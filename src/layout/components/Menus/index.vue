@@ -24,7 +24,7 @@ import { ref } from 'vue'
 import live from '@/assets/images/globalLayout/live.png'
 import game from '@/assets/images/globalLayout/game.png'
 import sports from '@/assets/images/globalLayout/sports.png'
-const barFooterArr:Array = ref([
+const barFooterArr:any = ref([
   {
     text: '直播',
     value: 'live',
@@ -41,7 +41,7 @@ const barFooterArr:Array = ref([
     iocn: game
   }
 ])
-const active:String = ref('sports')
+const active:any = ref('sports')
 const clickChangeActive = (item: any) => {
   active.value = item.value
 }
