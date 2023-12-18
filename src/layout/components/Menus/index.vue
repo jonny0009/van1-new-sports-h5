@@ -48,7 +48,11 @@ const clickChangeActive = (item: any) => {
 </script>
 <style lang="scss" scoped>
 .global-bar-footer {
-  height: 44px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 88px;
   display: flex;
   .item{
     display: flex;
@@ -59,9 +63,9 @@ const clickChangeActive = (item: any) => {
     color: #96A5AA;
     font-weight: 600;
     span{
-      line-height: 12px;
-      font-size: 12px;
-      margin-top: 2px;
+      line-height: 24px;
+      font-size: 24px;
+      margin-top: 4px;
     }
     .item-img{
       display: block;
