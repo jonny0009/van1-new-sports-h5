@@ -2,13 +2,13 @@
   <div class="login-page">
     <van-nav-bar class="bg-title">
       <template #left>
-        <img height="36" width="36" src="@/assets/images/login/return@2x.png" alt="" />
+        <img height="18" width="18" src="@/assets/images/login/return@2x.png" alt="" @click="goBack()" />
       </template>
       <template #title>
-        <img height="63" width="71" src="@/assets/images/login/ai-logo@2x.png" alt="" />
+        <img height="32" width="35" src="@/assets/images/login/ai-logo@2x.png" alt="" />
       </template>
       <template #right>
-        <img width="34" height="37" src="@/assets/images/login/service@2x.png" alt="" />
+        <img width="17" height="18" src="@/assets/images/login/service@2x.png" alt="" />
       </template>
     </van-nav-bar>
     <div class="content">
@@ -18,9 +18,11 @@
         <span @click="register">注册</span>
         <span @click="login">登录</span>
       </div>
-
+      <div class="googleImg">
+        <img class="googleImg_1" height="40" width="330" src="@/assets/images/login/google.png" alt="" />
+      </div>
       <div class="ban">
-        <img height="137" src="@/assets/images/login/login.png" alt="" />
+        <img class="ban_1" src="@/assets/images/login/login.png" alt="" />
       </div>
 
       <div class="list-set">
@@ -44,7 +46,7 @@
             <img class="arrow" src="@/assets/images/login/go@2x.png" />
           </div>
         </div>
-        <div class="item" @click="showPk">
+        <div class="item" @click="showPk()">
           <div class="label-info flex align-center">
             <div class="icon"><img src="@/assets/images/login/pankou@2x.png" /></div>
             <div class="label">{{ '盘口' }}</div>
@@ -69,11 +71,14 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+const $router = useRouter()
 const lang = ref('')
 const int = ref('')
 const pankou = ref('')
 const showBottom = ref(false)
-function showPk(val: any) {
+function showPk(val?: any) {
+  console.log(val)
   showBottom.value = true
 }
 
@@ -81,11 +86,16 @@ function setPk(val: any) {
   console.log(val)
 }
 
-function register() {
+const goBack = () => {
+  $router.back()
+}
+const register = () => {
+  $router.push({ path: '/register' })
+}
+const login = () => {
+  $router.push({ path: '/sign_in' })
 }
 
-function login() {
-}
 </script>
 
 <style lang="scss" scope>
@@ -95,10 +105,12 @@ function login() {
   background: url('@/assets/images/login/bg-tit@2x.png');
   background-size: 100% 100%;
 }
+
 .content {
   background: #ffffff;
   border-radius: 16px 16px 0px 0px;
   padding-left: 20px;
+
   .title {
     font-family: PingFangSC-Semibold;
     font-size: 20px;
@@ -107,6 +119,7 @@ function login() {
     font-weight: 600;
     padding-top: 22.5px;
   }
+
   .desc {
     display: block;
     font-family: PingFangSC-Semibold;
@@ -115,18 +128,22 @@ function login() {
     letter-spacing: 0;
     font-weight: 600;
   }
+
   .area-btn {
     margin-top: 10px;
+
     span {
       display: inline-block;
       background: #713ff6;
       text-align: center;
-      font-size: 20px;
+      font-size: 16px;
+      font-weight: 500;
       font-family: PingFangSC-Semibold;
       height: 40px;
       line-height: 40px;
       width: 160px;
       border-radius: 40px;
+
       &:first-child {
         background: #e5ecf3;
         color: #000;
@@ -139,10 +156,24 @@ function login() {
     }
   }
 
+  .googleImg {
+    margin-top: 15px;
+    width: 330px;
+    height: 40px;
+
+    &_1 {
+      width: 100%;
+      height: 100%;
+    }
+
+  }
+
   .ban {
     margin-top: 15px;
+
     img {
       width: 100%;
+      height: 137px;
       padding-right: 20px;
     }
   }
@@ -160,27 +191,30 @@ function login() {
       &:not(:last-child) {
         margin-bottom: 15px;
       }
+
       .label-info {
-        font-size: 24px;
+        font-size: 13px;
 
         .icon {
-          width: 28px;
-          height: 28px;
+          width: 18px;
+          height: 18px;
           margin-right: 11.5px;
-          > img {
+
+          >img {
             display: block;
             width: 100%;
             height: 100%;
           }
         }
       }
+
       .label-right {
         display: flex;
         align-items: center;
 
         .label {
           font-family: PingFangSC-Regular;
-          font-size: 24px;
+          font-size: 12px;
 
           color: #96a5aa;
           letter-spacing: 1px;
@@ -190,8 +224,8 @@ function login() {
 
         .arrow {
           margin-left: 8px;
-          width: 20px;
-          height: 20px;
+          width: 13px;
+          height: 13px;
         }
       }
     }
@@ -215,8 +249,10 @@ function login() {
   padding-left: 20px;
   padding-top: 10px;
 }
+
 .pk-list {
   padding: 15px 20px;
+
   .item {
     font-size: 20px;
     color: #1f2630;
@@ -224,11 +260,8 @@ function login() {
     padding: 5px 0;
     border-bottom: 1px solid #eaeaea;
   }
-}
-</style>
+}</style>
 
-<style scoped>
-:deep(.van-nav-bar__content) {
+<style scoped>:deep(.van-nav-bar__content) {
   height: 75px;
-}
-</style>
+}</style>

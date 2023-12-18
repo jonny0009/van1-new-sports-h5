@@ -1,234 +1,238 @@
 <template>
-  <div class="login-page">
-    <van-nav-bar class="bg-title">
+  <div class="register">
+    <van-nav-bar class="signInBar" :border="false">
       <template #left>
-        <img height="36" width="36" src="@/assets/images/login/return@2x.png" alt="" />
+        <img height="18" width="18" src="@/assets/images/login/arrow@2x.png" alt="" @click="goBack()" />
       </template>
       <template #title>
-        <img height="63" width="71" src="@/assets/images/login/ai-logo@2x.png" alt="" />
-      </template>
-      <template #right>
-        <img width="34" height="37" src="@/assets/images/login/service@2x.png" alt="" />
+        <span class="title">注册</span>
       </template>
     </van-nav-bar>
     <div class="content">
-      <p class="title">欢迎来到AI！</p>
-      <span class="desc">全球最领先的体育社交平台</span>
-      <div class="area-btn">
-        <span @click="register">注册</span>
-        <span @click="login">登录</span>
-      </div>
+      <p class="setPassWorld">创建用户名</p>
+      <van-field
+        v-model="username"
+        :class="[username ? 'bb' : '']"
+        name=""
+        label=""
+        placeholder="用户名"
+        maxlength="16"
+        clearable
+        :rules="[{ required: true, message: '请填写用户名' }]"
+        @update:model-value="updateName"
+      />
 
-      <div class="ban">
-        <img height="137" src="@/assets/images/login/login.png" alt="" />
+      <!--用户名规则  -->
+      <p class="userName">用户名必须:</p>
+      <p class="explain">
+        <img v-if="!ifStandard" class="noPitch" src="@/assets/images/login/noPitch.png" />
+        <img v-else class="noPitch" src="@/assets/images/login/pitch.png" />
+        <span>至少6个字母数字（最多16个）</span>
+      </p>
+      <p class="explain">
+        <img v-if="!ifSpecial" class="noPitch" src="@/assets/images/login/noPitch.png" />
+        <img v-else class="noPitch" src="@/assets/images/login/pitch.png" />
+        <span>不能有特殊字符</span>
+      </p>
+      <p class="explain">
+        <img v-if="!ifSpace" class="noPitch" src="@/assets/images/login/noPitch.png" />
+        <img v-else class="noPitch" src="@/assets/images/login/pitch.png" />
+        <span>不能有空格</span>
+      </p>
+      <div v-if="ifStandard && ifSpecial && ifSpace" class="loginBtn registerBtn" @click="handleRegister()">
+        注册
       </div>
-
-      <div class="list-set">
-        <div class="item">
-          <div class="label-info flex align-center">
-            <div class="icon"><img src="@/assets/images/login/lang@2x.png" /></div>
-            <div class="label">{{ '语言' }}</div>
-          </div>
-          <div class="label-right">
-            <div class="label">{{ lang || ' 中文' }}</div>
-            <img class="arrow" src="@/assets/images/login/go@2x.png" />
-          </div>
-        </div>
-        <div class="item">
-          <div class="label-info flex align-center">
-            <div class="icon"><img src="@/assets/images/login/area@2x.png" /></div>
-            <div class="label">{{ '地区' }}</div>
-          </div>
-          <div class="label-right">
-            <div class="label">{{ int || '国际' }}</div>
-            <img class="arrow" src="@/assets/images/login/go@2x.png" />
-          </div>
-        </div>
-        <div class="item" @click="showPk">
-          <div class="label-info flex align-center">
-            <div class="icon"><img src="@/assets/images/login/pankou@2x.png" /></div>
-            <div class="label">{{ '盘口' }}</div>
-          </div>
-          <div class="label-right">
-            <div class="label">{{ pankou || ' 欧洲盘' }}</div>
-            <img class="arrow" src="@/assets/images/login/go@2x.png" />
-          </div>
-        </div>
+      <div v-else class="loginBtn">
+        下一步
       </div>
+      <div class="google" />
+      <p class="literal">已有账号? <span class="register" @click="loginIn">登录</span></p>
     </div>
 
-    <van-popup v-model:show="showBottom" position="bottom" closeable round :style="{ height: '200px' }">
-      <div class="pankou-title">盘口</div>
-      <div class="pk-list">
-        <div class="item" @click="setPk(1)">欧洲盘</div>
-        <div class="item" @click="setPk(2)">香港盘</div>
-      </div>
-    </van-popup>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-const lang = ref('')
-const int = ref('')
-const pankou = ref('')
-const showBottom = ref(false)
-function showPk(val: any) {
-  showBottom.value = true
+
+import { useRouter } from 'vue-router'
+const $router = useRouter()
+const username = ref<String>('')
+const ifSpace = ref<Boolean>(false)
+const ifSpecial = ref<Boolean>(false)
+const ifStandard = ref<Boolean>(false)
+// const form = reactive({
+//   username: '',
+//   password: ''
+// })
+const updateName = (str: string) => {
+  if (!str) {
+    ifSpace.value = false
+    ifSpecial.value = false
+    ifStandard.value = false
+    return
+  }
+  if (str.indexOf(' ') !== -1) {
+    ifSpace.value = false
+  } else {
+    ifSpace.value = true
+  }
+  // const regex = /^[a-zA-Z0-9]{6,16}$/
+  const regex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,16}$/
+  if (regex.test(str)) {
+    ifStandard.value = true
+  } else {
+    ifStandard.value = false
+  }
+  if (str.indexOf('admin') > 0 || str.indexOf('test') > 0) {
+    ifSpecial.value = false
+  } else {
+    ifSpecial.value = true
+  }
+}
+const loginIn = () => {
+  $router.push({ path: '/sign_in' })
+}
+const goBack = () => {
+  $router.back()
+}
+const handleRegister = (e?: any) => {
+  console.log(e, '注册====')
 }
 
-function setPk(val: any) {
-  console.log(val)
-}
-
-function register() {
-}
-
-function login() {
-}
 </script>
 
 <style lang="scss" scope>
-.bg-title {
-  width: 100%;
-  height: 75px;
-  background: url('@/assets/images/login/bg-tit@2x.png');
-  background-size: 100% 100%;
-}
-.content {
-  background: #ffffff;
-  border-radius: 16px 16px 0px 0px;
-  padding-left: 20px;
+.register {
   .title {
     font-family: PingFangSC-Semibold;
-    font-size: 20px;
+    font-size: 14px;
     color: #000;
     letter-spacing: 0;
     font-weight: 600;
-    padding-top: 22.5px;
   }
-  .desc {
-    display: block;
+
+  .content {
+    padding: 28px 25px;
+
+    .setPassWorld {
+      font-family: PingFangSC-Semibold;
+      font-size: 17px;
+      color: #000000;
+      letter-spacing: 0;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+  }
+
+  .userName {
+    margin-top: 3px;
     font-family: PingFangSC-Semibold;
     font-size: 12px;
-    color: #97a6ab;
+    color: #000000;
+    letter-spacing: 0;
+    font-weight: 600;
+    margin-left: 15px;
+  }
+
+  .explain {
+    margin-top: 3px;
+    display: flex;
+    align-items: center;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #000000;
+    letter-spacing: 0;
+    font-weight: 400;
+    margin-left: 15px;
+
+    .noPitch {
+      width: 11px;
+      height: 11px;
+      margin-right: 7px;
+    }
+
+  }
+
+  .loginBtn {
+    height: 40px;
+    width: 325px;
+    margin-top: 40px;
+    border-radius: 40px;
+    font-family: PingFangSC-Semibold;
+    font-size: 14px;
+    color: #1F2630;
+    letter-spacing: 0;
+    font-weight: 600;
+    line-height: 40px;
+    text-align: center;
+    background: #DFE4E5;
+  }
+
+  .registerBtn {
+    background: #7642FD;
+    color: #FFFF;
+  }
+
+  .google {
+    margin-top: 10px;
+    height: 40px;
+    width: 325px;
+    border-radius: 40px;
+    background: url("@/assets/images/login/google.png");
+    background-size: 100% 100%;
+  }
+
+  .literal {
+    margin-top: 20px;
+    text-align: center;
+    font-family: PingFangSC-Semibold;
+    font-size: 12px;
+    color: #000000;
     letter-spacing: 0;
     font-weight: 600;
   }
-  .area-btn {
-    margin-top: 10px;
-    span {
-      display: inline-block;
-      background: #713ff6;
-      text-align: center;
-      font-size: 20px;
-      font-family: PingFangSC-Semibold;
-      height: 40px;
-      line-height: 40px;
-      width: 160px;
-      border-radius: 40px;
-      &:first-child {
-        background: #e5ecf3;
-        color: #000;
-      }
 
-      &:last-child {
-        color: #ffff;
-        margin-left: 10px;
-      }
+  .register {
+    font-family: PingFangSC-Semibold;
+    font-size: 12px;
+    color: #7642FD;
+    letter-spacing: 0;
+    font-weight: 600;
+  }
+
+  .van-cel {
+    margin-top: 30px;
+
+    &::after {
+      // border-bottom: 1px solid #97a6ab;
     }
-  }
-
-  .ban {
-    margin-top: 15px;
-    img {
-      width: 100%;
-      padding-right: 20px;
-    }
-  }
-
-  .list-set {
-    // margin-bottom: 17px;
-    padding: 35px 25px 0px 0;
-
-    .item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 38px;
-
-      &:not(:last-child) {
-        margin-bottom: 15px;
-      }
-      .label-info {
-        font-size: 24px;
-
-        .icon {
-          width: 28px;
-          height: 28px;
-          margin-right: 11.5px;
-          > img {
-            display: block;
-            width: 100%;
-            height: 100%;
-          }
-        }
-      }
-      .label-right {
-        display: flex;
-        align-items: center;
-
-        .label {
-          font-family: PingFangSC-Regular;
-          font-size: 24px;
-
-          color: #96a5aa;
-          letter-spacing: 1px;
-          text-align: right;
-          font-weight: 400;
-        }
-
-        .arrow {
-          margin-left: 8px;
-          width: 20px;
-          height: 20px;
-        }
-      }
-    }
-  }
-}
-
-.flex {
-  display: flex;
-
-  &.align-center {
-    align-items: center;
-  }
-}
-
-.pankou-title {
-  font-family: PingFangSC-Regular;
-  font-size: 20px;
-  color: #1f2630;
-  letter-spacing: 1px;
-  font-weight: 400;
-  padding-left: 20px;
-  padding-top: 10px;
-}
-.pk-list {
-  padding: 15px 20px;
-  .item {
-    font-size: 20px;
-    color: #1f2630;
-    letter-spacing: 1px;
-    padding: 5px 0;
-    border-bottom: 1px solid #eaeaea;
   }
 }
 </style>
 
 <style scoped>
 :deep(.van-nav-bar__content) {
-  height: 75px;
+  height: 45px;
+}
+
+:deep(input::placeholder) {
+  font-family: PingFangSC-Semibold;
+  font-size: 14px;
+  color: #97a6ab;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+:deep(.bb.van-cell::after) {
+  border-bottom: 4px solid #7642FD;
+}
+
+:deep(.van-cell::after) {
+  border-bottom: 1px solid #97a6ab;
+}
+
+:deep(.van-cel::after) {
+  border-bottom: 1px solid #97a6ab !important;
 }
 </style>
