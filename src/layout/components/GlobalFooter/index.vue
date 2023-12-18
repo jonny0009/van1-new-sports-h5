@@ -1,5 +1,5 @@
 <template>
-  <div class="global-bar-footer">
+  <div class="global-bar-footer has-border">
     <div
       v-for="(item, idx) in barFooterArr"
       :key="idx"
@@ -21,12 +21,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import liveDefault from '@/assets/images/globalLayout/live-default.png'
-import gameDefault from '@/assets/images/globalLayout/game-default.png'
-import sportsDefault from '@/assets/images/globalLayout/sports-default.png'
-import live from '@/assets/images/globalLayout/live.png'
-import game from '@/assets/images/globalLayout/game.png'
-import sports from '@/assets/images/globalLayout/sports.png'
+import liveDefault from '@/assets/images/globalLayout/footer/live-default.png'
+import gameDefault from '@/assets/images/globalLayout/footer/game-default.png'
+import sportsDefault from '@/assets/images/globalLayout/footer/sports-default.png'
+import live from '@/assets/images/globalLayout/footer/live.png'
+import game from '@/assets/images/globalLayout/footer/game.png'
+import sports from '@/assets/images/globalLayout/footer/sports.png'
 import { ref, reactive } from 'vue'
 import router from '@/router'
 const getRouteName = () => {
@@ -81,6 +81,9 @@ const clickChangeActive = (item: any) => {
   width: 100%;
   height: 88px;
   display: flex;
+  &.has-border{
+    border-top: 1px solid #e5ecf3;
+  }
   .item{
     display: flex;
     flex: 1;
