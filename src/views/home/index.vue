@@ -1,5 +1,11 @@
 <template>
   <div class="home-page">
+
+    <SportsButton :button-text="'暗示'" :active="true" />
+    <br />
+    <SportsButton :no-img-toggle="true" :button-text="'暗示'" />
+    <br />
+
     <van-button type="primary">主要按钮</van-button>
     <van-button type="success">成功按钮</van-button>
     <van-button type="default">默认按钮</van-button>
@@ -16,12 +22,11 @@
 </template>
 
 <script lang="ts" setup>
-
+import SportsButton from '@/components/SportsButton/index.vue'
 </script>
 
 <style lang="scss" scoped>
 .home-page{
-  height: 100%;
   padding: 20px;
 }
 .my-swipe .van-swipe-item {
