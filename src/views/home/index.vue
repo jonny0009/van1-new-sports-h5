@@ -1,9 +1,9 @@
 <template>
   <div class="home-page">
 
-    <SportsButton :button-text="'暗示'" :active="true" />
+    <SportsButton :button-text="'暗示'" :active="true" :img-src="''" />
     <br />
-    <SportsButton :no-img-toggle="true" :button-text="'暗示'" />
+    <SportsButton :no-img-toggle="true" :button-text="'暗示'" :img-src="''" />
     <br />
 
     <van-button type="primary">主要按钮</van-button>
