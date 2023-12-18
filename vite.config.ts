@@ -73,9 +73,7 @@ export default () => {
       rollupOptions: {
         output: {
           manualChunks: {
-            vue: ['vue', 'vue-router', 'vuex'],
-            'element-plus': ['element-plus'],
-            echarts: ['echarts']
+            vue: ['vue', 'vue-router', 'vuex']
           }
         }
       },

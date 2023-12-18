@@ -165,13 +165,6 @@
   }
 }
 
-//element-plus //BUG
-[id^='el-popper-container'] {
-  position: fixed;
-  z-index: 999999999999999999999999;
-}
-
-////////////////////////////////////////////////////////
 .blue {
   color: #409eff;
 }

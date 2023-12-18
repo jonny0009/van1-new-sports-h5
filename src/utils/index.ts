@@ -1,6 +1,6 @@
-export const sleep = (ms:number) => new Promise(resolve => setTimeout(resolve, ms))
+export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-const getQueryStringByName = function (name: string) {
+export const getQueryStringByName = function (name: string) {
   var result = location.search.match(new RegExp('[?&]' + name + '=([^&]+)', 'i'))
   if (result == null || result.length < 1) {
     return ''
@@ -8,7 +8,7 @@ const getQueryStringByName = function (name: string) {
   return result[1]
 }
 
-const transformData = function (data: any) {
+export const transformData = function (data: any) {
   const params = new FormData()
   for (const item in data) {
     params.append(item, data[item])
@@ -16,7 +16,7 @@ const transformData = function (data: any) {
   return params
 }
 
-const date = function (date: any, fmt = 'yyyy-MM-dd hh:mm:ss', number?: any) {
+export const date = function (date: any, fmt = 'yyyy-MM-dd hh:mm:ss', number?: any) {
   if (date === null || typeof date === 'undefined' || date === '') {
     return null
   } else {
@@ -49,14 +49,14 @@ const date = function (date: any, fmt = 'yyyy-MM-dd hh:mm:ss', number?: any) {
  * @param decPoint：小数点符号 默认.
  * @param thousandsSep：千分位符号 默认为,
  */
-const formatMoney = (number: any, decimals = 0, decPoint = '.', thousandsSep = ',') => {
+export const formatMoney = (number: any, decimals = 0, decPoint = '.', thousandsSep = ',') => {
   const num = (number + '').replace(/[^0-9+-Ee.]/g, '')
   const n = !isFinite(+num) ? 0 : +num
   const prec = !isFinite(+decimals) ? 0 : Math.abs(decimals)
-  const sep = (typeof thousandsSep === 'undefined') ? ',' : thousandsSep
-  const dec = (typeof decPoint === 'undefined') ? '.' : decPoint
+  const sep = typeof thousandsSep === 'undefined' ? ',' : thousandsSep
+  const dec = typeof decPoint === 'undefined' ? '.' : decPoint
 
-  const toFixedFix = function (n:number, prec: number) {
+  const toFixedFix = function (n: number, prec: number) {
     const k = Math.pow(10, prec)
     return '' + Math.ceil(n * k) / k
   }
@@ -77,8 +77,17 @@ const formatMoney = (number: any, decimals = 0, decPoint = '.', thousandsSep = '
  * @param number
  * @param decimals
  */
-const formatDecimals = (number: Number, decimals = 2) => {
+export const formatDecimals = (number: Number, decimals = 2) => {
   return formatMoney(number, decimals, '.', '')
 }
 
-export { getQueryStringByName, transformData, date, formatDecimals }
+/**
+ * 创建script
+ * @param url
+ */
+export const createScript = (url: string, async:boolean = true) => {
+  const el = document.createElement('script')
+  el.src = `${url}?r=${Date.now()}`
+  el.async = async
+  document.getElementsByTagName('head')[0].appendChild(el)
+}
