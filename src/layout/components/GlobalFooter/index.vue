@@ -30,11 +30,12 @@ import sports from '@/assets/images/globalLayout/sports.png'
 import { ref, reactive } from 'vue'
 import router from '@/router'
 const getRouteName = () => {
-  return router.currentRoute.value.name.toLowerCase()
+  const routerName:any = router?.currentRoute?.value?.name || ''
+  return routerName.toLowerCase()
 }
-const barFooterArrayChange = (RouteNameVal) => {
+const barFooterArrayChange = (RouteNameVal?:any):Array<any> => {
   const RouteName = RouteNameVal || getRouteName()
-  const RouteNameObj = {
+  const RouteNameObj:any = {
     'live': live,
     'home': sports,
     'game': game
@@ -56,7 +57,6 @@ const barFooterArrayChange = (RouteNameVal) => {
       iocn: gameDefault
     }
   ]
-  console.log(RouteName)
   return barFooterArray.map(e => {
     if (e.value === RouteName) {
       e.iocn = RouteNameObj[e.value]
