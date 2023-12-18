@@ -82,6 +82,22 @@ export const formatDecimals = (number: Number, decimals = 2) => {
 }
 
 /**
+ * 处理小数点位数
+ * @param  value
+ * @param {*} n
+ */
+export const points = (value:any, n = 2) => {
+  let valueStr = value + ''
+  if (valueStr.indexOf('.') > -1) {
+    valueStr += '00'
+  } else {
+    valueStr += '.000'
+  }
+  const regexp = new RegExp('([0-9]+.[0-9]{' + n + '})[0-9]*', 'g')
+  return valueStr.replace(regexp, '$1')
+}
+
+/**
  * 创建script
  * @param url
  */

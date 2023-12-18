@@ -1,9 +1,8 @@
-const baseURL: any = import.meta.env.VITE_BASE_API
 const isDev: any = import.meta.env.DEV
 
 if (isDev) {
   console.log('dev')
 }
 
-export const ImageSource = ''
-export const ChatSource = ''
+export const ImageSource = window.AIConfig.static_url
+export const ChatSource = window.AIConfig.push_url
