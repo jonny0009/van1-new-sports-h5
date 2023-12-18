@@ -52,15 +52,15 @@ defineProps({
 
 <style lang="scss" scoped>
 .item {
-  width: 165px;
-  height: 220px;
+  width: 330px;
+  height: 440px;
   background: #eff1f2;
   border-radius: 10px;
   overflow: hidden;
   &-photo {
     position: relative;
     width: 100%;
-    height: 110px;
+    height: 220px;
     .van-image {
       width: 100%;
       height: 100%;
@@ -68,35 +68,36 @@ defineProps({
     .footer {
       color: #fff;
       background: rgba(0, 0, 0, 0.5);
-      font-size: 12px;
+      font-size: 24px;
       position: absolute;
       left: 0;
       bottom: 0;
       width: 100%;
-      padding: 2px 5px;
+      padding: 4px 10px;
     }
     .state {
       position: absolute;
       left: 0;
       top: 0;
-      min-width: 42px;
-      height: 17px;
-      padding: 0 5px;
-      background: #cf00ff;
+      min-width: 84px;
+      height: 34px;
+      padding: 0 10px;
       color: #fff;
-      font-size: 12px;
+      font-size: 24px;
+      background-image: linear-gradient(-68deg, #d700ff 0%, #af00ff 100%);
+      border-radius: 10px 0px 10px 0px;
     }
   }
 
   &-title {
     display: flex;
     align-items: center;
-    font-size: 12px;
-    padding: 7px 8px;
+    font-size: 24px;
+    padding: 14px 16px;
     > img {
-      width: 12px;
-      height: 12px;
-      margin-right: 4px;
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
     }
     > span {
       overflow: hidden;
@@ -108,33 +109,33 @@ defineProps({
 
   &-team {
     color: #1f2630;
-    font-size: 12px;
+    font-size: 24px;
     font-weight: 800;
-    padding: 0 4px;
+    padding: 0 8px;
     .cell {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 8px;
+      margin-bottom: 16px;
     }
     .head {
       display: flex;
       align-items: center;
       > img {
-        width: 20px;
-        height: 20px;
-        margin-right: 5px;
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
       }
       > span {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        max-width: 110px;
+        max-width: 220px;
       }
     }
     .score {
       color: #546371;
-      font-size: 15px;
+      font-size: 30px;
       font-weight: 600;
     }
   }
@@ -144,21 +145,21 @@ defineProps({
     align-items: center;
     justify-content: space-between;
     color: #1f2630;
-    font-size: 12px;
+    font-size: 24px;
     font-weight: 800;
-    padding: 0 4px;
+    padding: 0 8px;
     .name {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      max-width: 72px;
+      max-width: 144px;
     }
     .hots {
       display: flex;
       align-items: center;
       > img {
-        width: 10px;
-        margin-right: 4px;
+        width: 20px;
+        margin-right: 8px;
       }
     }
   }

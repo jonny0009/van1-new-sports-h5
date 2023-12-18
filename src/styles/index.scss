@@ -71,3 +71,7 @@ div:focus {
   width: 90px;
   height: 42px;
 }
+
+.van-image__error, .van-image__loading{
+  background: transparent !important;
+}

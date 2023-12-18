@@ -14,7 +14,7 @@ export default () => {
       })
     ],
     resolve: {
-      extensions: ['.ts', '.js'],
+      extensions: ['.ts', '.js', '.vue'],
       alias: {
         '@': resolve(process.cwd(), '/src'),
         '#': resolve(process.cwd(), '/types')
@@ -37,7 +37,7 @@ export default () => {
           xfwd: false,
           ws: true,
           pathRewrite: {
-            '^/ai': '/ai/mobile'
+            '^/ai': '/ai'
           }
         },
         '/chat': {
@@ -73,9 +73,7 @@ export default () => {
       rollupOptions: {
         output: {
           manualChunks: {
-            vue: ['vue', 'vue-router', 'vuex'],
-            'element-plus': ['element-plus'],
-            echarts: ['echarts']
+            vue: ['vue', 'vue-router', 'vuex']
           }
         }
       },

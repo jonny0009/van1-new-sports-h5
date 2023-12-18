@@ -1,7 +1,8 @@
 
 import './socket'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 export default {
   install(app:any) {
-    console.log(app)
+    app.component('SvgIcon', SvgIcon)
   }
 }
