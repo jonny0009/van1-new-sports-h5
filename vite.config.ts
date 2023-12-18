@@ -1,7 +1,7 @@
 import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-
+const target = 'http://dev.m.xc.com/'
 export default () => {
   return {
     plugins: [
@@ -31,14 +31,34 @@ export default () => {
       port: 3001,
       open: false,
       proxy: {
-        '/gateway': {
-          target: ' https://game-admin.abgametest.com',
-          // target: 'http://dev.game-admin.ab-game.com',
+        '/ai': {
+          target,
           changeOrigin: true,
+          xfwd: false,
           ws: true,
-          rewrite: (path: string) => {
-            // return path.replace(new RegExp('^/gateway'), '/')
-            return path.replace(new RegExp('^/gateway'), '/gateway')
+          pathRewrite: {
+            '^/ai': '/ai/mobile'
+          }
+        },
+        '/chat': {
+          target,
+          changeOrigin: true,
+          xfwd: false,
+          ws: true,
+          pathRewrite: {
+            '^/chat': '/chat'
+          }
+        },
+        '/ws': {
+          target,
+          changeOrigin: true,
+          xfwd: false,
+          ws: true,
+          pathRewrite: {
+            '^/ws': ''
+          },
+          headers: {
+            Referer: target
           }
         }
       },

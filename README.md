@@ -4,7 +4,7 @@
 
 ## 前序准备
 
-你需要在本地安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。本项目技术栈基于 [ES2015+](http://es6.ruanyifeng.com/)、[vue3](https://v3.cn.vuejs.org/)、[vuex](https://next.vuex.vuejs.org/)、[vue-router](https://next.router.vuejs.org/) 、[vite](https://cn.vitejs.dev/) 、[axios](https://github.com/axios/axios) 和 [element-plus](https://element-plus.gitee.io/#/zh-CN)，提前了解和学习这些知识会对使用本项目有很大的帮助。
+你需要在本地安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。本项目技术栈基于 [ES2015+](http://es6.ruanyifeng.com/)、[vue3](https://v3.cn.vuejs.org/)、[vuex](https://next.vuex.vuejs.org/)、[vue-router](https://next.router.vuejs.org/) 、[vite](https://cn.vitejs.dev/) 、[axios](https://github.com/axios/axios) 和 [vant](https://vant-contrib.gitee.io/vant/#/zh-CN)，提前了解和学习这些知识会对使用本项目有很大的帮助。
 
 ## 开发
 
