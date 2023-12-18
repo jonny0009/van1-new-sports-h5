@@ -31,13 +31,13 @@ export default () => {
       port: 3001,
       open: false,
       proxy: {
-        '/ai': {
+        '/api': {
           target,
           changeOrigin: true,
           xfwd: false,
           ws: true,
           pathRewrite: {
-            '^/ai': '/ai/mobile'
+            '^/api': '/ai/mobile'
           }
         },
         '/chat': {
