@@ -1,10 +1,11 @@
 <template>
+  <div class="betting-slip-bg" :class="{ open }" @click="toogle"></div>
   <div class="betting-slip-popup" :class="{ open }">
     <div class="betting-slip-header" @click="toogle">
       <div class="bet-header-left">
         <span class="bet-icon"><van-icon name="orders-o" /></span>
         <span class="bet-title">投注单</span>
-        <span class="bet-arrow"><van-icon name="arrow-down" /></span>
+        <span class="bet-arrow"><van-icon :name="open ? 'arrow-up' : 'arrow-down'" /></span>
       </div>
       <div v-if="open" class="bet-switch-wrap">
         <span class="label">接受陪率变化</span>
@@ -26,7 +27,7 @@
       <div v-else class="bet-all-ior">@0.00</div>
 
     </div>
-    <div class="betting-slip-container">
+    <div class="betting-slip-container" :class="{ open }">
       <div class="bet-tab">
         <div
           v-for="(item, index) in tabs"
@@ -44,6 +45,7 @@
           }"
         ></div>
       </div>
+      <div style="height: 1000px;"></div>
 
     </div>
 
@@ -51,7 +53,7 @@
 </template>
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
-const open = ref(!false)
+const open = ref(false)
 const checked = ref(false)
 const type = ref(1)
 const tabs = ref([
@@ -78,8 +80,27 @@ const toogle = () => {
 
 </script>
 <style lang="scss" scoped>
+.betting-slip-bg {
+  display: none;
+  z-index: 7;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  opacity: 0;
+  margin: auto;
+  background-color: rgba(0, 0, 0, .3);
+
+  &.open {
+    display: block;
+    opacity: 1;
+    transition: all .3s;
+  }
+}
+
 .betting-slip-popup {
-  max-height: calc(100vh - 40px);
+  max-height: calc(100% - 110px - 88px);
   position: fixed;
   bottom: 0;
   left: 0;
@@ -93,11 +114,12 @@ const toogle = () => {
   transition: transform .3s;
 
   &.open {
-    transform: translateY(100%) translateY(-615px);
+    transform: translateY(-88px);
   }
 }
 
 .betting-slip-header {
+  flex-shrink: 0;
   height: 96px;
   padding-left: 40px;
   padding-right: 36px;
@@ -157,9 +179,20 @@ const toogle = () => {
 }
 
 .betting-slip-container {
-  height: 430px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  opacity: 0;
+  transition: opacity .3s;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &.open {
+    opacity: 1;
+  }
 
   .bet-tab {
+    flex-shrink: 0;
     position: relative;
     display: flex;
     align-items: center;
