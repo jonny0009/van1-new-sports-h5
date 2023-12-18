@@ -21,7 +21,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import router from '@/router'
 import live from '@/assets/images/globalLayout/live.png'
 import game from '@/assets/images/globalLayout/game.png'
