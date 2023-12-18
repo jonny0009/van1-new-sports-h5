@@ -8,7 +8,9 @@
     </div>
 
     <div class="wrapper">
-      <LiveItem :item="{}" />
+      <div class="live-item" v-for="item in 23" :key="item">
+        <LiveItem :item="{}" />
+      </div>
     </div>
   </div>
 </template>
@@ -43,6 +45,7 @@ function getImage(name: string) {
   overflow-y: hidden;
   white-space: nowrap;
   display: flex;
+  padding: 0 16px;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -74,5 +77,12 @@ function getImage(name: string) {
   }
 }
 .wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 15px 0 10px;
+  .live-item {
+    margin: 0 5px;
+    margin-top: 15px;
+  }
 }
 </style>
