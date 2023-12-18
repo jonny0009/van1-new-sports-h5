@@ -165,13 +165,6 @@
   }
 }
 
-//element-plus //BUG
-[id^='el-popper-container'] {
-  position: fixed;
-  z-index: 999999999999999999999999;
-}
-
-////////////////////////////////////////////////////////
 .blue {
   color: #409eff;
 }
@@ -181,7 +174,8 @@
 }
 
 .fz14 {
-  font-size: 14px;
+  // font-size: 14px;
+  font-size: 28px;
 }
 
 .ml10 {
@@ -245,7 +239,8 @@
 }
 
 .f14 {
-  font-size: 14px;
+  // font-size: 14px;
+  font-size: 28px;
 }
 
 .cursor {

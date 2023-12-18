@@ -7,20 +7,38 @@ const service = axios.create({
   baseURL,
   timeout: 30000 // request timeout
 })
-
+// 不需要传groupId参数的数组
+const noGroupId:Array<string> = [
+  '/order/all/betRecordTab',
+  '/common/businessConfig',
+  '/merchantAccountServer/api/c/getCMerAccessType'
+]
 // 发起请求之前的拦截器
 service.interceptors.request.use(
   (config: any) => {
     // 如果有token 就携带tokon
     const token = getToken()
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`
+      config.headers.token = token
     }
-
-    // other：放置其它需要传入的参数
-    const headers: any = (config.data && config.data.other && config.data.other.headers) || {}
-    for (const k in headers) {
-      config.headers[k] = headers.headers[k]
+    const groupId = 0
+    config.headers['Content-Type'] = 'application/json'
+    config.headers.token = token
+    config.headers.terType = '2'
+    config.headers.wid = 1
+    config.headers.lang = 'zh-cn'
+    config.headers.apiVer = '4.06'
+    config.headers.groupId = groupId
+    if (config.method === 'post') {
+      if (noGroupId.indexOf(config.url) < 0) {
+        config.data = config.data || {}
+        config.data = Object.assign({}, { groupId }, config.data)
+      }
+    } else if (config.method === 'get') {
+      if (noGroupId.indexOf(config.url) < 0) {
+        config.params = config.params || {}
+        config.params = Object.assign({}, { groupId }, config.params)
+      }
     }
 
     return config
@@ -32,9 +50,9 @@ const authCode: any = [401, 403, 1010]
 // 响应拦截器
 service.interceptors.response.use(
   (response: any) => {
-    if (authCode.includes(response.data.code)) {
+    if (authCode.includes(response.data.codecode)) {
       removeToken()
-      router.push('/login')
+      // router.push('/login')
     } else if (+response.data.code !== 200) {
       return response.data
     } else {
@@ -44,7 +62,7 @@ service.interceptors.response.use(
   (error: any) => {
     if (error.response && authCode.includes[error.response.status]) {
       removeToken()
-      router.push('/login')
+      // router.push('/login')
     }
     const timer = setTimeout(() => {
       let Text = ''
@@ -64,8 +82,7 @@ service.interceptors.response.use(
       console.error(Text)
       clearTimeout(timer)
     }, 400)
-
-    return Promise.reject(error)
+    return Promise.reject(error).catch(() => {})
   }
 )
 

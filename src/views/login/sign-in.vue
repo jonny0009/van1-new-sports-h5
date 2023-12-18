@@ -1,8 +1,8 @@
 <template>
   <div class="signIn">
-    <van-nav-bar class="signInBar">
+    <van-nav-bar class="signInBar" :border="false">
       <template #left>
-        <img height="18" width="18" src="@/assets/images/login/arrow@2x.png" alt="" @click="goBack()" />
+        <img class="img_1" src="@/assets/images/login/arrow@2x.png" alt="" @click="goBack()" />
       </template>
       <template #title>
         <span class="title">登录</span>
@@ -63,7 +63,6 @@
       <div class="loginBtn" @click="handleLogin()">
         登录
       </div>
-      <div class="google" />
       <p class="literal">还没账号? <span class="register" @click="register">注册</span></p>
     </div>
   </div>
@@ -97,12 +96,18 @@ const toForget = (values?: any) => {
 
 <style lang="scss" scope>
 .signIn {
+  .img_1 {
+    width: 35px;
+    height: 35px;
+  }
+
   .title {
-    font-family: PingFangSC-Semibold;
-    font-size: 14px;
+    // font-family: PingFangSC-Semibold;
+    font-size: 28px;
     color: #000;
     letter-spacing: 0;
     font-weight: 600;
+
   }
 
   .content {
@@ -116,7 +121,7 @@ const toForget = (values?: any) => {
 
     span {
       font-family: PingFangSC-Semibold;
-      font-size: 14px;
+      font-size: 28px;
       color: #97a6ab;
       letter-spacing: 0;
       font-weight: 600;
@@ -128,54 +133,49 @@ const toForget = (values?: any) => {
       &::after {
         content: '';
         width: 50%;
-        height: 3px;
+        height: 6px;
         display: block;
-        margin: 10px auto;
-        border-bottom: 3px solid #000;
-        border-radius: 3px;
+        margin: 20px auto;
+        border-bottom: 6px solid #000;
+        border-radius: 6px;
       }
     }
   }
 
+  .form {
+    margin-top: 40px;
+  }
+
   .forgetPassword {
-    margin-top: 31px;
-    margin-left: 10px;
+    margin-top: 62px;
+    margin-left: 20px;
     font-family: PingFangSC-Semibold;
-    font-size: 12px;
+    font-size: 24px;
     color: #000000;
     letter-spacing: 0;
     font-weight: 600;
   }
 
   .loginBtn {
-    height: 40px;
-    width: 325px;
-    margin-top: 23px;
-    border-radius: 40px;
+    height: 80px;
+    width: 650px;
+    margin-top: 50px;
+    border-radius: 80px;
     font-family: PingFangSC-Semibold;
-    font-size: 14px;
+    font-size: 27px;
     color: #1F2630;
     letter-spacing: 0;
     font-weight: 600;
-    line-height: 40px;
+    line-height: 80px;
     text-align: center;
     background: #DFE4E5;
   }
 
-  .google {
-    margin-top: 10px;
-    height: 40px;
-    width: 325px;
-    border-radius: 40px;
-    background: url("@/assets/images/login/google.png");
-    background-size: 100% 100%;
-  }
-
   .literal {
-    margin-top: 20px;
+    margin-top: 40px;
     text-align: center;
     font-family: PingFangSC-Semibold;
-    font-size: 12px;
+    font-size: 24px;
     color: #000000;
     letter-spacing: 0;
     font-weight: 600;
@@ -183,14 +183,14 @@ const toForget = (values?: any) => {
 
   .register {
     font-family: PingFangSC-Semibold;
-    font-size: 12px;
+    font-size: 24px;
     color: #7642FD;
     letter-spacing: 0;
     font-weight: 600;
   }
 
   .van-cel {
-    margin-top: 30px;
+    margin-top: 60px;
 
     &::after {
       border-bottom: 1px solid #97a6ab;
@@ -201,22 +201,30 @@ const toForget = (values?: any) => {
 
 <style scoped>
 :deep(.van-nav-bar__content) {
-  height: 45px;
+  height: 180px;
 }
 
 :deep(input::placeholder) {
-  font-family: PingFangSC-Semibold;
-  font-size: 14px;
+  /* font-family: PingFangSC-Semibold; */
+  font-size: 24px;
   color: #97a6ab;
-  letter-spacing: 0;
+  /* letter-spacing: 0; */
   font-weight: 600;
 }
 
 :deep(.van-cell::after) {
-  border-bottom: 1px solid #97a6ab;
+  border-bottom: 2px solid #97a6ab;
 }
 
 :deep(.van-cel::after) {
-  border-bottom: 1px solid #97a6ab !important;
+  border-bottom: 2px solid #97a6ab !important;
+}
+
+:deep(.van-field__control) {
+  height: 50px;
+  font-size: 30px;
+}
+:deep(.van-icon) {
+  font-size: 40px;
 }
 </style>

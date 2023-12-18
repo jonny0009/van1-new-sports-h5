@@ -14,7 +14,7 @@ export default () => {
       })
     ],
     resolve: {
-      extensions: ['.ts', '.js'],
+      extensions: ['.ts', '.js', '.vue'],
       alias: {
         '@': resolve(process.cwd(), '/src'),
         '#': resolve(process.cwd(), '/types')
@@ -27,55 +27,54 @@ export default () => {
         }
       }
     },
-    server: {
-      port: 3001,
-      open: false,
-      proxy: {
-        '/ai': {
-          target,
-          changeOrigin: true,
-          xfwd: false,
-          ws: true,
-          pathRewrite: {
-            '^/ai': '/ai/mobile'
-          }
-        },
-        '/chat': {
-          target,
-          changeOrigin: true,
-          xfwd: false,
-          ws: true,
-          pathRewrite: {
-            '^/chat': '/chat'
-          }
-        },
-        '/ws': {
-          target,
-          changeOrigin: true,
-          xfwd: false,
-          ws: true,
-          pathRewrite: {
-            '^/ws': ''
-          },
-          headers: {
-            Referer: target
-          }
-        }
-      },
-      fs: {
-        strict: false,
-        allow: []
-      }
-    },
+    // 先停用====写页面
+    // server: {
+    //   port: 3001,
+    //   open: false,
+    //   proxy: {
+    //     '/ai': {
+    //       target,
+    //       changeOrigin: true,
+    //       xfwd: false,
+    //       ws: true,
+    //       pathRewrite: {
+    //         '^/ai': '/ai'
+    //       }
+    //     },
+    //     '/chat': {
+    //       target,
+    //       changeOrigin: true,
+    //       xfwd: false,
+    //       ws: true,
+    //       pathRewrite: {
+    //         '^/chat': '/chat'
+    //       }
+    //     },
+    //     '/ws': {
+    //       target,
+    //       changeOrigin: true,
+    //       xfwd: false,
+    //       ws: true,
+    //       pathRewrite: {
+    //         '^/ws': ''
+    //       },
+    //       headers: {
+    //         Referer: target
+    //       }
+    //     }
+    //   },
+    //   fs: {
+    //     strict: false,
+    //     allow: []
+    //   }
+    // },
     build: {
       // sourcemap: true,
       manifest: true,
       rollupOptions: {
         output: {
           manualChunks: {
-            vue: ['vue', 'vue-router', 'vuex'],
-            'element-plus': ['element-plus'],
-            echarts: ['echarts']
+            vue: ['vue', 'vue-router', 'vuex']
           }
         }
       },

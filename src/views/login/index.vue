@@ -2,13 +2,13 @@
   <div class="login-page">
     <van-nav-bar class="bg-title">
       <template #left>
-        <img height="18" width="18" src="@/assets/images/login/return@2x.png" alt="" @click="goBack()" />
+        <img class="img_1" src="@/assets/images/login/return@2x.png" alt="" @click="goBack()" />
       </template>
       <template #title>
-        <img height="32" width="35" src="@/assets/images/login/ai-logo@2x.png" alt="" />
+        <img class="img_2" src="@/assets/images/login/ai-logo@2x.png" alt="" />
       </template>
       <template #right>
-        <img width="17" height="18" src="@/assets/images/login/service@2x.png" alt="" />
+        <img class="img_3" src="@/assets/images/login/service@2x.png" alt="" />
       </template>
     </van-nav-bar>
     <div class="content">
@@ -17,9 +17,6 @@
       <div class="area-btn">
         <span @click="register">注册</span>
         <span @click="login">登录</span>
-      </div>
-      <div class="googleImg">
-        <img class="googleImg_1" height="40" width="330" src="@/assets/images/login/google.png" alt="" />
       </div>
       <div class="ban">
         <img class="ban_1" src="@/assets/images/login/login.png" alt="" />
@@ -52,7 +49,7 @@
             <div class="label">{{ '盘口' }}</div>
           </div>
           <div class="label-right">
-            <div class="label">{{ pankou || ' 欧洲盘' }}</div>
+            <div class="label">{{ pankou || ' 欧洲盘[DEC]' }}</div>
             <img class="arrow" src="@/assets/images/login/go@2x.png" />
           </div>
         </div>
@@ -62,7 +59,7 @@
     <van-popup v-model:show="showBottom" position="bottom" closeable round :style="{ height: '200px' }">
       <div class="pankou-title">盘口</div>
       <div class="pk-list">
-        <div class="item" @click="setPk(1)">欧洲盘</div>
+        <div class="item" @click="setPk(1)">欧洲盘[DEC]</div>
         <div class="item" @click="setPk(2)">香港盘</div>
       </div>
     </van-popup>
@@ -101,19 +98,34 @@ const login = () => {
 <style lang="scss" scope>
 .bg-title {
   width: 100%;
-  height: 75px;
+  height: 150px;
   background: url('@/assets/images/login/bg-tit@2x.png');
   background-size: 100% 100%;
+
+  .img_1 {
+    width: 36px;
+    height: 36px;
+  }
+
+  .img_2 {
+    width: 77px;
+    height: 63px;
+  }
+
+  .img_3 {
+    width: 34px;
+    height: 37px;
+  }
 }
 
 .content {
   background: #ffffff;
   border-radius: 16px 16px 0px 0px;
-  padding-left: 20px;
+  padding: 0 45px;
 
   .title {
     font-family: PingFangSC-Semibold;
-    font-size: 20px;
+    font-size: 40px;
     color: #000;
     letter-spacing: 0;
     font-weight: 600;
@@ -123,26 +135,26 @@ const login = () => {
   .desc {
     display: block;
     font-family: PingFangSC-Semibold;
-    font-size: 12px;
+    font-size: 24px;
     color: #97a6ab;
     letter-spacing: 0;
     font-weight: 600;
   }
 
   .area-btn {
-    margin-top: 10px;
+    margin-top: 20px;
 
     span {
       display: inline-block;
-      background: #713ff6;
+      background-image: linear-gradient(to right, #623AF8, #4121AF);
       text-align: center;
-      font-size: 16px;
+      font-size: 28px;
       font-weight: 500;
       font-family: PingFangSC-Semibold;
-      height: 40px;
-      line-height: 40px;
-      width: 160px;
-      border-radius: 40px;
+      height: 80px;
+      line-height: 80px;
+      width: 320px;
+      border-radius: 80px;
 
       &:first-child {
         background: #e5ecf3;
@@ -151,54 +163,40 @@ const login = () => {
 
       &:last-child {
         color: #ffff;
-        margin-left: 10px;
+        margin-left: 20px;
       }
     }
   }
 
-  .googleImg {
-    margin-top: 15px;
-    width: 330px;
-    height: 40px;
-
-    &_1 {
-      width: 100%;
-      height: 100%;
-    }
-
-  }
-
   .ban {
-    margin-top: 15px;
+    margin-top: 35px;
 
     img {
       width: 100%;
-      height: 137px;
-      padding-right: 20px;
+      height: 274px;
     }
   }
 
   .list-set {
-    // margin-bottom: 17px;
-    padding: 35px 25px 0px 0;
+    padding-top: 73px;
 
     .item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 38px;
+      padding-bottom: 73px;
 
       &:not(:last-child) {
         margin-bottom: 15px;
       }
 
       .label-info {
-        font-size: 13px;
+        font-size: 27px;
 
         .icon {
-          width: 18px;
-          height: 18px;
-          margin-right: 11.5px;
+          width: 36px;
+          height: 36px;
+          margin-right: 23px;
 
           >img {
             display: block;
@@ -214,7 +212,7 @@ const login = () => {
 
         .label {
           font-family: PingFangSC-Regular;
-          font-size: 12px;
+          font-size: 27px;
 
           color: #96a5aa;
           letter-spacing: 1px;
@@ -224,8 +222,8 @@ const login = () => {
 
         .arrow {
           margin-left: 8px;
-          width: 13px;
-          height: 13px;
+          width: 25px;
+          height: 25px;
         }
       }
     }
@@ -242,26 +240,33 @@ const login = () => {
 
 .pankou-title {
   font-family: PingFangSC-Regular;
-  font-size: 20px;
+  font-size: 40px;
   color: #1f2630;
-  letter-spacing: 1px;
+  letter-spacing: px;
   font-weight: 400;
-  padding-left: 20px;
-  padding-top: 10px;
+  padding-left: 40px;
+  padding-top: 20px;
 }
 
 .pk-list {
-  padding: 15px 20px;
+  padding: 30px 40px;
 
   .item {
-    font-size: 20px;
+    font-size: 40px;
     color: #1f2630;
     letter-spacing: 1px;
-    padding: 5px 0;
-    border-bottom: 1px solid #eaeaea;
+    padding: 10px 0;
+    border-bottom: 2px solid #eaeaea;
   }
-}</style>
+}
+</style>
 
-<style scoped>:deep(.van-nav-bar__content) {
-  height: 75px;
-}</style>
+<style scoped>
+:deep(.van-nav-bar__content) {
+  height: 150px;
+}
+
+:deep(.van-icon) {
+  font-size: 48px;
+}
+</style>

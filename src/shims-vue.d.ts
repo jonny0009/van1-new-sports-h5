@@ -1,4 +1,3 @@
-
 /// <reference types="vite/client" />
 
 declare module '*.vue' {
@@ -6,10 +5,14 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+declare interface Window {
+  AIConfig: any
+  wf: any
+}
 
 declare module 'sockjs-client/dist/sockjs.min.js' {
-  import Client from 'sockjs-client';
-  export default Client;
+  import Client from 'sockjs-client'
+  export default Client
 }
 declare module '*.svg'
 declare module '*.png'
@@ -22,4 +25,6 @@ declare module 'md5'
 declare module 'vite-plugin-svg-icons'
 declare module 'path-browserify'
 declare module 'defineEmits'
+declare module 'defineProps'
 declare module 'stompjs'
+declare module 'xcsport-lib'
