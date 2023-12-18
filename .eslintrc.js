@@ -401,5 +401,11 @@ module.exports = {
     ],
     // 数组方括号内不允许使用空格
     'array-bracket-spacing': [2, 'never']
+  },
+  globals: {
+    defineProps: 'readonly',
+    defineEmits: 'readonly',
+    defineExpose: 'readonly',
+    withDefaults: 'readonly'
   }
 }

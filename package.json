@@ -29,7 +29,8 @@
     "vant": "^4.8.0",
     "vue": "3.2.47",
     "vue-router": "4.0.12",
-    "vuex": "4.0.0"
+    "vuex": "4.0.0",
+    "xcsport-lib": "git+http://192.168.20.27/front-end-web/xcsport-lib.git"
   },
   "devDependencies": {
     "@commitlint/cli": "12.1.1",
