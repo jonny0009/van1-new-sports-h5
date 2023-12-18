@@ -21,7 +21,7 @@ service.interceptors.request.use(
     if (token) {
       config.headers.token = token
     }
-    const groupId = 0
+    const groupId = 3
     config.headers['Content-Type'] = 'application/json'
     config.headers.token = token
     config.headers.terType = '2'
