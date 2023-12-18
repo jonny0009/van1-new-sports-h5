@@ -20,6 +20,16 @@ export const constantRoutes: Array<any> = [
     hidden: true
   },
   {
+    path: '/sign_in',
+    component: () => import('@/views/login/sign-in.vue'),
+    hidden: true
+  },
+  {
+    path: '/register',
+    component: () => import('@/views/login/register.vue'),
+    hidden: true
+  },
+  {
     path: '/401',
     name: '401',
     component: () => import('@/views/error-page/401.vue'),
