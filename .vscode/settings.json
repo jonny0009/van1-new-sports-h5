@@ -50,7 +50,7 @@
 	},
 	// 保存代码时操作
 	"editor.codeActionsOnSave": {
-		"source.fixAll": true,
+		"source.fixAll": "explicit"
 	},
 	"eslint.validate": [
 		"javascript",
