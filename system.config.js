@@ -1,5 +1,6 @@
-; (function () {
-  let host = location.hostname
+/* eslint-disable camelcase */
+(function () {
+  const host = location.hostname
   let static_url = location.protocol + '//' + (location.hostname.split('.').length === 3 ? location.hostname.replace(location.hostname.split('.')[0], 'img') : location.hostname.replace(location.hostname.split('.')[1], 'img')) + '/'
   let player_url = location.origin + '/'
   let push_url = location.origin + '/'
