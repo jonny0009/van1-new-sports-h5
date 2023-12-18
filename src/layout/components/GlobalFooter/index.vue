@@ -21,32 +21,55 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
-import router from '@/router'
+import liveDefault from '@/assets/images/globalLayout/live-default.png'
+import gameDefault from '@/assets/images/globalLayout/game-default.png'
+import sportsDefault from '@/assets/images/globalLayout/sports-default.png'
 import live from '@/assets/images/globalLayout/live.png'
 import game from '@/assets/images/globalLayout/game.png'
 import sports from '@/assets/images/globalLayout/sports.png'
-const barFooterArr:any = ref([
-  {
-    text: '直播',
-    value: 'live',
-    iocn: live
-  },
-  {
-    text: '体育',
-    value: 'home',
-    iocn: sports
-  },
-  {
-    text: '赌场',
-    value: 'game',
-    iocn: game
+import { ref, reactive } from 'vue'
+import router from '@/router'
+const getRouteName = () => {
+  return router.currentRoute.value.name.toLowerCase()
+}
+const barFooterArrayChange = (RouteNameVal) => {
+  const RouteName = RouteNameVal || getRouteName()
+  const RouteNameObj = {
+    'live': live,
+    'home': sports,
+    'game': game
   }
-])
-const active:any = ref('sports')
-active.value = router.currentRoute.value.name
+  const barFooterArray = [
+    {
+      text: '直播',
+      value: 'live',
+      iocn: liveDefault
+    },
+    {
+      text: '体育',
+      value: 'home',
+      iocn: sportsDefault
+    },
+    {
+      text: '赌场',
+      value: 'game',
+      iocn: gameDefault
+    }
+  ]
+  console.log(RouteName)
+  return barFooterArray.map(e => {
+    if (e.value === RouteName) {
+      e.iocn = RouteNameObj[e.value]
+    }
+    return e
+  })
+}
+const barFooterArr:any = reactive(barFooterArrayChange())
+const active = ref(getRouteName())
 const clickChangeActive = (item: any) => {
   active.value = item.value
+  barFooterArr.length = 0
+  barFooterArr.push(...barFooterArrayChange(active.value))
   router.push(`/` + item.value)
 }
 </script>
