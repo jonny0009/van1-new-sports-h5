@@ -64,8 +64,7 @@ service.interceptors.response.use(
       console.error(Text)
       clearTimeout(timer)
     }, 400)
-
-    return Promise.reject(error)
+    return Promise.reject(error).catch(() => {})
   }
 )
 
