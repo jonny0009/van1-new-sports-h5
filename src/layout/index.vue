@@ -1,8 +1,6 @@
 <template>
-  <div class="global-wrapper">
-    <AppMain />
-    <Footer />
-  </div>
+  <AppMain />
+  <Footer />
 </template>
 <script lang="ts" setup>
 import AppMain from './components/AppMain.vue'
