@@ -1,45 +1,69 @@
 <template>
   <div class="global-bar-footer">
-    <div v-for="(item, idx) in barFooterArr" :key="idx" class="item">
+    <div v-for="(item, idx) in barFooterArr" :key="idx" :class="{'active': item.value === active}" class="item">
       <van-image
-        width="27"
-        height="27"
-        src="https://img01.yzcdn.cn/vant/cat.jpeg"
+        width="23"
+        height="23"
+        class="item-img"
+        :src="item.iocn"
       />
-      {{ item.text }}
+      <span>
+        {{ item.text }}
+      </span>
     </div>
   </div>
 </template>
-
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-const barFooterArr:any = ref([
+import live from '@/assets/images/globalLayout/live.png'
+import game from '@/assets/images/globalLayout/game.png'
+import sports from '@/assets/images/globalLayout/sports.png'
+
+const barFooterArr:Array = ref([
   {
     text: '直播',
-    value: 'live'
+    value: 'live',
+    iocn: live
   },
   {
     text: '体育',
-    value: 'sports'
+    value: 'sports',
+    iocn: sports
   },
   {
     text: '赌场',
-    value: 'game'
+    value: 'game',
+    iocn: game
   }
 ])
 
-</script>
+const active:String = ref('sports')
 
+</script>
 <style lang="scss" scoped>
 .global-bar-footer {
   height: 44px;
   display: flex;
-  font-size: 12px;
   .item{
     display: flex;
     flex: 1;
-    flex-direction:column
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #96A5AA;
+    font-weight: 600;
+    span{
+      line-height: 12px;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+    .item-img{
+      display: block;
+    }
+    &.active {
+      color:#7642fe;
+    }
   }
 }
 </style>
