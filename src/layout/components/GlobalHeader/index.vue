@@ -100,7 +100,12 @@ import transactionImg from '@/assets/images/globalLayout/header/transaction.png'
     bottom: 6px;
   }
   .right-area{
-
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 30px;
+    display: flex;
+    align-items: center;
   }
 }
 </style>
