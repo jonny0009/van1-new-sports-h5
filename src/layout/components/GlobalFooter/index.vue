@@ -81,6 +81,8 @@ const clickChangeActive = (item: any) => {
   width: 100%;
   height: 88px;
   display: flex;
+  z-index: 9;
+  background-color: #fff;
   &.has-border{
     border-top: 1px solid #e5ecf3;
   }
