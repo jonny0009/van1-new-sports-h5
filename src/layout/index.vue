@@ -1,15 +1,13 @@
 <template>
-  <div class="layout-wrapper">
+  <div class="global-wrapper">
     <AppMain />
-    <Menus />
+    <Footer />
   </div>
 </template>
-
 <script lang="ts" setup>
 import AppMain from './components/AppMain.vue'
-import Menus from './components/Menus/index.vue'
+import Footer from './components/Footer/index.vue'
 </script>
-
 <style lang="scss" scoped>
 .layout-wrapper {
 }

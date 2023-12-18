@@ -10,6 +10,7 @@
       <van-image
         width="23"
         height="23"
+        fit="contain"
         class="item-img"
         :src="item.iocn"
       />
@@ -21,6 +22,7 @@
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue'
+import router from '@/router'
 import live from '@/assets/images/globalLayout/live.png'
 import game from '@/assets/images/globalLayout/game.png'
 import sports from '@/assets/images/globalLayout/sports.png'
@@ -32,7 +34,7 @@ const barFooterArr:any = ref([
   },
   {
     text: '体育',
-    value: 'sports',
+    value: 'home',
     iocn: sports
   },
   {
@@ -44,6 +46,7 @@ const barFooterArr:any = ref([
 const active:any = ref('sports')
 const clickChangeActive = (item: any) => {
   active.value = item.value
+  router.push(`/` + item.value)
 }
 </script>
 <style lang="scss" scoped>
