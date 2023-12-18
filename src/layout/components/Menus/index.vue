@@ -1,6 +1,12 @@
 <template>
   <div class="global-bar-footer">
-    <div v-for="(item, idx) in barFooterArr" :key="idx" :class="{'active': item.value === active}" class="item">
+    <div
+      v-for="(item, idx) in barFooterArr"
+      :key="idx"
+      :class="{'active': item.value === active}"
+      class="item"
+      @click="clickChangeActive(item)"
+    >
       <van-image
         width="23"
         height="23"
@@ -15,11 +21,9 @@
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue'
-
 import live from '@/assets/images/globalLayout/live.png'
 import game from '@/assets/images/globalLayout/game.png'
 import sports from '@/assets/images/globalLayout/sports.png'
-
 const barFooterArr:Array = ref([
   {
     text: '直播',
@@ -37,9 +41,10 @@ const barFooterArr:Array = ref([
     iocn: game
   }
 ])
-
 const active:String = ref('sports')
-
+const clickChangeActive = (item: any) => {
+  active.value = item.value
+}
 </script>
 <style lang="scss" scoped>
 .global-bar-footer {
