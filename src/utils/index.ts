@@ -91,3 +91,16 @@ export const createScript = (url: string, async:boolean = true) => {
   el.async = async
   document.getElementsByTagName('head')[0].appendChild(el)
 }
+
+export const imgUrlFormat = (url: string) => {
+  if (url) {
+    if (url.indexOf('http') > -1) {
+      return url
+    }
+    if (url.substring(0, 1) === '/') {
+      return window.AIConfig.static_url + url.substring(1, url.length)
+    }
+    return window.AIConfig.static_url + url
+  }
+  return ''
+}
