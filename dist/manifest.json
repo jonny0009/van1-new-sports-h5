@@ -1,0 +1,90 @@
+{
+  "index.html": {
+    "file": "assets/index.3acdfc50.js",
+    "src": "index.html",
+    "isEntry": true,
+    "imports": [
+      "_vue.cf49ad4f.js"
+    ],
+    "dynamicImports": [
+      "src/views/test1/index.vue",
+      "src/views/test2/index.vue",
+      "src/views/login/index.vue",
+      "src/views/error-page/401.vue",
+      "src/views/error-page/404.vue",
+      "src/views/error-page/503.vue",
+      "src/views/home/index.vue"
+    ],
+    "css": [
+      "assets/index.72feae09.css"
+    ]
+  },
+  "_vue.cf49ad4f.js": {
+    "file": "assets/vue.cf49ad4f.js"
+  },
+  "src/views/login/index.vue": {
+    "file": "assets/index.2a166252.js",
+    "src": "src/views/login/index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vue.cf49ad4f.js"
+    ]
+  },
+  "src/views/error-page/401.vue": {
+    "file": "assets/401.d788a0a2.js",
+    "src": "src/views/error-page/401.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vue.cf49ad4f.js"
+    ]
+  },
+  "src/views/error-page/404.vue": {
+    "file": "assets/404.26f97f0a.js",
+    "src": "src/views/error-page/404.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vue.cf49ad4f.js"
+    ]
+  },
+  "src/views/error-page/503.vue": {
+    "file": "assets/503.04db91d3.js",
+    "src": "src/views/error-page/503.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vue.cf49ad4f.js"
+    ]
+  },
+  "src/views/home/index.vue": {
+    "file": "assets/index.a09c7e89.js",
+    "src": "src/views/home/index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vue.cf49ad4f.js"
+    ],
+    "css": [
+      "assets/index.497bb81d.css"
+    ]
+  },
+  "src/views/test1/index.vue": {
+    "file": "assets/index.956f4c76.js",
+    "src": "src/views/test1/index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vue.cf49ad4f.js"
+    ],
+    "css": [
+      "assets/index.dc1444bc.css"
+    ]
+  },
+  "src/views/test2/index.vue": {
+    "file": "assets/index.ed19d1ff.js",
+    "src": "src/views/test2/index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vue.cf49ad4f.js"
+    ],
+    "css": [
+      "assets/index.0e9cf0cc.css"
+    ]
+  }
+}

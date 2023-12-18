@@ -1,6 +1,4 @@
 import { createApp } from 'vue'
-
-// global css
 import './styles/index.scss'
 import 'vant/lib/index.css'
 import 'virtual:svg-icons-register'
@@ -10,7 +8,12 @@ import store from './store'
 import directives from './directive'
 import plugins from '@/plugins'
 import vant from 'vant'
-
+import { createScript } from './utils'
+const lang = 'zh-cn'
+const playtypeScript = `${window.AIConfig.static_url}files/base/playtype/js/${lang}.js`
+const ratiotypeScript = `${window.AIConfig.static_url}app/lang/ratiotype-${lang}-min.js`
+createScript(playtypeScript, false)
+createScript(ratiotypeScript, false)
 const app = createApp(App)
 app.use(directives)
 app.use(router)
