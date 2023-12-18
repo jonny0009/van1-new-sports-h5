@@ -6,7 +6,7 @@ import request from '@/utils/request'
  */
 export const queryCMerLanguage = () => {
   return request({
-    url: '/merchantAccountServer/api/c/queryCMerLanguage',
+    url: '/ai/mobile/merchantAccountServer/api/c/queryCMerLanguage',
     method: 'get'
   })
 }
@@ -16,7 +16,7 @@ export const queryCMerLanguage = () => {
  */
 export const businessConfig = () => {
   return request({
-    url: '/common/businessConfig',
+    url: '/ai/mobile/common/businessConfig',
     method: 'get'
   })
 }
@@ -26,7 +26,7 @@ export const businessConfig = () => {
  */
 export const merchantConfig = () => {
   return request({
-    url: '/app/download/merchantConfigDetail',
+    url: '/ai/app/download/merchantConfigDetail',
     method: 'get'
   })
 }
@@ -36,7 +36,7 @@ export const merchantConfig = () => {
  */
 export const moduleConfig = () => {
   return request({
-    url: '/merchant/moduleConfig',
+    url: '/ai/merchant/moduleConfig',
     method: 'get'
   })
 }

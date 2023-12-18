@@ -14,7 +14,7 @@ export default () => {
       })
     ],
     resolve: {
-      extensions: ['.ts', '.js'],
+      extensions: ['.ts', '.js', '.vue'],
       alias: {
         '@': resolve(process.cwd(), '/src'),
         '#': resolve(process.cwd(), '/types')
@@ -31,13 +31,13 @@ export default () => {
       port: 3001,
       open: false,
       proxy: {
-        '/api': {
+        '/ai': {
           target,
           changeOrigin: true,
           xfwd: false,
           ws: true,
           pathRewrite: {
-            '^/api': '/ai/mobile'
+            '^/ai': '/ai'
           }
         },
         '/chat': {
