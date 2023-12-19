@@ -1,9 +1,7 @@
 <template>
   <div class="champion-page">
     <div class="title">
-      <van-image
-        width="42"
-        height="38"
+      <img
         fit="contain"
         class="item-img"
         :src="leagueIcon"
@@ -13,13 +11,12 @@
       </span></div>
     <ul class="game-type-wrap">
       <li v-for="(item, idx) in gameTypeTabList" :key="idx" @click="clickGameType(item)">
-        <van-image
-          v-img
+        <img
+          v-img="item.iocn"
           width="23"
           height="23"
           fit="contain"
           class="item-img"
-          :src="item.iocn"
         />
         {{ item.gameTypeName }}</li>
     </ul>
@@ -27,8 +24,8 @@
       <li :class="chooseLeagueId==='0'?'active':''" @click="clickLeague({leagueId:'0'})">全部</li>
       <li v-for="(item, idx) in leagueListAll" :key="idx" :class="chooseLeagueId===item.leagueId ? 'active':''" @click="clickLeague(item)">
         <div class="img-wrap">
-          <van-image
-            v-img="item.iocn"
+          <img
+            v-img="item.leagueIcon"
             width="23"
             height="23"
             fit="contain"
@@ -39,15 +36,16 @@
     </ul>
     <div class="league-list">
       <div v-for="(item, idx) in leagueList" :key="idx" class="up-league-item">
-        <van-image
+        <img
           v-img="item.leagueIcon"
           fit="contain"
           class="my-image icon"
         />
         <div class="content">
           <div class="top"><span class="sport">{{ item.gameType }}</span>
-            <i class="van-badge__wrapper icon-2up icon-2up-superior3 my-icon"></i>
-            <span class="region">International Clubs</span></div>
+            <!-- <i class="van-badge__wrapper icon-2up icon-2up-superior3 my-icon"></i>
+            <span class="region">International Clubs</span> -->
+          </div>
           <div class="name">{{ item.leagueName }}</div>
         </div>
       </div>
@@ -116,6 +114,10 @@ const getChampionLeagueInfo = async () => {
   .title{
     display: flex;
     align-items: center;
+    img{
+      width: 42px;
+      height: 38px;
+    }
     .st{
       margin-left: 13px;
       font-family: PingFangSC-Semibold;
@@ -165,11 +167,9 @@ const getChampionLeagueInfo = async () => {
       align-items: center;
       padding: 15px 18px;
       .my-image{
-        img{
-          width: 44px;
-          height: 44px;
-        }
-      }
+        width: 44px;
+        height: 44px;
+    }
       .content{
         margin-left: 22px;
         .top{
