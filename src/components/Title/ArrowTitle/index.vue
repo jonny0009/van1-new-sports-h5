@@ -14,7 +14,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, defineEmits, defineExpose } from 'vue'
 import arrow from '@/assets/images/components/title/arrow.png'
 const props = defineProps({
   src: {
@@ -30,10 +30,16 @@ const props = defineProps({
     }
   }
 })
+const emit = defineEmits(['returnSuccess'])
 const activeVal = ref(false)
 const clickChangActive = () => {
   activeVal.value = !activeVal.value
+  emit('returnSuccess', activeVal.value)
 }
+defineExpose({
+  activeVal
+})
+
 </script>
 <style lang="scss" scoped>
 .ArrowTitle{
@@ -46,8 +52,8 @@ const clickChangActive = () => {
     display: inline-block;
   }
   .img{
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     display: block;
   }
   .arrow{

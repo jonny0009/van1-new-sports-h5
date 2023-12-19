@@ -38,9 +38,6 @@ const homeBarArray = ref(
     }
   ]
 )
-const barclass = (item:any) => {
-  return `icon-bar-${item.value}`
-}
 const active = ref('Home')
 const clickChangeActive = (item:any) => {
   active.value = item.value
