@@ -72,6 +72,41 @@ div:focus {
   height: 42px;
 }
 
+// van
 .van-image__error, .van-image__loading{
   background: transparent !important;
 }
+
+// icon 2023/12/19
+@font-face {
+  font-family: "iconfont"; /* Project id  */
+  src: url('@/assets/icon/iconfont.ttf?t=1702953359576') format('truetype');
+}
+.iconfont{
+  font-family:iconfont!important;
+  font-size:32px;font-style:normal;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+.icon-a-americanfootball:before{content:"\e601"}
+.icon-boxing:before{content:"\e602"}
+.icon-hockey:before{content:"\e603"}
+.icon-cricket:before{content:"\e604"}
+.icon-football:before{content:"\e605"}
+.icon-baseball:before{content:"\e606"}
+.icon-handball:before{content:"\e607"}
+.icon-gaming:before{content:"\e608"}
+.icon-a-beachvolleyball:before{content:"\e609"}
+.icon-live-icon-1:before{content:"\e60a"}
+.icon-pingpong:before{content:"\e60b"}
+.icon-a-yumaoqiu-icon-1:before{content:"\e60c"}
+.icon-a-lanqiu-icon-1:before{content:"\e60d"}
+.icon-a-wangqiu-icon-1:before{content:"\e60e"}
+.icon-zuqiu-icon-1:before{content:"\e60f"}
+.icon-a-indoorsoccer:before{content:"\e610"}
+.icon-snooker:before{content:"\e611"}
+.icon-volleyball:before{content:"\e612"}
+.icon-a-waterpolo:before{content:"\e613"}
+.icon-a-dashibei-icon-22x:before{content:"\e614"}
+.icon-a-shouyeicon2x:before{content:"\e615"}
+.icon-a-tiyu-icon-12x:before{content:"\e616"}

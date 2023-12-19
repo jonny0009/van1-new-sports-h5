@@ -1,9 +1,27 @@
 <template>
   <div class="home-page">
 
-    <SportsButton :button-text="'暗示'" :active="true" :img-src="''" />
+    <!-- <SportsButton :button-text="'暗示'" :active="true" :img-src="''" /> -->
     <br />
-    <SportsButton :no-img-toggle="true" :button-text="'暗示'" :img-src="''" />
+    <TextButton text="暗示" :active="true" />
+    <TextButton text="暗示" />
+    <br />
+    <ImageButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" :active="true" />
+    <ImageButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" count="22" />
+    <br />
+
+    <SportsButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" :active="true" />
+    <SportsButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
+    <br />
+
+    <br />
+    <br />
+    <br />
+
+    <i class="iconfont icon-a-americanfootball"></i>
+    <br />
+    <br />
+    <br />
     <br />
 
     <van-button type="primary">主要按钮</van-button>
@@ -11,7 +29,6 @@
     <van-button type="default">默认按钮</van-button>
     <van-button type="warning">警告按钮</van-button>
     <van-button type="danger">危险按钮</van-button>
-
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
       <van-swipe-item>1</van-swipe-item>
       <van-swipe-item>2</van-swipe-item>
@@ -22,9 +39,10 @@
 </template>
 
 <script lang="ts" setup>
-import SportsButton from '@/components/SportsButton/index.vue'
+import TextButton from '@/components/Button/TextButton/index.vue'
+import ImageButton from '@/components/Button/ImageButton/index.vue'
+import SportsButton from '@/components/Button/SportsButton/index.vue'
 </script>
-
 <style lang="scss" scoped>
 .home-page{
   padding: 20px;

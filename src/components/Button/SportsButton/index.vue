@@ -3,25 +3,16 @@
     class="SportsButton"
     :class="[
       {
-        'active':active
+        'active':activeVal
       },
-      {
-        'noImg': noImg
-      }
     ]"
   >
-    <img
-      v-if="!noImg"
-      v-img="src"
-      class="img"
-      src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
-      style="object-fit: contain;"
-    />
-    {{ text }}
+    <span class="iconfont">&#x33;</span>
+    {{ textVal }}
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, reactive, defineProps } from 'vue'
+import { ref, defineProps } from 'vue'
 const props = defineProps({
   imgSrc: {
     type: String,
@@ -49,17 +40,11 @@ const props = defineProps({
   }
 })
 
-const active = ref(false)
-active.value = props.active
+const activeVal = ref(false)
+activeVal.value = props.active
 
-const noImg = ref(false)
-noImg.value = props.noImgToggle
-
-const src = ref('')
-src.value = props.imgSrc
-
-const text = ref('')
-text.value = props.buttonText
+const textVal = ref('')
+textVal.value = props.buttonText
 
 </script>
 <style lang="scss" scoped>
