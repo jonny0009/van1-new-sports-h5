@@ -7,9 +7,9 @@
       <div class="play">
         <div class="flex-1"></div>
         <span class="btn">让分</span>
-        <span class="btn">大小</span>
-        <span class="btn">独赢</span>
-        <span class="btn">比分</span>
+        <span class="btn active">大小</span>
+        <span class="btn active">独赢</span>
+        <span class="btn active">比分</span>
       </div>
     </div>
     <div class="home-match">
@@ -75,14 +75,18 @@ import SportsIcon from '@/components/Button/SportsIcon/index.vue'
       display: flex;
       align-items: center;
       .btn{
-        background: #7642FD;
         border-radius: 8px;
         font-size: 24px;
-        color: #FFFFFF;
+        background: #eff2f2;
+        color: #1f2630;
         width:110px;
         height:40px;
         text-align: center;
         margin-right:8px;
+        &.active{
+          background: #7642FD;
+          color: #FFFFFF;
+        }
         &:last-child{
           margin-right:0;
         }
