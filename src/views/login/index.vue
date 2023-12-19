@@ -80,6 +80,8 @@ function showPk(val?: any) {
 }
 
 function setPk(val: any) {
+  pankou.value = val === 1 ? '欧洲盘[DEC]' : '香港盘'
+  showBottom.value = false
   console.log(val)
 }
 

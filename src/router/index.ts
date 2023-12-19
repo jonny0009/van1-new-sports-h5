@@ -30,6 +30,11 @@ export const constantRoutes: Array<any> = [
     hidden: true
   },
   {
+    path: '/search',
+    component: () => import('@/views/search/index.vue'),
+    hidden: true
+  },
+  {
     path: '/401',
     name: '401',
     component: () => import('@/views/error-page/401.vue'),

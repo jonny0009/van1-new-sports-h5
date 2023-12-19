@@ -44,6 +44,7 @@
         height="20"
         fit="contain"
         :src="searchImg"
+        @click="toSearch"
       />
     </div>
   </div>
@@ -53,6 +54,11 @@ import searchImg from '@/assets/images/globalLayout/header/search.png'
 import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
 import USDTImg from '@/assets/images/globalLayout/header/USDT.png'
 import transactionImg from '@/assets/images/globalLayout/header/transaction.png'
+import { useRouter } from 'vue-router'
+const $router = useRouter()
+const toSearch = () => {
+  $router.push({ path: '/search' })
+}
 </script>
 <style lang="scss" scoped>
 .global-bar-header{
