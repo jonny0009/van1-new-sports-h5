@@ -40,7 +40,7 @@ class LocalStore {
     }
   }
   // store slice arr
-  slice(key: string, index: number, obj: any) {
+  slice(key: string, index: number, obj?: any) {
     const store: any = this.getItem(key)
     if (!obj) {
       store.splice(index, 1)
