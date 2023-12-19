@@ -1,14 +1,82 @@
 <template>
   <div class="sport-champion-list">
-    sport-champion-list
+    <div class="champion-title">
+      <img
+        v-img="championIcon"
+        class="item-img"
+      />
+      <span class="st">
+        冠军竞猜 <van-icon name="play" />
+      </span>
+    </div>
+    <div class="champion-group-body">
+      <div v-for="(item, idx) in championList" :key="idx" class="league-champion-item">
+        <div class="league-champion-item__header">
+          <img v-img="championIcon" class="icon">
+          <div class="title">{{ item.champion.championType }}</div>
+        </div>
+        <Championitem :game-detail="item" />
+
+      </div>
+    </div>
   </div></template>
 
 <script lang="ts" setup>
+import championIcon from '@/assets/images/champion/league-icon.png'
+import Championitem from './champion-item.vue'
+const props = defineProps({
+  championList: {
+    type: Array,
+    default: function () {
+      return []
+    }
+  }
 
+})
 </script>
 
 <style lang="scss">
 .sport-champion-list{
+  .champion-title{
+    height: 100px;
+    display: flex;
+    align-items: center;
+    img{
+      width: 42px;
+      height: 38px;
+    }
+    .st{
+      margin-left: 13px;
+      font-family: PingFangSC-Semibold;
+      font-size: 32px;
+      color: #1F2630;
+      letter-spacing: 0;
+      font-weight: 600;
+    }
+  }
+  .champion-group-body{
+    .league-champion-item{
+      padding: 20px;
+      border-radius: 32px;
+      background: #96a5aa26;
+      margin-bottom: 20px;
+      .league-champion-item__header{
+        display: flex;
+        align-items: center;
+        height: 30px;
+        img{
+          width: 30px;
+          height: 30px;
+        }
+        .title{
+          font-weight: 800;
+          font-size: 24px;
+          margin-left: 10px;
+        }
+      }
 
+    }
+
+  }
 }
 </style>

@@ -14,3 +14,11 @@ export const apiChampionLeagueInfo = (params:any) => {
     params
   })
 }
+
+export const apiChampionpPlayTypes = (params:any) => {
+  return request({
+    url: '/ai/mobile/game/champion/playTypes/v2',
+    method: 'get',
+    params
+  })
+}
