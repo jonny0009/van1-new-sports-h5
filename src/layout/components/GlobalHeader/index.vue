@@ -57,14 +57,17 @@ import transactionImg from '@/assets/images/globalLayout/header/transaction.png'
       justify-content: center;
       align-items: center;
       img{
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
         display: block;
       }
     }
     .cur{
       left: 6px;
-
+      img{
+        width: 40px;
+        height: 40px;
+      }
     }
     .transaction{
       background: #7642fe;
