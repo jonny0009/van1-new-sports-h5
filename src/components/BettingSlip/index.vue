@@ -45,7 +45,7 @@
           }"
         ></div>
       </div>
-      <div style="height: 1000px;"></div>
+      <div class="bet-content"></div>
 
     </div>
 
@@ -224,6 +224,14 @@ const toogle = () => {
       transition: all .3s;
       border-radius: 3px;
     }
+  }
+
+  .bet-content{
+    flex: 1;
+    padding: 10px 38px;
+    overflow: auto;
+    transition: height .3s;
+    overscroll-behavior: contain;
   }
 }
 </style>
