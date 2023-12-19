@@ -8,5 +8,6 @@ export default {
   }
 }
 function _handleParams(el: any, { value }: any) {
-  el.innerText = date(value)
+  const format = el.getAttribute('format') || ''
+  el.innerText = date(value, format)
 }
