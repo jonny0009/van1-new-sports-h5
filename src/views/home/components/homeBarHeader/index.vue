@@ -7,6 +7,7 @@
       :class="{
         'active':item.value === active
       }"
+      @click="clickChangeActive(item)"
     >
       <SportsIcon :icon-src="item.value" />
     </div>
@@ -41,6 +42,9 @@ const barclass = (item:any) => {
   return `icon-bar-${item.value}`
 }
 const active = ref('Home')
+const clickChangeActive = (item:any) => {
+  active.value = item.value
+}
 </script>
 <style lang="scss" scoped>
 .home-bar{
