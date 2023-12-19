@@ -7,13 +7,14 @@
       class="item"
       @click="clickChangeActive(item)"
     >
-      <van-image
-        width="23"
-        height="23"
-        fit="contain"
-        class="item-img"
-        :src="item.iocn"
-      />
+      <template v-if="item.value === 'game'">
+        <img v-if="active === 'game'" class="img" :src="game" style="object-fit: contain;" />
+        <img v-else :src="gameDefault" class="img" style="object-fit: contain;" />
+      </template>
+      <template v-else>
+        <i v-if="item.value === 'live'" class="iconfont icon-live"></i>
+        <i v-else class="iconfont icon-sports"></i>
+      </template>
       <span>
         {{ item.text }}
       </span>
@@ -94,6 +95,19 @@ const clickChangeActive = (item: any) => {
     align-items: center;
     color: #96A5AA;
     font-weight: 600;
+    .img{
+      height: 48px;
+      width: 48px;
+    }
+    .iconfont{
+      font-size: 44px;
+      height: 48px;
+      width: 48px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      font-weight: 100;
+    }
     span{
       line-height: 24px;
       font-size: 24px;
