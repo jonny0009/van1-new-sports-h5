@@ -53,7 +53,7 @@ export const constantRoutes: Array<any> = [
     hidden: true
   },
   {
-    path: '/',
+    path: '/home',
     component: () => import('@/layout/index.vue'),
     redirect: '/home',
     children: [
@@ -61,6 +61,38 @@ export const constantRoutes: Array<any> = [
         path: '/home',
         component: () => import('@/views/home/index.vue'),
         name: 'Home'
+      }
+    ]
+  },
+  {
+    path: '/user',
+    component: () => import('@/views/user/index.vue'),
+    // redirect: '/user',
+    hidden: true,
+    children: [
+      {
+        path: '/user/notice',
+        component: () => import('@/views/user/notice.vue'),
+        name: 'Notice',
+        hidden: true
+      },
+      {
+        path: '/user/noticeDetail',
+        component: () => import('@/views/user/noticeDetail.vue'),
+        name: 'NoticeDetail',
+        hidden: true
+      },
+      {
+        path: '/user/edit',
+        component: () => import('@/views/user/edit.vue'),
+        name: 'Edit',
+        hidden: true
+      },
+      {
+        path: '/user/result',
+        component: () => import('@/views/user/result.vue'),
+        name: 'Result',
+        hidden: true
       }
     ]
   },
