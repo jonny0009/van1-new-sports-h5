@@ -29,47 +29,46 @@ export default () => {
         }
       }
     },
-    // 先停用====写页面
-    // server: {
-    //   port: 3001,
-    //   open: false,
-    //   proxy: {
-    //     '/ai': {
-    //       target,
-    //       changeOrigin: true,
-    //       xfwd: false,
-    //       ws: true,
-    //       pathRewrite: {
-    //         '^/ai': '/ai'
-    //       }
-    //     },
-    //     '/chat': {
-    //       target,
-    //       changeOrigin: true,
-    //       xfwd: false,
-    //       ws: true,
-    //       pathRewrite: {
-    //         '^/chat': '/chat'
-    //       }
-    //     },
-    //     '/ws': {
-    //       target,
-    //       changeOrigin: true,
-    //       xfwd: false,
-    //       ws: true,
-    //       pathRewrite: {
-    //         '^/ws': ''
-    //       },
-    //       headers: {
-    //         Referer: target
-    //       }
-    //     }
-    //   },
-    //   fs: {
-    //     strict: false,
-    //     allow: []
-    //   }
-    // },
+    server: {
+      port: 3001,
+      open: false,
+      proxy: {
+        '/ai': {
+          target,
+          changeOrigin: true,
+          xfwd: false,
+          ws: true,
+          pathRewrite: {
+            '^/ai': '/ai'
+          }
+        },
+        '/chat': {
+          target,
+          changeOrigin: true,
+          xfwd: false,
+          ws: true,
+          pathRewrite: {
+            '^/chat': '/chat'
+          }
+        },
+        '/ws': {
+          target,
+          changeOrigin: true,
+          xfwd: false,
+          ws: true,
+          pathRewrite: {
+            '^/ws': ''
+          },
+          headers: {
+            Referer: target
+          }
+        }
+      },
+      fs: {
+        strict: false,
+        allow: []
+      }
+    },
     build: {
       // sourcemap: true,
       manifest: true,
