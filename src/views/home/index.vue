@@ -74,7 +74,7 @@ const returnStatus = (val:any) => {
   overflow: auto;
   .refresh-wrap{
     min-height: calc(100vh - 96px);
-    padding-bottom: 95px;
+    padding-bottom: 190px;
   }
 }
 </style>
