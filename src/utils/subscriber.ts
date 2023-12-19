@@ -12,7 +12,7 @@ export default class Subscriber {
     const r = this.all.get(e)
 
     if (r) {
-      r.slice().map((t:any) => {
+      r.slice().map((t: any) => {
         t?.(n)
       })
     }
