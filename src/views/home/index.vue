@@ -2,7 +2,7 @@
   <div class="home-page">
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <homeBarHeader />
-      <homeTabs />
+      <homeTabs class="mt10" />
       <p>刷新次数:</p>
     </van-pull-refresh>
   </div>
