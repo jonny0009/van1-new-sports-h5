@@ -46,13 +46,14 @@
         ></div>
       </div>
       <div class="bet-content"></div>
-
+      <img v-img="logo" alt="">
     </div>
 
   </div>
 </template>
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
+import logo from '@/assets/images/logo.png?url'
 const open = ref(false)
 const checked = ref(false)
 const type = ref(1)

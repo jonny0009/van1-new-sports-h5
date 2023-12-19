@@ -11,7 +11,7 @@ function _handleParams(el: any, { value }: any) {
   if (!value) {
     return false
   }
-  if (value.startsWith('http')) {
+  if (value.startsWith('/src/assets/images/') || value.startsWith('http')) {
     el.src = value
   } else {
     el.src = `${ImageSource}${value}`
