@@ -45,14 +45,15 @@
           }"
         ></div>
       </div>
-      <div style="height: 1000px;"></div>
-
+      <div class="bet-content"></div>
+      <img v-img="logo" alt="">
     </div>
 
   </div>
 </template>
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
+import logo from '@/assets/images/logo.png?url'
 const open = ref(false)
 const checked = ref(false)
 const type = ref(1)
@@ -224,6 +225,14 @@ const toogle = () => {
       transition: all .3s;
       border-radius: 3px;
     }
+  }
+
+  .bet-content{
+    flex: 1;
+    padding: 10px 38px;
+    overflow: auto;
+    transition: height .3s;
+    overscroll-behavior: contain;
   }
 }
 </style>

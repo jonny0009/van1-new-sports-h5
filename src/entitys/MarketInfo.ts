@@ -4,7 +4,7 @@ interface MarketInfoInterface {
   leagueId: any
   leagueName: any
   gidm: any
-  hgid: any
+  hgid?: any
   gameId: any
   gameType: any
   playType: any
@@ -12,20 +12,20 @@ interface MarketInfoInterface {
   ratioIpo: any
   session: any
   suffix: any
-  sgidm: any
+  sgidm?: any
   ior: any
-  id: any
+  id?: any
   oddfType: any
   sw: any
-  optionId: any
-  pgidm: any
+  optionId?: any
+  pgidm?: any
   showType: any
-  sourceCompany: any
-  homeTeamSuffix: any
+  sourceCompany?: any
+  homeTeamSuffix?: any
   systemId: any
   ratio: any
-  ratio1: any
-  championType: any
+  ratio1?: any
+  championType?: any
 }
 /** */
 export default class MarketInfo {
