@@ -25,6 +25,8 @@
           <SportsButton text="OP_BM" />
         </div>
 
+        <homeMatchHandicap class="mt20" />
+
         <ArrowTitle class="ml20 mt10 mb10" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
         <div class="Recommend-Match-Tabs">
           <SportsButton text="FT" :active="true" />
@@ -33,9 +35,9 @@
           <SportsButton text="OP_BM" />
         </div>
 
-        <p class="tc">刷新次数:</p>
+        <homeMatchHandicap class="mt20" />
 
-        <div class="Button-MatchMore">
+        <div class="Button-MatchMore mt20">
           <span>
             查看更多比赛
           </span>
@@ -46,12 +48,15 @@
 </template>
 
 <script lang="ts" setup>
-import xxx1 from '@/assets/images/home/other/x1.png'
+// home components
 import homeBarHeader from './components/homeBarHeader/index.vue'
 import homeTabs from './components/homeTabs/index.vue'
+import homeMatchHandicap from './components/homeMatchHandicap/index.vue'
+// common components
 import ArrowTitle from '@/components/Title/ArrowTitle/index.vue'
 import SportsButton from '@/components/Button/SportsButton/index.vue'
-
+// img
+import xxx1 from '@/assets/images/home/other/x1.png'
 import titleHot from '@/assets/images/home/title-hot.png'
 import titleRecommend from '@/assets/images/home/title-recommend.png'
 import titleTime from '@/assets/images/home/title-time.png'
@@ -69,6 +74,7 @@ const returnStatus = (val:any) => {
   overflow: auto;
   .refresh-wrap{
     min-height: calc(100vh - 96px);
+    padding-bottom: 95px;
   }
 }
 </style>
