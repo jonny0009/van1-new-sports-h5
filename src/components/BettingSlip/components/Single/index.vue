@@ -24,12 +24,10 @@
   </div>
 </template>
 <script lang="ts" setup>
+
 const props = defineProps({
   market: {
-    type: String,
-    default: function () {
-      return ''
-    }
+    default: () => {}
   }
 })
 console.log(props)
