@@ -26,7 +26,6 @@
         </van-switch>
       </div>
       <div v-else class="bet-all-ior">@0.00</div>
-
     </div>
     <div class="betting-slip-container" :class="{ open }">
       <div class="bet-tab">
@@ -46,8 +45,10 @@
           }"
         ></div>
       </div>
+      <Nothing v-if="markets.length"></Nothing>
       <div class="bet-content">
-        <Nothing></Nothing>
+        <Singles></Singles>
+        <Singles v-for="(market, index) in markets" :key="index" :market="market"></Singles>
       </div>
     </div>
 
@@ -57,6 +58,8 @@
 import { ref, computed } from 'vue'
 import BallEffect from './components/BallEffect/index.vue'
 import Nothing from './components/Nothing/index.vue'
+import Singles from './components/Single/index.vue'
+import store from '@/store'
 const open = ref(false)
 const checked = ref(false)
 const type = ref(1)
@@ -77,6 +80,7 @@ const tabs = ref([
 const tableLeft = computed(() => {
   return `calc(100% / 3 * ${type.value - 1} + (100% / 3 - 27vw) / 2 )`
 })
+const markets = computed(() => store.state.betting.markets)
 
 const toogle = () => {
   open.value = !open.value
@@ -254,7 +258,7 @@ const toogle = () => {
 
   .bet-content {
     flex: 1;
-    padding: 10px 38px;
+    padding: 20px 38px;
     overflow: auto;
     transition: height .3s;
     overscroll-behavior: contain;
