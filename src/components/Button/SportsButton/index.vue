@@ -15,7 +15,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, defineProps } from 'vue'
+import { ref, defineProps, watch } from 'vue'
 const props = defineProps({
   active: {
     type: Boolean,
@@ -80,8 +80,17 @@ const SportsObject:any = ref({
 })
 const activeVal = ref(false)
 activeVal.value = props.active
+watch(props, (val) => {
+  if (val) {
+    const { active, text } = val
+    activeVal.value = active
+    SportsName.value = `icon-${text}`
+  }
+})
+
 const textVal = ref('')
 textVal.value = SportsObject.value[props.text]
+
 const SportsName = ref('icon-FT')
 SportsName.value = `icon-${props.text}`
 </script>

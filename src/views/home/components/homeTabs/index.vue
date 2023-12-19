@@ -31,7 +31,7 @@ const homeBarArray = ref(
     {
       value: 'Home',
       text: '重点推荐',
-      icon: defaultImportant
+      icon: important
     },
     {
       value: 'live',

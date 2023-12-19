@@ -11,7 +11,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, defineProps, watch } from 'vue'
 const props = defineProps({
   active: {
     type: Boolean,
@@ -29,6 +29,12 @@ const props = defineProps({
 
 const activeVal = ref(false)
 activeVal.value = props.active
+watch(props, (val) => {
+  if (val) {
+    const { active } = val
+    activeVal.value = active
+  }
+})
 
 const textval = ref('')
 textval.value = props.text

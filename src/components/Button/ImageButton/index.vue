@@ -50,7 +50,11 @@ const props = defineProps({
 const activeVal:any = ref(false)
 activeVal.value = props.active
 watch(props, (val) => {
-  console.log(val)
+  if (val) {
+    const { active, src } = val
+    activeVal.value = active
+    srcVal.value = src
+  }
 })
 
 const srcVal:any = ref('')
