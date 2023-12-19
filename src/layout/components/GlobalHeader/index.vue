@@ -1,23 +1,19 @@
 <template>
   <div class="global-bar-header">
     <div class="avatar">
-      <van-image width="42" height="42" radius="100%" fit="contain" :src="'22'" @click="showInfo">
-        <template #error>
-          <van-image width="42" height="42" fit="contain" :src="avatarImg" />
-        </template>
-      </van-image>
+      <img :src="avatarImg" style="object-fit: contain;" />
     </div>
     <div class="wallet">
       <div class="cur">
-        <van-image width="24" height="24" radius="100%" fit="contain" :src="USDTImg" />
+        <img :src="USDTImg" style="object-fit: contain;" />
       </div>
       0.00
       <div class="transaction">
-        <van-image width="14" height="14" fit="contain" :src="transactionImg" />
+        <img :src="transactionImg" />
       </div>
     </div>
     <div class="right-area">
-      <van-image width="20" height="20" fit="contain" :src="searchImg" @click="toSearch" />
+      <img class="search" :src="searchImg" style="object-fit: contain;" />
     </div>
     <van-popup v-model:show="showLeft" :duration="0.2" position="left" :style="{ width: '71.5%', height: '100%' }">
       <div class="userInfo">
@@ -124,10 +120,22 @@ const showInfo = () => {
       height: 48px;
       border-radius: 100%;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img{
+        width: 24px;
+        height: 24px;
+        display: block;
+      }
     }
 
     .cur {
       left: 6px;
+      img{
+        width: 40px;
+        height: 40px;
+      }
     }
 
     .transaction {
@@ -141,6 +149,11 @@ const showInfo = () => {
     left: 30px;
     top: 6px;
     bottom: 6px;
+    img{
+      display: block;
+      width: 84px;
+      height: 84px;
+    }
   }
 
   .right-area {
@@ -150,6 +163,11 @@ const showInfo = () => {
     right: 30px;
     display: flex;
     align-items: center;
+    .search{
+      width: 40px;
+      height: 40px;
+      display: block;
+    }
   }
 }
 

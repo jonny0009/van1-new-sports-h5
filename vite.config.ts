@@ -2,6 +2,8 @@ import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 const target = 'http://dev.m.xc.com/'
+// const target = 'https://m.juxiangbaojie.com/'
+
 export default () => {
   return {
     plugins: [

@@ -1,40 +1,22 @@
 <template>
   <div class="home-page">
-    <van-button type="primary" @click="goLogin">登录</van-button>
-    <!-- <van-button type="success">成功按钮</van-button>
-    <van-button type="default">默认按钮</van-button>
-    <van-button type="warning">警告按钮</van-button>
-    <van-button type="danger">危险按钮</van-button> -->
-
-    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-      <van-swipe-item>1</van-swipe-item>
-      <van-swipe-item>2</van-swipe-item>
-      <van-swipe-item>3</van-swipe-item>
-      <van-swipe-item>4</van-swipe-item>
-    </van-swipe>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <homeBarHeader />
+      <homeTabs />
+      <p>刷新次数:</p>
+    </van-pull-refresh>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from 'vue-router'
-const $router = useRouter()
-const goLogin = () => {
-  // 3. 使用useRouter
-  $router.push({ path: '/login' })
+import homeBarHeader from './components/homeBarHeader/index.vue'
+import homeTabs from './components/homeTabs/index.vue'
+import { ref } from 'vue'
+const isLoading = ref(false)
+const onRefresh = () => {
+  isLoading.value = false
 }
-
 </script>
-
 <style lang="scss" scoped>
-.home-page{
-  height: 100%;
-  padding: 20px;
-}
-.my-swipe .van-swipe-item {
-    color: #fff;
-    font-size: 20px;
-    line-height: 150px;
-    text-align: center;
-    background-color: #39a9ed;
-  }
+
 </style>

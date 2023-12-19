@@ -1,79 +1,53 @@
 @import './common.scss';
-
-*,
-*::before,
-*::after {
-  padding: 0;
-  margin: 0;
-  box-sizing: inherit;
-}
-
-html {
-  height: 100%;
-  box-sizing: border-box;
-}
-
-body {
-  height: 100%;
-  font-family: Helvetica Neue , Helvetica , PingFang SC , Hiragino Sans GB , Microsoft YaHei , Arial , sans-serif;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
 #app {
   height: 100%;
 }
-:root{
-  // --van-nav-bar-height:150px
-}
-label {
-  font-weight: 700;
-}
-
-a:focus,
-a:active {
-  outline: none;
-}
-
-a,
-a:focus,
-a:hover {
-  color: inherit;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-div:focus {
-  outline: none;
-}
-
-.text-right{
-  text-align: right;
-}
-
-.float-right{
-  float: right;
-}
-
-.beautify-scroll{
-  &::-webkit-scrollbar {
-    width: 4px;
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
-  }
-
-}
-
-.vip-img {
-  width: 90px;
-  height: 42px;
-}
-
+// van
 .van-image__error, .van-image__loading{
   background: transparent !important;
 }
+// icon 2023/12/19
+@font-face {
+  font-family: "iconfont"; /* Project id  */
+  src: url('@/assets/icon/iconfont.ttf?t=1702953359576') format('truetype');
+}
+.iconfont{font-family:iconfont!important;font-size:32px;font-style:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.icon-bar-Home:before,
+.icon-Home:before{content:"\e615"}
+.icon-bar-FT:before,
+.icon-FT:before{content:"\e60f"}
+.icon-bar-TN:before,
+.icon-TN:before{content:"\e60e"}
+.icon-bar-OP_BM:before,
+.icon-OP_BM:before{content:"\e60c"}
+.icon-bar-BK:before,
+.icon-BK:before{content:"\e60d"}
+.icon-sports:before{content:"\e616"}
+.icon-live:before{content:"\e614"}
+.icon-bar-live:before,{content:"\e60a"}
+//
+//
+// 默认=>icon=>对照表
+.icon-a-americanfootball:before{content:"\e601"}
+.icon-boxing:before{content:"\e602"}
+.icon-hockey:before{content:"\e603"}
+.icon-cricket:before{content:"\e604"}
+.icon-football:before{content:"\e605"}
+.icon-baseball:before{content:"\e606"}
+.icon-handball:before{content:"\e607"}
+.icon-gaming:before{content:"\e608"}
+.icon-a-beachvolleyball:before{content:"\e609"}
+.icon-live-icon-1:before{content:"\e60a"}
+.icon-pingpong:before{content:"\e60b"}
+.icon-a-yumaoqiu-icon-1:before{content:"\e60c"}
+.icon-a-lanqiu-icon-1:before{content:"\e60d"}
+.icon-a-wangqiu-icon-1:before{content:"\e60e"}
+.icon-zuqiu-icon-1:before{content:"\e60f"}
+.icon-a-indoorsoccer:before{content:"\e610"}
+.icon-snooker:before{content:"\e611"}
+.icon-volleyball:before{content:"\e612"}
+.icon-a-waterpolo:before{content:"\e613"}
+.icon-a-dashibei-icon-22x:before{content:"\e614"}
+.icon-a-shouyeicon2x:before{content:"\e615"}
+.icon-a-tiyu-icon-12x:before{content:"\e616"}
+

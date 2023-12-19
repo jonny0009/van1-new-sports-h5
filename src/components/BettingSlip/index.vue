@@ -1,11 +1,12 @@
 <template>
   <div class="betting-slip-bg" :class="{ open }" @click="toogle"></div>
+  <BallEffect></BallEffect>
   <div class="betting-slip-popup" :class="{ open }">
     <div class="betting-slip-header" @click="toogle">
       <div class="bet-header-left">
-        <span class="bet-icon"><van-icon name="orders-o" /></span>
+        <span class="bet-icon"></span>
         <span class="bet-title">投注单</span>
-        <span class="bet-arrow"><van-icon :name="open ? 'arrow-up' : 'arrow-down'" /></span>
+        <span class="bet-arrow" :class="{ open }"></span>
       </div>
       <div v-if="open" class="bet-switch-wrap">
         <span class="label">接受陪率变化</span>
@@ -25,7 +26,6 @@
         </van-switch>
       </div>
       <div v-else class="bet-all-ior">@0.00</div>
-
     </div>
     <div class="betting-slip-container" :class="{ open }">
       <div class="bet-tab">
@@ -45,14 +45,21 @@
           }"
         ></div>
       </div>
-      <div style="height: 1000px;"></div>
-
+      <Nothing v-if="markets.length"></Nothing>
+      <div class="bet-content">
+        <Singles></Singles>
+        <Singles v-for="(market, index) in markets" :key="index" :market="market"></Singles>
+      </div>
     </div>
 
   </div>
 </template>
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
+import BallEffect from './components/BallEffect/index.vue'
+import Nothing from './components/Nothing/index.vue'
+import Singles from './components/Single/index.vue'
+import store from '@/store'
 const open = ref(false)
 const checked = ref(false)
 const type = ref(1)
@@ -73,6 +80,7 @@ const tabs = ref([
 const tableLeft = computed(() => {
   return `calc(100% / 3 * ${type.value - 1} + (100% / 3 - 27vw) / 2 )`
 })
+const markets = computed(() => store.state.betting.markets)
 
 const toogle = () => {
   open.value = !open.value
@@ -112,6 +120,7 @@ const toogle = () => {
   flex-direction: column;
   transform: translateY(100%) translateY(-185px);
   transition: transform .3s;
+  border-radius: 10px 10px 0px 0px;
 
   &.open {
     transform: translateY(-88px);
@@ -129,9 +138,20 @@ const toogle = () => {
   background-image: linear-gradient(270deg, #9C10FE 0%, #7541FD 100%);
   border-radius: 10px 10px 0px 0px;
 
+  .bet-header-left {
+    display: flex;
+    align-items: center;
+  }
+
   .bet-icon {
+    display: inline-block;
     width: 30px;
+    height: 32px;
     color: #FFFFFF;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('@/assets/images/betting/note.png');
   }
 
   .bet-title {
@@ -146,8 +166,18 @@ const toogle = () => {
   }
 
   .bet-arrow {
+    display: inline-block;
     width: 25px;
+    height: 14.2px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('@/assets/images/betting/arrow-up.png');
     color: #FFFFFF;
+
+    &.open {
+      transform: rotate(-180deg);
+    }
   }
 
   .bet-all-ior {
@@ -224,6 +254,14 @@ const toogle = () => {
       transition: all .3s;
       border-radius: 3px;
     }
+  }
+
+  .bet-content {
+    flex: 1;
+    padding: 20px 38px;
+    overflow: auto;
+    transition: height .3s;
+    overscroll-behavior: contain;
   }
 }
 </style>
