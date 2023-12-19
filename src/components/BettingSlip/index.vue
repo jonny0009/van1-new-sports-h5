@@ -46,7 +46,7 @@
         ></div>
       </div>
       <div class="bet-content"></div>
-      <img v-img="logo" alt="">
+      <img v-img="logo" type="2" alt="">
     </div>
 
   </div>
