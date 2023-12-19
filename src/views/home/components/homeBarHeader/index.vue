@@ -8,11 +8,12 @@
         'active':item.value === active
       }"
     >
-      <i class="iconfont" :class="barclass(item)"></i>
+      <SportsIcon :icon-src="item.value" />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 import { ref } from 'vue'
 const homeBarArray = ref(
   [

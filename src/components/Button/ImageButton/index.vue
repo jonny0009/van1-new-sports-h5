@@ -19,7 +19,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, defineProps } from 'vue'
+import { ref, defineProps, watch } from 'vue'
 const props = defineProps({
   text: {
     type: String,
@@ -49,6 +49,9 @@ const props = defineProps({
 
 const activeVal:any = ref(false)
 activeVal.value = props.active
+watch(props, (val) => {
+  console.log(val)
+})
 
 const srcVal:any = ref('')
 srcVal.value = props.src
@@ -58,6 +61,7 @@ textVal.value = props.text
 
 const countVal:any = ref('')
 countVal.value = props.count
+
 </script>
 <style lang="scss" scoped>
 .ImageButton{
