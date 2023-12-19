@@ -1,8 +1,5 @@
 import { createStore } from 'vuex'
-import { State } from '#/store'
 
-// Vite supports importing multiple modules from the file system using the special import.meta.glob function
-// see https://cn.vitejs.dev/guide/features.html#glob-import
 const modulesFiles = import.meta.globEager('./modules/*.ts')
 const pathList: string[] = []
 
@@ -17,7 +14,7 @@ const modules = pathList.reduce((modules: any, modulePath: string) => {
   return modules
 }, {})
 
-const store = createStore<State>({
+const store = createStore<any>({
   modules
 })
 
