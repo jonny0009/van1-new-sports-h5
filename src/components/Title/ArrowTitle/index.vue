@@ -14,7 +14,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, defineEmits, defineExpose } from 'vue'
+import { ref } from 'vue'
 import arrow from '@/assets/images/components/title/arrow.png'
 const props = defineProps({
   src: {
