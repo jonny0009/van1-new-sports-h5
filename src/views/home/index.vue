@@ -1,11 +1,19 @@
 <template>
   <div class="home-page">
-    <homeBarHeader />
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <homeBarHeader />
+      <p>刷新次数:</p>
+    </van-pull-refresh>
   </div>
 </template>
 
 <script lang="ts" setup>
 import homeBarHeader from './components/homeBarHeader.vue'
+import { ref } from 'vue'
+const isLoading = ref(false)
+const onRefresh = () => {
+  isLoading.value = false
+}
 </script>
 <style lang="scss" scoped>
 .my-swipe .van-swipe-item {

@@ -88,14 +88,19 @@ div:focus {
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
 }
+.icon-bar-Home:before,
 .icon-Home:before{content:"\e615"}
+.icon-bar-FT:before,
 .icon-FT:before{content:"\e60f"}
+.icon-bar-TN:before,
 .icon-TN:before{content:"\e60e"}
+.icon-bar-OP_BM:before,
 .icon-OP_BM:before{content:"\e60c"}
+.icon-bar-BK:before,
 .icon-BK:before{content:"\e60d"}
 .icon-sports:before{content:"\e616"}
 .icon-live:before{content:"\e614"}
-
+.icon-bar-live:before,{content:"\e60a"}
 
 .icon-a-americanfootball:before{content:"\e601"}
 .icon-boxing:before{content:"\e602"}
@@ -108,7 +113,7 @@ div:focus {
 .icon-gaming:before{content:"\e608"}
 .icon-a-beachvolleyball:before{content:"\e609"}
 
-.icon-live-icon-1:before{content:"\e60a"}
+
 
 .icon-pingpong:before{content:"\e60b"}
 
