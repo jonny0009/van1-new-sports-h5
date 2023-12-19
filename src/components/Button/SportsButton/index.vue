@@ -107,8 +107,8 @@ SportsName.value = `icon-${props.text}`
     height: 44px;
     margin-right: 19px;
   }
-  &.noImg{
-    padding: 0 30px;
+  .iconfont{
+    margin-right: 10px;
   }
 }
 </style>

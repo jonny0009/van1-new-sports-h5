@@ -1,17 +1,24 @@
 <template>
   <div class="home-page">
+    <homeBarHeader />
 
-    <!-- <SportsButton :button-text="'暗示'" :active="true" :img-src="''" /> -->
+    <br />
+    <br />
+    <br />
     <br />
     <TextButton text="暗示" :active="true" />
     <TextButton text="暗示" />
     <br />
+    <br />
+    <br />
     <ImageButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" :active="true" />
     <ImageButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" count="22" />
+    <br />
     <br />
 
     <SportsButton text="FT" :active="true" />
     <SportsButton text="FT" />
+    <br />
     <br />
 
     <br />
@@ -39,14 +46,12 @@
 </template>
 
 <script lang="ts" setup>
+import homeBarHeader from './components/homeBarHeader.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
 import ImageButton from '@/components/Button/ImageButton/index.vue'
 import SportsButton from '@/components/Button/SportsButton/index.vue'
 </script>
 <style lang="scss" scoped>
-.home-page{
-  padding: 20px;
-}
 .my-swipe .van-swipe-item {
     color: #fff;
     font-size: 20px;
