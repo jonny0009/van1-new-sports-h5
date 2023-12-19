@@ -8,8 +8,7 @@
         :class="{ active: navActive === item.num }"
         @click="onNav(item)"
       >
-        <img v-if="item.num == 0" src="@/assets/images/live/icon_hot_on.png" alt="" />
-        <SvgIcon v-else :name="item.iconName" />
+        <SvgIcon :name="item.iconName" />
         <span>{{ item.name }}</span>
       </div>
     </div>
@@ -17,7 +16,7 @@
     <div class="wrapper">
       <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <div class="live-item" v-for="(item, i) in list" :key="i">
-          <LiveItem :item="item" @click="onItem(item)" />
+          <LiveItem :item="item" @click="itemClick(item)" />
         </div>
       </van-list>
     </div>
@@ -25,13 +24,19 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, Ref } from 'vue'
+import { reactive, ref, Ref, onMounted } from 'vue'
 import LiveItem from './components/LiveItem.vue'
 import router from '@/router'
+import { liveGameTypeList } from '@/api/live'
 
-// const getImage = (name: string) => {
-//   return new URL(`/src/assets/images/live/${name}`, import.meta.url).href
-// }
+onMounted(() => {
+  getGameType()
+})
+
+const getGameType = async () => {
+  const res = await liveGameTypeList({})
+  console.log(res)
+}
 
 const list: Ref<Object[]> = ref([])
 const loading = ref(false)
@@ -53,13 +58,13 @@ const onLoad = () => {
     }
   }, 1000)
 }
-const onItem = (item: any) => {
+const itemClick = (item: any) => {
   console.log(item)
   router.push(`/live/1234`)
 }
 
 const navList = reactive([
-  { num: 0, name: '热播', iconName: '' },
+  { num: 0, name: '热播', iconName: 'live-hot' },
   { num: 1, name: '足球', iconName: 'live-football' },
   { num: 2, name: '篮球', iconName: 'live-basketball' },
   { num: 3, name: '网球', iconName: 'live-tennisball' },
@@ -110,6 +115,7 @@ const onNav = (item: any) => {
     .svg-icon {
       font-size: 38px;
       margin-right: 14px;
+      color: #999;
     }
     > img {
       width: auto;
