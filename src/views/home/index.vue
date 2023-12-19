@@ -10,8 +10,8 @@
     <ImageButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" count="22" />
     <br />
 
-    <SportsButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" :active="true" />
-    <SportsButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
+    <SportsButton text="FT" :active="true" />
+    <SportsButton text="FT" />
     <br />
 
     <br />
