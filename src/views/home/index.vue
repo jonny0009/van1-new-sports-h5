@@ -1,12 +1,12 @@
 <template>
   <div class="home-page">
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-      <homeBarHeader />
-      <homeTabs class="mt10" />
-
-      <homeTitle img-src="" text="热门赛事" />
-
-      <p class="tc">刷新次数:</p>
+      <div class="refresh-wrap">
+        <homeBarHeader />
+        <homeTabs class="mt10" />
+        <ArrowTitle :src="titleHot" text="热门赛事" />
+        <p class="tc">刷新次数:</p>
+      </div>
     </van-pull-refresh>
   </div>
 </template>
@@ -14,7 +14,9 @@
 <script lang="ts" setup>
 import homeBarHeader from './components/homeBarHeader/index.vue'
 import homeTabs from './components/homeTabs/index.vue'
-import homeTitle from './components/homeTitle/index.vue'
+import ArrowTitle from '@/components/Title/ArrowTitle/index.vue'
+import titleHot from '@/assets/images/home/title-hot.png'
+
 import { ref } from 'vue'
 const isLoading = ref(false)
 const onRefresh = () => {
@@ -22,5 +24,10 @@ const onRefresh = () => {
 }
 </script>
 <style lang="scss" scoped>
+.home-page{
+  .refresh-wrap{
+    min-height: calc(100vh - 96px);
+  }
+}
 
 </style>

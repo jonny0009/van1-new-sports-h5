@@ -1,22 +1,19 @@
 <template>
-  <div
-    class="textButton"
-    :class="[
-      {
-        'active':activeVal
-      }
-    ]"
-  >
-    {{ textval }}
+  <div class="ArrowTitle">
+    <img class="img" :src="props.src" style="object-fit: contain;" />
+    <span>
+      {{ props.text }}
+    </span>
+    <img class="arrow" :src="arrow" style="object-fit: contain;" />
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, defineProps, watch } from 'vue'
+import arrow from '@/assets/images/components/title/arrow.png'
 const props = defineProps({
-  active: {
-    type: Boolean,
+  src: {
+    type: String,
     default: function () {
-      return false
+      return ''
     }
   },
   text: {
@@ -27,40 +24,17 @@ const props = defineProps({
   }
 })
 
-const activeVal = ref(false)
-activeVal.value = props.active
-watch(props, (val) => {
-  if (val) {
-    const { active } = val
-    activeVal.value = active
-  }
-})
-
-const textval = ref('')
-textval.value = props.text
-
 </script>
 
 <style lang="scss" scoped>
-.textButton{
-  display: inline-flex;
-  align-items: center;
-  height: 64px;
-  line-height: 66px;
-  border-radius:30px;
-  padding:0 20px;
-  background: #eff2f2;
-  color: #1f2630;
-  transition: all .3s;
-  font-size: 24px;
-  &.active{
-    background:#7642fe;
-    color:#fff;
-  }
-  .img{
-    width:44px;
-    height: 44px;
-    margin-right: 19px;
+.ArrowTitle{
+  display: flex;
+  font-size: 32px;
+  color: #1F2630;
+  img{
+    width: 50px;
+    height: 50px;
+    display: block;
   }
 }
 </style>
