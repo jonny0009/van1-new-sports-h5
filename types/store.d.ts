@@ -3,6 +3,7 @@ import { Store } from 'vuex'
 import { RouteRecordRaw } from 'vue-router'
 
 declare interface App {
+  sports: any
   moduleConfig: any
   merchantConfig: any
   businessConfig: any
@@ -12,7 +13,10 @@ declare interface App {
 
 declare interface User {
   token: string | undefined | null
-
+}
+declare interface Betting {
+  markets: any
+  ratioChangesState: any
 }
 
 declare module '@vue/runtime-core' {

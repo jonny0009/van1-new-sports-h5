@@ -86,7 +86,7 @@ export const formatDecimals = (number: Number, decimals = 2) => {
  * @param  value
  * @param {*} n
  */
-export const points = (value:any, n = 2) => {
+export const points = (value: any, n = 2) => {
   let valueStr = value + ''
   if (valueStr.indexOf('.') > -1) {
     valueStr += '00'
@@ -101,7 +101,7 @@ export const points = (value:any, n = 2) => {
  * 创建script
  * @param url
  */
-export const createScript = (url: string, async:boolean = true) => {
+export const createScript = (url: string, async: boolean = true) => {
   const el = document.createElement('script')
   el.src = `${url}?r=${Date.now()}`
   el.async = async
@@ -119,4 +119,18 @@ export const imgUrlFormat = (url: string) => {
     return window.AIConfig.static_url + url
   }
   return ''
+}
+
+// 获取url参数
+export const getURLSearchParams = () => {
+  const search = window.location.search
+  const params: any = {}
+  const splits = search.replace('?', '').split('&')
+  splits.forEach((item: any) => {
+    const temp = item.split('=')
+    if (temp.length > 1) {
+      params[temp[0]] = temp[1]
+    }
+  })
+  return params
 }

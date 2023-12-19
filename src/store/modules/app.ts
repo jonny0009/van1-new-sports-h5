@@ -1,6 +1,7 @@
 import { Module } from 'vuex'
 import { App } from '#/store'
 import { businessConfig, merchantConfig, moduleConfig, queryCMerLanguage } from '@/api/auth'
+import { getAllSports } from '@/api/common'
 
 const appModule: Module<App, any> = {
   namespaced: true,
@@ -9,7 +10,8 @@ const appModule: Module<App, any> = {
     queryCMerLanguage: {},
     businessConfig: {},
     merchantConfig: {},
-    moduleConfig: {}
+    moduleConfig: {},
+    sports: []
   },
   mutations: {
 
@@ -46,6 +48,12 @@ const appModule: Module<App, any> = {
       const res:any = await moduleConfig() || {}
       if (res.code === 200) {
         state.moduleConfig = res.data || {}
+      }
+    },
+    async getAllSports({ state }) {
+      const res:any = await getAllSports() || {}
+      if (res.code === 200) {
+        state.sports = res.data || []
       }
     }
   }

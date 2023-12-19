@@ -1,50 +1,19 @@
 <template>
   <div class="global-bar-header">
     <div class="avatar">
-      <van-image
-        width="42"
-        height="42"
-        radius="100%"
-        fit="contain"
-        :src="'22'"
-      >
-        <template #error>
-          <van-image
-            width="42"
-            height="42"
-            fit="contain"
-            :src="avatarImg"
-          />
-        </template>
-      </van-image>
+      <img :src="avatarImg" style="object-fit: contain;" />
     </div>
     <div class="wallet">
       <div class="cur">
-        <van-image
-          width="24"
-          height="24"
-          radius="100%"
-          fit="contain"
-          :src="USDTImg"
-        />
+        <img :src="USDTImg" style="object-fit: contain;" />
       </div>
       0.00
       <div class="transaction">
-        <van-image
-          width="14"
-          height="14"
-          fit="contain"
-          :src="transactionImg"
-        />
+        <img :src="transactionImg" />
       </div>
     </div>
     <div class="right-area">
-      <van-image
-        width="20"
-        height="20"
-        fit="contain"
-        :src="searchImg"
-      />
+      <img class="search" :src="searchImg" style="object-fit: contain;" />
     </div>
   </div>
 </template>
@@ -84,9 +53,21 @@ import transactionImg from '@/assets/images/globalLayout/header/transaction.png'
       height: 48px;
       border-radius: 100%;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img{
+        width: 24px;
+        height: 24px;
+        display: block;
+      }
     }
     .cur{
       left: 6px;
+      img{
+        width: 40px;
+        height: 40px;
+      }
     }
     .transaction{
       background: #7642fe;
@@ -98,6 +79,11 @@ import transactionImg from '@/assets/images/globalLayout/header/transaction.png'
     left: 30px;
     top: 6px;
     bottom: 6px;
+    img{
+      display: block;
+      width: 84px;
+      height: 84px;
+    }
   }
   .right-area{
     position: absolute;
@@ -106,6 +92,11 @@ import transactionImg from '@/assets/images/globalLayout/header/transaction.png'
     right: 30px;
     display: flex;
     align-items: center;
+    .search{
+      width: 40px;
+      height: 40px;
+      display: block;
+    }
   }
 }
 </style>

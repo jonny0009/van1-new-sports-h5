@@ -1,39 +1,121 @@
 <template>
   <div class="home-page">
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <div class="refresh-wrap">
 
-    <SportsButton :button-text="'暗示'" :active="true" :img-src="''" />
-    <br />
-    <SportsButton :no-img-toggle="true" :button-text="'暗示'" :img-src="''" />
-    <br />
+        <homeBarHeader />
 
-    <van-button type="primary">主要按钮</van-button>
-    <van-button type="success">成功按钮</van-button>
-    <van-button type="default">默认按钮</van-button>
-    <van-button type="warning">警告按钮</van-button>
-    <van-button type="danger">危险按钮</van-button>
+        <homeTabs class="mt10" />
 
-    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-      <van-swipe-item>1</van-swipe-item>
-      <van-swipe-item>2</van-swipe-item>
-      <van-swipe-item>3</van-swipe-item>
-      <van-swipe-item>4</van-swipe-item>
-    </van-swipe>
+        <ArrowTitle class="ml20 mt10 mb10" :src="titleHot" text="热门赛事" @returnSuccess="returnStatus" />
+
+        <div class="Hot-Match-Group">
+          <img :src="xxx1" />
+          <img :src="xxx1" />
+          <img :src="xxx1" />
+          <img :src="xxx1" />
+        </div>
+
+        <ArrowTitle class="ml20 mt10 mb10" :src="titleRecommend" text="推荐比赛" @returnSuccess="returnStatus" />
+
+        <div class="Recommend-Match-Tabs">
+          <SportsButton text="FT" :active="true" />
+          <SportsButton text="BK" />
+          <SportsButton text="TN" />
+          <SportsButton text="OP_BM" />
+        </div>
+
+        <homeMatchHandicap class="mt20" />
+
+        <ArrowTitle class="ml20 mt10 mb10" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
+        <div class="Recommend-Match-Tabs">
+          <SportsButton text="FT" :active="true" />
+          <SportsButton text="BK" />
+          <SportsButton text="TN" />
+          <SportsButton text="OP_BM" />
+        </div>
+
+        <homeMatchHandicap class="mt20" />
+
+        <div class="Button-MatchMore mt20">
+          <span>
+            查看更多比赛
+          </span>
+        </div>
+      </div>
+    </van-pull-refresh>
   </div>
 </template>
 
 <script lang="ts" setup>
-import SportsButton from '@/components/SportsButton/index.vue'
+// home components
+import homeBarHeader from './components/homeBarHeader/index.vue'
+import homeTabs from './components/homeTabs/index.vue'
+import homeMatchHandicap from './components/homeMatchHandicap/index.vue'
+// common components
+import ArrowTitle from '@/components/Title/ArrowTitle/index.vue'
+import SportsButton from '@/components/Button/SportsButton/index.vue'
+// img
+import xxx1 from '@/assets/images/home/other/x1.png'
+import titleHot from '@/assets/images/home/title-hot.png'
+import titleRecommend from '@/assets/images/home/title-recommend.png'
+import titleTime from '@/assets/images/home/title-time.png'
+import { ref } from 'vue'
+const isLoading = ref(false)
+const onRefresh = () => {
+  isLoading.value = false
+}
+const returnStatus = (val:any) => {
+  console.log(val)
+}
 </script>
-
 <style lang="scss" scoped>
 .home-page{
-  padding: 20px;
-}
-.my-swipe .van-swipe-item {
-    color: #fff;
-    font-size: 20px;
-    line-height: 150px;
-    text-align: center;
-    background-color: #39a9ed;
+  overflow: auto;
+  .refresh-wrap{
+    min-height: calc(100vh - 96px);
+    padding-bottom: 95px;
   }
+}
+</style>
+<style lang="scss" >
+.Button-MatchMore{
+  color: #7642FD;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  span{
+    font-size: 24px;
+  }
+}
+.Hot-Match-Group{
+  display: flex;
+  overflow: auto;
+  margin: 0 40px;
+  &::-webkit-scrollbar {
+    height: 0;
+    display: none;
+  }
+  img{
+    width: 200px;
+    height: 176px;
+    display: block;
+    margin-right: 20px;
+  }
+}
+.Recommend-Match-Tabs{
+  margin: 0 40px;
+  display: flex;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    height: 0;
+    display: none;
+  }
+  .SportsButton{
+    margin-right: 20px;
+    flex-shrink: 1;
+    white-space:nowrap;
+  }
+}
 </style>
