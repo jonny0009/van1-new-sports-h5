@@ -10,7 +10,7 @@
     </div>
     <div class="confirm-button-wrap">
       <SvgIcon name="betting-trash" class="delete-btn" @click="clear"></SvgIcon>
-      <div class="confirm-button" @click="buy">{{ $t('betting.buy') }}</div>
+      <div v-debounce="buy" class="confirm-button">{{ $t('betting.buy') }}</div>
     </div>
   </div>
 </template>

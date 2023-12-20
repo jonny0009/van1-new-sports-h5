@@ -14,6 +14,9 @@ const bettingModule: Module<Betting, any> = {
   namespaced: true,
   state: {
     markets,
+    results: [],
+    hitState: 1, // 0非点水状态 / 1非点水状态
+    mode: 1, // 1单注， 2串关
     isOne: false,
     s: '',
     t: '',
@@ -35,7 +38,7 @@ const bettingModule: Module<Betting, any> = {
       return points(betsGolds)
     },
     // 投注前的可赢金额
-    betsProfit(state, state1, state2) {
+    betsProfit(state, _state1, state2) {
       const userConfig = state2.userConfig
       const { handicapType } = userConfig || {}
       let betsGolds = 0
@@ -55,6 +58,12 @@ const bettingModule: Module<Betting, any> = {
     }
   },
   actions: {
+    setMode({ state }, mode) {
+      state.mode = mode
+    },
+    setHitState({ state }, status) {
+      state.hitState = status
+    },
     // 添加投注项
     addMarket({ state }, marketInfo: MarketInfo) {
       const marketItem = betParams(marketInfo)
@@ -171,9 +180,10 @@ const bettingModule: Module<Betting, any> = {
     },
     // 单注批量点水,更新投注项
     async marketHit({ state, dispatch }) {
-      if (state.markets.length === 0) {
+      if (state.markets.length === 0 || state.hitState !== 1) {
         return false
       }
+      dispatch('setHitState', 1)
       const params = hitParams(state.markets)
       const res: any = await morePW(params).catch(() => {})
       const code = (res && +res.code) || -1
@@ -196,23 +206,22 @@ const bettingModule: Module<Betting, any> = {
       if (state.markets.length > 1) {
         await dispatch('marketHit')
       }
+      dispatch('setHitState', 0)
       const params: any = buyParams(state.markets, state.s, state.t)
       const res: any = await moreBetting(params).catch(() => {})
       if (res.code === 200 && res.data) {
-        const resData = res.data
-        const { s, t, orderData } = resData
-        state.s = s
-        state.t = t
-        const newBets = orderData || []
-        newBets.map((marketInfo: any) => {
-          dispatch('updateMarket', marketInfo)
-        })
+        state.results = state.markets
+        dispatch('clearMarkets')
       }
     },
     // 清空
     clearMarkets({ state }) {
       state.markets = []
       localStore.clear(MarketListKey)
+    },
+    // 清空
+    clearResult({ state }) {
+      state.results = []
     }
   }
 }

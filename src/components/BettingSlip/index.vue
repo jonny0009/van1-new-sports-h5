@@ -31,7 +31,7 @@
           </template>
         </van-switch>
       </div>
-      <div v-else class="bet-all-ior">@0.00</div>
+      <div v-else class="bet-all-ior">@{{ betsProfit }}</div>
     </div>
     <div class="betting-slip-container" :class="{ open }">
       <div class="bet-tab">
@@ -40,7 +40,7 @@
           :key="index"
           :class="{ active: type === item.type }"
           class="bet-item"
-          @click="type = item.type"
+          @click="changeType(item.type)"
         >
           {{ item.title }}
         </div>
@@ -51,11 +51,12 @@
           }"
         ></div>
       </div>
-      <Nothing v-if="markets.length === 0"></Nothing>
-      <div v-else class="bet-content">
+      <Nothing v-if="results.length === 0 && markets.length === 0"></Nothing>
+      <div v-else-if="type < 3 && markets.length" class="bet-content">
         <Singles v-for="(market, index) in markets" :key="index" :market-info="market"></Singles>
         <ActionBar />
       </div>
+      <Result v-if="results.length && markets.length === 0"></Result>
     </div>
 
   </div>
@@ -65,6 +66,7 @@ import { ref, computed, watch } from 'vue'
 import BallEffect from './components/BallEffect/index.vue'
 import Nothing from './components/Nothing/index.vue'
 import Singles from './components/Single/index.vue'
+import Result from './components/Result/index.vue'
 import ActionBar from './components/ActionBar/index.vue'
 import store from '@/store'
 const open = ref(false)
@@ -89,6 +91,9 @@ const tableLeft = computed(() => {
 })
 const isOne = computed(() => store.state.betting.isOne)
 const markets = computed(() => store.state.betting.markets)
+const results = computed(() => store.state.betting.results)
+const betsProfit = computed(() => store.getters['betting/betsProfit'])
+
 const userConfig = computed(() => store.state.user.userConfig)
 watch(() => isOne.value, () => {
   if (isOne.value) {
@@ -98,7 +103,13 @@ watch(() => isOne.value, () => {
 const toogle = () => {
   open.value = !open.value
 }
-const radioChange = (acceptAll:number) => {
+const changeType = (mode: any) => {
+  type.value = mode
+  store.dispatch('betting/setMode', mode)
+  store.dispatch('betting/setHitState', 1)
+  store.dispatch('betting/clearResult')
+}
+const radioChange = (acceptAll: number) => {
   store.dispatch('user/configSettingNew', { acceptAll })
 }
 const timer = ref()

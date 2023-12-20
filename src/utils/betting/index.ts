@@ -86,7 +86,6 @@ export const buyParams = (markets: any, s: any, t: any) => {
   const autoRatio = userConfig === 1 ? 'S' : 'N'
   // 当前选择的盘口 欧洲盘/香港盘
   const oddfType = !handicapType ? 'H' : handicapType
-  debugger
   const betSubList: Array<any> = []
   markets.map((bet: any) => {
     let gidm = bet.gidm
