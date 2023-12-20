@@ -9,6 +9,10 @@
     </div>
 
     <MatchLive />
+
+    <MatchLive />
+
+    <div class="footerHeight"></div>
   </div>
 </template>
 <script lang="ts" setup>
