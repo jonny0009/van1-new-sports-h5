@@ -64,6 +64,9 @@ export class MarketInfo {
   playOnlyId: string
   isChampion: boolean = false
   ratioName: string = ''
+  goldMax: string = ''
+  goldMin: string = ''
+  ratioKey: string = ''
 
   constructor(info: MarketInfoInterface) {
     this.systemId = info.systemId
@@ -105,6 +108,7 @@ export class MarketInfo {
     }
     this.checkoutAttrs(info)
     this.playOnlyId = this.getPlayOnlyId()
+    this.ratioKey = this.getPlayOnlyId()
   }
   checkoutAttrs(info: any) {
     const warnings: any[] = []

@@ -1,4 +1,4 @@
-import { createStore } from 'vuex'
+import { createStore, mapGetters, createNamespacedHelpers } from 'vuex'
 
 const modulesFiles = import.meta.globEager('./modules/*.ts')
 const pathList: string[] = []

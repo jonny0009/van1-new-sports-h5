@@ -54,7 +54,7 @@
       <Nothing v-if="markets.length === 0"></Nothing>
       <div v-else class="bet-content">
         <Singles v-for="(market, index) in markets" :key="index" :market-info="market"></Singles>
-        <div class="confirm-button"></div>
+        <ActionBar />
       </div>
     </div>
 
@@ -65,6 +65,7 @@ import { ref, computed, watch } from 'vue'
 import BallEffect from './components/BallEffect/index.vue'
 import Nothing from './components/Nothing/index.vue'
 import Singles from './components/Single/index.vue'
+import ActionBar from './components/ActionBar/index.vue'
 import store from '@/store'
 const open = ref(false)
 const checked = ref(false)
@@ -101,8 +102,11 @@ const radioChange = (acceptAll:number) => {
   store.dispatch('user/configSettingNew', { acceptAll })
 }
 const timer = ref()
+store.dispatch('betting/marketHit')
 timer.value = setInterval(() => {
-  store.dispatch('betting/marketHit')
+  if (open.value) {
+    store.dispatch('betting/marketHit')
+  }
 }, 10 * 1000)
 </script>
 <style lang="scss" scoped>
