@@ -25,33 +25,46 @@ import time from '@/assets/images/home/homeTabs/homeTabs-time.png'
 import important from '@/assets/images/home/homeTabs/homeTabs-important.png'
 import defaultImportant from '@/assets/images/home/homeTabs/homeTabs-default-important.png'
 import ImageButton from '@/components/Button/ImageButton/index.vue'
-import { ref } from 'vue'
-const homeBarArray = ref(
-  [
+import { ref, reactive } from 'vue'
+const active = ref('ImportantRecommend')
+const clickChangeActive = (item:any) => {
+  homeBarArray.length = 0
+  homeBarArray.push(...homeBarArrayTable(item.value))
+  active.value = item.value
+}
+const homeBarArrayTable = (val:any):Array<any> => {
+  const newActive = val || active.value
+  const activeObj:any = {
+    'ImportantRecommend': important,
+    'TimeSort': time,
+    'ChampionBet': champion
+  }
+  const homeBarArrayTableArray:any = [
     {
-      value: 'Home',
+      value: 'ImportantRecommend',
       text: '重点推荐',
-      icon: important
+      icon: defaultImportant
     },
     {
-      value: 'live',
+      value: 'TimeSort',
       text: '按时间排',
       icon: defaultTime
     },
     {
-      value: 'FT',
+      value: 'ChampionBet',
       text: '冠军竞猜',
       icon: defaultChampion
     }
   ]
-)
-const barclass = (item:any) => {
-  return `icon-bar-${item.value}`
+  return [...homeBarArrayTableArray.map((e:any) => {
+    if (newActive === e.value) {
+      e.icon = activeObj[e.value]
+    }
+    return e
+  })]
 }
-const active = ref('Home')
-const clickChangeActive = (item:any) => {
-  active.value = item.value
-}
+const homeBarArray:any = reactive(homeBarArrayTable(''))
+
 </script>
 <style lang="scss" scoped>
 .homeTabs{

@@ -1,6 +1,6 @@
 <template>
   <div class="Single-wrap">
-    <div class="remove">
+    <div class="remove" @click="remove">
       <van-icon name="cross" />
     </div>
     <div class="content">
@@ -24,14 +24,17 @@
   </div>
 </template>
 <script lang="ts" setup>
+import store from '@/store'
+
 const props = defineProps({
-  market: {
-    type: String,
-    default: function () {
-      return ''
-    }
+  marketInfo: {
+    type: Object,
+    default: () => {}
   }
 })
+const remove = () => {
+  store.dispatch('betting/deleteMarket', props.marketInfo.playOnlyId)
+}
 console.log(props)
 </script>
 <style scoped lang="scss">
@@ -39,6 +42,7 @@ console.log(props)
   display: flex;
   align-items: center;
   height: 178px;
+  margin-bottom: 10px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;

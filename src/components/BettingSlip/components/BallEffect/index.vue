@@ -16,8 +16,8 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import Subscriber from '@/utils/Subscriber'
-const list = []
+import Subscriber from '@/utils/subscriber'
+const list:any[] = []
 const balls = ref([
   {
     show: !1
@@ -31,7 +31,7 @@ const balls = ref([
 ])
 Subscriber.on('EVENT_BET_BALL', (target: any) => {
   for (let e = 0; e < balls.value.length; e++) {
-    const i = balls.value[e]
+    const i:any = balls.value[e]
     if (!i.show) {
       i.show = true
       i.el = target
@@ -39,7 +39,7 @@ Subscriber.on('EVENT_BET_BALL', (target: any) => {
     }
   }
 })
-const beforeEnter = (ball) => {
+const beforeEnter = (ball:any) => {
   const target = list[list.length - 1]
   const rect = target.el.getBoundingClientRect()
   const left = rect.left - 32
@@ -49,14 +49,14 @@ const beforeEnter = (ball) => {
   const o = ball.getElementsByClassName('inner-hook')[0]
   o.style.transform = `translate3d(${left}px,0,0)`
 }
-const enter = (t) => {
+const enter = (t:any) => {
   document.body.offsetHeight
   t.style.transform = 'translate3d(0,0,0)'
   const s = t.getElementsByClassName('inner-hook')[0]
   s.style.transform = 'translate3d(0,0,0)'
   // t.addEventListener('transitionend', e)
 }
-const afterEnter = (t) => {
+const afterEnter = (t:any) => {
   const e = list.shift()
   if (e) {
     e.show = false

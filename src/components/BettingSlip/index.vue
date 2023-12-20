@@ -6,6 +6,9 @@
       <div class="bet-header-left">
         <span class="bet-icon"></span>
         <span class="bet-title">投注单</span>
+        <span v-if="markets.length" class="num">
+          {{ markets.length }}
+        </span>
         <span class="bet-arrow" :class="{ open }"></span>
       </div>
       <div v-if="open" class="bet-switch-wrap">
@@ -45,11 +48,11 @@
           }"
         ></div>
       </div>
-      <Nothing v-if="markets.length"></Nothing>
-      <div class="bet-content">
-        <Singles></Singles>
-        <Singles v-for="(market, index) in markets" :key="index" :market="market"></Singles>
+      <Nothing v-if="markets.length === 0"></Nothing>
+      <div v-else class="bet-content">
+        <Singles v-for="(market, index) in markets" :key="index" :market-info="market"></Singles>
       </div>
+      {{ $t('home.title') }}
     </div>
 
   </div>
@@ -156,10 +159,25 @@ const toogle = () => {
 
   .bet-title {
     margin-left: 22px;
-    margin-right: 30px;
+    margin-right: 10px;
     font-family: PingFangSC-Medium;
     font-size: 28px;
     color: #FFFFFF;
+    letter-spacing: 0;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  .num {
+    margin-right: 20px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #fff;
+    border-radius: 50%;
+    font-family: PingFangSC-Medium;
+    font-size: 28px;
+    color: #7642FD;
     letter-spacing: 0;
     text-align: center;
     font-weight: 500;

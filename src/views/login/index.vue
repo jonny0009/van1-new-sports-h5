@@ -75,6 +75,8 @@
 
 <script lang="ts" setup>
 import { ref, reactive, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { locale } = useI18n()
 import { useRouter } from 'vue-router'
 import store from '@/store'
 const languages = computed(() => store.state.app.queryCMerLanguage)
@@ -118,6 +120,7 @@ function showPk(val?: any) {
 function setPk(val: any) {
   if (popupIndex.value === 1) {
     lang.value = val
+    locale.value = val.value
   }
   if (popupIndex.value === 1) {
     popupTitle.value = '地区'

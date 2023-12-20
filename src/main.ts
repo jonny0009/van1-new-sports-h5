@@ -10,6 +10,7 @@ import plugins from '@/plugins'
 import bootstrap from '@/bootstrap'
 import vant from 'vant'
 import { createScript } from './utils'
+import i18n from './lang'
 // 玩法名称，玩法球头表引入
 const lang = 'zh-cn'
 const playtypeScript = `${window.AIConfig.static_url}files/base/playtype/js/${lang}.js`
@@ -22,6 +23,7 @@ app.use(router)
 app.use(vant)
 app.use(store)
 app.use(plugins)
+app.use(i18n)
 
 const start = async () => {
   await bootstrap()

@@ -2,7 +2,7 @@ import localStore from '@/utils/localStore'
 import { Module } from 'vuex'
 import { Betting } from '#/store'
 import { betParams } from '@/utils/betting'
-import MarketInfo from '@/entitys/MarketInfo'
+import { MarketInfo } from '@/entitys/MarketInfo'
 
 // 投注单store
 const MarketListKey = '_MarketList_'
@@ -30,7 +30,7 @@ const bettingModule: Module<Betting, any> = {
       localStore.setItem(MarketListKey, state.markets)
     },
     // 移除投注项
-    deleteMarket({ state }, { playOnlyId }) {
+    deleteMarket({ state }, playOnlyId) {
       const index = state.markets.findIndex((play: MarketInfo) => {
         if (play.playOnlyId === playOnlyId) {
           return true

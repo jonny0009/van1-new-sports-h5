@@ -19,7 +19,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, defineProps, watch } from 'vue'
+import { ref, watch } from 'vue'
 const props = defineProps({
   text: {
     type: String,
