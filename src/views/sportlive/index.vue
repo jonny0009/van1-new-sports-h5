@@ -22,7 +22,7 @@ import MatchLive from '@/components/HomeMatch/MatchLive/index.vue'
 </script>
 <style lang="scss" scoped>
 .sportlive-Match-Tabs{
-  margin: 10px 36px;
+  margin: 10px 0;
   display: flex;
   overflow: auto;
   &::-webkit-scrollbar {
