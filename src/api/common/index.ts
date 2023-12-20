@@ -10,3 +10,16 @@ export const getAllSports = () => {
     method: 'get'
   })
 }
+
+/**
+ * 获取游戏
+ * @returns
+ */
+export const apiGetGameDetail = (params:any) => {
+  return request({
+    url: '/ai/mobile/game/url/new',
+    method: 'get',
+    params
+  })
+}
+
