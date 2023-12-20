@@ -5,14 +5,14 @@
     <div class="betting-slip-header" @click="toogle">
       <div class="bet-header-left">
         <span class="bet-icon"></span>
-        <span class="bet-title">投注单</span>
+        <span class="bet-title">{{ $t('betting.title') }}</span>
         <span v-if="markets.length" class="num">
           {{ markets.length }}
         </span>
         <span class="bet-arrow" :class="{ open }"></span>
       </div>
       <div v-if="open" class="bet-switch-wrap">
-        <span class="label">接受陪率变化</span>
+        <span class="label">{{ $t('betting.ratioChangTips') }}</span>
         <van-switch
           v-model="userConfig.acceptAll"
           :size="20"

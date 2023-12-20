@@ -11,7 +11,7 @@
       <div class="details">
         <div v-if="marketInfo.isChampion" class="play-name">{{ marketInfo.championType }}</div>
         <div v-else v-play="marketInfo" class="play-name"></div>
-        <div v-if="marketInfo.isChampion" class="team-info">冠军</div>
+        <div v-if="marketInfo.isChampion" class="team-info">{{ $t('betting.champion') }}</div>
         <div v-else class="team-info">{{ marketInfo.homeTeam }} VS {{ marketInfo.awayTeam }}</div>
       </div>
       <div class="betting-odds">@{{ marketInfo.ior }}</div>
