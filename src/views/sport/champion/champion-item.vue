@@ -73,11 +73,6 @@ const clickOpen = () => {
         overflow: hidden;
         transition: background-color .2s;
 
-        &.selected{
-          color: #fff;
-          background-color: #f00;
-        }
-
         .betslipLine {
           width: 100%;
           flex: 1;
@@ -86,19 +81,19 @@ const clickOpen = () => {
           align-items: center;
           color: #546371;
           font-size: 24px;
-           color: #546371;
+
           overflow: hidden !important;
           white-space: nowrap !important;
           text-overflow: ellipsis !important;
 
           .text {
+            color: #546371;
             text-align: center;
             overflow: hidden !important;
             white-space: nowrap !important;
             text-overflow: ellipsis !important;
           }
         }
-
         .details {
           display: flex;
           justify-content: center;
@@ -106,6 +101,17 @@ const clickOpen = () => {
           .item{
             font-size: 26px;
             color: #000000;
+          }
+        }
+      }
+      .selected{
+        background-color: #7642fe;
+        .text{
+          color: hsla(0,0%,100%,.8) !important;
+        }
+        .details {
+          .item{
+            color: white;
           }
         }
       }
