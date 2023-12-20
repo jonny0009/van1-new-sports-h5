@@ -14,55 +14,61 @@
         <span :class="index == 2 ? 'active' : ''" @click="index = 2">手机</span>
       </div>
 
-      <div v-if="index == 1" class="form">
-        <van-field
-          v-model="form.username"
-          name=""
-          label=""
-          clearable
-          placeholder="用户名或电子邮箱"
-          :rules="[{ required: true, message: '请填写用户名' }]"
-        />
-        <div></div>
-        <van-field
-          v-model="form.password"
-          type="password"
-          name=""
-          label=""
-          class="van-cel"
-          placeholder="密码"
-          clearable
-          :rules="[{ required: true, message: '请填写密码' }]"
-        />
-        <div></div>
-      </div>
-      <div v-if="index == 2" class="form">
-        <van-field
-          v-model="form.username"
-          name=""
-          label=""
-          placeholder="手机号码"
-          clearable
-          :rules="[{ required: true, message: '请填写手机号码' }]"
-        />
-        <div></div>
-        <van-field
-          v-model="form.password"
-          type="password"
-          name=""
-          label=""
-          class="van-cel"
-          clearable
-          placeholder="密码"
-          :rules="[{ required: true, message: '请填写密码' }]"
-        />
-        <div></div>
-      </div>
-      <!--忘记密码  -->
-      <p class="forgetPassword" @click="toForget()">忘记密码?</p>
-      <div class="loginBtn" @click="handleLogin()">
-        登录
-      </div>
+      <van-form @submit="onSubmit">
+        <div v-if="index == 1" class="form">
+          <van-field
+            v-model="form.username"
+            name=""
+            label=""
+            clearable
+            placeholder="用户名或电子邮箱"
+            :rules="[{ required: true, message: '请填写用户名或电子邮箱' }]"
+          />
+          <div></div>
+          <van-field
+            v-model="form.password"
+            type="password"
+            name=""
+            label=""
+            class="van-cel"
+            placeholder="密码"
+            clearable
+            :rules="[{ required: true, message: '请填写密码' }]"
+          />
+          <div></div>
+        </div>
+        <div v-if="index == 2" class="form">
+          <van-field
+            v-model="form.username"
+            name=""
+            label=""
+            placeholder="手机号码"
+            clearable
+            :rules="[{ required: true, message: '请填写手机号码' }]"
+          />
+          <div></div>
+          <van-field
+            v-model="form.password"
+            type="password"
+            name=""
+            label=""
+            class="van-cel"
+            clearable
+            placeholder="密码"
+            :rules="[{ required: true, message: '请填写密码' }]"
+          />
+          <div></div>
+        </div>
+        <p class="forgetPassword" @click="toForget()">忘记密码?</p>
+        <van-button
+          van-button
+          class="loginBtn"
+          :class="[Boolean(form.password && form.username) ? 'ifBtn' : '']"
+          native-type="submit"
+        >
+          登录
+        </van-button>
+      </van-form>
       <p class="literal">还没账号? <span class="register" @click="register">注册</span></p>
     </div>
   </div>
@@ -71,8 +77,13 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import md5 from 'md5'
+import { login, getLanguages } from '@/api/login'
+import { showToast } from 'vant'
+import { setToken } from '@/utils/auth'
 const $router = useRouter()
 const index = ref(1)
+// const merchantId = ref('')
 const form = reactive({
   username: '',
   password: ''
@@ -80,14 +91,42 @@ const form = reactive({
 const goBack = () => {
   $router.back()
 }
-// const onSubmit = (values: any) => {
-//   console.log('submit', values)
-// }
 const register = () => {
   $router.push({ path: '/register' })
 }
-const handleLogin = (values?: any) => {
-  console.log('登录===', values)
+const onSubmit = async (values?: any) => {
+  console.log(values)
+  if (!form.username || !form.password) return
+  const params = {
+    // merchantId: merchantId,
+    loginName: form.username,
+    passWord: md5(encodeURI(form.password))
+  }
+  const res: any = await login(params)
+  if ([901008].includes(res.code)) {
+    showToast(
+      '会员功能关闭,' + '\t\n' + '您的会员功能已被暂时关闭,您将无法登录!如有疑问请联系客服:400-000-0000'
+    )
+    return false
+  }
+  if (res.code === 200) {
+    setToken(res.data)
+    checkFirstEnter()
+    return
+  } else if (res.code === 205) {
+    showToast('账号或密码错误')
+  } else if (res.code === 204) {
+    showToast('账号不存在')
+  } else if (res.code === 207) {
+    showToast('账号已禁用')
+  }
+}
+const checkFirstEnter = async () => {
+  // 获取商户设置的语言，如果属于属于新账号国际版则直接跳到首页
+  const res:any = await getLanguages({})
+  if (res === 200) {
+    console.log(res, '======')
+  }
 }
 const toForget = (values?: any) => {
   console.log('忘记密码=====', values)
@@ -171,6 +210,11 @@ const toForget = (values?: any) => {
     background: #DFE4E5;
   }
 
+  .ifBtn {
+    background: #7642FD;
+    color: #FFFF;
+  }
+
   .literal {
     margin-top: 40px;
     text-align: center;
@@ -222,9 +266,19 @@ const toForget = (values?: any) => {
 
 :deep(.van-field__control) {
   height: 50px;
-  font-size: 30px;
+  font-size: 32px;
 }
+
+:deep(.van-field__error-message) {
+  height: 50px;
+  font-size: 24px;
+}
+
 :deep(.van-icon) {
-  font-size: 40px;
+  font-size: 38px;
+}
+:deep(.van-toast__text) {
+  width: ;
+  font-size: 38px;
 }
 </style>

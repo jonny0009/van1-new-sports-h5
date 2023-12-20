@@ -53,7 +53,7 @@ export const constantRoutes: Array<any> = [
     hidden: true
   },
   {
-    path: '/home',
+    path: '/',
     component: () => import('@/layout/index.vue'),
     redirect: '/home',
     children: [

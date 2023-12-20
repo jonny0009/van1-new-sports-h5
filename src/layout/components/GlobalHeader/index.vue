@@ -1,9 +1,9 @@
 <template>
   <div class="global-bar-header">
-    <div class="avatar">
+    <div class="avatar" @click="showInfo">
       <img :src="avatarImg" style="object-fit: contain;" />
     </div>
-    <div class="wallet">
+    <div class="wallet" @click="toUrl('/login')">
       <div class="cur">
         <img :src="USDTImg" style="object-fit: contain;" />
       </div>
@@ -12,7 +12,7 @@
         <img :src="transactionImg" />
       </div>
     </div>
-    <div class="right-area">
+    <div class="right-area" @click="toUrl('/search')">
       <img class="search" :src="searchImg" style="object-fit: contain;" />
     </div>
     <van-popup v-model:show="showLeft" :duration="0.2" position="left" :style="{ width: '71.5%', height: '100%' }">
@@ -26,7 +26,7 @@
             <div class="right">
               <div class="head">
                 <div class="head_1">查看档案</div>
-                <img class="headImg_1" fit="contain" src="@/assets/images/user/notice.svg" @click="toUser('notice')" />
+                <img class="headImg_1" fit="contain" src="@/assets/images/user/notice.svg" @click="toUser('/notice')" />
               </div>
               <div class="money">
                 <van-image class="headImg_2" fit="contain" :src="USDTImg" />
@@ -40,15 +40,15 @@
         <div class="line" />
         <!-- 导航 -->
         <div class="nav">
-          <div class="menu" @click="toUser('result')">
+          <div class="menu" @click="toUser('/result')">
             <img class="menu_1" fit="contain" src="@/assets/images/user/result.svg" />
             <div class="menu_2">结果</div>
           </div>
-          <div class="menu" @click="toUser('edit')">
+          <div class="menu" @click="toUser('/edit')">
             <img class="menu_1" fit="contain" src="@/assets/images/user/edit.svg" />
             <div class="menu_2">设置</div>
           </div>
-          <div class="menu" @click="toUser('customer')">
+          <div class="menu" @click="toUser('/customer')">
             <img class="menu_1" fit="contain" src="@/assets/images/user/icon2.svg" />
             <div class="menu_2">客服</div>
           </div>
@@ -71,17 +71,17 @@ import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 const showLeft = ref(false)
 const $router = useRouter()
-const toSearch = () => {
-  $router.push({ path: '/search' })
+const toUrl = (url:string) => {
+  $router.push({ path: url })
 }
 // 用户导航
-const toUser = (url?: String) => {
-  if (url === 'customer') {
+const toUser = (url?: string) => {
+  if (url === '/customer') {
     console.log('客服===')
     return
   }
   showLeft.value = false
-  $router.push({ path: '/user/' + url })
+  $router.push({ path: '/user' + url })
 }
 
 const showInfo = () => {
