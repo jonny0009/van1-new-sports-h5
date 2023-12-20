@@ -3,11 +3,19 @@
     <div class="my-scroll__content">
       <div class="betting-sport-nav">
         <TextButton text="推荐" :active="true" />
-        <ImageButton v-for="(item, idx) in [1,2,3,4,5]" :key="idx" text="和恢复顶顶顶帆帆" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" :active="true" />
+        <ImageButton v-for="item in [1,2,3,4,5]" :key="item" text="和恢复顶顶顶帆帆" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" :active="true" />
       </div>
     </div>
     <MatchLive />
     <ChampionList v-if="championList.length" :champion-list="championList" />
+
+    <div class="Button-MatchMore mt20">
+      <span>
+        查看更多比赛
+      </span>
+    </div>
+
+    <div class="footerHeight"></div>
   </div></template>
 
 <script lang="ts" setup>
@@ -75,6 +83,7 @@ const getChampionpPlayTypes = async () => {
       width: 1000px;
       white-space: normal;
       position: relative;
+      .textButton,
       .ImageButton{
         margin-left: 10px;
         margin-bottom: 10px;
