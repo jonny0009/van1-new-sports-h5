@@ -54,7 +54,6 @@ const enter = (t:any) => {
   t.style.transform = 'translate3d(0,0,0)'
   const s = t.getElementsByClassName('inner-hook')[0]
   s.style.transform = 'translate3d(0,0,0)'
-  // t.addEventListener('transitionend', e)
 }
 const afterEnter = (t:any) => {
   const e = list.shift()

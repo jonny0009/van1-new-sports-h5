@@ -14,11 +14,14 @@
       <div v-if="open" class="bet-switch-wrap">
         <span class="label">接受陪率变化</span>
         <van-switch
-          v-model="checked"
+          v-model="userConfig.acceptAll"
           :size="20"
           active-color="#fff"
           inactive-color="#baa0fe"
           class="bet-ior-switch"
+          :active-value="1"
+          :inactive-value="0"
+          @change="radioChange"
           @click.stop
         >
           <template #node>
@@ -52,13 +55,12 @@
       <div v-else class="bet-content">
         <Singles v-for="(market, index) in markets" :key="index" :market-info="market"></Singles>
       </div>
-      {{ $t('home.title') }}
     </div>
 
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import BallEffect from './components/BallEffect/index.vue'
 import Nothing from './components/Nothing/index.vue'
 import Singles from './components/Single/index.vue'
@@ -83,12 +85,24 @@ const tabs = ref([
 const tableLeft = computed(() => {
   return `calc(100% / 3 * ${type.value - 1} + (100% / 3 - 27vw) / 2 )`
 })
+const isOne = computed(() => store.state.betting.isOne)
 const markets = computed(() => store.state.betting.markets)
-
+const userConfig = computed(() => store.state.user.userConfig)
+watch(isOne.value, () => {
+  if (isOne.value) {
+    open.value = true
+  }
+})
 const toogle = () => {
   open.value = !open.value
 }
-
+const radioChange = (acceptAll:number) => {
+  store.dispatch('user/configSettingNew', { acceptAll })
+}
+const timer = ref()
+timer.value = setInterval(() => {
+  store.dispatch('betting/marketHit')
+}, 10 * 1000)
 </script>
 <style lang="scss" scoped>
 .betting-slip-bg {

@@ -2,11 +2,13 @@ import { Module } from 'vuex'
 import { login } from '@/api/login'
 import { User } from '#/store'
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import { configSettingNew } from '@/api/auth'
 
 const userModule: Module<User, any> = {
   namespaced: true,
   state: {
-    token: getToken()
+    token: getToken(),
+    userConfig: {}
   },
   mutations: {
     SET_TOKEN: (state, token: string) => {
@@ -45,15 +47,14 @@ const userModule: Module<User, any> = {
     // user logout
     logout({ state, dispatch }) {
       return new Promise((resolve) => {
-        // userLogout(state.token)
-        //   .then((res) => {
         dispatch('clearUserInfo')
         resolve({})
-        // })
-        // .catch((error) => {
-        //   reject(error)
-        // })
       })
+    },
+    // 用户配置
+    async configSettingNew({ state }, params = {}) {
+      const res = await configSettingNew(params)
+      state.userConfig = res.data || {}
     },
     // remove token
     clearUserInfo({ commit, dispatch }) {
