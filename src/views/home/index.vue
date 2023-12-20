@@ -1,7 +1,7 @@
 <template>
   <div class="home-page">
 
-    <ArrowTitle class="ml20 mt10 mb10" :src="titleHot" text="热门赛事" @returnSuccess="returnStatus" />
+    <ArrowTitle class="mt10 mb10" :src="titleHot" text="热门赛事" @returnSuccess="returnStatus" />
 
     <div class="Hot-Match-Group">
       <img :src="xxx1" />
@@ -10,7 +10,7 @@
       <img :src="xxx1" />
     </div>
 
-    <ArrowTitle class="ml20 mt10 mb10" :src="titleRecommend" text="推荐比赛" @returnSuccess="returnStatus" />
+    <ArrowTitle class="mt10 mb10" :src="titleRecommend" text="推荐比赛" @returnSuccess="returnStatus" />
 
     <div class="Recommend-Match-Tabs">
       <SportsButton text="FT" :active="true" />
@@ -21,7 +21,7 @@
 
     <homeMatchHandicap class="mt20" />
 
-    <ArrowTitle class="ml20 mt10 mb10" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
+    <ArrowTitle class="mt10 mb10" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
     <div class="Recommend-Match-Tabs">
       <SportsButton text="FT" :active="true" />
       <SportsButton text="BK" />
@@ -60,6 +60,7 @@ const returnStatus = (val:any) => {
 <style lang="scss" scoped>
 .home-page{
   overflow: hidden;
+  padding: 0 40px;
  .van-pull-refresh {
     min-height: calc(100vh - 96px);
   }
@@ -82,7 +83,6 @@ const returnStatus = (val:any) => {
 .Hot-Match-Group{
   display: flex;
   overflow: auto;
-  margin: 0 40px;
   &::-webkit-scrollbar {
     height: 0;
     display: none;
@@ -95,7 +95,6 @@ const returnStatus = (val:any) => {
   }
 }
 .Recommend-Match-Tabs{
-  margin: 0 40px;
   display: flex;
   overflow: auto;
   &::-webkit-scrollbar {

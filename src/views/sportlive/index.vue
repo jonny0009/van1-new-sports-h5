@@ -21,6 +21,9 @@ import TextButton from '@/components/Button/TextButton/index.vue'
 import MatchLive from '@/components/HomeMatch/MatchLive/index.vue'
 </script>
 <style lang="scss" scoped>
+.sportlive{
+  padding: 0 40px;
+}
 .sportlive-Match-Tabs{
   margin: 10px 0;
   display: flex;
