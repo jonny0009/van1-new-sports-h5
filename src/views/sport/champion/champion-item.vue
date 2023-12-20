@@ -73,6 +73,11 @@ const clickOpen = () => {
         overflow: hidden;
         transition: background-color .2s;
 
+        &.selected{
+          color: #fff;
+          background-color: #f00;
+        }
+
         .betslipLine {
           width: 100%;
           flex: 1;
