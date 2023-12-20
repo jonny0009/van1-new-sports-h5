@@ -7,7 +7,9 @@
       }
     ]"
   >
-    {{ textval }}
+    <span>
+      {{ textval }}
+    </span>
   </div>
 </template>
 <script lang="ts" setup>
@@ -54,6 +56,10 @@ textval.value = props.text
   color: #1f2630;
   transition: all .3s;
   font-size: 24px;
+  span{
+    line-height: 24px;
+    font-size: 24px;
+  }
   &.active{
     background:#7642fe;
     color:#fff;

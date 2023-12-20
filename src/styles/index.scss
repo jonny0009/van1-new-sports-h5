@@ -11,7 +11,14 @@
   font-family: "iconfont"; /* Project id  */
   src: url('@/assets/icon/iconfont.ttf?t=1702953359576') format('truetype');
 }
-.iconfont{font-family:iconfont!important;font-size:32px;font-style:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.iconfont{
+  font-family:iconfont!important;
+  font-size:36px;
+  height: 36px;
+  font-style:normal;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
 //
 //
 //重构=>对照表
