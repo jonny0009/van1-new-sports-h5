@@ -1,8 +1,8 @@
 <template>
   <div class="global-bar-header">
     <headerView />
-    <sportsTabsView />
-    <barTabsView class="mt10 mb10" />
+    <sportsTabsView v-if="$route.meta.showSportsTabsView" />
+    <barTabsView v-if="$route.meta.showBarTabsView" class="mt10 mb10" />
   </div>
 </template>
 <script lang="ts" setup>

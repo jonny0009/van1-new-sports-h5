@@ -7,7 +7,11 @@ export default {
     {
       path: '/sportlive',
       component: () => import('@/views/sportlive/index.vue'),
-      name: 'Sportlive'
+      name: 'Sportlive',
+      meta: {
+        showSportsTabsView: true,
+        showBarTabsView: true
+      }
     }
   ]
 }
