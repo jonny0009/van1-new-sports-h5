@@ -52,6 +52,7 @@
       <div v-else class="bet-content">
         <Singles v-for="(market, index) in markets" :key="index" :market-info="market"></Singles>
       </div>
+      {{ $t('home.title') }}
     </div>
 
   </div>
