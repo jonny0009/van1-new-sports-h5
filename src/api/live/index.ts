@@ -15,3 +15,35 @@ export const anchorLiveList = (params:any) => {
     params
   })
 }
+
+export const matcheInfo = (params:any) => {
+  return request({
+    url: '/ai/mobile/detail/matches',
+    method: 'get',
+    params
+  })
+}
+
+export const extendInfo = (params:any) => {
+  return request({
+    url: '/ai/mobile/detail/extend',
+    method: 'get',
+    params
+  })
+}
+
+export const playGroup = (params:any) => {
+  return request({
+    url: '/ai/mobile/detail/playGroup',
+    method: 'get',
+    params
+  })
+}
+
+export const ratioRateInfo = (params:any) => {
+  return request({
+    url: '/ai/mobile/detail/ratioRateInfo',
+    method: 'get',
+    params
+  })
+}

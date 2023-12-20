@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "axios": "0.21.1",
+    "dayjs": "^1.11.10",
     "md5": "^2.3.0",
     "sockjs-client": "1.6.0",
     "stompjs": "2.3.3",

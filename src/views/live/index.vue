@@ -5,8 +5,8 @@
         class="navbar-item"
         v-for="(item, i) in navList"
         :key="i"
-        :class="{ active: navActive === item.num }"
-        @click="onNav(item)"
+        :class="{ active: navActive === item.type }"
+        @click="onNavClick(item)"
       >
         <SvgIcon :name="item.iconName" />
         <span>{{ item.name }}</span>
@@ -16,7 +16,7 @@
     <div class="wrapper">
       <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <div class="live-item" v-for="(item, i) in list" :key="i">
-          <LiveItem :item="item" @click="itemClick(item)" />
+          <LiveItem :item="item" @click="onItemClick(item)" />
         </div>
       </van-list>
     </div>
@@ -26,63 +26,67 @@
 <script lang="ts" setup>
 import { reactive, ref, Ref, onMounted } from 'vue'
 import LiveItem from './components/LiveItem.vue'
+import { anchorLiveList } from '@/api/live'
 import router from '@/router'
-import { liveGameTypeList } from '@/api/live'
 
-onMounted(() => {
-  getGameType()
-})
-
-const getGameType = async () => {
-  const res = await liveGameTypeList({})
-  console.log(res)
+const navList = reactive([
+  { type: 'RB', name: '热播', iconName: 'live-hot' },
+  { type: 'FT', name: '足球', iconName: 'live-football' },
+  { type: 'BK', name: '篮球', iconName: 'live-basketball' },
+  { type: 'TN', name: '网球', iconName: 'live-tennisball' },
+  { type: 'OP_BM', name: '羽毛球', iconName: 'live-badminton' }
+])
+const navActive = ref('RB')
+const onNavClick = (item: any) => {
+  navActive.value = item.type
+  finished.value = false
+  loading.value = true
+  list.value = []
+  page = 0
+  onLoad()
 }
 
+let page: number = 0
 const list: Ref<Object[]> = ref([])
 const loading = ref(false)
 const finished = ref(false)
-const onLoad = () => {
-  // 异步更新数据
-  // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-  setTimeout(() => {
-    for (let i = 0; i < 10; i++) {
-      list.value.push({})
-    }
-
-    // 加载状态结束
+const onLoad = async () => {
+  page++
+  const params: any = {
+    page: page,
+    pageSize: 20
+    // rbType: '',
+    // gameType: '',
+    // videoType: 2
+  }
+  if (navActive.value == 'RB') {
+    params.videoType = 2
+  } else {
+    params.gameType = navActive.value
+  }
+  const res: any = await anchorLiveList(params)
+  const data = res.data
+  if (res.code == 200) {
+    data.list.forEach((item: any) => {
+      list.value.push(item)
+    })
     loading.value = false
-
-    // 数据全部加载完成
-    if (list.value.length >= 40) {
-      finished.value = true
-    }
-  }, 1000)
-}
-const itemClick = (item: any) => {
-  console.log(item)
-  router.push(`/live/1234`)
+    finished.value = list.value.length == data.total
+  }
 }
 
-const navList = reactive([
-  { num: 0, name: '热播', iconName: 'live-hot' },
-  { num: 1, name: '足球', iconName: 'live-football' },
-  { num: 2, name: '篮球', iconName: 'live-basketball' },
-  { num: 3, name: '网球', iconName: 'live-tennisball' },
-  { num: 4, name: '羽毛球', iconName: 'live-badminton' }
-])
-const navActive = ref(0)
-const onNav = (item: any) => {
-  navActive.value = item.num
-  loading.value = true
-  list.value = []
-  onLoad()
+const onItemClick = (item: any) => {
+  router.push(`/live/${item.gidm}`)
 }
+
+onMounted(() => {})
 </script>
 
 <style lang="scss" scoped>
 .live-page {
   height: 100%;
-  padding: 30px 0 88px 0;
+  padding-top: 30px;
+  padding-bottom: calc(88px + 96px);
 }
 .navbar {
   width: 100%;
