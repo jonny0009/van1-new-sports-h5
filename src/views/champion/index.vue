@@ -106,7 +106,7 @@ const getChampionLeagueInfo = async () => {
 const clickSportPage = (item: any) => {
   router.push({
     name: 'Sport',
-    query: { leagueId: item.leagueId }
+    query: { leagueId: item.leagueId, type: item.gameType }
   })
 }
 

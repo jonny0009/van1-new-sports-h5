@@ -1,14 +1,19 @@
 <template>
   <div class="sport-page">
-    sport-page<br>
-    sport-page<br>
-    sport-page<br>
+    <div class="sportlive-Match-Tabs">
+      <TextButton text="推荐" :active="true" />
+      <ImageButton text="暗示暗示暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" :active="true" />
 
+    </div>
+    <MatchLive />
     <ChampionList v-if="championList.length" :champion-list="championList" />
   </div></template>
 
 <script lang="ts" setup>
+import MatchLive from '@/components/HomeMatch/MatchLive/index.vue'
 import ChampionList from './champion/index.vue'
+import TextButton from '@/components/Button/TextButton/index.vue'
+import ImageButton from '@/components/Button/ImageButton/index.vue'
 import { useRoute } from 'vue-router'
 import { ref, onBeforeMount } from 'vue'
 import { apiChampionpPlayTypes } from '@/api/champion'
