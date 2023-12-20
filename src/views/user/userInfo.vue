@@ -4,13 +4,18 @@
       <template #left>
         <img class="img_1" src="@/assets/images/login/return@2x.png" alt="" @click="goBack()" />
       </template>
+      <template #right>
+        <img class="img_1" src="@/assets/images/user/edit.png" alt="" @click="goBack()" />
+      </template>
     </van-nav-bar>
-    <div class="content">
-      <p v-html="content"></p>
+    <div class="user">
+      <div class="user-info">
+        <div class="user-img"></div>
+      </div>
     </div>
-    <div class="noticeTime">
-      {{ '2023/12/10 13:59:59' }}
-    </div>
+    <!-- <div class="content">
+    </div> -->
+
   </div>
 </template>
 
@@ -19,7 +24,6 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 const $router = useRouter()
 // const dataList = reactive([])
-const content = ref('111111')
 const goBack = () => {
   $router.back()
 }
@@ -28,16 +32,17 @@ const title = ref('个人档案')
 </script>
 
 <style lang="scss" scoped>
-.noticeDetail {
+.userInfo {
   .bg-title {
     width: 100%;
-    height: 150px;
-    background: url('@/assets/images/login/bg-tit@2x.png');
+    height: 120px;
+    // background: url('@/assets/images/login/bg-tit@2x.png');
+    background-image: linear-gradient(180deg, #181F2A 0%, #260B62 100%);
     background-size: 100% 100%;
 
     .img_1 {
-      width: 36px;
-      height: 36px;
+      width: 30px;
+      height: 30px;
     }
   }
 
@@ -48,18 +53,10 @@ const title = ref('个人档案')
 
   }
 
-  .noticeTime {
-    font-family: PingFangSC-Regular;
-    font-size: 24px;
-    color: #546371;
-    letter-spacing: 0;
-    text-align: right;
-    font-weight: 400;
-    padding: 42px 36px;
-    text-align: right;
-  }
 }
+</style>
 
+<style scoped>
 :deep(.van-field__control) {
   height: 50px;
   font-size: 30px;
@@ -68,9 +65,7 @@ const title = ref('个人档案')
 :deep(.van-icon) {
   font-size: 40px;
 }
-</style>
 
-<style scoped>
 :deep(.van-nav-bar__content) {
   height: 150px;
 }
@@ -83,7 +78,7 @@ const title = ref('个人档案')
   color: #FFFFFF;
   letter-spacing: 0;
   text-align: center;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 :deep(.van-icon) {

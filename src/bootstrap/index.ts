@@ -6,15 +6,14 @@ export default async () => {
   if (searchParams.token) {
     store.commit('user/SET_TOKEN', searchParams.token)
   }
-// 先隐藏,写页面
-//   // 商户语言
-//   await store.dispatch('app/queryCMerLanguage')
-//   // 商户配置
-//   await store.dispatch('app/businessConfig')
-//   // 商户配置2
-//   await store.dispatch('app/merchantConfig')
-//   // 模块控制
-//   await store.dispatch('app/moduleConfig')
-//   // 获取全部体育项
-//   await store.dispatch('app/getAllSports')
+  // 商户语言
+  await store.dispatch('app/queryCMerLanguage')
+  // 商户配置
+  await store.dispatch('app/businessConfig')
+  // 商户配置2
+  await store.dispatch('app/merchantConfig')
+  // 模块控制
+  await store.dispatch('app/moduleConfig')
+  // 获取全部体育项
+  await store.dispatch('app/getAllSports')
 }
