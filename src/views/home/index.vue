@@ -38,14 +38,13 @@
         </span>
       </div>
 
-      <p>刷新次数: {{ count }}</p>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-// home components
-import homeMatchHandicap from './components/homeMatchHandicap/index.vue'
+// home
+import homeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
 // common components
 import ArrowTitle from '@/components/Title/ArrowTitle/index.vue'
 import SportsButton from '@/components/Button/SportsButton/index.vue'
@@ -54,8 +53,6 @@ import xxx1 from '@/assets/images/home/other/x1.png'
 import titleHot from '@/assets/images/home/title-hot.png'
 import titleRecommend from '@/assets/images/home/title-recommend.png'
 import titleTime from '@/assets/images/home/title-time.png'
-import { ref } from 'vue'
-const count = ref(0)
 const returnStatus = (val:any) => {
   console.log(val)
 }

@@ -1,15 +1,37 @@
 <template>
-  <div class="sport-page">
-    sportlive
-    sportlive
-    sportlive
-    sportlive
+  <div class="sportlive">
+    <div class="sportlive-Match-Tabs">
+      <TextButton text="推荐" :active="true" />
+      <SportsButton text="FT" />
+      <SportsButton text="BK" />
+      <SportsButton text="TN" />
+      <SportsButton text="OP_BM" />
+    </div>
+
+    <MatchLive />
   </div>
 </template>
 <script lang="ts" setup>
+import SportsButton from '@/components/Button/SportsButton/index.vue'
+import TextButton from '@/components/Button/TextButton/index.vue'
+import MatchLive from '@/components/HomeMatch/MatchLive/index.vue'
 </script>
-<style lang="scss">
-.sport-page{
-  padding: 0 36px;
+<style lang="scss" scoped>
+.sportlive-Match-Tabs{
+  margin: 10px 36px;
+  display: flex;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    height: 0;
+    display: none;
+  }
+  .textButton {
+    margin-right: 20px;
+    flex-shrink: 1;
+  }
+  .SportsButton{
+    margin-right: 20px;
+    flex-shrink: 1;
+  }
 }
 </style>

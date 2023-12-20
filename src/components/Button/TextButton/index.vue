@@ -43,6 +43,7 @@ textval.value = props.text
 
 <style lang="scss" scoped>
 .textButton{
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
   height: 64px;
