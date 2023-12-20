@@ -1,10 +1,10 @@
 {
   "index.html": {
-    "file": "assets/index.6b55a888.js",
+    "file": "assets/index.942cfb62.js",
     "src": "index.html",
     "isEntry": true,
     "imports": [
-      "_vue.703cc109.js"
+      "_vue.d4af3fe6.js"
     ],
     "dynamicImports": [
       "src/views/champion/index.vue",
@@ -22,7 +22,7 @@
       "src/views/home/index.vue"
     ],
     "css": [
-      "assets/index.d2fe5a57.css"
+      "assets/index.d8905723.css"
     ],
     "assets": [
       "assets/avatar.c8ad10a5.png",
@@ -35,49 +35,49 @@
       "assets/single-bg.4926805d.png"
     ]
   },
-  "_vue.703cc109.js": {
-    "file": "assets/vue.703cc109.js"
+  "_vue.d4af3fe6.js": {
+    "file": "assets/vue.d4af3fe6.js"
   },
   "src/views/login/index.vue": {
-    "file": "assets/index.aab3dcd4.js",
+    "file": "assets/index.03804058.js",
     "src": "src/views/login/index.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_vue.703cc109.js"
+      "_vue.d4af3fe6.js"
     ]
   },
   "src/views/error-page/401.vue": {
-    "file": "assets/401.37c3842b.js",
+    "file": "assets/401.76c475da.js",
     "src": "src/views/error-page/401.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_vue.703cc109.js"
+      "_vue.d4af3fe6.js"
     ]
   },
   "src/views/error-page/404.vue": {
-    "file": "assets/404.de45dd9e.js",
+    "file": "assets/404.87f0e542.js",
     "src": "src/views/error-page/404.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_vue.703cc109.js"
+      "_vue.d4af3fe6.js"
     ]
   },
   "src/views/error-page/503.vue": {
-    "file": "assets/503.1c655dd0.js",
+    "file": "assets/503.86a6bf71.js",
     "src": "src/views/error-page/503.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_vue.703cc109.js"
+      "_vue.d4af3fe6.js"
     ]
   },
   "src/views/home/index.vue": {
-    "file": "assets/index.76f224d3.js",
+    "file": "assets/index.db3dca0d.js",
     "src": "src/views/home/index.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_vue.703cc109.js",
-      "_index.d0b11eb7.js",
-      "_index.db4c3fec.js"
+      "_vue.d4af3fe6.js",
+      "_index.14767803.js",
+      "_index.b9abae27.js"
     ],
     "css": [
       "assets/index.8bcc5b06.css"
@@ -86,76 +86,76 @@
       "assets/x1.1ce38010.png"
     ]
   },
-  "_index.db4c3fec.js": {
-    "file": "assets/index.db4c3fec.js",
+  "_index.b9abae27.js": {
+    "file": "assets/index.b9abae27.js",
     "imports": [
-      "_vue.703cc109.js"
+      "_vue.d4af3fe6.js"
     ],
     "css": [
       "assets/index.da2af347.css"
     ]
   },
-  "_index.d0b11eb7.js": {
-    "file": "assets/index.d0b11eb7.js",
+  "_index.14767803.js": {
+    "file": "assets/index.14767803.js",
     "imports": [
-      "_vue.703cc109.js"
+      "_vue.d4af3fe6.js"
     ],
     "css": [
       "assets/index.3d94b3e7.css"
     ]
   },
   "src/views/champion/index.vue": {
-    "file": "assets/index.7ef7e220.js",
+    "file": "assets/index.88e29868.js",
     "src": "src/views/champion/index.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_index.db4c3fec.js",
-      "_index.9dbbd84a.js",
+      "_index.b9abae27.js",
+      "_index.30527d32.js",
       "index.html",
-      "_vue.703cc109.js"
+      "_vue.d4af3fe6.js"
     ],
     "css": [
       "assets/index.3caf5f37.css"
     ]
   },
-  "_index.9dbbd84a.js": {
-    "file": "assets/index.9dbbd84a.js",
+  "_index.30527d32.js": {
+    "file": "assets/index.30527d32.js",
     "imports": [
       "index.html"
     ]
   },
   "src/views/document/index.vue": {
-    "file": "assets/index.37840e26.js",
+    "file": "assets/index.cba41149.js",
     "src": "src/views/document/index.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_vue.703cc109.js",
-      "_index.d0b11eb7.js",
-      "_index.db4c3fec.js"
+      "_vue.d4af3fe6.js",
+      "_index.14767803.js",
+      "_index.b9abae27.js"
     ],
     "css": [
       "assets/index.9a03050b.css"
     ]
   },
   "src/views/game/index.vue": {
-    "file": "assets/index.ddc88d7e.js",
+    "file": "assets/index.7431a8d5.js",
     "src": "src/views/game/index.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_vue.703cc109.js"
+      "_vue.d4af3fe6.js"
     ],
     "css": [
       "assets/index.b1415f89.css"
     ]
   },
   "src/views/live/index.vue": {
-    "file": "assets/index.5b059df1.js",
+    "file": "assets/index.0a23ec85.js",
     "src": "src/views/live/index.vue",
     "isDynamicEntry": true,
     "imports": [
       "_team_img.865f1d94.js",
       "_s_hot.cb911bff.js",
-      "_vue.703cc109.js",
+      "_vue.d4af3fe6.js",
       "index.html"
     ],
     "css": [
@@ -172,12 +172,12 @@
     "file": "assets/s_hot.cb911bff.js"
   },
   "src/views/live/id.vue": {
-    "file": "assets/id.9defff35.js",
+    "file": "assets/id.aaab660f.js",
     "src": "src/views/live/id.vue",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_vue.703cc109.js",
+      "_vue.d4af3fe6.js",
       "_sub.216b2a49.js",
       "_team_img.865f1d94.js",
       "_s_hot.cb911bff.js"
@@ -194,14 +194,14 @@
     "file": "assets/sub.216b2a49.js"
   },
   "src/views/live/game.vue": {
-    "file": "assets/game.285467eb.js",
+    "file": "assets/game.f82d13e3.js",
     "src": "src/views/live/game.vue",
     "isDynamicEntry": true,
     "imports": [
       "_team_img.865f1d94.js",
       "_sub.216b2a49.js",
       "index.html",
-      "_vue.703cc109.js"
+      "_vue.d4af3fe6.js"
     ],
     "css": [
       "assets/game.d0a5631a.css"
@@ -211,12 +211,12 @@
     ]
   },
   "src/views/sport/index.vue": {
-    "file": "assets/index.0db6cfc0.js",
+    "file": "assets/index.8907e4b6.js",
     "src": "src/views/sport/index.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_index.9dbbd84a.js",
-      "_vue.703cc109.js",
+      "_index.30527d32.js",
+      "_vue.d4af3fe6.js",
       "index.html"
     ],
     "css": [
@@ -224,11 +224,11 @@
     ]
   },
   "src/views/test2/index.vue": {
-    "file": "assets/index.31abb13a.js",
+    "file": "assets/index.30e52b6b.js",
     "src": "src/views/test2/index.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_vue.703cc109.js"
+      "_vue.d4af3fe6.js"
     ],
     "css": [
       "assets/index.6450abaa.css"
