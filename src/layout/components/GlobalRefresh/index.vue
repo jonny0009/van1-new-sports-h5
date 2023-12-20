@@ -1,7 +1,9 @@
 <template>
   <van-pull-refresh v-if="$route.meta.showRefresh" v-model="isLoading" class="GlobalRefresh" @refresh="onRefresh">
-    <slot>
-    </slot>
+    <div class="GlobalRefresh-main">
+      <slot>
+      </slot>
+    </div>
   </van-pull-refresh>
   <slot v-else>
   </slot>
@@ -21,6 +23,6 @@ const onRefresh = (val:any) => {
 </script>
 <style lang="scss" >
 .GlobalRefresh {
-  height: calc(100vh - 96px);
+  min-height: calc(100vh - 96px);
 }
 </style>
