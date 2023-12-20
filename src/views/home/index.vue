@@ -42,12 +42,15 @@
             查看更多比赛
           </span>
         </div>
+
+        <p>刷新次数: {{ count }}</p>
       </div>
     </van-pull-refresh>
   </div>
 </template>
 
 <script lang="ts" setup>
+// import { showToast } from 'vant'
 // home components
 import homeBarHeader from './components/homeBarHeader/index.vue'
 import homeTabs from './components/homeTabs/index.vue'
@@ -62,8 +65,15 @@ import titleRecommend from '@/assets/images/home/title-recommend.png'
 import titleTime from '@/assets/images/home/title-time.png'
 import { ref } from 'vue'
 const isLoading = ref(false)
-const onRefresh = () => {
+const count = ref(0)
+const onRefresh = (val:any) => {
   isLoading.value = false
+  console.log(val)
+  // setTimeout(() => {
+  //   showToast('刷新成功')
+  //   isLoading.value = false
+  //   count.value++
+  // }, 1000)
 }
 const returnStatus = (val:any) => {
   console.log(val)
@@ -71,9 +81,11 @@ const returnStatus = (val:any) => {
 </script>
 <style lang="scss" scoped>
 .home-page{
-  overflow: auto;
-  .refresh-wrap{
+  overflow: hidden;
+ .van-pull-refresh {
     min-height: calc(100vh - 96px);
+  }
+  .refresh-wrap{
     padding-bottom: 190px;
   }
 }
