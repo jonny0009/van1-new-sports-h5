@@ -5,14 +5,16 @@
     </div>
     <div class="content">
       <div class="title">
-        <van-icon name="circle" />
-        <div class="betting-name">小于 +2.75</div>
+        <SportsIcon :icon-src="marketInfo.gameType" />
+        <div class="betting-name">{{ marketInfo.ratioName }}</div>
       </div>
       <div class="details">
-        <div class="play-name">全场 大小盘</div>
-        <div class="team-info">巴巴斯托 对 艾美利亚</div>
+        <div v-if="marketInfo.isChampion" class="play-name">{{ marketInfo.championType }}</div>
+        <div v-else v-play="marketInfo" class="play-name"></div>
+        <div v-if="marketInfo.isChampion" class="team-info">冠军</div>
+        <div v-else class="team-info">{{ marketInfo.homeTeam }} VS {{ marketInfo.awayTeam }}</div>
       </div>
-      <div class="betting-odds">@2.04</div>
+      <div class="betting-odds">@{{ marketInfo.ior }}</div>
       <div class="action">
         <div class="betting-slip-input">
           <span class="currency"><van-icon name="balance-o" /></span>
@@ -63,7 +65,7 @@ console.log(props)
   .content {
     height: 178px;
     flex: 1;
-    padding: 10px;
+    padding: 12px 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -72,7 +74,6 @@ console.log(props)
     .title {
       display: flex;
       align-items: center;
-      line-height: 16px;
 
       .betting-name {
         margin-left: 8px;
@@ -85,8 +86,6 @@ console.log(props)
     }
 
     .details {
-      margin-bottom: 2px;
-
       .play-name {
         font-family: PingFangSC-Medium;
         font-size: 24px;
@@ -116,7 +115,6 @@ console.log(props)
       position: absolute;
       right: 10px;
       bottom: 10px;
-      width: 100%;
       display: flex;
       justify-content: flex-end;
 

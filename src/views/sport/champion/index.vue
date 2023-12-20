@@ -19,11 +19,11 @@ import championIcon from '@/assets/images/champion/league-icon.png'
 import Championitem from './champion-item.vue'
 import ArrowTitle from '@/components/Title/ArrowTitle/index.vue'
 import titleIcon from '@/assets/images/home/title-recommend.png'
-import { ref, onBeforeMount } from 'vue'
+import { ref } from 'vue'
 const isOpen: any = ref(true)
-const props = defineProps({
+defineProps({
   championList: {
-    type: Array,
+    type: Array as any,
     default: function () {
       return []
     }
