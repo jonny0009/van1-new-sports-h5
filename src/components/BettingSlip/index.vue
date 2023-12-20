@@ -54,6 +54,7 @@
       <Nothing v-if="markets.length === 0"></Nothing>
       <div v-else class="bet-content">
         <Singles v-for="(market, index) in markets" :key="index" :market-info="market"></Singles>
+        <div class="confirm-button"></div>
       </div>
     </div>
 
@@ -88,7 +89,7 @@ const tableLeft = computed(() => {
 const isOne = computed(() => store.state.betting.isOne)
 const markets = computed(() => store.state.betting.markets)
 const userConfig = computed(() => store.state.user.userConfig)
-watch(isOne.value, () => {
+watch(() => isOne.value, () => {
   if (isOne.value) {
     open.value = true
   }

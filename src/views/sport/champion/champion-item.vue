@@ -23,7 +23,6 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { MarketInfo } from '@/entitys/MarketInfo'
 const isOpen: any = ref(false)
 const props = defineProps({
   gameDetail: {
@@ -33,14 +32,9 @@ const props = defineProps({
     }
   }
 })
-
 const itemList: any = ref()
 itemList.value = props.gameDetail.champion.ratioData.slice(0, 9)
 
-itemList.value = itemList.value.map((item:any) => {
-  item.marketInfo = new MarketInfo(item)
-  return item
-})
 const clickOpen = () => {
   isOpen.value = !isOpen.value
   if (isOpen.value) {
