@@ -1,7 +1,7 @@
 <template>
   <div class="live-page">
     <div class="video">
-      <video ref="videoRef" class="video-js"></video>
+      <video ref="videoRef" class="video-js" playsinline></video>
     </div>
 
     <div class="tab">
@@ -9,10 +9,10 @@
         class="tab-item"
         v-for="(item, i) in navList"
         :key="i"
-        :class="{ active: navActive === item.num }"
+        :class="{ active: navActive === item.type }"
         @click="onTab(item)"
       >
-        <img :src="navActive === item.num ? item.onIcon : item.unIcon" alt="" />
+        <img :src="navActive === item.type ? item.onIcon : item.unIcon" alt="" />
         <span>{{ item.name }}</span>
       </div>
     </div>
@@ -27,43 +27,47 @@
 import 'video.js/dist/video-js.min.css'
 import videojs from 'video.js'
 import { reactive, ref, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
 import TabChat from './components/TabChat.vue'
 import TabBet from './components/TabBet.vue'
 import TabWith from './components/TabWith.vue'
 import TabMore from './components/TabMore.vue'
+import { matcheInfo, extendInfo } from '@/api/live'
+
+const route = useRoute()
 
 const getImage = (name: string) => {
   return new URL(`/src/assets/images/live/${name}`, import.meta.url).href
 }
 
 const navList = reactive([
-  { num: 0, name: '聊天室', unIcon: getImage('nav_chat_un.png'), onIcon: getImage('nav_chat_on.png') },
-  { num: 1, name: '投注', unIcon: getImage('nav_bet_un.png'), onIcon: getImage('nav_bet_on.png') },
-  { num: 2, name: '跟注', unIcon: getImage('nav_add_un.png'), onIcon: getImage('nav_add_on.png') },
-  { num: 3, name: '更多', unIcon: getImage('nav_more_un.png'), onIcon: getImage('nav_more_on.png') }
+  { type: 0, name: '聊天室', unIcon: getImage('nav_chat_un.png'), onIcon: getImage('nav_chat_on.png') },
+  { type: 1, name: '投注', unIcon: getImage('nav_bet_un.png'), onIcon: getImage('nav_bet_on.png') },
+  { type: 2, name: '跟注', unIcon: getImage('nav_add_un.png'), onIcon: getImage('nav_add_on.png') },
+  { type: 3, name: '更多', unIcon: getImage('nav_more_un.png'), onIcon: getImage('nav_more_on.png') }
 ])
 const navActive = ref(2)
 const compsList = [TabChat, TabBet, TabWith, TabMore]
 const onTab = (item: any) => {
-  navActive.value = item.num
+  navActive.value = item.type
 }
 
 let player: any = null
 const videoRef = ref<HTMLDivElement | string>('')
+const videoUrl = ref(null)
 const initVideo = () => {
   const options = {
     language: 'zh-CN',
-    preload: 'auto',
+    preload: 'metadata',
     width: '100%',
     height: '100%',
-    autoplay: true, // 'muted',
+    autoplay: 'muted',
     controls: true,
     fluid: true,
     sources: [
       {
-        src: '//vjs.zencdn.net/v/oceans.mp4',
-        type: 'video/mp4'
-        // type: 'application/x-mpegURL',
+        src: videoUrl.value,
+        type: 'application/x-mpegURL'
       }
     ]
   }
@@ -72,8 +76,25 @@ const initVideo = () => {
   })
 }
 
+const getMatcheInfo = async () => {
+  const gidm = route.params['id']
+  await matcheInfo({ gidm })
+}
+
+const getExtendInfo = async () => {
+  const gidm = route.params['id']
+  const res: any = await extendInfo({ gidm })
+  const data = res.data || {}
+  if (res.code == 200) {
+    const { liveali } = data.streamNa
+    videoUrl.value = liveali.m3u8
+    initVideo()
+  }
+}
+
 onMounted(() => {
-  initVideo()
+  getMatcheInfo()
+  getExtendInfo()
 })
 
 onUnmounted(() => {
@@ -86,7 +107,7 @@ onUnmounted(() => {
 .live-page {
   position: relative;
   height: 100%;
-  padding-bottom: 88px;
+  padding-bottom: calc(88px + 96px);
 }
 
 .video {
