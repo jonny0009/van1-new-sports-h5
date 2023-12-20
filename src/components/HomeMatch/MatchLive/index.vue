@@ -8,8 +8,8 @@
     <div class="home-match">
       <div calss="up-match-group__body">
         <div class="up-match">
-          <!--  -->
 
+          <!--  -->
           <div class="match-info-live__header border-bottom">
             <div class="up-match-league">
               <div class="text">印度 - 德里超级联赛</div>
@@ -22,32 +22,20 @@
             </div>
           </div>
 
-          <div class="up-match__header border-bottom">
-            <div class="match-info">
-              <div class="match-team-logo">
-                <img
-                  class="my-image home"
-                  src="https://2up-pro-bucket.s3.ap-southeast-1.amazonaws.com/a20575f19a004a102cd23ff21049cb87ad19670d.png"
-                  alt=""
-                  style="object-fit: contain;"
-                >
-                <img
-                  class="my-image away"
-                  src="https://2up-pro-bucket.s3.ap-southeast-1.amazonaws.com/459758119fe1c93df257d17ba261dd6e6dfbcc42.png"
-                  alt=""
-                  style="object-fit: contain;"
-                >
+          <!--  -->
+          <div class="up-match-score">
+            <div class="item">
+              <img class="my-image img" :src="teamHome" alt="">
+              <div class="name">丁科·迪涅夫</div>
+              <div class="container">
+                <div class="value">0</div>
               </div>
-              <div class="match-info__content">
-                <div class="team">
-                  <span class="match-team-name">云达不莱梅 v 莱比锡红牛</span>
-                  <div class="flex-1"></div>
-                  <div class="up-match-time">1:30 AM</div>
-                </div>
-                <div class="up-match-league">
-                  <SportsIcon :icon-src="'FT'" />
-                  <div class="text">德国 - 甲级联赛</div>
-                </div>
+            </div>
+            <div class="item">
+              <img class="my-image img" :src="teamAway" alt="">
+              <div class="name">彼得·亚马基宁</div>
+              <div class="container">
+                <div class="value">0</div>
               </div>
             </div>
           </div>
@@ -172,6 +160,7 @@
 
              -->
           </div>
+
         </div>
       </div>
       <!--  -->
@@ -195,4 +184,6 @@
 </template>
 <script lang="ts" setup>
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
+import teamAway from '@/assets/images/home/match/team-away.svg'
+import teamHome from '@/assets/images/home/match/team-home.svg'
 </script>
