@@ -7,11 +7,13 @@
       <SportsButton text="TN" />
       <SportsButton text="OP_BM" />
     </div>
-
     <MatchLive />
-
     <MatchLive />
-
+    <div class="Button-MatchMore mt20">
+      <span>
+        查看更多比赛
+      </span>
+    </div>
     <div class="footerHeight"></div>
   </div>
 </template>
