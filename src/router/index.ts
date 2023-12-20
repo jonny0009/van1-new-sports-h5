@@ -67,7 +67,7 @@ export const constantRoutes: Array<any> = [
   {
     path: '/user',
     component: () => import('@/views/user/index.vue'),
-    // redirect: '/user',
+    redirect: '/user/userRecord',
     hidden: true,
     children: [
       {
@@ -91,6 +91,12 @@ export const constantRoutes: Array<any> = [
       {
         path: '/user/result',
         component: () => import('@/views/user/result.vue'),
+        name: 'Result',
+        hidden: true
+      },
+      {
+        path: '/user/userInfo',
+        component: () => import('@/views/user/userInfo.vue'),
         name: 'Result',
         hidden: true
       }

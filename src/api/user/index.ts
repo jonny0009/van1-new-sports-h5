@@ -1,13 +1,14 @@
 import request from '@/utils/request'
 
 /**
- * 登录
+ * 用户
  * @param {*} data
  * @returns
  */
-export const login = (data:any) => {
+// 盘口设置
+export const getPlateMask = (data:any) => {
   return request({
-    url: '/ai/mobile/login',
+    url: 'ai/mobile/player/configSettingNew',
     method: 'post',
     data
   })
