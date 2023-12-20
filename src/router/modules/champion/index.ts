@@ -10,7 +10,8 @@ export default {
       name: 'Champion',
       meta: {
         showSportsTabsView: true,
-        showBarTabsView: true
+        showBarTabsView: true,
+        showRefresh: true
       }
     }
   ]
