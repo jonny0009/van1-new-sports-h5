@@ -16,12 +16,15 @@ declare interface User {
   token: string | undefined | null
 }
 declare interface Betting {
+  mode: any
   s: any
   t: any
   comboS: any
   comboT: any
   markets: any
+  results: any
   isOne: boolean
+  hitState: any
 }
 
 declare module '@vue/runtime-core' {

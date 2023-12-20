@@ -80,14 +80,14 @@ export const hitParams = (bets: any) => {
   }
 }
 // 筛选投注参数
-export const buyParams = (bets: any, s: any, t: any) => {
+export const buyParams = (markets: any, s: any, t: any) => {
   const { userConfig } = store.state.user || {}
   const { handicapType } = userConfig || {}
   const autoRatio = userConfig === 1 ? 'S' : 'N'
   // 当前选择的盘口 欧洲盘/香港盘
   const oddfType = !handicapType ? 'H' : handicapType
   const betSubList: Array<any> = []
-  bets.map((bet: any) => {
+  markets.map((bet: any) => {
     let gidm = bet.gidm
     const {
       gameId,

@@ -5,6 +5,7 @@ import { betParams, buyParams, hitParams } from '@/utils/betting'
 import { MarketInfo } from '@/entitys/MarketInfo'
 import { moreBetting, morePW } from '@/api/betting'
 import createBetItem from 'xcsport-lib'
+import { points } from '@/utils'
 
 // 投注单store
 const MarketListKey = '_MarketList_'
@@ -13,6 +14,9 @@ const bettingModule: Module<Betting, any> = {
   namespaced: true,
   state: {
     markets,
+    results: [],
+    hitState: 1, // 0非点水状态 / 1非点水状态
+    mode: 1, // 1单注， 2串关
     isOne: false,
     s: '',
     t: '',
@@ -20,10 +24,50 @@ const bettingModule: Module<Betting, any> = {
     comboT: ''
   },
   mutations: {},
+  getters: {
+    // 投注额
+    betsGolds(state) {
+      let betsGolds = 0
+      // 单注总额
+      state.markets.map((bet: any) => {
+        const { gold = 0, errorCode } = bet
+        if (gold && !errorCode) {
+          betsGolds += +gold || 0
+        }
+      })
+      return points(betsGolds)
+    },
+    // 投注前的可赢金额
+    betsProfit(state, _state1, state2) {
+      const userConfig = state2.userConfig
+      const { handicapType } = userConfig || {}
+      let betsGolds = 0
+      // 单注可赢金额
+      state.markets.map((bet: any) => {
+        const { gold = 0, errorCode, ior, isEuropePlay } = bet
+        if (gold && !errorCode) {
+          const buyGold = +gold || 0
+          let winCountGold = buyGold * ior - buyGold
+          if (isEuropePlay && handicapType === 'H') {
+            winCountGold = buyGold * ior
+          }
+          betsGolds += winCountGold
+        }
+      })
+      return points(betsGolds)
+    }
+  },
   actions: {
+    setMode({ state }, mode) {
+      state.mode = mode
+    },
+    setHitState({ state }, status) {
+      state.hitState = status
+    },
     // 添加投注项
     addMarket({ state }, marketInfo: MarketInfo) {
       const marketItem = betParams(marketInfo)
+      marketItem.gold = 10
       if (state.markets.length === 0) {
         state.isOne = true
       } else {
@@ -46,31 +90,21 @@ const bettingModule: Module<Betting, any> = {
         localStore.slice(MarketListKey, index)
       }
     },
-    // 移除投注项
-    updateMarket({ state }, newBet) {
-      const userConfig = this.getters['user/userConfig']
+    // update投注项
+    updateMarket({ state, rootState }, newBet) {
+      const userConfig = rootState.user.userConfig
       const { handicapType } = userConfig || {}
       // 获取新的点水参数
-      const {
-        ratioKey,
-        errorCode,
-        eoIor,
-        ior,
-        score,
-        showType,
-        ratio,
-        strong,
-        gameDate
-      } = newBet
-      const newBetsMap:any = {}
+      const { ratioKey, errorCode, eoIor, ior, score, showType, ratio, strong, gameDate } = newBet
+      const newBetsMap: any = {}
       newBetsMap[ratioKey] = newBet
       let replaceBet = newBet
-      state.markets = state.markets.map((bet:any) => {
+      state.markets = state.markets.map((bet: any) => {
         const { ratioKey, isEuropePlay, session } = bet
         // 替换点水返回的并且有值的属性
         const currentBet = newBetsMap[ratioKey]
         if (currentBet) {
-          const newBetData:any = {}
+          const newBetData: any = {}
           // 旧的点水
           const oldIor = bet.ior
           // 旧的比分
@@ -112,7 +146,7 @@ const bettingModule: Module<Betting, any> = {
           }
           const oldBetKeys = Object.keys(bet)
           const needKeys = ['awayTeam', 'homeTeam', 'gold']
-          oldBetKeys.map(key => {
+          oldBetKeys.map((key) => {
             if (needKeys.includes(key)) {
               newBetData[key] = bet[key]
             }
@@ -146,9 +180,10 @@ const bettingModule: Module<Betting, any> = {
     },
     // 单注批量点水,更新投注项
     async marketHit({ state, dispatch }) {
-      if (state.markets.length === 0) {
+      if (state.markets.length === 0 || state.hitState !== 1) {
         return false
       }
+      dispatch('setHitState', 1)
       const params = hitParams(state.markets)
       const res: any = await morePW(params).catch(() => {})
       const code = (res && +res.code) || -1
@@ -158,7 +193,7 @@ const bettingModule: Module<Betting, any> = {
         state.s = s
         state.t = t
         const newBets = orderData || []
-        newBets.map((marketInfo:any) => {
+        newBets.map((marketInfo: any) => {
           dispatch('updateMarket', marketInfo)
         })
       }
@@ -171,23 +206,22 @@ const bettingModule: Module<Betting, any> = {
       if (state.markets.length > 1) {
         await dispatch('marketHit')
       }
-      const params:any = buyParams(state.markets, state.s, state.t)
-      const res:any = await moreBetting(params).catch(() => {})
+      dispatch('setHitState', 0)
+      const params: any = buyParams(state.markets, state.s, state.t)
+      const res: any = await moreBetting(params).catch(() => {})
       if (res.code === 200 && res.data) {
-        const resData = res.data
-        const { s, t, orderData } = resData
-        state.s = s
-        state.t = t
-        const newBets = orderData || []
-        newBets.map((marketInfo:any) => {
-          dispatch('updateMarket', marketInfo)
-        })
+        state.results = state.markets
+        dispatch('clearMarkets')
       }
     },
     // 清空
     clearMarkets({ state }) {
       state.markets = []
       localStore.clear(MarketListKey)
+    },
+    // 清空
+    clearResult({ state }) {
+      state.results = []
     }
   }
 }

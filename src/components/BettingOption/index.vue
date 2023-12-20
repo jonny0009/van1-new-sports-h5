@@ -28,12 +28,12 @@ const touchMarket = (event: any) => {
   if (find) {
     store.dispatch('betting/deleteMarket', props.marketInfo.playOnlyId)
   } else {
-    Subscriber.emit('EVENT_BET_BALL', target)
+    if (markets.value.length) {
+      Subscriber.emit('EVENT_BET_BALL', target)
+    }
     store.dispatch('betting/addMarket', props.marketInfo)
   }
 }
-
-// console.log(props.marketInfo)
 
 </script>
 

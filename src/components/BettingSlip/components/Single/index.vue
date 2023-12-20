@@ -19,7 +19,7 @@
         <div class="betting-slip-input">
           <span class="currency"><van-icon name="balance-o" /></span>
           <div style="flex: 1 1 0%;"></div>
-          <span class="amount">123</span>
+          <span class="amount">{{ marketInfo.gold }}</span>
         </div>
       </div>
     </div>

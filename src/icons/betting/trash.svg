@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="34px" height="34px" viewBox="0 0 34 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>trash@2x</title>
+    <g id="trash" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linejoin="round">
+        <polygon id="路径" stroke="#546371" stroke-width="2" points="3.77777778 8.5 30.2222222 8.5 28.3333333 34 5.66666667 34"></polygon>
+        <line x1="24.0833333" y1="12.2777778" x2="23.1388889" y2="30.2222222" id="路径" stroke="#546371" stroke-width="2" stroke-linecap="round"></line>
+        <line x1="17" y1="12.2777778" x2="17" y2="30.2222222" id="路径" stroke="#546371" stroke-width="2" stroke-linecap="round"></line>
+        <line x1="10.8611111" y1="12.2777778" x2="11.8055556" y2="30.2222222" id="路径" stroke="#546371" stroke-width="2" stroke-linecap="round"></line>
+        <path d="M24.5555556,3.77777778 L30.2222222,3.77777778 C32.3086889,3.77777778 34,5.46914556 34,7.55555556 L34,8.5 L0,8.5 L0,7.55555556 C0,5.46914556 1.69136778,3.77777778 3.77777778,3.77777778 L9.44444444,3.77777778 M24.5555556,3.77777778 L22.6666667,0 L11.3333333,0 L9.44444444,3.77777778 M24.5555556,3.77777778 L9.44444444,3.77777778" id="形状" stroke="#546371" stroke-width="2"></path>
+    </g>
+</svg>
