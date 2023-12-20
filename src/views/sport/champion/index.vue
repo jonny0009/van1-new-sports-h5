@@ -1,22 +1,15 @@
 <template>
   <div class="sport-champion-list">
     <div class="champion-title">
-      <img
-        v-img="championIcon"
-        class="item-img"
-      />
-      <span class="st">
-        冠军竞猜 <van-icon name="play" />
-      </span>
+      <ArrowTitle class="mt10 mb10" :src="titleIcon" text="冠军竞猜" @returnSuccess="CloseClick" />
     </div>
-    <div class="champion-group-body">
+    <div v-show="isOpen" class="champion-group-body">
       <div v-for="(item, idx) in championList" :key="idx" class="league-champion-item">
         <div class="league-champion-item__header">
           <img v-img="championIcon" class="icon">
           <div class="title">{{ item.champion.championType }}</div>
         </div>
         <Championitem :game-detail="item" />
-
       </div>
     </div>
   </div></template>
@@ -24,6 +17,10 @@
 <script lang="ts" setup>
 import championIcon from '@/assets/images/champion/league-icon.png'
 import Championitem from './champion-item.vue'
+import ArrowTitle from '@/components/Title/ArrowTitle/index.vue'
+import titleIcon from '@/assets/images/home/title-recommend.png'
+import { ref, onBeforeMount } from 'vue'
+const isOpen: any = ref(true)
 const props = defineProps({
   championList: {
     type: Array,
@@ -31,8 +28,11 @@ const props = defineProps({
       return []
     }
   }
-
 })
+const CloseClick = (val:any) => {
+  console.log(val)
+  isOpen.value = !val
+}
 </script>
 
 <style lang="scss">

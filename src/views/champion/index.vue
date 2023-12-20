@@ -21,6 +21,7 @@
         <div class="img-wrap">
           <img
             v-img="item.leagueIcon"
+            type="1"
             width="23"
             height="23"
             fit="contain"
@@ -33,6 +34,7 @@
       <div v-for="(item, idx) in leagueList" :key="idx" class="up-league-item" @click="clickSportPage(item)">
         <img
           v-img="item.leagueIcon"
+          type="1"
           fit="contain"
           class="my-image icon"
         />
@@ -113,7 +115,7 @@ const clickSportPage = (item: any) => {
 
 <style lang="scss">
 .champion-page{
-  padding: 0 35px;
+  padding: 0 35px 190px;
   .title{
     display: flex;
     align-items: center;

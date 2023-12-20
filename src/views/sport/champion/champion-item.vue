@@ -82,12 +82,12 @@ const clickOpen = () => {
         .betslipLine {
           width: 100%;
           flex: 1;
-          font-size: 28px;
-          // line-height: 20px;
           display: flex;
           justify-content: center;
           align-items: center;
           color: #546371;
+          font-size: 24px;
+           color: #546371;
           overflow: hidden !important;
           white-space: nowrap !important;
           text-overflow: ellipsis !important;
@@ -104,6 +104,10 @@ const clickOpen = () => {
           display: flex;
           justify-content: center;
           align-items: center;
+          .item{
+            font-size: 26px;
+            color: #000000;
+          }
         }
       }
     }
