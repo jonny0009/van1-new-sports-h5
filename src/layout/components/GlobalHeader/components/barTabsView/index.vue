@@ -26,11 +26,24 @@ import important from '@/assets/images/home/homeTabs/homeTabs-important.png'
 import defaultImportant from '@/assets/images/home/homeTabs/homeTabs-default-important.png'
 import ImageButton from '@/components/Button/ImageButton/index.vue'
 import { ref, reactive } from 'vue'
+import router from '@/router'
 const active = ref('ImportantRecommend')
 const clickChangeActive = (item:any) => {
+  const { value, name } = item
   homeBarArray.length = 0
-  homeBarArray.push(...homeBarArrayTable(item.value))
-  active.value = item.value
+  homeBarArray.push(...homeBarArrayTable(value))
+  active.value = value
+  let params:any = {}
+  params.name = name
+  if (value !== 'ChampionBet') {
+    params = {
+      name,
+      query: {
+        type: value
+      }
+    }
+  }
+  router.push(params)
 }
 const homeBarArrayTable = (val:any):Array<any> => {
   const newActive = val || active.value
@@ -43,17 +56,20 @@ const homeBarArrayTable = (val:any):Array<any> => {
     {
       value: 'ImportantRecommend',
       text: '重点推荐',
-      icon: defaultImportant
+      icon: defaultImportant,
+      name: 'Home'
     },
     {
       value: 'TimeSort',
       text: '按时间排',
-      icon: defaultTime
+      icon: defaultTime,
+      name: 'Home'
     },
     {
       value: 'ChampionBet',
       text: '冠军竞猜',
-      icon: defaultChampion
+      icon: defaultChampion,
+      name: 'Champion'
     }
   ]
   return [...homeBarArrayTableArray.map((e:any) => {

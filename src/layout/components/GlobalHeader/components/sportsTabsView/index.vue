@@ -49,7 +49,7 @@ const active = ref('Home')
 const clickChangeActive = (item:any) => {
   const { value, name } = item
   active.value = value
-  let params = {}
+  let params:any = {}
   params.name = name
   if (name === 'Sport') {
     params = {
