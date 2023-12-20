@@ -19,8 +19,8 @@ const onRefresh = (val:any) => {
   // }, 1000)
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss" >
 .GlobalRefresh {
-  min-height: calc(100vh - 96px);
+  height: calc(100vh - 96px);
 }
 </style>
