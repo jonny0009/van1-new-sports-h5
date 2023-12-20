@@ -1,5 +1,5 @@
 <template>
-  <div class="homeTabs">
+  <div class="barTabsView">
     <div
       v-for="(item, idx) in homeBarArray"
       :key="idx"
@@ -67,7 +67,7 @@ const homeBarArray:any = reactive(homeBarArrayTable(''))
 
 </script>
 <style lang="scss" scoped>
-.homeTabs{
+.barTabsView{
   display:flex;
   justify-content: center;
   align-items: center;
@@ -77,7 +77,7 @@ const homeBarArray:any = reactive(homeBarArrayTable(''))
 }
 </style>
 <style lang="scss">
-.homeTabs{
+.barTabsView{
   display:flex;
   .ImageButton{
     .img{

@@ -361,12 +361,14 @@ import SportsIcon from '@/components/Button/SportsIcon/index.vue'
   text-align: center;
   .up-betting-name{
     span{
+      line-height: 24px;
       font-size: 24px;
       color: #546371;
     }
   }
   .details{
     .item{
+      line-height: 26px;
       font-size: 26px;
       color: #000000;
     }

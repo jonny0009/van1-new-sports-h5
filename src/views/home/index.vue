@@ -3,10 +3,6 @@
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <div class="refresh-wrap">
 
-        <homeBarHeader />
-
-        <homeTabs class="mt10" />
-
         <ArrowTitle class="ml20 mt10 mb10" :src="titleHot" text="热门赛事" @returnSuccess="returnStatus" />
 
         <div class="Hot-Match-Group">
@@ -52,8 +48,6 @@
 <script lang="ts" setup>
 // import { showToast } from 'vant'
 // home components
-import homeBarHeader from './components/homeBarHeader/index.vue'
-import homeTabs from './components/homeTabs/index.vue'
 import homeMatchHandicap from './components/homeMatchHandicap/index.vue'
 // common components
 import ArrowTitle from '@/components/Title/ArrowTitle/index.vue'

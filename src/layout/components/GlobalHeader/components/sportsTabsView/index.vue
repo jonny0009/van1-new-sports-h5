@@ -1,5 +1,5 @@
 <template>
-  <div class="home-bar">
+  <div class="sportsTabsView">
     <div
       v-for="(item, idx) in homeBarArray"
       :key="idx"
@@ -16,35 +16,54 @@
 <script lang="ts" setup>
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 import { ref } from 'vue'
+import router from '@/router'
 const homeBarArray = ref(
   [
     {
-      value: 'Home'
+      value: 'Home',
+      name: 'Home'
     },
     {
-      value: 'live'
+      value: 'live',
+      name: 'Sportlive'
     },
     {
-      value: 'FT'
+      value: 'FT',
+      name: 'Sport'
     },
     {
-      value: 'BK'
+      value: 'BK',
+      name: 'Sport'
     },
     {
-      value: 'TN'
+      value: 'TN',
+      name: 'Sport'
     },
     {
-      value: 'OP_BM'
+      value: 'OP_BM',
+      name: 'Sport'
     }
   ]
 )
 const active = ref('Home')
 const clickChangeActive = (item:any) => {
-  active.value = item.value
+  const { value, name } = item
+  active.value = value
+  let params = {}
+  params.name = name
+  if (name === 'Sport') {
+    params = {
+      name,
+      query: {
+        type: value
+      }
+    }
+  }
+  router.push(params)
 }
 </script>
 <style lang="scss" scoped>
-.home-bar{
+.sportsTabsView{
   display:flex;
   height:88px;
   .item{
