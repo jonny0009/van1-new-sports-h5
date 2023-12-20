@@ -11,7 +11,14 @@
   font-family: "iconfont"; /* Project id  */
   src: url('@/assets/icon/iconfont.ttf?t=1702953359576') format('truetype');
 }
-.iconfont{font-family:iconfont!important;font-size:32px;font-style:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.iconfont{
+  font-family:iconfont!important;
+  font-size:36px;
+  height: 36px;
+  font-style:normal;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
 //
 //
 //重构=>对照表
@@ -61,7 +68,6 @@
   color: #1f2630;
   .home-tabs-play{
     height: 68px;
-    margin:0 40px;
     display: flex;
     align-items: center;
     .time{
@@ -196,7 +202,6 @@
       overflow: hidden;
       font-family: SF-Pro-Bold,PingFangSC-Semibold,MicrosoftYahei-Bold,system-ui;
       font-weight: 800;
-      margin: 0 40px;
     }
     .border-bottom{
       border-bottom: 1px solid #dee2e6!important;
@@ -274,6 +279,35 @@
           font-size: 26px !important;
           color: #7642fe;
           font-weight: 100;
+        }
+      }
+    }
+    .up-match-score{
+      margin: 0 13px;
+      padding: 20px 0;
+      .item{
+        display: flex;
+        align-items: center;
+        .img{
+          width: 48px;
+          height: 48px;
+        }
+        .name{
+          line-height: 24px;
+          font-size: 24px;
+          flex: 1;
+          margin-left: 20px;
+        }
+        .value {
+          width: 60px;
+          height: 40px;
+          border-radius: 13px;
+          background-color: #f7f8f8;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 24px;
+          color: #1f2630;
         }
       }
     }

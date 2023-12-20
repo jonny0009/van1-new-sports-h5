@@ -23,16 +23,16 @@
           </div>
 
           <!--  -->
-          <div class="up-match-score">
-            <div class="item">
-              <img class="my-image img" :src="teamHome" alt="">
+          <div class="up-match-score border-bottom">
+            <div class="item mb5">
+              <img class="my-image img" :src="teamHome" style="object-fit: contain;" alt="">
               <div class="name">丁科·迪涅夫</div>
               <div class="container">
                 <div class="value">0</div>
               </div>
             </div>
             <div class="item">
-              <img class="my-image img" :src="teamAway" alt="">
+              <img class="my-image img" :src="teamAway" style="object-fit: contain;" alt="">
               <div class="name">彼得·亚马基宁</div>
               <div class="container">
                 <div class="value">0</div>

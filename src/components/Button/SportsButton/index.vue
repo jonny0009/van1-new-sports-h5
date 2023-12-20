@@ -100,7 +100,6 @@ SportsName.value = `icon-${props.text}`
   display: inline-flex;
   align-items: center;
   height: 64px;
-  line-height: 64px;
   border-radius:30px;
   padding-left: 17px;
   padding-right: 40px;
