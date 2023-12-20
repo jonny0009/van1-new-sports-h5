@@ -9,8 +9,7 @@ export default {
       component: () => import('@/views/sportlive/index.vue'),
       name: 'Sportlive',
       meta: {
-        showSportsTabsView: true,
-        showBarTabsView: true
+        showSportsTabsView: true
       }
     }
   ]

@@ -33,16 +33,7 @@ const clickChangeActive = (item:any) => {
   homeBarArray.length = 0
   homeBarArray.push(...homeBarArrayTable(value))
   active.value = value
-  let params:any = {}
-  params.name = name
-  if (value !== 'ChampionBet') {
-    params = {
-      name,
-      query: {
-        type: value
-      }
-    }
-  }
+  const params:any = { name }
   router.push(params)
 }
 const homeBarArrayTable = (val:any):Array<any> => {
@@ -63,7 +54,7 @@ const homeBarArrayTable = (val:any):Array<any> => {
       value: 'TimeSort',
       text: '按时间排',
       icon: defaultTime,
-      name: 'Home'
+      name: 'HomeTime'
     },
     {
       value: 'ChampionBet',
