@@ -22,6 +22,7 @@
     <homeMatchHandicap class="mt20" />
 
     <ArrowTitle class="mt10 mb10" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
+
     <div class="Recommend-Match-Tabs">
       <SportsButton text="FT" :active="true" />
       <SportsButton text="BK" />
