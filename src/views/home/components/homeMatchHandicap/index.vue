@@ -13,30 +13,162 @@
       </div>
     </div>
     <div class="home-match">
-      <!--  -->
-      <div class="up-match__header border-bottom">
-        <div class="match-info">
-          <div class="match-team-logo">
-            <img class="my-image home" src="https://2up-pro-bucket.s3.ap-southeast-1.amazonaws.com/a20575f19a004a102cd23ff21049cb87ad19670d.png" alt="">
-            <img class="my-image away" src="https://2up-pro-bucket.s3.ap-southeast-1.amazonaws.com/459758119fe1c93df257d17ba261dd6e6dfbcc42.png" alt="">
+
+      <div calss="up-match-group__body">
+        <div class="up-match">
+          <!--  -->
+          <div class="up-match__header border-bottom">
+            <div class="match-info">
+              <div class="match-team-logo">
+                <img
+                  class="my-image home"
+                  src="https://2up-pro-bucket.s3.ap-southeast-1.amazonaws.com/a20575f19a004a102cd23ff21049cb87ad19670d.png"
+                  alt=""
+                  style="object-fit: contain;"
+                >
+                <img
+                  class="my-image away"
+                  src="https://2up-pro-bucket.s3.ap-southeast-1.amazonaws.com/459758119fe1c93df257d17ba261dd6e6dfbcc42.png"
+                  alt=""
+                  style="object-fit: contain;"
+                >
+              </div>
+              <div class="match-info__content">
+                <div class="team">
+                  <span class="match-team-name">云达不莱梅 v 莱比锡红牛</span>
+                  <div class="flex-1"></div>
+                  <div class="up-match-time">1:30 AM</div>
+                </div>
+                <div class="up-match-league">
+                  <SportsIcon :icon-src="'FT'" />
+                  <div class="text">德国 - 甲级联赛</div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="match-info__content">
-            <div class="team">
-              <span class="match-team-name">云达不莱梅 v 莱比锡红牛</span>
-              <div class="flex-1"></div>
-              <div class="up-match-time">1:30 AM</div>
+
+          <!--  -->
+          <div class="up-match__body">
+            <!-- 全场 亚洲让分盘 -->
+            <div class="match-betting-item">
+              <div class="match-betting-item__title">
+                <div class="flex-cross-center">
+                  全场 亚洲让分盘
+                  <van-popover
+                    placement="top"
+                    theme="dark"
+                    trigger="click"
+                  >
+                    <div class="popover-text">
+                      全场让分盘
+                    </div>
+                    <template #reference>
+                      <van-icon name="info" />
+                    </template>
+                  </van-popover>
+                </div>
+              </div>
+              <div class="match-betting-item__content">
+                <div class="betting-select">
+                  <div class="betting-select__list">
+                    <div class="betting-option">
+                      <span class="up-betting-name">
+                        <span class="text">柏林联 </span>
+                        <span class="point">-0.5</span>
+                      </span>
+                      <div class="details">
+                        <div class="item">1.88</div>
+                      </div>
+                    </div>
+                    <div class="betting-option">
+                      <span class="up-betting-name">
+                        <span class="text">柏林联 </span>
+                        <span class="point">-0.5</span>
+                      </span>
+                      <div class="details">
+                        <div class="item">1.88</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="up-match-league">
-              <SportsIcon :icon-src="'FT'" />
-              <div class="text">德国 - 甲级联赛</div>
+            <!-- 全场 大小盘  -->
+            <div class="match-betting-item">
+              <div class="match-betting-item__title">
+                <div class="flex-cross-center">
+                  全场 大小盘
+                </div>
+              </div>
+              <div class="match-betting-item__content">
+                <div class="betting-select">
+                  <div class="betting-select__list">
+                    <div class="betting-option">
+                      <span class="up-betting-name">
+                        <span class="text">大于</span>
+                        <span class="point">2.5</span>
+                      </span>
+                      <div class="details">
+                        <div class="item">1.88</div>
+                      </div>
+                    </div>
+                    <div class="betting-option">
+                      <span class="up-betting-name">
+                        <span class="text">小于</span>
+                        <span class="point">2.5</span>
+                      </span>
+                      <div class="details">
+                        <div class="item">1.88</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+            <!-- 全场 1X2 -->
+            <div class="match-betting-item">
+              <div class="match-betting-item__title">
+                <div class="flex-cross-center">
+                  全场 1X2
+                </div>
+              </div>
+              <div class="match-betting-item__content">
+                <div class="betting-select">
+                  <div class="betting-select__list">
+                    <div class="betting-option">
+                      <span class="up-betting-name">
+                        <span class="text">柏林联</span>
+                      </span>
+                      <div class="details">
+                        <div class="item">1.88</div>
+                      </div>
+                    </div>
+                    <div class="betting-option">
+                      <span class="up-betting-name">
+                        <span class="text">柏林联</span>
+                      </span>
+                      <div class="details">
+                        <div class="item">1.88</div>
+                      </div>
+                    </div>
+                    <div class="betting-option">
+                      <span class="up-betting-name">
+                        <span class="text">柏林联</span>
+                      </span>
+                      <div class="details">
+                        <div class="item">1.88</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--
+
+             -->
           </div>
         </div>
       </div>
-
-      <!--  -->
-      <div data-v-0e8d7156="" class="up-match__body"><div data-v-2e9a0bed="" data-v-0e8d7156="" class="match-betting-item"><div data-v-2e9a0bed="" class="match-betting-item__title"><div data-v-2e9a0bed="" class="flex-cross-center">全场 亚洲让分盘 <span data-v-0c5afda6="" data-v-2e9a0bed="" class="up-betting-desc"><i data-v-0c5afda6="" class="van-badge__wrapper icon-2up icon-2up-about my-icon up-betting-desc__icon up-betting-desc__icon"><!----><!----><!----></i><div data-v-0c5afda6="" class="up-betting-desc__triangle" style="display: none;"></div><div data-v-0c5afda6="" class="up-betting-desc__content" style="top: 0px; display: none;">全场让分盘</div></span></div></div><div data-v-2e9a0bed="" class="match-betting-item__content"><div data-v-729d85be="" data-v-2e9a0bed="" class="betting-select"><div data-v-729d85be="" class="betting-select__list" style="grid-template-columns: 1fr 1fr;"><div data-v-958c0514="" data-v-729d85be="" class="betting-option" market-id="0HC521359992360800256"><span data-v-14b728a8="" data-v-958c0514="" class="up-betting-name betslipLine"><span data-v-14b728a8="" class="text">云达不莱梅 </span><span data-v-14b728a8="" class="point">+1</span></span><div data-v-958c0514="" class="details"><span data-v-e861da40="" data-v-958c0514="" class="up-betting-odds-animate"><i data-v-e861da40="" class="van-badge__wrapper icon-2up icon-2up-down2 my-icon trend-icon down trend-icon down"><!----><!----><!----></i><div data-v-e861da40="" class="container"><div data-v-e861da40="" class="item">1.95</div></div><i data-v-e861da40="" class="van-badge__wrapper icon-2up icon-2up-superior2 my-icon trend-icon up trend-icon up"><!----><!----><!----></i></span></div></div><div data-v-958c0514="" data-v-729d85be="" class="betting-option" market-id="0HC521359992360800256"><span data-v-14b728a8="" data-v-958c0514="" class="up-betting-name betslipLine"><span data-v-14b728a8="" class="text">莱比锡红牛 </span><span data-v-14b728a8="" class="point">-1</span></span><div data-v-958c0514="" class="details"><span data-v-e861da40="" data-v-958c0514="" class="up-betting-odds-animate"><i data-v-e861da40="" class="van-badge__wrapper icon-2up icon-2up-down2 my-icon trend-icon down trend-icon down"><!----><!----><!----></i><div data-v-e861da40="" class="container"><div data-v-e861da40="" class="item">1.98</div></div><i data-v-e861da40="" class="van-badge__wrapper icon-2up icon-2up-superior2 my-icon trend-icon up trend-icon up"><!----><!----><!----></i></span></div></div></div><!----></div></div></div><div data-v-2e9a0bed="" data-v-0e8d7156="" class="match-betting-item"><div data-v-2e9a0bed="" class="match-betting-item__title"><div data-v-2e9a0bed="" class="flex-cross-center">全场 大小盘 <!----></div></div><div data-v-2e9a0bed="" class="match-betting-item__content"><div data-v-729d85be="" data-v-2e9a0bed="" class="betting-select"><div data-v-729d85be="" class="betting-select__list" style="grid-template-columns: 1fr 1fr;"><div data-v-958c0514="" data-v-729d85be="" class="betting-option" market-id="0OU521359992369188864"><span data-v-14b728a8="" data-v-958c0514="" class="up-betting-name betslipLine"><span data-v-14b728a8="" class="text">大于 </span><span data-v-14b728a8="" class="point">3.25</span></span><div data-v-958c0514="" class="details"><span data-v-e861da40="" data-v-958c0514="" class="up-betting-odds-animate"><i data-v-e861da40="" class="van-badge__wrapper icon-2up icon-2up-down2 my-icon trend-icon down trend-icon down"><!----><!----><!----></i><div data-v-e861da40="" class="container"><div data-v-e861da40="" class="item">1.92</div></div><i data-v-e861da40="" class="van-badge__wrapper icon-2up icon-2up-superior2 my-icon trend-icon up trend-icon up"><!----><!----><!----></i></span></div></div><div data-v-958c0514="" data-v-729d85be="" class="betting-option" market-id="0OU521359992369188864"><span data-v-14b728a8="" data-v-958c0514="" class="up-betting-name betslipLine"><span data-v-14b728a8="" class="text">小于 </span><span data-v-14b728a8="" class="point">3.25</span></span><div data-v-958c0514="" class="details"><span data-v-e861da40="" data-v-958c0514="" class="up-betting-odds-animate"><i data-v-e861da40="" class="van-badge__wrapper icon-2up icon-2up-down2 my-icon trend-icon down trend-icon down"><!----><!----><!----></i><div data-v-e861da40="" class="container"><div data-v-e861da40="" class="item">1.98</div></div><i data-v-e861da40="" class="van-badge__wrapper icon-2up icon-2up-superior2 my-icon trend-icon up trend-icon up"><!----><!----><!----></i></span></div></div></div><!----></div></div></div><div data-v-2e9a0bed="" data-v-0e8d7156="" class="match-betting-item"><div data-v-2e9a0bed="" class="match-betting-item__title"><div data-v-2e9a0bed="" class="flex-cross-center">全场 1X2 <!----></div></div><div data-v-2e9a0bed="" class="match-betting-item__content"><div data-v-729d85be="" data-v-2e9a0bed="" class="betting-select"><div data-v-729d85be="" class="betting-select__list" style="grid-template-columns: 1fr 1fr 1fr;"><div data-v-958c0514="" data-v-729d85be="" class="betting-option" market-id="0ML521359992364994560"><span data-v-14b728a8="" data-v-958c0514="" class="up-betting-name betslipLine"><span data-v-14b728a8="" class="text">云达不莱梅</span><span data-v-14b728a8="" class="point"></span></span><div data-v-958c0514="" class="details"><span data-v-e861da40="" data-v-958c0514="" class="up-betting-odds-animate"><i data-v-e861da40="" class="van-badge__wrapper icon-2up icon-2up-down2 my-icon trend-icon down trend-icon down"><!----><!----><!----></i><div data-v-e861da40="" class="container"><div data-v-e861da40="" class="item">5.10</div></div><i data-v-e861da40="" class="van-badge__wrapper icon-2up icon-2up-superior2 my-icon trend-icon up trend-icon up"><!----><!----><!----></i></span></div></div><div data-v-958c0514="" data-v-729d85be="" class="betting-option" market-id="0ML521359992364994560"><span data-v-14b728a8="" data-v-958c0514="" class="up-betting-name betslipLine"><span data-v-14b728a8="" class="text">和局</span><span data-v-14b728a8="" class="point"></span></span><div data-v-958c0514="" class="details"><span data-v-e861da40="" data-v-958c0514="" class="up-betting-odds-animate"><i data-v-e861da40="" class="van-badge__wrapper icon-2up icon-2up-down2 my-icon trend-icon down trend-icon down"><!----><!----><!----></i><div data-v-e861da40="" class="container"><div data-v-e861da40="" class="item">4.58</div></div><i data-v-e861da40="" class="van-badge__wrapper icon-2up icon-2up-superior2 my-icon trend-icon up trend-icon up"><!----><!----><!----></i></span></div></div><div data-v-958c0514="" data-v-729d85be="" class="betting-option" market-id="0ML521359992364994560"><span data-v-14b728a8="" data-v-958c0514="" class="up-betting-name betslipLine"><span data-v-14b728a8="" class="text">莱比锡红牛</span><span data-v-14b728a8="" class="point"></span></span><div data-v-958c0514="" class="details"><span data-v-e861da40="" data-v-958c0514="" class="up-betting-odds-animate"><i data-v-e861da40="" class="van-badge__wrapper icon-2up icon-2up-down2 my-icon trend-icon down trend-icon down"><!----><!----><!----></i><div data-v-e861da40="" class="container"><div data-v-e861da40="" class="item">1.58</div></div><i data-v-e861da40="" class="van-badge__wrapper icon-2up icon-2up-superior2 my-icon trend-icon up trend-icon up"><!----><!----><!----></i></span></div></div></div><!----></div></div></div><div data-v-2e9a0bed="" data-v-0e8d7156="" class="match-betting-item"><div data-v-2e9a0bed="" class="match-betting-item__title"><div data-v-2e9a0bed="" class="flex-cross-center">正确比分 <!----></div></div><div data-v-2e9a0bed="" class="match-betting-item__content"><div data-v-9a57d5ec="" data-v-2e9a0bed="" class="up-betting-score-input"><div data-v-9a57d5ec="" class="inputs"><div data-v-9a57d5ec="" class="input"><div data-v-9a57d5ec="" class="label">云达不莱梅</div><i data-v-9a57d5ec="" class="van-badge__wrapper icon-2up icon-2up-jian my-icon disabled disabled"><!----><!----><!----></i><div data-v-9a57d5ec="" class="value">0</div><i data-v-9a57d5ec="" class="van-badge__wrapper icon-2up icon-2up-jia my-icon"><!----><!----><!----></i></div><div data-v-9a57d5ec="" class="input"><div data-v-9a57d5ec="" class="label">莱比锡红牛</div><i data-v-9a57d5ec="" class="van-badge__wrapper icon-2up icon-2up-jian my-icon disabled disabled"><!----><!----><!----></i><div data-v-9a57d5ec="" class="value">0</div><i data-v-9a57d5ec="" class="van-badge__wrapper icon-2up icon-2up-jia my-icon"><!----><!----><!----></i></div></div><div data-v-958c0514="" data-v-9a57d5ec="" class="betting-option"><span data-v-14b728a8="" data-v-958c0514="" class="up-betting-name betslipLine"><span data-v-14b728a8="" class="text">0:0</span><span data-v-14b728a8="" class="point"></span></span><div data-v-958c0514="" class="details"><span data-v-e861da40="" data-v-958c0514="" class="up-betting-odds-animate"><i data-v-e861da40="" class="van-badge__wrapper icon-2up icon-2up-down2 my-icon trend-icon down trend-icon down"><!----><!----><!----></i><div data-v-e861da40="" class="container"><div data-v-e861da40="" class="item">21.00</div></div><i data-v-e861da40="" class="van-badge__wrapper icon-2up icon-2up-superior2 my-icon trend-icon up trend-icon up"><!----><!----><!----></i></span></div></div></div></div></div></div>
-
       <!--  -->
 
       <div class="up-match__footer">
@@ -63,8 +195,10 @@ import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 .homeMatchHandicap{
   color: #1f2630;
   .home-tabs-play{
+    height: 68px;
     margin:0 40px;
     display: flex;
+    align-items: center;
     .time{
       font-size: 24px;
       color: #000;
@@ -95,14 +229,14 @@ import SportsIcon from '@/components/Button/SportsIcon/index.vue'
   }
 }
 </style>
+
 <!-- header -->
 <style lang="scss" scoped>
 .up-match__header{
   margin: 0 13px;
-  padding: 26px;
+  padding: 20px 0;
 }
 .match-info{
-  padding: 0 10px;
   display: flex;
 }
 .match-team-logo{
@@ -137,12 +271,17 @@ import SportsIcon from '@/components/Button/SportsIcon/index.vue'
     }
   }
   .up-match-league{
+    display: flex;
+    align-items: center;
     font-size: 24px;
     color: #546371;
     padding-top: 5px;
-  }
-  .up-match-league{
-    display: flex;
+    .iconfont {
+      font-size: 24px;
+    }
+    .text{
+      margin-left: 10px;
+    }
   }
   .up-match-time{
     font-size: 24px;
@@ -182,5 +321,65 @@ import SportsIcon from '@/components/Button/SportsIcon/index.vue'
       margin-left: 10px;
     }
   }
+}
+</style>
+
+<!-- body -->
+<style lang="scss" scoped>
+.up-match {
+  background-color: #eff2f2;
+  border-radius: 32px;
+  overflow: hidden;
+  font-family: SF-Pro-Bold,PingFangSC-Semibold,MicrosoftYahei-Bold,system-ui;
+  font-weight: 800;
+  margin: 0 40px;
+}
+.border-bottom{
+  border-bottom: 1px solid #dee2e6!important;
+}
+.match-betting-item{
+  margin-top: 20px;
+}
+.match-betting-item__title{
+  margin: 10px 20px;
+  font-size: 24px;
+  line-height: 24px;
+  color: #546371;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.betting-option {
+  position: relative;
+  display: flex;
+  flex-direction:column;
+  flex: 1;
+  padding: 16px 5px;
+  background-color: #ffffff;
+  border-radius: 26px;
+  overflow: hidden;
+  text-align: center;
+  .up-betting-name{
+    span{
+      font-size: 24px;
+      color: #546371;
+    }
+  }
+  .details{
+    .item{
+      font-size: 26px;
+      color: #000000;
+    }
+  }
+}
+.betting-select__list{
+  width: 100%;
+  display: flex;
+  grid-gap: 20px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+.up-match__body{
+  padding-bottom: 20px;
 }
 </style>
