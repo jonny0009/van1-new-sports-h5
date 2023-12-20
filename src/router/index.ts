@@ -63,7 +63,8 @@ export const constantRoutes: Array<any> = [
         name: 'Home',
         meta: {
           showSportsTabsView: true,
-          showBarTabsView: true
+          showBarTabsView: true,
+          showRefresh: true
         }
       }
     ]
