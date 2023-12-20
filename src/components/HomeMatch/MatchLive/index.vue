@@ -4,12 +4,6 @@
       <div class="time">
         周一 27/11
       </div>
-      <div class="play">
-        <div class="flex-1"></div>
-        <span class="btn active">让分</span>
-        <span class="btn active">大小</span>
-        <span class="btn active">独赢</span>
-      </div>
     </div>
     <div class="home-match">
       <div calss="up-match-group__body">
