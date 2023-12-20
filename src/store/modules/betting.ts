@@ -24,7 +24,6 @@ const bettingModule: Module<Betting, any> = {
     // 添加投注项
     addMarket({ state }, marketInfo: MarketInfo) {
       const marketItem = betParams(marketInfo)
-      marketItem.ior = marketItem.vior
       if (state.markets.length === 0) {
         state.isOne = true
       } else {
@@ -35,6 +34,7 @@ const bettingModule: Module<Betting, any> = {
     },
     // 移除投注项
     deleteMarket({ state }, playOnlyId) {
+      state.isOne = false
       const index = state.markets.findIndex((marketInfo: MarketInfo) => {
         if (marketInfo.playOnlyId === playOnlyId) {
           return true
