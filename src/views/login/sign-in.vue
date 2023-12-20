@@ -69,7 +69,8 @@
           登录
         </van-button>
       </van-form>
-      <p class="literal">还没账号? <span class="register" @click="register">注册</span></p>
+      <!-- <p class="literal">还没账号? <span class="register" @click="register">注册</span></p> -->
+      <p class="literal" @click="tryPlay">还没账号?试玩一下 </p>
     </div>
   </div>
 </template>
@@ -78,7 +79,8 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import md5 from 'md5'
-import { login, getLanguages } from '@/api/login'
+// getLanguages
+import { login } from '@/api/login'
 import { showToast } from 'vant'
 import { setToken } from '@/utils/auth'
 const $router = useRouter()
@@ -91,8 +93,11 @@ const form = reactive({
 const goBack = () => {
   $router.back()
 }
-const register = () => {
-  $router.push({ path: '/register' })
+// const register = () => {
+//   $router.push({ path: '/register' })
+// }
+const tryPlay = () => {
+  $router.push({ path: '/home' })
 }
 const onSubmit = async (values?: any) => {
   console.log(values)
@@ -111,7 +116,8 @@ const onSubmit = async (values?: any) => {
   }
   if (res.code === 200) {
     setToken(res.data)
-    checkFirstEnter()
+    $router.push({ path: '/home' })
+    // checkFirstEnter()
     return
   } else if (res.code === 205) {
     showToast('账号或密码错误')
@@ -121,19 +127,21 @@ const onSubmit = async (values?: any) => {
     showToast('账号已禁用')
   }
 }
-const checkFirstEnter = async () => {
-  // 获取商户设置的语言，如果属于属于新账号国际版则直接跳到首页
-  const res:any = await getLanguages({})
-  if (res === 200) {
-    console.log(res, '======')
-  }
-}
+// const checkFirstEnter = async () => {
+//   // 获取商户设置的语言，如果属于属于新账号国际版则直接跳到首页
+//   const res:any = await getLanguages({})
+// }
 const toForget = (values?: any) => {
   console.log('忘记密码=====', values)
 }
 </script>
 
 <style lang="scss" scope>
+:root {
+  --van-toast-text-padding:20px 30px;
+  --van-toast-font-size:28px;
+
+}
 .signIn {
   .img_1 {
     width: 35px;

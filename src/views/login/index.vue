@@ -23,64 +23,108 @@
       </div>
 
       <div class="list-set">
-        <div class="item">
+        <div class="item" @click="showPk(1)">
           <div class="label-info flex align-center">
             <div class="icon"><img src="@/assets/images/login/lang@2x.png" /></div>
             <div class="label">{{ '语言' }}</div>
           </div>
           <div class="label-right">
-            <div class="label">{{ lang || ' 中文' }}</div>
+            <div class="label">{{ lang.value }}</div>
             <img class="arrow" src="@/assets/images/login/go@2x.png" />
           </div>
         </div>
-        <div class="item">
+        <div class="item" @click="showPk(2)">
           <div class="label-info flex align-center">
             <div class="icon"><img src="@/assets/images/login/area@2x.png" /></div>
             <div class="label">{{ '地区' }}</div>
           </div>
           <div class="label-right">
-            <div class="label">{{ int || '国际' }}</div>
+            <div class="label">{{ int.value }}</div>
             <img class="arrow" src="@/assets/images/login/go@2x.png" />
           </div>
         </div>
-        <div class="item" @click="showPk()">
+        <div class="item" @click="showPk(3)">
           <div class="label-info flex align-center">
             <div class="icon"><img src="@/assets/images/login/pankou@2x.png" /></div>
             <div class="label">{{ '盘口' }}</div>
           </div>
           <div class="label-right">
-            <div class="label">{{ pankou || ' 欧洲盘[DEC]' }}</div>
+            <div class="label">{{ pankou.value }}</div>
             <img class="arrow" src="@/assets/images/login/go@2x.png" />
           </div>
         </div>
       </div>
     </div>
-
-    <van-popup v-model:show="showBottom" position="bottom" closeable round :style="{ height: '200px' }">
-      <div class="pankou-title">盘口</div>
+    <van-popup v-model:show="showBottom" position="bottom" closeable round>
+      <div class="popup-title">{{ popupTitle }}</div>
       <div class="pk-list">
-        <div class="item" @click="setPk(1)">欧洲盘[DEC]</div>
-        <div class="item" @click="setPk(2)">香港盘</div>
+        <div v-for="(item, index) in popupList.arr" :key="index" class="item" :class="[lang.key===item.key?'item-color':'']" @click="setPk(item)">
+          <p>
+            <span>
+              {{ item.value }}
+            </span>
+            <span v-if="lang.key===item.key">
+              <van-icon name="success" />
+            </span>
+          </p>
+        </div>
       </div>
     </van-popup>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import store from '@/store'
+const languages = computed(() => store.state.app.queryCMerLanguage)
 const $router = useRouter()
-const lang = ref('')
-const int = ref('')
-const pankou = ref('')
+const popupTitle = ref('')
+const popupIndex = ref(0)
+const popupList = reactive<{arr:any[]}>({ arr: [] })
+const lang = ref({
+  value: '简体中文',
+  key: 'zh-cn'
+})
+const int = ref(
+  {
+    value: '国际',
+    key: 'zh-cn'
+  }
+)
+const pankou = ref(
+  {
+    value: '欧洲盘',
+    key: 'zh-cn'
+  }
+)
 const showBottom = ref(false)
 function showPk(val?: any) {
-  console.log(val)
+  popupIndex.value = val
+  if (val === 1) {
+    popupList.arr = languages.value
+    popupTitle.value = '语言'
+  }
+  if (val === 2) {
+    popupTitle.value = '地区'
+  }
+  if (val === 3) {
+    popupTitle.value = '盘口'
+  }
+
   showBottom.value = true
 }
 
 function setPk(val: any) {
-  pankou.value = val === 1 ? '欧洲盘[DEC]' : '香港盘'
+  if (popupIndex.value === 1) {
+    lang.value = val
+  }
+  if (popupIndex.value === 1) {
+    popupTitle.value = '地区'
+  }
+  if (popupIndex.value === 1) {
+    popupTitle.value = '盘口'
+  }
   showBottom.value = false
   console.log(val)
 }
@@ -240,25 +284,33 @@ const login = () => {
   }
 }
 
-.pankou-title {
-  font-family: PingFangSC-Regular;
-  font-size: 40px;
-  color: #1f2630;
-  letter-spacing: px;
-  font-weight: 400;
-  padding-left: 40px;
-  padding-top: 20px;
+.popup-title {
+  font-family: PingFangSC-Semibold;
+  font-size: 32px;
+  color: #1F2630;
+  letter-spacing: 0;
+  font-weight: 600;
+  margin: 24px 0 0 38px;
 }
 
 .pk-list {
-  padding: 30px 40px;
+  padding-top: 30px;
 
   .item {
-    font-size: 40px;
-    color: #1f2630;
+    font-size: 26px;
+    color: #1F2630;
     letter-spacing: 1px;
-    padding: 10px 0;
+    padding: 40px;
     border-bottom: 2px solid #eaeaea;
+
+    p {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+  .item-color{
+    color: #7642FD;
   }
 }
 </style>
