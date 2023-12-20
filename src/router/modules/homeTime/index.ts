@@ -1,13 +1,13 @@
 import Layout from '@/layout/index.vue'
 export default {
-  path: '/champion',
+  path: '/homeTime',
   component: Layout,
-  redirect: '/champion',
+  redirect: '/homeTime',
   children: [
     {
-      path: '/champion',
-      component: () => import('@/views/champion/index.vue'),
-      name: 'Champion',
+      path: '/homeTime',
+      component: () => import('@/views/homeTime/index.vue'),
+      name: 'HomeTime',
       meta: {
         showSportsTabsView: true,
         showBarTabsView: true

@@ -53,7 +53,6 @@
 import SportsButton from '@/components/Button/SportsButton/index.vue'
 import leagueIcon from '@/assets/images/champion/league-icon.png'
 import { apiChampionGameTypes, apiChampionLeagueInfo } from '@/api/champion'
-import { imgUrlFormat } from '@/utils'
 import { ref, onBeforeMount } from 'vue'
 import router from '@/router'
 const chooseGameType:any = ref('0')
