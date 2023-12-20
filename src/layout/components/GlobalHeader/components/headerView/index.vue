@@ -1,19 +1,21 @@
 <template>
   <div class="headerView">
-    <div class="avatar" @click="showInfo">
-      <img :src="avatarImg" style="object-fit: contain;" />
-    </div>
-    <div class="wallet" @click="toUrl('/login')">
-      <div class="cur">
-        <img :src="USDTImg" style="object-fit: contain;" />
+    <div class="headerView-fixed">
+      <div class="avatar" @click="showInfo">
+        <img :src="avatarImg" style="object-fit: contain;" />
       </div>
-      0.00
-      <div class="transaction">
-        <img :src="transactionImg" />
+      <div class="wallet" @click="toUrl('/login')">
+        <div class="cur">
+          <img :src="USDTImg" style="object-fit: contain;" />
+        </div>
+        0.00
+        <div class="transaction">
+          <img :src="transactionImg" />
+        </div>
       </div>
-    </div>
-    <div class="right-area" @click="toUrl('/search')">
-      <img class="search" :src="searchImg" style="object-fit: contain;" />
+      <div class="right-area" @click="toUrl('/search')">
+        <img class="search" :src="searchImg" style="object-fit: contain;" />
+      </div>
     </div>
   </div>
   <van-popup v-model:show="showLeft" :duration="0.2" position="left" :style="{ width: '71.5%', height: '100%' }">
@@ -94,12 +96,20 @@ const showInfo = () => {
 <style lang="scss" scoped>
 .headerView{
   height: 96px;
-  color: #fff;
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(to bottom,#181f2a 0,#2a0572 100%);
-  position: relative;
+  .headerView-fixed{
+    position: fixed;
+    z-index: 99;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 96px;
+    color: #fff;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom,#181f2a 0,#2a0572 100%);
+  }
+
   .wallet{
     height: 56px;
     line-height: 56px;
