@@ -10,7 +10,8 @@ export default {
       name: 'HomeTime',
       meta: {
         showSportsTabsView: true,
-        showBarTabsView: true
+        showBarTabsView: true,
+        showRefresh: true
       }
     }
   ]
