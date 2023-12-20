@@ -1,5 +1,6 @@
 import store from '@/store'
 import { getURLSearchParams } from '@/utils'
+import { getToken } from '@/utils/auth'
 
 export default async () => {
   const searchParams = getURLSearchParams()
@@ -16,5 +17,9 @@ export default async () => {
   // 模块控制
   await store.dispatch('app/moduleConfig')
   // 获取全部体育项
-  await store.dispatch('app/getAllSports')
+  store.dispatch('app/getAllSports')
+
+  if (getToken()) {
+    store.dispatch('user/configSettingNew')
+  }
 }
