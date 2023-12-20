@@ -7,6 +7,9 @@
   </GlobalRefresh>
   <GlobalFooter />
   <BettingSlip />
+  <van-back-top bottom="100" right="20" class="GlobalTop">
+    <van-icon name="down" />
+  </van-back-top>
 </template>
 <script lang="ts" setup>
 import GlobalRefresh from './components/GlobalRefresh/index.vue'
@@ -17,7 +20,12 @@ import AppMain from './components/AppMain.vue'
 import GlobalFooter from './components/GlobalFooter/index.vue'
 import BettingSlip from '@/components/BettingSlip/index.vue'
 </script>
-<style lang="scss" scoped>
-.layout-wrapper {
+<style lang="scss" >
+.GlobalTop {
+  background: #7642fe;
+  .van-icon{
+    transform: rotate(180deg);
+    font-weight: 600;
+  }
 }
 </style>
