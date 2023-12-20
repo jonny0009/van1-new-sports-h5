@@ -9,6 +9,19 @@
       <div calss="up-match-group__body">
         <div class="up-match">
           <!--  -->
+
+          <div class="match-info-live__header border-bottom">
+            <div class="up-match-league">
+              <div class="text">印度 - 德里超级联赛</div>
+            </div>
+            <div class="flex-cross-center">
+              <div class="up-match-time">
+                <SportsIcon :icon-src="'live'" />
+                上半场 7
+              </div>
+            </div>
+          </div>
+
           <div class="up-match__header border-bottom">
             <div class="match-info">
               <div class="match-team-logo">

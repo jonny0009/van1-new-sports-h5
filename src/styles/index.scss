@@ -192,7 +192,7 @@
     // body
     .up-match {
       background-color: #eff2f2;
-      border-radius: 32px;
+      border-radius: 26px;
       overflow: hidden;
       font-family: SF-Pro-Bold,PingFangSC-Semibold,MicrosoftYahei-Bold,system-ui;
       font-weight: 800;
@@ -251,6 +251,32 @@
     //
     //
     // end body
+
+
+
+    // live
+    .match-info-live__header{
+      margin: 0 13px;
+      padding: 20px 0;
+      color: #546371;
+      .up-match-league {
+        display: inline-flex;
+        align-items: center;
+        font-size: 24px;
+        line-height: 24px;
+        padding: 0 20px;
+      }
+      .up-match-time{
+        font-size: 26px;
+        line-height: 26px;
+        padding: 10px 20px 0;
+        .iconfont {
+          font-size: 26px !important;
+          color: #7642fe;
+          font-weight: 100;
+        }
+      }
+    }
     
   }
 }
