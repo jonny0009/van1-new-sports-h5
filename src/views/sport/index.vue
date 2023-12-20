@@ -38,6 +38,6 @@ const getChampionpPlayTypes = async () => {
 
 <style lang="scss">
 .sport-page{
-  padding: 0 36px;
+  padding: 0 36px 350px;
 }
 </style>
