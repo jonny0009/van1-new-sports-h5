@@ -5,18 +5,47 @@
     <br />
     <br />
     <br />
-    <TextButton text="暗示" :active="true" />
-    <TextButton text="暗示" />
+    <div class="flex-box">
+      <TextButton text="暗示" :active="true" />
+      <TextButton text="暗示" />
+      <TextButton text="暗示" />
+      <TextButton text="暗示" />
+      <TextButton text="暗示" />
+      <TextButton text="暗示" />
+      <TextButton text="暗示" />
+      <TextButton text="暗示" />
+      <TextButton text="暗示" />
+      <TextButton text="暗示" />
+    </div>
     <br />
     <br />
     <br />
-    <ImageButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" :active="true" />
-    <ImageButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" count="22" />
+    <div class="flex-box">
+      <ImageButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" :active="true" />
+      <ImageButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" count="22" />
+      <ImageButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" count="22" />
+      <ImageButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" count="22" />
+      <ImageButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" count="22" />
+      <ImageButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" count="22" />
+      <ImageButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" count="22" />
+      <ImageButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" count="22" />
+      <ImageButton text="暗示" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" count="22" />
+    </div>
     <br />
     <br />
-
-    <SportsButton text="FT" :active="true" />
-    <SportsButton text="FT" />
+    <div class="flex-box">
+      <SportsButton text="FT" :active="true" />
+      <SportsButton text="FT" />
+      <SportsButton text="FT" />
+      <SportsButton text="FT" />
+      <SportsButton text="FT" />
+      <SportsButton text="FT" />
+      <SportsButton text="FT" />
+      <SportsButton text="FT" />
+      <SportsButton text="FT" />
+      <SportsButton text="FT" />
+      <SportsButton text="FT" />
+    </div>
     <br />
     <br />
 

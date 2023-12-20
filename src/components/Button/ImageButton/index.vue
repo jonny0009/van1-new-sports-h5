@@ -69,6 +69,7 @@ countVal.value = props.count
 </script>
 <style lang="scss" scoped>
 .ImageButton{
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
   height: 64px;
