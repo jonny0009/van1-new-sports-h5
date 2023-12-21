@@ -148,7 +148,6 @@ async function setPk(val: any) {
 :root {
   --van-toast-text-padding: 20px 30px;
   --van-toast-font-size: 28px;
-
 }
 .noticeDetail {
   .bg-title {

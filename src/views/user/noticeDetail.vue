@@ -6,28 +6,65 @@
       </template>
     </van-nav-bar>
     <div class="content">
-      <p v-html="content"></p>
+      <p v-html="replaceImgUrl(detailObj.content)"></p>
+      <!-- {{ router.query.id }} -->
     </div>
     <div class="noticeTime">
-      {{ '2023/12/10 13:59:59' }}
+      {{ formatToDateTime(detailObj.optTime) }}
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { messageDetail } from '@/api/user'
+import { showToast } from 'vant'
+import { formatToDateTime } from '@/utils/date'
+import { ImageSource } from '@/config'
+
 const $router = useRouter()
-// const dataList = reactive([])
-const content = ref('111111')
 const goBack = () => {
   $router.back()
 }
 const title = ref('消息详情')
+const detailObj = ref<any>({})
+onMounted(async () => {
+  const id = $router.currentRoute.value.query.id
+  getDetail(id)
+})
+const getDetail = async (id:any) => {
+  const res: any = await messageDetail({ id: id })
+  const data = res.data
+  if (res.code === 200) {
+    detailObj.value = data
+    title.value = data.title
+  } else {
+    showToast(res.msg)
+  }
+}
+const replaceImgUrl = (str: any) => {
+  if (typeof str === 'string') {
+    const imgs = str.match(/<img.*?>/g)
+    Array.isArray(imgs) &&
+      imgs.forEach((item: any) => {
+        const _src = item
+          .match(/src=".*?"/g)[0]
+          .replace(/(src=")(.*?)(")/, '$2')
+        str = str.replace(_src, `${ImageSource}${_src}`)
+      })
+    return str
+  }
+  return ''
+}
 
 </script>
 
 <style lang="scss" scoped>
+:root {
+  --van-toast-text-padding: 20px 30px;
+  --van-toast-font-size: 28px;
+}
 .noticeDetail {
   .bg-title {
     width: 100%;
