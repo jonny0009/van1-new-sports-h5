@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 更新投注点水
 export const morePW = (data:any) => {
   return request({
-    url: '/bet/order/morePW',
+    url: '/ai/mobile/bet/order/morePW',
     method: 'post',
     data
   })
@@ -11,7 +11,7 @@ export const morePW = (data:any) => {
 // 投注
 export const moreBetting = (data:any) => {
   return request({
-    url: '/bet/order/moreBetting',
+    url: '/ai/mobile/bet/order/moreBetting',
     method: 'post',
     data
   })
@@ -19,7 +19,7 @@ export const moreBetting = (data:any) => {
 // 串关点水
 export const betComboOrder = (data:any) => {
   return request({
-    url: '/bet/order/betComboOrder',
+    url: '/ai/mobile/bet/order/betComboOrder',
     method: 'post',
     data
   })
@@ -27,7 +27,7 @@ export const betComboOrder = (data:any) => {
 // 串关投注
 export const comboBetting = (data:any) => {
   return request({
-    url: '/bet/order/comboBetting',
+    url: '/ai/mobile/bet/order/comboBetting',
     method: 'post',
     data
   })
@@ -35,7 +35,7 @@ export const comboBetting = (data:any) => {
 // 查询订单状态
 export const getOrderState = (data:any) => {
   return request({
-    url: '/order/getOrderState',
+    url: '/ai/mobile/order/getOrderState',
     method: 'post',
     data
   })
@@ -43,7 +43,7 @@ export const getOrderState = (data:any) => {
 // BTI订单再次确认
 export const betOrderConfirm = (data:any) => {
   return request({
-    url: '/bet/order/confirm',
+    url: '/ai/mobile/bet/order/confirm',
     method: 'post',
     data
   })

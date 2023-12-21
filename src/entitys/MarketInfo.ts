@@ -1,13 +1,15 @@
+import { createBetItem } from 'xcsport-lib'
 interface MarketInfoInterface {
   homeTeam: any
   awayTeam: any
   gidm: any
   gameId: any
   gameType: any
-  playType?: any
+  playType: any
   ratioType?: any
   ratioIpo?: any
   showType: any
+  showtype: any
   systemId: any
   ratio: any
   ior: any
@@ -28,7 +30,7 @@ interface MarketInfoInterface {
   ratio1?: any
   championType?: any
 }
-const requireAttrs: Array<string> = ['systemId', 'gidm', 'gameId', 'gameType', 'ratioType', 'ratio', 'ior']
+const requireAttrs: Array<string> = ['systemId', 'gidm', 'gameId', 'gameType', 'playType', 'ratioType', 'ratio', 'ior']
 
 /** */
 export class MarketInfo {
@@ -48,6 +50,7 @@ export class MarketInfo {
   sw: any
   oddfType: any
   showType: any
+  showtype: any
   session: any
   ior: any
   leagueName: any
@@ -59,6 +62,11 @@ export class MarketInfo {
   championType: any
 
   playOnlyId: string
+  isChampion: boolean = false
+  ratioName: string = ''
+  goldMax: string = ''
+  goldMin: string = ''
+  ratioKey: string = ''
 
   constructor(info: MarketInfoInterface) {
     this.systemId = info.systemId
@@ -73,7 +81,8 @@ export class MarketInfo {
     this.sw = info.sw
     this.championType = info.championType
     this.oddfType = info.oddfType
-    this.showType = info.showType
+    this.showType = info.showType || info.showtype
+    this.showtype = info.showType || info.showtype
     this.gameType = info.gameType
     this.playType = info.playType || ''
     this.ratioType = info.ratioType || ''
@@ -87,8 +96,19 @@ export class MarketInfo {
     this.suffix = info.suffix
     this.homeTeamSuffix = info.homeTeamSuffix
     this.sourceCompany = info.sourceCompany
+    if (this.showtype === 'CP' || this.playType === 'CHAMPION') {
+      this.isChampion = true
+    } else {
+      this.isChampion = false
+    }
+    try {
+      this.ratioName = createBetItem({ ...this })
+    } catch (error) {
+      console.error(error)
+    }
     this.checkoutAttrs(info)
     this.playOnlyId = this.getPlayOnlyId()
+    this.ratioKey = this.getPlayOnlyId()
   }
   checkoutAttrs(info: any) {
     const warnings: any[] = []
@@ -101,6 +121,7 @@ export class MarketInfo {
       console.warn(`缺少：${warnings.toString()}`)
     }
   }
+
   getPlayOnlyId() {
     let gidm = this.gidm
     // 投注使用子比赛sgidm

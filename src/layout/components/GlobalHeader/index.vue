@@ -1,20 +1,25 @@
 <template>
   <div class="global-bar-header">
-    <div class="avatar" @click="showInfo">
-      <img :src="avatarImg" style="object-fit: contain;" />
-    </div>
-    <div class="wallet" @click="toUrl('/login')">
-      <div class="cur">
-        <img :src="USDTImg" style="object-fit: contain;" />
+    <div class="headerView">
+      <div class="headerView-fixed">
+        <div class="avatar" @click="showInfo">
+          <img :src="avatarImg" style="object-fit: contain;" />
+        </div>
+        <div class="wallet" @click="toUrl('/login')">
+          <div class="cur">
+            <img :src="USDTImg" style="object-fit: contain;" />
+          </div>
+          0.00
+          <div class="transaction">
+            <img :src="transactionImg" />
+          </div>
+        </div>
+        <div class="right-area" @click="toUrl('/search')">
+          <img class="search" :src="searchImg" style="object-fit: contain;" />
+        </div>
       </div>
-      0.00
-      <div class="transaction">
-        <img :src="transactionImg" />
-      </div>
     </div>
-    <div class="right-area" @click="toUrl('/search')">
-      <img class="search" :src="searchImg" style="object-fit: contain;" />
-    </div>
+
     <van-popup v-model:show="showLeft" :duration="0.2" position="left" :style="{ width: '71.5%', height: '100%' }">
       <div class="userInfo">
         <!-- 头部 -->
@@ -59,6 +64,7 @@
         </div>
       </div>
     </van-popup>
+
   </div>
 </template>
 <script lang="ts" setup>
@@ -66,9 +72,11 @@ import searchImg from '@/assets/images/globalLayout/header/search.png'
 import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
 import USDTImg from '@/assets/images/globalLayout/header/USDT.png'
 import transactionImg from '@/assets/images/globalLayout/header/transaction.png'
+
 import logoImg from '@/assets/images/user/logo.png'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+
 const showLeft = ref(false)
 const $router = useRouter()
 const toUrl = (url:string) => {
@@ -88,32 +96,39 @@ const showInfo = () => {
   showLeft.value = true
 }
 </script>
-<style lang="scss" scoped>
-.global-bar-header {
-  height: 96px;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(to bottom, #181f2a 0, #2a0572 100%);
-  position: relative;
 
-  .wallet {
+<style lang="scss" scoped>
+.headerView{
+  height: 96px;
+  .headerView-fixed{
+    position: fixed;
+    z-index: 99;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 96px;
+    color: #fff;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom,#181f2a 0,#2a0572 100%);
+  }
+
+  .wallet{
     height: 56px;
     line-height: 56px;
     min-width: 300px;
     display: inline-block;
-    background: linear-gradient(90deg, #7642fe, #491cab);
+    background: linear-gradient(90deg,#7642fe,#491cab);
     border-radius: 100px;
     position: relative;
     text-align: center;
     font-weight: 800;
     font-size: 26px;
-    font-family: PingFangSC-Semibold, SF-Pro-Bold, system-ui;
+    font-family: PingFangSC-Semibold,SF-Pro-Bold,system-ui;
     padding: 0 66px;
-
     .transaction,
-    .cur {
+    .cur{
       position: absolute;
       top: 4px;
       width: 48px;
@@ -129,22 +144,19 @@ const showInfo = () => {
         display: block;
       }
     }
-
-    .cur {
+    .cur{
       left: 6px;
       img{
         width: 40px;
         height: 40px;
       }
     }
-
-    .transaction {
+    .transaction{
       background: #7642fe;
       right: 6px;
     }
   }
-
-  .avatar {
+  .avatar{
     position: absolute;
     left: 30px;
     top: 6px;
@@ -155,8 +167,7 @@ const showInfo = () => {
       height: 84px;
     }
   }
-
-  .right-area {
+  .right-area{
     position: absolute;
     top: 0;
     bottom: 0;
@@ -170,7 +181,6 @@ const showInfo = () => {
     }
   }
 }
-
 .userInfo {
   background: #FFFFFF;
   font-family: PingFangSC-Medium;
@@ -289,4 +299,6 @@ const showInfo = () => {
     }
   }
 
-}</style>
+}
+
+</style>

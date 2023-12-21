@@ -1,6 +1,6 @@
 <template>
   <div
-    class="textButton"
+    class="PlayButton"
     :class="[
       {
         'active':activeVal
@@ -42,11 +42,11 @@ textval.value = props.text
 </script>
 
 <style lang="scss" scoped>
-.textButton{
+.PlayButton{
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
-  height: 64px;
-  line-height: 64px;
+  height: 60px;
   border-radius:30px;
   padding-left: 17px;
   padding-right: 40px;

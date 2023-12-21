@@ -7,7 +7,9 @@
       }
     ]"
   >
-    {{ textval }}
+    <span>
+      {{ textval }}
+    </span>
   </div>
 </template>
 <script lang="ts" setup>
@@ -43,6 +45,7 @@ textval.value = props.text
 
 <style lang="scss" scoped>
 .textButton{
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
   height: 64px;
@@ -53,14 +56,18 @@ textval.value = props.text
   color: #1f2630;
   transition: all .3s;
   font-size: 24px;
+  span{
+    line-height: 24px;
+    font-size: 24px;
+  }
   &.active{
     background:#7642fe;
     color:#fff;
   }
-  .img{
-    width:44px;
+  &::before{
+    content: '';
+    display: inline-block;
     height: 44px;
-    margin-right: 19px;
   }
 }
 </style>

@@ -7,7 +7,12 @@ export default {
     {
       path: '/champion',
       component: () => import('@/views/champion/index.vue'),
-      name: 'Champion'
+      name: 'Champion',
+      meta: {
+        showSportsTabsView: true,
+        showBarTabsView: true,
+        showRefresh: true
+      }
     }
   ]
 }

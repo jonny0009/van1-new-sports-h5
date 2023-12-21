@@ -1,60 +1,51 @@
 <template>
   <div class="home-page">
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-      <div class="refresh-wrap">
 
-        <homeBarHeader />
+    <ArrowTitle class="mt10 mb10" :src="titleHot" text="热门赛事" @returnSuccess="returnStatus" />
 
-        <homeTabs class="mt10" />
+    <div class="Hot-Match-Group">
+      <img :src="xxx1" />
+      <img :src="xxx1" />
+      <img :src="xxx1" />
+      <img :src="xxx1" />
+    </div>
 
-        <ArrowTitle class="ml20 mt10 mb10" :src="titleHot" text="热门赛事" @returnSuccess="returnStatus" />
+    <ArrowTitle class="mt10 mb10" :src="titleRecommend" text="推荐比赛" @returnSuccess="returnStatus" />
 
-        <div class="Hot-Match-Group">
-          <img :src="xxx1" />
-          <img :src="xxx1" />
-          <img :src="xxx1" />
-          <img :src="xxx1" />
-        </div>
+    <div class="Recommend-Match-Tabs">
+      <SportsButton text="FT" :active="true" />
+      <SportsButton text="BK" />
+      <SportsButton text="TN" />
+      <SportsButton text="OP_BM" />
+    </div>
 
-        <ArrowTitle class="ml20 mt10 mb10" :src="titleRecommend" text="推荐比赛" @returnSuccess="returnStatus" />
+    <homeMatchHandicap class="mt20" />
 
-        <div class="Recommend-Match-Tabs">
-          <SportsButton text="FT" :active="true" />
-          <SportsButton text="BK" />
-          <SportsButton text="TN" />
-          <SportsButton text="OP_BM" />
-        </div>
+    <ArrowTitle class="mt10 mb10" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
 
-        <homeMatchHandicap class="mt20" />
+    <div class="Recommend-Match-Tabs">
+      <SportsButton text="FT" :active="true" />
+      <SportsButton text="BK" />
+      <SportsButton text="TN" />
+      <SportsButton text="OP_BM" />
+    </div>
 
-        <ArrowTitle class="ml20 mt10 mb10" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
-        <div class="Recommend-Match-Tabs">
-          <SportsButton text="FT" :active="true" />
-          <SportsButton text="BK" />
-          <SportsButton text="TN" />
-          <SportsButton text="OP_BM" />
-        </div>
+    <homeMatchHandicap class="mt20" />
 
-        <homeMatchHandicap class="mt20" />
+    <div class="Button-MatchMore mt20">
+      <span>
+        查看更多比赛
+      </span>
+    </div>
 
-        <div class="Button-MatchMore mt20">
-          <span>
-            查看更多比赛
-          </span>
-        </div>
+    <div class="footerHeight"></div>
 
-        <p>刷新次数: {{ count }}</p>
-      </div>
-    </van-pull-refresh>
   </div>
 </template>
 
 <script lang="ts" setup>
-// import { showToast } from 'vant'
-// home components
-import homeBarHeader from './components/homeBarHeader/index.vue'
-import homeTabs from './components/homeTabs/index.vue'
-import homeMatchHandicap from './components/homeMatchHandicap/index.vue'
+// home
+import homeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
 // common components
 import ArrowTitle from '@/components/Title/ArrowTitle/index.vue'
 import SportsButton from '@/components/Button/SportsButton/index.vue'
@@ -63,18 +54,6 @@ import xxx1 from '@/assets/images/home/other/x1.png'
 import titleHot from '@/assets/images/home/title-hot.png'
 import titleRecommend from '@/assets/images/home/title-recommend.png'
 import titleTime from '@/assets/images/home/title-time.png'
-import { ref } from 'vue'
-const isLoading = ref(false)
-const count = ref(0)
-const onRefresh = (val:any) => {
-  isLoading.value = false
-  console.log(val)
-  // setTimeout(() => {
-  //   showToast('刷新成功')
-  //   isLoading.value = false
-  //   count.value++
-  // }, 1000)
-}
 const returnStatus = (val:any) => {
   console.log(val)
 }
@@ -82,6 +61,7 @@ const returnStatus = (val:any) => {
 <style lang="scss" scoped>
 .home-page{
   overflow: hidden;
+  padding: 0 40px;
  .van-pull-refresh {
     min-height: calc(100vh - 96px);
   }
@@ -104,7 +84,6 @@ const returnStatus = (val:any) => {
 .Hot-Match-Group{
   display: flex;
   overflow: auto;
-  margin: 0 40px;
   &::-webkit-scrollbar {
     height: 0;
     display: none;
@@ -117,7 +96,6 @@ const returnStatus = (val:any) => {
   }
 }
 .Recommend-Match-Tabs{
-  margin: 0 40px;
   display: flex;
   overflow: auto;
   &::-webkit-scrollbar {

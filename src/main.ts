@@ -26,7 +26,7 @@ app.use(plugins)
 app.use(i18n)
 
 const start = async () => {
-  await bootstrap()
+  bootstrap()
   app.mount('#app')
 }
 

@@ -23,7 +23,6 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { MarketInfo } from '@/entitys/MarketInfo'
 const isOpen: any = ref(false)
 const props = defineProps({
   gameDetail: {
@@ -33,14 +32,9 @@ const props = defineProps({
     }
   }
 })
-
 const itemList: any = ref()
 itemList.value = props.gameDetail.champion.ratioData.slice(0, 9)
 
-itemList.value = itemList.value.map((item:any) => {
-  item.marketInfo = new MarketInfo(item)
-  return item
-})
 const clickOpen = () => {
   isOpen.value = !isOpen.value
   if (isOpen.value) {
@@ -82,28 +76,43 @@ const clickOpen = () => {
         .betslipLine {
           width: 100%;
           flex: 1;
-          font-size: 28px;
-          // line-height: 20px;
           display: flex;
           justify-content: center;
           align-items: center;
           color: #546371;
+          font-size: 24px;
+
           overflow: hidden !important;
           white-space: nowrap !important;
           text-overflow: ellipsis !important;
 
           .text {
+            color: #546371;
             text-align: center;
             overflow: hidden !important;
             white-space: nowrap !important;
             text-overflow: ellipsis !important;
           }
         }
-
         .details {
           display: flex;
           justify-content: center;
           align-items: center;
+          .item{
+            font-size: 26px;
+            color: #000000;
+          }
+        }
+      }
+      .selected{
+        background-color: #7642fe;
+        .text{
+          color: hsla(0,0%,100%,.8) !important;
+        }
+        .details {
+          .item{
+            color: white;
+          }
         }
       }
     }

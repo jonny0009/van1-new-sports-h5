@@ -60,7 +60,12 @@ export const constantRoutes: Array<any> = [
       {
         path: '/home',
         component: () => import('@/views/home/index.vue'),
-        name: 'Home'
+        name: 'Home',
+        meta: {
+          showSportsTabsView: true,
+          showBarTabsView: true,
+          showRefresh: true
+        }
       }
     ]
   },

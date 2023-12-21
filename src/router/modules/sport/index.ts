@@ -7,7 +7,11 @@ export default {
     {
       path: '/sport',
       component: () => import('@/views/sport/index.vue'),
-      name: 'Sport'
+      name: 'Sport',
+      meta: {
+        showSportsTabsView: true,
+        showRefresh: true
+      }
     }
   ]
 }

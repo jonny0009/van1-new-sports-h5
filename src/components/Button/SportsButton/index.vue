@@ -96,10 +96,10 @@ SportsName.value = `icon-${props.text}`
 </script>
 <style lang="scss" scoped>
 .SportsButton{
+  white-space:nowrap;
   display: inline-flex;
   align-items: center;
   height: 64px;
-  line-height: 64px;
   border-radius:30px;
   padding-left: 17px;
   padding-right: 40px;

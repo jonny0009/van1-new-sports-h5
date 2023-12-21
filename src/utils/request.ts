@@ -26,7 +26,7 @@ service.interceptors.request.use(
     config.headers.token = token
     config.headers.terType = '2'
     config.headers.wid = 1
-    config.headers.lang = 'en-us'
+    config.headers.lang = 'zh-cn'
     config.headers.apiVer = '4.06'
     config.headers.groupId = groupId
     if (config.method === 'post') {

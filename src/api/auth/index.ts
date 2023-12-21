@@ -40,3 +40,14 @@ export const moduleConfig = () => {
     method: 'get'
   })
 }
+/**
+ * 用户配置
+ * @returns
+ */
+export const configSettingNew = (data:any) => {
+  return request({
+    url: '/ai/mobile/player/configSettingNew',
+    method: 'post',
+    data
+  })
+}

@@ -80,24 +80,14 @@ export const hitParams = (bets: any) => {
   }
 }
 // 筛选投注参数
-export const buyParams = (bets: any, s: any, t: any) => {
-  // 是否接收所有盘口变化 'Y' 接收最优 'S' 接收所有
-  const { userConfig } = store.state.user
-  const { acceptHight, acceptAll, handicapType } = userConfig || {}
-  let autoOdd = ''
-
-  if (+acceptAll) {
-    autoOdd = 'S'
-  } else if (+acceptHight) {
-    autoOdd = 'Y'
-  } else if (+acceptAll === 0 && +acceptHight === 0) {
-    autoOdd = 'N'
-  }
-
+export const buyParams = (markets: any, s: any, t: any) => {
+  const { userConfig } = store.state.user || {}
+  const { handicapType } = userConfig || {}
+  const autoRatio = userConfig === 1 ? 'S' : 'N'
   // 当前选择的盘口 欧洲盘/香港盘
-  const oddfType = handicapType
+  const oddfType = !handicapType ? 'H' : handicapType
   const betSubList: Array<any> = []
-  bets.map((bet: any) => {
+  markets.map((bet: any) => {
     let gidm = bet.gidm
     const {
       gameId,
@@ -173,11 +163,13 @@ export const buyParams = (bets: any, s: any, t: any) => {
   return {
     s,
     t,
-    autoOdd,
     oddfType,
     betSubList,
+    autoRatio,
     betType: 1,
-    isCredit: 'N'
+    isCredit: 'N',
+    orderSource: 'AI',
+    autoOdd: 'N'
   }
 }
 // 筛选串关点水参数

@@ -21,6 +21,7 @@
         <div class="img-wrap">
           <img
             v-img="item.leagueIcon"
+            type="1"
             width="23"
             height="23"
             fit="contain"
@@ -33,6 +34,7 @@
       <div v-for="(item, idx) in leagueList" :key="idx" class="up-league-item" @click="clickSportPage(item)">
         <img
           v-img="item.leagueIcon"
+          type="1"
           fit="contain"
           class="my-image icon"
         />
@@ -51,7 +53,6 @@
 import SportsButton from '@/components/Button/SportsButton/index.vue'
 import leagueIcon from '@/assets/images/champion/league-icon.png'
 import { apiChampionGameTypes, apiChampionLeagueInfo } from '@/api/champion'
-import { imgUrlFormat } from '@/utils'
 import { ref, onBeforeMount } from 'vue'
 import router from '@/router'
 const chooseGameType:any = ref('0')
@@ -105,7 +106,7 @@ const getChampionLeagueInfo = async () => {
 const clickSportPage = (item: any) => {
   router.push({
     name: 'Sport',
-    query: { leagueId: item.leagueId }
+    query: { leagueId: item.leagueId, type: item.gameType }
   })
 }
 
@@ -113,7 +114,7 @@ const clickSportPage = (item: any) => {
 
 <style lang="scss">
 .champion-page{
-  padding: 0 35px;
+  padding: 0 35px 190px;
   .title{
     display: flex;
     align-items: center;
