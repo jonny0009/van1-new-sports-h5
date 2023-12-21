@@ -14,9 +14,9 @@
         <div v-if="marketInfo.isChampion" class="team-info">{{ $t('betting.champion') }}</div>
         <div v-else class="team-info">{{ marketInfo.homeTeam }} VS {{ marketInfo.awayTeam }}</div>
       </div>
-      <div class="betting-odds">@{{ marketInfo.ior }}</div>
+      <div class="betting-odds">@<span v-points="marketInfo.ior"></span></div>
       <div class="action">
-        <div class="betting-slip-input">
+        <div ref="inputBtn" class="betting-slip-input" @click="inputTouch">
           <span class="currency"><van-icon name="balance-o" /></span>
           <div style="flex: 1 1 0%;"></div>
           <span class="amount">{{ marketInfo.gold }}</span>
@@ -27,15 +27,24 @@
 </template>
 <script lang="ts" setup>
 import store from '@/store'
-
+import { ref } from 'vue'
+const inputBtn = ref()
 const props = defineProps({
   marketInfo: {
     type: Object,
-    default: () => {}
+    default: () => { }
   }
 })
 const remove = () => {
   store.dispatch('betting/deleteMarket', props.marketInfo.playOnlyId)
+}
+const inputTouch = () => {
+  store.dispatch('betting/setBoardShow', true)
+  setTimeout(() => {
+    inputBtn.value.scrollIntoView({
+      behavior: 'smooth'
+    })
+  })
 }
 console.log(props)
 </script>

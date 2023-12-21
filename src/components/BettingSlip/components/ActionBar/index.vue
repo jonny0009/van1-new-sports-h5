@@ -10,7 +10,8 @@
     </div>
     <div class="confirm-button-wrap">
       <SvgIcon name="betting-trash" class="delete-btn" @click="clear"></SvgIcon>
-      <div v-debounce="buy" class="confirm-button">{{ $t('betting.buy') }}</div>
+      <div v-if="hitState===1" v-debounce="buy" class="confirm-button">{{ $t('betting.buy') }}</div>
+      <div v-else class="confirm-button">{{ $t('betting.betting') }}</div>
     </div>
   </div>
 </template>
@@ -18,6 +19,7 @@
 import { computed } from 'vue'
 
 import store from '@/store'
+const hitState = computed(() => store.state.betting.hitState)
 const betsGolds = computed(() => store.getters['betting/betsGolds'])
 const betsProfit = computed(() => store.getters['betting/betsProfit'])
 
