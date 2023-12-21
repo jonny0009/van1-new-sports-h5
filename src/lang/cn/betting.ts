@@ -4,5 +4,6 @@ export default {
   champion: '冠军',
   betGolds: '投注额',
   betProfit: '可赔付额',
-  buy: '下单'
+  buy: '下单',
+  betting: '下单中...'
 }

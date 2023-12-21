@@ -32,7 +32,6 @@ interface MarketInfoInterface {
 }
 const requireAttrs: Array<string> = ['systemId', 'gidm', 'gameId', 'gameType', 'playType', 'ratioType', 'ratio', 'ior']
 
-/** */
 export class MarketInfo {
   gidm: any
   sgidm: any
@@ -108,7 +107,7 @@ export class MarketInfo {
     }
     this.checkoutAttrs(info)
     this.playOnlyId = this.getPlayOnlyId()
-    this.ratioKey = this.getPlayOnlyId()
+    this.ratioKey = this.playOnlyId
   }
   checkoutAttrs(info: any) {
     const warnings: any[] = []

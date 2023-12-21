@@ -52,14 +52,20 @@
         ></div>
       </div>
       <Nothing v-if="results.length === 0 && markets.length === 0"></Nothing>
-      <div v-else-if="type < 3 && markets.length" class="bet-content">
-        <Singles v-for="(market, index) in markets" :key="index" :market-info="market"></Singles>
+      <div
+        v-else-if="type < 3 && markets.length"
+        class="bet-content"
+        :style="{
+          paddingBottom: boardShow ? '175px' : '8px'
+        }"
+      >
+        <Singles v-for="( market, index ) in markets " :key="index" :market-info="market"></Singles>
         <ActionBar />
       </div>
       <Result v-if="results.length && markets.length === 0"></Result>
     </div>
-
   </div>
+  <Keyboard></Keyboard>
 </template>
 <script lang="ts" setup>
 import { ref, computed, watch } from 'vue'
@@ -68,9 +74,11 @@ import Nothing from './components/Nothing/index.vue'
 import Singles from './components/Single/index.vue'
 import Result from './components/Result/index.vue'
 import ActionBar from './components/ActionBar/index.vue'
+import Keyboard from './components/Keyboard/index.vue'
 import store from '@/store'
 const open = ref(false)
 const checked = ref(false)
+
 const type = ref(1)
 const tabs = ref([
   {
@@ -90,6 +98,7 @@ const tableLeft = computed(() => {
   return `calc(100% / 3 * ${type.value - 1} + (100% / 3 - 27vw) / 2 )`
 })
 const isOne = computed(() => store.state.betting.isOne)
+const boardShow = computed(() => store.state.betting.boardShow)
 const markets = computed(() => store.state.betting.markets)
 const results = computed(() => store.state.betting.results)
 const betsProfit = computed(() => store.getters['betting/betsProfit'])
@@ -98,6 +107,11 @@ const userConfig = computed(() => store.state.user.userConfig)
 watch(() => isOne.value, () => {
   if (isOne.value) {
     open.value = true
+  }
+})
+watch(() => open.value, () => {
+  if (!open.value) {
+    store.dispatch('betting/setBoardShow', false)
   }
 })
 const toogle = () => {
@@ -123,7 +137,7 @@ timer.value = setInterval(() => {
 <style lang="scss" scoped>
 .betting-slip-bg {
   display: none;
-  z-index: 7;
+  z-index: 288;
   position: fixed;
   left: 0;
   right: 0;
@@ -148,7 +162,7 @@ timer.value = setInterval(() => {
   right: 0;
   margin: auto;
   background: #fff;
-  z-index: 8;
+  z-index: 290;
   display: flex;
   flex-direction: column;
   transform: translateY(100%) translateY(-185px);
@@ -311,5 +325,7 @@ timer.value = setInterval(() => {
     transition: height .3s;
     overscroll-behavior: contain;
   }
+
 }
+
 </style>

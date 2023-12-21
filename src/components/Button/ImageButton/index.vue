@@ -8,7 +8,6 @@
     ]"
   >
     <img
-      v-if="!noImg"
       v-img="src"
       class="img"
       style="object-fit: contain;"
