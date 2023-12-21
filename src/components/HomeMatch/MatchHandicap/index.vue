@@ -128,20 +128,11 @@
                   <div class="betting-select__list">
                     <div v-for="(item,idx) in getOUList(props.sendParams)" :key="idx" class="betting-option">
                       <span class="up-betting-name">
-                        <span class="text">大于</span>
-                        <span class="point">2.5</span>
+                        <span class="text">{{ item.ratioType }}</span>
+                        <span class="point">{{ item.ratio }}</span>
                       </span>
                       <div class="details">
-                        <div class="item">1.88</div>
-                      </div>
-                    </div>
-                    <div class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">小于</span>
-                        <span class="point">2.5</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">1.88</div>
+                        <div class="item">{{ item.ior }}</div>
                       </div>
                     </div>
                   </div>
@@ -158,28 +149,12 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <div class="betting-option">
+                    <div v-for="(item,idx) in getMList(props.sendParams)" :key="idx" class="betting-option">
                       <span class="up-betting-name">
-                        <span class="text">柏林联</span>
+                        <span class="text">{{ item.ratioType }}</span>
                       </span>
                       <div class="details">
-                        <div class="item">1.88</div>
-                      </div>
-                    </div>
-                    <div class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">柏林联</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">1.88</div>
-                      </div>
-                    </div>
-                    <div class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">柏林联</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">1.88</div>
+                        <div class="item">{{ item.ior }}</div>
                       </div>
                     </div>
                   </div>
@@ -254,9 +229,9 @@ const OUclick = () => {
   OUrefShow.value = !OUrefShow.value
 }
 const getOUList = (item:any) => {
-  const { R } = item || {}
-  const { game, ratioData } = R || {}
-  const newObject = Object.assign({}, item, R, game)
+  const { OU } = item || {}
+  const { game, ratioData } = OU || {}
+  const newObject = Object.assign({}, item, OU, game)
   console.log(ratioData)
   const newRatioData = (ratioData || []).map(e => {
     return Object.assign({}, e, newObject)
@@ -266,5 +241,15 @@ const getOUList = (item:any) => {
 const MrefShow = ref(true)
 const Mclick = () => {
   MrefShow.value = !MrefShow.value
+}
+const getMList = (item:any) => {
+  const { M } = item || {}
+  const { game, ratioData } = M || {}
+  const newObject = Object.assign({}, item, M, game)
+  console.log(ratioData)
+  const newRatioData = (ratioData || []).map(e => {
+    return Object.assign({}, e, newObject)
+  })
+  return newRatioData
 }
 </script>
