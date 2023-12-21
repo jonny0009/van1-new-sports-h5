@@ -54,9 +54,31 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, onMounted, watch } from 'vue'
+import { playGroup } from '@/api/live'
+const props = defineProps({
+  matchInfo: Object
+})
 
 const activeNames = ref(['1'])
+
+const getPlayGroup = async () => {
+  const gameType = props.matchInfo?.gameType
+  const res = await playGroup({ gameType })
+  const data = res.data || {}
+  const aiFormatGroup = data['veteran'] || []
+  console.log(aiFormatGroup)
+}
+watch(
+  () => props.matchInfo,
+  () => {
+    getPlayGroup()
+  }
+)
+
+onMounted(() => {
+  getPlayGroup()
+})
 </script>
 
 <style lang="scss" scoped>

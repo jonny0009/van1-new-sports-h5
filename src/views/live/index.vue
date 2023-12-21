@@ -15,7 +15,7 @@
 
     <div class="wrapper">
       <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <div class="live-item" v-for="(item, i) in list" :key="i">
+        <div class="live-item" v-for="item in list" :key="item.gidm">
           <LiveItem :item="item" @click="onItemClick(item)" />
         </div>
       </van-list>
@@ -47,7 +47,7 @@ const onNavClick = (item: any) => {
 }
 
 let page: number = 0
-const list: Ref<Object[]> = ref([])
+const list: Ref<any[]> = ref([])
 const loading = ref(false)
 const finished = ref(false)
 const onLoad = async () => {
