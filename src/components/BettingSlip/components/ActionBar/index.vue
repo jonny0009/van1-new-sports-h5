@@ -8,6 +8,9 @@
       <span class="title">{{ $t('betting.betProfit') }} ：</span>
       <span class="value">{{ betsProfit }}</span>
     </div>
+    <div v-if="errorTips" class="error-tips">
+      {{ errorTips }}
+    </div>
     <div class="confirm-button-wrap">
       <SvgIcon v-if="hitState === 1" name="betting-trash" class="delete-btn" @click="clear"></SvgIcon>
       <div v-if="hitState === 1" v-debounce="buy" class="confirm-button">{{ $t('betting.buy') }}</div>
@@ -18,9 +21,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue'
-
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 import store from '@/store'
+const errorTips = ref()
+const errorTimer = ref()
 const hitState = computed(() => store.state.betting.hitState)
 const betsGolds = computed(() => store.getters['betting/betsGolds'])
 const betsProfit = computed(() => store.getters['betting/betsProfit'])
@@ -29,15 +35,41 @@ const clear = () => {
   store.dispatch('betting/clearMarkets')
 }
 const buy = () => {
-  store.dispatch('betting/marketBetting')
+  store.dispatch('betting/marketBetting').catch((err: any) => {
+    error(err || t('betting.errorTips'))
+  })
 }
-
+const error = (err: string) => {
+  errorTips.value = err
+  clearTimeout(errorTimer.value)
+  errorTimer.value = setTimeout(() => {
+    errorTips.value = ''
+  }, 3000)
+}
 </script>
 <style lang="scss" scoped>
 .action-bar {
+  position: relative;
   display: flex;
   flex-direction: column;
-  padding: 50px 0 20px;
+  padding: 50px 38px 20px;
+
+  .error-tips {
+    position: absolute;
+    left: 0;
+    bottom: 120px;
+    width: 100%;
+    height: 64px;
+    line-height: 64px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.40);
+    font-family: PingFangSC-Regular;
+    font-size: 28px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    text-align: center;
+    font-weight: 400;
+  }
 
   .bet-golds {
     display: flex;

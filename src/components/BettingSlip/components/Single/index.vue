@@ -55,7 +55,7 @@ console.log(props)
   display: flex;
   align-items: center;
   height: 178px;
-  margin-bottom: 10px;
+  margin: 0 38px 10px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;

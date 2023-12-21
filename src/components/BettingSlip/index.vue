@@ -321,7 +321,7 @@ timer.value = setInterval(() => {
 
   .bet-content {
     flex: 1;
-    padding: 20px 38px;
+    padding: 20px 0;
     overflow: auto;
     transition: height .3s;
     overscroll-behavior: contain;

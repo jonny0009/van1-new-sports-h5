@@ -5,5 +5,6 @@ export default {
   betGolds: '投注额',
   betProfit: '可赔付额',
   buy: '下单',
-  betting: '下单中...'
+  betting: '下单中...',
+  errorTips: '网络异常！'
 }
