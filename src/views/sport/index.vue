@@ -139,7 +139,7 @@ const getChampionpPlayTypes = async () => {
           // 整理下单所需参数实体类
           ratioInfo.marketInfo = new MarketInfo({ ...ratioInfo, systemId, gameId, gidm, gameType, playType, sw, championType })
           return ratioInfo
-        })
+        }).sort((a:any, b:any) => a.ior - b.ior)
         return details
       })
       championList.value = champions
@@ -160,7 +160,7 @@ const clickLeague = (item: any) => {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .sport-page{
   padding: 0 36px 350px;
   .my-scroll__content{

@@ -45,7 +45,7 @@ const clickOpen = () => {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .league-champion-item__content {
   margin-top: 24px;
 

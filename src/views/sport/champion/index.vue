@@ -34,7 +34,7 @@ const CloseClick = (val:any) => {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .sport-champion-list{
   .champion-title{
     height: 100px;

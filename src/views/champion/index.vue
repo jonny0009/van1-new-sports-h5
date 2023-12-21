@@ -108,7 +108,7 @@ const clickSportPage = (item: any) => {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .champion-page{
   padding: 0 35px 190px;
   .title{
