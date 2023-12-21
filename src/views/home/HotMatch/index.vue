@@ -39,7 +39,7 @@ import { imgUrlFormat } from '@/utils/index.ts'
 import { firstLeagues } from '@/api/home'
 // script
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
-const timeout = ref('')
+const timeout:any = ref('')
 watch(refreshChangeTime, (val) => {
   if (val) {
     clearTimeout(timeout.value)

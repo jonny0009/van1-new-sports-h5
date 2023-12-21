@@ -1,8 +1,8 @@
 <template>
   <ArrowTitle
     class="mt10 mb10"
-    :src="titleRecommend"
-    text="推荐比赛"
+    :src="titleTime"
+    text="早盘"
     @returnSuccess="returnStatus"
   />
   <div class="Recommend-Match-Tabs">
@@ -14,14 +14,13 @@
   <Loading v-if="!isLoading" />
   <template v-else>
     <EmptyIcon v-if="!recommendEventsList.length" class="marginAuto"></EmptyIcon>
-    <homeMatchHandicap v-for="(item,idx) in recommendEventsList" :key="idx" :send-params="item" class="mt20" />
+    <homeMatchHandicap v-for="(item,idx) in recommendEventsList" v-else :key="idx" :send-params="item" class="mt20" />
   </template>
 </template>
 <script lang="ts" setup>
 import SportsButton from '@/components/Button/SportsButton/index.vue'
+import titleTime from '@/assets/images/home/title-time.png'
 import homeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
-// img
-import titleRecommend from '@/assets/images/home/title-recommend.png'
 // vue
 import { onBeforeMount, reactive, ref, computed, watch } from 'vue'
 import store from '@/store'
@@ -41,10 +40,10 @@ watch(refreshChangeTime, (val) => {
 const recommendEventsList = reactive([])
 const isLoading = ref(false)
 const getRecommendEvents = async () => {
-  const params = {
-    gradeType: 1
-  }
   isLoading.value = false
+  const params = {
+    gradeType: 2
+  }
   const res:any = await recommendEvents(params)
   isLoading.value = true
   if (res.code === 200) {
@@ -54,7 +53,6 @@ const getRecommendEvents = async () => {
     recommendEventsList.push(...baseData)
   }
 }
-
 const init = () => {
   getRecommendEvents()
 }

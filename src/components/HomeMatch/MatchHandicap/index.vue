@@ -219,7 +219,6 @@ const getRList = (item:any) => {
   const { R } = item || {}
   const { game, ratioData } = R || {}
   const newObject = Object.assign({}, item, R, game)
-  console.log(ratioData)
   const newRatioData = (ratioData || []).map(e => {
     return Object.assign({}, e, newObject)
   })
@@ -232,7 +231,6 @@ const getOUList = (item:any) => {
   const { OU } = item || {}
   const { game, ratioData } = OU || {}
   const newObject = Object.assign({}, item, OU, game)
-  console.log(ratioData)
   const newRatioData = (ratioData || []).map(e => {
     return Object.assign({}, e, newObject)
   })
@@ -246,7 +244,6 @@ const getMList = (item:any) => {
   const { M } = item || {}
   const { game, ratioData } = M || {}
   const newObject = Object.assign({}, item, M, game)
-  console.log(ratioData)
   const newRatioData = (ratioData || []).map(e => {
     return Object.assign({}, e, newObject)
   })
