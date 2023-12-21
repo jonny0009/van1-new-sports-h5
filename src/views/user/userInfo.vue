@@ -5,12 +5,12 @@
         <img class="img_1" src="@/assets/images/login/return@2x.png" alt="" @click="goBack()" />
       </template>
       <template #right>
-        <img class="img_1" src="@/assets/images/user/edit.png" alt="" @click="goUrl()" />
+        <img class="img_1" src="@/assets/images/user/edit.png" alt="" @click="goUrl('/editUser')" />
       </template>
     </van-nav-bar>
     <div class="user">
       <div class="user-info">
-        <div class="user-img">
+        <div class="user-img" @click="goUrl('/editImg')">
           <img class="img_1" src="@/assets/images/user/head-img.png" alt="" />
         </div>
         <div class="user-right">
@@ -38,7 +38,7 @@
           </div>
         </div>
       </div>
-      <p class="note">请输入您的个人简介...</p>
+      <p class="note" @click="goUrl('/editUser')">请输入您的个人简介...</p>
 
     </div>
     <div class="content">
@@ -68,9 +68,9 @@
           <img class="img_1" src="@/assets/images/user/bottom2.png" alt="" />
         </div>
       </div>
-
+      <!-- elseInfo -->
       <div class="top-3">
-        <div class="left">
+        <div class="left" @click="goUrl('/elseInfo')">
           <img class="img_1" src="@/assets/images/user/head-img.png" alt="" />
           <div class="name">
             <div>ai-sport</div>
@@ -175,8 +175,8 @@ const $router = useRouter()
 const goBack = () => {
   $router.push('/home')
 }
-const goUrl = () => {
-  $router.push('/user/editUser')
+const goUrl = (url:string) => {
+  $router.push('/user' + url)
 }
 const title = ref('个人档案')
 const dataList = reactive<{ arr: any }>({
