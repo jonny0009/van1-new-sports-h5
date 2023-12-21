@@ -1,13 +1,143 @@
 <template>
-  <van-popup :show="boardShow" class="betting-slip-keyboard" position="bottom" :overlay="false">内容</van-popup>
+  <van-popup :show="boardShow" class="betting-slip-keyboard" position="bottom" :overlay="false">
+    <div class="keyboard-input-header">
+      <div class="quick-input-list">
+        <div v-for="key in quickKeys" :key="key" class="quick-input-item" @click="quickEntry(key)">
+          <div class="text">{{ key }}</div>
+        </div>
+      </div>
+      <div class="seize finish" @click="close">完成</div>
+    </div>
+    <div class="keyboard-input-body">
+      <div v-for="key in keys" :key="key" class="input-item">
+        <span v-if="key === 'back'" class="back"></span>
+        <span v-else>{{ key }}</span>
+      </div>
+    </div>
+    <div class="odd-change-tips">
+      <span class="state-icon"></span>
+      <span class="tips">接受所有盘口变化</span>
+      <span class="tips-icon"></span>
+    </div>
+
+  </van-popup>
 </template>
 <script lang="ts" setup>
 import store from '@/store'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+const quickKeys = ref([1, 10, 50, 100])
+const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '00', 'back']
 const boardShow = computed(() => store.state.betting.boardShow)
+const quickEntry = (amount:any) => {
+  store.dispatch('betting/changeSingleAmount', amount)
+  close()
+}
+const close = () => {
+  store.dispatch('betting/setBoardShow', { status: false })
+}
 </script>
 <style scoped lang="scss">
 .betting-slip-keyboard {
-  height: 300px;
+  box-shadow: 0px -3px 9px 0px rgba(55, 54, 54, 0.5);
+
+  .keyboard-input-header {
+    height: 108px;
+    padding: 0 37px;
+    display: flex;
+    align-items: center;
+  }
+
+  .seize {}
+
+  .quick-input-list {
+    padding-left: 36px;
+    padding-right: 44px;
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+
+    .quick-input-item {
+      width: 117px;
+      height: 50px;
+
+      .text {
+        height: 100%;
+        border-radius: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(150, 165, 170, .15);
+        font-family: PingFangSC-Medium;
+        font-size: 24px;
+        color: #000000;
+        letter-spacing: 0;
+        text-align: center;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .finish {
+    font-family: PingFangSC-Semibold;
+    font-size: 30px;
+    color: #7642FD;
+    letter-spacing: 0;
+    text-align: center;
+    font-weight: 600;
+  }
+}
+
+.keyboard-input-body {
+  height: 432px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  .input-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: PingFangSC-Semibold;
+    font-size: 50px;
+    color: #7642FD;
+    letter-spacing: 0;
+    text-align: center;
+    font-weight: 600;
+
+    .back {
+      width: 36px;
+      height: 30px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url('@/assets/images/betting/delete-left.png');
+    }
+  }
+}
+
+.odd-change-tips {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+
+  .state-icon {
+    width: 30px;
+    height: 30px;
+  }
+  .state-icon {
+    width: 23px;
+    height: 23px;
+  }
+
+  .tips {
+    display: inline-block;
+    margin: 0 5px;
+    font-family: PingFangSC-Medium;
+    font-size: 24px;
+    color: #7642FD;
+    letter-spacing: 0;
+    text-align: center;
+    font-weight: 500;
+  }
 }
 </style>

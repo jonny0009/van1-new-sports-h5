@@ -19,6 +19,7 @@ const bettingModule: Module<Betting, any> = {
     mode: 1, // 1单注， 2串关
     boardShow: false,
     isOne: false,
+    editId: '',
     s: '',
     t: '',
     comboS: '',
@@ -62,12 +63,23 @@ const bettingModule: Module<Betting, any> = {
     setMode({ state }, mode) {
       state.mode = mode
     },
-    setBoardShow({ state }, status) {
+    setBoardShow({ state }, { status, playOnlyId }) {
+      state.editId = playOnlyId
       state.boardShow = status
     },
     setHitState({ state }, status) {
       state.hitState = status
     },
+    changeSingleAmount({ state }, amount) {
+      const find = state.markets.find(
+        (marketInfo: MarketInfo) => marketInfo.playOnlyId === state.editId
+      )
+      if (find) {
+        find.gold = amount
+        // localStore.setItem(MarketListKey, state.markets)
+      }
+    },
+
     // 添加投注项
     addMarket({ state }, marketInfo: MarketInfo) {
       const marketItem = betParams(marketInfo)
