@@ -4,26 +4,20 @@
     <!-- <HotMatch ref="refHotMatch" /> -->
     <!-- 推荐比赛 -->
     <GoodMatch ref="refGoodMatch" />
-
     <ArrowTitle class="mt10 mb10" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
-
     <div class="Recommend-Match-Tabs">
       <SportsButton text="FT" :active="true" />
       <SportsButton text="BK" />
       <SportsButton text="TN" />
       <SportsButton text="OP_BM" />
     </div>
-
     <homeMatchHandicap class="mt20" />
-
     <div class="Button-MatchMore mt20">
       <span>
         查看更多比赛
       </span>
     </div>
-
     <div class="footerHeight"></div>
-
   </div>
 </template>
 

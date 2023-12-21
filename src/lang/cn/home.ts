@@ -10,5 +10,16 @@ export default {
   morePlay: '更多玩法',
   bettingChenge: '投注动态',
   lookMoreMatch: '查看更多比赛',
-  loading: '加载中...'
+  loading: '加载中...',
+  matchDate: '星期{num} {day}/{month}',
+  morePlayNumber: `<span>更多玩法</span><span class="num">{number}</span>`,
+  betChange: `<span>投注动态</span><span class="num">{number}</span>`,
+  R: '让分',
+  RInfo: '全场 亚洲让分盘',
+  RInfo2: '全场让分盘',
+  OU: '大小',
+  OUInfo: '全场 大小盘',
+  M: '独赢',
+  MInfo: '全场 1X2'
+
 }

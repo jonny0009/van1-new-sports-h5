@@ -1,5 +1,4 @@
 <template>
-
   <ArrowTitle
     class="mt10 mb10"
     :src="titleRecommend"
