@@ -13,10 +13,17 @@
         />
       </div>
     </div>
+    <div v-if="recommendList.length" class="recommend-list">
+      <ArrowTitle v-if="leagueId" class="mt10 mb10" :src="leagueLogo" :text="leagueName" @returnSuccess="recommendCloseClick" />
+      <ArrowTitle v-else class="mt10 mb10" :src="recommendIcon" text="推荐" @returnSuccess="recommendCloseClick" />
+      <HomeMatchHandicap v-for="(item,idx) in recommendList" v-show="isOpenRecommend" :key="idx" :send-params="item" />
+    </div>
 
-    <HomeMatchHandicap v-for="(item,idx) in recommendList" :key="idx" :send-params="item" />
+    <div v-if="earlyList.length" class="early-list">
+      <ArrowTitle class="mt10 mb10" :src="earlyIcon" text="早盘" @returnSuccess="earlyCloseClick" />
+      <HomeMatchHandicap v-for="(item,idx) in earlyList" v-show="isOpenEarly" :key="idx" :send-params="item" />
+    </div>
     <ChampionList v-if="championList.length" :champion-list="championList" />
-
     <div class="Button-MatchMore mt20">
       <span>
         查看更多比赛
@@ -27,6 +34,10 @@
   </div></template>
 
 <script lang="ts" setup>
+
+import earlyIcon from '@/assets/images/home/title-time.png'
+
+import recommendIcon from '@/assets/images/home/title-recommend.png'
 import HomeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
 import ChampionList from './champion/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
@@ -42,6 +53,22 @@ const route = useRoute()
 // const chooseLeagueId: any = ref()
 const leagueId: any = ref(route.query.leagueId)
 const gameType: any = ref(route.query.type)
+
+const leagueLogo: any = ref()
+const leagueName: any = ref()
+
+const isOpenRecommend: any = ref(true)
+const recommendCloseClick = (val:any) => {
+  console.log(val)
+  isOpenRecommend.value = !val
+}
+
+const isOpenEarly: any = ref(true)
+const earlyCloseClick = (val:any) => {
+  console.log(val)
+  isOpenEarly.value = !val
+}
+
 onBeforeMount(async () => {
   getFirstLeagues()
 
@@ -80,9 +107,18 @@ const getRecommendEvents = async (params:any) => {
     const res:any = await recommendEvents(params) || {}
     if (res.code === 200 && res.data) {
       recommendList.value = res.data.baseData || []
+      if (res.data.baseData || res.data.baseData.length) {
+        leagueLogo.value = res.data.baseData[0].leagueLogo
+        leagueName.value = res.data.baseData[0].leagueShortName
+      }
       if (!leagueId.value) {
         earlyList.value = res.data.baseData || []
+      } else {
+        earlyList.value = []
       }
+    } else {
+      recommendList.value = []
+      earlyList.value = []
     }
   }
 }
