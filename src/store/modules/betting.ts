@@ -17,6 +17,7 @@ const bettingModule: Module<Betting, any> = {
     results: [],
     hitState: 1, // 0非点水状态 / 1非点水状态
     mode: 1, // 1单注， 2串关
+    boardShow: false,
     isOne: false,
     s: '',
     t: '',
@@ -60,6 +61,9 @@ const bettingModule: Module<Betting, any> = {
   actions: {
     setMode({ state }, mode) {
       state.mode = mode
+    },
+    setBoardShow({ state }, status) {
+      state.boardShow = status
     },
     setHitState({ state }, status) {
       state.hitState = status
@@ -179,11 +183,10 @@ const bettingModule: Module<Betting, any> = {
       return replaceBet
     },
     // 单注批量点水,更新投注项
-    async marketHit({ state, dispatch }) {
-      if (state.markets.length === 0 || state.hitState !== 1) {
+    async marketHit({ state, dispatch }, betting:boolean = false) {
+      if (state.markets.length === 0 || (!betting && state.hitState !== 1)) {
         return false
       }
-      dispatch('setHitState', 1)
       const params = hitParams(state.markets)
       const res: any = await morePW(params).catch(() => {})
       const code = (res && +res.code) || -1
@@ -203,12 +206,12 @@ const bettingModule: Module<Betting, any> = {
       if (state.markets.length === 0) {
         return false
       }
-      if (state.markets.length > 1) {
-        await dispatch('marketHit')
-      }
       dispatch('setHitState', 0)
+      await dispatch('marketHit', true)
       const params: any = buyParams(state.markets, state.s, state.t)
-      const res: any = await moreBetting(params).catch(() => {})
+      const res: any = await moreBetting(params).finally(() => {
+        dispatch('setHitState', 1)
+      })
       if (res.code === 200 && res.data) {
         state.results = state.markets
         dispatch('clearMarkets')
