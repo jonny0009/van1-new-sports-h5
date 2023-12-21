@@ -20,5 +20,9 @@ export default async () => {
 
   if (getToken()) {
     store.dispatch('user/configSettingNew')
+    // 获取账号信息
+    store.dispatch('user/userInfo')
+    // 账户余额
+    store.dispatch('user/getBalance')
   }
 }
