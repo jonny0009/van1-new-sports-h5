@@ -6,7 +6,7 @@
     @returnSuccess="returnStatus"
   />
   <template v-if="!isShow">
-    <SportsTabs />
+    <SportsTabs @returnSportsSuccess="returnSportsSuccess" />
     <Loading v-if="!isLoading" />
     <template v-else>
       <EmptyIcon v-if="!recommendEventsList.length" class="marginAuto"></EmptyIcon>
@@ -49,6 +49,10 @@ const getRecommendEvents = async () => {
     recommendEventsList.length = 0
     recommendEventsList.push(...baseData)
   }
+}
+
+const returnSportsSuccess = (val:any) => {
+  console.log(val)
 }
 
 const init = () => {
