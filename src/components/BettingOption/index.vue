@@ -7,7 +7,7 @@
 import { MarketInfo } from '@/entitys/MarketInfo'
 import store from '@/store'
 import Subscriber from '@/utils/subscriber'
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 const props = defineProps({
   marketInfo: {
     type: Object,
@@ -16,6 +16,27 @@ const props = defineProps({
 })
 const markets = computed(() => store.state.betting.markets)
 const selected = computed(() => !!markets.value.find((marketInfo: MarketInfo) => marketInfo.playOnlyId === props.marketInfo.playOnlyId))
+
+// 监听赔率变化
+watch(() => props.marketInfo.value, (newVal, oldVal) => {
+  if (newVal === void 0 || oldVal === void 0) {
+    return false
+  }
+  const newIor = newVal * 1 || 0
+  const oldIor = oldVal * 1 || 0
+  if (+newIor > +oldIor) {
+    props.marketInfo.iorChange = 'up-ior'
+  } else if (+newIor < +oldIor) {
+    props.marketInfo.iorChange = 'down-ior'
+  } else {
+    props.marketInfo.iorChange = ''
+  }
+  if (props.marketInfo.iorChange) {
+    setTimeout(() => {
+      props.marketInfo.iorChange = ''
+    }, 5000)
+  }
+})
 
 const touchMarket = (event: any) => {
   const target = event.target
@@ -40,5 +61,9 @@ const touchMarket = (event: any) => {
 <style scoped lang="scss">
 .betting-option-wrap {
   display: inline-block;
+  &.selected{
+    background-color: #7642fd;
+    color: #fff;
+  }
 }
 </style>

@@ -126,6 +126,7 @@ const error = (err: string) => {
       bottom: 0;
       margin: auto;
       left: 37px;
+      height: auto;
     }
 
     .confirm-button {

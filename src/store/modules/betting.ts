@@ -41,7 +41,7 @@ const bettingModule: Module<Betting, any> = {
     },
     // 投注前的可赢金额
     betsProfit(state, _state1, state2) {
-      const userConfig = state2.userConfig
+      const userConfig = state2.user.userConfig
       const { handicapType } = userConfig || {}
       let betsGolds = 0
       // 单注可赢金额
