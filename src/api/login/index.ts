@@ -12,6 +12,14 @@ export const login = (data:any) => {
     data
   })
 }
+// 试玩登录====
+export const tryLogin = (data:any) => {
+  return request({
+    url: '/ai/mobile/loginTemp/v2',
+    method: 'post',
+    data
+  })
+}
 export const getLanguages = (params:any) => {
   return request({
     url: '/ai/mobile/merchantAccountServer/api/c/queryCMerLanguage',
