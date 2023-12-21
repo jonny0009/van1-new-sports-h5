@@ -17,6 +17,9 @@ const appModule: Module<App, any> = {
   mutations: {
   },
   actions: {
+    setKeyValue(state:any, { key, value }) {
+      state[key] = value
+    },
     async queryCMerLanguage({ state }) {
       const res:any = await queryCMerLanguage() || {}
       if (res.code === 200 && res.data) {

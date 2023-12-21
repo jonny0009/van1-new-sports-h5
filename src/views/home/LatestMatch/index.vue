@@ -59,6 +59,10 @@ const getRecommendEvents = async () => {
 }
 const goHomeTime = () => {
   const params:any = { name: 'HomeTime', params: { 'refreshTime': new Date().getTime() } }
+  store.dispatch('app/setKeyValue', {
+    key: 'imgChangeTime',
+    value: new Date().getTime()
+  })
   router.push(params)
 }
 const init = () => {

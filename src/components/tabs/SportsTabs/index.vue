@@ -1,6 +1,6 @@
 <template>
   <div class="Recommend-Match-Tabs">
-    <SportsButton v-for="(item,idx) in Tabs" :key="idx" :text="item.text" :active="active===item.text" />
+    <SportsButton v-for="(item,idx) in Tabs" :key="idx" :text="item.text" :active="active===item.text" @click="SportsClick(item)" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -13,6 +13,9 @@ const Tabs = ref([
   { text: 'OP_BM' }
 ])
 const active = ref('FT')
+const SportsClick = (item) => {
+  console.log(item)
+}
 </script>
 <style lang="scss" scoped>
 </style>

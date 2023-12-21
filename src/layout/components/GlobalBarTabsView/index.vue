@@ -10,7 +10,6 @@
       @click="clickChangeActive(item)"
     >
       <ImageButton
-        :key="active"
         :active="item.value === active"
         :text="item.text"
         :src="item.icon"
@@ -25,8 +24,7 @@ import defaultTime from '@/assets/images/home/homeTabs/homeTabs-default-time.png
 import time from '@/assets/images/home/homeTabs/homeTabs-time.png'
 import important from '@/assets/images/home/homeTabs/homeTabs-important.png'
 import defaultImportant from '@/assets/images/home/homeTabs/homeTabs-default-important.png'
-import ImageButton from '@/components/Button/ImageButton/index.vue'
-import { ref, reactive, watch, computed } from 'vue'
+import { ref, watch, computed } from 'vue'
 import router from '@/router'
 const getRouteName = () => {
   const routerName: any = router?.currentRoute?.value?.name || ''
@@ -42,12 +40,14 @@ const currentRoute = computed(() => router?.currentRoute?.value?.name)
 watch(currentRoute, (val) => {
   if (val) {
     active.value = getRouteNameObj[getRouteName()]
+    console.log(active.value, 'active.value active.value')
+    console.log(homeBarArrayTable(active.value), 'assctive.value active.value')
   }
 })
 const clickChangeActive = (item:any) => {
   const { value, name } = item
-  homeBarArray.length = 0
-  homeBarArray.push(...homeBarArrayTable(value))
+  homeBarArray.value.length = 0
+  homeBarArray.value.push(...homeBarArrayTable(value))
   active.value = value
   const params:any = { name }
   router.push(params)
@@ -86,7 +86,7 @@ const homeBarArrayTable = (val:any):Array<any> => {
     return e
   })]
 }
-const homeBarArray:any = reactive(homeBarArrayTable(''))
+const homeBarArray:any = ref(homeBarArrayTable(''))
 
 </script>
 <style lang="scss" scoped>

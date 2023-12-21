@@ -15,6 +15,7 @@
         :key="idx"
         :src="imgUrlFormat(item.icon)"
         fit="contain"
+        @click="goSportClick(item)"
       >
         <template #loading>
           <van-loading type="spinner" size="36px" />
@@ -36,6 +37,7 @@ import store from '@/store'
 import { imgUrlFormat } from '@/utils/index.ts'
 // api
 import { firstLeagues } from '@/api/home'
+import router from '@/router'
 // script
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const noDataToggle = computed(() => firstLeaguesList.length === 0)
@@ -59,6 +61,18 @@ const getFirstLeagues = async () => {
     firstLeaguesList.length = 0
     firstLeaguesList.push(...list)
   }
+}
+const goSportClick = (item:any) => {
+  const { leagueId, gameType } = item
+  const params:any = {
+    name: 'Sport',
+    query: {
+      'type': gameType,
+      'leagueId': leagueId,
+      'homeGoSport': 'homeGoSport'
+    }
+  }
+  router.push(params)
 }
 const init = () => {
   getFirstLeagues()

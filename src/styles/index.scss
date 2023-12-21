@@ -36,6 +36,7 @@
 //
 //
 //重构=>对照表
+.icon-bar-home:before,
 .icon-bar-Home:before,
 .icon-Home:before{content:"\e615"}
 .icon-bar-FT:before,
@@ -48,7 +49,8 @@
 .icon-BK:before{content:"\e60d"}
 .icon-sports:before{content:"\e616"}
 .icon-live:before{content:"\e614"}
-.icon-bar-live:before,{content:"\e60a"}
+.icon-bar-sportlive:before,
+.icon-bar-live:before{content:"\e60a"}
 //
 //
 // 默认=>icon=>对照表

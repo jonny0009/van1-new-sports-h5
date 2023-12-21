@@ -13,17 +13,33 @@
         />
       </div>
     </div>
-    <div v-if="recommendList.length" class="recommend-list">
-      <ArrowTitle v-if="leagueId" class="mt10 mb10" :src="leagueLogo" :text="leagueName" @returnSuccess="recommendCloseClick" />
-      <ArrowTitle v-else class="mt10 mb10" :src="recommendIcon" :text="$t('sport.recommend')" @returnSuccess="recommendCloseClick" />
-      <HomeMatchHandicap v-for="(item,idx) in recommendList" v-show="isOpenRecommend" :key="idx" :send-params="item" />
-    </div>
 
-    <div v-if="earlyList.length" class="early-list">
-      <ArrowTitle class="mt10 mb10" :src="earlyIcon" :text="$t('sport.early')" @returnSuccess="earlyCloseClick" />
-      <HomeMatchHandicap v-for="(item,idx) in earlyList" v-show="isOpenEarly" :key="idx" :send-params="item" />
-    </div>
-    <ChampionList v-if="championList.length" :champion-list="championList" />
+    <ArrowTitle v-if="!leagueId || homeGoSport" class="mt10 mb10" :src="recommendIcon" :text="$t('sport.recommend')" @returnSuccess="recommendCloseClick" />
+    <ArrowTitle v-else class="mt10 mb10" :src="leagueLogo" :text="leagueName" @returnSuccess="recommendCloseClick" />
+
+    <template v-if="isOpenRecommend">
+      <Loading v-if="!getRecommendEventsIsLoading" />
+      <template v-else>
+        <div v-if="recommendList.length" class="recommend-list">
+          <HomeMatchHandicap v-for="(item,idx) in recommendList" v-show="isOpenRecommend" :key="idx" :send-params="item" />
+        </div>
+        <EmptyIcon v-else class="marginAuto"></EmptyIcon>
+      </template>
+    </template>
+
+    <ArrowTitle class="mt10 mb10" :src="earlyIcon" :text="$t('sport.early')" @returnSuccess="earlyCloseClick" />
+    <template v-if="isOpenEarly">
+      <Loading v-if="!getRecommendEventsIsLoading" />
+      <template v-else>
+        <div v-if="earlyList.length" class="early-list">
+          <HomeMatchHandicap v-for="(item,idx) in earlyList" v-show="isOpenEarly" :key="idx" :send-params="item" />
+        </div>
+        <EmptyIcon v-else class="marginAuto"></EmptyIcon>
+      </template>
+    </template>
+
+    <ChampionList v-if="championList.length && !homeGoSport" :champion-list="championList" />
+
     <!-- <div class="Button-MatchMore mt20">
       <span>
         查看更多比赛
@@ -41,19 +57,20 @@ import recommendIcon from '@/assets/images/home/title-recommend.png'
 import HomeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
 import ChampionList from './champion/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
-import ImageButton from '@/components/Button/ImageButton/index.vue'
 import { useRoute } from 'vue-router'
-// import router from '@/router'
-import { ref, onBeforeMount } from 'vue'
+
+import { ref, onBeforeMount, computed } from 'vue'
 import { apiChampionpPlayTypes } from '@/api/champion'
 import { firstLeagues, recommendEvents } from '@/api/home'
 
 import { MarketInfo } from '@/entitys/MarketInfo'
+
 const route = useRoute()
-// const chooseLeagueId: any = ref()
+
+const homeGoSport = computed(() => route.query.homeGoSport)
+
 const leagueId: any = ref(route.query.leagueId)
 const gameType: any = ref(route.query.type)
-
 const leagueLogo: any = ref()
 const leagueName: any = ref()
 
@@ -71,7 +88,6 @@ const earlyCloseClick = (val:any) => {
 
 onBeforeMount(async () => {
   getFirstLeagues()
-
   if (leagueId.value) {
     // 按联赛查询
     const leagueParames:any = ref({ gameType: gameType.value, leagueId: leagueId.value, page: 1, pageSize: 20 })
@@ -85,7 +101,9 @@ onBeforeMount(async () => {
     getRecommendEvents(earlyParames.value)
   }
 
-  getChampionpPlayTypes()
+  if (!homeGoSport.value) {
+    getChampionpPlayTypes()
+  }
 })
 
 const firstLeaguesList: any = ref([])
@@ -101,10 +119,13 @@ const getFirstLeagues = async () => {
 
 const recommendList: any = ref([])
 const earlyList: any = ref([])
+const getRecommendEventsIsLoading = ref(false)
 // 获取推荐，早盘赛事
 const getRecommendEvents = async (params:any) => {
   if (gameType.value) {
+    getRecommendEventsIsLoading.value = false
     const res:any = await recommendEvents(params) || {}
+    getRecommendEventsIsLoading.value = true
     if (res.code === 200 && res.data) {
       recommendList.value = res.data.baseData || []
       if (res.data.baseData || res.data.baseData.length) {
@@ -150,8 +171,9 @@ const getChampionpPlayTypes = async () => {
 }
 
 const clickLeague = (item: any) => {
-  // chooseLeagueId.value = item.leagueId
-  if (item.leagueId) {
+  if (homeGoSport.value) {
+    window.location.href = `/sport?leagueId=${item.leagueId}&type=${item.gameType}&homeGoSport=homeGoSport`
+  } else if (item.leagueId) {
     window.location.href = '/sport?leagueId=' + item.leagueId + '&type=' + item.gameType
   } else {
     window.location.href = '/sport?type=' + gameType.value
