@@ -97,7 +97,7 @@ const goBack = () => {
 //   $router.push({ path: '/register' })
 // }
 const tryPlay = () => {
-  $router.push({ path: '/home' })
+  window.location.href = '/'
 }
 const onSubmit = async (values?: any) => {
   console.log(values)
@@ -116,7 +116,7 @@ const onSubmit = async (values?: any) => {
   }
   if (res.code === 200) {
     setToken(res.data)
-    $router.push({ path: '/home' })
+    window.location.href = '/'
     // checkFirstEnter()
     return
   } else if (res.code === 205) {
