@@ -66,11 +66,9 @@ const clickChangeActive = (item: any) => {
   display: flex;
   z-index: 299;
   background-color: #fff;
-
   &.has-border {
     border-top: 1px solid #e5ecf3;
   }
-
   .item {
     display: flex;
     flex: 1;
@@ -79,12 +77,10 @@ const clickChangeActive = (item: any) => {
     align-items: center;
     color: #96A5AA;
     font-weight: 600;
-
     .img {
       height: 48px;
       width: 48px;
     }
-
     .iconfont {
       font-size: 44px;
       height: 48px;
@@ -94,17 +90,14 @@ const clickChangeActive = (item: any) => {
       justify-content: center;
       font-weight: 100;
     }
-
     span {
       line-height: 24px;
       font-size: 24px;
       margin-top: 4px;
     }
-
     .item-img {
       display: block;
     }
-
     &.active {
       color: #7642fe;
     }

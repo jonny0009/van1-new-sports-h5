@@ -27,7 +27,16 @@ import defaultImportant from '@/assets/images/home/homeTabs/homeTabs-default-imp
 import ImageButton from '@/components/Button/ImageButton/index.vue'
 import { ref, reactive } from 'vue'
 import router from '@/router'
-const active = ref('ImportantRecommend')
+const getRouteName = () => {
+  const routerName: any = router?.currentRoute?.value?.name || ''
+  return routerName.toLowerCase()
+}
+const getRouteNameObj:any = {
+  'home': 'ImportantRecommend',
+  'hometime': 'TimeSort',
+  'champion': 'ChampionBet'
+}
+const active = ref(getRouteNameObj[getRouteName()])
 const clickChangeActive = (item:any) => {
   const { value, name } = item
   homeBarArray.length = 0
