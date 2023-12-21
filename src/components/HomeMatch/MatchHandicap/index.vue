@@ -101,17 +101,16 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <div v-for="(item,idx) in getRList(props.sendParams)" :key="idx" class="betting-option">
+                    <BettingOption v-for="(item,idx) in getList('R')" :key="idx" :market-info="item.marketInfo" class="betting-option ddd">
                       <span class="up-betting-name">
                         <span class="text">
-                          {{ item.ratioType }}
+                          {{ item.marketInfo.ratioName }}
                         </span>
-                        <span class="point">{{ item.ratio }}</span>
                       </span>
                       <div class="details">
                         <div class="item">{{ item.ior }}</div>
                       </div>
-                    </div>
+                    </BettingOption>
                   </div>
                 </div>
               </div>
@@ -126,15 +125,14 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <div v-for="(item,idx) in getOUList(props.sendParams)" :key="idx" class="betting-option">
+                    <BettingOption v-for="(item,idx) in getList('OU')" :key="idx" :market-info="item.marketInfo" class="betting-option">
                       <span class="up-betting-name">
-                        <span class="text">{{ item.ratioType }}</span>
-                        <span class="point">{{ item.ratio }}</span>
+                        <span class="text">{{ item.marketInfo.ratioName }}</span>
                       </span>
                       <div class="details">
                         <div class="item">{{ item.ior }}</div>
                       </div>
-                    </div>
+                    </BettingOption>
                   </div>
                 </div>
               </div>
@@ -149,14 +147,14 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <div v-for="(item,idx) in getMList(props.sendParams)" :key="idx" class="betting-option">
+                    <BettingOption v-for="(item,idx) in getList('M')" :key="idx" :market-info="item.marketInfo" class="betting-option">
                       <span class="up-betting-name">
-                        <span class="text">{{ item.ratioType }}</span>
+                        <span class="text">{{ item.marketInfo.ratioName }}</span>
                       </span>
                       <div class="details">
                         <div class="item">{{ item.ior }}</div>
                       </div>
-                    </div>
+                    </BettingOption>
                   </div>
                 </div>
               </div>
@@ -190,6 +188,7 @@
 import { matchDate } from '@/utils/matchDate.ts'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 import { ref } from 'vue'
+import { MarketInfo } from '@/entitys/MarketInfo'
 const props = defineProps({
   sendParams: {
     type: Object,
@@ -215,41 +214,24 @@ const Rclick = () => {
   RrefShow.value = !RrefShow.value
 }
 const OUrefShow = ref(true)
-const getRList = (item:any) => {
-  const { R } = item || {}
-  const { game, ratioData } = R || {}
-  const newObject = Object.assign({}, item, R, game)
-  console.log(ratioData)
-  const newRatioData = (ratioData || []).map(e => {
-    return Object.assign({}, e, newObject)
-  })
-  return newRatioData
-}
+
 const OUclick = () => {
   OUrefShow.value = !OUrefShow.value
 }
-const getOUList = (item:any) => {
-  const { OU } = item || {}
-  const { game, ratioData } = OU || {}
-  const newObject = Object.assign({}, item, OU, game)
+const getList = (playType:string) => {
+  const details = props.sendParams
+  const playTypeItem = details[playType] || {}
+  const { game, ratioData } = playTypeItem || {}
+  const newObject = Object.assign({}, details, playTypeItem, game)
   console.log(ratioData)
-  const newRatioData = (ratioData || []).map(e => {
-    return Object.assign({}, e, newObject)
+  const newRatioData = (ratioData || []).map((e:any) => {
+    const marketInfo = new MarketInfo({ ...details, ...game, ...e, playType })
+    return Object.assign({ marketInfo }, e, newObject)
   })
   return newRatioData
 }
 const MrefShow = ref(true)
 const Mclick = () => {
   MrefShow.value = !MrefShow.value
-}
-const getMList = (item:any) => {
-  const { M } = item || {}
-  const { game, ratioData } = M || {}
-  const newObject = Object.assign({}, item, M, game)
-  console.log(ratioData)
-  const newRatioData = (ratioData || []).map(e => {
-    return Object.assign({}, e, newObject)
-  })
-  return newRatioData
 }
 </script>
