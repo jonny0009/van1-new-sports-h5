@@ -1,7 +1,7 @@
 <template>
   <div class="sport-champion-list">
     <div class="champion-title">
-      <ArrowTitle class="mt10 mb10" :src="titleIcon" text="冠军竞猜" @returnSuccess="CloseClick" />
+      <ArrowTitle class="mt10 mb10" :src="titleIcon" :text="$t('sport.champion')" @returnSuccess="CloseClick" />
     </div>
     <div v-show="isOpen" class="champion-group-body">
       <div v-for="(item, idx) in championList" :key="idx" class="league-champion-item">
