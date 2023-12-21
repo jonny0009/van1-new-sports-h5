@@ -65,6 +65,7 @@
       <Result v-if="results.length && markets.length === 0"></Result>
     </div>
   </div>
+  <span v-play="{ gameType: 'FT', playType: 'R' }"></span>
   <Keyboard></Keyboard>
 </template>
 <script lang="ts" setup>
@@ -111,7 +112,7 @@ watch(() => isOne.value, () => {
 })
 watch(() => open.value, () => {
   if (!open.value) {
-    store.dispatch('betting/setBoardShow', false)
+    store.dispatch('betting/setBoardShow', { status: false })
   }
 })
 const toogle = () => {
@@ -327,5 +328,4 @@ timer.value = setInterval(() => {
   }
 
 }
-
 </style>

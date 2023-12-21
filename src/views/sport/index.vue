@@ -13,7 +13,8 @@
         />
       </div>
     </div>
-    <HomeMatchHandicap />
+
+    <HomeMatchHandicap v-for="(item,idx) in recommendList" :key="idx" :send-params="item" />
     <ChampionList v-if="championList.length" :champion-list="championList" />
 
     <div class="Button-MatchMore mt20">
@@ -38,12 +39,25 @@ import { firstLeagues, recommendEvents } from '@/api/home'
 
 import { MarketInfo } from '@/entitys/MarketInfo'
 const route = useRoute()
-const chooseLeagueId: any = ref()
+// const chooseLeagueId: any = ref()
 const leagueId: any = ref(route.query.leagueId)
 const gameType: any = ref(route.query.type)
 onBeforeMount(async () => {
   getFirstLeagues()
-  getRecommendEvents()
+
+  if (leagueId.value) {
+    // 按联赛查询
+    const leagueParames:any = ref({ gameType: gameType.value, leagueId: leagueId.value, page: 1, pageSize: 20 })
+    getRecommendEvents(leagueParames.value)
+  } else {
+    // 推荐
+    const recommendParames:any = ref({ gameType: gameType.value, gradeType: 1, page: 1, pageSize: 20 })
+    getRecommendEvents(recommendParames.value)
+    // 早盘
+    const earlyParames:any = ref({ gameType: gameType.value, gradeType: 2, page: 1, pageSize: 20 })
+    getRecommendEvents(earlyParames.value)
+  }
+
   getChampionpPlayTypes()
 })
 
@@ -61,11 +75,14 @@ const getFirstLeagues = async () => {
 const recommendList: any = ref([])
 const earlyList: any = ref([])
 // 获取推荐，早盘赛事
-const getRecommendEvents = async () => {
+const getRecommendEvents = async (params:any) => {
   if (gameType.value) {
-    const res:any = await recommendEvents({ gameType: gameType.value }) || {}
+    const res:any = await recommendEvents(params) || {}
     if (res.code === 200 && res.data) {
-      firstLeaguesList.value = res.data
+      recommendList.value = res.data.baseData || []
+      if (!leagueId.value) {
+        earlyList.value = res.data.baseData || []
+      }
     }
   }
 }

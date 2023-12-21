@@ -16,6 +16,7 @@ declare interface User {
   token: string | undefined | null
 }
 declare interface Betting {
+  editId: any
   boardShow: any
   mode: any
   s: any

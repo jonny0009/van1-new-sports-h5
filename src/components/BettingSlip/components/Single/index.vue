@@ -19,7 +19,8 @@
         <div ref="inputBtn" class="betting-slip-input" @click="inputTouch">
           <span class="currency"><van-icon name="balance-o" /></span>
           <div style="flex: 1 1 0%;"></div>
-          <span class="amount">{{ marketInfo.gold }}</span>
+          <span class="amount" :class="{ selected: marketInfo.playOnlyId === editId }">{{ marketInfo.gold }}</span>
+          <span v-show="marketInfo.playOnlyId === editId" class="cursor">|</span>
         </div>
       </div>
     </div>
@@ -27,7 +28,7 @@
 </template>
 <script lang="ts" setup>
 import store from '@/store'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 const inputBtn = ref()
 const props = defineProps({
   marketInfo: {
@@ -35,11 +36,12 @@ const props = defineProps({
     default: () => { }
   }
 })
+const editId = computed(() => store.state.betting.editId)
 const remove = () => {
   store.dispatch('betting/deleteMarket', props.marketInfo.playOnlyId)
 }
 const inputTouch = () => {
-  store.dispatch('betting/setBoardShow', true)
+  store.dispatch('betting/setBoardShow', { status: true, playOnlyId: props.marketInfo.playOnlyId })
   setTimeout(() => {
     inputBtn.value.scrollIntoView({
       behavior: 'smooth'
@@ -155,8 +157,29 @@ console.log(props)
         letter-spacing: 0.8px;
         text-align: justify;
         font-weight: 600;
+
+        &.selected{
+          color: #dfe4e5;
+        }
+      }
+
+      .cursor {
+        position: relative;
+        right: -4px;
+        top: -3px;
+        animation: auto-opacity .5s linear infinite alternate;
       }
     }
+  }
+}
+
+@keyframes auto-opacity {
+  0% {
+    opacity: 1
+  }
+
+  to {
+    opacity: 0
   }
 }
 </style>
