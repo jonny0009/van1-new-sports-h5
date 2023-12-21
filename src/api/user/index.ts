@@ -24,11 +24,12 @@ export const getLanguages = (params:any) => {
 // 右边搜索
 export const rightSearch = (params:any) => {
   return request({
-    url: '/ai/mobile/hot/searchs',
+    url: '/ai/hot/searchs',
     method: 'get',
     params
   })
 }
+
 // 获取当前币种
 export const getCMerAccessWallet = (params:any) => {
   return request({

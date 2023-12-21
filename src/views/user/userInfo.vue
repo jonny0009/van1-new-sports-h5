@@ -15,14 +15,14 @@
         </div>
         <div class="user-right">
           <div class="user-1">
-            <img class="img_1" src="@/assets/images/user/bottom2.png" alt="" />
+            <img class="img_1" src="@/assets/images/user/ball.svg" alt="" />
             <span>ai-sport</span>
           </div>
           <div class="user-2">
             @ai-sport
           </div>
           <div class="user-3">
-            <img class="img_1" src="@/assets/images/user/bottom2.png" alt="" />
+            <img class="img_1" src="@/assets/images/user/star.svg" alt="" />
             <span>注册时间 2023/12/12</span>
           </div>
           <div class="user-4">
@@ -57,15 +57,15 @@
       </div>
       <!-- top2 -->
       <div class="top-1 top-2">
-        <img class="img_1" src="@/assets/images/user/data.png" alt="" />
+        <img class="img_1" src="@/assets/images/user/bottom.png" alt="" />
         <span>注单</span>
         <div class="right">
           <span>近期战绩:</span>
-          <img class="img_1" src="@/assets/images/user/bottom2.png" alt="" />
-          <img class="img_1" src="@/assets/images/user/bottom2.png" alt="" />
-          <img class="img_1" src="@/assets/images/user/bottom2.png" alt="" />
-          <img class="img_1" src="@/assets/images/user/bottom2.png" alt="" />
-          <img class="img_1" src="@/assets/images/user/bottom2.png" alt="" />
+          <img class="img_1" src="@/assets/images/user/ask.svg" alt="" />
+          <img class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+          <img class="img_1" src="@/assets/images/user/win.svg" alt="" />
+          <img class="img_1" src="@/assets/images/user/win.svg" alt="" />
+          <img class="img_1" src="@/assets/images/user/fail.svg" alt="" />
         </div>
       </div>
       <!-- elseInfo -->
@@ -84,13 +84,14 @@
       <!-- four -->
       <div class="top4">
         <div class="game-1">
-          <img class="img_1" src="@/assets/images/user/bottom2.png" alt="" />
+          <img class="img_1" src="@/assets/images/user/num5.png" alt="" />
           <span>
             中华台北 - 超级联赛
           </span>
         </div>
         <div class="game-1 game-2">
-          <img class="img_1" src="@/assets/images/user/bottom2.png" alt="" />
+          <img class="img_1" src="@/assets/images/user/num7.png" alt="" />
+          <!-- <SportsIcon class="img_2" :icon-src="img1" style="color:#7642FD" /> -->
           <span>
             半场
           </span>
@@ -140,21 +141,21 @@
         <div class="game-5">
           <p>投注额：</p>
           <div>
-            <img class="img_1" src="@/assets/images/user/bottom2.png" alt="" />
+            <img class="img_1" src="@/assets/images/user/num1.png" alt="" />
             <span>1.00</span>
           </div>
         </div>
         <div class="game-5 game-6">
           <p>可赔付额：</p>
           <div>
-            <img class="img_1" src="@/assets/images/user/bottom2.png" alt="" />
+            <img class="img_1" src="@/assets/images/user/num2.png" alt="" />
             <span class="num">3.65</span>
           </div>
         </div>
         <!-- 6 -->
         <div class="addBtn">
           <span>加注</span>
-          <img class="img_1" src="@/assets/images/user/bottom2.png" alt="" />
+          <img class="img_1" src="@/assets/images/user/num8.png" alt="" />
         </div>
       </div>
       <div class="foot" />
@@ -171,6 +172,7 @@ import data3 from '@/assets/images/user/data3.png'
 import data4 from '@/assets/images/user/data4.png'
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+// const img1 = ref('live')
 const $router = useRouter()
 const goBack = () => {
   $router.push('/home')
