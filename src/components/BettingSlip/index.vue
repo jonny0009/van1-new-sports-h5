@@ -51,7 +51,6 @@
           }"
         ></div>
       </div>
-      {{ mode }}
       <Nothing v-if="results.length === 0 && markets.length === 0"></Nothing>
       <div
         v-else-if="type < 3 && markets.length"
@@ -60,6 +59,17 @@
           paddingBottom: boardShow ? '175px' : '8px'
         }"
       >
+        <div v-if="mode === 2" class="betting-slip-combo-header">
+          <div class="up-betting-combo">
+            <div class="text">{{ comboMarkets.length }}场串关</div>
+            <div class="icons">
+              <SportsIcon v-for="(item, index) in comboMarkets" :key="index" :icon-src="item.gameType" />
+            </div>
+          </div>
+          <div class="cur-odds">
+            @<span v-points="combosIor"></span>
+          </div>
+        </div>
         <Singles v-for="( market, index ) in markets " :key="index" :market-info="market"></Singles>
         <ActionBar />
       </div>
@@ -104,7 +114,8 @@ const boardShow = computed(() => store.state.betting.boardShow)
 const markets = computed(() => store.state.betting.markets)
 const results = computed(() => store.state.betting.results)
 const betsProfit = computed(() => store.getters['betting/betsProfit'])
-
+const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
+const combosIor = computed(() => store.getters['betting/combosIor'])
 const userConfig = computed(() => store.state.user.userConfig)
 watch(() => isOne.value, () => {
   if (isOne.value) {
@@ -133,6 +144,9 @@ store.dispatch('betting/marketHit')
 timer.value = setInterval(() => {
   if (open.value) {
     store.dispatch('betting/marketHit')
+    if (mode.value === 2) {
+      store.dispatch('betting/comboMarketHit')
+    }
   }
 }, 10 * 1000)
 </script>
@@ -269,7 +283,8 @@ timer.value = setInterval(() => {
     .bet-ior-switch {
       margin-left: 10px;
     }
-    .icon-wrapper{
+
+    .icon-wrapper {
       color: #fff;
     }
   }
@@ -329,6 +344,28 @@ timer.value = setInterval(() => {
     overflow: auto;
     transition: height .3s;
     overscroll-behavior: contain;
+
+    .betting-slip-combo-header {
+      margin: 20px 38px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .up-betting-combo {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .cur-odds {
+        font-family: PingFangSC-Semibold;
+        font-size: 30px;
+        color: #7642FD;
+        letter-spacing: 0;
+        font-weight: 600;
+      }
+    }
   }
 
 }

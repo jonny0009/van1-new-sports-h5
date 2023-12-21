@@ -17,6 +17,8 @@ declare interface User {
   token: string | undefined | null
 }
 declare interface Betting {
+  combos: { betNuiqueKey: string; comboNumber: any; betNumber: string; gold: string; lock: boolean; orderNumber: number; comboList: any[][]; goldMin: any; goldMax: any }[]
+  comboAmount: any
   editId: any
   boardShow: any
   mode: any
@@ -25,6 +27,7 @@ declare interface Betting {
   comboS: any
   comboT: any
   markets: any
+  comboMarkets: any
   results: any
   isOne: boolean
   hitState: any

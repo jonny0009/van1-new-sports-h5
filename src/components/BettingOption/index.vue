@@ -7,6 +7,7 @@
 import { MarketInfo } from '@/entitys/MarketInfo'
 import store from '@/store'
 import Subscriber from '@/utils/subscriber'
+import { showToast } from 'vant'
 import { computed, watch } from 'vue'
 const props = defineProps({
   marketInfo: {
@@ -49,6 +50,10 @@ const touchMarket = (event: any) => {
   if (find) {
     store.dispatch('betting/deleteMarket', props.marketInfo.playOnlyId)
   } else {
+    if (markets.value.length >= 10) {
+      showToast('最多可添加10个选项!')
+      return false
+    }
     if (markets.value.length) {
       Subscriber.emit('EVENT_BET_BALL', target)
     }
