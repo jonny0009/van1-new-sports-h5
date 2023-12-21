@@ -16,3 +16,19 @@ export const recommendEvents = (params:any) => {
     params
   })
 }
+
+export const apiRBCondition = (params:any) => {
+  return request({
+    url: '/ai/mobile/matches/getRBCondition',
+    method: 'get',
+    params
+  })
+}
+
+export const apiCommonMatches = (params:any) => {
+  return request({
+    url: '/ai/mobile/matches/commonMatches',
+    method: 'get',
+    params
+  })
+}
