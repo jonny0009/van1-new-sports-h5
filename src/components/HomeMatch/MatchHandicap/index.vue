@@ -101,16 +101,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <BettingOption v-for="(item,idx) in getList('R')" :key="idx" :market-info="item.marketInfo" class="betting-option ddd">
-                      <span class="up-betting-name">
-                        <span class="text">
-                          {{ item.marketInfo.ratioName }}
-                        </span>
-                      </span>
-                      <div class="details">
-                        <div class="item">{{ item.ior }}</div>
-                      </div>
-                    </BettingOption>
+                    <Handicap :send-params="getList('R')" />
                   </div>
                 </div>
               </div>
@@ -125,14 +116,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <BettingOption v-for="(item,idx) in getList('OU')" :key="idx" :market-info="item.marketInfo" class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">{{ item.marketInfo.ratioName }}</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">{{ item.ior }}</div>
-                      </div>
-                    </BettingOption>
+                    <Handicap :send-params="getList('OU')" />
                   </div>
                 </div>
               </div>
@@ -147,14 +131,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <BettingOption v-for="(item,idx) in getList('M')" :key="idx" :market-info="item.marketInfo" class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">{{ item.marketInfo.ratioName }}</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">{{ item.ior }}</div>
-                      </div>
-                    </BettingOption>
+                    <Handicap :send-params="getList('M')" />
                   </div>
                 </div>
               </div>
@@ -186,6 +163,7 @@
 </template>
 <script lang="ts" setup>
 import { matchDate } from '@/utils/matchDate.ts'
+import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 import { ref } from 'vue'
 import { MarketInfo } from '@/entitys/MarketInfo'
