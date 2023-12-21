@@ -1,18 +1,9 @@
 <template>
   <div class="home-page">
     <!-- 热门赛事 -->
-    <HotMatch ref="refHotMatch" />
-
-    <ArrowTitle class="mt10 mb10" :src="titleRecommend" text="推荐比赛" @returnSuccess="returnStatus" />
-
-    <div class="Recommend-Match-Tabs">
-      <SportsButton text="FT" :active="true" />
-      <SportsButton text="BK" />
-      <SportsButton text="TN" />
-      <SportsButton text="OP_BM" />
-    </div>
-
-    <homeMatchHandicap class="mt20" />
+    <!-- <HotMatch ref="refHotMatch" /> -->
+    <!-- 推荐比赛 -->
+    <GoodMatch ref="refGoodMatch" />
 
     <ArrowTitle class="mt10 mb10" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
 
@@ -41,9 +32,9 @@
 import homeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
 // common components
 import SportsButton from '@/components/Button/SportsButton/index.vue'
-import HotMatch from './HotMatch/index.vue'
+// import HotMatch from './HotMatch/index.vue'
+import GoodMatch from './GoodMatch/index.vue'
 // img
-import titleRecommend from '@/assets/images/home/title-recommend.png'
 import titleTime from '@/assets/images/home/title-time.png'
 // ts
 import { onBeforeMount } from 'vue'
