@@ -44,7 +44,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import SportsButton from '@/components/Button/SportsButton/index.vue'
 import homeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
 import titleTime from '@/assets/images/home/title-time.png'
 const returnStatus = (val:any) => {

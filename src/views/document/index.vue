@@ -863,7 +863,6 @@ class="language-html"
 <script lang="ts" setup>
 import TextButton from '@/components/Button/TextButton/index.vue'
 import ImageButton from '@/components/Button/ImageButton/index.vue'
-import SportsButton from '@/components/Button/SportsButton/index.vue'
 </script>
 <style lang="scss" scoped>
 .my-swipe .van-swipe-item {

@@ -50,7 +50,6 @@
   </div></template>
 
 <script lang="ts" setup>
-import SportsButton from '@/components/Button/SportsButton/index.vue'
 import leagueIcon from '@/assets/images/champion/league-icon.png'
 import { apiChampionGameTypes, apiChampionLeagueInfo } from '@/api/champion'
 import { ref, onBeforeMount } from 'vue'

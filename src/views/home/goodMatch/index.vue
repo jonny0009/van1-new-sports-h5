@@ -18,7 +18,6 @@
   </template>
 </template>
 <script lang="ts" setup>
-import SportsButton from '@/components/Button/SportsButton/index.vue'
 import homeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
 // img
 import titleRecommend from '@/assets/images/home/title-recommend.png'

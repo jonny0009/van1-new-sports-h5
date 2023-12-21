@@ -18,7 +18,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import SportsButton from '@/components/Button/SportsButton/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
 import MatchLive from '@/components/HomeMatch/MatchLive/index.vue'
 </script>
