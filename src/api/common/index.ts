@@ -22,4 +22,14 @@ export const apiGetGameDetail = (params:any) => {
     params
   })
 }
+/**
+ * 获取游戏
+ * @returns
+ */
+export const getDoubleLineInfo = () => {
+  return request({
+    url: '/ai/mobile/getDoubleLineInfo',
+    method: 'get'
+  })
+}
 

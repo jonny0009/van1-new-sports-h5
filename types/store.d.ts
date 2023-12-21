@@ -3,6 +3,7 @@ import { Store } from 'vuex'
 import { RouteRecordRaw } from 'vue-router'
 
 declare interface App {
+  doubleLineInfo: any
   sports: any
   moduleConfig: any
   merchantConfig: any
