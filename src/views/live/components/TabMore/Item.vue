@@ -1,61 +1,85 @@
 <template>
-  <div class="panel-more">
-    <div class="more-item" v-for="item in 3" :key="item">
-      <div class="photo">
-        <van-image src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
-        <span class="state">热播中</span>
+  <div class="item">
+    <div class="photo">
+      <van-image :src="item.cover || imgCover">
+        <template v-slot:error>
+          <img :src="imgCover" alt="" />
+        </template>
+      </van-image>
+      <span class="state" v-if="item.showType == 'RB'">热播中</span>
+    </div>
+
+    <div class="main">
+      <div class="main-title">
+        <SvgIcon v-if="item.gameType == 'FT'" name="live-football" />
+        <SvgIcon v-if="item.gameType == 'BK'" name="live-basketball" />
+        <span>{{ item.leagueName }}</span>
       </div>
 
-      <div class="main">
-        <div class="main-title">
-          <img src="@/assets/images/live/s_foot.png" alt="" />
-          <span>印度 - 孟买超级联赛</span>
-        </div>
-
-        <div class="main-team">
-          <div class="cell">
-            <div class="head">
-              <img src="@/assets/images/live/team_img.png" alt="" />
-              <span>孟买青少年</span>
-            </div>
-            <div class="score">
-              <span>3</span>
-            </div>
+      <div class="main-team">
+        <div class="cell">
+          <div class="head">
+            <img v-img="item.homeLogo" :type="2" alt="" />
+            <span>{{ item.homeTeam }}</span>
           </div>
-          <div class="cell">
-            <div class="head">
-              <img src="@/assets/images/live/team_img.png" alt="" />
-              <span>孟买青少年</span>
-            </div>
-            <div class="score">
-              <span>3</span>
-            </div>
+          <div class="score">
+            <span>{{ gameInfo.sc_game_H || gameInfo.sc_FT_H }}</span>
           </div>
         </div>
-
-        <div class="main-desc">
-          <div class="name">兮兮喜欢喵喵</div>
-          <div class="hots">
-            <img src="@/assets/images/live/s_hot.png" alt="" />
-            <span>115,564</span>
+        <div class="cell">
+          <div class="head">
+            <img v-img="item.awayLogo" :type="2" alt="" />
+            <span>{{ item.awayTeam }}</span>
+          </div>
+          <div class="score">
+            <span>{{ gameInfo.sc_game_A || gameInfo.sc_FT_C || gameInfo.sc_FT_A }}</span>
           </div>
         </div>
       </div>
-      <!-- end -->
+
+      <div class="main-desc">
+        <div class="name">{{ item.leagueShortName }}</div>
+        <div class="hots">
+          <img src="@/assets/images/live/s_hot.png" alt="" />
+          <span>{{ watchNumText }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-// import { reactive, ref } from 'vue'
+import { computed } from 'vue'
+import { ImageSource } from '@/config'
+// import { formatToDateTime } from '@/utils/date'
+
+const props = defineProps({
+  item: {
+    type: Object,
+    default: () => {}
+  }
+})
+
+const gameInfo = computed(() => props.item?.gameInfo)
+const imgCover = computed(() => {
+  const item = props.item
+  const type: any = {
+    FT: 'FE/common/live/img_video_bg_FT.jpg',
+    BK: 'FE/common/live/img_video_bg_BK.jpg'
+  }
+  return ImageSource + type[item.gameType]
+})
+const watchNumText = computed(() => {
+  const item = props.item
+  if (item.showType == 'RB') {
+    return `${item.watchTotal.toLocaleString()}人观看`
+  }
+  return `${item.watchTotal.toLocaleString()}人预约`
+})
 </script>
 
 <style lang="scss" scoped>
-.panel-more {
-  padding: 0 36px;
-}
-
-.more-item {
+.item {
   background: #eff1f2;
   border-radius: 10px;
   height: 220px;
@@ -106,6 +130,10 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         zoom: 0.95;
+      }
+      .svg-icon {
+        color: #999;
+        margin-right: 8px;
       }
     }
 

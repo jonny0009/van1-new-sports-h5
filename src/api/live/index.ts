@@ -47,3 +47,11 @@ export const ratioRateInfo = (params:any) => {
     params
   })
 }
+
+export const rbLiveList = (params:any) => {
+  return request({
+    url: '/ai/mobile/game/rbLiveList',
+    method: 'get',
+    params
+  })
+}

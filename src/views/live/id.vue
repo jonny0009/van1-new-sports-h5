@@ -1,7 +1,13 @@
 <template>
   <div class="live-page">
-    <div class="video">
-      <video ref="videoRef" class="video-js" playsinline></video>
+    <div class="match">
+      <div class="match-video">
+        <video ref="videoRef" class="video-js" playsinline></video>
+      </div>
+      <div v-if="videoWaiting" class="match-loading">
+        <div class="icon"></div>
+        <div class="text">正在拼命加载中...</div>
+      </div>
     </div>
 
     <div class="tab">
@@ -18,7 +24,7 @@
     </div>
 
     <div class="panel">
-      <component :is="compsList[navActive]" />
+      <component :is="compsList[navActive]" :matchInfo="matchData" />
     </div>
   </div>
 </template>
@@ -26,44 +32,66 @@
 <script lang="ts" setup>
 import 'video.js/dist/video-js.min.css'
 import videojs from 'video.js'
-import { reactive, ref, onMounted, onUnmounted } from 'vue'
+import { reactive, Ref, ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
-import TabChat from './components/TabChat.vue'
-import TabBet from './components/TabBet.vue'
-import TabWith from './components/TabWith.vue'
-import TabMore from './components/TabMore.vue'
 import { matcheInfo, extendInfo } from '@/api/live'
+import { getAssetsImage } from '@/utils/tools'
+
+import TabChat from './components/TabChat/index.vue'
+import TabBets from './components/TabBets/index.vue'
+import TabWith from './components/TabWith/index.vue'
+import TabMore from './components/TabMore/index.vue'
 
 const route = useRoute()
-
-const getImage = (name: string) => {
-  return new URL(`/src/assets/images/live/${name}`, import.meta.url).href
-}
-
+const getIcon = (name: string) => getAssetsImage(name, 'live')
 const navList = reactive([
-  { type: 0, name: '聊天室', unIcon: getImage('nav_chat_un.png'), onIcon: getImage('nav_chat_on.png') },
-  { type: 1, name: '投注', unIcon: getImage('nav_bet_un.png'), onIcon: getImage('nav_bet_on.png') },
-  { type: 2, name: '跟注', unIcon: getImage('nav_add_un.png'), onIcon: getImage('nav_add_on.png') },
-  { type: 3, name: '更多', unIcon: getImage('nav_more_un.png'), onIcon: getImage('nav_more_on.png') }
+  { type: 0, name: '聊天室', unIcon: getIcon('nav_chat_un.png'), onIcon: getIcon('nav_chat_on.png') },
+  { type: 1, name: '投注', unIcon: getIcon('nav_bet_un.png'), onIcon: getIcon('nav_bet_on.png') },
+  { type: 2, name: '跟注', unIcon: getIcon('nav_add_un.png'), onIcon: getIcon('nav_add_on.png') },
+  { type: 3, name: '更多', unIcon: getIcon('nav_more_un.png'), onIcon: getIcon('nav_more_on.png') }
 ])
 const navActive = ref(2)
-const compsList = [TabChat, TabBet, TabWith, TabMore]
+const compsList = [TabChat, TabBets, TabWith, TabMore]
 const onTab = (item: any) => {
   navActive.value = item.type
+}
+
+const matchData: Ref<any> = ref({})
+const getMatcheInfo = async () => {
+  const gidm = route.params['id']
+  const res = await matcheInfo({ gidm })
+  matchData.value = res.data || {}
+}
+
+const extendData: Ref<any> = ref({})
+const getExtendInfo = async () => {
+  const gidm = route.params['id']
+  const res: any = await extendInfo({ gidm })
+  const data = res.data || {}
+  extendData.value = data
+  if (res.code == 200) {
+    const { liveali } = data.streamNa
+    videoUrl.value = liveali.m3u8
+    initVideo()
+  }
 }
 
 let player: any = null
 const videoRef = ref<HTMLDivElement | string>('')
 const videoUrl = ref(null)
+const videoError = ref(false)
+const videoWaiting = ref(false)
 const initVideo = () => {
   const options = {
-    language: 'zh-CN',
-    preload: 'metadata',
+    preload: 'auto',
     width: '100%',
     height: '100%',
-    autoplay: 'muted',
+    autoplay: true,
+    muted: true,
     controls: true,
     fluid: true,
+    bigPlayButton: false,
+    loadingSpinner: false,
     sources: [
       {
         src: videoUrl.value,
@@ -71,25 +99,25 @@ const initVideo = () => {
       }
     ]
   }
-  player = videojs(videoRef.value, options, () => {
-    player.log('onPlayerReady')
+  nextTick(() => {
+    player = videojs(videoRef.value, options, () => {
+      player.log('onPlayerReady')
+    })
+
+    player.on('waiting', () => {
+      videoWaiting.value = true
+    })
+
+    player.on('playing', () => {
+      videoWaiting.value = false
+    })
+
+    player.on('error', () => {
+      videoError.value = true
+      player && player.dispose()
+      player = null
+    })
   })
-}
-
-const getMatcheInfo = async () => {
-  const gidm = route.params['id']
-  await matcheInfo({ gidm })
-}
-
-const getExtendInfo = async () => {
-  const gidm = route.params['id']
-  const res: any = await extendInfo({ gidm })
-  const data = res.data || {}
-  if (res.code == 200) {
-    const { liveali } = data.streamNa
-    videoUrl.value = liveali.m3u8
-    initVideo()
-  }
 }
 
 onMounted(() => {
@@ -110,18 +138,45 @@ onUnmounted(() => {
   padding-bottom: calc(88px + 96px);
 }
 
-.video {
-  width: 100%;
+.match {
+  position: relative;
   height: 440px;
-  background: #000;
-  display: flex;
-  align-items: center;
-  // video {
-  //   object-fit: fill;
-  // }
-  .video-js {
-    font-size: 20px;
+  &-video {
+    width: 100%;
     height: 100%;
+    background: #000;
+    display: flex;
+    align-items: center;
+    .video-js {
+      font-size: 20px;
+      height: 100%;
+    }
+    video {
+      object-fit: fill;
+    }
+  }
+
+  &-loading {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .icon {
+      width: 120px;
+      height: 120px;
+      background: url('@/assets/images/live/ai_loading.gif') no-repeat;
+      background-size: 100% auto;
+    }
+    .text {
+      font-size: 24px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 20px;
+    }
   }
 }
 
