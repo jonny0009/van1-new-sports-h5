@@ -1,7 +1,7 @@
 <template>
   <div class="sport-champion-list">
     <div class="champion-title">
-      <ArrowTitle class="mt10 mb10" :src="titleIcon" text="冠军竞猜" @returnSuccess="CloseClick" />
+      <ArrowTitle class="mt10 mb10" :src="titleIcon" :text="$t('sport.champion')" @returnSuccess="CloseClick" />
     </div>
     <div v-show="isOpen" class="champion-group-body">
       <div v-for="(item, idx) in championList" :key="idx" class="league-champion-item">
@@ -17,7 +17,6 @@
 <script lang="ts" setup>
 import championIcon from '@/assets/images/champion/league-icon.png'
 import Championitem from './champion-item.vue'
-import ArrowTitle from '@/components/Title/ArrowTitle/index.vue'
 import titleIcon from '@/assets/images/home/title-recommend.png'
 import { ref } from 'vue'
 const isOpen: any = ref(true)
@@ -35,7 +34,7 @@ const CloseClick = (val:any) => {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .sport-champion-list{
   .champion-title{
     height: 100px;

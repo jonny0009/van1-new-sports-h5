@@ -1,6 +1,7 @@
 import store from '@/store'
 import createBetItem from 'xcsport-lib'
 import { points } from '../index'
+import { MarketInfo } from '@/entitys/MarketInfo'
 
 // 投注参数过滤保留
 export const betParams = (bet: any) => {
@@ -173,8 +174,8 @@ export const buyParams = (markets: any, s: any, t: any) => {
   }
 }
 // 筛选串关点水参数
-export const combosHitParams = (combosBets: any) => {
-  const betList = combosBets.map((bet: any) => {
+export const combosHitParams = (combosMarkets: any) => {
+  const betList = combosMarkets.map((bet: any) => {
     const { gidm, gameId, gameType, playType, ratioType, ratio, ior, optionId, betItem, pgidm, showType, score } = bet
     return {
       gidm,
@@ -197,19 +198,10 @@ export const combosHitParams = (combosBets: any) => {
   }
 }
 // 筛选串关投注参数
-export const buyCombosParams = (bets: any, combos: any, { s, t }: any) => {
-  // 是否接收所有盘口变化 'Y' 接收最优 'S' 接收所有
-  const { userConfig } = store.state.user
-  const { acceptHight, acceptAll } = userConfig || {}
-  let autoOdd = ''
-  if (+acceptAll) {
-    autoOdd = 'S'
-  } else if (+acceptHight) {
-    autoOdd = 'Y'
-  } else if (+acceptAll === 0 && +acceptHight === 0) {
-    autoOdd = 'N'
-  }
-  const betSubList = bets.map((bet: any) => {
+export const buyCombosParams = (markets: Array<MarketInfo>, combos: any, { s, t, gold }: any) => {
+  const { userConfig } = store.state.user || {}
+  const autoRatio = userConfig === 1 ? 'S' : 'N'
+  const betSubList = markets.map((bet: any) => {
     const {
       gidm,
       gameId,
@@ -249,7 +241,7 @@ export const buyCombosParams = (bets: any, combos: any, { s, t }: any) => {
     }
   })
   const comboInfo = combos.map((combo: any) => {
-    const { comboNumber, gold, orderNumber } = combo
+    const { comboNumber, orderNumber } = combo
     return {
       combo: comboNumber,
       betNum: orderNumber,
@@ -261,9 +253,10 @@ export const buyCombosParams = (bets: any, combos: any, { s, t }: any) => {
     t,
     betSubList,
     comboInfo,
-    autoOdd,
+    autoRatio,
     isCredit: 'N',
-    autoRatio: 'Y'
+    orderSource: 'AI',
+    autoOdd: 'N'
   }
 }
 
@@ -320,4 +313,55 @@ export const chaiCombos = (betArray: Array<any>, goldDetails = {}) => {
     }
   }
   return chaiComboArray
+}
+
+export const getComboMarkets = (markets:Array<MarketInfo>) => {
+  const combosMarkets: Array<any> = []
+  // 获取不同比赛的投注项
+  const onlyBetGidms: Array<any> = []
+  // 收集相同比赛的gidm
+  const collectSameGidms: Array<any> = []
+  const sameDataSources: Array<any> = []
+  const year = new Date().getFullYear()
+  const month = new Date().getMonth() + 1
+  const day = new Date().getDate()
+  const curDate = new Date(`${year}/${month}/${day} 00:00:00`).getTime()
+  markets.filter((marketInfo: MarketInfo) => {
+    let comboState = true
+    const { gidm, showtype, playType, suffix, gameDate } = marketInfo
+    const dataSource = gidm.split('_')[0]
+    if (!sameDataSources.includes(dataSource)) {
+      sameDataSources.push(dataSource)
+    }
+    // 角球不能串关
+    if (suffix === '_conner') {
+      comboState = false
+    }
+    // 冠军盘不能串关
+    if (showtype === 'CP' || playType === 'CHAMPION') {
+      comboState = false
+    }
+
+    // 不支持相同比赛串关
+    if (onlyBetGidms.includes(gidm)) {
+      comboState = false
+      collectSameGidms.push(gidm)
+    }
+    // IBO是7天内的赛事可以串，第8天以后的就不能串了
+    if (dataSource === 'ib' && gameDate) {
+      const year = new Date(gameDate).getFullYear()
+      const month = new Date(gameDate).getMonth() + 1
+      const day = new Date(gameDate).getDate()
+      const betDate = new Date(`${year}/${month}/${day} 00:00:00`).getTime()
+      if (betDate - curDate > 7 * 24 * 60 * 60 * 1000) {
+        comboState = false
+      }
+    }
+    // 符合串关的
+    if (comboState) {
+      onlyBetGidms.push(gidm)
+      combosMarkets.push(marketInfo)
+    }
+  })
+  return combosMarkets
 }

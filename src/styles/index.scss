@@ -6,6 +6,20 @@
 .van-image__error, .van-image__loading{
   background: transparent !important;
 }
+.noLoadingAndError{
+  .van-image__error, .van-image__loading{
+    display: none;
+  }
+}
+.van-back-top{
+  width: 80px !important;
+  height: 80px !important;
+  min-width: 80px !important;
+  min-height: 80px !important;
+  .van-icon{
+    font-size: 32px !important;
+  }
+}
 // icon 2023/12/19
 @font-face {
   font-family: "iconfont"; /* Project id  */
@@ -22,6 +36,7 @@
 //
 //
 //重构=>对照表
+.icon-bar-home:before,
 .icon-bar-Home:before,
 .icon-Home:before{content:"\e615"}
 .icon-bar-FT:before,
@@ -34,7 +49,8 @@
 .icon-BK:before{content:"\e60d"}
 .icon-sports:before{content:"\e616"}
 .icon-live:before{content:"\e614"}
-.icon-bar-live:before,{content:"\e60a"}
+.icon-bar-sportlive:before,
+.icon-bar-live:before{content:"\e60a"}
 //
 //
 // 默认=>icon=>对照表
@@ -145,9 +161,11 @@
         padding-top: 5px;
         .iconfont {
           font-size: 24px;
+          height: auto;
+          font-weight: 100;
         }
         .text{
-          margin-left: 10px;
+          margin-left: 5px;
         }
       }
       .up-match-time{
@@ -205,6 +223,12 @@
     }
     .match-betting-item{
       margin-top: 20px;
+      .flex-cross-center{
+        .van-icon{
+          font-weight: 100;
+          color: #96a5aa;
+        }
+      }
     }
     .match-betting-item__title{
       margin: 10px 20px;
@@ -316,6 +340,56 @@
   height: 60px;
   span{
     font-size: 24px;
+  }
+}
+.Hot-Match-Group{
+  display: flex;
+  overflow: auto;
+  min-height: 176px;
+  &::-webkit-scrollbar {
+    height: 0;
+    display: none;
+  }
+  img{
+    width: 200px;
+    height: 176px;
+    min-width: 200px;
+    display: block;
+    flex-shrink: 1;
+    border-radius: 26px;
+    background: #eff2f2;
+  }
+  & > .van-image{
+    width: 200px;
+    height: 176px;
+    flex-shrink: 1;
+    margin-right: 20px;
+    .van-image__error{
+      width: 200px;
+      height: 176px;
+      overflow: hidden;
+      position: relative;
+    }
+  }
+  &.noData{
+    justify-content: center;
+    align-items: center;
+  }
+}
+.Recommend-Match-Tabs{
+  display: flex;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    height: 0;
+    display: none;
+  }
+  .SportsButton{
+    margin-right: 16px;
+    flex-shrink: 1;
+    white-space:nowrap;
+    &:last-child{
+      margin-right: 0;
+    }
   }
 }
 //end home page

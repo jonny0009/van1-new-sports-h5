@@ -2,41 +2,149 @@
   <div class="sport-page">
     <div class="my-scroll__content">
       <div class="betting-sport-nav">
-        <TextButton text="推荐" :active="true" />
-        <ImageButton v-for="item in [1,2,3,4,5]" :key="item" text="和恢复顶顶顶帆帆" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" :active="true" />
+        <TextButton :text="$t('sport.recommend')" :active="!leagueId" @click="clickLeague({})" />
+        <ImageButton
+          v-for="(item,idx) in firstLeaguesList"
+          :key="idx"
+          :text="item.leagueNameAbbr"
+          :src="item.icon"
+          :active="leagueId===item.leagueId"
+          @click="clickLeague(item)"
+        />
       </div>
     </div>
-    <MatchLive />
-    <ChampionList v-if="championList.length" :champion-list="championList" />
 
-    <div class="Button-MatchMore mt20">
+    <ArrowTitle v-if="!leagueId || homeGoSport" class="mt10 mb10" :src="recommendIcon" :text="$t('sport.recommend')" @returnSuccess="recommendCloseClick" />
+    <ArrowTitle v-else class="mt10 mb10" :src="leagueLogo" :text="leagueName" @returnSuccess="recommendCloseClick" />
+
+    <template v-if="isOpenRecommend">
+      <Loading v-if="!getRecommendEventsIsLoading" />
+      <template v-else>
+        <div v-if="recommendList.length" class="recommend-list">
+          <HomeMatchHandicap v-for="(item,idx) in recommendList" v-show="isOpenRecommend" :key="idx" :send-params="item" />
+        </div>
+        <EmptyIcon v-else class="marginAuto"></EmptyIcon>
+      </template>
+    </template>
+
+    <ArrowTitle class="mt10 mb10" :src="earlyIcon" :text="$t('sport.early')" @returnSuccess="earlyCloseClick" />
+    <template v-if="isOpenEarly">
+      <Loading v-if="!getRecommendEventsIsLoading" />
+      <template v-else>
+        <div v-if="earlyList.length" class="early-list">
+          <HomeMatchHandicap v-for="(item,idx) in earlyList" v-show="isOpenEarly" :key="idx" :send-params="item" />
+        </div>
+        <EmptyIcon v-else class="marginAuto"></EmptyIcon>
+      </template>
+    </template>
+
+    <ChampionList v-if="championList.length && !homeGoSport" :champion-list="championList" />
+
+    <!-- <div class="Button-MatchMore mt20">
       <span>
         查看更多比赛
       </span>
-    </div>
+    </div> -->
 
     <div class="footerHeight"></div>
   </div></template>
 
 <script lang="ts" setup>
-import MatchLive from '@/components/HomeMatch/MatchLive/index.vue'
+
+import earlyIcon from '@/assets/images/home/title-time.png'
+
+import recommendIcon from '@/assets/images/home/title-recommend.png'
+import HomeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
 import ChampionList from './champion/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
-import ImageButton from '@/components/Button/ImageButton/index.vue'
 import { useRoute } from 'vue-router'
-import { ref, onBeforeMount } from 'vue'
+
+import { ref, onBeforeMount, computed } from 'vue'
 import { apiChampionpPlayTypes } from '@/api/champion'
+import { firstLeagues, recommendEvents } from '@/api/home'
+
 import { MarketInfo } from '@/entitys/MarketInfo'
 
+const route = useRoute()
+
+const homeGoSport = computed(() => route.query.homeGoSport)
+
+const leagueId: any = ref(route.query.leagueId)
+const gameType: any = ref(route.query.type)
+const leagueLogo: any = ref()
+const leagueName: any = ref()
+
+const isOpenRecommend: any = ref(true)
+const recommendCloseClick = (val:any) => {
+  console.log(val)
+  isOpenRecommend.value = !val
+}
+
+const isOpenEarly: any = ref(true)
+const earlyCloseClick = (val:any) => {
+  console.log(val)
+  isOpenEarly.value = !val
+}
+
 onBeforeMount(async () => {
-  console.log(leagueId.value)
-  getChampionpPlayTypes()
+  getFirstLeagues()
+  if (leagueId.value) {
+    // 按联赛查询
+    const leagueParames:any = ref({ gameType: gameType.value, leagueId: leagueId.value, page: 1, pageSize: 20 })
+    getRecommendEvents(leagueParames.value)
+  } else {
+    // 推荐
+    const recommendParames:any = ref({ gameType: gameType.value, gradeType: 1, page: 1, pageSize: 20 })
+    getRecommendEvents(recommendParames.value)
+    // 早盘
+    const earlyParames:any = ref({ gameType: gameType.value, gradeType: 2, page: 1, pageSize: 20 })
+    getRecommendEvents(earlyParames.value)
+  }
+
+  if (!homeGoSport.value) {
+    getChampionpPlayTypes()
+  }
 })
 
-const route = useRoute()
-const leagueId: any = ref(route.query.leagueId)
-const championList: any = ref([])
+const firstLeaguesList: any = ref([])
+// 获取一级联赛
+const getFirstLeagues = async () => {
+  if (gameType.value) {
+    const res:any = await firstLeagues({ gameType: gameType.value }) || {}
+    if (res.code === 200 && res.data) {
+      firstLeaguesList.value = res.data
+    }
+  }
+}
 
+const recommendList: any = ref([])
+const earlyList: any = ref([])
+const getRecommendEventsIsLoading = ref(false)
+// 获取推荐，早盘赛事
+const getRecommendEvents = async (params:any) => {
+  if (gameType.value) {
+    getRecommendEventsIsLoading.value = false
+    const res:any = await recommendEvents(params) || {}
+    getRecommendEventsIsLoading.value = true
+    if (res.code === 200 && res.data) {
+      recommendList.value = res.data.baseData || []
+      if (res.data.baseData || res.data.baseData.length) {
+        leagueLogo.value = res.data.baseData[0].leagueLogo
+        leagueName.value = res.data.baseData[0].leagueShortName
+      }
+      if (!leagueId.value) {
+        earlyList.value = res.data.baseData || []
+      } else {
+        earlyList.value = []
+      }
+    } else {
+      recommendList.value = []
+      earlyList.value = []
+    }
+  }
+}
+
+const championList: any = ref([])
 // 获取冠军
 const getChampionpPlayTypes = async () => {
   if (leagueId.value) {
@@ -52,7 +160,7 @@ const getChampionpPlayTypes = async () => {
           // 整理下单所需参数实体类
           ratioInfo.marketInfo = new MarketInfo({ ...ratioInfo, systemId, gameId, gidm, gameType, playType, sw, championType })
           return ratioInfo
-        })
+        }).sort((a:any, b:any) => a.ior - b.ior)
         return details
       })
       championList.value = champions
@@ -62,9 +170,19 @@ const getChampionpPlayTypes = async () => {
   }
 }
 
+const clickLeague = (item: any) => {
+  if (homeGoSport.value) {
+    window.location.href = `/sport?leagueId=${item.leagueId}&type=${item.gameType}&homeGoSport=homeGoSport`
+  } else if (item.leagueId) {
+    window.location.href = '/sport?leagueId=' + item.leagueId + '&type=' + item.gameType
+  } else {
+    window.location.href = '/sport?type=' + gameType.value
+  }
+}
+
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .sport-page{
   padding: 0 36px 350px;
   .my-scroll__content{
@@ -78,9 +196,9 @@ const getChampionpPlayTypes = async () => {
     }
     .betting-sport-nav{
       margin-top: 26px;
-      margin-left: 21px;
+      // margin-left: 21px;
       margin-bottom: 5px;
-      width: 1000px;
+      width: 1600px;
       white-space: normal;
       position: relative;
       .textButton,

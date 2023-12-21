@@ -17,8 +17,13 @@ export default async () => {
   await store.dispatch('app/moduleConfig')
   // 获取全部体育项
   store.dispatch('app/getAllSports')
-
+  // 查询单双线玩法
+  store.dispatch('app/getDoubleLineInfo')
   if (getToken()) {
     store.dispatch('user/configSettingNew')
+    // 获取账号信息
+    store.dispatch('user/userInfo')
+    // 账户余额
+    store.dispatch('user/getBalance')
   }
 }

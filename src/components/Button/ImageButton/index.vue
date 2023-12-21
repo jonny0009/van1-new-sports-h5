@@ -3,25 +3,23 @@
     class="ImageButton"
     :class="[
       {
-        'active':activeVal
+        'active': active
       }
     ]"
   >
     <img
-      v-if="!noImg"
       v-img="src"
       class="img"
       style="object-fit: contain;"
     />
     <span>
-      {{ textVal }}
+      {{ text }}
     </span>
-    <span v-if="countVal" class="count">{{ countVal }}</span>
+    <span v-if="count" class="count">{{ count }}</span>
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
-const props = defineProps({
+defineProps({
   text: {
     type: String,
     default: function () {
@@ -47,25 +45,6 @@ const props = defineProps({
     }
   }
 })
-
-const activeVal:any = ref(false)
-activeVal.value = props.active
-watch(props, (val) => {
-  if (val) {
-    const { active, src } = val
-    activeVal.value = active
-    srcVal.value = src
-  }
-})
-
-const srcVal:any = ref('')
-srcVal.value = props.src
-
-const textVal:any = ref('')
-textVal.value = props.text
-
-const countVal:any = ref('')
-countVal.value = props.count
 
 </script>
 <style lang="scss" scoped>

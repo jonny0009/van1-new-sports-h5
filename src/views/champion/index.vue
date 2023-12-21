@@ -7,16 +7,15 @@
         :src="leagueIcon"
       />
       <span class="st">
-        选择联赛
+        {{ $t('sport.chooseLeague') }}
       </span></div>
     <ul class="game-type-wrap">
       <li v-for="(item, idx) in gameTypeTabList" :key="idx" @click="clickGameType(item)">
-        <!-- {{ chooseGameType===item.gameType }} -->
         <SportsButton :text="item.gameType" :active="chooseGameType===item.gameType" />
       </li>
     </ul>
     <ul class="league-tab-wrap">
-      <li :class="chooseLeagueId==='0'?'active':''" @click="clickLeague({leagueId:'0'})">全部</li>
+      <li :class="chooseLeagueId==='0'?'active':''" @click="clickLeague({leagueId:'0'})">{{ $t('sport.all') }}</li>
       <li v-for="(item, idx) in leagueListAll" :key="idx" :class="chooseLeagueId===item.leagueId ? 'active':''" @click="clickLeague(item)">
         <div class="img-wrap">
           <img
@@ -39,10 +38,8 @@
           class="my-image icon"
         />
         <div class="content">
-          <div class="top"><span v-game="item.gameType" class="sport">
-            <!-- <i class="van-badge__wrapper icon-2up icon-2up-superior3 my-icon"></i>
-            <span class="region">International Clubs</span> -->
-          </span></div>
+          <!-- <div class="top"><span v-game="item.gameType" class="sport">
+          </span></div> -->
           <div class="name">{{ item.leagueName }}</div>
         </div>
       </div>
@@ -50,7 +47,6 @@
   </div></template>
 
 <script lang="ts" setup>
-import SportsButton from '@/components/Button/SportsButton/index.vue'
 import leagueIcon from '@/assets/images/champion/league-icon.png'
 import { apiChampionGameTypes, apiChampionLeagueInfo } from '@/api/champion'
 import { ref, onBeforeMount } from 'vue'
@@ -112,12 +108,13 @@ const clickSportPage = (item: any) => {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .champion-page{
   padding: 0 35px 190px;
   .title{
     display: flex;
     align-items: center;
+    margin: 20px 0;
     img{
       width: 42px;
       height: 38px;

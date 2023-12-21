@@ -3,7 +3,7 @@
     <div
       v-for="(item, idx) in barFooterArr"
       :key="idx"
-      :class="{'active': item.value === active}"
+      :class="{ 'active': item.value === active }"
       class="item"
       @click="clickChangeActive(item)"
     >
@@ -27,10 +27,10 @@ import game from '@/assets/images/globalLayout/footer/game.png'
 import { ref, reactive } from 'vue'
 import router from '@/router'
 const getRouteName = () => {
-  const routerName:any = router?.currentRoute?.value?.name || ''
+  const routerName: any = router?.currentRoute?.value?.name || ''
   return routerName.toLowerCase()
 }
-const barFooterArrayChange = ():Array<any> => {
+const barFooterArrayChange = (): Array<any> => {
   const barFooterArray = [
     {
       text: '直播',
@@ -47,7 +47,7 @@ const barFooterArrayChange = ():Array<any> => {
   ]
   return barFooterArray
 }
-const barFooterArr:any = reactive(barFooterArrayChange())
+const barFooterArr: any = reactive(barFooterArrayChange())
 const active = ref(getRouteName())
 const clickChangeActive = (item: any) => {
   active.value = item.value
@@ -64,12 +64,12 @@ const clickChangeActive = (item: any) => {
   width: 100%;
   height: 88px;
   display: flex;
-  z-index: 9;
+  z-index: 299;
   background-color: #fff;
-  &.has-border{
+  &.has-border {
     border-top: 1px solid #e5ecf3;
   }
-  .item{
+  .item {
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -77,11 +77,11 @@ const clickChangeActive = (item: any) => {
     align-items: center;
     color: #96A5AA;
     font-weight: 600;
-    .img{
+    .img {
       height: 48px;
       width: 48px;
     }
-    .iconfont{
+    .iconfont {
       font-size: 44px;
       height: 48px;
       width: 48px;
@@ -90,16 +90,16 @@ const clickChangeActive = (item: any) => {
       justify-content: center;
       font-weight: 100;
     }
-    span{
+    span {
       line-height: 24px;
       font-size: 24px;
       margin-top: 4px;
     }
-    .item-img{
+    .item-img {
       display: block;
     }
     &.active {
-      color:#7642fe;
+      color: #7642fe;
     }
   }
 }

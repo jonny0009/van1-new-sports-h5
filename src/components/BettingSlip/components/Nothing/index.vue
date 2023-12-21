@@ -1,6 +1,6 @@
 <template>
   <div class="betting-slip-empty">
-    <div class="empty-icon"></div>
+    <EmptyIcon />
     <div class="empty-title">您的选择将出现在此</div>
   </div>
 </template>
@@ -14,15 +14,6 @@
   justify-content: center;
   align-items: center;
   padding: 50px 0;
-
-  .empty-icon {
-    width: 175px;
-    height: 175px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-image: url('@/assets/images/betting/empty.png');
-  }
 
   .empty-title {
     margin-top: 10px;

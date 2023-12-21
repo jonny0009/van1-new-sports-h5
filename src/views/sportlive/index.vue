@@ -1,26 +1,68 @@
 <template>
   <div class="sportlive">
     <div class="sportlive-Match-Tabs">
-      <TextButton text="推荐" :active="true" />
-      <SportsButton text="FT" />
-      <SportsButton text="BK" />
-      <SportsButton text="TN" />
-      <SportsButton text="OP_BM" />
+      <TextButton text="推荐" :active="!gameType" @click="clickGameType({})" />
+      <SportsButton v-for="(item,idx) in gameTypeList" :key="idx" :text="item.gameType" :active="gameType===item.gameType" @click="clickGameType(item)" />
     </div>
-    <MatchLive />
-    <MatchLive />
-    <div class="Button-MatchMore mt20">
-      <span>
-        查看更多比赛
-      </span>
-    </div>
+    <MatchLive v-for="(item,idx) in commonMatchesList" :key="idx" :send-params="item" />
+
     <div class="footerHeight"></div>
   </div>
 </template>
 <script lang="ts" setup>
-import SportsButton from '@/components/Button/SportsButton/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
 import MatchLive from '@/components/HomeMatch/MatchLive/index.vue'
+
+import { ref, onBeforeMount } from 'vue'
+import { apiRBCondition, apiCommonMatches } from '@/api/home'
+
+const gameType: any = ref()
+onBeforeMount(async () => {
+  getApiRBCondition()
+  getApiCommonMatches()
+})
+
+const showGameTypeList: any = ref(['FT', 'BK', 'TN', 'OP_BM'])
+
+const gameTypeList: any = ref([])
+//
+const getApiRBCondition = async () => {
+  const res:any = await apiRBCondition({ }) || {}
+  if (res.code === 200 && res.data) {
+    const dataList = res.data || []
+    gameTypeList.value = dataList.filter((t:any) => showGameTypeList.value.includes(t.gameType))
+  }
+}
+
+const commonMatchesList: any = ref([])
+const getApiCommonMatches = async () => {
+  const params = {
+    gameType: gameType.value || '',
+    showtype: 'RB',
+    timeStage: 0,
+    dateStage: 0,
+    gameSort: 1,
+    isNovice: 'Y',
+    onlyFavorite: 0,
+    leagueIds: '',
+    gameTypeSon: '',
+    page: 1,
+    pageSize: 50
+  }
+  const res:any = await apiCommonMatches(params) || {}
+  if (res.code === 200 && res.data?.matchList?.baseData) {
+    const dataList = res.data?.matchList?.baseData || []
+    commonMatchesList.value = dataList.filter((t:any) => showGameTypeList.value.includes(t.gameType))
+  } else {
+    commonMatchesList.value = []
+  }
+}
+
+const clickGameType = (item: any) => {
+  gameType.value = item.gameType
+  getApiCommonMatches()
+}
+
 </script>
 <style lang="scss" scoped>
 .sportlive{

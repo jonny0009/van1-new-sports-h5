@@ -64,10 +64,10 @@ textval.value = props.text
     background:#7642fe;
     color:#fff;
   }
-  .img{
-    width:44px;
+  &::before{
+    content: '';
+    display: inline-block;
     height: 44px;
-    margin-right: 19px;
   }
 }
 </style>

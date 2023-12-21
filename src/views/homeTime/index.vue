@@ -44,10 +44,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-import SportsButton from '@/components/Button/SportsButton/index.vue'
 import homeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
 import titleTime from '@/assets/images/home/title-time.png'
-import ArrowTitle from '@/components/Title/ArrowTitle/index.vue'
 const returnStatus = (val:any) => {
   console.log(val)
 }

@@ -1,22 +1,26 @@
 import { Module } from 'vuex'
 import { App } from '#/store'
 import { businessConfig, merchantConfig, moduleConfig, queryCMerLanguage } from '@/api/auth'
-import { getAllSports } from '@/api/common'
+import { getAllSports, getDoubleLineInfo } from '@/api/common'
 
 const appModule: Module<App, any> = {
   namespaced: true,
   state: {
+    imgChangeTime: '',
     state: true,
     queryCMerLanguage: {},
     businessConfig: {},
     merchantConfig: {},
     moduleConfig: {},
+    doubleLineInfo: {},
     sports: []
   },
   mutations: {
-
   },
   actions: {
+    setKeyValue(state:any, { key, value }) {
+      state[key] = value
+    },
     async queryCMerLanguage({ state }) {
       const res:any = await queryCMerLanguage() || {}
       if (res.code === 200 && res.data) {
@@ -55,6 +59,11 @@ const appModule: Module<App, any> = {
       if (res.code === 200) {
         state.sports = res.data || []
       }
+    },
+    // 获取单双线数据
+    async getDoubleLineInfo({ state }) {
+      const res = await getDoubleLineInfo()
+      state.doubleLineInfo = res.data || {}
     }
   }
 }

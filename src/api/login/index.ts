@@ -12,10 +12,28 @@ export const login = (data:any) => {
     data
   })
 }
-export const getLanguages = (params:any) => {
+// 试玩登录====
+export const tryLogin = (data:any) => {
   return request({
-    url: '/ai/mobile/merchantAccountServer/api/c/queryCMerLanguage',
+    url: '/ai/mobile/loginTemp/v2',
+    method: 'post',
+    data
+  })
+}
+// 玩家账户
+export const playAccount = (params:any) => {
+  return request({
+    url: '/ai/mobile/player/playerAccount',
     method: 'get',
     params
   })
 }
+// 账户余额 wid: 1
+export const getBalance = (params:any) => {
+  return request({
+    url: '/ai/mobile/player/getBalance',
+    method: 'get',
+    params
+  })
+}
+
