@@ -26,10 +26,10 @@
         <div class="item" @click="showPk(1)">
           <div class="label-info flex align-center">
             <div class="icon"><img src="@/assets/images/login/lang@2x.png" /></div>
-            <div class="label">{{ '语言' }}</div>
+            <div class="label">{{ $t('user.lang') }}</div>
           </div>
           <div class="label-right">
-            <div class="label">{{ lang.value }}</div>
+            <div class="label">{{ lang.value || '简体中文' }}</div>
             <img class="arrow" src="@/assets/images/login/go@2x.png" />
           </div>
         </div>
@@ -39,7 +39,7 @@
             <div class="label">{{ '地区' }}</div>
           </div>
           <div class="label-right">
-            <div class="label">{{ int.value }}</div>
+            <div class="label">{{ areaObj.value }}</div>
             <img class="arrow" src="@/assets/images/login/go@2x.png" />
           </div>
         </div>
@@ -49,7 +49,7 @@
             <div class="label">{{ '盘口' }}</div>
           </div>
           <div class="label-right">
-            <div class="label">{{ pankou.value }}</div>
+            <div class="label">{{ plateMask.value }}</div>
             <img class="arrow" src="@/assets/images/login/go@2x.png" />
           </div>
         </div>
@@ -58,12 +58,18 @@
     <van-popup v-model:show="showBottom" position="bottom" closeable round>
       <div class="popup-title">{{ popupTitle }}</div>
       <div class="pk-list">
-        <div v-for="(item, index) in popupList.arr" :key="index" class="item" :class="[lang.key===item.key?'item-color':'']" @click="setPk(item)">
+        <div
+          v-for="(item, index) in popupList.arr"
+          :key="index"
+          class="item"
+          :class="[commonKey.key === item.key ? 'item-color' : '']"
+          @click="setPk(item)"
+        >
           <p>
             <span>
               {{ item.value }}
             </span>
-            <span v-if="lang.key===item.key">
+            <span v-if="commonKey.key === item.key">
               <van-icon name="success" />
             </span>
           </p>
@@ -75,58 +81,78 @@
 
 <script lang="ts" setup>
 import { ref, reactive, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
-const { locale } = useI18n()
 import { useRouter } from 'vue-router'
 import store from '@/store'
-const languages = computed(() => store.state.app.queryCMerLanguage)
+// import { getPlateMask } from '@/api/user'
+const languages = computed(() => store.state.app.queryCMerLanguage.accessLanguage)
+const areaList = computed(() => store.state.app.businessConfig.betFont)
 const $router = useRouter()
 const popupTitle = ref('')
+const commonKey = reactive({ key: '' })
 const popupIndex = ref(0)
-const popupList = reactive<{arr:any[]}>({ arr: [] })
-const lang = ref({
-  value: '简体中文',
-  key: 'zh-cn'
-})
-const int = ref(
-  {
-    value: '国际',
-    key: 'zh-cn'
-  }
-)
-const pankou = ref(
-  {
-    value: '欧洲盘',
-    key: 'zh-cn'
-  }
-)
+const popupList = reactive<{ arr: any[] }>({ arr: [] })
+
+const language: any = localStorage.getItem('language')
+const lang = ref<any>(JSON.parse(language) || {})
+
+const areaSingle: any = localStorage.getItem('areaObj')
+const areaObj = ref<any>((JSON.parse(areaSingle) || {}))
+
+const plateMaskObj: any = localStorage.getItem('plateMaskObj')
+const plateMask = ref<any>((JSON.parse(plateMaskObj) || {}))
+
 const showBottom = ref(false)
+
+// 弹窗
 function showPk(val?: any) {
   popupIndex.value = val
+  popupList.arr = []
   if (val === 1) {
     popupList.arr = languages.value
+    commonKey.key = lang.value.key
     popupTitle.value = '语言'
   }
   if (val === 2) {
+    popupList.arr = Object.keys(areaList.value || {}).map(function (key) {
+      return { key: key, value: areaList.value[key] }
+    })
+    commonKey.key = areaObj.value.key
     popupTitle.value = '地区'
   }
   if (val === 3) {
+    popupList.arr = [
+      {
+        value: '香港盘',
+        key: 'E'
+      },
+      {
+        value: '欧洲盘',
+        key: 'H'
+      }
+    ]
+    commonKey.key = plateMask.value.key
     popupTitle.value = '盘口'
   }
 
   showBottom.value = true
 }
-
-function setPk(val: any) {
+// 设置
+async function setPk(val: any) {
   if (popupIndex.value === 1) {
     lang.value = val
-    locale.value = val.value
+    localStorage.setItem('locale', val.key)
+    localStorage.setItem('language', JSON.stringify(val))
+    window.location.reload()
   }
-  if (popupIndex.value === 1) {
-    popupTitle.value = '地区'
+  if (popupIndex.value === 2) {
+    localStorage.setItem('areaObj', JSON.stringify(val))
+    areaObj.value = val
   }
-  if (popupIndex.value === 1) {
-    popupTitle.value = '盘口'
+  if (popupIndex.value === 3) {
+    localStorage.setItem('plateMaskObj', JSON.stringify(val))
+    plateMask.value = val
+    // const res: any = await getPlateMask({})
+    // console.log(res, '=待联调=====')
   }
   showBottom.value = false
   console.log(val)
@@ -312,7 +338,8 @@ const login = () => {
       justify-content: space-between;
     }
   }
-  .item-color{
+
+  .item-color {
     color: #7642FD;
   }
 }

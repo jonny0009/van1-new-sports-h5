@@ -30,7 +30,7 @@
             </div>
             <div class="right">
               <div class="head">
-                <div class="head_1">查看档案</div>
+                <div class="head_1" @click="toUser('/userInfo')">查看档案</div>
                 <img class="headImg_1" fit="contain" src="@/assets/images/user/notice.svg" @click="toUser('/notice')" />
               </div>
               <div class="money">

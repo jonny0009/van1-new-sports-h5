@@ -72,7 +72,7 @@ export const constantRoutes: Array<any> = [
   {
     path: '/user',
     component: () => import('@/views/user/index.vue'),
-    // redirect: '/user',
+    // redirect: '/user/userRecord',
     hidden: true,
     children: [
       {
@@ -97,6 +97,42 @@ export const constantRoutes: Array<any> = [
         path: '/user/result',
         component: () => import('@/views/user/result.vue'),
         name: 'Result',
+        hidden: true
+      },
+      {
+        path: '/user/userInfo',
+        component: () => import('@/views/user/userInfo.vue'),
+        name: 'UserInfo',
+        hidden: true
+      },
+      {
+        path: '/user/editUser',
+        component: () => import('@/views/user/editUser.vue'),
+        name: 'EditInfo',
+        hidden: true
+      },
+      {
+        path: '/user/editName',
+        component: () => import('@/views/user/editName.vue'),
+        name: 'EditName',
+        hidden: true
+      },
+      {
+        path: '/user/elseFocus',
+        component: () => import('@/views/user/elseFocus.vue'),
+        name: 'ElseFocus',
+        hidden: true
+      },
+      {
+        path: '/user/elseInfo',
+        component: () => import('@/views/user/elseInfo.vue'),
+        name: 'ElseInfo',
+        hidden: true
+      },
+      {
+        path: '/user/editImg',
+        component: () => import('@/views/user/editImg.vue'),
+        name: 'EditImg',
         hidden: true
       }
     ]

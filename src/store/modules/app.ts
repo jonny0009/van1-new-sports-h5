@@ -20,7 +20,7 @@ const appModule: Module<App, any> = {
     async queryCMerLanguage({ state }) {
       const res:any = await queryCMerLanguage() || {}
       if (res.code === 200 && res.data) {
-        state.queryCMerLanguage = res.data.accessLanguage || {}
+        state.queryCMerLanguage = res.data || {}
       }
     },
     async businessConfig({ state }) {

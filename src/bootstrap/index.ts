@@ -7,7 +7,6 @@ export default async () => {
   if (searchParams.token) {
     store.commit('user/SET_TOKEN', searchParams.token)
   }
-
   // 商户语言
   await store.dispatch('app/queryCMerLanguage')
   // 商户配置
