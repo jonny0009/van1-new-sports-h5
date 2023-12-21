@@ -26,7 +26,7 @@
         >
           <template #node>
             <div class="icon-wrapper">
-              <van-icon :name="checked ? 'success' : 'cross'" color="#9912fe" />
+              <SvgIcon v-if="userConfig.acceptAll" name="betting-check" />
             </div>
           </template>
         </van-switch>
@@ -78,8 +78,6 @@ import ActionBar from './components/ActionBar/index.vue'
 import Keyboard from './components/Keyboard/index.vue'
 import store from '@/store'
 const open = ref(false)
-const checked = ref(false)
-
 const type = ref(1)
 const tabs = ref([
   {
@@ -267,6 +265,9 @@ timer.value = setInterval(() => {
 
     .bet-ior-switch {
       margin-left: 10px;
+    }
+    .icon-wrapper{
+      color: #fff;
     }
   }
 }
