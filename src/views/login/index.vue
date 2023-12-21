@@ -83,6 +83,7 @@
 import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import store from '@/store'
+import localStore from '@/utils/localStore'
 // import { getPlateMask } from '@/api/user'
 const languages = computed(() => store.state.app.queryCMerLanguage.accessLanguage)
 const areaList = computed(() => store.state.app.businessConfig.betFont)
@@ -92,14 +93,14 @@ const commonKey = reactive({ key: '' })
 const popupIndex = ref(0)
 const popupList = reactive<{ arr: any[] }>({ arr: [] })
 
-const language: any = localStorage.getItem('language')
-const lang = ref<any>(JSON.parse(language) || {})
+const language: any = localStore.getItem('language')
+const lang = ref<any>(language || {})
 
-const areaSingle: any = localStorage.getItem('areaObj')
-const areaObj = ref<any>((JSON.parse(areaSingle) || {}))
+const areaSingle: any = localStore.getItem('areaObj')
+const areaObj = ref<any>((areaSingle || {}))
 
-const plateMaskObj: any = localStorage.getItem('plateMaskObj')
-const plateMask = ref<any>((JSON.parse(plateMaskObj) || {}))
+const plateMaskObj: any = localStore.getItem('plateMaskObj')
+const plateMask = ref<any>((plateMaskObj || {}))
 
 const showBottom = ref(false)
 
@@ -140,16 +141,18 @@ function showPk(val?: any) {
 async function setPk(val: any) {
   if (popupIndex.value === 1) {
     lang.value = val
-    localStorage.setItem('locale', val.key)
-    localStorage.setItem('language', JSON.stringify(val))
+    localStore.setItem('locale', val.key)
+    localStore.setItem('language', val)
     window.location.reload()
   }
   if (popupIndex.value === 2) {
-    localStorage.setItem('areaObj', JSON.stringify(val))
+    localStore.setItem('areaObj', val)
+
     areaObj.value = val
   }
   if (popupIndex.value === 3) {
-    localStorage.setItem('plateMaskObj', JSON.stringify(val))
+    localStore.setItem('plateMaskObj', val)
+
     plateMask.value = val
     // const res: any = await getPlateMask({})
     // console.log(res, '=待联调=====')

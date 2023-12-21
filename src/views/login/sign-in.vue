@@ -76,13 +76,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
+import store from '@/store'
 import { useRouter } from 'vue-router'
 import md5 from 'md5'
 // getLanguages
-import { login } from '@/api/login'
+import { login, tryLogin } from '@/api/login'
 import { showToast } from 'vant'
 import { setToken } from '@/utils/auth'
+import localStore from '@/utils/localStore'
+import Fingerprint2 from 'fingerprintjs2'
+import aesUtil from '@/utils/aesUtil'
+const keyStr = computed(() => store.state.app.businessConfig.loginKey)
 const $router = useRouter()
 const index = ref(1)
 // const merchantId = ref('')
@@ -90,15 +95,44 @@ const form = reactive({
   username: '',
   password: ''
 })
+onMounted(() => {
+  // 浏览器指纹
+  if (!localStore.getItem('appFingerprint')) {
+    Fingerprint2.get((components:any) => {
+      // 参数只有回调函数或者options为{}时，默认浏览器指纹依据所有配置信息进行生成
+      const values = components.map((component:any) => component.value) // 配置的值的数组
+      const murmur = Fingerprint2.x64hash128(values.join(''), 31) // 生成浏览器指纹
+
+      localStore.setItem('appFingerprint', murmur)
+    })
+  } // end 浏览器指纹
+})
 const goBack = () => {
   $router.back()
 }
 // const register = () => {
 //   $router.push({ path: '/register' })
 // }
-const tryPlay = () => {
-  window.location.href = '/'
+const tryPlay = async () => {
+  const rDecrypt = localStore.getItem('appFingerprint')
+  if (rDecrypt) {
+    const aDecrypt = aesUtil.encrypt(rDecrypt, keyStr.value)
+    const params = {
+      loginTempName: aDecrypt
+    }
+
+    console.log('key', keyStr.value)
+    console.log('设备ID', rDecrypt)
+    console.log('加密后', params.loginTempName)
+    const res: any = await tryLogin(params)
+    if (res.code === 200) {
+      const { token } = res.data || {}
+      setToken(token)
+      window.location.href = '/'
+    }
+  }
 }
+
 const onSubmit = async (values?: any) => {
   console.log(values)
   if (!form.username || !form.password) return
