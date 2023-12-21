@@ -1,52 +1,27 @@
 <template>
   <div class="panel-bet">
     <van-collapse v-model="activeNames">
-      <van-collapse-item title="滚球 亚洲让分盘" name="1" :border="false">
+      <van-collapse-item v-for="(play, i) in betPlayList" :key="i" :name="`${i + 1}`" :border="false">
+        <template #title>
+          <span v-play="play.playInfo"></span>
+        </template>
         <div class="bet">
-          <div class="bet-item" v-for="item in 3" :key="item">
+          <BettingOption
+            class="bet-item"
+            v-for="(item, ind) in play.dataInfo?.ratioData"
+            :key="ind"
+            :market-info="item"
+          >
             <div class="top">
-              <span>查部伊</span>
-              <span>-0.25</span>
+              <span>{{ item.ratioName }}</span>
             </div>
             <div class="bot">
-              <span class="num">2.37</span>
-              <span class="ico">
+              <span class="num">{{ item.ior }}</span>
+              <span class="ico" v-show="false">
                 <img src="@/assets/images/live/sub.png" alt="" />
               </span>
             </div>
-          </div>
-        </div>
-      </van-collapse-item>
-
-      <van-collapse-item title="滚球投注 大小盘" name="2" :border="false">
-        <div class="bet">
-          <div class="bet-item active" v-for="item in 2" :key="item">
-            <div class="top">
-              <span>查部伊</span>
-              <span>-0.25</span>
-            </div>
-            <div class="bot">
-              <span class="num">2.37</span>
-              <span class="ico">
-                <img src="@/assets/images/live/sup.png" alt="" />
-              </span>
-            </div>
-          </div>
-        </div>
-      </van-collapse-item>
-      <van-collapse-item title="总进球 大小盘" name="3" :border="false">
-        <div class="bet">
-          <div class="bet-item" v-for="item in 2" :key="item">
-            <div class="top">
-              <span>查部伊</span>
-              <span>-0.25</span>
-            </div>
-            <div class="bot">
-              <span class="lock">
-                <img src="@/assets/images/live/lock.png" alt="" />
-              </span>
-            </div>
-          </div>
+          </BettingOption>
         </div>
       </van-collapse-item>
     </van-collapse>
@@ -54,30 +29,65 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, watch } from 'vue'
-import { playGroup } from '@/api/live'
+import { Ref, ref, onMounted, watch } from 'vue'
+import { MarketInfo } from '@/entitys/MarketInfo'
 const props = defineProps({
-  matchInfo: Object
+  matchInfo: {
+    type: Object,
+    default: () => {}
+  }
 })
 
 const activeNames = ref(['1'])
+const betPlayList: Ref<any[]> = ref([])
+const getBetData = () => {
+  const { detail, gameType, systemId, homeTeam, awayTeam } = props.matchInfo
+  if (detail && detail.length > 0) {
+    const dataList = detail.map((ele: any) => {
+      const { playData, game } = ele
 
-const getPlayGroup = async () => {
-  const gameType = props.matchInfo?.gameType
-  const res = await playGroup({ gameType })
-  const data = res.data || {}
-  const aiFormatGroup = data['veteran'] || []
-  console.log(aiFormatGroup)
+      const result = playData.map((item: any) => {
+        const dataInfo = { ...item }
+        const playInfo = {
+          gameType: gameType,
+          playType: dataInfo.playType,
+          championType: game.championType,
+          session: game.session
+        }
+        dataInfo.ratioData = item.ratioData.map((ratioInfo: any) => {
+          return new MarketInfo({
+            ...ratioInfo,
+            systemId: systemId,
+            gameType: gameType,
+            homeTeam: homeTeam,
+            awayTeam: awayTeam,
+            gameId: game.gameId,
+            gidm: game.gidm,
+            playType: dataInfo.playType,
+            sw: dataInfo.sw,
+            championType: dataInfo.championType,
+            ratio: dataInfo.ratio || '0'
+          })
+        })
+        return { playInfo, dataInfo }
+      })
+
+      return result
+    })
+    betPlayList.value = dataList.flat()
+  } else {
+    betPlayList.value = []
+  }
 }
 watch(
   () => props.matchInfo,
   () => {
-    getPlayGroup()
+    getBetData()
   }
 )
 
 onMounted(() => {
-  getPlayGroup()
+  getBetData()
 })
 </script>
 
@@ -122,7 +132,7 @@ onMounted(() => {
     color: #546371;
     border-radius: 20px;
     margin: 0 0 20px 20px;
-    &.active {
+    &.selected {
       background: #7643fd;
       color: #fff;
     }

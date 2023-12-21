@@ -8,7 +8,7 @@
       @load="getRbLiveList"
     >
       <div class="more-item" v-for="item in list" :key="item.gidm">
-        <Item :item="item" />
+        <Item :item="item" @click="onItemClick(item)" />
       </div>
     </van-list>
   </div>
@@ -18,6 +18,7 @@
 import { onMounted, Ref, ref } from 'vue'
 import { rbLiveList } from '@/api/live'
 import Item from './Item.vue'
+const emits = defineEmits(['more-video'])
 
 let page = 0
 const list: Ref<any[]> = ref([])
@@ -39,6 +40,9 @@ const getRbLiveList = async () => {
     loading.value = false
     finished.value = list.value.length == data.total
   }
+}
+const onItemClick = (item: any) => {
+  emits('more-video', item)
 }
 
 onMounted(() => {

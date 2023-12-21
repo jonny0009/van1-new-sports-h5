@@ -55,9 +55,6 @@ const onLoad = async () => {
   const params: any = {
     page: page,
     pageSize: 20
-    // rbType: '',
-    // gameType: '',
-    // videoType: 2
   }
   if (navActive.value == 'RB') {
     params.videoType = 2

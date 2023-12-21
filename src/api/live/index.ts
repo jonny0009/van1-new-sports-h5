@@ -8,7 +8,7 @@ export const liveGameTypeList = (params: any) => {
   })
 }
 
-export const anchorLiveList = (params:any) => {
+export const anchorLiveList = (params: any) => {
   return request({
     url: '/ai/mobile/game/anchorLiveList',
     method: 'get',
@@ -16,7 +16,7 @@ export const anchorLiveList = (params:any) => {
   })
 }
 
-export const matcheInfo = (params:any) => {
+export const matcheInfo = (params: any) => {
   return request({
     url: '/ai/mobile/detail/matches',
     method: 'get',
@@ -24,7 +24,7 @@ export const matcheInfo = (params:any) => {
   })
 }
 
-export const extendInfo = (params:any) => {
+export const extendInfo = (params: any) => {
   return request({
     url: '/ai/mobile/detail/extend',
     method: 'get',
@@ -32,7 +32,7 @@ export const extendInfo = (params:any) => {
   })
 }
 
-export const playGroup = (params:any) => {
+export const playGroup = (params: any) => {
   return request({
     url: '/ai/mobile/detail/playGroup',
     method: 'get',
@@ -40,7 +40,7 @@ export const playGroup = (params:any) => {
   })
 }
 
-export const ratioRateInfo = (params:any) => {
+export const ratioRateInfo = (params: any) => {
   return request({
     url: '/ai/mobile/detail/ratioRateInfo',
     method: 'get',
@@ -48,9 +48,41 @@ export const ratioRateInfo = (params:any) => {
   })
 }
 
-export const rbLiveList = (params:any) => {
+export const betRecordAll = (params: any) => {
+  return request({
+    url: '/ai/mobile/detail/betRecordAll',
+    method: 'get',
+    params
+  })
+}
+
+export const betRecord = (params: any) => {
+  return request({
+    url: '/ai/mobile/detail/betRecord',
+    method: 'get',
+    params
+  })
+}
+
+export const rbLiveList = (params: any) => {
   return request({
     url: '/ai/mobile/game/rbLiveList',
+    method: 'get',
+    params
+  })
+}
+
+export const intoRoom = (params: any) => {
+  return request({
+    url: '/api/chat/intoRoom',
+    method: 'get',
+    params
+  })
+}
+
+export const lastMessageByPage = (params: any) => {
+  return request({
+    url: '/apiChat/chat/findAllLastMessageByPage',
     method: 'get',
     params
   })
