@@ -24,6 +24,10 @@
         </div>
       </div>
     </div>
+    <div v-if="marketInfo.errorCode" class="error-popup">
+      <div class="lock"></div>
+      <div class="tips">赛事封单</div>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -52,6 +56,7 @@ console.log(props)
 </script>
 <style scoped lang="scss">
 .Single-wrap {
+  position: relative;
   display: flex;
   align-items: center;
   height: 178px;
@@ -60,6 +65,39 @@ console.log(props)
   background-repeat: no-repeat;
   background-position: center;
   background-image: url('@/assets/images/betting/single-bg.png');
+
+  .error-popup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+
+    .lock {
+      width: 44px;
+      height: 54px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url('@/assets/images/betting/lock.png');
+    }
+
+    .tips {
+      margin: 5px;
+      font-family: PingFangSC-Medium;
+      font-size: 24px;
+      color: #FFFFFF;
+      letter-spacing: 0;
+      font-weight: 500;
+    }
+  }
 
   .remove {
     width: 76px;
@@ -158,7 +196,7 @@ console.log(props)
         text-align: justify;
         font-weight: 600;
 
-        &.selected{
+        &.selected {
           color: #dfe4e5;
         }
       }

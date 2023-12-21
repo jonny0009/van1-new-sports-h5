@@ -3,7 +3,7 @@
     <div v-for="(result, index) in results" :key="index" class="result-item">
       <div class="title">
         <span class="state-icon" :class="`${result.errorCode ? 'error' : 'check'}`"></span>
-        {{ '已受理注单' }}
+        {{ result.errorCode ? $t('betting.orderError') : $t('betting.orderCheck') }}
       </div>
       <div class="content">
         <div class="result-info">
