@@ -17,7 +17,6 @@
 <script lang="ts" setup>
 import championIcon from '@/assets/images/champion/league-icon.png'
 import Championitem from './champion-item.vue'
-import ArrowTitle from '@/components/Title/ArrowTitle/index.vue'
 import titleIcon from '@/assets/images/home/title-recommend.png'
 import { ref } from 'vue'
 const isOpen: any = ref(true)

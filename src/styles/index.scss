@@ -6,6 +6,11 @@
 .van-image__error, .van-image__loading{
   background: transparent !important;
 }
+.noLoadingAndError{
+  .van-image__error, .van-image__loading{
+    display: none;
+  }
+}
 // icon 2023/12/19
 @font-face {
   font-family: "iconfont"; /* Project id  */
@@ -316,6 +321,53 @@
   height: 60px;
   span{
     font-size: 24px;
+  }
+}
+.Hot-Match-Group{
+  display: flex;
+  overflow: auto;
+  min-height: 176px;
+  &::-webkit-scrollbar {
+    height: 0;
+    display: none;
+  }
+  img{
+    width: 200px;
+    height: 176px;
+    min-width: 200px;
+    display: block;
+    flex-shrink: 1;
+    border-radius: 26px;
+    background: #eff2f2;
+  }
+  & > .van-image{
+    width: 200px;
+    height: 176px;
+    flex-shrink: 1;
+    margin-right: 20px;
+    .van-image__error{
+      width: 200px;
+      height: 176px;
+      overflow: hidden;
+      position: relative;
+    }
+  }
+  &.noData{
+    justify-content: center;
+    align-items: center;
+  }
+}
+.Recommend-Match-Tabs{
+  display: flex;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    height: 0;
+    display: none;
+  }
+  .SportsButton{
+    margin-right: 20px;
+    flex-shrink: 1;
+    white-space:nowrap;
   }
 }
 //end home page

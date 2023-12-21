@@ -10,15 +10,11 @@
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue'
+import store from '@/store'
 const isLoading = ref(false)
-const onRefresh = (val:any) => {
+const onRefresh = () => {
   isLoading.value = false
-  console.log(val)
-  // setTimeout(() => {
-  //   showToast('刷新成功')
-  //   isLoading.value = false
-  //   count.value++
-  // }, 1000)
+  store.dispatch('home/setRefreshChangeTime', new Date().getTime())
 }
 </script>
 <style lang="scss" >
