@@ -106,7 +106,7 @@ export class MarketInfo {
       console.error(error)
     }
     this.checkoutAttrs(info)
-    this.playOnlyId = this.getPlayOnlyId()
+    this.playOnlyId = MarketInfo.getPlayOnlyId(this)
     this.ratioKey = this.playOnlyId
   }
   checkoutAttrs(info: any) {
@@ -121,18 +121,18 @@ export class MarketInfo {
     }
   }
 
-  getPlayOnlyId() {
-    let gidm = this.gidm
+  static getPlayOnlyId(info: MarketInfoInterface) {
+    let gidm = info.gidm
     // 投注使用子比赛sgidm
-    if (this.sgidm) {
-      gidm = this.sgidm
+    if (info.sgidm) {
+      gidm = info.sgidm
     }
     // bti
-    if (this.optionId) {
-      return `${gidm}/${this.optionId}/${this.playType}${this.ratioType}`
+    if (info.optionId) {
+      return `${gidm}/${info.optionId}/${info.playType}${info.ratioType}`
     }
     // ibo
-    return `${gidm}/${this.gameId}/${this.playType}/${this.ratioType}`
+    return `${gidm}/${info.gameId}/${info.playType}/${info.ratioType}`
   }
   get vior() {
     return this.ior

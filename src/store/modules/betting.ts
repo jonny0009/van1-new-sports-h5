@@ -6,7 +6,7 @@ import { MarketInfo } from '@/entitys/MarketInfo'
 import { moreBetting, morePW } from '@/api/betting'
 import createBetItem from 'xcsport-lib'
 import { points } from '@/utils'
-
+import lang from '@/lang'
 // 投注单store
 const MarketListKey = '_MarketList_'
 const markets = localStore.getItem(MarketListKey) || []
@@ -76,7 +76,6 @@ const bettingModule: Module<Betting, any> = {
       )
       if (find) {
         find.gold = amount
-        // localStore.setItem(MarketListKey, state.markets)
       }
     },
 
@@ -224,13 +223,23 @@ const bettingModule: Module<Betting, any> = {
       const res: any = await moreBetting(params).finally(() => {
         dispatch('setHitState', 1)
       })
-      if (res.code === 200 && res.data) {
-        state.results = state.markets
+      if (res?.code === 200 && res?.data) {
+        const bettingData = res.data.bettingData || []
+        state.results = bettingData.map((order:MarketInfo) => {
+          const playOnlyId = MarketInfo.getPlayOnlyId(order)
+          const find = state.markets.find((marketInfo:MarketInfo) => {
+            return MarketInfo.getPlayOnlyId(marketInfo) === playOnlyId
+          })
+          return { ...find, ...order }
+        })
         dispatch('clearMarkets')
+      } else {
+        return Promise.reject(lang.global.t('betting.errorTips'))
       }
     },
     // 清空
     clearMarkets({ state }) {
+      state.isOne = false
       state.markets = []
       localStore.clear(MarketListKey)
     },

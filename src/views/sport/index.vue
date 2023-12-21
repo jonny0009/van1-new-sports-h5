@@ -2,7 +2,7 @@
   <div class="sport-page">
     <div class="my-scroll__content">
       <div class="betting-sport-nav">
-        <TextButton text="推荐" :active="!leagueId" @click="clickLeague({})" />
+        <TextButton :text="$t('sport.recommend')" :active="!leagueId" @click="clickLeague({})" />
         <ImageButton
           v-for="(item,idx) in firstLeaguesList"
           :key="idx"
@@ -15,20 +15,20 @@
     </div>
     <div v-if="recommendList.length" class="recommend-list">
       <ArrowTitle v-if="leagueId" class="mt10 mb10" :src="leagueLogo" :text="leagueName" @returnSuccess="recommendCloseClick" />
-      <ArrowTitle v-else class="mt10 mb10" :src="recommendIcon" text="推荐" @returnSuccess="recommendCloseClick" />
+      <ArrowTitle v-else class="mt10 mb10" :src="recommendIcon" :text="$t('sport.recommend')" @returnSuccess="recommendCloseClick" />
       <HomeMatchHandicap v-for="(item,idx) in recommendList" v-show="isOpenRecommend" :key="idx" :send-params="item" />
     </div>
 
     <div v-if="earlyList.length" class="early-list">
-      <ArrowTitle class="mt10 mb10" :src="earlyIcon" text="早盘" @returnSuccess="earlyCloseClick" />
+      <ArrowTitle class="mt10 mb10" :src="earlyIcon" :text="$t('sport.early')" @returnSuccess="earlyCloseClick" />
       <HomeMatchHandicap v-for="(item,idx) in earlyList" v-show="isOpenEarly" :key="idx" :send-params="item" />
     </div>
     <ChampionList v-if="championList.length" :champion-list="championList" />
-    <div class="Button-MatchMore mt20">
+    <!-- <div class="Button-MatchMore mt20">
       <span>
         查看更多比赛
       </span>
-    </div>
+    </div> -->
 
     <div class="footerHeight"></div>
   </div></template>
@@ -139,7 +139,7 @@ const getChampionpPlayTypes = async () => {
           // 整理下单所需参数实体类
           ratioInfo.marketInfo = new MarketInfo({ ...ratioInfo, systemId, gameId, gidm, gameType, playType, sw, championType })
           return ratioInfo
-        })
+        }).sort((a:any, b:any) => a.ior - b.ior)
         return details
       })
       championList.value = champions
@@ -160,7 +160,7 @@ const clickLeague = (item: any) => {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .sport-page{
   padding: 0 36px 350px;
   .my-scroll__content{
