@@ -17,7 +17,17 @@ declare interface User {
   token: string | undefined | null
 }
 declare interface Betting {
-  combos: { betNuiqueKey: string; comboNumber: any; betNumber: string; gold: string; lock: boolean; orderNumber: number; comboList: any[][]; goldMin: any; goldMax: any }[]
+  combos: {
+    betNuiqueKey: string
+    comboNumber: any
+    betNumber: string
+    gold: string
+    lock: boolean
+    orderNumber: number
+    comboList: any[][]
+    goldMin: any
+    goldMax: any
+  }[]
   comboAmount: any
   editId: any
   boardShow: any
@@ -31,6 +41,8 @@ declare interface Betting {
   results: any
   isOne: boolean
   hitState: any
+  moreShow: any
+  moreParams: any
 }
 
 declare module '@vue/runtime-core' {

@@ -4,9 +4,12 @@
       <div class="match-video">
         <video ref="videoRef" class="video-js" playsinline></video>
       </div>
-      <div v-if="videoWaiting" class="match-loading">
+      <div v-if="videoWaiting" class="match-loading mask">
         <div class="icon"></div>
         <div class="text">正在拼命加载中...</div>
+      </div>
+      <div v-if="videoError" class="match-error mask">
+        <div class="text">视频加载失败</div>
       </div>
     </div>
 
@@ -24,7 +27,7 @@
     </div>
 
     <div class="panel">
-      <component :is="compsList[navActive]" :matchInfo="matchData" />
+      <component :is="compsList[navActive]" :matchInfo="matchData" @more-video="onMoreVideo" />
     </div>
   </div>
 </template>
@@ -33,7 +36,7 @@
 import 'video.js/dist/video-js.min.css'
 import videojs from 'video.js'
 import { reactive, Ref, ref, onMounted, onUnmounted, nextTick } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { matcheInfo, extendInfo } from '@/api/live'
 import { getAssetsImage } from '@/utils/tools'
 
@@ -43,6 +46,7 @@ import TabWith from './components/TabWith/index.vue'
 import TabMore from './components/TabMore/index.vue'
 
 const route = useRoute()
+const router = useRouter()
 const getIcon = (name: string) => getAssetsImage(name, 'live')
 const navList = reactive([
   { type: 0, name: '聊天室', unIcon: getIcon('nav_chat_un.png'), onIcon: getIcon('nav_chat_on.png') },
@@ -50,7 +54,7 @@ const navList = reactive([
   { type: 2, name: '跟注', unIcon: getIcon('nav_add_un.png'), onIcon: getIcon('nav_add_on.png') },
   { type: 3, name: '更多', unIcon: getIcon('nav_more_un.png'), onIcon: getIcon('nav_more_on.png') }
 ])
-const navActive = ref(2)
+const navActive = ref(0)
 const compsList = [TabChat, TabBets, TabWith, TabMore]
 const onTab = (item: any) => {
   navActive.value = item.type
@@ -92,6 +96,7 @@ const initVideo = () => {
     fluid: true,
     bigPlayButton: false,
     loadingSpinner: false,
+    errorDisplay: false,
     sources: [
       {
         src: videoUrl.value,
@@ -114,10 +119,18 @@ const initVideo = () => {
 
     player.on('error', () => {
       videoError.value = true
-      player && player.dispose()
-      player = null
+      videoWaiting.value = false
     })
   })
+}
+
+const onMoreVideo = (item: any) => {
+  videoError.value = false
+  player.src(item.m3u8)
+  player.load()
+  player.play()
+  router.replace(`/live/${item.gidm}`)
+  getMatcheInfo()
 }
 
 onMounted(() => {
@@ -141,6 +154,17 @@ onUnmounted(() => {
 .match {
   position: relative;
   height: 440px;
+  .mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   &-video {
     width: 100%;
     height: 100%;
@@ -152,20 +176,11 @@ onUnmounted(() => {
       height: 100%;
     }
     video {
-      object-fit: fill;
+      object-fit: cover;
     }
   }
 
   &-loading {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     .icon {
       width: 120px;
       height: 120px;
@@ -176,6 +191,12 @@ onUnmounted(() => {
       font-size: 24px;
       color: rgba(255, 255, 255, 0.5);
       margin-top: 20px;
+    }
+  }
+  &-error {
+    font-size: 24px;
+    .text {
+      color: #f2f2f2;
     }
   }
 }
