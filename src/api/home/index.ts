@@ -1,16 +1,18 @@
 import request from '@/utils/request'
 
 // 热门赛事
-export const firstLeagues = () => {
+export const firstLeagues = (params:any) => {
   return request({
     url: '/ai/mobile/matches/firstLeagues',
-    method: 'get'
+    method: 'get',
+    params
   })
 }
 // 推荐比赛
-export const recommendEvents = () => {
+export const recommendEvents = (params:any) => {
   return request({
     url: '/ai/mobile/recommend/events',
-    method: 'get'
+    method: 'get',
+    params
   })
 }
