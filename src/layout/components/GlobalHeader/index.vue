@@ -3,13 +3,13 @@
     <div class="headerView">
       <div class="headerView-fixed">
         <div class="avatar" @click="showInfo">
-          <img :src="avatarImg" style="object-fit: contain;" />
+          <img :src="getImg(userInfo.headImg)" style="object-fit: contain;" />
         </div>
         <div class="wallet" @click="toUrl('/login')">
           <div class="cur">
             <img :src="USDTImg" style="object-fit: contain;" />
           </div>
-          0.00
+          {{ formatMoney(balance.balance) }}
           <div class="transaction">
             <img :src="transactionImg" />
           </div>
@@ -26,7 +26,7 @@
         <div class="top">
           <div class="top_1">
             <div class="left">
-              <van-image class="headImg" fit="contain" :src="avatarImg" />
+              <van-image class="headImg" fit="contain" :src="getImg(userInfo.headImg)" />
             </div>
             <div class="right">
               <div class="head">
@@ -35,12 +35,12 @@
               </div>
               <div class="money">
                 <van-image class="headImg_2" fit="contain" :src="USDTImg" />
-                <span>200,334,050.26</span>
+                <span> {{ formatMoney(balance.balance) }}</span>
               </div>
             </div>
           </div>
-          <p class="font_3 font_4">{{ 'dilychsy789' }}</p>
-          <p class="font_3">{{ '@dilychsy789' }}</p>
+          <p class="font_3 font_4">{{ userInfo.nickName }}</p>
+          <p class="font_3">{{ userInfo.email || '' }}</p>
         </div>
         <div class="line" />
         <!-- 导航 -->
@@ -75,21 +75,36 @@ import transactionImg from '@/assets/images/globalLayout/header/transaction.png'
 
 import logoImg from '@/assets/images/user/logo.png'
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import store from '@/store'
+import {
+  formatMoney
+} from '@/utils/index'
+const userInfo = computed(() => store.state.user.userInfo)
+const balance = computed(() => store.state.user.balance)
 
 const showLeft = ref(false)
 const $router = useRouter()
-const toUrl = (url:string) => {
+const toUrl = (url: string) => {
   $router.push({ path: url })
 }
 // 用户导航
 const toUser = (url?: string) => {
   if (url === '/customer') {
+    console.log(window.AIConfig.static_url, '===')
+
     console.log('客服===')
     return
   }
   showLeft.value = false
   $router.push({ path: '/user' + url })
+}
+const getImg = (imgUrl: string) => {
+  console.log(imgUrl, '====')
+  if (imgUrl) {
+    return window.AIConfig.static_url + imgUrl
+  }
+  return avatarImg
 }
 
 const showInfo = () => {
@@ -98,9 +113,10 @@ const showInfo = () => {
 </script>
 
 <style lang="scss" scoped>
-.headerView{
+.headerView {
   height: 96px;
-  .headerView-fixed{
+
+  .headerView-fixed {
     position: fixed;
     z-index: 99;
     left: 0;
@@ -108,27 +124,28 @@ const showInfo = () => {
     width: 100%;
     height: 96px;
     color: #fff;
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(to bottom,#181f2a 0,#2a0572 100%);
+    background: linear-gradient(to bottom, #181f2a 0, #2a0572 100%);
   }
 
-  .wallet{
+  .wallet {
     height: 56px;
     line-height: 56px;
     min-width: 300px;
     display: inline-block;
-    background: linear-gradient(90deg,#7642fe,#491cab);
+    background: linear-gradient(90deg, #7642fe, #491cab);
     border-radius: 100px;
     position: relative;
     text-align: center;
     font-weight: 800;
     font-size: 26px;
-    font-family: PingFangSC-Semibold,SF-Pro-Bold,system-ui;
+    font-family: PingFangSC-Semibold, SF-Pro-Bold, system-ui;
     padding: 0 66px;
+
     .transaction,
-    .cur{
+    .cur {
       position: absolute;
       top: 4px;
       width: 48px;
@@ -138,49 +155,61 @@ const showInfo = () => {
       display: flex;
       justify-content: center;
       align-items: center;
-      img{
+
+      img {
         width: 24px;
         height: 24px;
         display: block;
       }
     }
-    .cur{
+
+    .cur {
       left: 6px;
-      img{
+
+      img {
         width: 40px;
         height: 40px;
       }
     }
-    .transaction{
+
+    .transaction {
       background: #7642fe;
       right: 6px;
     }
   }
-  .avatar{
+
+  .avatar {
     position: absolute;
     left: 30px;
     top: 6px;
     bottom: 6px;
-    img{
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    overflow: hidden;
+    img {
       display: block;
       width: 84px;
       height: 84px;
     }
   }
-  .right-area{
+
+  .right-area {
     position: absolute;
     top: 0;
     bottom: 0;
     right: 30px;
     display: flex;
     align-items: center;
-    .search{
+
+    .search {
       width: 40px;
       height: 40px;
       display: block;
     }
   }
 }
+
 .userInfo {
   background: #FFFFFF;
   font-family: PingFangSC-Medium;
@@ -263,17 +292,20 @@ const showInfo = () => {
       font-weight: 500;
     }
   }
-  .line{
+
+  .line {
     margin-top: -20px;
     background: #E5ECF3;
     height: 2px;
     width: 100%;
   }
-  .logoImg{
+
+  .logoImg {
     margin-top: 280px;
     text-align: center;
   }
-  .logo{
+
+  .logo {
     width: 197px;
     height: 175px;
   }
@@ -299,6 +331,4 @@ const showInfo = () => {
     }
   }
 
-}
-
-</style>
+}</style>
