@@ -12,8 +12,9 @@
 
   }
 
-  .content {
+  .notice,.content {
     height: calc(100vh - 150px);
+    overflow-y: auto;
 
     .noData {
       text-align: center;
@@ -35,7 +36,6 @@
     // 数据列表
     .list {
       padding: 42px 36px;
-
       .itemContent {
         margin-bottom: 20px;
       }
@@ -44,6 +44,9 @@
         background: #EFF1F2;
         border-radius: 10px 0 0 10px;
         padding: 25px;
+        height: 262px;
+        position: relative;
+
 
         .font_1 {
           font-family: PingFangSC-Semibold;
@@ -51,6 +54,11 @@
           color: #1F2630;
           letter-spacing: 0;
           font-weight: 600;
+          overflow: hidden;//溢出隐藏
+          text-overflow: ellipsis;//省略号
+          display: -webkit-box;//
+          -webkit-box-orient: vertical;//设置弹性盒子的子元素的排列方式
+          -webkit-line-clamp: 2;//设置显示文本的行数
         }
 
         .font_2 {
@@ -60,17 +68,26 @@
           color: #546371;
           letter-spacing: 0;
           font-weight: 500;
+          overflow: hidden;//溢出隐藏
+          text-overflow: ellipsis;//省略号
+          display: -webkit-box;//
+          -webkit-box-orient: vertical;//设置弹性盒子的子元素的排列方式
+          -webkit-line-clamp: 3;//设置显示文本的行数
         }
 
         .font_3 {
-          display: flex;
-          justify-content: space-between;
-          margin-top: 20px;
+          position: absolute;
+          bottom: 25px;
+        
           font-family: PingFangSC-Regular;
           font-size: 24px;
           color: #546371;
           letter-spacing: 0;
           font-weight: 400;
+          width:620px;
+          display: flex;
+          justify-content: space-between;
+        
         }
 
       }

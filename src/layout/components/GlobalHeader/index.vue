@@ -68,6 +68,8 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { ImageSource } from '@/config'
+
 import searchImg from '@/assets/images/globalLayout/header/search.png'
 import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
 import USDTImg from '@/assets/images/globalLayout/header/USDT.png'
@@ -91,8 +93,7 @@ const toUrl = (url: string) => {
 // 用户导航
 const toUser = (url?: string) => {
   if (url === '/customer') {
-    console.log(window.AIConfig.static_url, '===')
-
+    // console.log(window.AIConfig.static_url, '===')
     console.log('客服===')
     return
   }
@@ -102,7 +103,7 @@ const toUser = (url?: string) => {
 const getImg = (imgUrl: string) => {
   console.log(imgUrl, '====')
   if (imgUrl) {
-    return window.AIConfig.static_url + imgUrl
+    return `${ImageSource}${imgUrl}`
   }
   return avatarImg
 }

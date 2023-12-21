@@ -13,19 +13,21 @@
         </p>
       </div>
       <div class="list">
-        <van-swipe-cell v-for="i in 10" :key="i" :before-close="beforeClose" class="itemContent">
-          <div class="cell" @click="toDetail(i)">
-            <p class="font_1">服务器将于13:00停服维修</p>
-            <p class="font_2">由于版本升级，服务器升级更新，更新停服的时间为13:00时，请各位玩家合理安排时间，对于玩家带来的不便，表意抱歉只说。</p>
-            <div class="font_3">
-              <span>查看完整讯息</span>
-              <span>2023/12/10 13:59:59</span>
+        <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+          <van-swipe-cell v-for="(item, index) in list.arr" :key="index" :before-close="beforeClose" class="itemContent">
+            <div class="cell" @click="toDetail(item)">
+              <p class="font_1">{{ item.title }}</p>
+              <p class="font_2" v-html="replaceImgUrl(item.content)"></p>
+              <div class="font_3">
+                <span>查看完整讯息</span>
+                <span>{{ formatToDateTime(item.optTime) }}</span>
+              </div>
             </div>
-          </div>
-          <template #right>
-            <img class="img_close" src="@/assets/images/user/close.png" />
-          </template>
-        </van-swipe-cell>
+            <template #right>
+              <img class="img_close" src="@/assets/images/user/close.png" />
+            </template>
+          </van-swipe-cell>
+        </van-list>
       </div>
     </div>
   </div>
@@ -35,25 +37,69 @@
 import { ref, reactive, onMounted } from 'vue'
 import { messageList } from '@/api/user'
 import { useRouter } from 'vue-router'
+import { ImageSource } from '@/config'
+import { formatToDateTime } from '@/utils/date'
+import { showToast } from 'vant'
+
 // import { showConfirmDialog } from 'vant'
 const $router = useRouter()
 const title = ref('消息')
 const dataList = reactive([])
+const loading = ref(false)
+const finished = ref(false)
+const list = reactive<{ arr: any }>({ arr: [] })
+// const list= reactive<any[]> = ref([])
 const goBack = () => {
   $router.push({ path: '/home' })
 }
-const toDetail = (i: any) => {
-  console.log(i, '====')
+const toDetail = (item: any) => {
+  console.log(item, '====')
 
-  $router.push('/user/noticeDetail')
+  $router.push({
+    path: '/user/noticeDetail',
+    query: {
+      id: item.id
+    }
+  })
 }
 onMounted(async () => {
-  getList()
+  // onLoad()
 })
 
-const getList = async () => {
-  const res: any = await messageList({ page: 1, pageSize: 20 })
-  console.log(res, '=====')
+let page: number = 0
+
+const onLoad = async () => {
+  page++
+  const params: any = {
+    page: page,
+    pageSize: 20
+  }
+  const res: any = await messageList(params)
+  const data = res.data
+  if (res.code === 200) {
+    data.messages.forEach((item: any) => {
+      list.arr.push(item)
+    })
+    loading.value = false
+    finished.value = list.arr.length === data.totalCount
+  } else {
+    showToast(res.msg)
+  }
+}
+
+const replaceImgUrl = (str: any) => {
+  if (typeof str === 'string') {
+    const imgs = str.match(/<img.*?>/g)
+    Array.isArray(imgs) &&
+      imgs.forEach((item: any) => {
+        const _src = item
+          .match(/src=".*?"/g)[0]
+          .replace(/(src=")(.*?)(")/, '$2')
+        str = str.replace(_src, `${ImageSource}${_src}`)
+      })
+    return str
+  }
+  return ''
 }
 
 const beforeClose = (position: any) => {
@@ -78,7 +124,10 @@ const beforeClose = (position: any) => {
 
 <style lang="scss" scoped>
 @import './style/notice.scss';
-
+:root {
+  --van-toast-text-padding: 20px 30px;
+  --van-toast-font-size: 28px;
+}
 :deep(.van-field__control) {
   height: 50px;
   font-size: 30px;
