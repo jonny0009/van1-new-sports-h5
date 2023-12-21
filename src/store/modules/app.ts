@@ -6,6 +6,7 @@ import { getAllSports } from '@/api/common'
 const appModule: Module<App, any> = {
   namespaced: true,
   state: {
+    imgChangeTime: '',
     state: true,
     queryCMerLanguage: {},
     businessConfig: {},
@@ -14,7 +15,6 @@ const appModule: Module<App, any> = {
     sports: []
   },
   mutations: {
-
   },
   actions: {
     async queryCMerLanguage({ state }) {
