@@ -128,10 +128,14 @@ const tryPlay = async () => {
     if (res.code === 200) {
       const { token } = res.data || {}
       setToken(token)
+      // setUserInfo()
       window.location.href = '/'
     }
   }
 }
+// const setUserInfo = () => {
+//   console.log('获取信息===')
+// }
 
 const onSubmit = async (values?: any) => {
   console.log(values)

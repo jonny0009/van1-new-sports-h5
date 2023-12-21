@@ -1,5 +1,5 @@
 import { Module } from 'vuex'
-import { login } from '@/api/login'
+import { login, playAccount, getBalance } from '@/api/login'
 import { User } from '#/store'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { configSettingNew } from '@/api/auth'
@@ -8,7 +8,9 @@ const userModule: Module<User, any> = {
   namespaced: true,
   state: {
     token: getToken(),
-    userConfig: {}
+    userConfig: {},
+    userInfo: {},
+    balance: {}
   },
   mutations: {
     SET_TOKEN: (state, token: string) => {
@@ -55,6 +57,20 @@ const userModule: Module<User, any> = {
     async configSettingNew({ state }, params = {}) {
       const res = await configSettingNew(params)
       state.userConfig = res.data || {}
+    },
+    // 用户信息
+    async userInfo({ state }, params = {}) {
+      const res:any = await playAccount(params) || {}
+      if (res.code === 200) {
+        state.userInfo = res.data || {}
+      }
+    },
+    // 账户余额
+    async getBalance({ state }, params = { wid: 1 }) {
+      const res:any = await getBalance(params) || {}
+      if (res.code === 200) {
+        state.balance = res.data || {}
+      }
     },
     // remove token
     clearUserInfo({ commit, dispatch }) {

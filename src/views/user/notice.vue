@@ -32,7 +32,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+import { messageList } from '@/api/user'
 import { useRouter } from 'vue-router'
 // import { showConfirmDialog } from 'vant'
 const $router = useRouter()
@@ -46,6 +47,15 @@ const toDetail = (i: any) => {
 
   $router.push('/user/noticeDetail')
 }
+onMounted(async () => {
+  getList()
+})
+
+const getList = async () => {
+  const res: any = await messageList({ page: 1, pageSize: 20 })
+  console.log(res, '=====')
+}
+
 const beforeClose = (position: any) => {
   console.log(position, '====11')
   // switch (position.position) {
