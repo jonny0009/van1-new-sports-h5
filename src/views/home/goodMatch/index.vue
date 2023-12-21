@@ -6,12 +6,7 @@
     @returnSuccess="returnStatus"
   />
   <template v-if="!isShow">
-    <div class="Recommend-Match-Tabs">
-      <SportsButton text="FT" :active="true" />
-      <SportsButton text="BK" />
-      <SportsButton text="TN" />
-      <SportsButton text="OP_BM" />
-    </div>
+    <SportsTabs />
     <Loading v-if="!isLoading" />
     <template v-else>
       <EmptyIcon v-if="!recommendEventsList.length" class="marginAuto"></EmptyIcon>
