@@ -34,7 +34,9 @@ const bettingModule: Module<Betting, any> = {
     s: '',
     t: '',
     comboS: '',
-    comboT: ''
+    comboT: '',
+    moreShow: false, // 更多玩法
+    moreParams: {}
   },
   mutations: {},
   getters: {
@@ -151,6 +153,10 @@ const bettingModule: Module<Betting, any> = {
     },
     changeComboAmount({ state }, amount) {
       state.comboAmount = amount
+    },
+    setMoreShow({ state }, { status, moreParams }) {
+      state.moreShow = status
+      state.moreParams = moreParams
     },
 
     // 添加投注项
