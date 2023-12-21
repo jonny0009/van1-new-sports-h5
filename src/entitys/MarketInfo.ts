@@ -1,3 +1,5 @@
+import store from '@/store'
+import { points } from '@/utils'
 import { createBetItem } from 'xcsport-lib'
 interface MarketInfoInterface {
   homeTeam: any
@@ -11,7 +13,7 @@ interface MarketInfoInterface {
   showType: any
   showtype: any
   systemId: any
-  ratio: any
+  ratio?: any
   ior: any
 
   leagueId?: any
@@ -30,7 +32,7 @@ interface MarketInfoInterface {
   ratio1?: any
   championType?: any
 }
-const requireAttrs: Array<string> = ['systemId', 'gidm', 'gameId', 'gameType', 'playType', 'ratioType', 'ratio', 'ior']
+const requireAttrs: Array<string> = ['systemId', 'gidm', 'gameId', 'gameType', 'playType', 'ratioType', 'ior']
 
 export class MarketInfo {
   gidm: any
@@ -66,6 +68,8 @@ export class MarketInfo {
   goldMax: string = ''
   goldMin: string = ''
   ratioKey: string = ''
+  iorChange: string = ''
+  isEuropePlay: boolean | undefined
 
   constructor(info: MarketInfoInterface) {
     this.systemId = info.systemId
@@ -94,7 +98,6 @@ export class MarketInfo {
     this.awayTeam = info.awayTeam
     this.suffix = info.suffix
     this.homeTeamSuffix = info.homeTeamSuffix
-    this.sourceCompany = info.sourceCompany
     if (this.showtype === 'CP' || this.playType === 'CHAMPION') {
       this.isChampion = true
     } else {
@@ -108,6 +111,12 @@ export class MarketInfo {
     this.checkoutAttrs(info)
     this.playOnlyId = MarketInfo.getPlayOnlyId(this)
     this.ratioKey = this.playOnlyId
+    this.sourceCompany = info.sourceCompany || MarketInfo.getSourceCompany(this.gidm)
+    this.isEuropePlay = MarketInfo.isOddsTypeChange({
+      gameType: this.gameType,
+      playType: this.playType,
+      sourceCompany: this.sourceCompany
+    })
   }
   checkoutAttrs(info: any) {
     const warnings: any[] = []
@@ -120,7 +129,42 @@ export class MarketInfo {
       console.warn(`缺少：${warnings.toString()}`)
     }
   }
-
+  static getSourceCompany(gidm:string = '') {
+    return gidm.split('_')[0]
+  }
+  static isOddsTypeChange({ playType, gameType, sourceCompany }:any) {
+    let newPlay = playType
+    const specifiersPlay = [
+      '_conner',
+      '_card',
+      '_OT',
+      '_PS',
+      '_promote',
+      '_champion'
+    ]
+    specifiersPlay.map(item => {
+      const lowerPlayStr = playType.toLowerCase()
+      const lowerItemStr = item.toLowerCase()
+      if (lowerPlayStr.includes(lowerItemStr)) {
+        const lowerPlay = lowerPlayStr.replace(new RegExp(lowerItemStr, 'g'), '')
+        newPlay = lowerPlay.toUpperCase()
+      }
+    })
+    let isSecifiers = false
+    const dataSourceMap:any = {
+      ib: 'ibo',
+      sd: 'sd',
+      ic: 'bti'
+    }
+    const oddsTypeChangeArraymap = store.state.app.doubleLineInfo
+    const oddsTypeChangeArrayNew =
+      (store.state.app && oddsTypeChangeArraymap[dataSourceMap[sourceCompany]]) ||
+      null
+    if (oddsTypeChangeArrayNew) {
+      isSecifiers = oddsTypeChangeArrayNew.includes(playType)
+      return isSecifiers && !(newPlay === 'PR' && gameType === 'BK')
+    }
+  }
   static getPlayOnlyId(info: MarketInfoInterface) {
     let gidm = info.gidm
     // 投注使用子比赛sgidm
@@ -134,7 +178,17 @@ export class MarketInfo {
     // ibo
     return `${gidm}/${info.gameId}/${info.playType}/${info.ratioType}`
   }
+  // 切换赔率
   get vior() {
-    return this.ior
+    const { handicapType } = store.state.user.userConfig || {}
+    if (!this.ior || +this.ior <= 0) {
+      return this.ior
+    }
+    // 判断是否是串关并且属于欧洲玩法的 + 1
+    if (this.isEuropePlay && handicapType === 'E') {
+      // 当前属于欧洲盘，并且属于可欧洲玩法的 赔率+1
+      return points(this.ior * 1 + 1)
+    }
+    return points(this.ior) || ''
   }
 }

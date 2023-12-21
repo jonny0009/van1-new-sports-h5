@@ -1,1 +1,0 @@
-import{f as e}from"./index.915b0e79.js";const a=a=>e({url:"/ai/mobile/matches/firstLeagues",method:"get",params:a}),m=a=>e({url:"/ai/mobile/recommend/events",method:"get",params:a});export{a as f,m as r};

@@ -1,11 +1,11 @@
 <template>
   <div class="game-page">
-    <iframe
+    <!-- <iframe
       :src="gameUrl"
       width="100%"
       height="100%"
       frameborder="0"
-    ></iframe>
+    ></iframe> -->
   </div>
 </template>
 
@@ -16,7 +16,7 @@ import { apiGetGameDetail } from '@/api/common'
 const gameUrl: any = ref('')
 
 onBeforeMount(async () => {
-  getGameDetail()
+  // getGameDetail()
 })
 
 // 获取冠军

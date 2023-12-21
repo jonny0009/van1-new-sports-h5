@@ -51,6 +51,7 @@
           }"
         ></div>
       </div>
+      {{ mode }}
       <Nothing v-if="results.length === 0 && markets.length === 0"></Nothing>
       <div
         v-else-if="type < 3 && markets.length"
@@ -65,7 +66,6 @@
       <Result v-if="results.length && markets.length === 0"></Result>
     </div>
   </div>
-  <span v-play="{ gameType: 'FT', playType: 'R' }"></span>
   <Keyboard></Keyboard>
 </template>
 <script lang="ts" setup>
@@ -76,27 +76,30 @@ import Singles from './components/Single/index.vue'
 import Result from './components/Result/index.vue'
 import ActionBar from './components/ActionBar/index.vue'
 import Keyboard from './components/Keyboard/index.vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 import store from '@/store'
 const open = ref(false)
 const type = ref(1)
 const tabs = ref([
   {
     type: 1,
-    title: '单关'
+    title: t('betting.single')
   },
   {
     type: 2,
-    title: '串关'
+    title: t('betting.parlay')
   },
   {
     type: 3,
-    title: '进行中'
+    title: t('betting.pending')
   }
 ])
 const tableLeft = computed(() => {
   return `calc(100% / 3 * ${type.value - 1} + (100% / 3 - 27vw) / 2 )`
 })
 const isOne = computed(() => store.state.betting.isOne)
+const mode = computed(() => store.state.betting.mode)
 const boardShow = computed(() => store.state.betting.boardShow)
 const markets = computed(() => store.state.betting.markets)
 const results = computed(() => store.state.betting.results)
