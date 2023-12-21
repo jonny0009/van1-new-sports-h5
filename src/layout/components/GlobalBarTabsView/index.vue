@@ -10,6 +10,7 @@
       @click="clickChangeActive(item)"
     >
       <ImageButton
+        :key="active"
         :active="item.value === active"
         :text="item.text"
         :src="item.icon"
@@ -25,7 +26,7 @@ import time from '@/assets/images/home/homeTabs/homeTabs-time.png'
 import important from '@/assets/images/home/homeTabs/homeTabs-important.png'
 import defaultImportant from '@/assets/images/home/homeTabs/homeTabs-default-important.png'
 import ImageButton from '@/components/Button/ImageButton/index.vue'
-import { ref, reactive } from 'vue'
+import { ref, reactive, watch, computed } from 'vue'
 import router from '@/router'
 const getRouteName = () => {
   const routerName: any = router?.currentRoute?.value?.name || ''
@@ -37,6 +38,12 @@ const getRouteNameObj:any = {
   'champion': 'ChampionBet'
 }
 const active = ref(getRouteNameObj[getRouteName()])
+const currentRoute = computed(() => router?.currentRoute?.value?.name)
+watch(currentRoute, (val) => {
+  if (val) {
+    active.value = getRouteNameObj[getRouteName()]
+  }
+})
 const clickChangeActive = (item:any) => {
   const { value, name } = item
   homeBarArray.length = 0

@@ -58,7 +58,7 @@ const getRecommendEvents = async () => {
   }
 }
 const goHomeTime = () => {
-  const params:any = { name: 'HomeTime' }
+  const params:any = { name: 'HomeTime', params: { 'refreshTime': new Date().getTime() } }
   router.push(params)
 }
 const init = () => {

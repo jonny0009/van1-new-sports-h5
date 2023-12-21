@@ -5,11 +5,10 @@
     text="热门赛事"
     @returnSuccess="returnStatus"
   />
-
-  <div v-if="!isShow" class="Hot-Match-Group" :calss="{'noData':!firstLeaguesList.length}">
+  <div v-if="!isShow" class="Hot-Match-Group" :class="[{ 'noData': noDataToggle }]">
     <Loading v-if="!isLoading" />
     <template v-else>
-      <EmptyIcon v-if="!firstLeaguesList.length"></EmptyIcon>
+      <EmptyIcon v-if="noDataToggle"></EmptyIcon>
       <van-image
         v-for="(item,idx) in firstLeaguesList"
         v-else
@@ -18,7 +17,7 @@
         fit="contain"
       >
         <template #loading>
-          <van-loading type="spinner" />
+          <van-loading type="spinner" size="36px" />
         </template>
         <template #error>
           <van-image fit="contain" :src="league" class="noLoadingAndError" />
@@ -39,6 +38,7 @@ import { imgUrlFormat } from '@/utils/index.ts'
 import { firstLeagues } from '@/api/home'
 // script
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
+const noDataToggle = computed(() => firstLeaguesList.length === 0)
 const timeout:any = ref('')
 watch(refreshChangeTime, (val) => {
   if (val) {

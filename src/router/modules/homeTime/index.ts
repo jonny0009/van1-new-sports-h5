@@ -5,7 +5,7 @@ export default {
   redirect: '/homeTime',
   children: [
     {
-      path: '/homeTime',
+      path: '/homeTime/:refreshTime?',
       component: () => import('@/views/homeTime/index.vue'),
       name: 'HomeTime',
       meta: {
