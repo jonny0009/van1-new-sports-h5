@@ -6,12 +6,6 @@
     <GoodMatch ref="refGoodMatch" />
     <!-- 早盘 -->
     <LatestMatch ref="refLatestMatch" />
-    <!-- btn -->
-    <div class="Button-MatchMore mt20" @click="goHomeTime">
-      <span>
-        查看更多比赛
-      </span>
-    </div>
     <div class="footerHeight"></div>
   </div>
 </template>
@@ -21,11 +15,7 @@
 import HotMatch from './HotMatch/index.vue'
 import GoodMatch from './GoodMatch/index.vue'
 import LatestMatch from './LatestMatch/index.vue'
-import router from '@/router'
-const goHomeTime = () => {
-  const params:any = { name: 'HomeTime' }
-  router.push(params)
-}
+
 </script>
 <style lang="scss" scoped>
 .home-page{

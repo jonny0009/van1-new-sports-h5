@@ -11,6 +11,15 @@
     display: none;
   }
 }
+.van-back-top{
+  width: 80px !important;
+  height: 80px !important;
+  min-width: 80px !important;
+  min-height: 80px !important;
+  .van-icon{
+    font-size: 32px !important;
+  }
+}
 // icon 2023/12/19
 @font-face {
   font-family: "iconfont"; /* Project id  */
@@ -366,9 +375,12 @@
     display: none;
   }
   .SportsButton{
-    margin-right: 20px;
+    margin-right: 16px;
     flex-shrink: 1;
     white-space:nowrap;
+    &:last-child{
+      margin-right: 0;
+    }
   }
 }
 //end home page

@@ -67,7 +67,7 @@
                     {{ getTeam(props.sendParams) }}
                   </span>
                   <div class="flex-1"></div>
-                  <div class="up-match-time">1:30 AM</div>
+                  <!-- <div class="up-match-time">1:30 AM</div> -->
                 </div>
                 <div class="up-match-league">
                   <SportsIcon :icon-src="props.sendParams.gameType" />
@@ -202,7 +202,7 @@ const getTeam = ({ homeTeamAbbr, awayTeamAbbr }:any) => {
   if (!homeTeamAbbr) {
     return ''
   }
-  return `${homeTeamAbbr} V ${awayTeamAbbr}`
+  return `${homeTeamAbbr} v ${awayTeamAbbr}`
 }
 const getLeagueShortName = ({ leagueShortName }:any) => {
   if (!leagueShortName) {
@@ -219,7 +219,7 @@ const getRList = (item:any) => {
   const { R } = item || {}
   const { game, ratioData } = R || {}
   const newObject = Object.assign({}, item, R, game)
-  const newRatioData = (ratioData || []).map(e => {
+  const newRatioData = (ratioData || []).map((e:any) => {
     return Object.assign({}, e, newObject)
   })
   return newRatioData
@@ -231,7 +231,7 @@ const getOUList = (item:any) => {
   const { OU } = item || {}
   const { game, ratioData } = OU || {}
   const newObject = Object.assign({}, item, OU, game)
-  const newRatioData = (ratioData || []).map(e => {
+  const newRatioData = (ratioData || []).map((e:any) => {
     return Object.assign({}, e, newObject)
   })
   return newRatioData
@@ -244,7 +244,7 @@ const getMList = (item:any) => {
   const { M } = item || {}
   const { game, ratioData } = M || {}
   const newObject = Object.assign({}, item, M, game)
-  const newRatioData = (ratioData || []).map(e => {
+  const newRatioData = (ratioData || []).map((e:any) => {
     return Object.assign({}, e, newObject)
   })
   return newRatioData

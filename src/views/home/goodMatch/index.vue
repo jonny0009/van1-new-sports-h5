@@ -5,16 +5,18 @@
     text="推荐比赛"
     @returnSuccess="returnStatus"
   />
-  <div class="Recommend-Match-Tabs">
-    <SportsButton text="FT" :active="true" />
-    <SportsButton text="BK" />
-    <SportsButton text="TN" />
-    <SportsButton text="OP_BM" />
-  </div>
-  <Loading v-if="!isLoading" />
-  <template v-else>
-    <EmptyIcon v-if="!recommendEventsList.length" class="marginAuto"></EmptyIcon>
-    <homeMatchHandicap v-for="(item,idx) in recommendEventsList" :key="idx" :send-params="item" class="mt20" />
+  <template v-if="!isShow">
+    <div class="Recommend-Match-Tabs">
+      <SportsButton text="FT" :active="true" />
+      <SportsButton text="BK" />
+      <SportsButton text="TN" />
+      <SportsButton text="OP_BM" />
+    </div>
+    <Loading v-if="!isLoading" />
+    <template v-else>
+      <EmptyIcon v-if="!recommendEventsList.length" class="marginAuto"></EmptyIcon>
+      <homeMatchHandicap v-for="(item,idx) in recommendEventsList" :key="idx" :send-params="item" class="mt20" />
+    </template>
   </template>
 </template>
 <script lang="ts" setup>
