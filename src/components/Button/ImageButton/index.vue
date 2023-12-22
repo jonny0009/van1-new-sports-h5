@@ -10,6 +10,7 @@
     <img
       v-img="src"
       class="img"
+      :type="1"
       style="object-fit: contain;"
     />
     <span>

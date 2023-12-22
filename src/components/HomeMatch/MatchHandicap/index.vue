@@ -52,12 +52,14 @@
                   v-img="props.sendParams.homeLogo"
                   class="my-image home"
                   alt=""
+                  :type="4"
                   style="object-fit: contain;"
                 >
                 <img
                   v-img="props.sendParams.awayLogo"
                   class="my-image away"
                   alt=""
+                  :type="5"
                   style="object-fit: contain;"
                 >
               </div>

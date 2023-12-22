@@ -30,16 +30,18 @@ watch(refreshChangeTime, (val) => {
   if (val) {
     clearTimeout(timeout.value)
     timeout.value = setTimeout(() => {
-      getRecommendEvents()
+      getRecommendEvents('')
     }, 100)
   }
 })
 const recommendEventsList = reactive([])
 const isLoading = ref(false)
-const getRecommendEvents = async () => {
+const getRecommendEvents = async (gameType:any) => {
   const params = {
-    gradeType: 1
+    gradeType: 1,
+    gameType: gameType
   }
+  console.log(params, 'params params')
   isLoading.value = false
   const res:any = await recommendEvents(params)
   isLoading.value = true
@@ -50,13 +52,11 @@ const getRecommendEvents = async () => {
     recommendEventsList.push(...baseData)
   }
 }
-
 const returnSportsSuccess = (val:any) => {
-  console.log(val)
+  getRecommendEvents(val)
 }
-
 const init = () => {
-  getRecommendEvents()
+  getRecommendEvents('')
 }
 onBeforeMount(() => {
   init()

@@ -6,7 +6,7 @@
     @returnSuccess="returnStatus"
   />
   <template v-if="!isShow">
-    <SportsTabs />
+    <SportsTabs @returnSportsSuccess="returnSportsSuccess" />
     <Loading v-if="!isLoading" />
     <template v-else>
       <EmptyIcon v-if="!recommendEventsList.length" class="marginAuto"></EmptyIcon>
@@ -14,7 +14,7 @@
     </template>
 
     <!-- btn -->
-    <div class="Button-MatchMore mt20" @click="goHomeTime">
+    <div v-if="recommendEventsList.length" class="Button-MatchMore mt20" @click="goHomeTime">
       <span>
         查看更多比赛
       </span>
@@ -37,16 +37,17 @@ watch(refreshChangeTime, (val) => {
   if (val) {
     clearTimeout(timeout.value)
     timeout.value = setTimeout(() => {
-      getRecommendEvents()
+      getRecommendEvents('')
     }, 100)
   }
 })
 const recommendEventsList = reactive([])
 const isLoading = ref(false)
-const getRecommendEvents = async () => {
+const getRecommendEvents = async (gameType:any) => {
   isLoading.value = false
   const params = {
-    gradeType: 2
+    gradeType: 2,
+    gameType: gameType
   }
   const res:any = await recommendEvents(params)
   isLoading.value = true
@@ -65,8 +66,11 @@ const goHomeTime = () => {
   })
   router.push(params)
 }
+const returnSportsSuccess = (val:any) => {
+  getRecommendEvents(val)
+}
 const init = () => {
-  getRecommendEvents()
+  getRecommendEvents('')
 }
 onBeforeMount(() => {
   init()

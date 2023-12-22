@@ -6,7 +6,7 @@
     }"
     @click="clickChangActive"
   >
-    <img v-img="props.src" class="img mr10" style="object-fit: contain;" />
+    <img v-img="props.src" :type="1" class="img mr10" style="object-fit: contain;" />
     <span>
       {{ props.text }}
     </span>

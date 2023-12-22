@@ -213,10 +213,16 @@
     // body
     .up-match {
       background-color: #eff2f2;
-      border-radius: 26px;
+      border-top-left-radius: 26px;
+      border-top-right-radius: 26px;
       overflow: hidden;
       font-family: SF-Pro-Bold,PingFangSC-Semibold,MicrosoftYahei-Bold,system-ui;
       font-weight: 800;
+    }
+    .up-match__footer{
+      border:  1px solid #eff2f2;
+      border-bottom-left-radius: 26px;
+      border-bottom-right-radius: 26px;
     }
     .border-bottom{
       border-bottom: 1px solid #dee2e6!important;

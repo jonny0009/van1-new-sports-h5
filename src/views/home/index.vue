@@ -15,6 +15,7 @@
 // import HotMatch from './HotMatch/index.vue'
 import GoodMatch from './GoodMatch/index.vue'
 import LatestMatch from './LatestMatch/index.vue'
+
 </script>
 <style lang="scss" scoped>
 .home-page{
