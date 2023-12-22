@@ -46,7 +46,6 @@
               'new_loading mt10' : loading
             }"
           />
-
         </template>
       </van-list>
       <div class="footerHeight"></div>
@@ -54,11 +53,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-// img
 import titleTime from '@/assets/images/home/title-time.png'
-// api
 import { recommendEvents } from '@/api/home'
-// script
 import { onBeforeMount, ref, reactive } from 'vue'
 const isLoading = ref(false)
 const params:any = reactive({
@@ -87,10 +83,8 @@ const getRecommendEvents = async (nextToggle:any = '') => {
     const { pageSize, page } = params
     if (nextToggle) {
       if (pageSize * page < total) {
-        // 有数据 可下一页
         finished.value = false
       } else {
-        // 无数据
         finished.value = true
       }
     } else {
@@ -99,12 +93,10 @@ const getRecommendEvents = async (nextToggle:any = '') => {
     recommendEventsList.push(...baseData)
   }
 }
-
 const loading = ref(false)
 const finished = ref(false)
 const timer:any = ref('')
 const onLoad = () => {
-  // 异步更新数据
   if (!finished.value) {
     if (!loading.value) {
       loading.value = true
@@ -115,7 +107,6 @@ const onLoad = () => {
       }, 100)
     }
   }
-  // 加载状态结束 finished => true
 }
 const returnSportsSuccess = (val:any) => {
   isLoading.value = true

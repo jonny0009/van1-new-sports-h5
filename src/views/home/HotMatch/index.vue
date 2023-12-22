@@ -28,17 +28,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-// img
 import titleHot from '@/assets/images/home/title-hot.png'
 import league from '@/assets/images/home/other/league.png'
-// vue
 import { onBeforeMount, reactive, ref, computed, watch } from 'vue'
 import store from '@/store'
 import { imgUrlFormat } from '@/utils/index.ts'
-// api
 import { firstLeagues } from '@/api/home'
 import router from '@/router'
-// script
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const noDataToggle = computed(() => firstLeaguesList.length === 0)
 const timeout:any = ref('')

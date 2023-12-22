@@ -15,14 +15,10 @@
   </template>
 </template>
 <script lang="ts" setup>
-// img
 import titleRecommend from '@/assets/images/home/title-recommend.png'
-// vue
 import { onBeforeMount, reactive, ref, computed, watch } from 'vue'
 import store from '@/store'
-// api
 import { recommendEvents } from '@/api/home'
-// script
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout:any = ref('')
 watch(refreshChangeTime, (val) => {
