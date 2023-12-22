@@ -1,9 +1,7 @@
 <template>
   <div class="homeMatchHandicap">
     <div class="home-tabs-play">
-      <div class="time">
-        周一 27/11
-      </div>
+      <TimeView :time-send-params="sendParams" />
     </div>
     <div class="home-match">
       <div calss="up-match-group__body">
@@ -11,29 +9,41 @@
           <!--  -->
           <div class="match-info-live__header border-bottom">
             <div class="up-match-league">
-              <div class="text">印度 - 德里超级联赛</div>
+              <div class="text">{{ getLeagueShortName(sendParams) }}</div>
             </div>
             <div class="flex-cross-center">
               <div class="up-match-time">
                 <SportsIcon :icon-src="'live'" />
-                上半场 7
+                -
               </div>
             </div>
           </div>
           <!--  -->
           <div class="up-match-score border-bottom">
             <div class="item mb5">
-              <img class="my-image img" :src="teamHome" style="object-fit: contain;" alt="">
-              <div class="name">丁科·迪涅夫</div>
+              <img
+                v-img="sendParams.homeLogo"
+                :type="4"
+                class="my-image img"
+                style="object-fit: contain;"
+                alt=""
+              >
+              <div class="name">{{ sendParams.homeTeamAbbr || sendParams.homeTeam }}</div>
               <div class="container">
-                <div class="value">0</div>
+                <div class="value">-</div>
               </div>
             </div>
             <div class="item">
-              <img class="my-image img" :src="teamAway" style="object-fit: contain;" alt="">
-              <div class="name">彼得·亚马基宁</div>
+              <img
+                v-img="sendParams.awayLogo"
+                class="my-image img"
+                :type="5"
+                style="object-fit: contain;"
+                alt=""
+              >
+              <div class="name">{{ sendParams.awayTeamAbbr || sendParams.awayTeam }}</div>
               <div class="container">
-                <div class="value">0</div>
+                <div class="value">-</div>
               </div>
             </div>
           </div>
@@ -177,9 +187,10 @@
   </div>
 </template>
 <script lang="ts" setup>
+// components
+import TimeView from '@/components/HomeMatch/public/time/index.vue'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
-import teamAway from '@/assets/images/home/match/team-away.svg'
-import teamHome from '@/assets/images/home/match/team-home.svg'
+// script
 import { showDialog } from 'vant'
 import store from '@/store'
 const goClick = () => {
@@ -189,6 +200,12 @@ const goClick = () => {
   }).then(() => {
   // on close
   })
+}
+const getLeagueShortName = ({ leagueShortName, leagueName }: any) => {
+  if (!(leagueShortName && leagueName)) {
+    return ''
+  }
+  return `${leagueShortName || leagueName}`
 }
 const props = defineProps({
   sendParams: {

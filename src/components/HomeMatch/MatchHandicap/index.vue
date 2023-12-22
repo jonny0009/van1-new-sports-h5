@@ -1,9 +1,9 @@
 <template>
   <div class="homeMatchHandicap">
     <div class="home-tabs-play">
-      <div class="time">
-        {{ matchDate(props.sendParams.gameDate) }}
-      </div>
+
+      <TimeView :time-send-params="sendParams" />
+
       <div class="play">
         <div class="flex-1"></div>
         <span
@@ -96,7 +96,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('R')" />
+                    <Handicap :send-params="getHandicap('R',sendParams)" />
                   </div>
                 </div>
               </div>
@@ -109,7 +109,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('OU')" />
+                    <Handicap :send-params="getHandicap('OU',sendParams)" />
                   </div>
                 </div>
               </div>
@@ -122,7 +122,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('M')" />
+                    <Handicap :send-params="getHandicap('M',sendParams)" />
                   </div>
                 </div>
               </div>
@@ -154,11 +154,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { matchDate } from '@/utils/matchDate.ts'
+import { getHandicap } from '@/utils/getHandicap.ts'
 import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
+import TimeView from '@/components/HomeMatch/public/time/index.vue'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 import { ref } from 'vue'
-import { MarketInfo } from '@/entitys/MarketInfo'
 import store from '@/store'
 import { showDialog } from 'vant'
 const props = defineProps({
@@ -169,17 +169,17 @@ const props = defineProps({
     }
   }
 })
-const getTeam = ({ homeTeamAbbr, awayTeamAbbr }: any) => {
+const getTeam = ({ homeTeamAbbr, awayTeamAbbr, homeTeam, awayTeam }: any) => {
   if (!homeTeamAbbr) {
     return ''
   }
-  return `${homeTeamAbbr} v ${awayTeamAbbr}`
+  return `${homeTeamAbbr || homeTeam} v ${awayTeamAbbr || awayTeam}`
 }
-const getLeagueShortName = ({ leagueShortName }: any) => {
-  if (!leagueShortName) {
+const getLeagueShortName = ({ leagueShortName, leagueName }: any) => {
+  if (!(leagueShortName && leagueName)) {
     return ''
   }
-  return `${leagueShortName}`
+  return `${leagueShortName || leagueName}`
 }
 const RrefShow = ref(true)
 const Rclick = () => {
@@ -189,17 +189,7 @@ const OUrefShow = ref(true)
 const OUclick = () => {
   OUrefShow.value = !OUrefShow.value
 }
-const getHandicap = (playType: string) => {
-  const details = props.sendParams
-  const playTypeItem = details[playType] || {}
-  const { game, ratioData } = playTypeItem || {}
-  const newObject = Object.assign({}, details, playTypeItem, game)
-  const newRatioData = (ratioData || []).map((e: any) => {
-    const marketInfo = new MarketInfo({ ...details, ...game, ...e, playType })
-    return Object.assign({ marketInfo }, e, newObject)
-  })
-  return newRatioData
-}
+
 const MrefShow = ref(true)
 const Mclick = () => {
   MrefShow.value = !MrefShow.value

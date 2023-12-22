@@ -1,7 +1,7 @@
 <template>
   <BettingOption
-    v-for="(item,idx) in props.sendParams"
-    v-if="props.sendParams.length"
+    v-for="(item,idx) in sendParams"
+    v-if="sendParams.length"
     :key="idx+'key'"
     :market-info="item.marketInfo"
     class="betting-option"
@@ -15,7 +15,7 @@
   </BettingOption>
 </template>
 <script lang="ts" setup>
-const props = defineProps({
+defineProps({
   sendParams: {
     type: Array,
     default: function () {

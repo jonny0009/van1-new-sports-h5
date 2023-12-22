@@ -24,9 +24,7 @@ export default {
         el.src = matchlLeague
       }
     }
-    if (type) {
-      el.addEventListener('error', el._handlerError)
-    }
+    el.addEventListener('error', el._handlerError)
     _handleParams(el, binding)
   },
   updated(el: any, binding: any) {
@@ -38,11 +36,8 @@ export default {
   }
 }
 
-function _handleParams(el: any, { value }: any) {
-  if (!value) {
-    return false
-  }
-  if (value.startsWith('http') || value.startsWith('data:image/') || value.startsWith('/src/assets/images/')) {
+function _handleParams(el: any, { value = '' }: any) {
+  if (!value || value.startsWith('http') || value.startsWith('data:image/') || value.startsWith('/src/assets/images/')) {
     el.src = value
   } else {
     el.src = `${ImageSource}${value}`

@@ -57,6 +57,9 @@ const getApiCommonMatches = async () => {
   } else {
     commonMatchesList.value = []
   }
+
+  console.log(res, 'apiCommonMatches')
+  console.log(commonMatchesList)
 }
 const clickGameType = (item:any) => {
   gameType.value = item.gameType
