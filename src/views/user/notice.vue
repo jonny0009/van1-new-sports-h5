@@ -53,8 +53,6 @@ const goBack = () => {
   $router.push({ path: '/home' })
 }
 const toDetail = (item: any) => {
-  console.log(item, '====')
-
   $router.push({
     path: '/user/noticeDetail',
     query: {

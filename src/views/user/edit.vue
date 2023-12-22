@@ -157,7 +157,7 @@ async function setPk(val: any) {
     }
   }
 
-  .content {
+  > .content {
     height: calc(100vh - 150px);
     overflow-y: auto;
     padding: 42px 36px;
