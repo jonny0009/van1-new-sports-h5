@@ -20,5 +20,6 @@ export default {
   OU: '大小',
   OUInfo: '全场 大小盘',
   M: '独赢',
-  MInfo: '全场 1X2'
+  MInfo: '全场 1X2',
+  searchNoData: '未查询到相关数据'
 }

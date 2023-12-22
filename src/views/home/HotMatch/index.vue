@@ -8,7 +8,7 @@
   <div v-if="!isShow" class="Hot-Match-Group" :class="[{ 'noData': noDataToggle }]">
     <Loading v-if="!isLoading" />
     <template v-else>
-      <EmptyIcon v-if="noDataToggle"></EmptyIcon>
+      <HomeEmpty v-if="noDataToggle"></HomeEmpty>
       <van-image
         v-for="(item,idx) in firstLeaguesList"
         v-else

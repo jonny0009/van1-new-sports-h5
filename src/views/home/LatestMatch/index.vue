@@ -9,7 +9,7 @@
     <SportsTabs @returnSportsSuccess="returnSportsSuccess" />
     <Loading v-if="!isLoading" />
     <template v-else>
-      <EmptyIcon v-if="!recommendEventsList.length" class="marginAuto"></EmptyIcon>
+      <HomeEmpty v-if="!recommendEventsList.length" class="marginAuto"></HomeEmpty>
       <HomeMatchHandicap v-for="(item,idx) in recommendEventsList" v-else :key="idx" :send-params="item" class="mt20" />
     </template>
 

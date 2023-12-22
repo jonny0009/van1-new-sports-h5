@@ -23,7 +23,7 @@
         <div v-if="recommendList.length" class="recommend-list">
           <HomeMatchHandicap v-for="(item,idx) in recommendList" v-show="isOpenRecommend" :key="idx" :send-params="item" />
         </div>
-        <EmptyIcon v-else class="marginAuto"></EmptyIcon>
+        <HomeEmpty v-else></HomeEmpty>
       </template>
     </template>
 
@@ -34,7 +34,7 @@
         <div v-if="earlyList.length" class="early-list">
           <HomeMatchHandicap v-for="(item,idx) in earlyList" v-show="isOpenEarly" :key="idx" :send-params="item" />
         </div>
-        <EmptyIcon v-else class="marginAuto"></EmptyIcon>
+        <HomeEmpty v-else></HomeEmpty>
       </template>
     </template>
 
