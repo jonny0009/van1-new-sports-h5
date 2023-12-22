@@ -13,7 +13,8 @@
             </div>
             <div class="flex-cross-center">
               <div class="up-match-time">
-                <SportsIcon :icon-src="'live'" /> 进行中
+                <SportsIcon :icon-src="'live'" />
+                {{ getTime(sendParams) }}
               </div>
             </div>
           </div>
@@ -29,7 +30,9 @@
               >
               <div class="name">{{ sendParams.homeTeamAbbr || sendParams.homeTeam }}</div>
               <div class="container">
-                <div class="value">-</div>
+                <div class="value">
+                  {{ getscoreH(sendParams) }}
+                </div>
               </div>
             </div>
             <div class="item">
@@ -42,7 +45,9 @@
               >
               <div class="name">{{ sendParams.awayTeamAbbr || sendParams.awayTeam }}</div>
               <div class="container">
-                <div class="value">-</div>
+                <div class="value">
+                  {{ getscoreA(sendParams) }}
+                </div>
               </div>
             </div>
           </div>
@@ -144,6 +149,33 @@ const goClick = () => {
   }).then(() => {
   // on close
   })
+}
+
+const getTime = (val:any) => {
+  console.log(val)
+  const { gameInfo } = val
+  // eslint-disable-next-line camelcase
+  const { re_time } = gameInfo || {}
+  // eslint-disable-next-line camelcase
+  return re_time || '0'
+}
+
+const getscoreH = (val:any) => {
+  console.log(val)
+  const { gameInfo } = val
+  // eslint-disable-next-line camelcase
+  const { sc_FT_H } = gameInfo || {}
+  // eslint-disable-next-line camelcase
+  return sc_FT_H || '0'
+}
+
+const getscoreA = (val:any) => {
+  console.log(val)
+  const { gameInfo } = val
+  // eslint-disable-next-line camelcase
+  const { sc_FT_A } = gameInfo || {}
+  // eslint-disable-next-line camelcase
+  return sc_FT_A || '0'
 }
 const getLeagueShortName = ({ leagueShortName, leagueName }: any) => {
   if (!(leagueShortName && leagueName)) {

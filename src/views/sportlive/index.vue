@@ -50,6 +50,8 @@ const getApiCommonMatches = async () => {
   }
   isLoading.value = false
   const res:any = await apiCommonMatches(params) || {}
+
+  console.log(res, 'resresresres')
   isLoading.value = true
   if (res.code === 200 && res.data?.matchList?.baseData) {
     const dataList = res.data?.matchList?.baseData || []
