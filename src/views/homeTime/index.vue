@@ -87,11 +87,9 @@ const getRecommendEvents = async (nextToggle:any = '') => {
     const { pageSize, page } = params
     if (nextToggle) {
       if (pageSize * page < total) {
-        console.log('console.log A')
         // 有数据 可下一页
         finished.value = false
       } else {
-        console.log('console.log B')
         // 无数据
         finished.value = true
       }

@@ -40,7 +40,6 @@ const getRecommendEvents = async (gameType:any = 'FT') => {
     gradeType: 1,
     gameType: gameType
   }
-  console.log(params, 'params params')
   isLoading.value = false
   const res:any = await recommendEvents(params)
   isLoading.value = true

@@ -6,7 +6,9 @@
         <TextButton text="推荐" :active="!gameType" @click="clickGameType({})" />
         <SportsButton v-for="(item,idx) in gameTypeList" :key="idx" :text="item.gameType" :active="gameType===item.gameType" @click="clickGameType(item)" />
       </div>
+
       <MatchLive v-for="(item,idx) in commonMatchesList" :key="idx" :send-params="item" />
+
       <HomeEmpty v-if="!commonMatchesList.length"></HomeEmpty>
     </template>
     <div class="footerHeight"></div>
@@ -57,9 +59,6 @@ const getApiCommonMatches = async () => {
   } else {
     commonMatchesList.value = []
   }
-
-  console.log(res, 'apiCommonMatches')
-  console.log(commonMatchesList)
 }
 const clickGameType = (item:any) => {
   gameType.value = item.gameType

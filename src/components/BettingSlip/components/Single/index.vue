@@ -57,7 +57,6 @@ const inputTouch = () => {
     })
   })
 }
-console.log(props)
 </script>
 <style scoped lang="scss">
 .Single-wrap {

@@ -75,13 +75,11 @@ const leagueName: any = ref()
 
 const isOpenRecommend: any = ref(true)
 const recommendCloseClick = (val:any) => {
-  console.log(val)
   isOpenRecommend.value = !val
 }
 
 const isOpenEarly: any = ref(true)
 const earlyCloseClick = (val:any) => {
-  console.log(val)
   isOpenEarly.value = !val
 }
 

@@ -51,7 +51,6 @@ const title = ref('编辑头像')
 
 const handleSave = () => {
   // $router.push('/user/userInfo')
-  console.log('保存====')
 }
 
 const getImgUrl = (num: any, index: any) => {

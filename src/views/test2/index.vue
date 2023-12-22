@@ -11,7 +11,6 @@ import { ref } from 'vue'
 const isLoading = ref(false)
 const onRefresh = (val:any) => {
   isLoading.value = false
-  console.log(val)
   // setTimeout(() => {
   //   showToast('刷新成功')
   //   isLoading.value = false
