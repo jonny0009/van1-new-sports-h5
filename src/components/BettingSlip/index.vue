@@ -122,9 +122,15 @@ watch(() => isOne.value, () => {
     open.value = true
   }
 })
+watch(() => markets.value.length, () => {
+  hitTimer()
+})
 watch(() => open.value, () => {
-  if (!open.value) {
+  if (open.value) {
+    hitTimer()
+  } else {
     store.dispatch('betting/setBoardShow', { status: false })
+    store.dispatch('betting/clearResult')
   }
 })
 const toogle = () => {
@@ -135,20 +141,33 @@ const changeType = (mode: any) => {
   store.dispatch('betting/setMode', mode)
   store.dispatch('betting/setHitState', 1)
   store.dispatch('betting/clearResult')
+  hitTimer()
 }
 const radioChange = (acceptAll: number) => {
   store.dispatch('user/configSettingNew', { acceptAll })
 }
 const timer = ref()
-store.dispatch('betting/marketHit')
-timer.value = setInterval(() => {
+const hitTimer = () => {
   if (open.value) {
-    store.dispatch('betting/marketHit')
     if (mode.value === 2) {
       store.dispatch('betting/comboMarketHit')
     }
+    if (mode.value < 3) {
+      store.dispatch('betting/marketHit')
+    }
   }
-}, 10 * 1000)
+  clearInterval(timer.value)
+  timer.value = setInterval(() => {
+    if (open.value && mode.value < 3) {
+      store.dispatch('betting/marketHit')
+      if (mode.value === 2) {
+        store.dispatch('betting/comboMarketHit')
+      }
+    }
+  }, 10 * 1000)
+}
+hitTimer()
+
 </script>
 <style lang="scss" scoped>
 .betting-slip-bg {

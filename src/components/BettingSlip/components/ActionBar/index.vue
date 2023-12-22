@@ -24,7 +24,7 @@
         v-debounce="buy"
         type="button"
         class="confirm-button"
-        :disabled="effectiveMarkets.length === 0"
+        :disabled="bettingState"
       >
         {{ $t('betting.buy') }}
       </button>
@@ -50,8 +50,16 @@ const betsProfit = computed(() => store.getters['betting/betsProfit'])
 const combosBetGolds = computed(() => store.getters['betting/combosBetGolds'])
 const combosProfit = computed(() => store.getters['betting/combosProfit'])
 const effectiveMarkets = computed(() => store.getters['betting/effectiveMarkets'])
+const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
 const golds = computed(() => mode.value === 1 ? betsGolds.value : combosBetGolds.value)
 const profit = computed(() => mode.value === 1 ? betsProfit.value : combosProfit.value)
+
+const bettingState = computed(() => {
+  if (mode.value === 1) {
+    return effectiveMarkets.value.length === 0
+  }
+  return comboMarkets.value.length <= 1
+})
 
 const clear = () => {
   store.dispatch('betting/clearMarkets')
