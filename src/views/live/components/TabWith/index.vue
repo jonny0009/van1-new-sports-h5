@@ -1,11 +1,20 @@
 <template>
   <div class="panel-with">
-    <div class="item" v-for="item in 2" :key="item">
+    <div class="top-nav">
+      <span :class="{ active: navActive == 1 }" @click="onNavClick(1)">当前比赛</span>
+      <span :class="{ active: navActive == 2 }" @click="onNavClick(2)">全部跟注</span>
+    </div>
+
+    <Loading v-if="loading" />
+    <div class="no-data" v-else-if="list.length === 0">
+      <EmptyIcon />
+    </div>
+    <div class="item" v-else v-for="(item, index) in list" :key="index">
       <div class="header">
-        <img class="avatar" src="@/assets/images/live/avatar.png" alt="" />
+        <img class="avatar" v-img="item.headImg" :type="3" alt="" />
         <div class="title">
-          <strong>Celeste_Serenity</strong>
-          <span>@wely123456</span>
+          <strong>{{ item.nikeName }}</strong>
+          <span>@{{ item.nikeName }}</span>
         </div>
         <div class="right">
           <span class="state">进行中</span>
@@ -13,34 +22,35 @@
       </div>
 
       <div class="wrapper">
-        <div class="summary">切尔西对战皇家马德里精彩分析</div>
+        <div class="summary">{{ item.leagueName }}</div>
         <div class="label">
           <div class="label-flex">
-            <img src="@/assets/images/live/s_foot.png" alt="" />
-            <span>中华台北 - 超级联赛</span>
+            <SvgIcon v-if="item.gameType == 'FT'" name="live-football" />
+            <SvgIcon v-if="item.gameType == 'BK'" name="live-basketball" />
+            <span>{{ item.leagueShortName }}</span>
           </div>
           <div class="label-flex">
             <img src="@/assets/images/live/live_purple.png" alt="" />
-            <span>半场</span>
+            <span>-</span>
           </div>
         </div>
         <div class="team">
           <div class="team-cell">
             <div class="palyer">
-              <img src="@/assets/images/live/team_img.png" alt="" />
-              <span>台北天龙1</span>
+              <img src="@/assets/images/empty/team.png" v-img="item.homeLogo" :type="2" alt="" />
+              <span>{{ item.homeTeam }}</span>
             </div>
             <div class="score">
-              <span>3</span>
+              <span>{{ item.betScore || '-' }}</span>
             </div>
           </div>
           <div class="team-cell">
             <div class="palyer">
-              <img src="@/assets/images/live/team_img.png" alt="" />
-              <span>台北天龙2</span>
+              <img src="@/assets/images/empty/team.png" v-img="item.awayLogo" :type="2" alt="" />
+              <span>{{ item.awayTeam }}</span>
             </div>
             <div class="score">
-              <span>7</span>
+              <span>{{ item.betScore || '-' }}</span>
             </div>
           </div>
         </div>
@@ -50,30 +60,32 @@
               <img src="" alt="" />
             </div>
             <div class="info">
-              <strong>大于 2</strong>
-              <span>全场 大小盘</span>
+              <strong>{{ item.betItem }}</strong>
+              <span v-play="item.playInfo"></span>
             </div>
           </div>
           <div class="ticket-bet">
-            <span>@3.64</span>
+            <span>@{{ item.ior }}</span>
           </div>
         </div>
         <div class="betting">
           <div class="betting-cell bt1">
             <strong>投注额：</strong>
-            <span>1.00</span>
+            <span>0.00</span>
           </div>
           <div class="betting-cell bt2">
             <strong>可赔付额：</strong>
-            <span>1.00</span>
+            <span>0.00</span>
           </div>
         </div>
 
         <div class="footer">
-          <div class="button">
-            <span>跟注</span>
-            <img src="@/assets/images/live/live_white_r.png" alt="" />
-          </div>
+          <BettingOption :market-info="item.marketInfo">
+            <div class="button">
+              <span>跟注</span>
+              <img src="@/assets/images/live/live_white_r.png" alt="" />
+            </div>
+          </BettingOption>
         </div>
       </div>
     </div>
@@ -81,12 +93,91 @@
 </template>
 
 <script lang="ts" setup>
-// import { reactive, ref } from 'vue'
+import { onMounted, Ref, ref, watch } from 'vue'
+import { betRecord, betRecordAll } from '@/api/live'
+import { MarketInfo } from '@/entitys/MarketInfo'
+const props = defineProps({
+  matchInfo: {
+    type: Object,
+    default: () => {}
+  }
+})
+
+const navActive = ref(1)
+const onNavClick = (num: number) => {
+  navActive.value = num
+  list.value = []
+  getWithData()
+}
+
+const list: Ref<any[]> = ref([])
+const loading = ref(false)
+const getWithData = async () => {
+  loading.value = true
+  const apiFun = navActive.value == 1 ? betRecord : betRecordAll
+  const params = {
+    page: 1,
+    pageSize: 50,
+    gidm: props.matchInfo?.gidm
+  }
+  const res: any = await apiFun(params)
+  if (res.code == 200) {
+    const dataList = res.data.map((item: any) => {
+      const dataInfo = { ...item }
+      const playInfo = {
+        gameType: dataInfo.gameType,
+        playType: dataInfo.playType,
+        session: dataInfo.session
+      }
+      const marketInfo = new MarketInfo(dataInfo)
+      return { ...dataInfo, playInfo, marketInfo }
+    })
+    list.value = dataList
+  }
+  loading.value = false
+}
+watch(
+  () => props.matchInfo,
+  () => {
+    if (props.matchInfo?.gidm) {
+      getWithData()
+    }
+  }
+)
+
+onMounted(() => {
+  getWithData()
+})
 </script>
 
 <style lang="scss" scoped>
+.no-data {
+  display: flex;
+  justify-content: center;
+  padding: 50px 0 0 0;
+}
 .panel-with {
   padding: 0 36px;
+  .top-nav {
+    display: flex;
+    margin-bottom: 42px;
+    > span {
+      min-width: 160px;
+      height: 64px;
+      line-height: 64px;
+      padding: 0 15px;
+      background: #eff1f2;
+      text-align: center;
+      border-radius: 32px;
+      margin-right: 16px;
+      font-size: 24px;
+    }
+    .active {
+      background: #7642fd;
+      color: #fff;
+    }
+  }
+
   > .item {
     margin-bottom: 25px;
   }
@@ -147,7 +238,8 @@
       padding: 20px 10px;
       &-flex {
         display: flex;
-        margin-bottom: 4px;
+        align-items: center;
+        margin-bottom: 5px;
       }
       img {
         display: block;
@@ -160,6 +252,10 @@
         color: #546371;
         letter-spacing: 0;
         font-weight: 600;
+      }
+      .svg-icon {
+        color: #999;
+        margin: 0 10px 0 5px;
       }
     }
     .team {
@@ -193,7 +289,8 @@
         }
         .score {
           > span {
-            display: block;
+            display: flex;
+            align-items: center;
             min-width: 40px;
             height: 40px;
             padding: 0 20px;

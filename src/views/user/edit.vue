@@ -8,32 +8,46 @@
     <div class="content">
       <div class="top1">
         <span>{{ "用户名" }}</span>
-        <span class="font2">{{ "chuanly130" }}</span>
+        <span class="font2">{{ userInfo.nickName }}</span>
       </div>
       <div class="top1">
         <span>{{ "货币" }}</span>
-        <span class="font2">{{ "RMB" }}</span>
+        <span class="font2">{{ current || 'CNY' }}</span>
       </div>
-      <div class="top1">
-        <span>{{ "语言" }}</span>
+      <div class="top1" @click="showPk(1)">
+        <span>{{ $t('user.lang') }}</span>
         <div class="font3">
-          <span class="font2">{{ lang || "中文" }}</span>
+          <span class="font2">{{ lang.value || '简体中文' }}</span>
           <img class="arrow" src="@/assets/images/login/go@2x.png" />
         </div>
       </div>
-      <div class="top1" @click="showPk()">
+      <div class="top1" @click="showPk(3)">
         <span>{{ "盘口" }}</span>
         <div class="font3">
-          <span class="font2">{{ pankou || "欧洲盘[DEC]" }}</span>
+          <span class="font2">{{ plateMask.value }}</span>
           <img class="arrow" src="@/assets/images/login/go@2x.png" />
         </div>
       </div>
     </div>
-    <van-popup v-model:show="showBottom" position="bottom" closeable round :style="{ height: '200px' }">
-      <div class="pankou-title">盘口</div>
+    <van-popup v-model:show="showBottom" position="bottom" closeable round>
+      <div class="popup-title">{{ popupTitle }}</div>
       <div class="pk-list">
-        <div class="item" @click="setPk(1)">欧洲盘[DEC]</div>
-        <div class="item" @click="setPk(2)">香港盘</div>
+        <div
+          v-for="(item, index) in popupList.arr"
+          :key="index"
+          class="item"
+          :class="[commonKey.key === item.key ? 'item-color' : '']"
+          @click="setPk(item)"
+        >
+          <p>
+            <span>
+              {{ item.value }}
+            </span>
+            <span v-if="commonKey.key === item.key">
+              <van-icon name="success" />
+            </span>
+          </p>
+        </div>
       </div>
     </van-popup>
 
@@ -41,24 +55,87 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, computed, onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { getCMerAccessWallet } from '@/api/user'
 const $router = useRouter()
-// const dataList = reactive([])
-// const content = ref('111111')
-const lang = ref('')
-const pankou = ref('')
+import localStore from '@/utils/localStore'
+import store from '@/store'
+import { showToast } from 'vant'
+
+const languages = computed(() => store.state.app.queryCMerLanguage.accessLanguage)
+const userInfo = computed(() => store.state.user.userInfo)
+// const balance = computed(() => store.state.user.balance)
+const commonKey = reactive({ key: '' })
+const current = ref('')
 const showBottom = ref(false)
+
+const popupTitle = ref('')
+const popupIndex = ref(0)
+
+const popupList = reactive<{ arr: any[] }>({ arr: [] })
+
+const language: any = localStore.getItem('language')
+const lang = ref<any>(language || {})
+
+const plateMaskObj: any = localStore.getItem('plateMaskObj')
+const plateMask = ref<any>((plateMaskObj || {}))
+
+onMounted(() => {
+  getCurrent()
+})
+const getCurrent = async () => {
+  const res: any = await getCMerAccessWallet({})
+  if (res.code === 200) {
+    current.value = res.data[0].currency
+  } else {
+    showToast(res.msg)
+  }
+}
 const goBack = () => {
   $router.back()
 }
 const title = ref('账号')
+// 弹窗
 function showPk(val?: any) {
-  console.log(val)
+  popupIndex.value = val
+  popupList.arr = []
+  if (val === 1) {
+    popupList.arr = languages.value
+    commonKey.key = lang.value.key
+    popupTitle.value = '语言'
+  }
+  if (val === 3) {
+    popupList.arr = [
+      {
+        value: '香港盘',
+        key: 'E'
+      },
+      {
+        value: '欧洲盘',
+        key: 'H'
+      }
+    ]
+    commonKey.key = plateMask.value.key
+    popupTitle.value = '盘口'
+  }
+
   showBottom.value = true
 }
-function setPk(val: any) {
-  pankou.value = val === 1 ? '欧洲盘[DEC]' : '香港盘'
+// 设置
+async function setPk(val: any) {
+  if (popupIndex.value === 1) {
+    lang.value = val
+    localStore.setItem('locale', val.key)
+    localStore.setItem('language', val)
+    window.location.reload()
+  }
+
+  if (popupIndex.value === 3) {
+    localStore.setItem('plateMaskObj', val)
+    plateMask.value = val
+    store.dispatch('user/configSettingNew', { handicapType: val.key })
+  }
   showBottom.value = false
   console.log(val)
 }
@@ -66,6 +143,10 @@ function setPk(val: any) {
 </script>
 
 <style lang="scss" scoped>
+:root {
+  --van-toast-text-padding: 20px 30px;
+  --van-toast-font-size: 28px;
+}
 .noticeDetail {
   .bg-title {
     width: 100%;
@@ -108,10 +189,12 @@ function setPk(val: any) {
         text-align: right;
         font-weight: 500;
       }
-      .font3{
+
+      .font3 {
         display: flex;
         align-items: center;
-        .arrow{
+
+        .arrow {
           margin-left: 10px;
           height: 26px;
           width: 26px;
@@ -119,6 +202,36 @@ function setPk(val: any) {
       }
     }
   }
+  .popup-title {
+  font-family: PingFangSC-Semibold;
+  font-size: 32px;
+  color: #1F2630;
+  letter-spacing: 0;
+  font-weight: 600;
+  margin: 24px 0 0 38px;
+}
+
+.pk-list {
+  padding-top: 30px;
+
+  .item {
+    font-size: 26px;
+    color: #1F2630;
+    letter-spacing: 1px;
+    padding: 40px;
+    border-bottom: 2px solid #eaeaea;
+
+    p {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .item-color {
+    color: #7642FD;
+  }
+}
 
 }
 

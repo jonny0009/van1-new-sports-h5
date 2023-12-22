@@ -14,7 +14,10 @@
     </div>
 
     <div class="wrapper">
-      <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <div class="no-data" v-if="finished && list.length === 0">
+        <EmptyIcon />
+      </div>
+      <van-list v-model:loading="loading" :finished="finished" :finished-text="t('live.noMore')" @load="onLoad">
         <div class="live-item" v-for="item in list" :key="item.gidm">
           <LiveItem :item="item" @click="onItemClick(item)" />
         </div>
@@ -28,13 +31,15 @@ import { reactive, ref, Ref, onMounted } from 'vue'
 import LiveItem from './components/LiveItem.vue'
 import { anchorLiveList } from '@/api/live'
 import router from '@/router'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const navList = reactive([
-  { type: 'RB', name: '热播', iconName: 'live-hot' },
-  { type: 'FT', name: '足球', iconName: 'live-football' },
-  { type: 'BK', name: '篮球', iconName: 'live-basketball' },
-  { type: 'TN', name: '网球', iconName: 'live-tennisball' },
-  { type: 'OP_BM', name: '羽毛球', iconName: 'live-badminton' }
+  { type: 'RB', name: t('live.hot'), iconName: 'live-hot' },
+  { type: 'FT', name: t('live.football'), iconName: 'live-football' },
+  { type: 'BK', name: t('live.basketball'), iconName: 'live-basketball' },
+  { type: 'TN', name: t('live.tennisball'), iconName: 'live-tennisball' },
+  { type: 'OP_BM', name: t('live.badminton'), iconName: 'live-badminton' }
 ])
 const navActive = ref('RB')
 const onNavClick = (item: any) => {
@@ -55,9 +60,6 @@ const onLoad = async () => {
   const params: any = {
     page: page,
     pageSize: 20
-    // rbType: '',
-    // gameType: '',
-    // videoType: 2
   }
   if (navActive.value == 'RB') {
     params.videoType = 2
@@ -72,6 +74,8 @@ const onLoad = async () => {
     })
     loading.value = false
     finished.value = list.value.length == data.total
+  } else {
+    finished.value = true
   }
 }
 
@@ -137,6 +141,11 @@ onMounted(() => {})
 }
 .wrapper {
   padding: 0 0 0 25px;
+  .no-data {
+    display: flex;
+    justify-content: center;
+    padding: 50px 0 0 0;
+  }
   .van-list {
     display: flex;
     flex-wrap: wrap;

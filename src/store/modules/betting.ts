@@ -1,9 +1,17 @@
 import localStore from '@/utils/localStore'
 import { Module } from 'vuex'
 import { Betting } from '#/store'
-import { betParams, buyParams, hitParams } from '@/utils/betting'
+import {
+  betParams,
+  buyCombosParams,
+  buyParams,
+  chaiCombo,
+  combosHitParams,
+  getComboMarkets,
+  hitParams
+} from '@/utils/betting'
 import { MarketInfo } from '@/entitys/MarketInfo'
-import { moreBetting, morePW } from '@/api/betting'
+import { betComboOrder, comboBetting, moreBetting, morePW } from '@/api/betting'
 import createBetItem from 'xcsport-lib'
 import { points } from '@/utils'
 import lang from '@/lang'
@@ -14,16 +22,21 @@ const bettingModule: Module<Betting, any> = {
   namespaced: true,
   state: {
     markets,
+    comboMarkets: [],
+    combos: [],
     results: [],
     hitState: 1, // 0非点水状态 / 1非点水状态
     mode: 1, // 1单注， 2串关
     boardShow: false,
     isOne: false,
     editId: '',
+    comboAmount: 0,
     s: '',
     t: '',
     comboS: '',
-    comboT: ''
+    comboT: '',
+    moreShow: false, // 更多玩法
+    moreParams: {}
   },
   mutations: {},
   getters: {
@@ -57,6 +70,68 @@ const bettingModule: Module<Betting, any> = {
         }
       })
       return points(betsGolds)
+    },
+    // 串关投注总额
+    combosBetGolds(state) {
+      let betsGolds = 0
+      state.combos.map((combo: any) => {
+        const { orderNumber, errorCode } = combo
+        if (state.comboAmount && !errorCode) {
+          betsGolds += state.comboAmount * orderNumber
+        }
+      })
+      return betsGolds
+    },
+    // 串关可赢金额
+    combosProfit(state) {
+      let betsGolds = 0
+      // 串关可赢金额
+      state.combos.map((combo: any) => {
+        const { comboList, errorCode } = combo
+        if (state.comboAmount && !errorCode && comboList && comboList.length > 0) {
+          comboList.map((comboArray: any) => {
+            let iorCount = 1
+            comboArray.map((bet: any) => {
+              iorCount *= bet.ior * 1
+            })
+            betsGolds += iorCount * state.comboAmount - state.comboAmount
+          })
+        }
+      })
+      return betsGolds
+    },
+    // 串关ior
+    combosIor(state) {
+      let iors = 0
+      // 串关可赢金额
+      state.combos.map((combo: any) => {
+        const { comboList, errorCode } = combo
+        if (!errorCode && comboList && comboList.length > 0) {
+          comboList.map((comboArray: any) => {
+            let iorCount = 1
+            comboArray.map((bet: any) => {
+              iorCount *= bet.ior * 1
+            })
+            iors += iorCount
+          })
+        }
+      })
+      return iors
+    },
+    // 有效投注注数
+    effectiveMarkets(state) {
+      return state.markets.filter((order: any) => {
+        return !order.errorCode
+      })
+    },
+    // 有效投注注数
+    comboMarkets(state) {
+      return getComboMarkets(state.markets)
+    },
+    comboMarketPlayOnlyIds(state) {
+      const markets = getComboMarkets(state.markets)
+      const getPlayOnlyIds = markets.map((i: MarketInfo) => i.playOnlyId)
+      return getPlayOnlyIds
     }
   },
   actions: {
@@ -71,12 +146,17 @@ const bettingModule: Module<Betting, any> = {
       state.hitState = status
     },
     changeSingleAmount({ state }, amount) {
-      const find = state.markets.find(
-        (marketInfo: MarketInfo) => marketInfo.playOnlyId === state.editId
-      )
+      const find = state.markets.find((marketInfo: MarketInfo) => marketInfo.playOnlyId === state.editId)
       if (find) {
         find.gold = amount
       }
+    },
+    changeComboAmount({ state }, amount) {
+      state.comboAmount = amount
+    },
+    setMoreShow({ state }, { status, moreParams }) {
+      state.moreShow = status
+      state.moreParams = moreParams
     },
 
     // 添加投注项
@@ -194,7 +274,7 @@ const bettingModule: Module<Betting, any> = {
       return replaceBet
     },
     // 单注批量点水,更新投注项
-    async marketHit({ state, dispatch }, betting:boolean = false) {
+    async marketHit({ state, dispatch }, betting: boolean = false) {
       if (state.markets.length === 0 || (!betting && state.hitState !== 1)) {
         return false
       }
@@ -212,6 +292,101 @@ const bettingModule: Module<Betting, any> = {
         })
       }
     },
+    // 串关批量点水,更新投注项
+    async comboMarketHit({ state, getters }, betting: boolean = false) {
+      if (getters.comboMarkets.length < 2 || (!betting && state.hitState !== 1)) {
+        return false
+      }
+
+      if (state.comboMarkets.length === 0) {
+        state.comboMarkets = JSON.parse(JSON.stringify(getters.comboMarkets))
+      }
+
+      const params: any = combosHitParams(state.comboMarkets)
+      const res: any = await betComboOrder(params).catch(() => {})
+      if (res?.code === 200 && res?.data && res?.data?.length) {
+        const data: any = res?.data[0] || {}
+        const orderData = data.orderData || []
+        const errorCode = data.errorCode
+        const goldGmin = data.goldGmin
+        const goldGmax = data.goldGmax
+        const bodyVOS = data.bodyVOS
+        const errorIds = data.errorIds
+        const s = data.s
+        const t = data.t
+        state.comboS = s
+        state.comboT = t
+
+        // 有异常的情况,全部锁盘
+        if (errorCode || (Array.isArray(errorIds) && errorIds.length)) {
+          if (['1X034'].includes(errorCode)) {
+            // 根据返回出异常的errorIds标出有异常的玩法
+            if (Array.isArray(errorIds) && errorIds.length) {
+              // dispatch('bet/updateComboBets', errorIds, { root: true })
+              // dispatch('setCombosStructure', [])
+            }
+          } else {
+            // state.combosStructure = state.combosStructure.map(comboItem => {
+            //   comboItem.lock = true
+            //   // comboItem.gold = ''
+            //   return comboItem
+            // })
+          }
+        } else {
+          const comboCount = state.comboMarkets.length
+          const comboList = chaiCombo(comboCount, orderData)
+          let combos = [
+            {
+              betNuiqueKey: 'comboOrderKey-' + comboCount,
+              comboNumber: comboCount,
+              betNumber: '',
+              gold: '',
+              lock: false,
+              orderNumber: 1,
+              comboList,
+              goldMin: goldGmin,
+              goldMax: goldGmax
+            }
+          ]
+          if (combos) {
+            // BI数据需接受接口返回的最大最小值限制
+            if (Array.isArray(bodyVOS) && bodyVOS.length) {
+              const newCombos: any = []
+              bodyVOS.map((item) => {
+                const { mbType, mbSubType, goldGmin, goldGmax } = item
+                //  串1
+                const betNum = mbSubType * 1
+                //  注数
+                const combo = mbType * 1
+                const currentCombo = combos.find((order) => {
+                  const { comboNumber } = order
+                  return combo === comboNumber && betNum === 1
+                })
+                if (currentCombo) {
+                  newCombos.push({
+                    ...currentCombo,
+                    goldMin: goldGmin,
+                    goldMax: goldGmax
+                  })
+                }
+              })
+              combos = newCombos
+            }
+            state.comboMarkets = state.comboMarkets.map((marketInfo: MarketInfo) => {
+              const playOnlyId = MarketInfo.getPlayOnlyId(marketInfo)
+              const find = state.markets.find((info: MarketInfo) => {
+                return MarketInfo.getPlayOnlyId(info) === playOnlyId
+              })
+              if (find) {
+                return { ...marketInfo, ...find }
+              }
+              return marketInfo
+            })
+          }
+          state.combos = combos
+        }
+      }
+    },
     // 单注下单
     async marketBetting({ state, dispatch }) {
       if (state.markets.length === 0) {
@@ -225,9 +400,34 @@ const bettingModule: Module<Betting, any> = {
       })
       if (res?.code === 200 && res?.data) {
         const bettingData = res.data.bettingData || []
-        state.results = bettingData.map((order:MarketInfo) => {
+        state.results = bettingData.map((order: MarketInfo) => {
           const playOnlyId = MarketInfo.getPlayOnlyId(order)
-          const find = state.markets.find((marketInfo:MarketInfo) => {
+          const find = state.markets.find((marketInfo: MarketInfo) => {
+            return MarketInfo.getPlayOnlyId(marketInfo) === playOnlyId
+          })
+          return { ...find, ...order }
+        })
+        dispatch('clearMarkets')
+      } else {
+        return Promise.reject(lang.global.t('betting.errorTips'))
+      }
+    },
+    // 串关下单
+    async comboMarketBetting({ state, getters, dispatch }) {
+      if (getters.comboMarkets.length === 0 || state.combos.length === 0) {
+        return false
+      }
+      const params = buyCombosParams(getters.comboMarkets, state.combos, {
+        gold: state.comboAmount,
+        s: state.comboS,
+        t: state.comboT
+      })
+      const res: any = await comboBetting(params).catch(() => {})
+      if (res?.code === 200 && res?.data) {
+        const bettingData = res.data.bettingData || []
+        state.results = bettingData.map((order: MarketInfo) => {
+          const playOnlyId = MarketInfo.getPlayOnlyId(order)
+          const find = state.markets.find((marketInfo: MarketInfo) => {
             return MarketInfo.getPlayOnlyId(marketInfo) === playOnlyId
           })
           return { ...find, ...order }

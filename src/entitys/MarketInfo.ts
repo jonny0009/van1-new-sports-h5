@@ -31,6 +31,7 @@ interface MarketInfoInterface {
   homeTeamSuffix?: any
   ratio1?: any
   championType?: any
+  gameDate?: any
 }
 const requireAttrs: Array<string> = ['systemId', 'gidm', 'gameId', 'gameType', 'playType', 'ratioType', 'ior']
 
@@ -61,6 +62,7 @@ export class MarketInfo {
   homeTeamSuffix: any
   sourceCompany: any
   championType: any
+  gameDate: any
 
   playOnlyId: string
   isChampion: boolean = false
@@ -173,7 +175,7 @@ export class MarketInfo {
     }
     // bti
     if (info.optionId) {
-      return `${gidm}/${info.optionId}/${info.playType}${info.ratioType}`
+      return `${gidm}/${info.optionId}/${info.playType}/${info.ratioType}`
     }
     // ibo
     return `${gidm}/${info.gameId}/${info.playType}/${info.ratioType}`

@@ -68,7 +68,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+import { rightSearch } from '@/api/user'
 import searchImg from '@/assets/images/globalLayout/header/search.png'
 import ball1 from '@/assets/images/login/ball1.svg'
 import ball2 from '@/assets/images/login/ball2.svg'
@@ -104,7 +105,13 @@ const ballList = reactive(
     }
   ]
 )
-
+onMounted(async () => {
+  getList()
+})
+const getList = async () => {
+  const res: any = await rightSearch({ keywords: 1 })
+  console.log(res, '=====')
+}
 const toUrl = () => {
   $router.push({ path: '/home' })
 }

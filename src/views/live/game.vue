@@ -98,7 +98,6 @@
             </div>
           </van-collapse-item>
 
-          <!-- 更多玩法 -->
           <van-collapse-item title="滚球 亚洲让分盘" name="1" :border="false">
             <div class="bet">
               <div class="bet-item" v-for="item in 3" :key="item">

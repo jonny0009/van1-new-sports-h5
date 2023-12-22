@@ -5,14 +5,6 @@ import request from '@/utils/request'
  * @param {*} data
  * @returns
  */
-// 盘口设置
-export const getPlateMask = (data:any) => {
-  return request({
-    url: 'ai/mobile/player/configSettingNew',
-    method: 'post',
-    data
-  })
-}
 // 获取语言
 export const getLanguages = (params:any) => {
   return request({
@@ -24,11 +16,12 @@ export const getLanguages = (params:any) => {
 // 右边搜索
 export const rightSearch = (params:any) => {
   return request({
-    url: '/ai/mobile/hot/searchs',
+    url: '/ai/hot/searchs',
     method: 'get',
     params
   })
 }
+
 // 获取当前币种
 export const getCMerAccessWallet = (params:any) => {
   return request({

@@ -10,7 +10,7 @@
           class="btn R"
           :class="[
             {
-              'active':RrefShow
+              active: RrefShow
             }
           ]"
           @click="Rclick"
@@ -21,7 +21,7 @@
           class="btn OU"
           :class="[
             {
-              'active':OUrefShow
+              active: OUrefShow
             }
           ]"
           @click="OUclick"
@@ -32,7 +32,7 @@
           class="btn M"
           :class="[
             {
-              'active':MrefShow
+              active: MrefShow
             }
           ]"
           @click="Mclick"
@@ -86,14 +86,8 @@
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">
                   全场 亚洲让分盘
-                  <van-popover
-                    placement="top"
-                    theme="dark"
-                    trigger="click"
-                  >
-                    <div class="popover-text">
-                      全场让分盘
-                    </div>
+                  <van-popover placement="top" theme="dark" trigger="click">
+                    <div class="popover-text">全场让分盘</div>
                     <template #reference>
                       <van-icon name="info" />
                     </template>
@@ -111,9 +105,7 @@
             <!-- 全场 大小盘  -->
             <div v-if="OUrefShow" ref="OUref" class="match-betting-item">
               <div class="match-betting-item__title">
-                <div class="flex-cross-center">
-                  全场 大小盘
-                </div>
+                <div class="flex-cross-center">全场 大小盘</div>
               </div>
               <div class="match-betting-item__content">
                 <div class="betting-select">
@@ -126,9 +118,7 @@
             <!-- 全场 1X2 -->
             <div v-if="MrefShow" ref="Mref" class="match-betting-item">
               <div class="match-betting-item__title">
-                <div class="flex-cross-center">
-                  全场 1X2
-                </div>
+                <div class="flex-cross-center">全场 1X2</div>
               </div>
               <div class="match-betting-item__content">
                 <div class="betting-select">
@@ -148,7 +138,10 @@
 
       <div class="up-match__footer">
         <div class="match-footer">
-          <div class="match-footer__item">
+          <div
+            class="match-footer__item"
+            @click="store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })"
+          >
             <span>更多玩法</span>
             <span class="num">149</span>
             <van-icon class="arrow" name="arrow" />
@@ -169,21 +162,22 @@ import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 import { ref } from 'vue'
 import { MarketInfo } from '@/entitys/MarketInfo'
+import store from '@/store'
 const props = defineProps({
   sendParams: {
     type: Object,
     default: function () {
-      return { }
+      return {}
     }
   }
 })
-const getTeam = ({ homeTeamAbbr, awayTeamAbbr }:any) => {
+const getTeam = ({ homeTeamAbbr, awayTeamAbbr }: any) => {
   if (!homeTeamAbbr) {
     return ''
   }
   return `${homeTeamAbbr} v ${awayTeamAbbr}`
 }
-const getLeagueShortName = ({ leagueShortName }:any) => {
+const getLeagueShortName = ({ leagueShortName }: any) => {
   if (!leagueShortName) {
     return ''
   }
@@ -198,13 +192,13 @@ const OUrefShow = ref(true)
 const OUclick = () => {
   OUrefShow.value = !OUrefShow.value
 }
-const getList = (playType:string) => {
+const getList = (playType: string) => {
   const details = props.sendParams
   const playTypeItem = details[playType] || {}
   const { game, ratioData } = playTypeItem || {}
   const newObject = Object.assign({}, details, playTypeItem, game)
   console.log(ratioData)
-  const newRatioData = (ratioData || []).map((e:any) => {
+  const newRatioData = (ratioData || []).map((e: any) => {
     const marketInfo = new MarketInfo({ ...details, ...game, ...e, playType })
     return Object.assign({ marketInfo }, e, newObject)
   })

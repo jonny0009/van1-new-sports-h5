@@ -15,7 +15,7 @@
         <div v-else class="team-info">{{ marketInfo.homeTeam }} VS {{ marketInfo.awayTeam }}</div>
       </div>
       <div class="betting-odds">@<span v-points="marketInfo.ior"></span></div>
-      <div class="action">
+      <div v-if="mode === 1" class="action">
         <div ref="inputBtn" class="betting-slip-input" @click="inputTouch">
           <span class="currency"><van-icon name="balance-o" /></span>
           <div style="flex: 1 1 0%;"></div>
@@ -24,6 +24,7 @@
         </div>
       </div>
     </div>
+    <div v-if="isCombo" class="combo-enable"></div>
     <div v-if="marketInfo.errorCode" class="error-popup">
       <div class="lock"></div>
       <div class="tips">赛事封单</div>
@@ -40,7 +41,11 @@ const props = defineProps({
     default: () => { }
   }
 })
+const mode = computed(() => store.state.betting.mode)
 const editId = computed(() => store.state.betting.editId)
+const comboMarketPlayOnlyIds = computed(() => store.getters['betting/comboMarketPlayOnlyIds'])
+const isCombo = computed(() => comboMarketPlayOnlyIds.value.includes(props.marketInfo.playOnlyId) && mode.value === 2)
+
 const remove = () => {
   store.dispatch('betting/deleteMarket', props.marketInfo.playOnlyId)
 }
@@ -208,6 +213,13 @@ console.log(props)
         animation: auto-opacity .5s linear infinite alternate;
       }
     }
+  }
+
+  .combo-enable {
+    width: 16px;
+    height: 100%;
+    background: #0BBA3E;
+    border-radius: 0px 20px 20px 0px;
   }
 }
 
