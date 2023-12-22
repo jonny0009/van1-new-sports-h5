@@ -15,15 +15,14 @@
 <script lang="ts" setup>
 import TextButton from '@/components/Button/TextButton/index.vue'
 import MatchLive from '@/components/HomeMatch/MatchLive/index.vue'
-import { ref, onBeforeMount } from 'vue'
+import { ref, onBeforeMount, onActivated, onDeactivated, onBeforeUnmount } from 'vue'
 import { apiRBCondition, apiCommonMatches } from '@/api/home'
 const gameType:any = ref()
 const isLoading = ref(false)
-onBeforeMount(async () => {
-  isLoading.value = false
+const init = async () => {
   await getApiRBCondition()
   await getApiCommonMatches()
-})
+}
 const showGameTypeList:any = ref(['FT', 'BK', 'TN', 'OP_BM'])
 const gameTypeList:any = ref([])
 const getApiRBCondition = async () => {
@@ -64,6 +63,25 @@ const clickGameType = (item:any) => {
   gameType.value = item.gameType
   getApiCommonMatches()
 }
+
+onBeforeMount(async () => {
+  console.log('onBeforeMount')
+  isLoading.value = false
+  init()
+})
+
+onActivated(() => {
+  console.log('onActivated')
+})
+
+onDeactivated(() => {
+  console.log('deactivated')
+})
+
+onBeforeUnmount(() => {
+  console.log('onBeforeUnmount')
+})
+
 </script>
 <style lang="scss" scoped>
 .sportlive{

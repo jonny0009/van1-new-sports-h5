@@ -152,7 +152,6 @@ const goClick = () => {
 }
 
 const getTime = (val:any) => {
-  console.log(val)
   const { gameInfo } = val
   // eslint-disable-next-line camelcase
   const { re_time } = gameInfo || {}
@@ -161,7 +160,6 @@ const getTime = (val:any) => {
 }
 
 const getscoreH = (val:any) => {
-  console.log(val)
   const { gameInfo } = val
   // eslint-disable-next-line camelcase
   const { sc_FT_H } = gameInfo || {}
@@ -170,7 +168,6 @@ const getscoreH = (val:any) => {
 }
 
 const getscoreA = (val:any) => {
-  console.log(val)
   const { gameInfo } = val
   // eslint-disable-next-line camelcase
   const { sc_FT_A } = gameInfo || {}
