@@ -197,7 +197,6 @@ const getList = (playType: string) => {
   const playTypeItem = details[playType] || {}
   const { game, ratioData } = playTypeItem || {}
   const newObject = Object.assign({}, details, playTypeItem, game)
-  console.log(ratioData)
   const newRatioData = (ratioData || []).map((e: any) => {
     const marketInfo = new MarketInfo({ ...details, ...game, ...e, playType })
     return Object.assign({ marketInfo }, e, newObject)

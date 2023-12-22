@@ -29,16 +29,23 @@
       @load="onLoad"
     >
       <template v-if="!isShow">
-        <Loading v-if="!isLoading" />
-        <template v-else>
+        <template v-if="isLoading">
           <HomeMatchHandicap
             v-for="(item,idx) in recommendEventsList"
             :key="idx"
             :send-params="item"
-            class="mb20"
+            :class="{'mt20':idx !== 0}"
           />
           <EmptyIcon v-if="!recommendEventsList.length" class="marginAuto"></EmptyIcon>
         </template>
+
+        <Loading
+          v-if="!isLoading || loading"
+          :class="{
+            'new_loading mt10' : loading
+          }"
+        />
+
       </template>
     </van-list>
     <div class="footerHeight"></div>
@@ -55,32 +62,40 @@ const isLoading = ref(false)
 const params:any = reactive({
   page: 1,
   pageSize: 10,
-  gradeType: 2
+  gradeType: 2,
+  gameType: 'FT'
 })
 const recommendEventsList = reactive([])
 const totalVal = ref(0)
-const getRecommendEvents = async (gameType:any = '', nextToggle:any = '') => {
-  isLoading.value = false
-  params.gameType = gameType
+const getLoading = (val:any = false, nextToggle:any = '') => {
+  if (nextToggle) {
+    loading.value = !val
+  } else {
+    isLoading.value = val
+  }
+}
+const getRecommendEvents = async (nextToggle:any = '') => {
+  getLoading(false, nextToggle)
   const res:any = await recommendEvents(params)
-  isLoading.value = true
+  getLoading(true, nextToggle)
   if (res.code === 200) {
     const data:any = res?.data || {}
     const { baseData, total } = data
-
     totalVal.value = total
     const { pageSize, page } = params
-    if (pageSize * page < total) {
-      console.log('console.log A')
-      // 有数据 可下一页
+    if (nextToggle) {
+      if (pageSize * page < total) {
+        console.log('console.log A')
+        // 有数据 可下一页
+        finished.value = false
+      } else {
+        console.log('console.log B')
+        // 无数据
+        finished.value = true
+      }
     } else {
-      console.log('console.log B')
-      // 无数据
-    }
-    if (!nextToggle) {
       recommendEventsList.length = 0
     }
-
     recommendEventsList.push(...baseData)
   }
 }
@@ -89,20 +104,24 @@ const loading = ref(false)
 const finished = ref(false)
 const timer:any = ref('')
 const onLoad = () => {
-  console.log('onLoad onLoad')
   // 异步更新数据
-  clearTimeout(timer.value)
-  timer.value = setTimeout(() => {
-    loading.value = true
-    // 加载状态结束
-    // // 数据全部加载完成
-    // if (list.value.length >= 40) {
-    //   finished.value = true
-    // }
-  }, 100)
+  if (!finished.value) {
+    if (!loading.value) {
+      loading.value = true
+      clearTimeout(timer.value)
+      timer.value = setTimeout(() => {
+        params.page++
+        getRecommendEvents(true)
+      }, 100)
+    }
+  }
+  // 加载状态结束 finished => true
 }
 const returnSportsSuccess = (val:any) => {
-  getRecommendEvents(val)
+  isLoading.value = true
+  params.gameType = val
+  params.page = 1
+  getRecommendEvents()
 }
 const isShow = ref(false)
 const returnStatus = (val:any) => {
@@ -151,5 +170,11 @@ onBeforeMount(() => {
       color: #fff;
     }
   }
+}
+</style>
+
+<style lang="scss">
+.new_loading{
+  height: auto !important;
 }
 </style>
