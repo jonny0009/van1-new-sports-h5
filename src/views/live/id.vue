@@ -11,6 +11,9 @@
       <div v-if="videoError" class="match-error mask">
         <div class="text">视频加载失败</div>
       </div>
+      <div v-if="notExtend" class="match-error mask">
+        <div class="text">无数据</div>
+      </div>
     </div>
 
     <div class="tab">
@@ -68,15 +71,16 @@ const getMatcheInfo = async () => {
 }
 
 const extendData: Ref<any> = ref({})
+const notExtend = ref(false)
 const getExtendInfo = async () => {
   const gidm = route.params['id']
   const res: any = await extendInfo({ gidm })
-  const data = res.data || {}
-  extendData.value = data
   if (res.code == 200) {
-    const { liveali } = data.streamNa
-    videoUrl.value = liveali.m3u8
+    extendData.value = res.data
     initVideo()
+  } else {
+    extendData.value = {}
+    notExtend.value = true
   }
 }
 
@@ -86,6 +90,9 @@ const videoUrl = ref(null)
 const videoError = ref(false)
 const videoWaiting = ref(false)
 const initVideo = () => {
+  const { streamNa } = extendData.value
+  const { liveali } = streamNa
+  videoUrl.value = liveali.m3u8
   const options = {
     preload: 'auto',
     width: '100%',
@@ -146,9 +153,15 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .live-page {
-  position: relative;
-  height: 100%;
-  padding-bottom: calc(88px + 96px);
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - (96px + 96px + 88px));
+  padding: 0;
+  .panel {
+    overflow-y: auto;
+    font-size: 24px;
+    flex: 1;
+  }
 }
 
 .match {
@@ -203,11 +216,13 @@ onUnmounted(() => {
 
 .tab {
   width: 100%;
+  height: 120px;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
   display: flex;
-  padding: 30px 32px;
+  align-items: center;
+  padding: 0 32px;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -238,9 +253,5 @@ onUnmounted(() => {
       color: #fff;
     }
   }
-}
-
-.panel {
-  font-size: 24px;
 }
 </style>
