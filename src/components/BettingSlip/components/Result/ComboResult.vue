@@ -1,14 +1,30 @@
 <template>
-  <SingleResult v-if="mode===1"></SingleResult>
-  <ComboResult v-else></ComboResult>
+  <div class="result-page">
+    <div v-for="(result, index) in results" :key="index" class="result-item">
+      <div class="title">
+        <span class="state-icon" :class="`${result.errorCode ? 'error' : 'check'}`"></span>
+        {{ result.errorCode ? $t('betting.orderError') : $t('betting.orderCheck') }}
+      </div>
+      <div class="content">
+        <div class="result-info">
+          <div class="title">
+            <div class="betting-name">{{ result.count }}场串关</div>
+          </div>
+          <div class="details">
+            <SportsIcon v-for="(item, index1) in result.list" :key="index1" :icon-src="item.gameType" />
+          </div>
+        </div>
+        <div class="betting-odds">@<span v-points="result.ior"></span></div>
+        <div class="order-state" :class="`${result.errorCode ? 'error' : 'check'}`"></div>
+      </div>
+    </div>
+  </div>
 </template>
 <script lang="ts" setup>
 import store from '@/store'
 import { computed } from 'vue'
-import SingleResult from './SingleResult.vue'
-import ComboResult from './ComboResult.vue'
 
-const mode = computed(() => store.state.betting.mode)
+const results = computed(() => store.state.betting.results)
 </script>
 <style scoped lang="scss">
 .result-page {
