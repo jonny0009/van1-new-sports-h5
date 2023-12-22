@@ -1,14 +1,12 @@
 <template>
   <div class="sportlive">
+    <div v-if="gameTypeList.length" class="sportlive-Match-Tabs">
+      <TextButton text="推荐" :active="!gameType" @click="clickGameType({})" />
+      <SportsButton v-for="(item,idx) in gameTypeList" :key="idx" :text="item.gameType" :active="gameType===item.gameType" @click="clickGameType(item)" />
+    </div>
     <Loading v-if="!isLoading" />
     <template v-else>
-      <div class="sportlive-Match-Tabs">
-        <TextButton text="推荐" :active="!gameType" @click="clickGameType({})" />
-        <SportsButton v-for="(item,idx) in gameTypeList" :key="idx" :text="item.gameType" :active="gameType===item.gameType" @click="clickGameType(item)" />
-      </div>
-
       <MatchLive v-for="(item,idx) in commonMatchesList" :key="idx" :send-params="item" />
-
       <HomeEmpty v-if="!commonMatchesList.length"></HomeEmpty>
     </template>
     <div class="footerHeight"></div>
