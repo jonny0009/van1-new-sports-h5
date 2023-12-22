@@ -1,0 +1,1 @@
+import{f as a}from"./index.4e6847ca.js";const e=e=>a({url:"/ai/hot/searchs",method:"get",params:e}),r=e=>a({url:"/ai/mobile/merchantAccountServer/api/c/getCMerAccessWallet",method:"get",params:e}),s=e=>a({url:"/ai/mobile/player/messageList",method:"get",params:e}),t=e=>a({url:"/ai/mobile/player/find",method:"get",params:e});export{t as a,r as g,s as m,e as r};
