@@ -13,6 +13,7 @@
         :active="item.value === active"
         :text="item.text"
         :src="item.icon"
+        :class="item.value"
       />
     </div>
   </div>
@@ -103,6 +104,13 @@ const homeBarArray:any = ref(homeBarArrayTable(''))
     .img{
       width: 36px !important;
       height: 36px !important;
+    }
+
+    &.ImportantRecommend{
+      .img{
+        width: 32px !important;
+        height: 32px !important;
+      }
     }
   }
 }

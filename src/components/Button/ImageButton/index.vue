@@ -69,7 +69,8 @@ defineProps({
   font-size: 24px;
   font-weight: bold;
   span{
-    line-height:12px;
+    font-size: 24px;
+    line-height:24px;
   }
   &.active{
     background:#7642fe;
