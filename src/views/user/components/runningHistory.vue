@@ -4,23 +4,14 @@
       <div v-if="item.timeName" class="time" :class="timeIndex == index ? 'timeActive' : ''" @click="selectTime(index)">
         {{ item.timeName }}
       </div>
-      <p v-else class="imgStyle">
+      <p v-else class="imgStyle" @click="getSelectTime">
         <img class="img_1" src="@/assets/images/user/selectTime.png" alt="" />
       </p>
     </div>
   </div>
-  <!-- 状态 -->
-  <div class="status">
-    <div class="status_1">
-      <span>状态</span>
-      <div class="round" @click="seStatus()">
-        <span>{{ commonKey.value }}</span>
-        <img class="img_1 " :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
-      </div>
-    </div>
-  </div>
+  <van-divider />
   <!-- 列表 -->
-  <div v-if="list.arr.length" class="dataList">
+  <div v-if="!list.arr.length" class="dataList">
     <div v-for="(item, index) in list.arr" :key="index" class="item">
       <div class="top">
         <div class="left">
@@ -124,7 +115,8 @@
       </div>
     </div>
   </van-popup>
-
+  <!-- 日期选择 -->
+  <!-- <van-calendar v-model:show="showTime" type="multiple" @confirm="onConfirm" /> -->
 </template>
 
 <script lang="ts" setup>
@@ -178,14 +170,15 @@ const timeList = reactive([
   }
 
 ])
-onMounted(() => {
-  getNoAccount({})
-})
+
+const getSelectTime = () => {
+  console.log('选择时间', '======')
+}
 
 async function setPk(val: any) {
   commonKey.value = val
   showBottom.value = false
-  getNoAccount({})
+  getNoAccount()
   console.log(val)
 }
 const selectTime = (index: number) => {
@@ -209,23 +202,16 @@ const selectTime = (index: number) => {
   //
   beginTime.value = startDate
   endTime.value = endDate
-  getNoAccount(3)
 }
-const seStatus = () => {
-  showBottom.value = true
-}
+onMounted(() => {
+  getNoAccount()
+})
 
-const getNoAccount = async (num:any) => {
+const getNoAccount = async () => {
   const params = {
     orderState: commonKey.value.key,
     page: 1,
-    pageSize: 10,
-    beginTime: '',
-    endTime: ''
-  }
-  if (num === 3) {
-    params.beginTime = beginTime.value
-    params.endTime = endTime.value
+    pageSize: 10
   }
   const res: any = await betRecordTab(params)
   // const res: any = await betRecordTab({ 'orderState': '1', 'page': 1, 'pageSize': 10, 'beginTime': 1703132137274, 'endTime': 1703218537274 })

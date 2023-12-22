@@ -61,10 +61,7 @@ const replaceImgUrl = (str: any) => {
 </script>
 
 <style lang="scss" scoped>
-:root {
-  --van-toast-text-padding: 20px 30px;
-  --van-toast-font-size: 28px;
-}
+
 .noticeDetail {
   .bg-title {
     width: 100%;

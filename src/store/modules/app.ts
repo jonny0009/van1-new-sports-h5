@@ -53,6 +53,8 @@ const appModule: Module<App, any> = {
     async getAllSports({ state }) {
       const res:any = await getAllSports() || {}
       if (res.code === 200) {
+        console.log(res, '======你是啥===')
+
         state.sports = res.data || []
       }
     }

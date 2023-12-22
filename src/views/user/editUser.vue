@@ -72,11 +72,6 @@ const title = ref('编辑档案')
 </script>
 
 <style lang="scss" scoped>
-:root {
-  --van-field-word-limit-font-size: 30px;
-  --van-toast-text-padding: 20px 30px;
-  --van-toast-font-size: 28px;
-}
 
 .editUser {
   .bg-title {

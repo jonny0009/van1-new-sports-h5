@@ -124,10 +124,7 @@ const beforeClose = (position: any) => {
 
 <style lang="scss" scoped>
 @import './style/notice.scss';
-:root {
-  --van-toast-text-padding: 20px 30px;
-  --van-toast-font-size: 28px;
-}
+
 :deep(.van-field__control) {
   height: 50px;
   font-size: 30px;

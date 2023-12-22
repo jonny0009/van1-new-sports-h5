@@ -324,7 +324,6 @@ const toForget = (values?: any) => {
   font-size: 38px;
 }
 :deep(.van-toast__text) {
-  width: ;
   font-size: 38px;
 }
 </style>

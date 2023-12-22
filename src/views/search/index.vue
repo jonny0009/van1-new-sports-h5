@@ -13,7 +13,10 @@
     <!-- 推荐 -->
     <div v-if="!keyWords" class="content">
       <p v-if="ifHistory" class="font_1">推荐</p>
-      <p v-else class="font_1">搜索历史</p>
+      <p v-else class="font_1 font-2">
+        <span>搜索历史</span>
+        <img class="img_3" src="@/assets/images/user/del.svg" alt="" @click="hanDleClear" />
+      </p>
       <van-divider />
       <div v-if="!ifHistory" class="historyList">
         <div v-for="i in 6" :key="i" class="item">
@@ -78,6 +81,7 @@ import ball4 from '@/assets/images/login/ball4.svg'
 import game1 from '@/assets/images/login/game1.png'
 // import game2 from '@/assets/images/login/game2.png'
 // import game3 from '@/assets/images/login/game3.png'
+// import game5 from '@/assets/images/user/del.svg'
 import goImg from '@/assets/images/login/go@2x.png'
 import time from '@/assets/images/login/time.png'
 import { useRouter } from 'vue-router'
@@ -108,6 +112,9 @@ const ballList = reactive(
 onMounted(async () => {
   getList()
 })
+const hanDleClear = async () => {
+  console.log('清除历史===')
+}
 const getList = async () => {
   const res: any = await rightSearch({ keywords: 1 })
   console.log(res, '=====')
@@ -159,6 +166,15 @@ const toUrl = () => {
       color: #96A5AA;
       letter-spacing: 0;
       font-weight: 600;
+    }
+
+    .font-2 {
+      display: flex;
+      justify-content: space-between;
+      .img_3{
+        width: 24px;
+        height: 24px;
+      }
     }
 
     .historyList {

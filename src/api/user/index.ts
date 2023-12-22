@@ -80,3 +80,27 @@ export const playerInfo = (params:any) => {
   })
 }
 
+/*
+结果, 投注历史========
+{"orderState":"0","page":1,"pageSize":10}
+{"orderState":"1","page":1,"pageSize":10,"beginTime":1703126000447,"endTime":1703212400447}
+参数
+ */
+export const betRecordTab = (data:any) => {
+  return request({
+    url: '/ai/mobile/order/all/betRecordTab',
+    method: 'post',
+    data
+  })
+}
+// 游戏详情
+// gidms=48935924,6525841347224326144,6525841345152335872
+
+export const getGameManyInfo = (params:any) => {
+  return request({
+    url: 'ai/mobile/dataPageServer/api/c/game/getGameManyInfo',
+    method: 'post',
+    params
+  })
+}
+
