@@ -64,15 +64,15 @@ const getFirstLeagues = async () => {
 }
 const goSportClick = (item:any) => {
   const { leagueId, gameType } = item
-  const params:any = {
+  router.push({
     name: 'Sport',
     query: {
-      'type': gameType,
-      'leagueId': leagueId,
-      'homeGoSport': 'homeGoSport'
+      leagueId
+    },
+    params: {
+      type: gameType
     }
-  }
-  router.push(params)
+  })
 }
 const init = () => {
   getFirstLeagues()
