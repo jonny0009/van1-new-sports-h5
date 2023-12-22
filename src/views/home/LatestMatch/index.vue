@@ -42,7 +42,7 @@ watch(refreshChangeTime, (val) => {
 })
 const recommendEventsList = reactive([])
 const isLoading = ref(false)
-const getRecommendEvents = async (gameType:any = '') => {
+const getRecommendEvents = async (gameType:any = 'FT') => {
   isLoading.value = false
   const params = {
     gradeType: 2,
