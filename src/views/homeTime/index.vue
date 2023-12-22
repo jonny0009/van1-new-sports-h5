@@ -1,46 +1,49 @@
 <template>
   <div class="homeTime-page">
 
-    <ArrowTitle class="mt10 mb10" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
+    <ArrowTitle class="mt10 mb20" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
 
-    <SportsTabs @returnSportsSuccess="returnSportsSuccess" />
-    <!-- <div class="homeTime-Time-Tabs mt10">
-      <div class="item active">
-        <span class="name">
-          全部
-        </span>
-        <div class="number">
-          946
+    <SportsTabs class="mb20" @returnSportsSuccess="returnSportsSuccess" />
+
+    <!--
+      <div class="homeTime-Time-Tabs mt10">
+        <div class="item active">
+          <span class="name">
+            全部
+          </span>
+          <div class="number">
+            946
+          </div>
+        </div>
+        <div class="item">
+          <span class="name">
+            全部
+          </span>
+          <div class="number">
+            946
+          </div>
         </div>
       </div>
-      <div class="item">
-        <span class="name">
-          全部
-        </span>
-        <div class="number">
-          946
-        </div>
-      </div>
-    </div> -->
-    <homeMatchHandicap
-      v-for="(item,idx) in recommendEventsList"
-      :key="idx"
-      :send-params="item"
-      class="mb20"
-    />
-    <!-- <div class="Button-MatchMore mt20">
-      <span>
-        查看更多比赛
-      </span>
-    </div> -->
+    -->
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+    >
+      <homeMatchHandicap
+        v-for="(item,idx) in recommendEventsList"
+        :key="idx"
+        :send-params="item"
+        class="mb20"
+      />
+    </van-list>
     <div class="footerHeight"></div>
   </div>
 </template>
 <script lang="ts" setup>
 // img
 import titleTime from '@/assets/images/home/title-time.png'
-// components
-import homeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
 // api
 import { recommendEvents } from '@/api/home'
 // script
@@ -63,6 +66,26 @@ const getRecommendEvents = async (gameType:any) => {
     recommendEventsList.value = baseData
   }
 }
+//
+
+const loading = ref(false)
+const finished = ref(false)
+const timer:any = ref('')
+const onLoad = () => {
+  console.log('onLoad onLoad')
+  // 异步更新数据
+  clearTimeout(timer.value)
+  timer.value = setTimeout(() => {
+    loading.value = true
+    // 加载状态结束
+
+    // // 数据全部加载完成
+    // if (list.value.length >= 40) {
+    //   finished.value = true
+    // }
+  }, 100)
+}
+
 const returnSportsSuccess = (val:any) => {
   getRecommendEvents(val)
 }
