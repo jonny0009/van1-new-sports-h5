@@ -8,7 +8,6 @@
     <div class="home-match">
       <div calss="up-match-group__body">
         <div class="up-match">
-
           <!--  -->
           <div class="match-info-live__header border-bottom">
             <div class="up-match-league">
@@ -21,7 +20,6 @@
               </div>
             </div>
           </div>
-
           <!--  -->
           <div class="up-match-score border-bottom">
             <div class="item mb5">
@@ -39,7 +37,6 @@
               </div>
             </div>
           </div>
-
           <!--  -->
           <div class="up-match__body">
             <!-- 全场 亚洲让分盘 -->
@@ -157,24 +154,21 @@
               </div>
             </div>
             <!--
-
              -->
           </div>
-
         </div>
       </div>
       <!--  -->
-
       <div class="up-match__footer">
         <div class="match-footer">
           <div class="match-footer__item">
             <span>更多玩法</span>
-            <span class="num">149</span>
+            <!-- <span class="num">149</span> -->
             <van-icon class="arrow" name="arrow" />
           </div>
-          <div class="match-footer__item">
+          <div class="match-footer__item" @click="goClick">
             <span>投注动态</span>
-            <span class="num">45</span>
+            <!-- <span class="num">45</span> -->
             <van-icon class="arrow" name="arrow" />
           </div>
         </div>
@@ -186,4 +180,13 @@
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 import teamAway from '@/assets/images/home/match/team-away.svg'
 import teamHome from '@/assets/images/home/match/team-home.svg'
+import { showDialog } from 'vant'
+const goClick = () => {
+  showDialog({
+    message: '投注动态即将推出',
+    theme: 'round-button'
+  }).then(() => {
+  // on close
+  })
+}
 </script>
