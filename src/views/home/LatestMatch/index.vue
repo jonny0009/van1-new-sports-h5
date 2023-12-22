@@ -10,7 +10,7 @@
     <Loading v-if="!isLoading" />
     <template v-else>
       <EmptyIcon v-if="!recommendEventsList.length" class="marginAuto"></EmptyIcon>
-      <homeMatchHandicap v-for="(item,idx) in recommendEventsList" v-else :key="idx" :send-params="item" class="mt20" />
+      <HomeMatchHandicap v-for="(item,idx) in recommendEventsList" v-else :key="idx" :send-params="item" class="mt20" />
     </template>
 
     <!-- btn -->
@@ -23,7 +23,6 @@
 </template>
 <script lang="ts" setup>
 import titleTime from '@/assets/images/home/title-time.png'
-import homeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
 // vue
 import { onBeforeMount, reactive, ref, computed, watch } from 'vue'
 import store from '@/store'
@@ -37,13 +36,13 @@ watch(refreshChangeTime, (val) => {
   if (val) {
     clearTimeout(timeout.value)
     timeout.value = setTimeout(() => {
-      getRecommendEvents('')
+      getRecommendEvents()
     }, 100)
   }
 })
 const recommendEventsList = reactive([])
 const isLoading = ref(false)
-const getRecommendEvents = async (gameType:any) => {
+const getRecommendEvents = async (gameType:any = '') => {
   isLoading.value = false
   const params = {
     gradeType: 2,
@@ -70,7 +69,7 @@ const returnSportsSuccess = (val:any) => {
   getRecommendEvents(val)
 }
 const init = () => {
-  getRecommendEvents('')
+  getRecommendEvents()
 }
 onBeforeMount(() => {
   init()

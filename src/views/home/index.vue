@@ -1,7 +1,7 @@
 <template>
   <div class="home-page">
     <!-- 热门赛事 -->
-    <!-- <HotMatch ref="refHotMatch" /> -->
+    <HotMatch ref="refHotMatch" />
     <!-- 推荐比赛 -->
     <GoodMatch ref="refGoodMatch" />
     <!-- 早盘 -->
@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
 // components
-// import HotMatch from './HotMatch/index.vue'
+import HotMatch from './HotMatch/index.vue'
 import GoodMatch from './GoodMatch/index.vue'
 import LatestMatch from './LatestMatch/index.vue'
 

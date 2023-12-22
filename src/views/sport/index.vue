@@ -54,7 +54,6 @@
 import earlyIcon from '@/assets/images/home/title-time.png'
 
 import recommendIcon from '@/assets/images/home/title-recommend.png'
-import HomeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
 import ChampionList from './champion/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
 import { useRoute } from 'vue-router'

@@ -1,10 +1,7 @@
 <template>
   <div class="homeTime-page">
-
     <ArrowTitle class="mt10 mb20" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
-
     <SportsTabs class="mb20" @returnSportsSuccess="returnSportsSuccess" />
-
     <!--
       <div class="homeTime-Time-Tabs mt10">
         <div class="item active">
@@ -31,12 +28,18 @@
       finished-text="没有更多了"
       @load="onLoad"
     >
-      <homeMatchHandicap
-        v-for="(item,idx) in recommendEventsList"
-        :key="idx"
-        :send-params="item"
-        class="mb20"
-      />
+      <template v-if="!isShow">
+        <Loading v-if="!isLoading" />
+        <template v-else>
+          <HomeMatchHandicap
+            v-for="(item,idx) in recommendEventsList"
+            :key="idx"
+            :send-params="item"
+            class="mb20"
+          />
+          <EmptyIcon v-if="!recommendEventsList.length" class="marginAuto"></EmptyIcon>
+        </template>
+      </template>
     </van-list>
     <div class="footerHeight"></div>
   </div>
@@ -54,19 +57,33 @@ const params:any = reactive({
   pageSize: 10,
   gradeType: 2
 })
-const recommendEventsList = ref([])
-const getRecommendEvents = async (gameType:any) => {
+const recommendEventsList = reactive([])
+const totalVal = ref(0)
+const getRecommendEvents = async (gameType:any = '', nextToggle:any = '') => {
   isLoading.value = false
   params.gameType = gameType
   const res:any = await recommendEvents(params)
   isLoading.value = true
   if (res.code === 200) {
     const data:any = res?.data || {}
-    const { baseData } = data
-    recommendEventsList.value = baseData
+    const { baseData, total } = data
+
+    totalVal.value = total
+    const { pageSize, page } = params
+    if (pageSize * page < total) {
+      console.log('console.log A')
+      // 有数据 可下一页
+    } else {
+      console.log('console.log B')
+      // 无数据
+    }
+    if (!nextToggle) {
+      recommendEventsList.length = 0
+    }
+
+    recommendEventsList.push(...baseData)
   }
 }
-//
 
 const loading = ref(false)
 const finished = ref(false)
@@ -78,22 +95,21 @@ const onLoad = () => {
   timer.value = setTimeout(() => {
     loading.value = true
     // 加载状态结束
-
     // // 数据全部加载完成
     // if (list.value.length >= 40) {
     //   finished.value = true
     // }
   }, 100)
 }
-
 const returnSportsSuccess = (val:any) => {
   getRecommendEvents(val)
 }
+const isShow = ref(false)
 const returnStatus = (val:any) => {
-  console.log(val)
+  isShow.value = val
 }
 const init = () => {
-  getRecommendEvents('')
+  getRecommendEvents()
 }
 onBeforeMount(() => {
   init()

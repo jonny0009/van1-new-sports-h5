@@ -9,6 +9,7 @@ import EmptyIcon from '@/components/EmptyIcon/index.vue'
 import SportsButton from '@/components/Button/SportsButton/index.vue'
 import SportsTabs from '@/components/tabs/SportsTabs/index.vue'
 import ImageButton from '@/components/Button/ImageButton/index.vue'
+import HomeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
 export default {
   install(app:any) {
     app.component('SvgIcon', SvgIcon)
@@ -20,5 +21,6 @@ export default {
     app.component('SportsButton', SportsButton)
     app.component('SportsTabs', SportsTabs)
     app.component('ImageButton', ImageButton)
+    app.component('HomeMatchHandicap', HomeMatchHandicap)
   }
 }
