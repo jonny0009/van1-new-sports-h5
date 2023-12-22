@@ -55,11 +55,23 @@
 <script lang="ts" setup>
 import titleTime from '@/assets/images/home/title-time.png'
 import { recommendEvents } from '@/api/home'
-import { onBeforeMount, ref, reactive } from 'vue'
+import store from '@/store'
+import { onBeforeMount, ref, reactive, computed, watch } from 'vue'
+const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
+const timeout:any = ref('')
+watch(refreshChangeTime, (val) => {
+  if (val) {
+    clearTimeout(timeout.value)
+    timeout.value = setTimeout(async () => {
+      await initData()
+      await getRecommendEvents()
+    }, 100)
+  }
+})
 const isLoading = ref(false)
 const params:any = reactive({
   page: 1,
-  pageSize: 10,
+  pageSize: 5,
   gradeType: 2,
   gameType: 'FT'
 })
@@ -117,6 +129,10 @@ const returnSportsSuccess = (val:any) => {
 const isShow = ref(false)
 const returnStatus = (val:any) => {
   isShow.value = val
+}
+const initData = () => {
+  params.page = 1
+  params.gameType = 'FT'
 }
 const init = () => {
   getRecommendEvents()

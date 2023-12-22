@@ -129,7 +129,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { getHandicap } from '@/utils/getHandicap.ts'
+import { getHandicap } from '@/utils/home/getHandicap.ts'
 // components
 import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
 import TimeView from '@/components/HomeMatch/public/time/index.vue'

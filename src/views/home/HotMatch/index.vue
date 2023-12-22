@@ -64,8 +64,7 @@ const goSportClick = (item:any) => {
     name: 'Sport',
     query: {
       'type': gameType,
-      'leagueId': leagueId,
-      'homeGoSport': 'homeGoSport'
+      'leagueId': leagueId
     }
   }
   router.push(params)

@@ -154,7 +154,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { getHandicap } from '@/utils/getHandicap.ts'
+import { getHandicap } from '@/utils/home/getHandicap.ts'
 import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
 import TimeView from '@/components/HomeMatch/public/time/index.vue'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
