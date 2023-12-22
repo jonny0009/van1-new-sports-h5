@@ -5,14 +5,6 @@ import request from '@/utils/request'
  * @param {*} data
  * @returns
  */
-// 盘口设置
-export const getPlateMask = (data:any) => {
-  return request({
-    url: 'ai/mobile/player/configSettingNew',
-    method: 'post',
-    data
-  })
-}
 // 获取语言
 export const getLanguages = (params:any) => {
   return request({
