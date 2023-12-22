@@ -58,7 +58,7 @@ const bettingModule: Module<Betting, any> = {
       const { handicapType } = userConfig || {}
       let betsGolds = 0
       // 单注可赢金额
-      state.markets.map((bet: any) => {
+      state.markets.forEach((bet: any) => {
         const { gold = 0, errorCode, ior, isEuropePlay } = bet
         if (gold && !errorCode) {
           const buyGold = +gold || 0
@@ -154,6 +154,32 @@ const bettingModule: Module<Betting, any> = {
     changeComboAmount({ state }, amount) {
       state.comboAmount = amount
     },
+    inputSingleAmount({ state }, amount) {
+      const find = state.markets.find((marketInfo: MarketInfo) => marketInfo.playOnlyId === state.editId)
+      if (!find) {
+        return false
+      }
+      if (amount === 'back') {
+        const e = '' + find.gold
+        e.length === 1 ? find.gold = 0 : find.gold = e.substring(0, e.length - 1)
+      } else {
+        find.gold = find.gold + amount
+      }
+      if (find.gold * 1 === 0) {
+        find.gold = ''
+      }
+    },
+    inputComboAmount({ state }, amount) {
+      if (amount === 'back') {
+        const e = '' + state.comboAmount
+        e.length === 1 ? state.comboAmount = 0 : state.comboAmount = e.substring(0, e.length - 1)
+      } else {
+        state.comboAmount = state.comboAmount + amount
+      }
+      if (state.comboAmount * 1 === 0) {
+        state.comboAmount = ''
+      }
+    },
     setMoreShow({ state }, { status, moreParams }) {
       state.moreShow = status
       state.moreParams = moreParams
@@ -182,7 +208,16 @@ const bettingModule: Module<Betting, any> = {
       })
       if (index >= 0) {
         state.markets.splice(index, 1)
+        state.markets = state.markets.slice()
         localStore.slice(MarketListKey, index)
+      }
+    },
+    clearIorChange({ state }, playOnlyId) {
+      const find = state.markets.find((marketInfo: MarketInfo) => {
+        return marketInfo.playOnlyId === playOnlyId
+      })
+      if (find) {
+        find.iorChange = ''
       }
     },
     // update投注项
@@ -198,6 +233,7 @@ const bettingModule: Module<Betting, any> = {
         const { ratioKey, isEuropePlay, session } = bet
         // 替换点水返回的并且有值的属性
         const currentBet = newBetsMap[ratioKey]
+        let iorChange = ''
         if (currentBet) {
           const newBetData: any = {}
           // 旧的点水
@@ -215,6 +251,15 @@ const bettingModule: Module<Betting, any> = {
           if (!(isEuropePlay && handicapType === 'H') && eoIor) {
             newBetData.ior = eoIor
           }
+          const newIor = (newBetData.ior * 1 || ior * 1)
+          if (oldIor * 1 !== newIor) {
+            if (oldIor * 1 > newIor) {
+              iorChange = 'up'
+            } else {
+              iorChange = 'down'
+            }
+          }
+
           // 新增点水的赔率标记 hitIor,保留点水的ior,投注用到，单独标记，防止污染
           // 点水失败不会返回赔率，所以需要额外判断
           if (ior) {
@@ -246,7 +291,7 @@ const bettingModule: Module<Betting, any> = {
               newBetData[key] = bet[key]
             }
           })
-          replaceBet = { ...bet, ...currentBet, ...newBetData }
+          replaceBet = { ...bet, ...currentBet, ...newBetData, iorChange }
           // 异常情况下回显
           if (errorCode && session) {
             replaceBet.session = session
@@ -423,7 +468,10 @@ const bettingModule: Module<Betting, any> = {
         s: state.comboS,
         t: state.comboT
       })
-      const res: any = await comboBetting(params).catch(() => {})
+      dispatch('setHitState', 0)
+      const res: any = await comboBetting(params).finally(() => {
+        dispatch('setHitState', 1)
+      }).catch(() => {})
       if (res?.code === 200 && res?.data) {
         const { errorCode } = res?.data || {}
         state.results = [
