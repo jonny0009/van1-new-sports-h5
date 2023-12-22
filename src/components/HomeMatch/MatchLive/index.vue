@@ -50,7 +50,7 @@
           <!--  -->
           <div class="up-match__body">
             <!-- 全场 亚洲让分盘 -->
-            <div class="match-betting-item">
+            <div v-if="sendParams.RE" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">
                   全场 亚洲让分盘
@@ -71,30 +71,13 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <div class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">柏林联 </span>
-                        <span class="point">-0.5</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">1.88</div>
-                      </div>
-                    </div>
-                    <div class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">柏林联 </span>
-                        <span class="point">-0.5</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">1.88</div>
-                      </div>
-                    </div>
+                    <Handicap :send-params="getHandicap('RE',sendParams)" />
                   </div>
                 </div>
               </div>
             </div>
             <!-- 全场 大小盘  -->
-            <div class="match-betting-item">
+            <div v-if="sendParams.ROU" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">
                   全场 大小盘
@@ -103,30 +86,14 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <div class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">大于</span>
-                        <span class="point">2.5</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">1.88</div>
-                      </div>
-                    </div>
-                    <div class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">小于</span>
-                        <span class="point">2.5</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">1.88</div>
-                      </div>
-                    </div>
+                    <Handicap :send-params="getHandicap('ROU',sendParams)" />
+
                   </div>
                 </div>
               </div>
             </div>
             <!-- 全场 1X2 -->
-            <div class="match-betting-item">
+            <div v-if="sendParams.RM" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">
                   全场 1X2
@@ -135,30 +102,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <div class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">柏林联</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">1.88</div>
-                      </div>
-                    </div>
-                    <div class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">柏林联</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">1.88</div>
-                      </div>
-                    </div>
-                    <div class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">柏林联</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">1.88</div>
-                      </div>
-                    </div>
+                    <Handicap :send-params="getHandicap('RM',sendParams)" />
                   </div>
                 </div>
               </div>
@@ -187,7 +131,9 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { getHandicap } from '@/utils/getHandicap.ts'
 // components
+import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
 import TimeView from '@/components/HomeMatch/public/time/index.vue'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 // script
