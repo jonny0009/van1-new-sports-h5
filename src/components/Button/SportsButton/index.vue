@@ -114,8 +114,8 @@ SportsName.value = `icon-${props.text}`
     color:#fff;
   }
   span{
-    font-size: 12px;
-    line-height: 12px;
+    font-size: 24px;
+    line-height: 24px;
     display: inline-block;
   }
   .img{
