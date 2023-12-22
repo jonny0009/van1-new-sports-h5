@@ -5,7 +5,11 @@
       <span :class="{ active: navActive == 2 }" @click="onNavClick(2)">全部跟注</span>
     </div>
 
-    <div class="item" v-for="(item, index) in list" :key="index">
+    <Loading v-if="loading" />
+    <div class="no-data" v-else-if="list.length === 0">
+      <EmptyIcon />
+    </div>
+    <div class="item" v-else v-for="(item, index) in list" :key="index">
       <div class="header">
         <img class="avatar" v-img="item.headImg" :type="3" alt="" />
         <div class="title">
@@ -107,7 +111,9 @@ const onNavClick = (num: number) => {
 }
 
 const list: Ref<any[]> = ref([])
+const loading = ref(false)
 const getWithData = async () => {
+  loading.value = true
   const apiFun = navActive.value == 1 ? betRecord : betRecordAll
   const params = {
     page: 1,
@@ -128,6 +134,7 @@ const getWithData = async () => {
     })
     list.value = dataList
   }
+  loading.value = false
 }
 watch(
   () => props.matchInfo,
@@ -144,6 +151,11 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.no-data {
+  display: flex;
+  justify-content: center;
+  padding: 50px 0 0 0;
+}
 .panel-with {
   padding: 0 36px;
   .top-nav {

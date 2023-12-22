@@ -1,6 +1,9 @@
 <template>
   <div class="panel-bet">
-    <van-collapse v-model="activeNames">
+    <div class="no-data" v-if="betPlayList.length === 0">
+      <EmptyIcon />
+    </div>
+    <van-collapse v-else v-model="activeNames">
       <van-collapse-item v-for="(play, i) in betPlayList" :key="i" :name="`${i + 1}`" :border="false">
         <template #title>
           <span v-play="play.playInfo"></span>
@@ -92,6 +95,11 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.no-data {
+  display: flex;
+  justify-content: center;
+  padding: 100px 0 0 0;
+}
 .panel-bet {
   padding: 0 36px;
   .van-hairline--top-bottom:after {

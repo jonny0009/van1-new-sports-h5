@@ -1,5 +1,8 @@
 <template>
   <div class="panel-more">
+    <div class="no-data" v-if="finished && list.length === 0">
+      <EmptyIcon />
+    </div>
     <van-list
       v-model:loading="loading"
       :finished="finished"
@@ -39,6 +42,8 @@ const getRbLiveList = async () => {
     })
     loading.value = false
     finished.value = list.value.length == data.total
+  } else {
+    finished.value = true
   }
 }
 const onItemClick = (item: any) => {
@@ -51,6 +56,11 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.no-data {
+  display: flex;
+  justify-content: center;
+  padding: 50px 0 0 0;
+}
 .panel-more {
   padding: 0 36px;
 }
