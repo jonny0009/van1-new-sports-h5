@@ -468,7 +468,10 @@ const bettingModule: Module<Betting, any> = {
         s: state.comboS,
         t: state.comboT
       })
-      const res: any = await comboBetting(params).catch(() => {})
+      dispatch('setHitState', 0)
+      const res: any = await comboBetting(params).finally(() => {
+        dispatch('setHitState', 1)
+      }).catch(() => {})
       if (res?.code === 200 && res?.data) {
         const { errorCode } = res?.data || {}
         state.results = [
