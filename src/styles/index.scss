@@ -251,12 +251,13 @@
       display: flex;
       flex-direction:column;
       flex: 1;
-      padding: 16px 5px;
+      padding: 10px 5px 20px;
       background-color: #ffffff;
-      border-radius: 26px;
+      border-radius: 20px;
       overflow: hidden;
       text-align: center;
       .up-betting-name{
+        margin-bottom: 6px;
         span{
           line-height: 24px;
           font-size: 24px;
@@ -396,6 +397,22 @@
     white-space:nowrap;
     &:last-child{
       margin-right: 0;
+    }
+  }
+}
+.betting-option-wrap {
+  display: inline-block;
+  &.selected{
+    background-color: #7642fd !important;
+    .up-betting-name{
+      .text{
+        color: rgba(255, 255, 255, .8) !important;
+      }
+    }
+    .details{
+      .item{
+        color: #fff !important;
+      }
     }
   }
 }

@@ -63,12 +63,3 @@ const touchMarket = (event: any) => {
 
 </script>
 
-<style scoped lang="scss">
-.betting-option-wrap {
-  display: inline-block;
-  &.selected{
-    background-color: #7642fd;
-    color: #fff;
-  }
-}
-</style>

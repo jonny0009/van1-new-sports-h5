@@ -37,7 +37,7 @@
               :send-params="item"
               :class="{'mt20':idx !== 0}"
             />
-            <EmptyIcon v-if="!recommendEventsList.length" class="marginAuto"></EmptyIcon>
+            <HomeEmpty v-if="!recommendEventsList.length"></HomeEmpty>
           </template>
 
           <Loading

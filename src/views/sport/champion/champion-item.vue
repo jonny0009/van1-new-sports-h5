@@ -72,7 +72,6 @@ const clickOpen = () => {
         border-radius: 26px;
         overflow: hidden;
         transition: background-color .2s;
-
         .betslipLine {
           width: 100%;
           flex: 1;
