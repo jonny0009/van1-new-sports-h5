@@ -64,10 +64,11 @@ const clickChangeActive = (item:any) => {
   const { value, name } = item
   let params:any = {}
   params.name = name
+
   if (name === 'Sport') {
     params = {
       name,
-      query: {
+      params: {
         type: value
       }
     }

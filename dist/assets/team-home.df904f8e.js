@@ -1,1 +1,0 @@
-var e="/assets/team-away.62111f60.svg",t=Object.freeze(Object.defineProperty({__proto__:null,default:e},Symbol.toStringTag,{value:"Module"})),a="/assets/team-home.3d0f32b2.svg",o=Object.freeze(Object.defineProperty({__proto__:null,default:a},Symbol.toStringTag,{value:"Module"}));export{t as _,o as a,e as b,a as t};

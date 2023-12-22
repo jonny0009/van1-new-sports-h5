@@ -56,8 +56,6 @@ const ifStandard = ref<Boolean>(false)
 const title = ref('编辑昵称')
 
 const updateName = (str: string) => {
-  console.log('1111')
-
   if (!str) {
     ifSpace.value = false
     ifSpecial.value = false
@@ -89,7 +87,6 @@ const updateName = (str: string) => {
 }
 const handleSave = () => {
   // $router.push('/user/userInfo')
-  console.log('保存====')
 }
 
 const goBack = () => {

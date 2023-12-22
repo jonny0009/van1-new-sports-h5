@@ -25,6 +25,8 @@ import BettingMore from '@/components/BettingMore/index.vue'
 <style lang="scss">
 .GlobalTop {
   background: #7642fe;
+  right: 40px !important;
+  bottom: 200px !important;
   .van-icon {
     transform: rotate(180deg);
     font-weight: 600;

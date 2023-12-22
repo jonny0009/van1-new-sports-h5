@@ -65,7 +65,6 @@ const goUrl = (url:string) => {
 }
 const handleSave = () => {
   // $router.push('/user/userInfo')
-  console.log('保存====')
 }
 const title = ref('编辑档案')
 

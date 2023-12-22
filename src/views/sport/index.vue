@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <ArrowTitle v-if="!leagueId || homeGoSport" class="mt10 mb10" :src="recommendIcon" :text="$t('sport.recommend')" @returnSuccess="recommendCloseClick" />
+    <ArrowTitle v-if="!leagueId" class="mt10 mb10" :src="recommendIcon" :text="$t('sport.recommend')" @returnSuccess="recommendCloseClick" />
     <ArrowTitle v-else class="mt10 mb10" :src="leagueLogo" :text="leagueName" @returnSuccess="recommendCloseClick" />
 
     <template v-if="isOpenRecommend">
@@ -23,22 +23,24 @@
         <div v-if="recommendList.length" class="recommend-list">
           <HomeMatchHandicap v-for="(item,idx) in recommendList" v-show="isOpenRecommend" :key="idx" :send-params="item" />
         </div>
-        <EmptyIcon v-else class="marginAuto"></EmptyIcon>
+        <HomeEmpty v-else></HomeEmpty>
       </template>
     </template>
 
-    <ArrowTitle class="mt10 mb10" :src="earlyIcon" :text="$t('sport.early')" @returnSuccess="earlyCloseClick" />
-    <template v-if="isOpenEarly">
-      <Loading v-if="!getRecommendEventsIsLoading" />
-      <template v-else>
-        <div v-if="earlyList.length" class="early-list">
-          <HomeMatchHandicap v-for="(item,idx) in earlyList" v-show="isOpenEarly" :key="idx" :send-params="item" />
-        </div>
-        <EmptyIcon v-else class="marginAuto"></EmptyIcon>
+    <template v-if="!leagueId">
+      <ArrowTitle class="mt10 mb10" :src="earlyIcon" :text="$t('sport.early')" @returnSuccess="earlyCloseClick" />
+      <template v-if="isOpenEarly">
+        <Loading v-if="!getRecommendEventsIsLoading" />
+        <template v-else>
+          <div v-if="earlyList.length" class="early-list">
+            <HomeMatchHandicap v-for="(item,idx) in earlyList" v-show="isOpenEarly" :key="idx" :send-params="item" />
+          </div>
+          <HomeEmpty v-else></HomeEmpty>
+        </template>
       </template>
     </template>
 
-    <ChampionList v-if="championList.length && !homeGoSport" :champion-list="championList" />
+    <ChampionList v-if="championList.length && leagueId" :champion-list="championList" />
 
     <!-- <div class="Button-MatchMore mt20">
       <span>
@@ -54,11 +56,10 @@
 import earlyIcon from '@/assets/images/home/title-time.png'
 
 import recommendIcon from '@/assets/images/home/title-recommend.png'
-import HomeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
 import ChampionList from './champion/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
 import { useRoute } from 'vue-router'
-
+import router from '@/router'
 import { ref, onBeforeMount, computed } from 'vue'
 import { apiChampionpPlayTypes } from '@/api/champion'
 import { firstLeagues, recommendEvents } from '@/api/home'
@@ -67,31 +68,32 @@ import { MarketInfo } from '@/entitys/MarketInfo'
 
 const route = useRoute()
 
-const homeGoSport = computed(() => route.query.homeGoSport)
-
 const leagueId: any = ref(route.query.leagueId)
-const gameType: any = ref(route.query.type)
+const gameType: any = ref(route.params.type)
 const leagueLogo: any = ref()
 const leagueName: any = ref()
-
+console.log(leagueId.value)
 const isOpenRecommend: any = ref(true)
 const recommendCloseClick = (val:any) => {
-  console.log(val)
   isOpenRecommend.value = !val
 }
 
 const isOpenEarly: any = ref(true)
 const earlyCloseClick = (val:any) => {
-  console.log(val)
   isOpenEarly.value = !val
 }
 
 onBeforeMount(async () => {
   getFirstLeagues()
+  initData()
+})
+
+const initData = async () => {
   if (leagueId.value) {
     // 按联赛查询
     const leagueParames:any = ref({ gameType: gameType.value, leagueId: leagueId.value, page: 1, pageSize: 20 })
     getRecommendEvents(leagueParames.value)
+    getChampionpPlayTypes()
   } else {
     // 推荐
     const recommendParames:any = ref({ gameType: gameType.value, gradeType: 1, page: 1, pageSize: 20 })
@@ -100,11 +102,7 @@ onBeforeMount(async () => {
     const earlyParames:any = ref({ gameType: gameType.value, gradeType: 2, page: 1, pageSize: 20 })
     getRecommendEvents(earlyParames.value)
   }
-
-  if (!homeGoSport.value) {
-    getChampionpPlayTypes()
-  }
-})
+}
 
 const firstLeaguesList: any = ref([])
 // 获取一级联赛
@@ -171,13 +169,26 @@ const getChampionpPlayTypes = async () => {
 }
 
 const clickLeague = (item: any) => {
-  if (homeGoSport.value) {
-    window.location.href = `/sport?leagueId=${item.leagueId}&type=${item.gameType}&homeGoSport=homeGoSport`
-  } else if (item.leagueId) {
-    window.location.href = '/sport?leagueId=' + item.leagueId + '&type=' + item.gameType
-  } else {
-    window.location.href = '/sport?type=' + gameType.value
-  }
+  leagueId.value = item.leagueId
+  initData()
+  // if (item.leagueId) {
+  //   router.push({
+  //     name: 'Sport',
+  //     query: {
+  //       leagueId: item.leagueId
+  //     },
+  //     params: {
+  //       type: item.gameType
+  //     }
+  //   })
+  // } else {
+  //   router.push({
+  //     name: 'Sport',
+  //     params: {
+  //       type: item.gameType
+  //     }
+  //   })
+  // }
 }
 
 </script>

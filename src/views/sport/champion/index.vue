@@ -29,7 +29,6 @@ defineProps({
   }
 })
 const CloseClick = (val:any) => {
-  console.log(val)
   isOpen.value = !val
 }
 </script>

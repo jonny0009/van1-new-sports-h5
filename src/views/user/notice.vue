@@ -53,8 +53,6 @@ const goBack = () => {
   $router.push({ path: '/home' })
 }
 const toDetail = (item: any) => {
-  console.log(item, '====')
-
   $router.push({
     path: '/user/noticeDetail',
     query: {
@@ -103,7 +101,6 @@ const replaceImgUrl = (str: any) => {
 }
 
 const beforeClose = (position: any) => {
-  console.log(position, '====11')
   // switch (position.position) {
   //   case 'left':
   //   case 'cell':

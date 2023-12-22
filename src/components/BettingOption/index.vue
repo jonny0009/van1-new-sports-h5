@@ -1,6 +1,6 @@
 <template>
   <div class="betting-option-wrap" :class="{ selected }" @click="touchMarket">
-    <slot :selected="selected"></slot>
+    <slot :selected="selected" :lock="lock" :iorChange="marketInfo.iorChange"></slot>
   </div>
 </template>
 <script setup lang="ts">
@@ -16,6 +16,14 @@ const props = defineProps({
   }
 })
 const markets = computed(() => store.state.betting.markets)
+
+const lock = computed(() => {
+  const { ior, sw } = props.marketInfo || {}
+  if (!ior || !Number(ior) || sw === 'N') {
+    return true
+  }
+  return false
+})
 const selected = computed(() => !!markets.value.find((marketInfo: MarketInfo) => marketInfo.playOnlyId === props.marketInfo.playOnlyId))
 
 // 监听赔率变化
@@ -63,12 +71,3 @@ const touchMarket = (event: any) => {
 
 </script>
 
-<style scoped lang="scss">
-.betting-option-wrap {
-  display: inline-block;
-  &.selected{
-    background-color: #7642fd;
-    color: #fff;
-  }
-}
-</style>

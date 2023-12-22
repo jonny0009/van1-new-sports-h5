@@ -133,9 +133,6 @@ const tryPlay = async () => {
     }
   }
 }
-// const setUserInfo = () => {
-//   console.log('获取信息===')
-// }
 
 const onSubmit = async (values?: any) => {
   console.log(values)

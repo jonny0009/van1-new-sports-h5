@@ -11,7 +11,9 @@
       class="iconfont"
       :class="SportsName"
     ></i>
-    {{ textVal }}
+    <span>
+      {{ textVal }}
+    </span>
   </div>
 </template>
 <script lang="ts" setup>
@@ -111,6 +113,11 @@ SportsName.value = `icon-${props.text}`
     background:#7642fe;
     color:#fff;
   }
+  span{
+    font-size: 24px;
+    line-height: 24px;
+    display: inline-block;
+  }
   .img{
     width:44px;
     height: 44px;
@@ -118,6 +125,8 @@ SportsName.value = `icon-${props.text}`
   }
   .iconfont{
     margin-right: 10px;
+    position: relative;
+    top: -2px;
   }
 }
 </style>

@@ -59,7 +59,6 @@ const leagueListAll:any = ref()
 const leagueList:any = ref()
 
 const clickGameType = async (item: any) => {
-  console.log(item.gameType)
   chooseGameType.value = item.gameType
   chooseLeagueId.value = '0'
   getChampionLeagueInfo()
@@ -72,8 +71,6 @@ const clickLeague = (item: any) => {
   } else {
     leagueList.value = leagueListAll.value.filter((t:any) => t.leagueId === item.leagueId)
   }
-
-  console.log(item.leagueId)
 }
 
 onBeforeMount(async () => {
@@ -87,7 +84,6 @@ const getChampionGameTypes = async () => {
   if (res.code === 200 && res.data) {
     gameTypeTabList.value = res.data
     chooseGameType.value = res.data[0].gameType
-    console.log(chooseGameType.value)
   }
 }
 
@@ -102,7 +98,12 @@ const getChampionLeagueInfo = async () => {
 const clickSportPage = (item: any) => {
   router.push({
     name: 'Sport',
-    query: { leagueId: item.leagueId, type: item.gameType }
+    query: {
+      leagueId: item.leagueId
+    },
+    params: {
+      type: item.gameType
+    }
   })
 }
 

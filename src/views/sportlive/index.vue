@@ -1,31 +1,30 @@
 <template>
   <div class="sportlive">
-    <div class="sportlive-Match-Tabs">
+    <div v-if="gameTypeList.length" class="sportlive-Match-Tabs">
       <TextButton text="推荐" :active="!gameType" @click="clickGameType({})" />
       <SportsButton v-for="(item,idx) in gameTypeList" :key="idx" :text="item.gameType" :active="gameType===item.gameType" @click="clickGameType(item)" />
     </div>
-    <MatchLive v-for="(item,idx) in commonMatchesList" :key="idx" :send-params="item" />
-
+    <Loading v-if="!isLoading" />
+    <template v-else>
+      <MatchLive v-for="(item,idx) in commonMatchesList" :key="idx" :send-params="item" />
+      <HomeEmpty v-if="!commonMatchesList.length"></HomeEmpty>
+    </template>
     <div class="footerHeight"></div>
   </div>
 </template>
 <script lang="ts" setup>
 import TextButton from '@/components/Button/TextButton/index.vue'
 import MatchLive from '@/components/HomeMatch/MatchLive/index.vue'
-
-import { ref, onBeforeMount } from 'vue'
+import { ref, onBeforeMount, onActivated, onDeactivated, onBeforeUnmount } from 'vue'
 import { apiRBCondition, apiCommonMatches } from '@/api/home'
-
-const gameType: any = ref()
-onBeforeMount(async () => {
-  getApiRBCondition()
-  getApiCommonMatches()
-})
-
-const showGameTypeList: any = ref(['FT', 'BK', 'TN', 'OP_BM'])
-
-const gameTypeList: any = ref([])
-//
+const gameType:any = ref()
+const isLoading = ref(false)
+const init = async () => {
+  await getApiRBCondition()
+  await getApiCommonMatches()
+}
+const showGameTypeList:any = ref(['FT', 'BK', 'TN', 'OP_BM'])
+const gameTypeList:any = ref([])
 const getApiRBCondition = async () => {
   const res:any = await apiRBCondition({ }) || {}
   if (res.code === 200 && res.data) {
@@ -33,8 +32,7 @@ const getApiRBCondition = async () => {
     gameTypeList.value = dataList.filter((t:any) => showGameTypeList.value.includes(t.gameType))
   }
 }
-
-const commonMatchesList: any = ref([])
+const commonMatchesList:any = ref([])
 const getApiCommonMatches = async () => {
   const params = {
     gameType: gameType.value || '',
@@ -49,7 +47,11 @@ const getApiCommonMatches = async () => {
     page: 1,
     pageSize: 50
   }
+  isLoading.value = false
   const res:any = await apiCommonMatches(params) || {}
+
+  console.log(res, 'resresresres')
+  isLoading.value = true
   if (res.code === 200 && res.data?.matchList?.baseData) {
     const dataList = res.data?.matchList?.baseData || []
     commonMatchesList.value = dataList.filter((t:any) => showGameTypeList.value.includes(t.gameType))
@@ -57,11 +59,28 @@ const getApiCommonMatches = async () => {
     commonMatchesList.value = []
   }
 }
-
-const clickGameType = (item: any) => {
+const clickGameType = (item:any) => {
   gameType.value = item.gameType
   getApiCommonMatches()
 }
+
+onBeforeMount(async () => {
+  console.log('onBeforeMount')
+  isLoading.value = false
+  init()
+})
+
+onActivated(() => {
+  console.log('onActivated')
+})
+
+onDeactivated(() => {
+  console.log('deactivated')
+})
+
+onBeforeUnmount(() => {
+  console.log('onBeforeUnmount')
+})
 
 </script>
 <style lang="scss" scoped>

@@ -5,7 +5,7 @@ export default {
   redirect: '/sport',
   children: [
     {
-      path: '/sport',
+      path: '/sport/:type',
       component: () => import('@/views/sport/index.vue'),
       name: 'Sport',
       meta: {

@@ -1,9 +1,9 @@
 <template>
   <div class="homeMatchHandicap">
     <div class="home-tabs-play">
-      <div class="time">
-        {{ matchDate(props.sendParams.gameDate) }}
-      </div>
+
+      <TimeView :time-send-params="sendParams" />
+
       <div class="play">
         <div class="flex-1"></div>
         <span
@@ -78,7 +78,6 @@
               </div>
             </div>
           </div>
-
           <!--  -->
           <div class="up-match__body">
             <!-- 全场 亚洲让分盘 -->
@@ -97,7 +96,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getList('R')" />
+                    <Handicap :send-params="getHandicap('R',sendParams)" />
                   </div>
                 </div>
               </div>
@@ -110,7 +109,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getList('OU')" />
+                    <Handicap :send-params="getHandicap('OU',sendParams)" />
                   </div>
                 </div>
               </div>
@@ -123,19 +122,17 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getList('M')" />
+                    <Handicap :send-params="getHandicap('M',sendParams)" />
                   </div>
                 </div>
               </div>
             </div>
             <!--
-
              -->
           </div>
         </div>
       </div>
       <!--  -->
-
       <div class="up-match__footer">
         <div class="match-footer">
           <div
@@ -143,12 +140,12 @@
             @click="store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })"
           >
             <span>更多玩法</span>
-            <span class="num">149</span>
+            <!-- <span class="num">149</span> -->
             <van-icon class="arrow" name="arrow" />
           </div>
-          <div class="match-footer__item">
+          <div class="match-footer__item" @click="goClick">
             <span>投注动态</span>
-            <span class="num">45</span>
+            <!-- <span class="num">45</span> -->
             <van-icon class="arrow" name="arrow" />
           </div>
         </div>
@@ -157,12 +154,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { matchDate } from '@/utils/matchDate.ts'
+import { getHandicap } from '@/utils/home/getHandicap.ts'
 import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
+import TimeView from '@/components/HomeMatch/public/time/index.vue'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 import { ref } from 'vue'
-import { MarketInfo } from '@/entitys/MarketInfo'
 import store from '@/store'
+import { showDialog } from 'vant'
 const props = defineProps({
   sendParams: {
     type: Object,
@@ -171,41 +169,37 @@ const props = defineProps({
     }
   }
 })
-const getTeam = ({ homeTeamAbbr, awayTeamAbbr }: any) => {
+const getTeam = ({ homeTeamAbbr, awayTeamAbbr, homeTeam, awayTeam }: any) => {
   if (!homeTeamAbbr) {
     return ''
   }
-  return `${homeTeamAbbr} v ${awayTeamAbbr}`
+  return `${homeTeamAbbr || homeTeam} v ${awayTeamAbbr || awayTeam}`
 }
-const getLeagueShortName = ({ leagueShortName }: any) => {
-  if (!leagueShortName) {
+const getLeagueShortName = ({ leagueShortName, leagueName }: any) => {
+  if (!(leagueShortName && leagueName)) {
     return ''
   }
-  return `${leagueShortName}`
+  return `${leagueShortName || leagueName}`
 }
 const RrefShow = ref(true)
 const Rclick = () => {
   RrefShow.value = !RrefShow.value
 }
 const OUrefShow = ref(true)
-
 const OUclick = () => {
   OUrefShow.value = !OUrefShow.value
 }
-const getList = (playType: string) => {
-  const details = props.sendParams
-  const playTypeItem = details[playType] || {}
-  const { game, ratioData } = playTypeItem || {}
-  const newObject = Object.assign({}, details, playTypeItem, game)
-  console.log(ratioData)
-  const newRatioData = (ratioData || []).map((e: any) => {
-    const marketInfo = new MarketInfo({ ...details, ...game, ...e, playType })
-    return Object.assign({ marketInfo }, e, newObject)
-  })
-  return newRatioData
-}
+
 const MrefShow = ref(true)
 const Mclick = () => {
   MrefShow.value = !MrefShow.value
+}
+const goClick = () => {
+  showDialog({
+    message: '投注动态即将推出',
+    theme: 'round-button'
+  }).then(() => {
+  // on close
+  })
 }
 </script>

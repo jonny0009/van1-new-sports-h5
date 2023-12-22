@@ -110,7 +110,6 @@ onMounted(async () => {
 })
 const getList = async () => {
   const res: any = await rightSearch({ keywords: 1 })
-  console.log(res, '=====')
 }
 const toUrl = () => {
   $router.push({ path: '/home' })

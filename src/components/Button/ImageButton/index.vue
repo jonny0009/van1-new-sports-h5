@@ -69,7 +69,8 @@ defineProps({
   font-size: 24px;
   font-weight: bold;
   span{
-    line-height:12px;
+    font-size: 24px;
+    line-height:24px;
   }
   &.active{
     background:#7642fe;
@@ -78,7 +79,7 @@ defineProps({
   .img{
     width:44px;
     height: 44px;
-    margin-right: 19px;
+    margin-right: 10px;
   }
   .count{
     margin-left: 5px;

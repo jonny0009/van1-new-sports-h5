@@ -11,7 +11,6 @@ const HomeModule: Module<Home, any> = {
   getters: {},
   actions: {
     setRefreshChangeTime({ state }, val) {
-      console.log(val)
       state.refreshChangeTime = val
     }
   }

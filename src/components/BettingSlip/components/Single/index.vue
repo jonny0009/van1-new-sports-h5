@@ -14,9 +14,15 @@
         <div v-if="marketInfo.isChampion" class="team-info">{{ $t('betting.champion') }}</div>
         <div v-else class="team-info">{{ marketInfo.homeTeam }} VS {{ marketInfo.awayTeam }}</div>
       </div>
-      <div class="betting-odds">@<span v-points="marketInfo.ior"></span></div>
+      <div class="betting-odds" :class="marketInfo.iorChange">
+        @<span v-points="marketInfo.ior"></span>
+        <span class="ior-change" :class="marketInfo.iorChange"></span>
+      </div>
       <div v-if="mode === 1" class="action">
-        <div ref="inputBtn" class="betting-slip-input" @click="inputTouch">
+        <div v-if="marketInfo.iorChange" class="betting-slip-accept-button" @click="clearIorChange">
+          接受赔率
+        </div>
+        <div v-else ref="inputBtn" class="betting-slip-input" @click="inputTouch">
           <span class="currency"><van-icon name="balance-o" /></span>
           <div style="flex: 1 1 0%;"></div>
           <span class="amount" :class="{ selected: marketInfo.playOnlyId === editId }">{{ marketInfo.gold }}</span>
@@ -49,6 +55,9 @@ const isCombo = computed(() => comboMarketPlayOnlyIds.value.includes(props.marke
 const remove = () => {
   store.dispatch('betting/deleteMarket', props.marketInfo.playOnlyId)
 }
+const clearIorChange = () => {
+  store.dispatch('betting/clearIorChange', props.marketInfo.playOnlyId)
+}
 const inputTouch = () => {
   store.dispatch('betting/setBoardShow', { status: true, playOnlyId: props.marketInfo.playOnlyId })
   setTimeout(() => {
@@ -57,7 +66,6 @@ const inputTouch = () => {
     })
   })
 }
-console.log(props)
 </script>
 <style scoped lang="scss">
 .Single-wrap {
@@ -158,11 +166,39 @@ console.log(props)
     }
 
     .betting-odds {
+      display: flex;
+      align-items: center;
       font-family: PingFangSC-Semibold;
       font-size: 30px;
       color: #7642FD;
       letter-spacing: 1px;
       font-weight: 600;
+
+      &.up {
+        color: #FB0738;
+      }
+
+      &.down {
+        color: #0BBA3E;
+      }
+
+      .ior-change {
+        width: 22px;
+        height: 11px;
+        margin-left: 5px;
+        display: inline-block;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        transform: rotate(180deg);
+        &.up {
+          background-image: url('@/assets/images/betting/up.png');
+        }
+
+        &.down {
+          background-image: url('@/assets/images/betting/down.png');
+        }
+      }
     }
 
     .action {
@@ -191,6 +227,17 @@ console.log(props)
         letter-spacing: 0.8px;
         text-align: justify;
         font-weight: 600
+      }
+
+      .betting-slip-accept-button {
+        position: relative;
+        width: 200px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        background-color: #7642fe;
+        color: #fff;
+        border-radius: 12px;
       }
 
       .amount {
