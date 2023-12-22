@@ -78,7 +78,7 @@ defineProps({
   .img{
     width:44px;
     height: 44px;
-    margin-right: 19px;
+    margin-right: 10px;
   }
   .count{
     margin-left: 5px;

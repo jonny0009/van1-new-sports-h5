@@ -101,8 +101,8 @@ const homeBarArray:any = ref(homeBarArrayTable(''))
   display:flex;
   .ImageButton{
     .img{
-      width: 36px;
-      height: 36px;
+      width: 36px !important;
+      height: 36px !important;
     }
   }
 }
