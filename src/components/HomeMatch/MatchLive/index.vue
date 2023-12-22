@@ -13,8 +13,7 @@
             </div>
             <div class="flex-cross-center">
               <div class="up-match-time">
-                <SportsIcon :icon-src="'live'" />
-                -
+                <SportsIcon :icon-src="'live'" /> 进行中
               </div>
             </div>
           </div>
@@ -87,7 +86,6 @@
                 <div class="betting-select">
                   <div class="betting-select__list">
                     <Handicap :send-params="getHandicap('ROU',sendParams)" />
-
                   </div>
                 </div>
               </div>
