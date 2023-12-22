@@ -10,7 +10,7 @@
     <img
       v-img="src"
       class="img"
-      :type="1"
+      :type="type"
       style="object-fit: contain;"
     />
     <span>
@@ -25,6 +25,12 @@ defineProps({
     type: String,
     default: function () {
       return ''
+    }
+  },
+  type: {
+    type: String,
+    default: function () {
+      return '6'
     }
   },
   src: {
