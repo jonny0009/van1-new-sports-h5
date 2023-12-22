@@ -1,8 +1,9 @@
 <template>
   <div class="homeTime-page">
     <ArrowTitle class="mt10 mb20" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
-    <SportsTabs class="mb20" @returnSportsSuccess="returnSportsSuccess" />
-    <!--
+    <template v-if="!isShow">
+      <SportsTabs class="mb20" @returnSportsSuccess="returnSportsSuccess" />
+      <!--
       <div class="homeTime-Time-Tabs mt10">
         <div class="item active">
           <span class="name">
@@ -22,33 +23,34 @@
         </div>
       </div>
     -->
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <template v-if="!isShow">
-        <template v-if="isLoading">
-          <HomeMatchHandicap
-            v-for="(item,idx) in recommendEventsList"
-            :key="idx"
-            :send-params="item"
-            :class="{'mt20':idx !== 0}"
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <template v-if="!isShow">
+          <template v-if="isLoading">
+            <HomeMatchHandicap
+              v-for="(item,idx) in recommendEventsList"
+              :key="idx"
+              :send-params="item"
+              :class="{'mt20':idx !== 0}"
+            />
+            <EmptyIcon v-if="!recommendEventsList.length" class="marginAuto"></EmptyIcon>
+          </template>
+
+          <Loading
+            v-if="!isLoading || loading"
+            :class="{
+              'new_loading mt10' : loading
+            }"
           />
-          <EmptyIcon v-if="!recommendEventsList.length" class="marginAuto"></EmptyIcon>
+
         </template>
-
-        <Loading
-          v-if="!isLoading || loading"
-          :class="{
-            'new_loading mt10' : loading
-          }"
-        />
-
-      </template>
-    </van-list>
-    <div class="footerHeight"></div>
+      </van-list>
+      <div class="footerHeight"></div>
+    </template>
   </div>
 </template>
 <script lang="ts" setup>
