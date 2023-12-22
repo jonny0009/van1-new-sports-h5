@@ -73,7 +73,7 @@
         <Singles v-for="( market, index ) in markets " :key="index" :market-info="market"></Singles>
         <ActionBar />
       </div>
-      <Result v-if="results.length && markets.length === 0"></Result>
+      <Result v-if="results.length"></Result>
     </div>
   </div>
   <Keyboard></Keyboard>

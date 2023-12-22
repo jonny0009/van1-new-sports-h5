@@ -374,11 +374,12 @@ const bettingModule: Module<Betting, any> = {
             }
             state.comboMarkets = state.comboMarkets.map((marketInfo: MarketInfo) => {
               const playOnlyId = MarketInfo.getPlayOnlyId(marketInfo)
-              const find = state.markets.find((info: MarketInfo) => {
+              const find = orderData.find((info: MarketInfo) => {
                 return MarketInfo.getPlayOnlyId(info) === playOnlyId
               })
               if (find) {
-                return { ...marketInfo, ...find }
+                const gameType = find.gameType || marketInfo.gameType
+                return { ...marketInfo, ...find, gameType }
               }
               return marketInfo
             })
@@ -414,24 +415,25 @@ const bettingModule: Module<Betting, any> = {
     },
     // 串关下单
     async comboMarketBetting({ state, getters, dispatch }) {
-      if (getters.comboMarkets.length === 0 || state.combos.length === 0) {
+      if (state.comboMarkets.length === 0 || state.combos.length === 0) {
         return false
       }
-      const params = buyCombosParams(getters.comboMarkets, state.combos, {
+      const params = buyCombosParams(state.comboMarkets, state.combos, {
         gold: state.comboAmount,
         s: state.comboS,
         t: state.comboT
       })
       const res: any = await comboBetting(params).catch(() => {})
       if (res?.code === 200 && res?.data) {
-        const bettingData = res.data.bettingData || []
-        state.results = bettingData.map((order: MarketInfo) => {
-          const playOnlyId = MarketInfo.getPlayOnlyId(order)
-          const find = state.markets.find((marketInfo: MarketInfo) => {
-            return MarketInfo.getPlayOnlyId(marketInfo) === playOnlyId
-          })
-          return { ...find, ...order }
-        })
+        const { errorCode } = res?.data || {}
+        state.results = [
+          {
+            errorCode,
+            ior: getters.combosIor,
+            count: state.comboMarkets.length,
+            list: JSON.parse(JSON.stringify(state.comboMarkets))
+          }
+        ]
         dispatch('clearMarkets')
       } else {
         return Promise.reject(lang.global.t('betting.errorTips'))
@@ -441,6 +443,7 @@ const bettingModule: Module<Betting, any> = {
     clearMarkets({ state }) {
       state.isOne = false
       state.markets = []
+      state.comboMarkets = []
       localStore.clear(MarketListKey)
     },
     // 清空
