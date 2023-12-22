@@ -125,6 +125,8 @@ SportsName.value = `icon-${props.text}`
   }
   .iconfont{
     margin-right: 10px;
+    position: relative;
+    top: -2px;
   }
 }
 </style>

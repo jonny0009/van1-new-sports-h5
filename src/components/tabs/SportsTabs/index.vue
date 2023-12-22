@@ -5,6 +5,7 @@
       :key="idx"
       :text="item.text"
       :active="active===item.text"
+      :class="item.text"
       @click="SportsClick(item)"
     />
   </div>

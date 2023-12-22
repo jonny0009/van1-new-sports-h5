@@ -401,6 +401,14 @@
     &:last-child{
       margin-right: 0;
     }
+    .iconfont{
+      position: relative;
+    }
+    &.OP_BM{
+      .iconfont{
+        top: 2px;
+      }
+    }
   }
 }
 .betting-option-wrap {
