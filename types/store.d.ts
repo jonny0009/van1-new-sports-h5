@@ -14,6 +14,8 @@ declare interface App {
 
 declare interface User {
   userConfig: any
+  userInfo: any
+  balance: any
   token: string | undefined | null
 }
 declare interface Betting {

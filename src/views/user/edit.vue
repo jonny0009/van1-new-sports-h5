@@ -133,10 +133,8 @@ async function setPk(val: any) {
 
   if (popupIndex.value === 3) {
     localStore.setItem('plateMaskObj', val)
-
     plateMask.value = val
-    // const res: any = await getPlateMask({})
-    // console.log(res, '=待联调=====')
+    store.dispatch('user/configSettingNew', { handicapType: val.key })
   }
   showBottom.value = false
   console.log(val)
