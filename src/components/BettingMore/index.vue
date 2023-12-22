@@ -7,7 +7,7 @@
     :style="{ zIndex: 96 }"
   >
     <div class="betting-more-container">
-      <van-pull-refresh v-model="loading" @refresh="onRefresh">
+      <van-pull-refresh v-model="loading" @refresh="getPlayData">
         <div class="team">
           <div class="team-header">
             <div class="league">
@@ -32,8 +32,12 @@
         </div>
 
         <div class="bettings">
-          <van-collapse v-model="activeNames">
-            <van-collapse-item title="竞猜分析" name="0" :border="false">
+          <Loading v-if="isLoading" />
+          <div class="no-data" v-else-if="betPlayList.length === 0">
+            <EmptyIcon />
+          </div>
+          <van-collapse v-else v-model="activeNames">
+            <!-- <van-collapse-item title="竞猜分析" name="0" :border="false">
               <div class="analyze">
                 <van-swipe indicator-color="#9417D5">
                   <van-swipe-item v-for="item in 3" :key="item">
@@ -102,22 +106,29 @@
                   </van-swipe-item>
                 </van-swipe>
               </div>
-            </van-collapse-item>
+            </van-collapse-item> -->
 
-            <van-collapse-item title="滚球 亚洲让分盘" name="1" :border="false">
+            <van-collapse-item v-for="(play, index) in betPlayList" :key="index" :name="index + ''" :border="false">
+              <template #title>
+                <span v-play="play.playInfo"></span>
+              </template>
               <div class="bet">
-                <div class="bet-item" v-for="item in 3" :key="item">
+                <BettingOption
+                  class="bet-item"
+                  v-for="(item, ind) in play.dataInfo?.ratioData"
+                  :key="ind"
+                  :market-info="item"
+                >
                   <div class="top">
-                    <span>查部伊</span>
-                    <span>-0.25</span>
+                    <span>{{ item.ratioName }}</span>
                   </div>
                   <div class="bot">
-                    <span class="num">2.37</span>
-                    <span class="ico">
+                    <span class="num">{{ item.ior }}</span>
+                    <span class="ico" v-show="false">
                       <img src="@/assets/images/live/sub.png" alt="" />
                     </span>
                   </div>
-                </div>
+                </BettingOption>
               </div>
             </van-collapse-item>
           </van-collapse>
@@ -128,27 +139,92 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
-import { showToast } from 'vant'
+import { computed, Ref, ref, watch } from 'vue'
 import { formatToDate } from '@/utils/date'
+import { matcheInfo } from '@/api/live'
+import { MarketInfo } from '@/entitys/MarketInfo'
 import store from '@/store'
 
 const showPopup = computed(() => store.state.betting.moreShow)
-const moreParams = computed(() => {
-  return store.state.betting.moreParams
-})
-const activeNames = ref(['0'])
+const moreParams = computed(() => store.state.betting.moreParams)
 
 const loading = ref(false)
-const onRefresh = () => {
-  setTimeout(() => {
-    showToast('刷新成功')
+const isLoading = ref(false)
+const activeNames = ref(['0'])
+const getPlayData = async () => {
+  const gidm = moreParams.value.gidm
+  const res: any = await matcheInfo({ gidm })
+  if (res.code == 200) {
+    buildBetList(res.data)
     loading.value = false
-  }, 1000)
+    isLoading.value = false
+  }
 }
+
+const betPlayList: Ref<any[]> = ref([])
+const buildBetList = (data: any) => {
+  const { detail, gameType, systemId, homeTeam, awayTeam } = data
+  if (detail && detail.length > 0) {
+    const dataList = detail.map((ele: any) => {
+      const { playData, game } = ele
+
+      const result = playData.map((item: any) => {
+        const dataInfo = { ...item }
+        const playInfo = {
+          gameType: gameType,
+          playType: dataInfo.playType,
+          championType: game.championType,
+          session: game.session
+        }
+        dataInfo.ratioData = item.ratioData.map((ratioInfo: any) => {
+          return new MarketInfo({
+            ...ratioInfo,
+            systemId: systemId,
+            gameType: gameType,
+            homeTeam: homeTeam,
+            awayTeam: awayTeam,
+            gameId: game.gameId,
+            gidm: game.gidm,
+            playType: dataInfo.playType,
+            sw: dataInfo.sw,
+            championType: dataInfo.championType,
+            ratio: dataInfo.ratio || '0'
+          })
+        })
+        return { playInfo, dataInfo }
+      })
+
+      return result
+    })
+    betPlayList.value = dataList.flat()
+  } else {
+    betPlayList.value = []
+  }
+}
+
+watch(
+  () => showPopup.value,
+  (flag: boolean) => {
+    if (flag) {
+      isLoading.value = true
+      betPlayList.value = []
+    }
+  }
+)
+watch(
+  () => moreParams.value,
+  () => {
+    getPlayData()
+  }
+)
 </script>
 
 <style lang="scss" scoped>
+.no-data {
+  display: flex;
+  justify-content: center;
+  padding: 50px 0 0 0;
+}
 .betting-more-popup {
   width: 100%;
   height: 100%;
@@ -157,10 +233,6 @@ const onRefresh = () => {
 }
 .betting-more-container {
   padding: 0 36px;
-  height: 100%;
-  .van-pull-refresh {
-    height: 100%;
-  }
   .team {
     height: 252px;
     background: url('@/assets/images/live/game_mask.png') no-repeat;
@@ -234,6 +306,7 @@ const onRefresh = () => {
   }
 
   .bettings {
+    padding-bottom: 30px;
     .van-hairline--top-bottom:after {
       border: none;
     }
@@ -273,7 +346,7 @@ const onRefresh = () => {
         color: #546371;
         border-radius: 20px;
         margin: 0 0 20px 20px;
-        &.active {
+        &.selected {
           background: #7643fd;
           color: #fff;
         }
