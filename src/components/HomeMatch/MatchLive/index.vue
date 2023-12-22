@@ -161,7 +161,7 @@
       <!--  -->
       <div class="up-match__footer">
         <div class="match-footer">
-          <div class="match-footer__item">
+          <div class="match-footer__item" @click="store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })">
             <span>更多玩法</span>
             <!-- <span class="num">149</span> -->
             <van-icon class="arrow" name="arrow" />
@@ -181,6 +181,7 @@ import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 import teamAway from '@/assets/images/home/match/team-away.svg'
 import teamHome from '@/assets/images/home/match/team-home.svg'
 import { showDialog } from 'vant'
+import store from '@/store'
 const goClick = () => {
   showDialog({
     message: '投注动态即将推出',
@@ -189,4 +190,12 @@ const goClick = () => {
   // on close
   })
 }
+const props = defineProps({
+  sendParams: {
+    type: Object,
+    default: function () {
+      return {}
+    }
+  }
+})
 </script>
