@@ -3,14 +3,8 @@
 
     <ArrowTitle class="mt10 mb10" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
 
-    <div class="homeTime-Sports-Tabs">
-      <SportsButton text="FT" :active="true" />
-      <SportsButton text="BK" />
-      <SportsButton text="TN" />
-      <SportsButton text="OP_BM" />
-    </div>
-
-    <div class="homeTime-Time-Tabs mt10">
+    <SportsTabs @returnSportsSuccess="returnSportsSuccess" />
+    <!-- <div class="homeTime-Time-Tabs mt10">
       <div class="item active">
         <span class="name">
           全部
@@ -27,75 +21,95 @@
           946
         </div>
       </div>
-    </div>
-
-    <homeMatchHandicap class="mt20" />
-
-    <homeMatchHandicap class="mt20" />
-
-    <div class="Button-MatchMore mt20">
+    </div> -->
+    <homeMatchHandicap
+      v-for="(item,idx) in recommendEventsList"
+      :key="idx"
+      :send-params="item"
+      class="mb20"
+    />
+    <!-- <div class="Button-MatchMore mt20">
       <span>
         查看更多比赛
       </span>
-    </div>
-
+    </div> -->
     <div class="footerHeight"></div>
-
   </div>
 </template>
 <script lang="ts" setup>
-import homeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
+// img
 import titleTime from '@/assets/images/home/title-time.png'
+// components
+import homeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
+// api
+import { recommendEvents } from '@/api/home'
+// script
+import { onBeforeMount, ref, reactive } from 'vue'
+const isLoading = ref(false)
+const params:any = reactive({
+  page: 1,
+  pageSize: 10,
+  gradeType: 2
+})
+const recommendEventsList = ref([])
+const getRecommendEvents = async (gameType:any) => {
+  isLoading.value = false
+  params.gameType = gameType
+  const res:any = await recommendEvents(params)
+  isLoading.value = true
+  if (res.code === 200) {
+    const data:any = res?.data || {}
+    const { baseData } = data
+    recommendEventsList.value = baseData
+  }
+}
+const returnSportsSuccess = (val:any) => {
+  getRecommendEvents(val)
+}
 const returnStatus = (val:any) => {
   console.log(val)
 }
+const init = () => {
+  getRecommendEvents('')
+}
+onBeforeMount(() => {
+  init()
+})
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .homeTime-page{
   padding: 0 40px;
-  .homeTime-Sports-Tabs{
-    display: flex;
-    overflow: auto;
-    &::-webkit-scrollbar {
-      height: 0;
-      display: none;
-    }
-    .SportsButton{
-      margin-right: 20px;
-      flex-shrink: 1;
-      white-space:nowrap;
-    }
-  }
-  .homeTime-Time-Tabs{
-    .item{
-      height: 62px;
-      padding: 0 10px 0 20px;
-      border-radius: 42px;
-      background-color: #eff2f2;
+
+}
+.homeTime-Time-Tabs{
+  .item{
+    height: 62px;
+    padding: 0 10px 0 20px;
+    border-radius: 42px;
+    background-color: #eff2f2;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    margin-right: 20px;
+    .number{
+      margin-left: 20px;
+      padding: 0 13px;
+      height: 46px;
+      border-radius: 30px;
+      color: #546371;
+      background-color: #e5ecf3;
       display: inline-flex;
       justify-content: center;
       align-items: center;
-      font-size: 24px;
-      margin-right: 20px;
-      .number{
-        margin-left: 20px;
-        padding: 0 13px;
-        height: 46px;
-        border-radius: 30px;
-        color: #546371;
-        background-color: #e5ecf3;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .name{
-        height: 24px;
-        line-height: 24px;
-      }
-      &.active{
-        background: #7642fe;
-        color: #fff;
-      }
+    }
+    .name{
+      height: 24px;
+      line-height: 24px;
+    }
+    &.active{
+      background: #7642fe;
+      color: #fff;
     }
   }
 }
