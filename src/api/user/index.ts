@@ -136,4 +136,20 @@ export const matchResult = (params:any) => {
     params
   })
 }
+// 关注列表
+export const starPage = (params:any) => {
+  return request({
+    url: 'ai/mobile/player/starPage',
+    method: 'get',
+    params
+  })
+}
+// 粉丝列表 参数: playerId
+export const fansList = (params:any) => {
+  return request({
+    url: '/ai/mobile/player/fansList',
+    method: 'get',
+    params
+  })
+}
 

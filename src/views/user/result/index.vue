@@ -38,7 +38,7 @@ const title = ref('结果')
 
 <style lang="scss" scoped>
 
-@import './style/result.scss';
+@import '../style/result.scss';
 
 :deep(.van-field__control) {
   height: 50px;

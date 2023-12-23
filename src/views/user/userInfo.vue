@@ -26,12 +26,12 @@
             <span>{{ '注册时间' }} {{ formatToDateTime(peopleInfo.createTime) }}</span>
           </div>
           <div class="user-4">
-            <div class="left">
+            <div class="left" @click="goUrl('/selfFocus?num=1')">
               <span>{{ peopleInfo.followNum }}</span>
               <span>关注</span>
             </div>
             <div class="center" />
-            <div class="left right">
+            <div class="left right" @click="goUrl('/selfFocus?num=2')">
               <span>{{ peopleInfo.fansCount }}</span>
               <span>粉丝</span>
             </div>
@@ -219,7 +219,6 @@ onMounted(() => {
   getAccountInfo()
 })
 const getImg = (imgUrl: string) => {
-  console.log(imgUrl, '====')
   if (imgUrl) {
     return `${ImageSource}${imgUrl}`
   }
