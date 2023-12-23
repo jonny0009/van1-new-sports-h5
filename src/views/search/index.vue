@@ -39,33 +39,9 @@
         <span :class="index == 1 ? 'active' : ''" @click="index = 1">联赛</span>
         <span :class="index == 2 ? 'active' : ''" @click="index = 2">比赛</span>
       </div>
-      <div v-if="index === 1" class="matchList-1">
-        <div v-for="(item, index) in leagueList.arr" :key="index" class="left1" @click="toLeague(item)">
-          <van-image class="itemImg" fit="contain" :src="ball3" />
-          <span class="font_2">{{ item.name }}</span>
-        </div>
-      </div>
-      <div v-if="index === 2" class="matchList-1">
-        <div v-for="(item, index) in gameList.arr" :key="index" class="left1 left2" @click="toMatch(item)">
-          <div class="left3">
-            <van-image class="itemImg" fit="contain" :src="getImg(item.homeLogo)" />
-            <div class="center">
-              <div>
-                <span>{{ item.homeTeam }}</span> VS {{ item.awayTeam }}
-              </div>
-              <div class="center_1">
-                <!-- <van-image class="ball4" fit="contain" :src="game1" /> -->
-                <!-- <span>哥伦比亚- 地区联赛</span> -->
-                <span>{{ item.gameDate ? formatToDateTime(item.gameDate) : '' }}</span>
-              </div>
-            </div>
-
-          </div>
-          <div class="right">
-            <van-image class="goImg" fit="contain" :src="goImg" />
-          </div>
-        </div>
-      </div>
+      <van-loading v-if="listLoading" size="24" type="spinner" vertical />
+      <League v-if="index === 1" :league-list="leagueList.arr" :key-words="keyWords"></League>
+      <Match v-if="index === 2" :game-list="gameList.arr" :key-words="keyWords"></Match>
     </div>
   </div>
 </template>
@@ -78,13 +54,15 @@ import ball1 from '@/assets/images/login/ball1.svg'
 import ball2 from '@/assets/images/login/ball2.svg'
 import ball3 from '@/assets/images/login/ball3.svg'
 import ball4 from '@/assets/images/login/ball4.svg'
+
 // import game1 from '@/assets/images/login/game1.png'
 // import game2 from '@/assets/images/login/game2.png'
 // import game3 from '@/assets/images/login/game3.png'
 // import game5 from '@/assets/images/user/del.svg'
-import goImg from '@/assets/images/login/go@2x.png'
 import time from '@/assets/images/login/time.png'
-import { formatToDateTime } from '@/utils/date'
+
+import League from './components/league.vue'
+import Match from './components/match.vue'
 
 // import { ImageSource } from '@/config'
 
@@ -92,13 +70,14 @@ import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
 import localStore from '@/utils/localStore'
 
-const searchHistory = reactive<{ arr: any }>({ arr: localStore.getItem('searchHistory') })
+const searchHistory = reactive<{ arr: any }>({ arr: localStore.getItem('searchHistory') || [] })
 const $router = useRouter()
 const keyWords = ref('')
 const index = ref(1)
 const leagueList = reactive<{ arr: any }>({ arr: [] })
 const gameList = reactive<{ arr: any }>({ arr: [] })
 const ifHistory = ref<Boolean>(false)
+const listLoading = ref<any>(false)
 const ballList = reactive(
   [
     {
@@ -126,30 +105,23 @@ const ballList = reactive(
 onMounted(async () => {
 })
 
-const toLeague = async (item: any) => {
-  console.log(item, '联赛跳转')
-}
-const toMatch = async (item: any) => {
-  console.log(item, '比赛跳转')
-}
 const hanDleClear = async () => {
   searchHistory.arr = []
   localStore.setItem('searchHistory', searchHistory.arr)
 }
-const getImg = (imgUrl: any) => {
-  console.log(imgUrl, '=====')
-  // if (imgUrl) {
-  //   return `${ImageSource}${imgUrl}`
-  // }
-  return ball4
-}
+
 const keyWordsSearch = (key:any) => {
   keyWords.value = key
   getList
 }
 const getList = async () => {
+  listLoading.value = true
+  index.value = 1
+  gameList.arr = []
+  leagueList.arr = []
   const res: any = await rightSearch({ keywords: keyWords.value })
   if (res.code !== 200) {
+    listLoading.value = false
     return showToast(res.msg)
   }
   if (res.code === 200) {
@@ -158,15 +130,15 @@ const getList = async () => {
       localStore.setItem('searchHistory', searchHistory.arr.slice(0, 6))
       searchHistory.arr = localStore.getItem('searchHistory')
     }
-    gameList.arr = res.data.gameInfo
-    leagueList.arr = res.data.league
+    listLoading.value = false
+    gameList.arr = res.data.gameInfo || []
+    leagueList.arr = res.data.league || []
   }
 }
 const toUrl = () => {
   $router.push({ path: '/home' })
 }
 const toUrlGame = (item: any) => {
-  console.log(item, '==')
   $router.push({
     path: '/sport',
     query: {
@@ -331,72 +303,6 @@ const toUrlGame = (item: any) => {
       }
     }
 
-    .matchList-1 {
-      overflow-y: auto;
-      height: 1100px;
-
-    }
-
-    // 比赛
-    .left1 {
-      margin-top: 20px;
-      width: 678px;
-      height: 120px;
-      background: #EFF1F2;
-      border-radius: 10px;
-      padding: 28px 20px;
-      display: flex;
-      align-items: center;
-      font-family: PingFangSC-Semibold;
-      font-size: 24px;
-      color: #1F2630;
-      letter-spacing: 0;
-      font-weight: 600;
-
-      .itemImg {
-        height: 64px;
-        width: 64px;
-        margin-right: 15px;
-      }
-    }
-
-    .left2 {
-      justify-content: space-between;
-      align-items: center;
-
-      .left3 {
-        display: flex;
-        align-items: center;
-      }
-
-      .itemImg {
-        width: 50px;
-        height: 50px;
-      }
-
-      .center {
-        margin-left: 30px;
-        font-size: 24px;
-        color: #1F2630;
-
-        &_1 {
-          display: flex;
-          align-items: center;
-          font-size: 24px;
-          color: #96A5AA;
-
-          .ball4 {
-            height: 24px;
-            width: 24px;
-          }
-        }
-      }
-
-      .goImg {
-        width: 30px;
-        height: 35px;
-      }
-    }
   }
 
 }
