@@ -1,8 +1,8 @@
 <template>
   <div class="panel-with">
     <div class="top-nav">
-      <span :class="{ active: navActive == 1 }" @click="onNavClick(1)">当前比赛</span>
-      <span :class="{ active: navActive == 2 }" @click="onNavClick(2)">全部跟注</span>
+      <span :class="{ active: navActive == 1 }" @click="onNavClick(1)">{{ $t('live.curMatch') }}</span>
+      <span :class="{ active: navActive == 2 }" @click="onNavClick(2)">{{ $t('allBetWith') }}</span>
     </div>
 
     <Loading v-if="loading" />
@@ -17,7 +17,7 @@
           <span>@{{ item.nikeName }}</span>
         </div>
         <div class="right">
-          <span class="state">进行中</span>
+          <span class="state">{{ $t('live.inprogress') }}</span>
         </div>
       </div>
 
@@ -70,11 +70,11 @@
         </div>
         <div class="betting">
           <div class="betting-cell bt1">
-            <strong>投注额：</strong>
+            <strong>{{ $t('live.betAmout') }}：</strong>
             <span>0.00</span>
           </div>
           <div class="betting-cell bt2">
-            <strong>可赔付额：</strong>
+            <strong>{{ $t('live.betProfit') }}：</strong>
             <span>0.00</span>
           </div>
         </div>
@@ -82,7 +82,7 @@
         <div class="footer">
           <BettingOption :market-info="item.marketInfo">
             <div class="button">
-              <span>跟注</span>
+              <span>{{ $t('betWith') }}</span>
               <img src="@/assets/images/live/live_white_r.png" alt="" />
             </div>
           </BettingOption>

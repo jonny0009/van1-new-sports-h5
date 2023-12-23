@@ -22,7 +22,7 @@
               <strong>{{ moreParams.homeTeam }}</strong>
             </div>
             <div class="team-score">
-              <span class="default">未开始</span>
+              <span class="default">{{ $t('live.inprogress') }}</span>
             </div>
             <div class="team-player away">
               <img v-img="moreParams.awayLogo" :type="2" alt="" />

@@ -5,8 +5,8 @@
         <div class="item-avatar">
           <SvgIcon name="bot" />
         </div>
-        <div class="item-name">{{ 'AI助手' }}<em>:</em></div>
-        <div class="item-cont">{{ '聊天室开放了，球友们快出来聊天啦' }}</div>
+        <div class="item-name">{{ $t('live.aiBot') }}<em>:</em></div>
+        <div class="item-cont">{{ $t('live.chatSys') }}</div>
       </div>
 
       <div class="item" v-for="item in chatMessageList" :key="item.msgId">
@@ -30,7 +30,7 @@
         <button native-type="submit" hidden />
       </van-form>
       <div class="action">
-        <van-button @click="onSend" :disabled="disabledSend">发送</van-button>
+        <van-button @click="onSend" :disabled="disabledSend">{{ $t('live.send') }}</van-button>
       </div>
     </div>
   </div>
@@ -42,6 +42,8 @@ import { watch, Ref, ref, computed, nextTick } from 'vue'
 import { intoRoom, lastMessageByPage } from '@/api/live'
 import { getToken } from '@/utils/auth'
 import store from '@/store'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 const props = defineProps({
   matchInfo: {
     type: Object,
@@ -74,12 +76,12 @@ const disabledField = computed(() => {
 const placeholder = computed(() => {
   const { isSend, bettingTotal } = chatRoomInfo.value
   if (!getToken()) {
-    return '请先登录'
+    return t('live.needLogin')
   }
   if (isSend == 0) {
-    return `还需要${bettingTotal}投注额才可以参与互动`
+    return t('live.needBet', { num: bettingTotal })
   }
-  return '来来来，谁不会吹点牛逼...'
+  return t('live.chatTip') + '...'
 })
 
 const chatRoomInfo: Ref<any> = ref({})

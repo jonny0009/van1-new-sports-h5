@@ -7,7 +7,7 @@
       v-model:loading="loading"
       :finished="finished"
       :immediate-check="false"
-      finished-text="没有更多了"
+      :finished-text="$t('live.noMore')"
       @load="getRbLiveList"
     >
       <div class="more-item" v-for="item in list" :key="item.gidm">

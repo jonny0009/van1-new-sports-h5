@@ -20,5 +20,13 @@ export default {
   curMatch: '当前比赛',
   allBetWith: '全部跟注',
   betAmout: '投注额',
-  betProfit: '可赔付额'
+  betProfit: '可赔付额',
+  noData: '无数据',
+  aiBot: 'AI助手',
+  send: '发送',
+  sending: '发送中',
+  plsSign: '请先登录',
+  needBet: '还需要{num}投注额才可以参与互动',
+  chatTip: '来来来，谁不会吹点牛逼',
+  chatSys: '聊天室开放了，球友们快出来聊天啦'
 }
