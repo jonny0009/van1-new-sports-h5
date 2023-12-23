@@ -79,6 +79,14 @@ export const playerInfo = (params:any) => {
     params
   })
 }
+// 隐身模式
+export const setPrivacy = (params:any) => {
+  return request({
+    url: 'ai/mobile/setPrivacy/' + params.privacy,
+    method: 'get',
+    params
+  })
+}
 
 /*
 结果, 投注历史========
@@ -112,10 +120,18 @@ export const getTradeTypeEnums = (params:any) => {
     params
   })
 }
-// 余额列表  无参数  needCount
+// 余额列表   needCount
 export const capitalRecords = (params:any) => {
   return request({
     url: 'ai/mobile/player/capitalRecords',
+    method: 'get',
+    params
+  })
+}
+// 赛果查询   needCount
+export const matchResult = (params:any) => {
+  return request({
+    url: 'ai/mobile/matches/result',
     method: 'get',
     params
   })

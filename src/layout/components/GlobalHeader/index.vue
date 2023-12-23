@@ -101,7 +101,6 @@ const toUser = (url?: string) => {
   $router.push({ path: '/user' + url })
 }
 const getImg = (imgUrl: string) => {
-  console.log(imgUrl, '====')
   if (imgUrl) {
     return `${ImageSource}${imgUrl}`
   }

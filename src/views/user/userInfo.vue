@@ -11,34 +11,34 @@
     <div class="user">
       <div class="user-info">
         <div class="user-img" @click="goUrl('/editImg')">
-          <img class="img_1" src="@/assets/images/user/head-img.png" alt="" />
+          <img class="img_1" :src="getImg(peopleInfo.headImg)" alt="" />
         </div>
         <div class="user-right">
           <div class="user-1">
             <img class="img_1" src="@/assets/images/user/ball.svg" alt="" />
-            <span>ai-sport</span>
+            <span>{{ peopleInfo.nickName }}</span>
           </div>
           <div class="user-2">
-            @ai-sport
+            {{ peopleInfo.email || '' }}
           </div>
           <div class="user-3">
             <img class="img_1" src="@/assets/images/user/star.svg" alt="" />
-            <span>注册时间 2023/12/12</span>
+            <span>{{ '注册时间' }} {{ formatToDateTime(peopleInfo.createTime) }}</span>
           </div>
           <div class="user-4">
             <div class="left">
-              <span>0</span>
+              <span>{{ peopleInfo.followNum }}</span>
               <span>关注</span>
             </div>
             <div class="center" />
             <div class="left right">
-              <span>0</span>
+              <span>{{ peopleInfo.fansCount }}</span>
               <span>粉丝</span>
             </div>
           </div>
         </div>
       </div>
-      <p class="note" @click="goUrl('/editUser')">请输入您的个人简介...</p>
+      <p class="note" @click="goUrl('/editUser')">{{ peopleInfo.profiles }}</p>
 
     </div>
     <div class="content">
@@ -170,14 +170,24 @@ import data1 from '@/assets/images/user/data1.png'
 import data2 from '@/assets/images/user/data2.png'
 import data3 from '@/assets/images/user/data3.png'
 import data4 from '@/assets/images/user/data4.png'
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { playerInfo } from '@/api/user'
+import { showToast } from 'vant'
+import { ImageSource } from '@/config'
+import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
+import { formatToDateTime } from '@/utils/date'
+
+import store from '@/store'
+const userInfo = computed(() => store.state.user.userInfo)
+
+const peopleInfo = ref<any>({})
 // const img1 = ref('live')
 const $router = useRouter()
 const goBack = () => {
   $router.push('/home')
 }
-const goUrl = (url:string) => {
+const goUrl = (url: string) => {
   $router.push('/user' + url)
 }
 const title = ref('个人档案')
@@ -205,6 +215,26 @@ const dataList = reactive<{ arr: any }>({
     }
   ]
 })
+onMounted(() => {
+  getAccountInfo()
+})
+const getImg = (imgUrl: string) => {
+  console.log(imgUrl, '====')
+  if (imgUrl) {
+    return `${ImageSource}${imgUrl}`
+  }
+  return avatarImg
+}
+const getAccountInfo = async () => {
+  const params = {
+    fPlayerId: userInfo.value.playerId
+  }
+  const res: any = await playerInfo(params)
+  if (res.code !== 200) {
+    return showToast(res.msg)
+  }
+  peopleInfo.value = res.data
+}
 
 </script>
 

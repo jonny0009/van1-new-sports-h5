@@ -18,36 +18,36 @@
   </div>
   <van-divider />
   <!-- 列表 -->
-  <div v-if="list.arr.length" class="dataList">
+  <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" class="dataList" @load="onLoad">
     <div v-for="(item, index) in list.arr" :key="index" class="item">
       <div class="title">
-        <div class="left">
+        <div class="left  title-left">
           <img class="img_1" src="@/assets/images/login/ball1.svg" />
-          欧洲冠军联赛
+          {{ item.leagueName }}
         </div>
         <div class="right">
-          11/30 15:30
+          {{ formatToDateTime(item.gameDate) || formatToDateTime(item.matchTime) }}
         </div>
       </div>
       <div class="match-content">
         <div class="left">
-          <div>
-            库卢维赤克肯德
+          <div class="left-1">
+            {{ item.homeTeamName }}
           </div>
-          <img class="img_1" src="@/assets/images/user/num3.png" alt="" />
+          <!-- <img class="img_1" src="@/assets/images/user/num3.png" alt="" /> -->
         </div>
         <div class="center">
           1:2
         </div>
         <div class="right">
-          <img class="img_2" src="@/assets/images/user/num9.png" alt="" />
-          <div>
-            克孜勒库姆
+          <!-- <img class="img_2" src="@/assets/images/user/num9.png" alt="" /> -->
+          <div class="right-1">
+            {{ item.awayTeamName }}
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </van-list>
   <div v-if="!list.arr.length" class="noData">
     <img class="img_1" src="@/assets/images/user/noData.png" />
     <p>
@@ -81,12 +81,14 @@
 import { ref, reactive, onMounted } from 'vue'
 import { formatToDateTime } from '@/utils/date'
 import moment from 'moment'
-import ball1 from '@/assets/images/login/ball1.svg'
+// import ball1 from '@/assets/images/login/ball1.svg'
 // import arrow from '@/assets/images/components/title/arrow.png'
 // getGameManyInfo
-import { betRecordTab } from '@/api/user'
+import { matchResult } from '@/api/user'
 const list = reactive<{ arr: any }>({ arr: [] })
 import { showToast } from 'vant'
+const loading = ref(false)
+const finished = ref(false)
 const timeIndex = ref(0)
 const beginTime = ref('')
 const endTime = ref<any>('')
@@ -129,13 +131,39 @@ const timeList = reactive([
 
 ])
 onMounted(() => {
-  getNoAccount({})
+  // getNoAccount({})
 })
+// 先通接口, 参数等会调整====
+let page: number = 0
+const onLoad = async () => {
+  page++
+  const params: any = {
+    page: page,
+    gameSort: 3,
+    leagueIds: '',
+    gameType: 'FT',
+    matchTime: 1703318370524,
+    pageSize: 10,
+    gameStatus: 1,
+    groupId: 3
+  }
+  const res: any = await matchResult(params)
+  const data = res.data
+  if (res.code === 200) {
+    data.list.forEach((item: any) => {
+      list.arr.push(item)
+    })
+    loading.value = false
+    finished.value = list.arr.length === data.count
+  } else {
+    showToast(res.msg)
+  }
+}
 
 async function setPk(val: any) {
   commonKey.value = val
   showBottom.value = false
-  getNoAccount({})
+  // getNoAccount({})
   console.log(val)
 }
 const selectTime = (index: number) => {
@@ -163,26 +191,6 @@ const selectTime = (index: number) => {
 }
 const seStatus = () => {
   showBottom.value = true
-}
-
-const getNoAccount = async (num: any) => {
-  const params = {
-    orderState: commonKey.value.key,
-    page: 1,
-    pageSize: 10,
-    beginTime: '',
-    endTime: ''
-  }
-  if (num === 3) {
-    params.beginTime = beginTime.value
-    params.endTime = endTime.value
-  }
-  const res: any = await betRecordTab(params)
-  // const res: any = await betRecordTab({ 'orderState': '1', 'page': 1, 'pageSize': 10, 'beginTime': 1703132137274, 'endTime': 1703218537274 })
-  if (res.code !== 200) {
-    return showToast(res.msg)
-  }
-  list.arr = res.data
 }
 
 // systemId
@@ -235,6 +243,8 @@ const getNoAccount = async (num: any) => {
 // 列表
 .dataList {
   margin-top: 20px;
+  height: calc(100vh - 390px);
+  overflow-y: auto;
 
   .color-1 {
     color: #7642FD;
@@ -263,6 +273,11 @@ const getNoAccount = async (num: any) => {
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      .title-left {
+        font-size: 20px;
+        font-weight: 600;
+      }
 
       .img_1 {
         height: 24px;
@@ -293,6 +308,14 @@ const getNoAccount = async (num: any) => {
       .left {
         display: flex;
         align-items: center;
+        font-size: 24px;
+
+        &-1 {
+          width: 230px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
 
         >.img_1 {
           width: 48px;
@@ -309,10 +332,19 @@ const getNoAccount = async (num: any) => {
         text-align: center;
         font-weight: 600;
       }
-      .right{
+
+      .right {
         display: flex;
         align-items: center;
-        .img_2{
+        font-size: 24px;
+        &-1 {
+          width: 230px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        .img_2 {
           width: 48px;
           height: 48px;
           margin-right: 10px;
