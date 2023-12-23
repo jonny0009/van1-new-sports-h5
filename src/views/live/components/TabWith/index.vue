@@ -2,7 +2,7 @@
   <div class="panel-with">
     <div class="top-nav">
       <span :class="{ active: navActive == 1 }" @click="onNavClick(1)">{{ $t('live.curMatch') }}</span>
-      <span :class="{ active: navActive == 2 }" @click="onNavClick(2)">{{ $t('allBetWith') }}</span>
+      <span :class="{ active: navActive == 2 }" @click="onNavClick(2)">{{ $t('live.allBetWith') }}</span>
     </div>
 
     <Loading v-if="loading" />
