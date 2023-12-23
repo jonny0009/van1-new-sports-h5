@@ -30,7 +30,7 @@
           </div>
         </div>
         <div class="right">
-          <div class="font_1">{{ item.betDTOList[0].homeTeam }} v {{ item.betDTOList[0].awayTeam }}<span class="color-1">
+          <div class="font_1">{{ item.betDTOList[0].homeTeam }} VS {{ item.betDTOList[0].awayTeam }}<span class="color-1">
             [{{ item.betDTOList[0].resultScore }}]</span></div>
           <div class="font_2">{{ item.betDTOList[0].leagueName }}</div>
         </div>
@@ -45,7 +45,7 @@
             <span>
               {{ item.betDTOList[0].betItem }}
             </span>
-            <span class="color-2">
+            <span class="color-2" :class="[item.betDTOList[0].betResultDetail==='L'?'color-3':'']">
               @{{ item.betDTOList[0].ioRatio }}
             </span>
           </div>
@@ -70,9 +70,11 @@
           </div>
         </div>
         <div class="one two">
-          <span>实际赔付：</span>
+          <span>可赔付额：</span>
           <div>
             <img class="img_1" src="@/assets/images/user/num2.png" alt="" />
+            <span class="color-1"> {{ item.currency }}</span>
+
             <span class="color-1"> {{ item.winAndLossGold }}</span>
           </div>
         </div>
@@ -340,6 +342,9 @@ const getNoAccount = async (num:any) => {
 
   .color-2 {
     color: #1EBB52;
+  }
+  .color-3 {
+    color: red;
   }
 
   .item {

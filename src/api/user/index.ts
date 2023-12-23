@@ -104,3 +104,20 @@ export const getGameManyInfo = (params:any) => {
   })
 }
 
+// 余额类型   无参数
+export const getTradeTypeEnums = (params:any) => {
+  return request({
+    url: 'ai/mobile/player/getTradeTypeEnums',
+    method: 'get',
+    params
+  })
+}
+// 余额列表  无参数  needCount
+export const capitalRecords = (params:any) => {
+  return request({
+    url: 'ai/mobile/player/capitalRecords',
+    method: 'get',
+    params
+  })
+}
+
