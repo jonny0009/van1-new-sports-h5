@@ -83,6 +83,7 @@ const handleSave = async () => {
     return showToast(res.msg)
   }
   showToast('编辑成功')
+  store.dispatch('user/userInfo')
   $router.push('/user/userInfo')
 }
 const handlePrivacy = async (num :any) => {
