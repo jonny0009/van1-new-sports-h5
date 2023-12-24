@@ -26,7 +26,7 @@
           {{ item.leagueName }}
         </div>
         <div class="right">
-          {{ formatToDateTime(item.gameDate) || formatToDateTime(item.matchTime) }}
+          {{ getMatchTime(item) }}
         </div>
       </div>
       <div class="match-content">
@@ -37,9 +37,9 @@
           <!-- <img class="img_1" src="@/assets/images/user/num3.png" alt="" /> -->
         </div>
         <div class="center">
-          {{ getResult(item.result) }}
+          {{ item.result.GM_h || 0 }}
           :
-          {{ getResult1(item.result) }}
+          {{ item.result.GM_c || 0 }}
         </div>
         <div class="right">
           <!-- <img class="img_2" src="@/assets/images/user/num9.png" alt="" /> -->
@@ -96,7 +96,6 @@
 
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from 'vue'
-import { formatToDateTime } from '@/utils/date'
 import moment from 'moment'
 // import ball1 from '@/assets/images/login/ball1.svg'
 // import arrow from '@/assets/images/components/title/arrow.png'
@@ -143,13 +142,13 @@ const popupList1 = reactive<{ arr: any[] }>({
       key: 'OP_BM'
     }
 
-  ] })
+  ]
+})
 const popupList = reactive<{ arr: any[] }>({ arr: [] })
 
 onMounted(() => {
   // getNoAccount({})
 })
-// 先通接口, 参数等会调整====
 let page: number = 0
 const onLoad = async () => {
   page++
@@ -187,7 +186,15 @@ async function setPk(val: any) {
   onLoad()
   console.log(val)
 }
-
+// 获取游戏时间
+const getMatchTime = (item: any) => {
+  if (item.gameDate) {
+    return moment(item.gameDate).format('MM/DD HH:mm')
+  }
+  if (item.matchTime) {
+    return moment(item.gameDate).format('MM/DD HH:mm')
+  }
+}
 const seStatus = () => {
   const timeArr = [
     {
@@ -273,21 +280,7 @@ const seStatus = () => {
 const setBall = () => {
   showBottom1.value = true
 }
-// 获取比分
-const getResult = (item:any) => {
-  if (item) {
-    return item.GM_h
-  } else {
-    return 0
-  }
-}
-const getResult1 = (item:any) => {
-  if (item) {
-    return item.GM_c
-  } else {
-    return 0
-  }
-}
+
 const setBallSelect = (val: any) => {
   ballKey.value = val
   showBottom1.value = false

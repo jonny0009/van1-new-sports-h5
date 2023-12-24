@@ -11,7 +11,8 @@
           <div class="center_1">
             <!-- <van-image class="ball4" fit="contain" :src="game1" /> -->
             <!-- <span>哥伦比亚- 地区联赛</span> -->
-            <span>{{ item.gameDate ? formatToDateTime(item.gameDate) : '' }}</span>
+            <!-- <span>{{ item.gameDate ? formatToDateTime(item.gameDate) : '' }}</span> -->
+            <span>{{ getMatchTime(item.gameDate) }}</span>
           </div>
         </div>
 
@@ -30,7 +31,7 @@
 </template>
 
 <script lang="ts" setup>
-import { formatToDateTime } from '@/utils/date'
+import moment from 'moment'
 import goImg from '@/assets/images/login/go@2x.png'
 import ball4 from '@/assets/images/login/ball4.svg'
 
@@ -48,8 +49,15 @@ const props = defineProps({
       return ''
     }
   }
-
 })
+// 获取比赛时间
+const getMatchTime = (item: any) => {
+  if (item) {
+    return moment(item).format('MM/DD HH:mm')
+  } else {
+    return ''
+  }
+}
 const getImg = (imgUrl?: any) => {
   console.log(imgUrl)
 
