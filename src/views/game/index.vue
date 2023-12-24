@@ -26,8 +26,7 @@ const getGameDetail = async () => {
     supplierId: 'aigame',
     gameKey: 'BAC-V2.0',
     openType: 2,
-    dirType: 3,
-    terType: 2
+    dirType: 3
   }
   const res:any = await apiGetGameDetail(params) || {}
   if (res.code === 200 && res.data) {

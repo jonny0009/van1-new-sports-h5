@@ -53,7 +53,7 @@ const getRouteName = () => {
 
 const active:any = computed(() => {
   const route = useRoute()
-  let active = route.query.type
+  let active = route.query.type || route.params.type
   if (!active) {
     active = getRouteName()
   }

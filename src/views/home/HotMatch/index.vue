@@ -21,7 +21,7 @@
           <van-loading type="spinner" size="36px" />
         </template>
         <template #error>
-          <van-image fit="contain" :src="league" class="noLoadingAndError" />
+          <div class="onImgError"></div>
         </template>
       </van-image>
     </template>
@@ -29,10 +29,9 @@
 </template>
 <script lang="ts" setup>
 import titleHot from '@/assets/images/home/title-hot.png'
-import league from '@/assets/images/home/other/league.png'
 import { onBeforeMount, reactive, ref, computed, watch } from 'vue'
 import store from '@/store'
-import { imgUrlFormat } from '@/utils/index.ts'
+import { imgUrlFormat } from '@/utils/index'
 import { firstLeagues } from '@/api/home'
 import router from '@/router'
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
@@ -81,3 +80,13 @@ const returnStatus = (val:any) => {
   isShow.value = val
 }
 </script>
+
+<style lang="scss" scoped>
+  .onImgError{
+    width: 200px;
+    height: 176px;
+    display: inline-block;
+    background: url('@/assets/images/home/other/league.png') no-repeat center;
+    background-size: contain;
+  }
+</style>

@@ -22,6 +22,8 @@ export default {
         el.src = awayTeam
       } else if (type === 6) {
         el.src = matchlLeague
+      } else if (type === 7) {
+        el.src = ''
       }
     }
     el.addEventListener('error', el._handlerError)

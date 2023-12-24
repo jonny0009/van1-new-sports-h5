@@ -14,7 +14,8 @@
             <div class="flex-cross-center">
               <div class="up-match-time">
                 <SportsIcon :icon-src="'live'" />
-                {{ getTime(sendParams) }}
+                <!-- {{ getTime(sendParams) }} -->
+                <div class="up-match-time-html" v-html="showRBTime(sendParams)"></div>
               </div>
             </div>
           </div>
@@ -134,7 +135,10 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { getHandicap } from '@/utils/home/getHandicap.ts'
+import { ref } from 'vue'
+import { tnStObj, bsStObj, opScoreObj } from '@/utils/home/gameInfo'
+import { dateFormat } from '@/utils/date'
+import { getHandicap } from '@/utils/home/getHandicap'
 // components
 import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
 import TimeView from '@/components/HomeMatch/public/time/index.vue'
@@ -149,6 +153,172 @@ const goClick = () => {
   }).then(() => {
   // on close
   })
+}
+
+//
+const sectionMap:any = {
+  0: '',
+  'Q1': '第一节',
+  'Q2': '第二节',
+  'Q3': '第三节',
+  'Q4': '第四节',
+  '1h': '第一节',
+  '2h': '第二节',
+  '3h': '第三节',
+  '4h': '第四节',
+  'OT': '加时赛',
+  'HT': '中场休息',
+  'H1': '上半场',
+  'H2': '下半场',
+  'q1': '第一节',
+  'q2': '第二节',
+  'q3': '第三节',
+  'q4': '第四节',
+  'ot': '加时赛',
+  'ht': '中场休息',
+  'h1': '上半场',
+  'h2': '下半场'
+}
+const BKSection = (section:any) => {
+  return sectionMap[section]
+}
+const currBkTime:any = ref('')
+// const europSingle:any = ref(false)
+const showRBTime = (raceinfo:any = {}) => {
+  // const raceinfo:any = {}
+  const { showtype, gameType, gameInfo, showType, homeTeamSuffix } = raceinfo
+  const Obj = opScoreObj(gameInfo, 5)
+  const seNow:any = gameInfo && gameInfo.se_now
+  if (showtype === 'RB' || showType === 'RB') {
+    switch (gameType) {
+      // 足球
+      //
+      case 'FT':
+        if (!gameInfo) {
+          return ''
+        }
+        if (homeTeamSuffix?.includes('点球') || homeTeamSuffix?.includes('點球')) {
+          gameInfo.raceType = 'dianqiu'
+          gameInfo.teamSuffix = '点球大战'
+        }
+        if (homeTeamSuffix?.includes('加时赛') || homeTeamSuffix?.includes('加時賽')) {
+          gameInfo.raceType = 'jiashi'
+          gameInfo.teamSuffix = '加时'
+        }
+        if (gameInfo.raceType) {
+          //  加时赛
+          if (gameInfo?.raceType === 'jiashi' && (gameInfo?.re_time === 'HT^^' || gameInfo?.re_time === 'HT')) {
+            // 中场休息
+            return '中场休息'
+          }
+          if (gameInfo?.raceType === 'jiashi' && gameInfo?.re_time && new RegExp('LIVE').test(gameInfo?.re_time)) {
+            // 暂停
+            return '暂停'
+          }
+          if (gameInfo?.raceType === 'jiashi' && gameInfo?.re_time.indexOf('^') > -1) {
+            const [secssion, raceTime] = gameInfo.re_time.split('^')
+            // 上 下
+            const overTiming = secssion === '1H' ? `上${raceTime}` : `下${raceTime}`
+            return `${gameInfo.teamSuffix}<span calss='time-h-number'>${overTiming}</span>`
+          }
+        }
+        // 非加时赛
+        if (gameInfo?.re_time === 'HT^^' || gameInfo?.re_time === 'HT') {
+          // 中场休息
+          return '中场休息'
+        } else if (gameInfo?.re_time && new RegExp('LIVE').test(gameInfo?.re_time)) {
+          // 暂停
+          return '暂停'
+        } else if (gameInfo?.re_time && gameInfo?.re_time.indexOf('^') > -1) {
+          // 比赛进行中
+          const [secssion, raceTime] = gameInfo.re_time.split('^')
+          let newRaceTimeVal = ''
+          if (raceTime.indexOf("'") > -1) {
+            const [newRaceTime] = raceTime.split("'")
+            newRaceTimeVal = `${newRaceTime}<span>'</span>`
+          } else {
+            newRaceTimeVal = raceTime
+          }
+          // 上半场  下半场
+          return secssion === '1H' ? `上半场<span calss='time-h-Up'>${newRaceTimeVal}</span>` : `下半场<span calss='time-h-d'>${newRaceTimeVal}</span>`
+        } else if (gameInfo?.re_time) {
+          // 比赛时间容错
+          return gameInfo.re_time
+        }
+        // 比赛时间容错
+        return '-' + ':' + '-'
+      // 网球
+      //
+      case 'TN':
+        if (gameInfo) {
+          const tninfo:any = tnStObj(gameInfo)
+          if (tninfo?.sciwd) {
+            return '暂停'
+          }
+          const { panNum, score1, score2 } = tninfo
+          return `${panNum}<span>${score1}${score2}</span>`
+        }
+        return ''
+      //
+      // 棒
+      case 'BS':
+        /* eslint-disable no-case-declarations */
+        /* eslint-disable indent */
+        const bsScoreObj = gameInfo ? bsStObj(gameInfo) : ''
+        // 局数
+        const inningNum = gameInfo?.inningNum ? gameInfo?.inningNum : bsScoreObj?.se_now > 0
+          ? bsScoreObj?.se_now : bsScoreObj?.score?.num
+        const juCount = `<span calss="">第${inningNum}局</span>`
+        return juCount
+      //
+      // 篮球
+      case 'BK':
+        if (gameInfo?.se_now === 'HT' || gameInfo?.se_now === 'ht') {
+          // 中场休息
+          return '中场休息'
+        }
+        if (gameInfo?.se_now.indexOf('OT') > -1 || gameInfo?.se_now.indexOf('ot') > -1) {
+          // 加时
+          return `加时<span>${dateFormat(currBkTime.value * 1000, 'mm:ss')}</span>`
+        }
+        return seNow && currBkTime ? `${BKSection(gameInfo?.se_now)}<span>${dateFormat(currBkTime.value * 1000, 'mm:ss')}</span>` : !currBkTime.value && seNow
+          ? `${BKSection(gameInfo.se_now)}<span>00:00</span>` : ''
+      //
+      // 美式足球
+      case 'BK_AFT':
+        if (gameInfo?.se_now === 'HT' || gameInfo?.se_now === 'ht') {
+          // 中场休息
+          return '中场休息'
+        }
+        if (gameInfo?.se_now.indexOf('OT') > -1 || gameInfo?.se_now.indexOf('ot') > -1) {
+          // 加时
+          return `加时 <span>${dateFormat(gameInfo.t_count * 1000, 'mm:ss')}</span>`
+        }
+        const seNow1 = gameInfo && gameInfo.se_now
+        const tCount1 = gameInfo && +gameInfo.t_count
+        return seNow1 && tCount1 ? `${BKSection(gameInfo.se_now)}<span>${dateFormat(gameInfo.t_count * 1000, 'mm:ss')}</span>` : ''
+      //
+      // 乒乓球
+      case 'OP_TN':
+        const newSeNow:any = gameInfo?.se_now.replace(/[^0-9]/gi, '') || ''
+        return newSeNow
+      //
+      // 排球
+      case 'OP_VB': // 排球
+        return Obj ? `第${Obj.scorePan.num}局` : ''
+      //
+      // 电竞
+      case 'OP_DJ': // 电竞
+        return '进行中'
+      //
+      // 冰球
+      case 'OP_IH': // 冰球
+        return '进行中'
+    }
+    return '进行中'
+  } else {
+    return '进行中'
+  }
 }
 
 const getTime = (val:any) => {

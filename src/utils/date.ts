@@ -13,3 +13,6 @@ export function formatToDate(date: any, format = DATE_FORMAT) {
   return dateUtil(date).format(format)
 }
 
+export function dateFormat(date: any, format = DATE_TIME_FORMAT) {
+  return dateUtil(date).format(format)
+}
