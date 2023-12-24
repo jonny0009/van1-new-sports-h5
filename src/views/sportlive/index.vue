@@ -15,13 +15,14 @@
 <script lang="ts" setup>
 import TextButton from '@/components/Button/TextButton/index.vue'
 import MatchLive from '@/components/HomeMatch/MatchLive/index.vue'
-import { ref, onBeforeMount, onActivated, onDeactivated, onBeforeUnmount } from 'vue'
+import store from '@/store'
+import { ref, onBeforeMount, onActivated, onDeactivated, onBeforeUnmount, computed, watch } from 'vue'
 import { apiRBCondition, apiCommonMatches } from '@/api/home'
 const gameType:any = ref()
 const isLoading = ref(false)
-const init = async () => {
+const init = async (toggleLoading:any = true) => {
   await getApiRBCondition()
-  await getApiCommonMatches()
+  await getApiCommonMatches(toggleLoading)
 }
 const showGameTypeList:any = ref(['FT', 'BK', 'TN', 'OP_BM'])
 const gameTypeList:any = ref([])
@@ -33,7 +34,7 @@ const getApiRBCondition = async () => {
   }
 }
 const commonMatchesList:any = ref([])
-const getApiCommonMatches = async () => {
+const getApiCommonMatches = async (toggleLoading:any = true) => {
   const params = {
     gameType: gameType.value || '',
     showtype: 'RB',
@@ -45,13 +46,15 @@ const getApiCommonMatches = async () => {
     leagueIds: '',
     gameTypeSon: '',
     page: 1,
-    pageSize: 50
+    pageSize: 200
   }
-  isLoading.value = false
+  if (toggleLoading) {
+    isLoading.value = false
+  }
   const res:any = await apiCommonMatches(params) || {}
-
-  console.log(res, 'resresresres')
-  isLoading.value = true
+  if (toggleLoading) {
+    isLoading.value = true
+  }
   if (res.code === 200 && res.data?.matchList?.baseData) {
     const dataList = res.data?.matchList?.baseData || []
     commonMatchesList.value = dataList.filter((t:any) => showGameTypeList.value.includes(t.gameType))
@@ -63,24 +66,45 @@ const clickGameType = (item:any) => {
   gameType.value = item.gameType
   getApiCommonMatches()
 }
-
 onBeforeMount(async () => {
-  console.log('onBeforeMount')
+  startInterval()
   isLoading.value = false
   init()
 })
-
 onActivated(() => {
-  console.log('onActivated')
+  startInterval()
 })
-
 onDeactivated(() => {
-  console.log('deactivated')
+  setClearInterval()
 })
-
 onBeforeUnmount(() => {
-  console.log('onBeforeUnmount')
+  setClearInterval()
 })
+const pushSwitch:any = computed(() => store.state.app.businessConfig.pushSwitch)
+watch(pushSwitch, () => {
+  startInterval()
+})
+const IntervalTimer:any = ref()
+const startInterval = () => {
+  clearTimeout(IntervalTimer)
+  IntervalTimer.value = setTimeout(() => {
+    setIntervalSendData()
+  }, 100)
+}
+const setIntervalDate:any = ref(15 * 1000)
+const setIntervalSendData = () => {
+  if (+pushSwitch.value === 1) {
+    setIntervalDate.value = 2 * 60 * 1000
+  }
+  setClearInterval()
+  setIntervalTimer.value = setInterval(() => {
+    init(false)
+  }, setIntervalDate.value)
+}
+const setIntervalTimer:any = ref()
+const setClearInterval = () => {
+  clearInterval(setIntervalTimer.value)
+}
 
 </script>
 <style lang="scss" scoped>

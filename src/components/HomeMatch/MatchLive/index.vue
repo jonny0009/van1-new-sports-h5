@@ -31,7 +31,8 @@
               <div class="name">{{ sendParams.homeTeamAbbr || sendParams.homeTeam }}</div>
               <div class="container">
                 <div class="value">
-                  {{ getscoreH(sendParams) }}
+                  <!-- {{ getscoreH(sendParams) }} -->
+                  {{ getScore(sendParams,'H') }}
                 </div>
               </div>
             </div>
@@ -46,7 +47,8 @@
               <div class="name">{{ sendParams.awayTeamAbbr || sendParams.awayTeam }}</div>
               <div class="container">
                 <div class="value">
-                  {{ getscoreA(sendParams) }}
+                  {{ getScore(sendParams,'C') }}
+                  <!-- {{ getscoreA(sendParams) }} -->
                 </div>
               </div>
             </div>
@@ -137,6 +139,7 @@
 import { ref } from 'vue'
 import { tnStObj, bsStObj, opScoreObj } from '@/utils/home/gameInfo'
 import { dateFormat } from '@/utils/date'
+import { getScore } from '@/utils/home/getScore'
 import { getHandicap } from '@/utils/home/getHandicap'
 // components
 import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
@@ -192,7 +195,8 @@ const showRBTime = (raceinfo:any = {}) => {
       //
       case 'FT':
         if (!gameInfo) {
-          return ''
+          // 原本data显示空
+          return '进行中'
         }
         if (homeTeamSuffix?.includes('点球') || homeTeamSuffix?.includes('點球')) {
           gameInfo.raceType = 'dianqiu'
@@ -255,15 +259,18 @@ const showRBTime = (raceinfo:any = {}) => {
           const { panNum, score1, score2 } = tninfo
           return `${panNum}<span>${score1}${score2}</span>`
         }
-        return ''
+        // 原本data显示空
+        return '进行中'
       //
       // 棒
       case 'BS':
         if (!gameInfo) {
-          return ''
+          // 原本data显示空
+          return '进行中'
         } else {
           if (gidm && gidm.indexOf('ic') > -1) {
-            return ''
+            // 原本data显示空
+            return '进行中'
           }
           const bsScoreObj:any = gameInfo ? bsStObj(gameInfo) : ''
           const inningNum = gameInfo.inningNum ? gameInfo?.inningNum
@@ -288,7 +295,8 @@ const showRBTime = (raceinfo:any = {}) => {
       // 美式足球
       case 'BK_AFT':
         if (!gameInfo) {
-          return ''
+          // 原本data显示空
+          return '进行中'
         } else {
           if (gameInfo?.se_now === 'HT' || gameInfo?.se_now === 'ht') {
           // 中场休息
@@ -306,7 +314,8 @@ const showRBTime = (raceinfo:any = {}) => {
       // 乒乓球
       case 'OP_TN':
         if (!gameInfo) {
-          return ''
+          // 原本data显示空
+          return '进行中'
         } else {
           const newSeNow:any = gameInfo?.se_now.replace(/[^0-9]/gi, '') || ''
           return newSeNow
@@ -324,8 +333,10 @@ const showRBTime = (raceinfo:any = {}) => {
       case 'OP_IH': // 冰球
         return '进行中'
     }
+    // 原本data显示空
     return '进行中'
   } else {
+    // 原本data显示空
     return '进行中'
   }
 }
