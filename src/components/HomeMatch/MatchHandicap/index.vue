@@ -42,7 +42,7 @@
       </div>
     </div>
     <div class="home-match">
-      <div calss="up-match-group__body">
+      <div class="up-match-group__body">
         <div class="up-match">
           <!--  -->
           <div class="up-match__header border-bottom">

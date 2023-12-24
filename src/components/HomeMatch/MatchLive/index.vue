@@ -4,7 +4,7 @@
       <TimeView :time-send-params="sendParams" />
     </div>
     <div class="home-match">
-      <div calss="up-match-group__body">
+      <div class="up-match-group__body">
         <div class="up-match">
           <!--  -->
           <div class="match-info-live__header border-bottom">
@@ -14,7 +14,6 @@
             <div class="flex-cross-center">
               <div class="up-match-time">
                 <SportsIcon :icon-src="'live'" />
-                <!-- {{ getTime(sendParams) }} -->
                 <div class="up-match-time-html" v-html="showRBTime(sendParams)"></div>
               </div>
             </div>
@@ -183,10 +182,8 @@ const BKSection = (section:any) => {
   return sectionMap[section]
 }
 const currBkTime:any = ref('')
-// const europSingle:any = ref(false)
 const showRBTime = (raceinfo:any = {}) => {
-  // const raceinfo:any = {}
-  const { showtype, gameType, gameInfo, showType, homeTeamSuffix } = raceinfo
+  const { showtype, gameType, gameInfo, showType, homeTeamSuffix, gidm } = raceinfo
   const Obj = opScoreObj(gameInfo, 5)
   const seNow:any = gameInfo && gameInfo.se_now
   if (showtype === 'RB' || showType === 'RB') {
@@ -217,9 +214,9 @@ const showRBTime = (raceinfo:any = {}) => {
           }
           if (gameInfo?.raceType === 'jiashi' && gameInfo?.re_time.indexOf('^') > -1) {
             const [secssion, raceTime] = gameInfo.re_time.split('^')
-            // 上 下
+            // 上and下
             const overTiming = secssion === '1H' ? `上${raceTime}` : `下${raceTime}`
-            return `${gameInfo.teamSuffix}<span calss='time-h-number'>${overTiming}</span>`
+            return `${gameInfo.teamSuffix}<span class='time-h-number'>${overTiming}</span>`
           }
         }
         // 非加时赛
@@ -235,12 +232,12 @@ const showRBTime = (raceinfo:any = {}) => {
           let newRaceTimeVal = ''
           if (raceTime.indexOf("'") > -1) {
             const [newRaceTime] = raceTime.split("'")
-            newRaceTimeVal = `${newRaceTime}<span>'</span>`
+            newRaceTimeVal = `${newRaceTime}<span class="time-h-dot">'</span>`
           } else {
             newRaceTimeVal = raceTime
           }
-          // 上半场  下半场
-          return secssion === '1H' ? `上半场<span calss='time-h-Up'>${newRaceTimeVal}</span>` : `下半场<span calss='time-h-d'>${newRaceTimeVal}</span>`
+          // 上半场and下半场
+          return secssion === '1H' ? `上半场<span class='time-h-Up'>${newRaceTimeVal}</span>` : `下半场<span class='time-h-d'>${newRaceTimeVal}</span>`
         } else if (gameInfo?.re_time) {
           // 比赛时间容错
           return gameInfo.re_time
@@ -262,14 +259,18 @@ const showRBTime = (raceinfo:any = {}) => {
       //
       // 棒
       case 'BS':
-        /* eslint-disable no-case-declarations */
-        /* eslint-disable indent */
-        const bsScoreObj = gameInfo ? bsStObj(gameInfo) : ''
-        // 局数
-        const inningNum = gameInfo?.inningNum ? gameInfo?.inningNum : bsScoreObj?.se_now > 0
-          ? bsScoreObj?.se_now : bsScoreObj?.score?.num
-        const juCount = `<span calss="">第${inningNum}局</span>`
-        return juCount
+        if (!gameInfo) {
+          return ''
+        } else {
+          if (gidm && gidm.indexOf('ic') > -1) {
+            return ''
+          }
+          const bsScoreObj:any = gameInfo ? bsStObj(gameInfo) : ''
+          const inningNum = gameInfo.inningNum ? gameInfo?.inningNum
+            : bsScoreObj.se_now > 0 ? bsScoreObj.se_now : bsScoreObj.score.num
+          const juCount = `<span class="">第${inningNum}局</span>`
+          return juCount
+        }
       //
       // 篮球
       case 'BK':
@@ -286,22 +287,30 @@ const showRBTime = (raceinfo:any = {}) => {
       //
       // 美式足球
       case 'BK_AFT':
-        if (gameInfo?.se_now === 'HT' || gameInfo?.se_now === 'ht') {
+        if (!gameInfo) {
+          return ''
+        } else {
+          if (gameInfo?.se_now === 'HT' || gameInfo?.se_now === 'ht') {
           // 中场休息
-          return '中场休息'
-        }
-        if (gameInfo?.se_now.indexOf('OT') > -1 || gameInfo?.se_now.indexOf('ot') > -1) {
+            return '中场休息'
+          }
+          if (gameInfo?.se_now.indexOf('OT') > -1 || gameInfo?.se_now.indexOf('ot') > -1) {
           // 加时
-          return `加时 <span>${dateFormat(gameInfo.t_count * 1000, 'mm:ss')}</span>`
+            return `加时 <span>${dateFormat(gameInfo.t_count * 1000, 'mm:ss')}</span>`
+          }
+          const seNow1 = gameInfo && gameInfo.se_now
+          const tCount1 = gameInfo && +gameInfo.t_count
+          return seNow1 && tCount1 ? `${BKSection(gameInfo.se_now)}<span>${dateFormat(gameInfo.t_count * 1000, 'mm:ss')}</span>` : ''
         }
-        const seNow1 = gameInfo && gameInfo.se_now
-        const tCount1 = gameInfo && +gameInfo.t_count
-        return seNow1 && tCount1 ? `${BKSection(gameInfo.se_now)}<span>${dateFormat(gameInfo.t_count * 1000, 'mm:ss')}</span>` : ''
       //
       // 乒乓球
       case 'OP_TN':
-        const newSeNow:any = gameInfo?.se_now.replace(/[^0-9]/gi, '') || ''
-        return newSeNow
+        if (!gameInfo) {
+          return ''
+        } else {
+          const newSeNow:any = gameInfo?.se_now.replace(/[^0-9]/gi, '') || ''
+          return newSeNow
+        }
       //
       // 排球
       case 'OP_VB': // 排球
@@ -319,14 +328,6 @@ const showRBTime = (raceinfo:any = {}) => {
   } else {
     return '进行中'
   }
-}
-
-const getTime = (val:any) => {
-  const { gameInfo } = val
-  // eslint-disable-next-line camelcase
-  const { re_time } = gameInfo || {}
-  // eslint-disable-next-line camelcase
-  return re_time || '0'
 }
 
 const getscoreH = (val:any) => {

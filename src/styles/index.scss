@@ -175,6 +175,7 @@
       .up-match-time{
         font-size: 24px;
         color: #546371;
+        display: flex;
       }
     }
     //
@@ -304,10 +305,12 @@
         font-size: 24px;
         line-height: 26px;
         padding: 10px 20px 0;
+        display: flex;
         .iconfont {
           font-size: 26px !important;
           color: #7642fe;
           font-weight: 100;
+          height: auto;
         }
       }
     }
@@ -425,6 +428,19 @@
         color: #fff !important;
       }
     }
+  }
+}
+.time-h-dot{
+  animation: fade-in-put 1.5s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+}
+@keyframes fade-in-put {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 //end home page
