@@ -142,10 +142,7 @@ async function setPk(val: any) {
 </script>
 
 <style lang="scss" scoped>
-:root {
-  --van-toast-text-padding: 20px 30px;
-  --van-toast-font-size: 28px;
-}
+
 .noticeDetail {
   .bg-title {
     width: 100%;
@@ -159,7 +156,7 @@ async function setPk(val: any) {
     }
   }
 
-  .content {
+  > .content {
     height: calc(100vh - 150px);
     overflow-y: auto;
     padding: 42px 36px;

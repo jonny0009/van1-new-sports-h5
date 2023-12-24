@@ -1,5 +1,6 @@
 import axios from 'axios'
 import router from '@/router'
+import { showDialog } from 'vant'
 import { getToken, removeToken } from './auth'
 // .env.development/.env.production配置
 const baseURL: any = import.meta.env.VITE_BASE_API
@@ -50,8 +51,15 @@ const authCode: any = [401, 403, 1010]
 // 响应拦截器
 service.interceptors.response.use(
   (response: any) => {
-    if (authCode.includes(response.data.codecode)) {
+    if (authCode.includes(response.data.code)) {
       removeToken()
+      showDialog({
+        message: '登录信息已失效,请重新登录',
+        theme: 'round-button',
+        confirmButtonText: '确认'
+      }).then(() => {
+        router.push('/login')
+      })
       // router.push('/login')
     } else if (+response.data.code !== 200) {
       return response.data

@@ -58,7 +58,7 @@ const bettingState = computed(() => {
   if (mode.value === 1) {
     return effectiveMarkets.value.length === 0
   }
-  return comboMarkets.value.length <= 1
+  return comboMarkets.value.length <= 1 || !profit.value
 })
 
 const clear = () => {

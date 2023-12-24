@@ -95,7 +95,7 @@ export const constantRoutes: Array<any> = [
       },
       {
         path: '/user/result',
-        component: () => import('@/views/user/result.vue'),
+        component: () => import('@/views/user/result/index.vue'),
         name: 'Result',
         hidden: true
       },
@@ -119,8 +119,14 @@ export const constantRoutes: Array<any> = [
       },
       {
         path: '/user/elseFocus',
-        component: () => import('@/views/user/elseFocus.vue'),
+        component: () => import('@/views/user/elseFocus/index.vue'),
         name: 'ElseFocus',
+        hidden: true
+      },
+      {
+        path: '/user/selfFocus',
+        component: () => import('@/views/user/selfFocus/index.vue'),
+        name: 'SelfFocus',
         hidden: true
       },
       {

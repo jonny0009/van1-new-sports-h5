@@ -104,7 +104,6 @@ onMounted(() => {})
     display: none;
   }
   &-item {
-    min-width: 152px;
     height: 64px;
     padding: 0 20px;
     background: #eff1f2;

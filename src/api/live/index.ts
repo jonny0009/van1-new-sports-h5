@@ -74,7 +74,7 @@ export const rbLiveList = (params: any) => {
 
 export const intoRoom = (params: any) => {
   return request({
-    url: '/api/chat/intoRoom',
+    url: '/chat/intoRoom',
     method: 'get',
     params
   })
@@ -82,7 +82,7 @@ export const intoRoom = (params: any) => {
 
 export const lastMessageByPage = (params: any) => {
   return request({
-    url: '/apiChat/chat/findAllLastMessageByPage',
+    url: '/chat/findAllLastMessageByPage',
     method: 'get',
     params
   })

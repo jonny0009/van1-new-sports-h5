@@ -1,3 +1,4 @@
+import { showToast } from 'vant'
 export default {
   mounted(el: any, { value }: any) {
     el.$value = value
@@ -5,6 +6,7 @@ export default {
       if (!el.$value) {
         // 值为空的时候，给出提示
         console.error('无复制内容')
+        showToast('无复制内容')
         return
       }
       // 动态创建 textarea 标签
@@ -25,6 +27,7 @@ export default {
           type: 'success',
           message: '复制成功'
         })
+        showToast('复制成功')
       }
       document.body.removeChild(textarea)
     }

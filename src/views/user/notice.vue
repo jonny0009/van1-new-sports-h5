@@ -6,7 +6,7 @@
       </template>
     </van-nav-bar>
     <div class="content">
-      <div v-if="dataList.length" class="noData">
+      <div v-if="!list.arr.length" class="noData">
         <img class="img_1" src="@/assets/images/user/noData.png" />
         <p>
           未查询到相关数据
@@ -44,7 +44,6 @@ import { showToast } from 'vant'
 // import { showConfirmDialog } from 'vant'
 const $router = useRouter()
 const title = ref('消息')
-const dataList = reactive([])
 const loading = ref(false)
 const finished = ref(false)
 const list = reactive<{ arr: any }>({ arr: [] })
@@ -121,10 +120,7 @@ const beforeClose = (position: any) => {
 
 <style lang="scss" scoped>
 @import './style/notice.scss';
-:root {
-  --van-toast-text-padding: 20px 30px;
-  --van-toast-font-size: 28px;
-}
+
 :deep(.van-field__control) {
   height: 50px;
   font-size: 30px;

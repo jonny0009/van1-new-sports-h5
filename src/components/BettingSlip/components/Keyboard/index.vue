@@ -9,7 +9,7 @@
       <div class="seize finish" @click="close">完成</div>
     </div>
     <div class="keyboard-input-body">
-      <div v-for="key in keys" :key="key" class="input-item">
+      <div v-for="key in keys" :key="key" class="input-item" @click="inputEntry(key)">
         <span v-if="key === 'back'" class="back"></span>
         <span v-else>{{ key }}</span>
       </div>
@@ -36,6 +36,13 @@ const quickEntry = (amount:any) => {
     store.dispatch('betting/changeComboAmount', amount)
   }
   close()
+}
+const inputEntry = (amount:any) => {
+  if (mode.value === 1) {
+    store.dispatch('betting/inputSingleAmount', amount)
+  } else {
+    store.dispatch('betting/inputComboAmount', amount)
+  }
 }
 const close = () => {
   store.dispatch('betting/setBoardShow', { status: false })

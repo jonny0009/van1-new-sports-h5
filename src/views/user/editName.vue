@@ -22,6 +22,7 @@
       />
 
       <!--用户名规则  -->
+      <p class=" edit-name">7天可以修改一次昵称，请认真修改哦!</p>
       <p class="userName">用户名必须:</p>
       <p class="explain">
         <img v-if="!ifStandard" class="noPitch" src="@/assets/images/login/noPitch.png" />
@@ -44,14 +45,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-
+import { ref, onMounted, computed } from 'vue'
+import { playerInfo, updatePlayerInfo } from '@/api/user'
 import { useRouter } from 'vue-router'
+import store from '@/store'
+const userInfo = computed(() => store.state.user.userInfo)
 const $router = useRouter()
 const username = ref<String>('')
 const ifSpace = ref<Boolean>(false)
 const ifSpecial = ref<Boolean>(false)
 const ifStandard = ref<Boolean>(false)
+import { showToast } from 'vant'
 
 const title = ref('编辑昵称')
 
@@ -85,8 +89,35 @@ const updateName = (str: string) => {
     }
   }
 }
-const handleSave = () => {
-  // $router.push('/user/userInfo')
+onMounted(() => {
+  getAccountInfo()
+})
+const getAccountInfo = async () => {
+  const params = {
+    fPlayerId: userInfo.value.playerId
+  }
+  const res: any = await playerInfo(params)
+  if (res.code !== 200) {
+    return showToast(res.msg)
+  }
+  username.value = res.data.nickName
+  updateName(res.data.nickName)
+}
+const handleSave = async () => {
+  if (!ifStandard.value || !ifStandard.value || !ifStandard.value) {
+    return showToast('请按规则修改')
+  }
+  const params = {
+    nickName: username.value,
+    lang: localStorage.getItem('locale')
+  }
+  const res: any = await updatePlayerInfo(params)
+  if (res.code !== 200) {
+    return showToast(res.msg)
+  }
+  showToast('编辑成功')
+  store.dispatch('user/userInfo')
+  $router.push('/user/userInfo')
 }
 
 const goBack = () => {
@@ -132,6 +163,14 @@ const goBack = () => {
     letter-spacing: 0;
     font-weight: 600;
     margin-left: 15px;
+  }
+  .edit-name{
+    color: #8a979c;
+    font-weight: normal;
+    font-size: 24px;
+    // color: red;
+    margin-left: 15px;
+    margin-top: 7px;
   }
 
   .explain {

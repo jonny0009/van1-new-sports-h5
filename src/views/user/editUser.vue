@@ -10,7 +10,7 @@
     </van-nav-bar>
     <div class="content">
       <div class="head">
-        <img class="img_1" src="@/assets/images/user/head-img.png" alt="" />
+        <img class="img_1" :src="getImg(peopleInfo.headImg)" alt="" />
         <div class="edit" @click="goUrl('/editImg')">编辑</div>
       </div>
       <div class="edit-name">
@@ -27,8 +27,8 @@
       <!-- 账户 -->
       <div class="account-1">
         <div class="top-1">
-          <img v-if="privacy === 1" class="img_1" src="@/assets/images/user/pitch.png" alt="" />
-          <div v-else class="round" @click="privacy = 1"></div>
+          <img v-if="privacy === 0" class="img_1" src="@/assets/images/user/pitch.png" alt="" />
+          <div v-else class="round" @click="handlePrivacy(0)"></div>
           公开帐户（推荐）
         </div>
         <div class="top-2">
@@ -37,8 +37,8 @@
       </div>
       <div class="account-1">
         <div class="top-1">
-          <img v-if="privacy === 2" class="img_1" src="@/assets/images/user/pitch.png" alt="" />
-          <div v-else class="round" @click="privacy = 2"></div>
+          <img v-if="privacy === 1" class="img_1" src="@/assets/images/user/pitch.png" alt="" />
+          <div v-else class="round" @click="handlePrivacy(1)"></div>
           私密帐户
         </div>
         <div class="top-2">
@@ -51,32 +51,79 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { playerInfo, updatePlayerInfo, setPrivacy } from '@/api/user'
+import { showToast } from 'vant'
+import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
+import store from '@/store'
+import { ImageSource } from '@/config'
+const userInfo = computed(() => store.state.user.userInfo)
 const $router = useRouter()
 const remark = ref('')
-const privacy = ref(1)
+const privacy = ref(0)
+const peopleInfo = ref<any>({})
+
 // const dataList = reactive([])
 const goBack = () => {
   $router.push('/user/userInfo')
 }
-const goUrl = (url:string) => {
+const goUrl = (url: string) => {
   $router.push('/user' + url)
 }
-const handleSave = () => {
+const handleSave = async () => {
   // $router.push('/user/userInfo')
+  const params = {
+    nickName: '',
+    headImg: '',
+    profiles: remark.value
+  }
+  const res: any = await updatePlayerInfo(params)
+  if (res.code !== 200) {
+    return showToast(res.msg)
+  }
+  showToast('编辑成功')
+  store.dispatch('user/userInfo')
+  $router.push('/user/userInfo')
+}
+const handlePrivacy = async (num :any) => {
+  if (privacy.value === num) return
+  privacy.value = num
+  const params = {
+    privacy: privacy.value
+  }
+  const res: any = await setPrivacy(params)
+  if (res.code !== 200) {
+    return showToast(res.msg)
+  }
+  showToast('编辑成功')
+}
+const getImg = (imgUrl: string) => {
+  if (imgUrl) {
+    return `${ImageSource}${imgUrl}`
+  }
+  return avatarImg
 }
 const title = ref('编辑档案')
+onMounted(() => {
+  getAccountInfo()
+})
+const getAccountInfo = async () => {
+  const params = {
+    fPlayerId: userInfo.value.playerId
+  }
+  const res: any = await playerInfo(params)
+  if (res.code !== 200) {
+    return showToast(res.msg)
+  }
+  remark.value = res.data.profiles
+  privacy.value = res.data.privacy
+  peopleInfo.value = res.data
+}
 
 </script>
 
 <style lang="scss" scoped>
-:root {
-  --van-field-word-limit-font-size: 30px;
-  --van-toast-text-padding: 20px 30px;
-  --van-toast-font-size: 28px;
-}
-
 .editUser {
   .bg-title {
     width: 100%;
@@ -90,12 +137,13 @@ const title = ref('编辑档案')
 
   }
 
-  .content {
+  >.content {
     height: calc(100vh - 150px);
     padding: 0px 40px;
 
     .head {
-      width: 106px;
+      // width: 106px;
+      width: 126px;
       height: 126px;
       background-color: #FFFFFF;
       border-radius: 106px;
@@ -112,7 +160,7 @@ const title = ref('编辑档案')
       .edit {
         position: absolute;
         bottom: 2px;
-        width: 106px;
+        width: 126px;
         height: 32px;
         background-color: rgba(0, 0, 0, 0.5);
         text-align: center;
