@@ -15,16 +15,17 @@
 </template>
 <script lang="ts" setup>
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import router from '@/router'
+import { useRoute } from 'vue-router'
 const homeBarArray = ref(
   [
     {
-      value: 'Home',
+      value: 'home',
       name: 'Home'
     },
     {
-      value: 'live',
+      value: 'sportlive',
       name: 'Sportlive'
     },
     {
@@ -45,16 +46,29 @@ const homeBarArray = ref(
     }
   ]
 )
-const active = ref('Home')
+const getRouteName = () => {
+  const routerName: any = router?.currentRoute?.value?.name || ''
+  return routerName.toLowerCase()
+}
+
+const active:any = computed(() => {
+  const route = useRoute()
+  let active = route.query.type
+  if (!active) {
+    active = getRouteName()
+  }
+  return active || 'home'
+})
+
 const clickChangeActive = (item:any) => {
   const { value, name } = item
-  active.value = value
   let params:any = {}
   params.name = name
+
   if (name === 'Sport') {
     params = {
       name,
-      query: {
+      params: {
         type: value
       }
     }

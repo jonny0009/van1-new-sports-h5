@@ -14,7 +14,7 @@
         </BettingOption>
       </div>
       <div class="betting-select__more" @click="clickOpen()">
-        {{ isOpen ? '收起' : '更多' }}
+        {{ isOpen ? $t('sport.close') : $t('sport.more') }}
         <van-icon class="icon" :class="isOpen ? 'up' : ''" name="play" />
       </div>
     </div>
@@ -45,7 +45,7 @@ const clickOpen = () => {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .league-champion-item__content {
   margin-top: 24px;
 
@@ -72,7 +72,6 @@ const clickOpen = () => {
         border-radius: 26px;
         overflow: hidden;
         transition: background-color .2s;
-
         .betslipLine {
           width: 100%;
           flex: 1;

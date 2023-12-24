@@ -1,7 +1,7 @@
 const isDev: any = import.meta.env.DEV
 
 if (isDev) {
-  console.log('dev')
+  // console.log('dev')
 }
 
 export const ImageSource = window.AIConfig.static_url

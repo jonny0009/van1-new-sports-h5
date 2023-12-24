@@ -13,6 +13,7 @@
         :active="item.value === active"
         :text="item.text"
         :src="item.icon"
+        :class="item.value"
       />
     </div>
   </div>
@@ -24,15 +25,28 @@ import defaultTime from '@/assets/images/home/homeTabs/homeTabs-default-time.png
 import time from '@/assets/images/home/homeTabs/homeTabs-time.png'
 import important from '@/assets/images/home/homeTabs/homeTabs-important.png'
 import defaultImportant from '@/assets/images/home/homeTabs/homeTabs-default-important.png'
-import ImageButton from '@/components/Button/ImageButton/index.vue'
-import { ref, reactive } from 'vue'
+import { ref, computed, watch } from 'vue'
 import router from '@/router'
-const active = ref('ImportantRecommend')
+const active = computed(() => {
+  const getRouteNameObj:any = {
+    'home': 'ImportantRecommend',
+    'hometime': 'TimeSort',
+    'champion': 'ChampionBet'
+  }
+  const routerName: any = router?.currentRoute?.value?.name || ''
+  const newRouterName = routerName.toLowerCase()
+  const val = getRouteNameObj[newRouterName]
+  return val
+})
+
+watch(active, (val) => {
+  if (val) {
+    homeBarArray.value.length = 0
+    homeBarArray.value.push(...homeBarArrayTable(active.value))
+  }
+})
 const clickChangeActive = (item:any) => {
-  const { value, name } = item
-  homeBarArray.length = 0
-  homeBarArray.push(...homeBarArrayTable(value))
-  active.value = value
+  const { name } = item
   const params:any = { name }
   router.push(params)
 }
@@ -70,7 +84,7 @@ const homeBarArrayTable = (val:any):Array<any> => {
     return e
   })]
 }
-const homeBarArray:any = reactive(homeBarArrayTable(''))
+const homeBarArray:any = ref(homeBarArrayTable(''))
 
 </script>
 <style lang="scss" scoped>
@@ -88,8 +102,15 @@ const homeBarArray:any = reactive(homeBarArrayTable(''))
   display:flex;
   .ImageButton{
     .img{
-      width: 36px;
-      height: 36px;
+      width: 36px !important;
+      height: 36px !important;
+    }
+
+    &.ImportantRecommend{
+      .img{
+        width: 32px !important;
+        height: 32px !important;
+      }
     }
   }
 }

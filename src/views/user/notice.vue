@@ -100,7 +100,6 @@ const replaceImgUrl = (str: any) => {
 }
 
 const beforeClose = (position: any) => {
-  console.log(position, '====11')
   // switch (position.position) {
   //   case 'left':
   //   case 'cell':

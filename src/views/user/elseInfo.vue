@@ -177,8 +177,6 @@ const goBack = () => {
   $router.push('/user/userInfo')
 }
 const goUrl = (url: string) => {
-  console.log(url, '======')
-
   // $router.push('/user' + url)
 }
 const goElseUrl = (url: string) => {

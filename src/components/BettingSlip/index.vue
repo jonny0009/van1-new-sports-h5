@@ -26,7 +26,7 @@
         >
           <template #node>
             <div class="icon-wrapper">
-              <van-icon :name="checked ? 'success' : 'cross'" color="#9912fe" />
+              <SvgIcon v-if="userConfig.acceptAll" name="betting-check" />
             </div>
           </template>
         </van-switch>
@@ -52,14 +52,31 @@
         ></div>
       </div>
       <Nothing v-if="results.length === 0 && markets.length === 0"></Nothing>
-      <div v-else-if="type < 3 && markets.length" class="bet-content">
-        <Singles v-for="(market, index) in markets" :key="index" :market-info="market"></Singles>
+      <div
+        v-else-if="type < 3 && markets.length"
+        class="bet-content"
+        :style="{
+          paddingBottom: boardShow ? '175px' : '8px'
+        }"
+      >
+        <div v-if="mode === 2" class="betting-slip-combo-header">
+          <div class="up-betting-combo">
+            <div class="text">{{ comboMarkets.length }}场串关</div>
+            <div class="icons">
+              <SportsIcon v-for="(item, index) in comboMarkets" :key="index" :icon-src="item.gameType" />
+            </div>
+          </div>
+          <div class="cur-odds">
+            @<span v-points="combosIor"></span>
+          </div>
+        </div>
+        <Singles v-for="( market, index ) in markets " :key="index" :market-info="market"></Singles>
         <ActionBar />
       </div>
-      <Result v-if="results.length && markets.length === 0"></Result>
+      <Result v-if="results.length"></Result>
     </div>
-
   </div>
+  <Keyboard></Keyboard>
 </template>
 <script lang="ts" setup>
 import { ref, computed, watch } from 'vue'
@@ -68,36 +85,52 @@ import Nothing from './components/Nothing/index.vue'
 import Singles from './components/Single/index.vue'
 import Result from './components/Result/index.vue'
 import ActionBar from './components/ActionBar/index.vue'
+import Keyboard from './components/Keyboard/index.vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 import store from '@/store'
 const open = ref(false)
-const checked = ref(false)
 const type = ref(1)
 const tabs = ref([
   {
     type: 1,
-    title: '单关'
+    title: t('betting.single')
   },
   {
     type: 2,
-    title: '串关'
+    title: t('betting.parlay')
   },
   {
     type: 3,
-    title: '进行中'
+    title: t('betting.pending')
   }
 ])
 const tableLeft = computed(() => {
   return `calc(100% / 3 * ${type.value - 1} + (100% / 3 - 27vw) / 2 )`
 })
 const isOne = computed(() => store.state.betting.isOne)
+const mode = computed(() => store.state.betting.mode)
+const boardShow = computed(() => store.state.betting.boardShow)
 const markets = computed(() => store.state.betting.markets)
 const results = computed(() => store.state.betting.results)
 const betsProfit = computed(() => store.getters['betting/betsProfit'])
-
+const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
+const combosIor = computed(() => store.getters['betting/combosIor'])
 const userConfig = computed(() => store.state.user.userConfig)
 watch(() => isOne.value, () => {
   if (isOne.value) {
     open.value = true
+  }
+})
+watch(() => markets.value.length, () => {
+  hitTimer()
+})
+watch(() => open.value, () => {
+  if (open.value) {
+    hitTimer()
+  } else {
+    store.dispatch('betting/setBoardShow', { status: false })
+    store.dispatch('betting/clearResult')
   }
 })
 const toogle = () => {
@@ -108,22 +141,38 @@ const changeType = (mode: any) => {
   store.dispatch('betting/setMode', mode)
   store.dispatch('betting/setHitState', 1)
   store.dispatch('betting/clearResult')
+  hitTimer()
 }
 const radioChange = (acceptAll: number) => {
   store.dispatch('user/configSettingNew', { acceptAll })
 }
 const timer = ref()
-store.dispatch('betting/marketHit')
-timer.value = setInterval(() => {
+const hitTimer = () => {
   if (open.value) {
-    store.dispatch('betting/marketHit')
+    if (mode.value === 2) {
+      store.dispatch('betting/comboMarketHit')
+    }
+    if (mode.value < 3) {
+      store.dispatch('betting/marketHit')
+    }
   }
-}, 10 * 1000)
+  clearInterval(timer.value)
+  timer.value = setInterval(() => {
+    if (open.value && mode.value < 3) {
+      store.dispatch('betting/marketHit')
+      if (mode.value === 2) {
+        store.dispatch('betting/comboMarketHit')
+      }
+    }
+  }, 10 * 1000)
+}
+hitTimer()
+
 </script>
 <style lang="scss" scoped>
 .betting-slip-bg {
   display: none;
-  z-index: 7;
+  z-index: 288;
   position: fixed;
   left: 0;
   right: 0;
@@ -148,7 +197,7 @@ timer.value = setInterval(() => {
   right: 0;
   margin: auto;
   background: #fff;
-  z-index: 8;
+  z-index: 290;
   display: flex;
   flex-direction: column;
   transform: translateY(100%) translateY(-185px);
@@ -253,6 +302,10 @@ timer.value = setInterval(() => {
     .bet-ior-switch {
       margin-left: 10px;
     }
+
+    .icon-wrapper {
+      color: #fff;
+    }
   }
 }
 
@@ -306,10 +359,33 @@ timer.value = setInterval(() => {
 
   .bet-content {
     flex: 1;
-    padding: 20px 38px;
+    padding: 20px 0;
     overflow: auto;
     transition: height .3s;
     overscroll-behavior: contain;
+
+    .betting-slip-combo-header {
+      margin: 20px 38px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .up-betting-combo {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .cur-odds {
+        font-family: PingFangSC-Semibold;
+        font-size: 30px;
+        color: #7642FD;
+        letter-spacing: 0;
+        font-weight: 600;
+      }
+    }
   }
+
 }
 </style>

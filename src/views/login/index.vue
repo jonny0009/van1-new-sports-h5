@@ -156,7 +156,6 @@ async function setPk(val: any) {
     store.dispatch('user/configSettingNew', { handicapType: val.key })
   }
   showBottom.value = false
-  console.log(val)
 }
 
 const goBack = () => {

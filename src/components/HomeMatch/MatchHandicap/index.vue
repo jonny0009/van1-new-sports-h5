@@ -1,14 +1,44 @@
 <template>
   <div class="homeMatchHandicap">
     <div class="home-tabs-play">
-      <div class="time">
-        周一 27/11
-      </div>
+
+      <TimeView :time-send-params="sendParams" />
+
       <div class="play">
         <div class="flex-1"></div>
-        <span class="btn active">让分</span>
-        <span class="btn active">大小</span>
-        <span class="btn active">独赢</span>
+        <span
+          class="btn R"
+          :class="[
+            {
+              active: RrefShow
+            }
+          ]"
+          @click="Rclick"
+        >
+          让分
+        </span>
+        <span
+          class="btn OU"
+          :class="[
+            {
+              active: OUrefShow
+            }
+          ]"
+          @click="OUclick"
+        >
+          大小
+        </span>
+        <span
+          class="btn M"
+          :class="[
+            {
+              active: MrefShow
+            }
+          ]"
+          @click="Mclick"
+        >
+          独赢
+        </span>
       </div>
     </div>
     <div class="home-match">
@@ -19,47 +49,44 @@
             <div class="match-info">
               <div class="match-team-logo">
                 <img
+                  v-img="props.sendParams.homeLogo"
                   class="my-image home"
-                  src="https://2up-pro-bucket.s3.ap-southeast-1.amazonaws.com/a20575f19a004a102cd23ff21049cb87ad19670d.png"
                   alt=""
+                  :type="4"
                   style="object-fit: contain;"
                 >
                 <img
+                  v-img="props.sendParams.awayLogo"
                   class="my-image away"
-                  src="https://2up-pro-bucket.s3.ap-southeast-1.amazonaws.com/459758119fe1c93df257d17ba261dd6e6dfbcc42.png"
                   alt=""
+                  :type="5"
                   style="object-fit: contain;"
                 >
               </div>
               <div class="match-info__content">
                 <div class="team">
-                  <span class="match-team-name">云达不莱梅 v 莱比锡红牛</span>
+                  <span class="match-team-name">
+                    {{ getTeam(props.sendParams) }}
+                  </span>
                   <div class="flex-1"></div>
-                  <div class="up-match-time">1:30 AM</div>
+                  <!-- <div class="up-match-time">1:30 AM</div> -->
                 </div>
                 <div class="up-match-league">
-                  <SportsIcon :icon-src="'FT'" />
-                  <div class="text">德国 - 甲级联赛</div>
+                  <SportsIcon :icon-src="props.sendParams.gameType" />
+                  <div class="text">{{ getLeagueShortName(props.sendParams) }}</div>
                 </div>
               </div>
             </div>
           </div>
-
           <!--  -->
           <div class="up-match__body">
             <!-- 全场 亚洲让分盘 -->
-            <div class="match-betting-item">
+            <div v-if="RrefShow" ref="Rref" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">
                   全场 亚洲让分盘
-                  <van-popover
-                    placement="top"
-                    theme="dark"
-                    trigger="click"
-                  >
-                    <div class="popover-text">
-                      全场让分盘
-                    </div>
+                  <van-popover placement="top" theme="dark" trigger="click">
+                    <div class="popover-text">全场让分盘</div>
                     <template #reference>
                       <van-icon name="info" />
                     </template>
@@ -69,116 +96,56 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <div class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">柏林联 </span>
-                        <span class="point">-0.5</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">1.88</div>
-                      </div>
-                    </div>
-                    <div class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">柏林联 </span>
-                        <span class="point">-0.5</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">1.88</div>
-                      </div>
-                    </div>
+                    <Handicap :send-params="getHandicap('R',sendParams)" />
                   </div>
                 </div>
               </div>
             </div>
             <!-- 全场 大小盘  -->
-            <div class="match-betting-item">
+            <div v-if="OUrefShow" ref="OUref" class="match-betting-item">
               <div class="match-betting-item__title">
-                <div class="flex-cross-center">
-                  全场 大小盘
-                </div>
+                <div class="flex-cross-center">全场 大小盘</div>
               </div>
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <div class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">大于</span>
-                        <span class="point">2.5</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">1.88</div>
-                      </div>
-                    </div>
-                    <div class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">小于</span>
-                        <span class="point">2.5</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">1.88</div>
-                      </div>
-                    </div>
+                    <Handicap :send-params="getHandicap('OU',sendParams)" />
                   </div>
                 </div>
               </div>
             </div>
             <!-- 全场 1X2 -->
-            <div class="match-betting-item">
+            <div v-if="MrefShow" ref="Mref" class="match-betting-item">
               <div class="match-betting-item__title">
-                <div class="flex-cross-center">
-                  全场 1X2
-                </div>
+                <div class="flex-cross-center">全场 1X2</div>
               </div>
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <div class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">柏林联</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">1.88</div>
-                      </div>
-                    </div>
-                    <div class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">柏林联</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">1.88</div>
-                      </div>
-                    </div>
-                    <div class="betting-option">
-                      <span class="up-betting-name">
-                        <span class="text">柏林联</span>
-                      </span>
-                      <div class="details">
-                        <div class="item">1.88</div>
-                      </div>
-                    </div>
+                    <Handicap :send-params="getHandicap('M',sendParams)" />
                   </div>
                 </div>
               </div>
             </div>
             <!--
-
              -->
           </div>
         </div>
       </div>
       <!--  -->
-
       <div class="up-match__footer">
         <div class="match-footer">
-          <div class="match-footer__item">
+          <div
+            class="match-footer__item"
+            @click="store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })"
+          >
             <span>更多玩法</span>
-            <span class="num">149</span>
+            <!-- <span class="num">149</span> -->
             <van-icon class="arrow" name="arrow" />
           </div>
-          <div class="match-footer__item">
+          <div class="match-footer__item" @click="goClick">
             <span>投注动态</span>
-            <span class="num">45</span>
+            <!-- <span class="num">45</span> -->
             <van-icon class="arrow" name="arrow" />
           </div>
         </div>
@@ -187,5 +154,52 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { getHandicap } from '@/utils/home/getHandicap.ts'
+import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
+import TimeView from '@/components/HomeMatch/public/time/index.vue'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
+import { ref } from 'vue'
+import store from '@/store'
+import { showDialog } from 'vant'
+const props = defineProps({
+  sendParams: {
+    type: Object,
+    default: function () {
+      return {}
+    }
+  }
+})
+const getTeam = ({ homeTeamAbbr, awayTeamAbbr, homeTeam, awayTeam }: any) => {
+  if (!homeTeamAbbr) {
+    return ''
+  }
+  return `${homeTeamAbbr || homeTeam} v ${awayTeamAbbr || awayTeam}`
+}
+const getLeagueShortName = ({ leagueShortName, leagueName }: any) => {
+  if (!(leagueShortName && leagueName)) {
+    return ''
+  }
+  return `${leagueShortName || leagueName}`
+}
+const RrefShow = ref(true)
+const Rclick = () => {
+  RrefShow.value = !RrefShow.value
+}
+const OUrefShow = ref(true)
+const OUclick = () => {
+  OUrefShow.value = !OUrefShow.value
+}
+
+const MrefShow = ref(true)
+const Mclick = () => {
+  MrefShow.value = !MrefShow.value
+}
+const goClick = () => {
+  showDialog({
+    message: '投注动态即将推出',
+    theme: 'round-button'
+  }).then(() => {
+  // on close
+  })
+}
 </script>

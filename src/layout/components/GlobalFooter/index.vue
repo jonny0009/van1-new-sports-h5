@@ -3,13 +3,13 @@
     <div
       v-for="(item, idx) in barFooterArr"
       :key="idx"
-      :class="{'active': item.value === active}"
+      :class="{ active: item.value === active }"
       class="item"
       @click="clickChangeActive(item)"
     >
       <template v-if="item.value === 'game'">
-        <img v-if="active === 'game'" class="img" :src="game" style="object-fit: contain;" />
-        <img v-else :src="gameDefault" class="img" style="object-fit: contain;" />
+        <img v-if="active === 'game'" class="img" :src="game" style="object-fit: contain" />
+        <img v-else :src="gameDefault" class="img" style="object-fit: contain" />
       </template>
       <template v-else>
         <i v-if="item.value === 'live'" class="iconfont icon-live"></i>
@@ -26,11 +26,12 @@ import gameDefault from '@/assets/images/globalLayout/footer/game-default.png'
 import game from '@/assets/images/globalLayout/footer/game.png'
 import { ref, reactive } from 'vue'
 import router from '@/router'
+import store from '@/store'
 const getRouteName = () => {
-  const routerName:any = router?.currentRoute?.value?.name || ''
+  const routerName: any = router?.currentRoute?.value?.name || ''
   return routerName.toLowerCase()
 }
-const barFooterArrayChange = ():Array<any> => {
+const barFooterArrayChange = (): Array<any> => {
   const barFooterArray = [
     {
       text: '直播',
@@ -47,12 +48,13 @@ const barFooterArrayChange = ():Array<any> => {
   ]
   return barFooterArray
 }
-const barFooterArr:any = reactive(barFooterArrayChange())
+const barFooterArr: any = reactive(barFooterArrayChange())
 const active = ref(getRouteName())
 const clickChangeActive = (item: any) => {
   active.value = item.value
   barFooterArr.length = 0
   barFooterArr.push(...barFooterArrayChange())
+  store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
   router.push(`/` + item.value)
 }
 </script>
@@ -64,24 +66,24 @@ const clickChangeActive = (item: any) => {
   width: 100%;
   height: 88px;
   display: flex;
-  z-index: 9;
+  z-index: 299;
   background-color: #fff;
-  &.has-border{
+  &.has-border {
     border-top: 1px solid #e5ecf3;
   }
-  .item{
+  .item {
     display: flex;
     flex: 1;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #96A5AA;
+    color: #96a5aa;
     font-weight: 600;
-    .img{
+    .img {
       height: 48px;
       width: 48px;
     }
-    .iconfont{
+    .iconfont {
       font-size: 44px;
       height: 48px;
       width: 48px;
@@ -90,16 +92,16 @@ const clickChangeActive = (item: any) => {
       justify-content: center;
       font-weight: 100;
     }
-    span{
+    span {
       line-height: 24px;
       font-size: 24px;
       margin-top: 4px;
     }
-    .item-img{
+    .item-img {
       display: block;
     }
     &.active {
-      color:#7642fe;
+      color: #7642fe;
     }
   }
 }

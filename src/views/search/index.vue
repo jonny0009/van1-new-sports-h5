@@ -140,10 +140,10 @@ const toUrl = () => {
 }
 const toUrlGame = (item: any) => {
   $router.push({
-    path: '/sport',
-    query: {
-      type: item.type
-    }
+    path: `/sport/${item.type}`
+    // query: {
+    //   type: item.type
+    // }
   })
 }
 

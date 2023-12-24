@@ -6,7 +6,7 @@
           <img :src="imgCover" alt="" />
         </template>
       </van-image>
-      <div class="state" v-if="item.showType == 'RB'">热播中</div>
+      <div class="state" v-if="item.showType == 'RB'">{{ $t('live.hotNow') }}</div>
       <div class="footer">
         <span v-if="item.showType == 'RB'"> {{ formatToDateTime(item.gameDate, 'HH:mm') }} </span>
         <span v-else>{{ formatToDateTime(item.gameDate, 'MM-DD HH:mm') }}</span>
@@ -54,6 +54,8 @@
 import { computed } from 'vue'
 import { ImageSource } from '@/config'
 import { formatToDateTime } from '@/utils/date'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const props = defineProps({
   item: {
@@ -73,11 +75,11 @@ const imgCover = computed(() => {
   return ImageSource + type[item.gameType]
 })
 const watchNumText = computed(() => {
-  const item = props.item
-  if (item.showType == 'RB') {
-    return `${item.watchTotal.toLocaleString()}人观看`
+  const num = props.item.watchTotal.toLocaleString()
+  if (props.item.showType == 'RB') {
+    return t('live.xLooks', { num })
   }
-  return `${item.watchTotal.toLocaleString()}人预约`
+  return t('live.xReserve', { num })
 })
 </script>
 
@@ -187,14 +189,21 @@ const watchNumText = computed(() => {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      max-width: 144px;
+      max-width: 140px;
     }
     .hots {
       display: flex;
       align-items: center;
+      max-width: 280px;
       > img {
         width: 20px;
         margin-right: 8px;
+      }
+      > span {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 180px;
       }
     }
   }

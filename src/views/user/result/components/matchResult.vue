@@ -103,7 +103,7 @@ import moment from 'moment'
 // getGameManyInfo
 import { matchResult } from '@/api/user'
 const list = reactive<{ arr: any }>({ arr: [] })
-import { showToast } from 'vant'
+// import { showToast } from 'vant'
 const loading = ref(false)
 const finished = ref(false)
 const popupTitle1 = ref('球类')
@@ -139,13 +139,10 @@ const popupList1 = reactive<{ arr: any[] }>({
       key: 'TN'
     },
     {
-      name: '棒球',
-      key: 'BS'
-    },
-    {
-      name: '美式足球',
-      key: 'BK_AFT'
+      name: '羽毛球',
+      key: 'OP_BM'
     }
+
   ] })
 const popupList = reactive<{ arr: any[] }>({ arr: [] })
 
@@ -177,7 +174,7 @@ const onLoad = async () => {
   } else {
     finished.value = true
     loading.value = false
-    showToast(res.msg)
+    // showToast(res.msg)
   }
 }
 
@@ -270,7 +267,6 @@ const seStatus = () => {
       key: 14
     }
   ]
-  console.log(timeArr)
   popupList.arr = timeArr
   showBottom.value = true
 }

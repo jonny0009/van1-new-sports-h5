@@ -6,11 +6,11 @@
     }"
     @click="clickChangActive"
   >
-    <img class="img mr10" :src="props.src" style="object-fit: contain;" />
+    <img v-img="props.src" :type="1" class="img mr10" style="object-fit: contain;" />
     <span>
       {{ props.text }}
     </span>
-    <img class="arrow ml10" :src="arrow" style="object-fit: contain;" />
+    <img v-img="arrow" class="arrow ml10" style="object-fit: contain;" />
   </div>
 </template>
 <script lang="ts" setup>
