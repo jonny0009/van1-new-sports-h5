@@ -4,7 +4,8 @@
     <div class="status_1">
       <span>球类</span>
       <div class="round" @click="setBall()">
-        <span>{{ ballKey.name }}</span>
+        <!-- <span>{{ ballKey.gameType }}</span> -->
+        <span>{{ $t(`user.sports.${ballKey.gameType}`) }}</span>
         <img class="img_1 " :class="[showBottom1 ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
       </div>
     </div>
@@ -34,7 +35,7 @@
           <div class="left-1">
             {{ item.homeTeamName }}
           </div>
-          <!-- <img class="img_1" src="@/assets/images/user/num3.png" alt="" /> -->
+          <img class="img_1" :src="getImg(item.homeTeamLogo)" alt="" />
         </div>
         <div class="center">
           {{ item.result.GM_h || 0 }}
@@ -42,7 +43,7 @@
           {{ item.result.GM_c || 0 }}
         </div>
         <div class="right">
-          <!-- <img class="img_2" src="@/assets/images/user/num9.png" alt="" /> -->
+          <img class="img_2" :src="getImg(item.awayTeamLogo)" alt="" />
           <div class="right-1">
             {{ item.awayTeamName }}
           </div>
@@ -75,17 +76,17 @@
     <div class="popup-title">{{ popupTitle1 }}</div>
     <div class="pk-list">
       <div
-        v-for="(item, index) in popupList1.arr"
+        v-for="(item, index) in ballList.arr"
         :key="index"
         class="item"
-        :class="[ballKey.key === item.key ? 'item-color' : '']"
+        :class="[ballKey.gameType === item.gameType ? 'item-color' : '']"
         @click="setBallSelect(item)"
       >
         <p>
           <span>
-            {{ item.name }}
+            {{ $t(`user.sports.${item.gameType}`) }}
           </span>
-          <span v-if="ballKey.key === item.key">
+          <span v-if="ballKey.gameType === item.gameType">
             <van-icon name="success" />
           </span>
         </p>
@@ -95,13 +96,20 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
+
+import { ImageSource } from '@/config'
+
+import store from '@/store'
+const ballListAll = computed(() => store.state.app.sports)
+
 import moment from 'moment'
-// import ball1 from '@/assets/images/login/ball1.svg'
+import ball1 from '@/assets/images/login/ball1.svg'
 // import arrow from '@/assets/images/components/title/arrow.png'
 // getGameManyInfo
 import { matchResult } from '@/api/user'
 const list = reactive<{ arr: any }>({ arr: [] })
+
 // import { showToast } from 'vant'
 const loading = ref(false)
 const finished = ref(false)
@@ -117,29 +125,29 @@ const commonKey = ref(
 const ballKey = ref(
   {
     name: '足球',
-    key: 'FT'
+    gameType: 'FT'
   }
 )
 const showBottom1 = ref(false)
 const showBottom = ref(false)
 // const showTime = ref(false)
-const popupList1 = reactive<{ arr: any[] }>({
+const ballList = reactive<{ arr: any[] }>({
   arr: [
     {
       name: '足球',
-      key: 'FT'
+      gameType: 'FT'
     },
     {
       name: '篮球',
-      key: 'BK'
+      gameType: 'BK'
     },
     {
       name: '网球',
-      key: 'TN'
+      gameType: 'TN'
     },
     {
       name: '羽毛球',
-      key: 'OP_BM'
+      gameType: 'OP_BM'
     }
 
   ]
@@ -148,6 +156,15 @@ const popupList = reactive<{ arr: any[] }>({ arr: [] })
 
 onMounted(() => {
   // getNoAccount({})
+
+  let arr = [...ballListAll.value]
+  arr = arr.filter((item: any) => item.gameCount !== 0 && item.gameType !== 'SY')
+  arr = JSON.parse(JSON.stringify(arr))
+  const sortArr: any = ['OP_BM', 'TN', 'BK', 'FT']
+  arr.sort(function (a, b) {
+    return sortArr.indexOf(b.gameType) - sortArr.indexOf(a.gameType)
+  })
+  ballList.arr = arr
 })
 let page: number = 0
 const onLoad = async () => {
@@ -156,7 +173,7 @@ const onLoad = async () => {
     page: page,
     gameSort: 3,
     leagueIds: '',
-    gameType: ballKey.value.key,
+    gameType: ballKey.value.gameType,
     matchTime: commonKey.value.value,
     pageSize: 10,
     gameStatus: 1,
@@ -177,7 +194,15 @@ const onLoad = async () => {
   }
 }
 
+const getImg = (item: any) => {
+  if (item) {
+    return `${ImageSource}${item}`
+  }
+  return ''
+}
+
 async function setPk(val: any) {
+  page = 0
   commonKey.value = val
   showBottom.value = false
   loading.value = true
@@ -282,6 +307,7 @@ const setBall = () => {
 }
 
 const setBallSelect = (val: any) => {
+  page = 0
   ballKey.value = val
   showBottom1.value = false
   loading.value = true
@@ -408,7 +434,7 @@ const setBallSelect = (val: any) => {
         font-size: 24px;
 
         &-1 {
-          width: 230px;
+          width: 200px;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
@@ -417,11 +443,12 @@ const setBallSelect = (val: any) => {
         >.img_1 {
           width: 48px;
           height: 48px;
-          margin-left: 10px;
+          margin-left: 5px;
         }
       }
 
       .center {
+        width: 200px;
         font-family: PingFangSC-Semibold;
         font-size: 32px;
         color: #000000;
@@ -436,7 +463,7 @@ const setBallSelect = (val: any) => {
         font-size: 24px;
 
         &-1 {
-          width: 230px;
+          width: 200px;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
@@ -445,7 +472,7 @@ const setBallSelect = (val: any) => {
         .img_2 {
           width: 48px;
           height: 48px;
-          margin-right: 10px;
+          margin-right: 5px;
         }
       }
     }

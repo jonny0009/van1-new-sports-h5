@@ -29,7 +29,9 @@
         <div v-for="(item, index) in ballList.arr" :key="index" class="detail" @click="toUrlGame(item)">
           <div class="left">
             <van-image class="itemImg" fit="contain" :src="getImg(item)" />
-            <span class="font_2">{{ $t(`user.sports.${item.gameType}`) }}</span>
+            <span class="font_2">
+              {{ $t(`user.sports.${item.gameType}`) }}
+            </span>
           </div>
           <div class="right">
             {{ item.gameCount }}
