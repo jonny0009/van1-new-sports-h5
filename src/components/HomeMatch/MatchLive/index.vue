@@ -13,7 +13,7 @@
             </div>
             <div class="flex-cross-center">
               <div class="up-match-time">
-                <SportsIcon :icon-src="'live'" />
+                <!-- <SportsIcon :icon-src="'live'" /> -->
                 <div class="up-match-time-html" v-html="showRBTime(sendParams)"></div>
               </div>
             </div>
@@ -144,7 +144,7 @@ import { getHandicap } from '@/utils/home/getHandicap'
 // components
 import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
 import TimeView from '@/components/HomeMatch/public/time/index.vue'
-import SportsIcon from '@/components/Button/SportsIcon/index.vue'
+// import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 // script
 import { showDialog } from 'vant'
 import store from '@/store'
