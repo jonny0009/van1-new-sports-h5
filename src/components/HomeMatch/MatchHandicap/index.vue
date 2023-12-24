@@ -69,7 +69,7 @@
                     {{ getTeam(props.sendParams) }}
                   </span>
                   <div class="flex-1"></div>
-                  <!-- <div class="up-match-time">1:30 AM</div> -->
+                  <div v-if="showFUTime" class="up-match-time" v-html="showFUTime"></div>
                 </div>
                 <div class="up-match-league">
                   <SportsIcon :icon-src="props.sendParams.gameType" />
@@ -154,11 +154,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { getHandicap } from '@/utils/home/getHandicap.ts'
+import { dateFormat } from '@/utils/date'
+import { getHandicap } from '@/utils/home/getHandicap'
 import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
 import TimeView from '@/components/HomeMatch/public/time/index.vue'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import store from '@/store'
 import { showDialog } from 'vant'
 const props = defineProps({
@@ -202,4 +203,10 @@ const goClick = () => {
   // on close
   })
 }
+
+const showFUTime = computed(() => {
+  const { gameDate } = props.sendParams || {}
+  return dateFormat(gameDate, 'MM-DD HH:mm')
+})
+
 </script>
