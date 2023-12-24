@@ -1,6 +1,6 @@
 <template>
   <div class="panel-bet">
-    <div class="no-data" v-if="betPlayList.length === 0">
+    <div v-if="betPlayList.length === 0" class="no-data">
       <EmptyIcon />
     </div>
     <van-collapse v-else v-model="activeNames">
@@ -10,17 +10,17 @@
         </template>
         <div class="bet">
           <BettingOption
-            class="bet-item"
             v-for="(item, ind) in play.dataInfo?.ratioData"
             :key="ind"
+            class="bet-item"
             :market-info="item"
           >
             <div class="top">
               <span>{{ item.ratioName }}</span>
             </div>
             <div class="bot">
-              <span class="num">{{ item.ior }}</span>
-              <span class="ico" v-show="false">
+              <span class="num">{{ item.vior }}</span>
+              <span v-show="false" class="ico">
                 <img src="@/assets/images/live/sub.png" alt="" />
               </span>
             </div>
