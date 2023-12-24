@@ -8,7 +8,7 @@
           </span>
           <div class="details">
             <div class="container">
-              <div class="item">{{ item.ior }}</div>
+              <div class="item">{{ item.marketInfo.vior }}</div>
             </div>
           </div>
         </BettingOption>
