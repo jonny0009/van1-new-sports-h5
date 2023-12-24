@@ -10,7 +10,7 @@
       <span class="text">{{ item.marketInfo.ratioName }}</span>
     </span>
     <div class="details">
-      <div class="item">{{ item.ior }}</div>
+      <div class="item">{{ item.marketInfo.vior }}</div>
     </div>
   </BettingOption>
 </template>
