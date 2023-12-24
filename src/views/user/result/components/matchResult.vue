@@ -3,15 +3,15 @@
   <div class="status">
     <div class="status_1">
       <span>球类</span>
-      <div class="round" @click="seStatus()">
-        <span>{{ commonKey.value }}</span>
-        <img class="img_1 " :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
+      <div class="round" @click="setBall()">
+        <span>{{ ballKey.name }}</span>
+        <img class="img_1 " :class="[showBottom1 ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
       </div>
     </div>
     <div class="status_1">
       <span>时间</span>
       <div class="round" @click="seStatus()">
-        <span>{{ commonKey.value }}</span>
+        <span>{{ commonKey.name }}</span>
         <img class="img_1 " :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
       </div>
     </div>
@@ -37,7 +37,9 @@
           <!-- <img class="img_1" src="@/assets/images/user/num3.png" alt="" /> -->
         </div>
         <div class="center">
-          1:2
+          {{ getResult(item.result) }}
+          :
+          {{ getResult1(item.result) }}
         </div>
         <div class="right">
           <!-- <img class="img_2" src="@/assets/images/user/num9.png" alt="" /> -->
@@ -48,13 +50,7 @@
       </div>
     </div>
   </van-list>
-  <div v-if="!list.arr.length" class="noData">
-    <img class="img_1" src="@/assets/images/user/noData.png" />
-    <p>
-      未查询到相关数据
-    </p>
-  </div>
-  <van-popup v-model:show="showBottom" position="bottom" closeable round>
+  <van-popup v-model:show="showBottom" position="bottom" closeable round :style="{ height: '50%' }">
     <div class="popup-title">{{ popupTitle }}</div>
     <div class="pk-list">
       <div
@@ -66,9 +62,30 @@
       >
         <p>
           <span>
-            {{ item.value }}
+            {{ item.name }}
           </span>
           <span v-if="commonKey.key === item.key">
+            <van-icon name="success" />
+          </span>
+        </p>
+      </div>
+    </div>
+  </van-popup>
+  <van-popup v-model:show="showBottom1" position="bottom" closeable round :style="{ height: '50%' }">
+    <div class="popup-title">{{ popupTitle1 }}</div>
+    <div class="pk-list">
+      <div
+        v-for="(item, index) in popupList1.arr"
+        :key="index"
+        class="item"
+        :class="[ballKey.key === item.key ? 'item-color' : '']"
+        @click="setBallSelect(item)"
+      >
+        <p>
+          <span>
+            {{ item.name }}
+          </span>
+          <span v-if="ballKey.key === item.key">
             <van-icon name="success" />
           </span>
         </p>
@@ -89,47 +106,49 @@ const list = reactive<{ arr: any }>({ arr: [] })
 import { showToast } from 'vant'
 const loading = ref(false)
 const finished = ref(false)
-const timeIndex = ref(0)
-const beginTime = ref('')
-const endTime = ref<any>('')
-const popupTitle = ref('状态')
-const commonKey = ref({ key: '', value: '全部' })
+const popupTitle1 = ref('球类')
+const popupTitle = ref('时间')
+const commonKey = ref(
+  {
+    name: moment().format('MM/DD'),
+    value: moment().valueOf(),
+    key: 0
+  }
+)
+const ballKey = ref(
+  {
+    name: '足球',
+    key: 'FT'
+  }
+)
+const showBottom1 = ref(false)
 const showBottom = ref(false)
 // const showTime = ref(false)
-const popupList = reactive<{ arr: any[] }>({
+const popupList1 = reactive<{ arr: any[] }>({
   arr: [
     {
-      value: '全部',
-      key: ''
+      name: '足球',
+      key: 'FT'
     },
     {
-      value: '未结算',
-      key: '0'
+      name: '篮球',
+      key: 'BK'
     },
     {
-      value: '已结算',
-      key: '1'
+      name: '网球',
+      key: 'TN'
+    },
+    {
+      name: '棒球',
+      key: 'BS'
+    },
+    {
+      name: '美式足球',
+      key: 'BK_AFT'
     }
-  ]
-})
-const timeList = reactive([
-  {
-    timeName: '今日'
-  },
-  {
-    timeName: '近48小时'
-  },
-  {
-    timeName: '近7天'
-  },
-  // {
-  //   timeName: '90天'
-  // },
-  {
-    timeName: ''
-  }
+  ] })
+const popupList = reactive<{ arr: any[] }>({ arr: [] })
 
-])
 onMounted(() => {
   // getNoAccount({})
 })
@@ -141,8 +160,8 @@ const onLoad = async () => {
     page: page,
     gameSort: 3,
     leagueIds: '',
-    gameType: 'FT',
-    matchTime: 1703318370524,
+    gameType: ballKey.value.key,
+    matchTime: commonKey.value.value,
     pageSize: 10,
     gameStatus: 1,
     groupId: 3
@@ -156,6 +175,8 @@ const onLoad = async () => {
     loading.value = false
     finished.value = list.arr.length === data.count
   } else {
+    finished.value = true
+    loading.value = false
     showToast(res.msg)
   }
 }
@@ -163,34 +184,121 @@ const onLoad = async () => {
 async function setPk(val: any) {
   commonKey.value = val
   showBottom.value = false
-  // getNoAccount({})
+  loading.value = true
+  finished.value = false
+  list.arr = []
+  onLoad()
   console.log(val)
 }
-const selectTime = (index: number) => {
-  timeIndex.value = index
-  const nowDate = moment().valueOf()
-  let startDate = ref<any>('')
-  const endDate = nowDate
-  const oneDayDate = 24 * 60 * 60 * 1000
-  // 近24小时
-  if (index === 0) {
-    startDate = nowDate - oneDayDate
-  }
-  // 近48小时
-  if (index === 1) {
-    startDate = nowDate - oneDayDate * 2
-  }
-  // 近7天
-  if (index === 2) {
-    startDate = nowDate - oneDayDate * 7
-  }
-  //
-  beginTime.value = startDate
-  endTime.value = endDate
-  getNoAccount(3)
-}
+
 const seStatus = () => {
+  const timeArr = [
+    {
+      name: moment().format('MM/DD'),
+      value: moment().valueOf(),
+      key: 0
+    },
+    {
+      name: moment().subtract(1, 'days').format('MM/DD'),
+      value: moment().subtract(1, 'days').valueOf(),
+      key: 1
+    },
+
+    {
+      name: moment().subtract(2, 'days').format('MM/DD'),
+      value: moment().subtract(2, 'days').valueOf(),
+      key: 2
+    },
+    {
+      name: moment().subtract(3, 'days').format('MM/DD'),
+      value: moment().subtract(3, 'days').valueOf(),
+      key: 3
+    },
+    {
+      name: moment().subtract(4, 'days').format('MM/DD'),
+      value: moment().subtract(4, 'days').valueOf(),
+      key: 4
+    },
+    {
+      name: moment().subtract(5, 'days').format('MM/DD'),
+      value: moment().subtract(5, 'days').valueOf(),
+      key: 5
+    },
+    {
+      name: moment().subtract(6, 'days').format('MM/DD'),
+      value: moment().subtract(6, 'days').valueOf(),
+      key: 6
+    },
+    {
+      name: moment().subtract(7, 'days').format('MM/DD'),
+      value: moment().subtract(7, 'days').valueOf(),
+      key: 7
+    },
+    {
+      name: moment().subtract(8, 'days').format('MM/DD'),
+      value: moment().subtract(8, 'days').valueOf(),
+      key: 8
+    },
+    {
+      name: moment().subtract(9, 'days').format('MM/DD'),
+      value: moment().subtract(9, 'days').valueOf(),
+      key: 9
+    },
+    {
+      name: moment().subtract(10, 'days').format('MM/DD'),
+      value: moment().subtract(10, 'days').valueOf(),
+      key: 10
+    },
+    {
+      name: moment().subtract(11, 'days').format('MM/DD'),
+      value: moment().subtract(11, 'days').valueOf(),
+      key: 11
+    },
+    {
+      name: moment().subtract(12, 'days').format('MM/DD'),
+      value: moment().subtract(12, 'days').valueOf(),
+      key: 12
+    },
+    {
+      name: moment().subtract(13, 'days').format('MM/DD'),
+      value: moment().subtract(13, 'days').valueOf(),
+      key: 13
+    },
+    {
+      name: moment().subtract(14, 'days').format('MM/DD'),
+      value: moment().subtract(14, 'days').valueOf(),
+      key: 14
+    }
+  ]
+  console.log(timeArr)
+  popupList.arr = timeArr
   showBottom.value = true
+}
+const setBall = () => {
+  showBottom1.value = true
+}
+// 获取比分
+const getResult = (item:any) => {
+  if (item) {
+    return item.GM_h
+  } else {
+    return 0
+  }
+}
+const getResult1 = (item:any) => {
+  if (item) {
+    return item.GM_c
+  } else {
+    return 0
+  }
+}
+const setBallSelect = (val: any) => {
+  ballKey.value = val
+  showBottom1.value = false
+  loading.value = true
+  finished.value = false
+  list.arr = []
+  onLoad()
 }
 
 // systemId
@@ -337,6 +445,7 @@ const seStatus = () => {
         display: flex;
         align-items: center;
         font-size: 24px;
+
         &-1 {
           width: 230px;
           overflow: hidden;
