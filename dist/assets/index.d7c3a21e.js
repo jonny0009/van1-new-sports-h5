@@ -1,1 +1,0 @@
-import{f as e}from"./index.9e2e5c29.js";const a=a=>e({url:"/ai/hot/searchs",method:"get",params:a}),r=a=>e({url:"/ai/mobile/merchantAccountServer/api/c/getCMerAccessWallet",method:"get",params:a}),s=a=>e({url:"/ai/mobile/player/messageList",method:"get",params:a}),t=a=>e({url:"/ai/mobile/player/find",method:"get",params:a});export{t as a,r as g,s as m,a as r};
