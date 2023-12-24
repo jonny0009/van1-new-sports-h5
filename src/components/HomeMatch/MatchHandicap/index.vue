@@ -85,12 +85,12 @@
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">
                   全场 亚洲让分盘
-                  <van-popover placement="top" theme="dark" trigger="click">
+                  <!-- <van-popover placement="top" theme="dark" trigger="click">
                     <div class="popover-text">全场让分盘</div>
                     <template #reference>
                       <van-icon name="info" />
                     </template>
-                  </van-popover>
+                  </van-popover> -->
                 </div>
               </div>
               <div class="match-betting-item__content">
