@@ -137,7 +137,7 @@ export class MarketInfo {
       const [ratioMatch, ratioTag, ...special] = this.ratioName.split(' ')
 
       if (special.length) {
-        this.ratioTag = special.pop()
+        this.ratioTag = special.pop() || ''
         const lastSpaceIndex = this.ratioName.lastIndexOf(' ')
         this.ratioMatch = this.ratioName.substr(0, lastSpaceIndex)
       } else {
