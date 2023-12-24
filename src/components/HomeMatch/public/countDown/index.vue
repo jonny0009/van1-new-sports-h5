@@ -5,7 +5,7 @@
 </template>
 <script lang="ts" setup>
 import { dateFormat } from '@/utils/date'
-import { ref, onBeforeMount, onActivated, onDeactivated, onBeforeUnmount, computed, watch } from 'vue'
+import { computed } from 'vue'
 const Props:any = defineProps({
   raceinfo: {
     type: Object,

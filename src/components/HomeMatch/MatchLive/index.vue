@@ -31,7 +31,6 @@
               <div class="name">{{ sendParams.homeTeamAbbr || sendParams.homeTeam }}</div>
               <div class="container">
                 <div class="value">
-                  <!-- {{ getscoreH(sendParams) }} -->
                   {{ getScore(sendParams,'H') }}
                 </div>
               </div>
@@ -48,7 +47,6 @@
               <div class="container">
                 <div class="value">
                   {{ getScore(sendParams,'C') }}
-                  <!-- {{ getscoreA(sendParams) }} -->
                 </div>
               </div>
             </div>
@@ -341,21 +339,6 @@ const showRBTime = (raceinfo:any = {}) => {
   }
 }
 
-const getscoreH = (val:any) => {
-  const { gameInfo } = val
-  // eslint-disable-next-line camelcase
-  const { sc_FT_H } = gameInfo || {}
-  // eslint-disable-next-line camelcase
-  return sc_FT_H || '0'
-}
-
-const getscoreA = (val:any) => {
-  const { gameInfo } = val
-  // eslint-disable-next-line camelcase
-  const { sc_FT_A } = gameInfo || {}
-  // eslint-disable-next-line camelcase
-  return sc_FT_A || '0'
-}
 const getLeagueShortName = ({ leagueShortName, leagueName }: any) => {
   if (!(leagueShortName && leagueName)) {
     return ''

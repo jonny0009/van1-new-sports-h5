@@ -154,7 +154,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { dateFormat } from '@/utils/date'
+import { matchDateFormat } from '@/utils/date'
 import { getHandicap } from '@/utils/home/getHandicap'
 import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
 import TimeView from '@/components/HomeMatch/public/time/index.vue'
@@ -206,7 +206,7 @@ const goClick = () => {
 
 const showFUTime = computed(() => {
   const { gameDate } = props.sendParams || {}
-  return dateFormat(gameDate, 'MM-DD HH:mm')
+  return matchDateFormat(gameDate, 'MM-DD HH:mm')
 })
 
 </script>
