@@ -104,7 +104,7 @@ import store from '@/store'
 const ballListAll = computed(() => store.state.app.sports)
 
 import moment from 'moment'
-import ball1 from '@/assets/images/login/ball1.svg'
+// import ball1 from '@/assets/images/login/ball1.svg'
 // import arrow from '@/assets/images/components/title/arrow.png'
 // getGameManyInfo
 import { matchResult } from '@/api/user'
