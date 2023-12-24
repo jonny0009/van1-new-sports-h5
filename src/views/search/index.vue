@@ -172,9 +172,11 @@ const getList = async () => {
   }
 }
 const toUrl = () => {
+  store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
   $router.push({ path: '/home' })
 }
 const toUrlGame = (item: any) => {
+  store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
   $router.push({
     path: `/sport/${item.gameType}`
     // query: {

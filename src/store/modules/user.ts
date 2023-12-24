@@ -81,7 +81,6 @@ const userModule: Module<User, any> = {
       const res:any = await getBalance(params) || {}
       if (res.code === 200) {
         state.balance = res.data || {}
-        console.log(state.balance, '====')
       }
     },
     // remove token
