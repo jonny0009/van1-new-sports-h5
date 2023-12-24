@@ -112,7 +112,7 @@ const hanDleClear = async () => {
 
 const keyWordsSearch = (key:any) => {
   keyWords.value = key
-  getList
+  getList()
 }
 const getList = async () => {
   listLoading.value = true
