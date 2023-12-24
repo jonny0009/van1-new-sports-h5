@@ -15,9 +15,11 @@
 </template>
 <script lang="ts" setup>
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import router from '@/router'
 import { useRoute } from 'vue-router'
+import store from '@/store'
+
 const homeBarArray = ref(
   [
     {
@@ -46,6 +48,20 @@ const homeBarArray = ref(
     }
   ]
 )
+
+const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
+const timeout:any = ref('')
+watch(refreshChangeTime, (val) => {
+  if (val) {
+
+    // clearTimeout(timeout.value)
+    // timeout.value = setTimeout(() => {
+    //   getRecommendEvents()
+    // }, 100)
+  }
+})
+
+console.log(2222222222222)
 const getRouteName = () => {
   const routerName: any = router?.currentRoute?.value?.name || ''
   return routerName.toLowerCase()

@@ -210,6 +210,7 @@ const clickLeague = (item: any) => {
       // margin-left: 21px;
       margin-bottom: 5px;
       width: 1600px;
+      max-height: 140px;
       white-space: normal;
       position: relative;
       .textButton,
