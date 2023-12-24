@@ -9,6 +9,7 @@ import directives from './directive'
 import plugins from '@/plugins'
 import bootstrap from '@/bootstrap'
 import vant from 'vant'
+import { Lazyload } from 'vant'
 import { createScript } from './utils'
 import i18n from './lang'
 // 玩法名称，玩法球头表引入
@@ -21,6 +22,7 @@ const app = createApp(App)
 app.use(directives)
 app.use(router)
 app.use(vant)
+app.use(Lazyload)
 app.use(store)
 app.use(plugins)
 app.use(i18n)
