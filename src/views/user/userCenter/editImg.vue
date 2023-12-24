@@ -15,17 +15,17 @@
     <div class="area-btn_1">
       <span :class="index == 1 ? 'active' : ''" @click="index = 1">足球明星</span>
       <span :class="index == 2 ? 'active' : ''" @click="index = 2">其他人物</span>
-      <span :class="index == 3 ? 'active' : ''" @click="index = 3">背景颜色</span>
+      <!-- <span :class="index == 3 ? 'active' : ''" @click="index = 3">背景颜色</span> -->
     </div>
     <div class="content">
       <div v-if="index === 1" class="img-style">
-        <div v-for="i in 48" :key="i" class="select-img">
-          <van-image class="img_1" fit="contain" :src="getImgUrl(i, index)" @click="getSelectImg(i)" />
+        <div v-for="i in 16" :key="i" class="select-img">
+          <van-image class="img_1" fit="contain" :src="getImgUrl(i, 1)" @click="getSelectImg(i,1)" />
         </div>
       </div>
       <div v-if="index === 2" class="img-style">
         <div v-for="i in 16" :key="i" class="select-img">
-          <van-image class="img_1" fit="contain" :src="getImgUrl(i, index)" />
+          <van-image class="img_1" fit="contain" :src="getImgUrl(i, 2)" @click="getSelectImg(i,2)" />
         </div>
       </div>
       <div v-if="index === 3" class="img-style">
@@ -75,17 +75,25 @@ const handleSave = async () => {
   $router.push('/user/userInfo')
 }
 // 更换头像
-const getSelectImg = (num:any) => {
-  postImg.value = `/FE/common/head/${num}_s_248x248.jpg`
-  getImg(postImg.value)
+const getSelectImg = (num: any, index: any) => {
+  if (index === 1) {
+    postImg.value = `/FE/common/head/newsport/star/${num}.png`
+    getImg(postImg.value)
+  }
+  if (index === 2) {
+    postImg.value = `/FE/common/head/newsport/else/${num}.png`
+    getImg(postImg.value)
+  }
 }
 const getImgUrl = (num: any, index: any) => {
-  const imgUrl = `/FE/common/head/${num}_s_248x248.jpg`
   if (index === 1) {
+    const imgUrl = `/FE/common/head/newsport/star/${num}.png`
     return `${ImageSource}${imgUrl}`
   }
   if (index === 2) {
-    return new URL(`../../assets/images/user/else/${num}.png`, import.meta.url).href
+    const imgUrl = `/FE/common/head/newsport/else/${num}.png`
+    return `${ImageSource}${imgUrl}`
+    // return new URL(`../../assets/images/user/else/${num}.png`, import.meta.url).href
   }
 }
 onMounted(() => {

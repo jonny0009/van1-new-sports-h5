@@ -23,7 +23,9 @@ export default async () => {
     store.dispatch('user/configSettingNew')
     // 获取账号信息
     store.dispatch('user/userInfo')
+    // 获取钱包币种
+    store.dispatch('user/getCurrency')
     // 账户余额
-    store.dispatch('user/getBalance')
+    // store.dispatch('user/getBalance')
   }
 }

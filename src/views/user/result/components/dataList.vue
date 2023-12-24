@@ -140,7 +140,7 @@ import { betRecordTab } from '@/api/user'
 const list = reactive<{ arr: any }>({ arr: [] })
 import { showToast } from 'vant'
 const timeIndex = ref(0)
-const beginTime = ref('')
+const beginTime = ref<any>('')
 const endTime = ref<any>('')
 const popupTitle = ref('状态')
 const commonKey = ref({ key: '', value: '全部' })
@@ -172,22 +172,22 @@ const timeList = reactive([
   {
     timeName: '近7天'
   },
-  // {
-  //   timeName: '90天'
-  // },
   {
     timeName: ''
   }
 
 ])
 onMounted(() => {
-  getNoAccount({})
+  endTime.value = moment().valueOf()
+  const oneDayDate = 24 * 60 * 60 * 1000
+  beginTime.value = endTime.value - oneDayDate
+  getNoAccount()
 })
 
 async function setPk(val: any) {
   commonKey.value = val
   showBottom.value = false
-  getNoAccount({})
+  getNoAccount()
   console.log(val)
 }
 const selectTime = (index: number) => {
@@ -211,26 +211,22 @@ const selectTime = (index: number) => {
   //
   beginTime.value = startDate
   endTime.value = endDate
-  getNoAccount(3)
+  getNoAccount()
 }
 const seStatus = () => {
   showBottom.value = true
 }
 
-const getNoAccount = async (num:any) => {
+const getNoAccount = async () => {
   const params = {
     orderState: commonKey.value.key,
     page: 1,
     pageSize: 10,
-    beginTime: '',
-    endTime: ''
+    beginTime: beginTime.value,
+    endTime: endTime.value
   }
-  if (num === 3) {
-    params.beginTime = beginTime.value
-    params.endTime = endTime.value
-  }
+
   const res: any = await betRecordTab(params)
-  // const res: any = await betRecordTab({ 'orderState': '1', 'page': 1, 'pageSize': 10, 'beginTime': 1703132137274, 'endTime': 1703218537274 })
   if (res.code !== 200) {
     return showToast(res.msg)
   }

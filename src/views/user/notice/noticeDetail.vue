@@ -17,12 +17,13 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { messageDetail } from '@/api/user'
 import { showToast } from 'vant'
 import { formatToDateTime } from '@/utils/date'
 import { ImageSource } from '@/config'
 
+const route = useRoute()
 const $router = useRouter()
 const goBack = () => {
   $router.back()
@@ -30,7 +31,7 @@ const goBack = () => {
 const title = ref('消息详情')
 const detailObj = ref<any>({})
 onMounted(async () => {
-  const id = $router.currentRoute.value.query.id
+  const id = route.query.id
   getDetail(id)
 })
 const getDetail = async (id:any) => {

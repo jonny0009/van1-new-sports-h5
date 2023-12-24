@@ -1,5 +1,6 @@
 import { Module } from 'vuex'
 import { App } from '#/store'
+import localStore from '@/utils/localStore'
 import { businessConfig, merchantConfig, moduleConfig, queryCMerLanguage } from '@/api/auth'
 import { getAllSports, getDoubleLineInfo } from '@/api/common'
 
@@ -57,7 +58,8 @@ const appModule: Module<App, any> = {
     async getAllSports({ state }) {
       const res:any = await getAllSports() || {}
       if (res.code === 200) {
-        state.sports = res.data || []
+        localStore.setItem('sports', res.data)
+        state.sports = localStore.getItem('sports')
       }
     },
     // 获取单双线数据
