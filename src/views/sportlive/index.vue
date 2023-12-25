@@ -24,13 +24,13 @@ const init = async (toggleLoading:any = true) => {
   await getApiRBCondition()
   await getApiCommonMatches(toggleLoading)
 }
-const showGameTypeList:any = ref(['FT', 'BK', 'TN', 'OP_BM'])
+const showGameTypeList:any = ref([''])
 const gameTypeList:any = ref([])
 const getApiRBCondition = async () => {
   const res:any = await apiRBCondition({ }) || {}
   if (res.code === 200 && res.data) {
     const dataList = res.data || []
-    gameTypeList.value = dataList.filter((t:any) => showGameTypeList.value.includes(t.gameType))
+    gameTypeList.value = dataList.filter((t:any) => !showGameTypeList.value.includes(t.gameType))
   }
 }
 const commonMatchesList:any = ref([])
@@ -57,7 +57,7 @@ const getApiCommonMatches = async (toggleLoading:any = true) => {
   }
   if (res.code === 200 && res.data?.matchList?.baseData) {
     const dataList = res.data?.matchList?.baseData || []
-    commonMatchesList.value = dataList.filter((t:any) => showGameTypeList.value.includes(t.gameType))
+    commonMatchesList.value = dataList.filter((t:any) => !showGameTypeList.value.includes(t.gameType))
   } else {
     commonMatchesList.value = []
   }

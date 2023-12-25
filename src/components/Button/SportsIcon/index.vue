@@ -12,7 +12,7 @@ const props = defineProps({
   }
 })
 const classVal = ref('FT')
-classVal.value = `icon-bar-${props.iconSrc}`
+classVal.value = `icon-${props.iconSrc}`
 </script>
 <style lang="scss" scoped>
 </style>

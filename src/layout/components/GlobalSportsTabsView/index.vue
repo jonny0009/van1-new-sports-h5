@@ -4,9 +4,14 @@
       v-for="(item, idx) in sportsList"
       :key="idx"
       class="item"
-      :class="{
-        'active':item.value === active
-      }"
+      :class="
+        [
+          {
+            'active':item.value === active
+          },
+          item.value
+        ]
+      "
       @click="clickChangeActive(item)"
     >
       <SportsIcon :icon-src="item.value" />
@@ -88,18 +93,32 @@ const clickChangeActive = (item:any) => {
 .sportsTabsView{
   display:flex;
   height:88px;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    height: 0;
+    display: none;
+  }
   .item{
     flex:1;
     display:flex;
     justify-content:center;
     align-items:center;
     color:#546371;
+    min-width: 124px;
     .iconfont{
+      position: relative;
       font-size:44px;
       font-weight: 100;
+      height: auto;
     }
     &.active{
       color:#7642fe;
+    }
+    &.OP_DJ{
+      .iconfont{
+        top: 4px;
+        font-size:54px;
+      }
     }
   }
 }
