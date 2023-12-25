@@ -18,6 +18,7 @@ declare interface User {
   userInfo: any
   balance: any
   currency: any
+  pendingData: any
   token: string | undefined | null
 }
 declare interface Betting {

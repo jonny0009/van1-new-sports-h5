@@ -43,6 +43,7 @@
           @click="changeType(item.type)"
         >
           {{ item.title }}
+          <span v-if="item.type === 3" class="bet-num">{{ pendingNum.length || 0 }}</span>
         </div>
         <div
           class="tab-line"
@@ -74,6 +75,7 @@
         <ActionBar />
       </div>
       <Result v-if="results.length"></Result>
+      <Pending v-if="type == 3"></Pending>
     </div>
   </div>
   <Keyboard></Keyboard>
@@ -86,6 +88,7 @@ import Singles from './components/Single/index.vue'
 import Result from './components/Result/index.vue'
 import ActionBar from './components/ActionBar/index.vue'
 import Keyboard from './components/Keyboard/index.vue'
+import Pending from './components/Pending/index.vue'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 import store from '@/store'
@@ -108,6 +111,7 @@ const tabs = ref([
 const tableLeft = computed(() => {
   return `calc(100% / 3 * ${type.value - 1} + (100% / 3 - 27vw) / 2 )`
 })
+const pendingNum = computed(() => store.state.user.pendingData)
 const isOne = computed(() => store.state.betting.isOne)
 const mode = computed(() => store.state.betting.mode)
 const boardShow = computed(() => store.state.betting.boardShow)
@@ -338,6 +342,25 @@ hitTimer()
       letter-spacing: 0;
       text-align: center;
       font-weight: 500;
+      position: relative;
+
+      .bet-num {
+        display:inline-block;
+        font-family: PingFangSC-Medium;
+        font-size: 23px;
+        color: #FFFFFF;
+        background-color:  #7642FD;;
+        letter-spacing: 0;
+        text-align: center;
+        font-weight: 500;
+        width: 35px;
+        height: 38px;
+        line-height: 40px;
+        border-radius: 50%;
+        position:absolute;
+        top: -15px;
+        right: 45px;
+      }
 
       &.active {
         color: #000000;
