@@ -5,7 +5,7 @@
 <script lang="ts" setup>
 import store from '@/store'
 import { computed } from 'vue'
-import SingleResult from './SingleResult.vue'
+import SingleResult from './Single/index.vue'
 import ComboResult from './ComboResult.vue'
 
 const mode = computed(() => store.state.betting.mode)
