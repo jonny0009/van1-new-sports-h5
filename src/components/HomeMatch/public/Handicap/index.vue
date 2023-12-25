@@ -6,9 +6,15 @@
     :market-info="item.marketInfo"
     class="betting-option"
   >
-
     <span class="up-betting-name">
-      <span class="text">{{ item.marketInfo.ratioName }}</span>
+      <span class="text">
+        <span class="team">
+          {{ item.marketInfo.ratioMatch || item.marketInfo.ratioName }}
+        </span>
+        <span v-if="item.marketInfo.ratioTag" class="ratio">
+          {{ item.marketInfo.ratioTag }}
+        </span>
+      </span>
     </span>
     <div class="details">
       <div class="item">{{ item.marketInfo.vior }}</div>

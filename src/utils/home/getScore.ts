@@ -7,16 +7,16 @@ export const getScore = (raceinfo:any, type:any = 'H') => {
       // 网球比分
       const tninfo:any = tnStObj(raceinfo?.gameInfo)
       if (type === 'H') {
-        return tninfo.scorePan.scoreH
+        return tninfo.scorePan.scoreH || '0'
       }
-      return tninfo.scorePan.scoreA
+      return tninfo.scorePan.scoreA || '0'
     } else if (raceinfo.gameType === 'BS' && raceinfo.gidm.indexOf('ib') > -1) {
       // 棒球比分
       const bsinfo = bsStObj(raceinfo.gameInfo)
       if (type === 'H') {
-        return bsinfo.score.scoreH
+        return bsinfo.score.scoreH || '0'
       }
-      return bsinfo.score.scoreA
+      return bsinfo.score.scoreA || '0'
     } else if (raceinfo.gameType === 'FT' && raceinfo.gidm.indexOf('ib') > -1 && raceinfo.homeTeamSuffix) {
       // ibo 足球加时赛比分
       if (
@@ -26,9 +26,9 @@ export const getScore = (raceinfo:any, type:any = 'H') => {
         raceinfo.gameScene.scene.score.fullScore
       ) {
         if (type === 'H') {
-          return raceinfo.gameScene.scene.score.fullScore.team1 || ''
+          return raceinfo.gameScene.scene.score.fullScore.team1 || '0'
         }
-        return raceinfo.gameScene.scene.score.fullScore.team2 || ''
+        return raceinfo.gameScene.scene.score.fullScore.team2 || '0'
       }
     }
     // 通用比分
@@ -36,13 +36,13 @@ export const getScore = (raceinfo:any, type:any = 'H') => {
       if (raceinfo.gameInfo['sc_FT_H'] || raceinfo.gameInfo['sc_game_H']) {
         homeScore = raceinfo.gameInfo['sc_FT_H'] || 0
       }
-      return homeScore
+      return homeScore || '0'
     }
     if (raceinfo.gameInfo.sc_FT_H || raceinfo.gameInfo.sc_game_H) {
       awayScore =
         raceinfo.gameInfo['sc_FT_A'] || raceinfo.gameInfo['sc_FT_C'] || 0
     }
-    return awayScore
+    return awayScore || '0'
   }
 }
 
