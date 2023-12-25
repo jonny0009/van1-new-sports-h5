@@ -1,0 +1,1 @@
+var e="/assets/fail.ec46aec6.svg",a=Object.freeze(Object.defineProperty({__proto__:null,default:"/assets/fail.ec46aec6.svg"},Symbol.toStringTag,{value:"Module"})),s="/assets/win.0fa574ba.svg",t=Object.freeze(Object.defineProperty({__proto__:null,default:"/assets/win.0fa574ba.svg"},Symbol.toStringTag,{value:"Module"}));export{s as _,e as a,a as b,t as c};

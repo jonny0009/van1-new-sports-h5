@@ -1,7 +1,7 @@
 <template>
   <div class="timeSelect">
     <div v-for="(item, index) in timeList" :key="index">
-      <div v-if="item.timeName" class="time" :class="timeIndex == index ? 'timeActive' : ''" @click="selectTime(index)">
+      <div v-if="item.timeName" class="time" :class="timeIndex == index ? 'timeActive' : ''" @click.stop="selectTime(index)">
         {{ item.timeName }}
       </div>
       <p v-else class="imgStyle">
@@ -13,7 +13,7 @@
   <div class="status">
     <div class="status_1">
       <span>状态</span>
-      <div class="round" @click="seStatus()">
+      <div class="round" @click.stop="seStatus()">
         <span>{{ commonKey.value }}</span>
         <img class="img_1 " :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
       </div>
@@ -21,168 +21,9 @@
   </div>
   <!-- 列表 -->
   <div v-if="list.arr.length" class="dataList">
-    <div v-for="(item, index) in list.arr" :key="index" class="item">
-      <div v-if="item.parlayNum ==1 && item.state !==2" :key="index">
-        <div v-for="(item1,index1) in item.betDTOList" :key="index1">
-          <div class="top">
-            <div class="left">
-              <div class="top-img">
-                <img class="img_1" src="@/assets/images/user/num3.png" alt="" />
-                <img class="img_2" src="@/assets/images/user/num9.png" alt="" />
-              </div>
-            </div>
-            <div class="right">
-              <div class="font_1">{{ item1.homeTeam }} v {{ item1.awayTeam }}
-                <span v-if="item1.resultScore" class="color-1"> [{{ item1.resultScore }}]</span>
-              </div>
-              <div class="font_2">{{ item1.leagueName }}</div>
-            </div>
-          </div>
-          <!-- 2 -->
-          <div class="top2">
-            <div class="left">
-              <img class="img_1" src="@/assets/images/user/plate.png" alt="" />
-            </div>
-            <div class="right">
-              <div class="one">
-                <span>
-                  {{ item1.betItem }}
-                </span>
-                <span class="color-2" :class="[item1.betResultDetail==='L'?'color-3':'']">
-                  @{{ item1.ioRatio }}
-                </span>
-              </div>
-              <div class="one two">
-                <span v-play="item1">
-                </span>
-                <span>
-                  <!-- 问号图标没找到 -->
-                  <img v-if="item.state==1" class="img_1" src="" alt="" />
-                  <img v-if="item1.betResultDetail==='W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
-                  <img v-if="item1.betResultDetail==='L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
-                </span>
-              </div>
-            </div>
-          </div>
-          <!-- 3 -->
-          <div class="top3">
-            <div class="one">
-              <span>投注额：</span>
-              <div>
-                <!-- <img class="img_1" src="@/assets/images/user/num1.png" alt="" /> -->
-                <span v-points="item.gold ||0"></span>
-              </div>
-            </div>
-            <div class="one two">
-              <span v-if="item.state==3">实际赔付:</span>
-              <span v-if="item.state==1">可能赔付:</span>
-              <!-- <span v-else>可能赔付:</span> -->
-              <div>
-                <!-- <img class="img_1" src="@/assets/images/user/num2.png" alt="" /> -->
-                <span v-points="item.winAndLossGold ||0" class="color-1"></span>
-              </div>
-            </div>
-          </div>
-          <!-- line -->
-          <div class="line" />
-          <!-- num-->
-          <div class="top4">
-            <div class="one">
-              <span>注单号:</span>
-              <span>{{ item.orderId }}</span>
-            </div>
-            <div class="one">
-              <span>投注时间：</span>
-              <span>{{ item.createDate }}</span>
-            </div>
-            <div v-if="item.state==3" class="one">
-              <span>结算时间：</span>
-              <span>{{ formatToDateTime(item.resultDate) }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div v-if="item.parlayNum ==6 && item.state !==2" :key="index">
-        <div v-for="(item1,index1) in item.betDTOList" :key="index1">
-          <div class="top">
-            <div class="left">
-              <div class="top-img">
-                <img class="img_1" src="@/assets/images/user/num3.png" alt="" />
-                <img class="img_2" src="@/assets/images/user/num9.png" alt="" />
-              </div>
-            </div>
-            <div class="right">
-              <div class="font_1">{{ item1.homeTeam }} v {{ item1.awayTeam }}
-                <span v-if="item1.resultScore" class="color-1"> [{{ item1.resultScore }}]</span>
-              </div>
-              <div class="font_2">{{ item1.leagueName }}</div>
-            </div>
-          </div>
-          <!-- 2 -->
-          <div class="top2">
-            <div class="left">
-              <img class="img_1" src="@/assets/images/user/plate.png" alt="" />
-            </div>
-            <div class="right">
-              <div class="one">
-                <span>
-                  {{ item1.betItem }}
-                </span>
-                <span class="color-2" :class="[item1.betResultDetail==='L'?'color-3':'']">
-                  @{{ item1.ioRatio }}
-                </span>
-              </div>
-              <div class="one two">
-                <span v-play="item1">
-                </span>
-                <span>
-                  <!-- 问号图标没找到 -->
-                  <img v-if="item.state==1" class="img_1" src="" alt="" />
-                  <img v-if="item1.betResultDetail==='W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
-                  <img v-if="item1.betResultDetail==='L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
-                </span>
-              </div>
-            </div>
-          </div>
-          <!-- 3 -->
-          <div class="top3">
-            <div class="one">
-              <span>投注额：</span>
-              <div>
-                <!-- <img class="img_1" src="@/assets/images/user/num1.png" alt="" /> -->
-                <span v-points="item.gold ||0"></span>
-              </div>
-            </div>
-            <div class="one two">
-              <span v-if="item.state==3">实际赔付:</span>
-              <span v-if="item.state==1">可能赔付:</span>
-              <!-- <span v-else>可能赔付:</span> -->
-              <div>
-                <!-- <img class="img_1" src="@/assets/images/user/num2.png" alt="" /> -->
-                <span v-points="item.winAndLossGold ||0" class="color-1"></span>
-              </div>
-            </div>
-          </div>
-          <!-- line -->
-          <div class="line" />
-          <!-- num-->
-          <div class="top4">
-            <div class="one">
-              <span>注单号:</span>
-              <span>{{ item.orderId }}</span>
-            </div>
-            <div class="one">
-              <span>投注时间：</span>
-              <span>{{ item.createDate }}</span>
-            </div>
-            <div v-if="item.state==3" class="one">
-              <span>结算时间：</span>
-              <span>{{ formatToDateTime(item.resultDate) }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <div v-for="(item, index) in list.arr" :key="index">
+      <Single v-if="item.parlayNum ==1" :item="item" class="item"></Single>
+      <Bunch v-if="item.parlayNum !=1 && item.state !==2" :item="item" class="item"></Bunch>
     </div>
   </div>
   <div v-if="!list.arr.length" class="noData">
@@ -217,8 +58,10 @@
 
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from 'vue'
-import { formatToDateTime } from '@/utils/date'
 import moment from 'moment'
+
+import Bunch from './bunch.vue'
+import Single from './single.vue'
 
 // import arrow from '@/assets/images/components/title/arrow.png'
 // getGameManyInfo
@@ -416,6 +259,8 @@ const getNoAccount = async () => {
 
 // 列表
 .dataList {
+  height: calc(100vh - 450px);
+  overflow-y: auto;
   margin-top: 20px;
 
   .color-1 {
@@ -435,143 +280,6 @@ const getNoAccount = async () => {
     padding: 15px 20px;
     margin-bottom: 20px;
 
-    .top {
-      display: flex;
-
-      .top-img {
-        height: 80px;
-        width: 80px;
-        position: relative;
-
-        .img_1 {
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 50px;
-          width: 50px;
-        }
-
-        .img_2 {
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          height: 50px;
-          width: 50px;
-        }
-      }
-
-      .right {
-        margin-left: 18px;
-
-        .font_1 {
-          font-family: PingFangSC-Semibold;
-          font-size: 28px;
-          color: #1F2630;
-          letter-spacing: 0;
-          font-weight: 600;
-        }
-
-        .font_2 {
-          font-family: PingFangSC-Semibold;
-          font-size: 24px;
-          color: #546371;
-          letter-spacing: 0;
-          font-weight: 600;
-        }
-      }
-    }
-
-    .top2 {
-      margin-top: 20px;
-      background: #E2E6E8;
-      border-radius: 20px;
-      padding: 20px 10px;
-      display: flex;
-      align-items: center;
-
-      .left {
-        margin-right: 15px;
-
-        .img_1 {
-          width: 60px;
-          height: 60px;
-        }
-      }
-
-      .right {
-        .one {
-          display: flex;
-          width: 550px;
-          justify-content: space-between;
-          font-family: PingFangSC-Semibold;
-          font-size: 28px;
-          color: #1F2630;
-          letter-spacing: 0;
-          font-weight: 600;
-        }
-
-        .two {
-          font-family: PingFangSC-Semibold;
-          font-size: 24px;
-          color: #546371;
-          letter-spacing: 0;
-          font-weight: 600;
-
-          .img_1 {
-            width: 40px;
-            height: 30px;
-          }
-        }
-      }
-    }
-
-    .top3 {
-      margin-top: 9px;
-
-      .one {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-family: PingFangSC-Semibold;
-        font-size: 24px;
-        color: #546371;
-        letter-spacing: 0;
-        font-weight: 600;
-
-        .img_1 {
-          width: 20px;
-          height: 19px;
-        }
-      }
-
-      .two {
-        font-family: PingFangSC-Semibold;
-        font-size: 28px;
-        color: #546371;
-        letter-spacing: 0;
-        font-weight: 600;
-      }
-    }
-
-    .line {
-      background: #E0E3E7;
-      height: 2px;
-    }
-
-    .top4 {
-      margin-top: 10px;
-
-      .one {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-family: PingFangSC-Regular;
-        font-size: 22px;
-        color: #96A5AA;
-        letter-spacing: 0;
-        font-weight: 400;
-      }
-    }
   }
 }
 

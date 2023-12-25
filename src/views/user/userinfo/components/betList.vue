@@ -7,28 +7,34 @@
       <div class="right">
         <!-- 显示5个,问号是进行中的 -->
         <span>近期战绩:</span>
-        <img class="img_1" src="@/assets/images/user/ask.svg" alt="" />
-        <img class="img_1" src="@/assets/images/user/fail.svg" alt="" />
-        <img class="img_1" src="@/assets/images/user/win.svg" alt="" />
-        <img class="img_1" src="@/assets/images/user/win.svg" alt="" />
-        <img class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+        <!-- <img class="img_1" src="@/assets/images/user/ask.svg" alt="" /> -->
+        <span v-for="(item, index) in recordNum.arr" :key="index" class="img_1">
+          <img v-if="item !== 1" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+          <img v-else class="img_1" src="@/assets/images/user/win.svg" alt="" />
+        </span>
       </div>
     </div>
     <!-- 列表 -->
-    <div class="top-3">
-      <div class="left" @click="goUrl('/elseInfo')">
-        <img class="img_1" src="@/assets/images/user/head-img.png" alt="" />
-        <div class="name">
-          <div>ai-sport</div>
-          <div>@ai-sport</div>
+    <div v-if="list.arr.length" class="dataList">
+      <div v-for="(item, index) in list.arr" :key="index">
+        <div class="top-3">
+          <div class="left" @click="goUrl('/elseInfo')">
+            <img class="img_1" :src="getImg(props.peopleInfo.headImg)" alt="" />
+            <div class="name">
+              <div>ai-sport</div>
+              <div>@ai-sport</div>
+            </div>
+          </div>
+          <div class="right">
+            已结束
+          </div>
         </div>
-      </div>
-      <div class="right">
-        进行中
+        <Single v-if="item.parlayNum == 1" :item="item" class="item"></Single>
+        <Bunch v-if="item.parlayNum != 1 && item.state !== 2" :item="item" class="item"></Bunch>
       </div>
     </div>
-    <!-- four -->
-    <div class="top4">
+
+    <!-- <div class="top4">
       <div class="game-1">
         <img class="img_1" src="@/assets/images/user/num5.png" alt="" />
         <span>
@@ -41,7 +47,6 @@
           半场
         </span>
       </div>
-      <!-- 框 -->
       <div class="game-3">
         <div class="match-1">
           <div class="left">
@@ -67,7 +72,6 @@
         </div>
 
       </div>
-      <!-- 框4 -->
       <div class="game-3 game-4">
         <div class="match-1">
           <div class="left">
@@ -82,7 +86,6 @@
           </div>
         </div>
       </div>
-      <!-- 5 -->
       <div class="game-5">
         <p>投注额：</p>
         <div>
@@ -91,24 +94,25 @@
         </div>
       </div>
       <div class="game-5 game-6">
-        <p>可赔付额：</p>
+        <p>实际赔付:</p>
         <div>
           <img class="img_1" src="@/assets/images/user/num2.png" alt="" />
           <span class="num">3.65</span>
         </div>
       </div>
-      <!-- 6 -->
-      <!-- 未结算先不展示live  按钮置灰色-->
-      <div class="addBtn">
+      <div class="addBtn-1">
         <span>加注</span>
-        <!-- <img class="img_1" src="@/assets/images/user/num8.png" alt="" /> -->
+        <img class="img_1" src="@/assets/images/user/num8.png" alt="" />
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from 'vue'
+
+import Bunch from './bunch.vue'
+import Single from './single.vue'
 
 import { betRecordTab } from '@/api/user'
 
@@ -118,10 +122,27 @@ import { useRouter } from 'vue-router'
 const $router = useRouter()
 import moment from 'moment'
 
+import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
+
 const beginTime = ref<any>('')
 const endTime = ref<any>('')
+const recordNum = ref<any>({})
 
 const list = reactive<{ arr: any }>({ arr: [] })
+import { ImageSource } from '@/config'
+
+const props = defineProps({
+  peopleInfo: {
+    type: Object,
+    default: () => { }
+  }
+})
+const getImg = (imgUrl: string) => {
+  if (imgUrl) {
+    return `${ImageSource}${imgUrl}`
+  }
+  return avatarImg
+}
 
 onMounted(() => {
   endTime.value = moment().valueOf()
@@ -144,6 +165,16 @@ const getBetList = async () => {
     return showToast(res.msg)
   }
   list.arr = res.data
+  const resultArr: any = []
+  list.arr.map((item: any) => {
+    if (item.winAndLossGold >= 0) {
+      resultArr.push(1)
+    } else {
+      resultArr.push(0)
+    }
+  })
+  recordNum.value.arr = resultArr
+  console.log()
 }
 const goUrl = (url: string) => {
   $router.push('/user' + url)
@@ -152,5 +183,29 @@ const goUrl = (url: string) => {
 
 <style lang="scss" scoped>
 @import '../index.scss';
+// 列表
+.dataList {
+  // height: calc(100vh - 450px);
+  // overflow-y: auto;
+  margin-top: 20px;
 
+  .color-1 {
+    color: #7642FD;
+  }
+
+  .color-2 {
+    color: #1EBB52;
+  }
+  .color-3 {
+    color: red;
+  }
+
+  .item {
+    background: #EFF1F2;
+    border-radius: 22px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+
+  }
+}
 </style>

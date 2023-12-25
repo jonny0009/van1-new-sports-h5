@@ -41,7 +41,7 @@
               <span>{{ item.homeTeam }}</span>
             </div>
             <div class="score">
-              <span>{{ item.betScore || '-' }}</span>
+              <span>{{ getScore(item, 'H') }}</span>
             </div>
           </div>
           <div class="team-cell">
@@ -50,7 +50,7 @@
               <span>{{ item.awayTeam }}</span>
             </div>
             <div class="score">
-              <span>{{ item.betScore || '-' }}</span>
+              <span>{{ getScore(item, 'C') }}</span>
             </div>
           </div>
         </div>
@@ -96,6 +96,7 @@
 import { onMounted, Ref, ref, watch } from 'vue'
 import { betRecord, betRecordAll } from '@/api/live'
 import { MarketInfo } from '@/entitys/MarketInfo'
+import { getScore } from '@/utils/home/getScore'
 const props = defineProps({
   matchInfo: {
     type: Object,
