@@ -5,12 +5,7 @@
       <div class="title-left">
         <div>{{ item.parlayNum }}场串关</div>
         <div>
-          <img class="img_1" src="@/assets/images/user/num5.png" alt="" />
-          <img class="img_1" src="@/assets/images/user/num5.png" alt="" />
-          <img class="img_1" src="@/assets/images/user/num5.png" alt="" />
-          <img class="img_1" src="@/assets/images/user/num5.png" alt="" />
-          <img class="img_1" src="@/assets/images/user/num5.png" alt="" />
-          <img class="img_1" src="@/assets/images/user/num5.png" alt="" />
+          <img v-for="i in Number(item.parlayNum)" :key="i" class="img_1" src="@/assets/images/user/num5.png" alt="" />
         </div>
       </div>
       <!-- <img class="img_1" src="@/assets/images/user/down1.png" alt="" /> -->
@@ -71,16 +66,16 @@
         <span>投注额:</span>
         <span>
           <!-- <img class="img_1" src="@/assets/images/user/num1.png" alt="" /> -->
-          <span v-points="item.gold ||0"></span>
+          <span v-points="item.gold || 0"></span>
         </span>
       </div>
       <div class="money-num-2">
-        <span v-if="item.state==3">实际赔付:</span>
-        <span v-if="item.state==1">可赔付额:</span>
+        <span v-if="item.state == 3">实际赔付:</span>
+        <span v-if="item.state == 1">可赔付额:</span>
         <span>
           <!-- <img class="img_1" src="@/assets/images/user/num2.png" alt="" /> -->
-          <span v-if="item.state==3" v-points="item.winAndLossGold ||0" class="num"></span>
-          <span v-if="item.state==1" v-points="getProfit(item)" class="num"></span>
+          <span v-if="item.state == 3" v-points="item.winAndLossGold || 0" class="num"></span>
+          <span v-if="item.state == 1" v-points="getProfit(item)" class="num"></span>
         </span>
       </div>
     </div>
@@ -111,9 +106,9 @@ const props = defineProps({
     default: () => { }
   }
 })
-const getProfit = (item:any) => {
+const getProfit = (item: any) => {
   let money = item.gold
-  item.betDTOList.map((i:any) => {
+  item.betDTOList.map((i: any) => {
     money = money * i.ioRatio
   })
 

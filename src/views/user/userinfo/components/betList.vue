@@ -7,11 +7,11 @@
       <div class="right">
         <!-- 显示5个,问号是进行中的 -->
         <span>近期战绩:</span>
-        <img class="img_1" src="@/assets/images/user/ask.svg" alt="" />
-        <img class="img_1" src="@/assets/images/user/fail.svg" alt="" />
-        <img class="img_1" src="@/assets/images/user/win.svg" alt="" />
-        <img class="img_1" src="@/assets/images/user/win.svg" alt="" />
-        <img class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+        <!-- <img class="img_1" src="@/assets/images/user/ask.svg" alt="" /> -->
+        <span v-for="(item, index) in recordNum.arr" :key="index" class="img_1">
+          <img v-if="item === 1" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+          <img v-else class="img_1" src="@/assets/images/user/win.svg" alt="" />
+        </span>
       </div>
     </div>
     <!-- 列表 -->
@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="right">
-        进行中
+        已结束
       </div>
     </div>
     <!-- four -->
@@ -98,8 +98,8 @@
         </div>
       </div>
       <!-- 6 -->
-      <!-- 未结算先不展示live  按钮置灰色-->
-      <div class="addBtn">
+      <!-- 未结算先不展示live addBtn 按钮置灰色-->
+      <div class="addBtn-1">
         <span>加注</span>
         <!-- <img class="img_1" src="@/assets/images/user/num8.png" alt="" /> -->
       </div>
@@ -120,6 +120,7 @@ import moment from 'moment'
 
 const beginTime = ref<any>('')
 const endTime = ref<any>('')
+const recordNum = ref<any>({})
 
 const list = reactive<{ arr: any }>({ arr: [] })
 
@@ -144,6 +145,16 @@ const getBetList = async () => {
     return showToast(res.msg)
   }
   list.arr = res.data
+  const resultArr: any = []
+  list.arr.map((item: any) => {
+    if (item.winAndLossGold >= 0) {
+      resultArr.push(1)
+    } else {
+      resultArr.push(0)
+    }
+  })
+  recordNum.value.arr = resultArr
+  console.log()
 }
 const goUrl = (url: string) => {
   $router.push('/user' + url)
