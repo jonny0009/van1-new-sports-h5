@@ -5,47 +5,47 @@
         <img class="img_1" src="@/assets/images/login/arrow@2x.png" alt="" @click="goBack()" />
       </template>
       <template #title>
-        <span class="title">注册</span>
+        <span class="title">{{ $t('user.register') }}</span>
       </template>
     </van-nav-bar>
     <div class="content">
-      <p class="setPassWorld">创建用户名</p>
+      <p class="setPassWorld">{{ $t('user.CreateUsername') }}</p>
       <van-field
         v-model="username"
         :class="[username ? 'bb' : '']"
         name=""
         label=""
-        placeholder="用户名"
+        :placeholder="$t('user.userName')"
         maxlength="16"
         clearable
-        :rules="[{ required: true, message: '请填写用户名' }]"
+        :rules="[{ required: true, message: $t('user.CreateUsername') }]"
         @update:model-value="updateName"
       />
 
       <!--用户名规则  -->
-      <p class="userName">用户名必须:</p>
+      <p class="userName">{{ $t('user.text3') }}:</p>
       <p class="explain">
         <img v-if="!ifStandard" class="noPitch" src="@/assets/images/login/noPitch.png" />
         <img v-else class="noPitch" src="@/assets/images/login/pitch.png" />
-        <span>至少6个字母数字（最多16个）</span>
+        <span>{{ $t('user.text4') }}</span>
       </p>
       <p class="explain">
         <img v-if="!ifSpecial" class="noPitch" src="@/assets/images/login/noPitch.png" />
         <img v-else class="noPitch" src="@/assets/images/login/pitch.png" />
-        <span>不能有特殊字符</span>
+        <span>{{ $t('user.text5') }}</span>
       </p>
       <p class="explain">
         <img v-if="!ifSpace" class="noPitch" src="@/assets/images/login/noPitch.png" />
         <img v-else class="noPitch" src="@/assets/images/login/pitch.png" />
-        <span>不能有空格</span>
+        <span>{{ $t('user.text6') }}</span>
       </p>
       <div v-if="ifStandard && ifSpecial && ifSpace" class="loginBtn registerBtn" @click="handleRegister()">
-        注册
+        {{ $t('user.register') }}
       </div>
       <div v-else class="loginBtn">
-        下一步
+        {{ $t('user.nextStep') }}
       </div>
-      <p class="literal">已有账号? <span class="register" @click="loginIn">登录</span></p>
+      <p class="literal"> {{ $t('user.ExistingAccount') }}? <span class="register" @click="loginIn">{{ $t('user.logOn') }}</span></p>
     </div>
 
   </div>

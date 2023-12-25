@@ -25,6 +25,8 @@ export default async () => {
     store.dispatch('user/userInfo')
     // 获取钱包币种
     store.dispatch('user/getCurrency')
+    // 获取注单数据
+    store.dispatch('user/pendingOrder')
     // 账户余额
     // store.dispatch('user/getBalance')
   }

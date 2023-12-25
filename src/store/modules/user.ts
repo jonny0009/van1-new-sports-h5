@@ -1,6 +1,6 @@
 import { Module } from 'vuex'
 import { login, playAccount, getBalance } from '@/api/login'
-import { getCMerAccessWallet } from '@/api/user'
+import { getCMerAccessWallet, betRecordTab } from '@/api/user'
 import { User } from '#/store'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { configSettingNew } from '@/api/auth'
@@ -12,6 +12,7 @@ const userModule: Module<User, any> = {
     userConfig: {},
     userInfo: {},
     balance: {},
+    pendingData: [],
     currency: {}
   },
   mutations: {
@@ -81,6 +82,19 @@ const userModule: Module<User, any> = {
       const res:any = await getBalance(params) || {}
       if (res.code === 200) {
         state.balance = res.data || {}
+      }
+    },
+    // 进行中的注单
+    async pendingOrder({ state }, params = { }) {
+      const res: any = await betRecordTab({
+        orderState: '0',
+        page: 1,
+        pageSize: 99,
+        beginTime: '',
+        endTime: ''
+      }) || {}
+      if (res.code === 200) {
+        state.pendingData = res.data || []
       }
     },
     // remove token

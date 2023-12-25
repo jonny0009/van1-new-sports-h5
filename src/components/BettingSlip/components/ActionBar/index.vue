@@ -73,6 +73,7 @@ const buy = () => {
     store.dispatch('betting/comboMarketBetting').catch((err: any) => {
       error(err || t('betting.errorTips'))
     })
+    store.dispatch('user/pendingOrder')
   }
 }
 const error = (err: string) => {

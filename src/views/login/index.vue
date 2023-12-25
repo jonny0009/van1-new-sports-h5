@@ -12,11 +12,11 @@
       </template>
     </van-nav-bar>
     <div class="content">
-      <p class="title">欢迎来到AI！</p>
-      <span class="desc">全球最领先的体育社交平台</span>
+      <p class="title">{{ $t('user.WelcomeToAI') }}</p>
+      <span class="desc">{{ $t('user.text1') }}</span>
       <div class="area-btn">
-        <span @click="register">注册</span>
-        <span @click="login">登录</span>
+        <span @click="register">{{ $t('user.register') }}</span>
+        <span @click="login">{{ $t('user.logOn') }}</span>
       </div>
       <div class="ban">
         <img class="ban_1" src="@/assets/images/login/login.png" alt="" />
@@ -36,7 +36,7 @@
         <div class="item" @click="showPk(2)">
           <div class="label-info flex align-center">
             <div class="icon"><img src="@/assets/images/login/area@2x.png" /></div>
-            <div class="label">{{ '地区' }}</div>
+            <div class="label">{{ $t('user.area') }}</div>
           </div>
           <div class="label-right">
             <div class="label">{{ areaObj.value }}</div>
@@ -46,7 +46,7 @@
         <div class="item" @click="showPk(3)">
           <div class="label-info flex align-center">
             <div class="icon"><img src="@/assets/images/login/pankou@2x.png" /></div>
-            <div class="label">{{ '盘口' }}</div>
+            <div class="label">{{ $t('user.Handicap') }}</div>
           </div>
           <div class="label-right">
             <div class="label">{{ plateMask.value }}</div>
@@ -56,7 +56,7 @@
       </div>
     </div>
     <van-popup v-model:show="showBottom" position="bottom" closeable round>
-      <div class="popup-title">{{ popupTitle }}</div>
+      <div class="popup-title">{{ $t(`user.${popupTitle}`) }}</div>
       <div class="pk-list">
         <div
           v-for="(item, index) in popupList.arr"
@@ -111,14 +111,14 @@ function showPk(val?: any) {
   if (val === 1) {
     popupList.arr = languages.value
     commonKey.key = lang.value.key
-    popupTitle.value = '语言'
+    popupTitle.value = `lang`
   }
   if (val === 2) {
     popupList.arr = Object.keys(areaList.value || {}).map(function (key) {
       return { key: key, value: areaList.value[key] }
     })
     commonKey.key = areaObj.value.key
-    popupTitle.value = '地区'
+    popupTitle.value = 'area'
   }
   if (val === 3) {
     popupList.arr = [
@@ -132,7 +132,7 @@ function showPk(val?: any) {
       }
     ]
     commonKey.key = plateMask.value.key
-    popupTitle.value = '盘口'
+    popupTitle.value = 'Handicap'
   }
 
   showBottom.value = true

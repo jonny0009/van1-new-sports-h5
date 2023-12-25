@@ -73,6 +73,7 @@ export default {
   otherCharacters: 'Nhân vật khác',
   Background: 'Màu nền',
   Followed: 'Đã theo dõi',
+  area: 'Quận',
   sports: {
     'officeNumber': 'số trò chơi',
     FT: 'Bóng đá',
