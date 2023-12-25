@@ -309,6 +309,22 @@
           color: #000000;
         }
       }
+      .lock{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        &::before{
+          content: '';
+          display: inline-block;
+          height: 28px;
+          width: 28px;
+          background: url('@/assets/images/home/match/lock.png') no-repeat;
+          background-size: contain;
+        }
+      }
     }
     .betting-select__list{
       width: 100%;
