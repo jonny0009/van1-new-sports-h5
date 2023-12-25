@@ -44,7 +44,7 @@
     <div class="content">
       <div class="top-1">
         <img class="img_1" src="@/assets/images/user/data.png" alt="" />
-        <span>投注数据（近90天）</span>
+        <span>投注数据（近7天）</span>
       </div>
       <div class="circle">
         <div v-for="(item, index) in dataList.arr" :key="index" class="num-1">
@@ -55,109 +55,8 @@
           </div>
         </div>
       </div>
-      <!-- top2 -->
-      <div class="top-1 top-2">
-        <img class="img_1" src="@/assets/images/user/bottom.png" alt="" />
-        <span>注单</span>
-        <div class="right">
-          <span>近期战绩:</span>
-          <img class="img_1" src="@/assets/images/user/ask.svg" alt="" />
-          <img class="img_1" src="@/assets/images/user/fail.svg" alt="" />
-          <img class="img_1" src="@/assets/images/user/win.svg" alt="" />
-          <img class="img_1" src="@/assets/images/user/win.svg" alt="" />
-          <img class="img_1" src="@/assets/images/user/fail.svg" alt="" />
-        </div>
-      </div>
-      <!-- elseInfo -->
-      <div class="top-3">
-        <div class="left" @click="goUrl('/elseInfo')">
-          <img class="img_1" src="@/assets/images/user/head-img.png" alt="" />
-          <div class="name">
-            <div>ai-sport</div>
-            <div>@ai-sport</div>
-          </div>
-        </div>
-        <div class="right">
-          进行中
-        </div>
-      </div>
-      <!-- four -->
-      <div class="top4">
-        <div class="game-1">
-          <img class="img_1" src="@/assets/images/user/num5.png" alt="" />
-          <span>
-            中华台北 - 超级联赛
-          </span>
-        </div>
-        <div class="game-1 game-2">
-          <img class="img_1" src="@/assets/images/user/num7.png" alt="" />
-          <!-- <SportsIcon class="img_2" :icon-src="img1" style="color:#7642FD" /> -->
-          <span>
-            半场
-          </span>
-        </div>
-        <!-- 框 -->
-        <div class="game-3">
-          <div class="match-1">
-            <div class="left">
-              <img class="img_1" src="@/assets/images/user/bottom1.png" alt="" />
-              <span>
-                台北
-              </span>
-            </div>
-            <div class="right">
-              2
-            </div>
-          </div>
-          <div class="match-1 match-2">
-            <div class="left">
-              <img class=" img_2" src="@/assets/images/user/bottom2.png" alt="" />
-              <span>
-                台北天龙
-              </span>
-            </div>
-            <div class="right">
-              0
-            </div>
-          </div>
-
-        </div>
-        <!-- 框4 -->
-        <div class="game-3 game-4">
-          <div class="match-1">
-            <div class="left">
-              <img class="img_1" src="@/assets/images/user/plate.png" alt="" />
-              <div>
-                <p>大于 2</p>
-                <p class="plate">全场 大小盘</p>
-              </div>
-            </div>
-            <div class="right-1">
-              @3.64
-            </div>
-          </div>
-        </div>
-        <!-- 5 -->
-        <div class="game-5">
-          <p>投注额：</p>
-          <div>
-            <img class="img_1" src="@/assets/images/user/num1.png" alt="" />
-            <span>1.00</span>
-          </div>
-        </div>
-        <div class="game-5 game-6">
-          <p>可赔付额：</p>
-          <div>
-            <img class="img_1" src="@/assets/images/user/num2.png" alt="" />
-            <span class="num">3.65</span>
-          </div>
-        </div>
-        <!-- 6 -->
-        <div class="addBtn">
-          <span>加注</span>
-          <img class="img_1" src="@/assets/images/user/num8.png" alt="" />
-        </div>
-      </div>
+      <!-- 注单列表 -->
+      <bet-list></bet-list>
       <div class="foot" />
     </div>
 
@@ -172,18 +71,23 @@ import data3 from '@/assets/images/user/data3.png'
 import data4 from '@/assets/images/user/data4.png'
 import { ref, reactive, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { playerInfo } from '@/api/user'
+const $router = useRouter()
+
+import { playerInfo, standings } from '@/api/user'
 import { showToast } from 'vant'
 import { ImageSource } from '@/config'
 import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
 import { formatToDateTime } from '@/utils/date'
 
+import BetList from './components/betList.vue'
+
 import store from '@/store'
 const userInfo = computed(() => store.state.user.userInfo)
 
 const peopleInfo = ref<any>({})
-// const img1 = ref('live')
-const $router = useRouter()
+const userStandInfo = ref<any>({})
+const currentNumber = ref<any>('')
+
 const goBack = () => {
   $router.push('/home')
 }
@@ -195,29 +99,32 @@ const dataList = reactive<{ arr: any }>({
   arr: [
     {
       num: 0,
-      name: '投注次数',
+      name: '胜率',
       img: data1
     },
     {
       num: 0,
-      name: '被跟注次数',
+      name: '盈利',
       img: data2
     },
     {
       num: 0,
-      name: '平均投注额',
+      name: '投注金额',
       img: data3
     },
     {
       num: 0,
-      name: '平均赔率',
+      name: '返还金额',
       img: data4
     }
   ]
 })
 onMounted(() => {
   getAccountInfo()
+  // 获取战力
+  getStandings()
 })
+
 const getImg = (imgUrl: string) => {
   if (imgUrl) {
     return `${ImageSource}${imgUrl}`
@@ -234,11 +141,26 @@ const getAccountInfo = async () => {
   }
   peopleInfo.value = res.data
 }
+const getStandings = async () => {
+  const params = {
+    type: 2
+  }
+  const res: any = await standings(params)
+  if (res.code !== 200) {
+    return showToast(res.msg)
+  }
+  userStandInfo.value = res.data
+  currentNumber.value = userStandInfo.value.winRatio * 100 || 0
+  dataList.arr[0].num = (userStandInfo.value.winRatio * 100) + '%'
+  dataList.arr[1].num = userStandInfo.value.winOrderAmount - userStandInfo.value.orderAmount || 0
+  dataList.arr[2].num = userStandInfo.value.orderAmount || 0
+  dataList.arr[3].num = userStandInfo.value.winOrderAmount || 0
+}
 
 </script>
 
 <style lang="scss" scoped>
-@import './style/userInfo.scss';
+@import './index.scss';
 </style>
 
 <style scoped>

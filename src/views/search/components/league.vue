@@ -15,6 +15,11 @@
 
 <script lang="ts" setup>
 import ball3 from '@/assets/images/login/ball3.svg'
+
+import { useRouter } from 'vue-router'
+const $router = useRouter()
+import store from '@/store'
+
 // import { ref, reactive } from 'vue'
 const props = defineProps({
   leagueList: {
@@ -32,7 +37,14 @@ const props = defineProps({
 
 })
 const toLeague = async (item: any) => {
-  console.log(item, '联赛跳转====')
+  store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
+
+  $router.push({
+    path: `/sport/${item.gameType}`,
+    query: {
+      leagueId: item.id
+    }
+  })
 }
 // 搜索字体颜色
 const highlightText = (field: any, text: any) => {

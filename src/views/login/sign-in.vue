@@ -110,9 +110,7 @@ onMounted(() => {
 const goBack = () => {
   $router.back()
 }
-// const register = () => {
-//   $router.push({ path: '/register' })
-// }
+
 const tryPlay = async () => {
   const rDecrypt = localStore.getItem('appFingerprint')
   if (rDecrypt) {

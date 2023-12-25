@@ -100,6 +100,8 @@ const replaceImgUrl = (str: any) => {
 }
 
 const beforeClose = (position: any) => {
+  console.log(position, '单个删除====')
+
   // switch (position.position) {
   //   case 'left':
   //   case 'cell':
@@ -119,7 +121,7 @@ const beforeClose = (position: any) => {
 </script>
 
 <style lang="scss" scoped>
-@import './style/notice.scss';
+@import './index.scss';
 
 :deep(.van-field__control) {
   height: 50px;

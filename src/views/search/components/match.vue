@@ -2,14 +2,18 @@
   <div class="matchList-1">
     <div v-for="(item, index) in props.gameList" :key="index" class="left1 left2" @click="toMatch(item)">
       <div class="left3">
-        <van-image class="itemImg" fit="contain" :src="getImg(item.homeLogo)" />
+        <!-- <van-image class="itemImg" fit="contain" :src="getImg(item.homeLogo)" /> -->
+        <div class="itemImg">
+          <img class="itemImg-1" fit="contain" :src="getImg(item.homeLogo)" />
+          <img class="itemImg-2" fit="contain" :src="getImg(item.awayLogo)" />
+        </div>
         <div class="center">
           <div>
             <span v-html="highlightText(props.keyWords, item.homeTeam)"></span> VS
             <span v-html="highlightText(props.keyWords, item.awayTeam)"></span>
           </div>
           <div class="center_1">
-            <!-- <van-image class="ball4" fit="contain" :src="game1" /> -->
+            <img class="ball4" fit="contain" src="@/assets/images/login/ball1.svg" />
             <!-- <span>哥伦比亚- 地区联赛</span> -->
             <!-- <span>{{ item.gameDate ? formatToDateTime(item.gameDate) : '' }}</span> -->
             <span>{{ getMatchTime(item.gameDate) }}</span>
@@ -31,9 +35,15 @@
 </template>
 
 <script lang="ts" setup>
+import { ImageSource } from '@/config'
+
 import moment from 'moment'
 import goImg from '@/assets/images/login/go@2x.png'
 import ball4 from '@/assets/images/login/ball4.svg'
+import store from '@/store'
+
+import { useRouter } from 'vue-router'
+const $router = useRouter()
 
 // import { ref, reactive } from 'vue'
 const props = defineProps({
@@ -60,14 +70,22 @@ const getMatchTime = (item: any) => {
 }
 const getImg = (imgUrl?: any) => {
   console.log(imgUrl)
-
-  // if (imgUrl) {
-  //   return `${ImageSource}${imgUrl}`
-  // }
+  if (imgUrl) {
+    return `${ImageSource}${imgUrl}`
+  }
   return ball4
 }
 const toMatch = async (item: any) => {
-  console.log(item, '比赛跳转======')
+  store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
+
+  const obj = JSON.stringify(item)
+  $router.push({
+    path: `/home`,
+    query: {
+      gidm: item.gidm,
+      obj: obj
+    }
+  })
 }
 // 搜索字体颜色
 const highlightText = (field: any, text: any) => {
@@ -118,11 +136,12 @@ const highlightText = (field: any, text: any) => {
       letter-spacing: 0;
       font-weight: 600;
 
-      .itemImg {
-        height: 64px;
-        width: 64px;
-        margin-right: 15px;
-      }
+      // .itemImg {
+      //   height: 100px;
+      //   width: 100px;
+      //   background:orange;
+      //   margin-right: 10px;
+      // }
     }
 
     .left2 {
@@ -135,8 +154,25 @@ const highlightText = (field: any, text: any) => {
       }
 
       .itemImg {
-        width: 50px;
-        height: 50px;
+        height: 80px;
+        width: 80px;
+        // background:orange;
+        margin-right: 0px;
+        position: relative;
+        &-1{
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 50px;
+          height: 50px;
+        }
+        &-2{
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 50px;
+          height: 50px;
+        }
       }
 
       .center {
@@ -151,6 +187,7 @@ const highlightText = (field: any, text: any) => {
           color: #96A5AA;
 
           .ball4 {
+            margin-right: 10px;
             height: 24px;
             width: 24px;
           }
