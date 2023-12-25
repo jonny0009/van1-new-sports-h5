@@ -1,7 +1,7 @@
 <template>
   <div class="timeSelect">
     <div v-for="(item, index) in timeList" :key="index">
-      <div v-if="item.timeName" class="time" :class="timeIndex == index ? 'timeActive' : ''" @click="selectTime(index)">
+      <div v-if="item.timeName" class="time" :class="timeIndex == index ? 'timeActive' : ''" @click.stop="selectTime(index)">
         {{ item.timeName }}
       </div>
       <p v-else class="imgStyle">
@@ -13,7 +13,7 @@
   <div class="status">
     <div class="status_1">
       <span>状态</span>
-      <div class="round" @click="seStatus()">
+      <div class="round" @click.stop="seStatus()">
         <span>{{ commonKey.value }}</span>
         <img class="img_1 " :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
       </div>
@@ -22,7 +22,7 @@
   <!-- 列表 -->
   <div v-if="list.arr.length" class="dataList">
     <div v-for="(item, index) in list.arr" :key="index">
-      <Single v-if="item.parlayNum ==1 && item.state !==2" :item="item" class="item"></Single>
+      <Single v-if="item.parlayNum ==1" :item="item" class="item"></Single>
       <Bunch v-if="item.parlayNum !=1 && item.state !==2" :item="item" class="item"></Bunch>
     </div>
   </div>
@@ -259,7 +259,7 @@ const getNoAccount = async () => {
 
 // 列表
 .dataList {
-  height: calc(100vh - 400px);
+  height: calc(100vh - 450px);
   overflow-y: auto;
   margin-top: 20px;
 
@@ -280,143 +280,6 @@ const getNoAccount = async () => {
     padding: 15px 20px;
     margin-bottom: 20px;
 
-    .top {
-      display: flex;
-
-      .top-img {
-        height: 80px;
-        width: 80px;
-        position: relative;
-
-        .img_1 {
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 50px;
-          width: 50px;
-        }
-
-        .img_2 {
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          height: 50px;
-          width: 50px;
-        }
-      }
-
-      .right {
-        margin-left: 18px;
-
-        .font_1 {
-          font-family: PingFangSC-Semibold;
-          font-size: 28px;
-          color: #1F2630;
-          letter-spacing: 0;
-          font-weight: 600;
-        }
-
-        .font_2 {
-          font-family: PingFangSC-Semibold;
-          font-size: 24px;
-          color: #546371;
-          letter-spacing: 0;
-          font-weight: 600;
-        }
-      }
-    }
-
-    .top2 {
-      margin-top: 20px;
-      background: #E2E6E8;
-      border-radius: 20px;
-      padding: 20px 10px;
-      display: flex;
-      align-items: center;
-
-      .left {
-        margin-right: 15px;
-
-        .img_1 {
-          width: 60px;
-          height: 60px;
-        }
-      }
-
-      .right {
-        .one {
-          display: flex;
-          width: 550px;
-          justify-content: space-between;
-          font-family: PingFangSC-Semibold;
-          font-size: 28px;
-          color: #1F2630;
-          letter-spacing: 0;
-          font-weight: 600;
-        }
-
-        .two {
-          font-family: PingFangSC-Semibold;
-          font-size: 24px;
-          color: #546371;
-          letter-spacing: 0;
-          font-weight: 600;
-
-          .img_1 {
-            width: 40px;
-            height: 30px;
-          }
-        }
-      }
-    }
-
-    .top3 {
-      margin-top: 9px;
-
-      .one {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-family: PingFangSC-Semibold;
-        font-size: 24px;
-        color: #546371;
-        letter-spacing: 0;
-        font-weight: 600;
-
-        .img_1 {
-          width: 20px;
-          height: 19px;
-        }
-      }
-
-      .two {
-        font-family: PingFangSC-Semibold;
-        font-size: 28px;
-        color: #546371;
-        letter-spacing: 0;
-        font-weight: 600;
-      }
-    }
-
-    .line {
-      background: #E0E3E7;
-      height: 2px;
-    }
-
-    .top4 {
-      margin-top: 10px;
-
-      .one {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-family: PingFangSC-Regular;
-        font-size: 22px;
-        color: #96A5AA;
-        letter-spacing: 0;
-        font-weight: 400;
-      }
-    }
   }
 }
 

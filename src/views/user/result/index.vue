@@ -7,9 +7,9 @@
     </van-nav-bar>
     <div class="content">
       <div class="area-btn_1">
-        <span :class="index == 1 ? 'active' : ''" @click="index = 1">投注历史</span>
-        <span :class="index == 2 ? 'active' : ''" @click="index = 2">流水历史</span>
-        <span :class="index == 3 ? 'active' : ''" @click="index = 3">赛果</span>
+        <span :class="index == 1 ? 'active' : ''" @click.stop="index = 1">投注历史</span>
+        <span :class="index == 2 ? 'active' : ''" @click.stop="index = 2">流水历史</span>
+        <span :class="index == 3 ? 'active' : ''" @click.stop="index = 3">赛果</span>
       </div>
       <dataList v-if="index === 1"></dataList>
       <RunningHistory v-if="index === 2"></RunningHistory>

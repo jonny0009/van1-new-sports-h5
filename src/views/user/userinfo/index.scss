@@ -220,6 +220,7 @@
     // 3
     .top-3 {
       margin-top: 20px;
+      margin-bottom: 10px;
       display: flex;
       // align-items: center;
       justify-content: space-between;
@@ -429,7 +430,7 @@
         margin-top: 22px;
         width: 638px;
         height: 68px;
-        background: #8b8080;
+        background: #D7D7D7;
         border-radius: 68px;
         span {
           font-family: PingFangSC-Semibold;

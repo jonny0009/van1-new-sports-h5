@@ -63,10 +63,14 @@
           </div>
         </div>
       </div>
+      <div class="addBtn-1">
+        <span>加注</span>
+        <!-- <img class="img_1" src="@/assets/images/user/num8.png" alt="" /> -->
+      </div>
       <!-- line -->
-      <div class="line" />
+      <!-- <div class="line" /> -->
       <!-- num-->
-      <div class="top4">
+      <!-- <div class="top4">
         <div class="one">
           <span>注单号:</span>
           <span>{{ item.orderId }}</span>
@@ -79,13 +83,13 @@
           <span>结算时间：</span>
           <span>{{ formatToDateTime(item.resultDate) }}</span>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { formatToDateTime } from '@/utils/date'
+// import { formatToDateTime } from '@/utils/date'
 // import { ref, reactive } from 'vue'
 const props = defineProps({
   item: {
@@ -245,5 +249,21 @@ const getProfit = (item:any) => {
         font-weight: 400;
       }
     }
+    .addBtn-1{
+        text-align: center;
+        line-height: 68px;
+        margin-top: 22px;
+        width: 638px;
+        height: 68px;
+        background: #D7D7D7;
+        border-radius: 68px;
+        span {
+          font-family: PingFangSC-Semibold;
+          font-size: 28px;
+          color: #EFF1F2;
+          letter-spacing: 0;
+          font-weight: 600;
+        }
+      }
 
 </style>
