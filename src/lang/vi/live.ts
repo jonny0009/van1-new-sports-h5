@@ -28,5 +28,17 @@ export default {
   needLogin: 'Đăng nhập đầu tiên',
   needBet: '{num} Số tiền đặt cược có thể tham gia tương tác',
   chatTip: 'Đến, đến, ai không thể khoe khoang',
-  chatSys: 'Phòng chat mở cửa, anh em đam mê bóng vào bình luận nào! '
+  chatSys: 'Phòng chat mở cửa, anh em đam mê bóng vào bình luận nào!',
+  Q1: 'Q1 ',
+  Q2: 'Q2 ',
+  Q3: 'Q3 ',
+  Q4: 'Q4 ',
+  OT: 'Hiệp phụ',
+  HT: 'Nghỉ giữa hiệp',
+  H1: 'Hiệp 1',
+  H2: 'Hiệp 2',
+  xup: '上{num}',
+  xub: '下{num}',
+  pause: '暂停',
+  xround: '第{num}局'
 }
