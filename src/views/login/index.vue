@@ -141,7 +141,7 @@ function showPk(val?: any) {
 async function setPk(val: any) {
   if (popupIndex.value === 1) {
     lang.value = val
-    localStore.setItem('locale', val.key)
+    localStorage.setItem('locale', val.key)
     localStore.setItem('language', val)
     window.location.reload()
   }

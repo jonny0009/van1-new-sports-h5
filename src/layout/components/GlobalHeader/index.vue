@@ -5,14 +5,17 @@
         <div class="avatar" @click="showInfo">
           <img :src="getImg(userInfo.headImg)" style="object-fit: contain;" />
         </div>
-        <div class="wallet" @click="toUrl('/login')">
+        <div v-if="loginToken" class="wallet" @click="toUrl('/login')">
           <div class="cur">
             <img :src="USDTImg" style="object-fit: contain;" />
           </div>
-          {{ formatMoney(balance.balance) }}
+          <span v-points="balance.balance ||0" />
           <div class="transaction">
             <img :src="transactionImg" />
           </div>
+        </div>
+        <div v-else class="wallet" @click="toUrl('/login')">
+          {{ '注册/登录' }}
         </div>
         <div class="right-area" @click="toUrl('/search')">
           <img class="search" :src="searchImg" style="object-fit: contain;" />
@@ -35,7 +38,7 @@
               </div>
               <div class="money">
                 <van-image class="headImg_2" fit="contain" :src="USDTImg" />
-                <span> {{ formatMoney(balance.balance) }}</span>
+                <span v-points="balance.balance ||0" />
               </div>
             </div>
           </div>
@@ -68,6 +71,8 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { getToken } from '@/utils/auth'
+
 import { ImageSource } from '@/config'
 
 import searchImg from '@/assets/images/globalLayout/header/search.png'
@@ -79,13 +84,11 @@ import logoImg from '@/assets/images/user/logo.png'
 import { useRouter } from 'vue-router'
 import { ref, computed } from 'vue'
 import store from '@/store'
-import {
-  formatMoney
-} from '@/utils/index'
 const userInfo = computed(() => store.state.user.userInfo)
 const balance = computed(() => store.state.user.balance)
 
 const showLeft = ref(false)
+const loginToken = ref(getToken())
 const $router = useRouter()
 const toUrl = (url: string) => {
   $router.push({ path: url })

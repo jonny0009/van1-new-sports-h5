@@ -1,6 +1,7 @@
 import store from '@/store'
 import { points } from '@/utils'
-import { createBetItem } from 'xcsport-lib'
+import { createBetItem, config } from 'xcsport-lib'
+const { letBallMap } = config
 interface MarketInfoInterface {
   homeTeam: any
   awayTeam: any
@@ -15,6 +16,7 @@ interface MarketInfoInterface {
   systemId: any
   ratio?: any
   ior: any
+  strong: any
 
   leagueId?: any
   leagueName?: any
@@ -32,6 +34,7 @@ interface MarketInfoInterface {
   ratio1?: any
   championType?: any
   gameDate?: any
+  hstrong?: any
 }
 const requireAttrs: Array<string> = ['systemId', 'gidm', 'gameId', 'gameType', 'playType', 'ratioType', 'ior']
 
@@ -67,11 +70,15 @@ export class MarketInfo {
   playOnlyId: string
   isChampion: boolean = false
   ratioName: string = ''
+  strong: string = ''
+  hstrong: string = ''
   goldMax: string = ''
   goldMin: string = ''
   ratioKey: string = ''
   iorChange: string = ''
   isEuropePlay: boolean | undefined
+  ratioTag: string = ''
+  ratioMatch: string = ''
 
   constructor(info: MarketInfoInterface) {
     this.systemId = info.systemId
@@ -100,6 +107,9 @@ export class MarketInfo {
     this.awayTeam = info.awayTeam
     this.suffix = info.suffix
     this.homeTeamSuffix = info.homeTeamSuffix
+    this.strong = info.strong
+    this.hstrong = info.hstrong
+
     if (this.showtype === 'CP' || this.playType === 'CHAMPION') {
       this.isChampion = true
     } else {
@@ -119,6 +129,22 @@ export class MarketInfo {
       playType: this.playType,
       sourceCompany: this.sourceCompany
     })
+
+    this.splitRatio()
+  }
+  splitRatio() {
+    if (this.ratioName?.includes(' ') && letBallMap.indexOf(this.playType)) {
+      const [ratioMatch, ratioTag, ...special] = this.ratioName.split(' ')
+
+      if (special.length) {
+        this.ratioTag = special.pop() || ''
+        const lastSpaceIndex = this.ratioName.lastIndexOf(' ')
+        this.ratioMatch = this.ratioName.substr(0, lastSpaceIndex)
+      } else {
+        this.ratioMatch = ratioMatch
+        this.ratioTag = ratioTag
+      }
+    }
   }
   checkoutAttrs(info: any) {
     const warnings: any[] = []

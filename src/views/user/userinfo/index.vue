@@ -1,0 +1,194 @@
+<template>
+  <div class="userInfo">
+    <van-nav-bar class="bg-title" :title="title" :border="false">
+      <template #left>
+        <img class="img_1" src="@/assets/images/login/return@2x.png" alt="" @click="goBack()" />
+      </template>
+      <template #right>
+        <img class="img_1" src="@/assets/images/user/edit.png" alt="" @click="goUrl('/editUser')" />
+      </template>
+    </van-nav-bar>
+    <div class="user">
+      <div class="user-info">
+        <div class="user-img" @click="goUrl('/editImg')">
+          <img class="img_1" :src="getImg(peopleInfo.headImg)" alt="" />
+        </div>
+        <div class="user-right">
+          <div class="user-1">
+            <img class="img_1" src="@/assets/images/user/ball.svg" alt="" />
+            <span>{{ peopleInfo.nickName }}</span>
+          </div>
+          <div class="user-2">
+            {{ peopleInfo.email || '' }}
+          </div>
+          <div class="user-3">
+            <img class="img_1" src="@/assets/images/user/star.svg" alt="" />
+            <span>{{ '注册时间' }} {{ formatToDateTime(peopleInfo.createTime) }}</span>
+          </div>
+          <div class="user-4">
+            <div class="left" @click="goUrl('/selfFocus?num=1')">
+              <span>{{ peopleInfo.followNum }}</span>
+              <span>关注</span>
+            </div>
+            <div class="center" />
+            <div class="left right" @click="goUrl('/selfFocus?num=2')">
+              <span>{{ peopleInfo.fansCount }}</span>
+              <span>粉丝</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="note" @click="goUrl('/editUser')">{{ peopleInfo.profiles }}</p>
+
+    </div>
+    <div class="content">
+      <div class="top-1">
+        <img class="img_1" src="@/assets/images/user/data.png" alt="" />
+        <span>投注数据（近7天）</span>
+      </div>
+      <div class="circle">
+        <div v-for="(item, index) in dataList.arr" :key="index" class="num-1">
+          <div class="left"> <img class="img_1" :src="item.img" alt="" /></div>
+          <div class="right">
+            <div>{{ item.num }}</div>
+            <div>{{ item.name }}</div>
+          </div>
+        </div>
+      </div>
+      <!-- 注单列表 -->
+      <bet-list></bet-list>
+      <div class="foot" />
+    </div>
+
+  </div>
+</template>
+
+<script lang="ts" setup>
+import img from '@/directive/img'
+import data1 from '@/assets/images/user/data1.png'
+import data2 from '@/assets/images/user/data2.png'
+import data3 from '@/assets/images/user/data3.png'
+import data4 from '@/assets/images/user/data4.png'
+import { ref, reactive, onMounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
+const $router = useRouter()
+
+import { playerInfo, standings } from '@/api/user'
+import { showToast } from 'vant'
+import { ImageSource } from '@/config'
+import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
+import { formatToDateTime } from '@/utils/date'
+
+import BetList from './components/betList.vue'
+
+import store from '@/store'
+const userInfo = computed(() => store.state.user.userInfo)
+
+const peopleInfo = ref<any>({})
+const userStandInfo = ref<any>({})
+const currentNumber = ref<any>('')
+
+const goBack = () => {
+  $router.push('/home')
+}
+const goUrl = (url: string) => {
+  $router.push('/user' + url)
+}
+const title = ref('个人档案')
+const dataList = reactive<{ arr: any }>({
+  arr: [
+    {
+      num: 0,
+      name: '胜率',
+      img: data1
+    },
+    {
+      num: 0,
+      name: '盈利',
+      img: data2
+    },
+    {
+      num: 0,
+      name: '投注金额',
+      img: data3
+    },
+    {
+      num: 0,
+      name: '返还金额',
+      img: data4
+    }
+  ]
+})
+onMounted(() => {
+  getAccountInfo()
+  // 获取战力
+  getStandings()
+})
+
+const getImg = (imgUrl: string) => {
+  if (imgUrl) {
+    return `${ImageSource}${imgUrl}`
+  }
+  return avatarImg
+}
+const getAccountInfo = async () => {
+  const params = {
+    fPlayerId: userInfo.value.playerId
+  }
+  const res: any = await playerInfo(params)
+  if (res.code !== 200) {
+    return showToast(res.msg)
+  }
+  peopleInfo.value = res.data
+}
+const getStandings = async () => {
+  const params = {
+    type: 2
+  }
+  const res: any = await standings(params)
+  if (res.code !== 200) {
+    return showToast(res.msg)
+  }
+  userStandInfo.value = res.data
+  currentNumber.value = userStandInfo.value.winRatio * 100 || 0
+  dataList.arr[0].num = (userStandInfo.value.winRatio * 100) + '%'
+  dataList.arr[1].num = userStandInfo.value.winOrderAmount - userStandInfo.value.orderAmount || 0
+  dataList.arr[2].num = userStandInfo.value.orderAmount || 0
+  dataList.arr[3].num = userStandInfo.value.winOrderAmount || 0
+}
+
+</script>
+
+<style lang="scss" scoped>
+@import './index.scss';
+</style>
+
+<style scoped>
+:deep(.van-field__control) {
+  height: 50px;
+  font-size: 30px;
+}
+
+:deep(.van-icon) {
+  font-size: 40px;
+}
+
+:deep(.van-nav-bar__content) {
+  height: 150px;
+}
+
+:deep(.van-nav-bar__title) {
+  height: 90px;
+  line-height: 90px;
+  font-family: PingFangSC-Medium;
+  font-size: 28px;
+  color: #FFFFFF;
+  letter-spacing: 0;
+  text-align: center;
+  font-weight: 600;
+}
+
+:deep(.van-icon) {
+  font-size: 48px;
+}
+</style>

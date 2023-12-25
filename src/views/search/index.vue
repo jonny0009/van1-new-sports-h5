@@ -10,6 +10,7 @@
       </van-cell-group>
       <span class="cancel" @click="toUrl()">取消</span>
     </div>
+    <!-- {{ ballListAll }} -->
     <!-- 推荐 -->
     <div v-if="!keyWords" class="content">
       <p v-if="!searchHistory.arr.length" class="font_1">推荐</p>
@@ -24,16 +25,21 @@
           <span class="font_2" @click="keyWordsSearch(item)">{{ item }}</span>
         </div>
       </div>
-      <div v-for="(item, index) in ballList" :key="index" class="detail" @click="toUrlGame(item)">
-        <div class="left">
-          <van-image class="itemImg" fit="contain" :src="item.img" />
-          <span class="font_2">{{ item.name }}</span>
-        </div>
-        <div class="right">
-          <!-- 321 -->
+      <div class="content-list">
+        <div v-for="(item, index) in ballList.arr" :key="index" class="detail" @click="toUrlGame(item)">
+          <div class="left">
+            <van-image class="itemImg" fit="contain" :src="getImg(item)" />
+            <span class="font_2">
+              {{ $t(`user.sports.${item.gameType}`) }}
+            </span>
+          </div>
+          <div class="right">
+            {{ item.gameCount }}
+          </div>
         </div>
       </div>
     </div>
+
     <div v-else class="matchList">
       <div class="area-btn_1">
         <span :class="index == 1 ? 'active' : ''" @click="index = 1">联赛</span>
@@ -47,8 +53,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import { rightSearch } from '@/api/user'
+import { ImageSource } from '@/config'
+
 import searchImg from '@/assets/images/globalLayout/header/search.png'
 import ball1 from '@/assets/images/login/ball1.svg'
 import ball2 from '@/assets/images/login/ball2.svg'
@@ -67,50 +75,80 @@ import Match from './components/match.vue'
 // import { ImageSource } from '@/config'
 
 import { useRouter } from 'vue-router'
+const $router = useRouter()
+
 import { showToast } from 'vant'
 import localStore from '@/utils/localStore'
 
+import store from '@/store'
+
+const ballListAll = computed(() => store.state.app.sports)
+
 const searchHistory = reactive<{ arr: any }>({ arr: localStore.getItem('searchHistory') || [] })
-const $router = useRouter()
 const keyWords = ref('')
 const index = ref(1)
 const leagueList = reactive<{ arr: any }>({ arr: [] })
 const gameList = reactive<{ arr: any }>({ arr: [] })
 const ifHistory = ref<Boolean>(false)
 const listLoading = ref<any>(false)
-const ballList = reactive(
-  [
-    {
-      name: '足球',
-      img: ball1,
-      type: 'FT'
-    },
-    {
-      name: '篮球',
-      img: ball2,
-      type: 'BK'
-    },
-    {
-      name: '网球',
-      img: ball3,
-      type: 'TN'
-    },
-    {
-      name: '羽毛球',
-      img: ball4,
-      type: 'OP_BM'
-    }
-  ]
+const ballList = reactive<{ arr: any }>(
+  {
+    arr: [
+      {
+        name: '足球',
+        img: ball1,
+        gameType: 'FT'
+      },
+      {
+        name: '篮球',
+        img: ball2,
+        gameType: 'BK'
+      },
+      {
+        name: '网球',
+        img: ball3,
+        gameType: 'TN'
+      },
+      {
+        name: '羽毛球',
+        img: ball4,
+        gameType: 'OP_BM'
+      }
+    ]
+  }
 )
 onMounted(async () => {
+  getBallList()
 })
+
+const getImg = (item: any) => {
+  if (item.icon) {
+    return `${ImageSource}${item.icon}`
+  }
+  return ball1
+}
+
+const getBallList = () => {
+  let arr = [...ballListAll.value]
+  arr = arr.filter((item: any) => item.gameCount !== 0 && item.gameType !== 'SY')
+  arr = JSON.parse(JSON.stringify(arr))
+  // 原来倒着排才可以========
+  // const sortArr: any = ['FT', 'BK', 'TN', 'OP_BM']
+  const sortArr: any = ['OP_BM', 'TN', 'BK', 'FT']
+  arr.sort(function (a, b) {
+    return sortArr.indexOf(b.gameType) - sortArr.indexOf(a.gameType)
+  })
+  ballList.arr = arr
+
+  // 根据指定字符排序
+}
 
 const hanDleClear = async () => {
   searchHistory.arr = []
   localStore.setItem('searchHistory', searchHistory.arr)
 }
 
-const keyWordsSearch = (key:any) => {
+const keyWordsSearch = (key: any) => {
   keyWords.value = key
   getList()
 }
@@ -136,11 +174,13 @@ const getList = async () => {
   }
 }
 const toUrl = () => {
+  store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
   $router.push({ path: '/home' })
 }
 const toUrlGame = (item: any) => {
+  store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
   $router.push({
-    path: `/sport/${item.type}`
+    path: `/sport/${item.gameType}`
     // query: {
     //   type: item.type
     // }
@@ -203,7 +243,7 @@ const toUrlGame = (item: any) => {
     }
 
     .historyList {
-      padding-top: 20px;
+      padding-top: 0px;
       display: flex;
       align-items: center;
       flex-wrap: wrap;
@@ -229,6 +269,11 @@ const toUrlGame = (item: any) => {
           margin-left: 14px;
         }
       }
+    }
+
+    .content-list {
+      height: calc(100vh - 300px);
+      overflow-y: auto;
     }
 
     .detail {
