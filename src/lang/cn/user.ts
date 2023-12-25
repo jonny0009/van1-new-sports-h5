@@ -72,6 +72,10 @@ export default {
   Background: '背景颜色',
   Followed: '已关注',
 
+  // 新增===
+  area: '地区',
+  nextStep: '下一步',
+
   sports: {
     'officeNumber': '局号',
     FT: '足球',

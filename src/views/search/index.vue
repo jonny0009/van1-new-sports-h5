@@ -2,20 +2,20 @@
   <div class="search">
     <div class="search_box">
       <van-cell-group inset>
-        <van-field v-model="keyWords" center clearable placeholder="搜索" @update:model-value="getList">
+        <van-field v-model="keyWords" center clearable :placeholder=" $t('user.search')" @update:model-value="getList">
           <template #left-icon>
             <van-image class="searchImg" fit="contain" :src="searchImg" />
           </template>
         </van-field>
       </van-cell-group>
-      <span class="cancel" @click="toUrl()">取消</span>
+      <span class="cancel" @click="toUrl()">{{ $t('user.cancellation') }}</span>
     </div>
     <!-- {{ ballListAll }} -->
     <!-- 推荐 -->
     <div v-if="!keyWords" class="content">
-      <p v-if="!searchHistory.arr.length" class="font_1">推荐</p>
+      <p v-if="!searchHistory.arr.length" class="font_1">{{ $t('user.recommend') }}</p>
       <p v-else class="font_1 font-2">
-        <span>搜索历史</span>
+        <span>{{ $t('user.SearchHistory') }}</span>
         <img class="img_3" src="@/assets/images/user/del.svg" alt="" @click="hanDleClear" />
       </p>
       <van-divider />
@@ -42,8 +42,8 @@
 
     <div v-else class="matchList">
       <div class="area-btn_1">
-        <span :class="index == 1 ? 'active' : ''" @click="index = 1">联赛</span>
-        <span :class="index == 2 ? 'active' : ''" @click="index = 2">比赛</span>
+        <span :class="index == 1 ? 'active' : ''" @click="index = 1">{{ $t('user.league') }}</span>
+        <span :class="index == 2 ? 'active' : ''" @click="index = 2">{{ $t('user.competition') }}</span>
       </div>
       <van-loading v-if="listLoading" size="24" type="spinner" vertical />
       <League v-if="index === 1" :league-list="leagueList.arr" :key-words="keyWords"></League>
