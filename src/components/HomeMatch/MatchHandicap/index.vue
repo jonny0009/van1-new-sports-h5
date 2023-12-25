@@ -159,7 +159,7 @@ import { getHandicap } from '@/utils/home/getHandicap'
 import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
 import TimeView from '@/components/HomeMatch/public/time/index.vue'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import store from '@/store'
 import { showDialog } from 'vant'
 const props = defineProps({
@@ -182,18 +182,30 @@ const getLeagueShortName = ({ leagueShortName, leagueName }: any) => {
   }
   return `${leagueShortName || leagueName}`
 }
-const RrefShow = ref(true)
+const RrefShow = computed(() => store.state.home.RrefShow)
 const Rclick = () => {
-  RrefShow.value = !RrefShow.value
+  //
+  store.dispatch('home/setKeyValue', {
+    key: 'RrefShow',
+    value: !RrefShow.value
+  })
 }
-const OUrefShow = ref(true)
+const OUrefShow = computed(() => store.state.home.OUrefShow)
 const OUclick = () => {
-  OUrefShow.value = !OUrefShow.value
+  //
+  store.dispatch('home/setKeyValue', {
+    key: 'OUrefShow',
+    value: !OUrefShow.value
+  })
 }
 
-const MrefShow = ref(true)
+const MrefShow = computed(() => store.state.home.MrefShow)
 const Mclick = () => {
-  MrefShow.value = !MrefShow.value
+  //
+  store.dispatch('home/setKeyValue', {
+    key: 'MrefShow',
+    value: !MrefShow.value
+  })
 }
 const goClick = () => {
   showDialog({
