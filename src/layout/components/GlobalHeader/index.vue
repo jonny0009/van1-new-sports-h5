@@ -15,7 +15,7 @@
           </div>
         </div>
         <div v-else class="wallet" @click="toUrl('/login')">
-          {{ '注册/登录' }}
+          {{ $t('user.logOn') }}  / {{ $t('user.register') }}
         </div>
         <div class="right-area" @click="toUrl('/search')">
           <img class="search" :src="searchImg" style="object-fit: contain;" />
@@ -33,7 +33,7 @@
             </div>
             <div class="right">
               <div class="head">
-                <div class="head_1" @click="toUser('/userInfo')">查看档案</div>
+                <div class="head_1" @click="toUser('/userInfo')"> {{ $t('user.ViewProfile') }} </div>
                 <img class="headImg_1" fit="contain" src="@/assets/images/user/notice.svg" @click="toUser('/notice')" />
               </div>
               <div class="money">
@@ -50,15 +50,15 @@
         <div class="nav">
           <div class="menu" @click="toUser('/result')">
             <img class="menu_1" fit="contain" src="@/assets/images/user/result.svg" />
-            <div class="menu_2">结果</div>
+            <div class="menu_2">{{ $t('user.result') }}</div>
           </div>
           <div class="menu" @click="toUser('/edit')">
             <img class="menu_1" fit="contain" src="@/assets/images/user/edit.svg" />
-            <div class="menu_2">设置</div>
+            <div class="menu_2">{{ $t('user.edit') }}</div>
           </div>
           <div class="menu" @click="toUser('/customer')">
             <img class="menu_1" fit="contain" src="@/assets/images/user/icon2.svg" />
-            <div class="menu_2">客服</div>
+            <div class="menu_2">{{ $t('user.customer') }}</div>
           </div>
         </div>
         <!-- logo -->

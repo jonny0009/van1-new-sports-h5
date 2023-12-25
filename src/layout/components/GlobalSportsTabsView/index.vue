@@ -1,7 +1,7 @@
 <template>
   <div class="sportsTabsView">
     <div
-      v-for="(item, idx) in homeBarArray"
+      v-for="(item, idx) in sportsList"
       :key="idx"
       class="item"
       :class="{
@@ -29,36 +29,29 @@ const homeBarArray = ref(
     {
       value: 'sportlive',
       name: 'Sportlive'
-    },
-    {
-      value: 'FT',
-      name: 'Sport'
-    },
-    {
-      value: 'BK',
-      name: 'Sport'
-    },
-    {
-      value: 'TN',
-      name: 'Sport'
-    },
-    {
-      value: 'OP_BM',
-      name: 'Sport'
     }
   ]
 )
 
-const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
-const timeout:any = ref('')
-watch(refreshChangeTime, (val) => {
-  if (val) {
+const sportsList = computed(() => {
+  const sports = store.state.app.sports || []
+  const newSportsA = sports.filter((e:any) => {
+    return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.gameCount
+  })
+  let newSportsB:any = [
 
-    // clearTimeout(timeout.value)
-    // timeout.value = setTimeout(() => {
-    //   getRecommendEvents()
-    // }, 100)
+  ]
+  if (newSportsA.length) {
+    const newSportsC = newSportsA.map((e:any) => {
+      return {
+        value: e.gameType,
+        name: 'Sport'
+      }
+    })
+    newSportsB = [...homeBarArray.value, ...newSportsC]
   }
+
+  return newSportsB
 })
 
 const getRouteName = () => {
