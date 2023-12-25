@@ -2,10 +2,10 @@
   <div class="editUser">
     <van-nav-bar class="bg-title" :title="title" :border="false">
       <template #left>
-        <span @click="goBack()">取消</span>
+        <span @click="goBack()">{{ $t('user.cancellation') }}</span>
       </template>
       <template #right>
-        <span @click="handleSave()">保存</span>
+        <span @click="handleSave()">{{ $t('user.save') }}</span>
       </template>
     </van-nav-bar>
     <div class="content">

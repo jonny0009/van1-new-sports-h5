@@ -1,3 +1,4 @@
+
 export default {
   lang: '语言',
   search: '搜索',
@@ -75,6 +76,19 @@ export default {
   // 新增===
   area: '地区',
   nextStep: '下一步',
+  session: '场串关',
+  practical: '实际赔付',
+  orderId: '注单ID',
+  matchResult: '赛果',
+  noData: '未查到相关数据',
+  time: '时间',
+  betId: '投注ID',
+  bet: '投注ID',
+  balance: '余额',
+  currency: '货币',
+  save: '保存',
+  nickname: '输入昵称',
+  font7: '天可以修改一次昵称，请认真修改哦!',
 
   sports: {
     'officeNumber': '局号',

@@ -2,7 +2,7 @@
   <!-- 状态 -->
   <div class="status">
     <div class="status_1">
-      <span>球类</span>
+      <span>{{ $t('user.Balls') }}</span>
       <div class="round" @click="setBall()">
         <!-- <span>{{ ballKey.gameType }}</span> -->
         <span>{{ $t(`user.sports.${ballKey.gameType}`) }}</span>
@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="status_1">
-      <span>时间</span>
+      <span>{{ $t('user.time') }}</span>
       <div class="round" @click="seStatus()">
         <span>{{ commonKey.name }}</span>
         <img class="img_1 " :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />

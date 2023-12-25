@@ -118,6 +118,7 @@ const ballList = reactive<{ arr: any }>(
   }
 )
 onMounted(async () => {
+  store.dispatch('app/getAllSports')
   getBallList()
 })
 
