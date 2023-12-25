@@ -14,8 +14,7 @@
     </div>
 
     <div class="item-title">
-      <SvgIcon v-if="item.gameType == 'FT'" name="live-football" />
-      <SvgIcon v-if="item.gameType == 'BK'" name="live-basketball" />
+      <SvgIcon :name="leagueIcon" />
       <span>{{ item.leagueName }}</span>
     </div>
 
@@ -80,6 +79,15 @@ const watchNumText = computed(() => {
     return t('live.xLooks', { num })
   }
   return t('live.xReserve', { num })
+})
+const leagueIcon = computed(() => {
+  const icon: any = {
+    FT: 'live-football',
+    BK: 'live-basketball',
+    TN: 'live-tennisball',
+    OP_BM: 'live-badminton'
+  }
+  return icon[props.item.gameType]
 })
 </script>
 
