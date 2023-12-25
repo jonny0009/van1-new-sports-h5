@@ -81,7 +81,7 @@
           <!--  -->
           <div class="up-match__body">
             <!-- 全场 亚洲让分盘 -->
-            <div v-if="RrefShow" ref="Rref" class="match-betting-item">
+            <div v-if="RrefShow && sendParams.R" ref="Rref" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">
                   全场 亚洲让分盘
@@ -102,7 +102,7 @@
               </div>
             </div>
             <!-- 全场 大小盘  -->
-            <div v-if="OUrefShow" ref="OUref" class="match-betting-item">
+            <div v-if="OUrefShow && sendParams.OU" ref="OUref" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">全场 大小盘</div>
               </div>
@@ -115,7 +115,7 @@
               </div>
             </div>
             <!-- 全场 1X2 -->
-            <div v-if="MrefShow" ref="Mref" class="match-betting-item">
+            <div v-if="MrefShow && sendParams.M" ref="Mref" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">全场 1X2</div>
               </div>

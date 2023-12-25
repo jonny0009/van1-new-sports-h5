@@ -6,6 +6,7 @@
     :market-info="item.marketInfo"
     class="betting-option"
   >
+
     <span class="up-betting-name">
       <span class="text">{{ item.marketInfo.ratioName }}</span>
     </span>

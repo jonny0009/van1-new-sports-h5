@@ -108,16 +108,16 @@ const getDirection = (startx:any, starty:any, endx:any, endy:any) => {
   var angle = getAngle(angx, angy)
   if (angle >= -135 && angle <= -45) {
     result = 1 // 向上
-    console.log('向上')
+    // console.log('向上')
   } else if (angle > 45 && angle < 135) {
     result = 2 // 向下
-    console.log('向下')
+    // console.log('向下')
   } else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
     result = 3 // 向左
-    console.log('向左')
+    // console.log('向左')
   } else if (angle >= -45 && angle <= 45) {
     result = 4 // 向右
-    console.log('向右')
+    // console.log('向右')
   }
   return result
 }

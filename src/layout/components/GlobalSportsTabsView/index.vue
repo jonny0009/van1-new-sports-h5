@@ -61,7 +61,6 @@ watch(refreshChangeTime, (val) => {
   }
 })
 
-console.log(2222222222222)
 const getRouteName = () => {
   const routerName: any = router?.currentRoute?.value?.name || ''
   return routerName.toLowerCase()

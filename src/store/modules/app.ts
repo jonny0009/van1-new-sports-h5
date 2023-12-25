@@ -56,7 +56,6 @@ const appModule: Module<App, any> = {
       }
     },
     async getAllSports({ state }) {
-      console.log(1111111111)
       const res:any = await getAllSports() || {}
       if (res.code === 200) {
         localStore.setItem('sports', res.data)
