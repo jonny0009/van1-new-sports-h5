@@ -6,11 +6,11 @@
     @returnSuccess="returnStatus"
   />
   <template v-if="!isShow">
-    <SportsTabs @returnSportsSuccess="returnSportsSuccess" />
+    <SportsTabs class="mb10 mt20" @returnSportsSuccess="returnSportsSuccess" />
     <Loading v-if="!isLoading" />
     <template v-else>
       <HomeEmpty v-if="!recommendEventsList.length" />
-      <HomeMatchHandicap v-for="(item,idx) in recommendEventsList" :key="idx" :send-params="item" class="mt20" />
+      <HomeMatchHandicap v-for="(item,idx) in recommendEventsList" :key="idx" :send-params="item" class="mb10" />
     </template>
   </template>
 </template>

@@ -4,37 +4,39 @@ export function getHandicap(playType: string, sendParams:any) {
   const playTypeItem = details[playType] || {}
   let newPlayTypeItem:any = {}
   const newRatioDataVal:any = playTypeItem?.ratioData || []
-  if (playType === 'R') {
+  if (['R', 'RE'].includes(playType)) {
+    // REC //REH
     const RC = newRatioDataVal.find((e:any) => {
-      return e.ratioType === 'RC'
+      return ['REC', 'RC'].includes(e.ratioType)
     })
     const RH = newRatioDataVal.find((e:any) => {
-      return e.ratioType === 'RH'
+      return ['REH', 'RH'].includes(e.ratioType)
     })
     newPlayTypeItem = {
       ...playTypeItem,
       ratioData: [...[RH, RC]]
     }
-  } else if (playType === 'M') {
+  } else if (['M', 'RM'].includes(playType)) {
+    // RMC //RMH
     const MN = newRatioDataVal.find((e:any) => {
-      return e.ratioType === 'MN'
+      return ['RMN', 'MN'].includes(e.ratioType)
     })
     const MC = newRatioDataVal.find((e:any) => {
-      return e.ratioType === 'MC'
+      return ['RMC', 'MC'].includes(e.ratioType)
     })
     const MH = newRatioDataVal.find((e:any) => {
-      return e.ratioType === 'MH'
+      return ['RMH', 'MH'].includes(e.ratioType)
     })
     newPlayTypeItem = {
       ...playTypeItem,
       ratioData: [...[MH, MN, MC]]
     }
-  } else if (playType === 'OU') {
+  } else if (['OU', 'ROU'].includes(playType)) {
     const OUH = newRatioDataVal.find((e:any) => {
-      return e.ratioType === 'OUH'
+      return ['OUH', 'ROUH'].includes(e.ratioType)
     })
     const OUC = newRatioDataVal.find((e:any) => {
-      return e.ratioType === 'OUC'
+      return ['OUC', 'ROUC'].includes(e.ratioType)
     })
     newPlayTypeItem = {
       ...playTypeItem,

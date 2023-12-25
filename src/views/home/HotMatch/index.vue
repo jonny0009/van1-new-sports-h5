@@ -31,7 +31,6 @@
             <div class="onImgError"></div>
           </template>
         </van-image>
-
       </template>
     </div>
     <template v-if="!noDataToggle">

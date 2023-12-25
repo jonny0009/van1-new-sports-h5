@@ -1,7 +1,7 @@
 <template>
   <div class="Recommend-Match-Tabs">
     <SportsButton
-      v-for="(item,idx) in Tabs"
+      v-for="(item,idx) in sportsList"
       :key="idx"
       :text="item.text"
       :active="active===item.text"
@@ -11,22 +11,37 @@
   </div>
 </template>
 <script lang="ts" setup>
-// vue
-import { ref } from 'vue'
-const Tabs = ref([
-  { text: 'FT' },
-  { text: 'BK' },
-  { text: 'TN' },
-  { text: 'OP_BM' }
-])
+import { ref, computed } from 'vue'
+import store from '@/store'
 const active = ref('FT')
 const emit = defineEmits(['returnSportsSuccess'])
-const activeVal = ref(false)
-const SportsClick = (item) => {
+const SportsClick = (item:any) => {
   const { text } = item
   active.value = text
   emit('returnSportsSuccess', active.value)
 }
+const sportsList = computed(() => {
+  const sports = store.state.app.sports || []
+  const newSportsA = sports.filter((e:any) => {
+    // return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.gameCount
+    return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType)
+  })
+  let newSportsB:any = [
+    { text: 'FT' },
+    { text: 'BK' },
+    { text: 'TN' },
+    { text: 'OP_BM' }
+  ]
+  if (newSportsA.length) {
+    const newSportsC = newSportsA.map((e:any) => {
+      return {
+        text: e.gameType
+      }
+    })
+    newSportsB = [...newSportsC]
+  }
+  return newSportsB
+})
 defineExpose({
   active
 })

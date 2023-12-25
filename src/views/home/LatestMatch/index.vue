@@ -6,11 +6,11 @@
     @returnSuccess="returnStatus"
   />
   <template v-if="!isShow">
-    <SportsTabs @returnSportsSuccess="returnSportsSuccess" />
+    <SportsTabs class="mb10 mt20" @returnSportsSuccess="returnSportsSuccess" />
     <Loading v-if="!isLoading" />
     <template v-else>
       <HomeEmpty v-if="!recommendEventsList.length" class="marginAuto"></HomeEmpty>
-      <HomeMatchHandicap v-for="(item,idx) in recommendEventsList" v-else :key="idx" :send-params="item" class="mt20" />
+      <HomeMatchHandicap v-for="(item,idx) in recommendEventsList" v-else :key="idx" :send-params="item" class="mb10" />
     </template>
     <div v-if="recommendEventsList.length" class="Button-MatchMore mt20" @click="goHomeTime">
       <span>
