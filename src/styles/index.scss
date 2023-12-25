@@ -315,7 +315,17 @@
         top: 0;
         width: 100%;
         height: 100%;
-        background: #fff;
+        &::after{
+          content: '';
+          display: inline-block;
+          position: absolute;
+          bottom:0;
+          height: 46px;
+          width: 100%;
+          left: 0;
+          background: #fff;
+          z-index: 1;
+        }
         &::before{
           content: '';
           display: inline-block;
@@ -323,6 +333,11 @@
           width: 28px;
           background: url('@/assets/images/home/match/lock.png') no-repeat;
           background-size: contain;
+          position: absolute;
+          left: 50%;
+          margin-left: -14px;
+          bottom: 20px;
+          z-index: 2;
         }
       }
     }

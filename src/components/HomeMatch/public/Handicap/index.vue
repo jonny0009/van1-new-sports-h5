@@ -7,13 +7,12 @@
     class="betting-option"
   >
     <template #default="scope">
-      <!-- <i v-if="scope.lock" class="lock"></i> -->
       <!--
         1. up-ior
         2. down-ior
        -->
       <!-- <i v-if="scope.iorChange" :class="scope.iorChange"></i> -->
-      <i class="lock"></i>
+      <i v-if="scope.lock" class="lock"></i>
       <span class="up-betting-name">
         <span class="text">
           <span class="team">
