@@ -22,78 +22,164 @@
   <!-- 列表 -->
   <div v-if="list.arr.length" class="dataList">
     <div v-for="(item, index) in list.arr" :key="index" class="item">
-      <div class="top">
-        <div class="left">
-          <div class="top-img">
-            <img class="img_1" src="@/assets/images/user/num3.png" alt="" />
-            <img class="img_2" src="@/assets/images/user/num9.png" alt="" />
+      <div v-if="item.parlayNum ==1 && item.state !==2" :key="index">
+        <div v-for="(item1,index1) in item.betDTOList" :key="index1">
+          <div class="top">
+            <div class="left">
+              <div class="top-img">
+                <img class="img_1" src="@/assets/images/user/num3.png" alt="" />
+                <img class="img_2" src="@/assets/images/user/num9.png" alt="" />
+              </div>
+            </div>
+            <div class="right">
+              <div class="font_1">{{ item1.homeTeam }} v {{ item1.awayTeam }}
+                <span v-if="item1.resultScore" class="color-1"> [{{ item1.resultScore }}]</span>
+              </div>
+              <div class="font_2">{{ item1.leagueName }}</div>
+            </div>
           </div>
-        </div>
-        <div class="right">
-          <div class="font_1">{{ item.betDTOList[0].homeTeam }} VS {{ item.betDTOList[0].awayTeam }}<span class="color-1">
-            [{{ item.betDTOList[0].resultScore }}]</span></div>
-          <div class="font_2">{{ item.betDTOList[0].leagueName }}</div>
+          <!-- 2 -->
+          <div class="top2">
+            <div class="left">
+              <img class="img_1" src="@/assets/images/user/plate.png" alt="" />
+            </div>
+            <div class="right">
+              <div class="one">
+                <span>
+                  {{ item1.betItem }}
+                </span>
+                <span class="color-2" :class="[item1.betResultDetail==='L'?'color-3':'']">
+                  @{{ item1.ioRatio }}
+                </span>
+              </div>
+              <div class="one two">
+                <span v-play="item1">
+                </span>
+                <span>
+                  <!-- 问号图标没找到 -->
+                  <img v-if="item.state==1" class="img_1" src="" alt="" />
+                  <img v-if="item1.betResultDetail==='W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
+                  <img v-if="item1.betResultDetail==='L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- 3 -->
+          <div class="top3">
+            <div class="one">
+              <span>投注额：</span>
+              <div>
+                <!-- <img class="img_1" src="@/assets/images/user/num1.png" alt="" /> -->
+                <span v-points="item.gold ||0"></span>
+              </div>
+            </div>
+            <div class="one two">
+              <span v-if="item.state==3">实际赔付:</span>
+              <span v-if="item.state==1">可能赔付:</span>
+              <!-- <span v-else>可能赔付:</span> -->
+              <div>
+                <!-- <img class="img_1" src="@/assets/images/user/num2.png" alt="" /> -->
+                <span v-points="item.winAndLossGold ||0" class="color-1"></span>
+              </div>
+            </div>
+          </div>
+          <!-- line -->
+          <div class="line" />
+          <!-- num-->
+          <div class="top4">
+            <div class="one">
+              <span>注单号:</span>
+              <span>{{ item.orderId }}</span>
+            </div>
+            <div class="one">
+              <span>投注时间：</span>
+              <span>{{ item.createDate }}</span>
+            </div>
+            <div v-if="item.state==3" class="one">
+              <span>结算时间：</span>
+              <span>{{ formatToDateTime(item.resultDate) }}</span>
+            </div>
+          </div>
         </div>
       </div>
-      <!-- 2 -->
-      <div class="top2">
-        <div class="left">
-          <img class="img_1" src="@/assets/images/user/plate.png" alt="" />
-        </div>
-        <div class="right">
-          <div class="one">
-            <span>
-              {{ item.betDTOList[0].betItem }}
-            </span>
-            <span class="color-2" :class="[item.betDTOList[0].betResultDetail==='L'?'color-3':'']">
-              @{{ item.betDTOList[0].ioRatio }}
-            </span>
+      <div v-if="item.parlayNum ==6 && item.state !==2" :key="index">
+        <div v-for="(item1,index1) in item.betDTOList" :key="index1">
+          <div class="top">
+            <div class="left">
+              <div class="top-img">
+                <img class="img_1" src="@/assets/images/user/num3.png" alt="" />
+                <img class="img_2" src="@/assets/images/user/num9.png" alt="" />
+              </div>
+            </div>
+            <div class="right">
+              <div class="font_1">{{ item1.homeTeam }} v {{ item1.awayTeam }}
+                <span v-if="item1.resultScore" class="color-1"> [{{ item1.resultScore }}]</span>
+              </div>
+              <div class="font_2">{{ item1.leagueName }}</div>
+            </div>
           </div>
-          <div class="one two">
-            <span>
-              全场 1X2
-            </span>
-            <span>
-              <img v-if="item.betDTOList[0].betResultDetail==='W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
-              <img v-if="item.betDTOList[0].betResultDetail==='L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
-            </span>
+          <!-- 2 -->
+          <div class="top2">
+            <div class="left">
+              <img class="img_1" src="@/assets/images/user/plate.png" alt="" />
+            </div>
+            <div class="right">
+              <div class="one">
+                <span>
+                  {{ item1.betItem }}
+                </span>
+                <span class="color-2" :class="[item1.betResultDetail==='L'?'color-3':'']">
+                  @{{ item1.ioRatio }}
+                </span>
+              </div>
+              <div class="one two">
+                <span v-play="item1">
+                </span>
+                <span>
+                  <!-- 问号图标没找到 -->
+                  <img v-if="item.state==1" class="img_1" src="" alt="" />
+                  <img v-if="item1.betResultDetail==='W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
+                  <img v-if="item1.betResultDetail==='L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+                </span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <!-- 3 -->
-      <div class="top3">
-        <div class="one">
-          <span>投注额：</span>
-          <div>
-            <img class="img_1" src="@/assets/images/user/num1.png" alt="" />
-            <span>{{ item.gold }}</span>
+          <!-- 3 -->
+          <div class="top3">
+            <div class="one">
+              <span>投注额：</span>
+              <div>
+                <!-- <img class="img_1" src="@/assets/images/user/num1.png" alt="" /> -->
+                <span v-points="item.gold ||0"></span>
+              </div>
+            </div>
+            <div class="one two">
+              <span v-if="item.state==3">实际赔付:</span>
+              <span v-if="item.state==1">可能赔付:</span>
+              <!-- <span v-else>可能赔付:</span> -->
+              <div>
+                <!-- <img class="img_1" src="@/assets/images/user/num2.png" alt="" /> -->
+                <span v-points="item.winAndLossGold ||0" class="color-1"></span>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="one two">
-          <span>可赔付额：</span>
-          <div>
-            <img class="img_1" src="@/assets/images/user/num2.png" alt="" />
-            <span class="color-1"> {{ item.currency }}</span>
-
-            <span class="color-1"> {{ item.winAndLossGold }}</span>
+          <!-- line -->
+          <div class="line" />
+          <!-- num-->
+          <div class="top4">
+            <div class="one">
+              <span>注单号:</span>
+              <span>{{ item.orderId }}</span>
+            </div>
+            <div class="one">
+              <span>投注时间：</span>
+              <span>{{ item.createDate }}</span>
+            </div>
+            <div v-if="item.state==3" class="one">
+              <span>结算时间：</span>
+              <span>{{ formatToDateTime(item.resultDate) }}</span>
+            </div>
           </div>
-        </div>
-      </div>
-      <!-- line -->
-      <div class="line" />
-      <!-- num-->
-      <div class="top4">
-        <div class="one">
-          <span>注单号:</span>
-          <span>{{ item.orderId }}</span>
-        </div>
-        <div class="one">
-          <span>投注时间：</span>
-          <span>{{ item.createDate }}</span>
-        </div>
-        <div class="one">
-          <span>结算时间：</span>
-          <span>{{ formatToDateTime(item.resultDate) }}</span>
         </div>
       </div>
 
