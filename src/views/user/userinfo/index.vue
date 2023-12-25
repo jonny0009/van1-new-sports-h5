@@ -23,17 +23,17 @@
           </div>
           <div class="user-3">
             <img class="img_1" src="@/assets/images/user/star.svg" alt="" />
-            <span>{{ '注册时间' }} {{ formatToDateTime(peopleInfo.createTime) }}</span>
+            <span>{{ $t('user.RegistrationTime') }} {{ formatToDateTime(peopleInfo.createTime) }}</span>
           </div>
           <div class="user-4">
             <div class="left" @click="goUrl('/selfFocus?num=1')">
               <span>{{ peopleInfo.followNum }}</span>
-              <span>关注</span>
+              <span>{{ $t('user.follow') }}</span>
             </div>
             <div class="center" />
             <div class="left right" @click="goUrl('/selfFocus?num=2')">
               <span>{{ peopleInfo.fansCount }}</span>
-              <span>粉丝</span>
+              <span>{{ $t('user.fans') }}</span>
             </div>
           </div>
         </div>

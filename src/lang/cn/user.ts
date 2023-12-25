@@ -89,6 +89,9 @@ export default {
   save: '保存',
   nickname: '输入昵称',
   font7: '天可以修改一次昵称，请认真修改哦!',
+  editText: '编辑',
+  betForm: '注单',
+  end: '已结束',
 
   sports: {
     'officeNumber': '局号',

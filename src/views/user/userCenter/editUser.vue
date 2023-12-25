@@ -11,38 +11,38 @@
     <div class="content">
       <div class="head">
         <img class="img_1" :src="getImg(peopleInfo.headImg)" alt="" />
-        <div class="edit" @click="goUrl('/editImg')">编辑</div>
+        <div class="edit" @click="goUrl('/editImg')">{{ $t('user.editText') }}</div>
       </div>
       <div class="edit-name">
-        <span>编辑昵称</span>
+        <span>{{ $t('user.EditNickname') }}</span>
         <img class="img_1" src="@/assets/images/user/edit.png" alt="" @click="goUrl('/editName')" />
       </div>
       <!-- 内容框 -->
-      <p class="explain">个人简介</p>
+      <p class="explain">{{ $t('user.Personal') }}</p>
       <div class="explain-box">
         <van-field v-model="remark" rows="10" autosize type="textarea" maxlength="256" show-word-limit />
       </div>
-      <p class="explain privacy">隐私设置</p>
+      <p class="explain privacy">{{ $t('user.PrivacySettings') }}</p>
 
       <!-- 账户 -->
       <div class="account-1">
         <div class="top-1">
           <img v-if="privacy === 0" class="img_1" src="@/assets/images/user/pitch.png" alt="" />
           <div v-else class="round" @click="handlePrivacy(0)"></div>
-          公开帐户（推荐）
+          {{ $t('user.PublicAccount') }}
         </div>
         <div class="top-2">
-          其他用户可以直接关注你，查看你的档案和注单。你还是可以隐藏具体的注单。这是默认设置。
+          {{ $t('user.font2') }}
         </div>
       </div>
       <div class="account-1">
         <div class="top-1">
           <img v-if="privacy === 1" class="img_1" src="@/assets/images/user/pitch.png" alt="" />
           <div v-else class="round" @click="handlePrivacy(1)"></div>
-          私密帐户
+          {{ $t('user.PrivateAccount') }}
         </div>
         <div class="top-2">
-          其他用户只有在你接受他们的关注请求时才能看到你的档案和注单。你在平台的体验会比较私密。
+          {{ $t('user.font3') }}
         </div>
       </div>
     </div>
