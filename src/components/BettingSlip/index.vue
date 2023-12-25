@@ -72,7 +72,7 @@
           </div>
         </div>
         <Singles v-for="( market, index ) in markets " :key="index" :market-info="market"></Singles>
-        <ActionBar />
+        <ActionBar v-if="open" />
       </div>
       <Result v-if="results.length"></Result>
       <Pending v-if="type == 3"></Pending>

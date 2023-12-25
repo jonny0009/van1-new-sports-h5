@@ -48,6 +48,9 @@ watch(() => props.marketInfo.value, (newVal, oldVal) => {
 })
 
 const touchMarket = (event: any) => {
+  if (lock.value) {
+    return false
+  }
   const target = event.target
   // 唯一值
   const { playOnlyId } = props.marketInfo

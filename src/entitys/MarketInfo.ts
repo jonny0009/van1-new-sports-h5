@@ -133,7 +133,7 @@ export class MarketInfo {
     this.splitRatio()
   }
   splitRatio() {
-    if (this.ratioName?.includes(' ') && letBallMap.indexOf(this.playType)) {
+    if (this.ratioName?.includes(' ') && letBallMap.includes(this.playType)) {
       const [ratioMatch, ratioTag, ...special] = this.ratioName.split(' ')
 
       if (special.length) {
