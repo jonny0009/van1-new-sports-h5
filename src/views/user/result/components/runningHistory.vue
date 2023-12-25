@@ -2,36 +2,39 @@
   <van-divider />
   <!-- 列表 -->
   <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" class="dataList" @load="onLoad">
-    <div v-for="(item, index) in list.arr" :key="index" class="item">
-      <div class="title">
-        {{ getTitle(item.tradeType) }}
-      </div>
-      <div class="line">
-        <div class="left">
-          <div class="left-1">
-            <div class="font">投注ID:</div>
-            <span>
-              <span class="font-1">{{ item.payno }}</span>
-              <img v-copy="item.payno" class="img_1" src="@/assets/images/user/copy.svg" />
-            </span>
-          </div>
-          <p class="left-2">
-            <span class="font">时间:</span>
-            <span>{{ formatToDateTime(item.createTime) }}</span>
-          </p>
+    <div v-for="(outItem,outIndex) in dataList.arr" :key="outIndex" class="dataList-item">
+      <div class="date-title">{{ outItem.date }}</div>
+      <div v-for="(item, index) in outItem.list" :key="index" class="item">
+        <div class="title">
+          {{ getTitle(item.tradeType) }}
         </div>
-        <div class="right">
-          <div>
-            <div> 投注</div>
-            <div class="right-1">{{ item.currency }} {{ formatMoney(item.tradeGold) }}</div>
+        <div class="line">
+          <div class="left">
+            <div class="left-1">
+              <div class="font">投注ID:</div>
+              <span>
+                <span class="font-1">{{ item.payno }}</span>
+                <img v-copy="item.payno" class="img_1" src="@/assets/images/user/copy.svg" />
+              </span>
+            </div>
+            <p class="left-2">
+              <span class="font">时间:</span>
+              <span>{{ formatToDateTime(item.createTime) }}</span>
+            </p>
           </div>
-          <div>
-            <div> 余额</div>
-            <div class="right-1">{{ item.currency }} {{ formatMoney(item.gold) }}</div>
+          <div class="right">
+            <div>
+              <div> 投注</div>
+              <div class="right-1">{{ item.currency }} {{ formatMoney(item.tradeGold) }}</div>
+            </div>
+            <div>
+              <div> 余额</div>
+              <div class="right-1">{{ item.currency }} {{ formatMoney(item.gold) }}</div>
+            </div>
           </div>
         </div>
-      </div>
 
+      </div>
     </div>
   </van-list>
   <div v-if="!list.arr.length" class="noData">
@@ -46,12 +49,15 @@
 import { ref, reactive, onMounted } from 'vue'
 import { formatToDateTime } from '@/utils/date'
 import { formatMoney } from '@/utils/index'
+import moment from 'moment'
+
 const loading = ref(false)
 const finished = ref(false)
 
 // getTradeTypeEnums
 import { capitalRecords, getTradeTypeEnums } from '@/api/user'
 const list = reactive<{ arr: any }>({ arr: [] })
+const dataList = reactive<{ arr: any }>({ arr: [] })
 const typeList = reactive<{ arr: any }>({ arr: [] })
 import { showToast } from 'vant'
 
@@ -76,6 +82,27 @@ const onLoad = async () => {
     data.transferRecordRspList.forEach((item: any) => {
       list.arr.push(item)
     })
+    const listObj: any = {}
+    const listFlag: any = []
+    const sortArr = list.arr.sort((a: any, b: any) => {
+      return b.createTime - a.createTime
+    })
+    sortArr.map((item: any) => {
+      const date = moment(item.createTime).format('YYYY/MM/DD')
+      if (listObj[date]) {
+        listObj[date].list.push(item)
+      } else {
+        listObj[date] = {
+          date: date,
+          list: [item]
+        }
+      }
+    })
+    Object.keys(listObj).map(item => {
+      listFlag.push(JSON.parse(JSON.stringify(listObj[item])))
+    })
+
+    dataList.arr = listFlag
     loading.value = false
     finished.value = list.arr.length === data.total
   } else {
@@ -105,6 +132,9 @@ const getTitle = (type: any) => {
   margin-top: 20px;
   height: calc(100vh - 330px);
   overflow-y: auto;
+  > &-item{
+    margin-bottom: 10px;
+  }
 
   .color-1 {
     color: #7642FD;
@@ -112,6 +142,16 @@ const getTitle = (type: any) => {
 
   .color-2 {
     color: #1EBB52;
+  }
+
+  .date-title {
+    font-family: PingFangSC-Semibold;
+    font-size: 24px;
+    color: #1F2630;
+    letter-spacing: 0;
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin-left: 7px;
   }
 
   .item {

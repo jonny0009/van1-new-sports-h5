@@ -77,19 +77,19 @@ export const constantRoutes: Array<any> = [
     children: [
       {
         path: '/user/notice',
-        component: () => import('@/views/user/notice.vue'),
+        component: () => import('@/views/user/notice/index.vue'),
         name: 'Notice',
         hidden: true
       },
       {
         path: '/user/noticeDetail',
-        component: () => import('@/views/user/noticeDetail.vue'),
+        component: () => import('@/views/user/notice/noticeDetail.vue'),
         name: 'NoticeDetail',
         hidden: true
       },
       {
         path: '/user/edit',
-        component: () => import('@/views/user/edit.vue'),
+        component: () => import('@/views/user/userCenter/edit.vue'),
         name: 'Edit',
         hidden: true
       },
@@ -101,19 +101,19 @@ export const constantRoutes: Array<any> = [
       },
       {
         path: '/user/userInfo',
-        component: () => import('@/views/user/userInfo.vue'),
+        component: () => import('@/views/user/userinfo/index.vue'),
         name: 'UserInfo',
         hidden: true
       },
       {
         path: '/user/editUser',
-        component: () => import('@/views/user/editUser.vue'),
+        component: () => import('@/views/user/userCenter/editUser.vue'),
         name: 'EditInfo',
         hidden: true
       },
       {
         path: '/user/editName',
-        component: () => import('@/views/user/editName.vue'),
+        component: () => import('@/views/user/userCenter/editName.vue'),
         name: 'EditName',
         hidden: true
       },
@@ -131,13 +131,13 @@ export const constantRoutes: Array<any> = [
       },
       {
         path: '/user/elseInfo',
-        component: () => import('@/views/user/elseInfo.vue'),
+        component: () => import('@/views/user/userCenter/elseInfo.vue'),
         name: 'ElseInfo',
         hidden: true
       },
       {
         path: '/user/editImg',
-        component: () => import('@/views/user/editImg.vue'),
+        component: () => import('@/views/user/userCenter/editImg.vue'),
         name: 'EditImg',
         hidden: true
       }

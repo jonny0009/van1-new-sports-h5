@@ -152,4 +152,12 @@ export const fansList = (params:any) => {
     params
   })
 }
+// 战绩接口
+export const standings = (params:any) => {
+  return request({
+    url: '/ai/mobile/game/standings',
+    method: 'get',
+    params
+  })
+}
 

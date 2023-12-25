@@ -20,6 +20,10 @@
     font-size: 32px !important;
   }
 }
+.van-new-loading{
+  width: 50px !important;
+  height: 50px !important;
+}
 // icon 2023/12/19
 @font-face {
   font-family: "iconfont"; /* Project id  */
@@ -383,7 +387,7 @@
     width: 200px;
     height: 176px;
     flex-shrink: 1;
-    margin-right: 20px;
+    margin-right: 14px;
     .van-image__error{
       width: 200px;
       height: 176px;

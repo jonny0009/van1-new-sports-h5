@@ -9,6 +9,7 @@ declare interface App {
   merchantConfig: any
   businessConfig: any
   queryCMerLanguage: any
+  imgChangeTime: any
   state: boolean
 }
 
@@ -16,6 +17,7 @@ declare interface User {
   userConfig: any
   userInfo: any
   balance: any
+  currency: any
   token: string | undefined | null
 }
 declare interface Betting {

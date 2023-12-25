@@ -1,5 +1,6 @@
 import { Module } from 'vuex'
 import { login, playAccount, getBalance } from '@/api/login'
+import { getCMerAccessWallet } from '@/api/user'
 import { User } from '#/store'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { configSettingNew } from '@/api/auth'
@@ -10,7 +11,8 @@ const userModule: Module<User, any> = {
     token: getToken(),
     userConfig: {},
     userInfo: {},
-    balance: {}
+    balance: {},
+    currency: {}
   },
   mutations: {
     SET_TOKEN: (state, token: string) => {
@@ -65,6 +67,15 @@ const userModule: Module<User, any> = {
         state.userInfo = res.data || {}
       }
     },
+    // 获取钱包币种
+    async getCurrency({ state }, params = {}) {
+      const res:any = await getCMerAccessWallet(params) || {}
+      if (res.code === 200) {
+        state.currency = res.data || {}
+        this.dispatch('user/getBalance', { wid: res.data[0].walletId || '' })
+      }
+    },
+
     // 账户余额
     async getBalance({ state }, params = { wid: 1 }) {
       const res:any = await getBalance(params) || {}
