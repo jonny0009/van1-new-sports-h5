@@ -11,24 +11,24 @@
         <div class="line">
           <div class="left">
             <div class="left-1">
-              <div class="font">投注ID:</div>
+              <div class="font">{{ $t('user.betId') }}:</div>
               <span>
                 <span class="font-1">{{ item.payno }}</span>
                 <img v-copy="item.payno" class="img_1" src="@/assets/images/user/copy.svg" />
               </span>
             </div>
             <p class="left-2">
-              <span class="font">时间:</span>
+              <span class="font">{{ $t('user.time') }}:</span>
               <span>{{ formatToDateTime(item.createTime) }}</span>
             </p>
           </div>
           <div class="right">
             <div>
-              <div> 投注</div>
+              <div> {{ $t('user.bet') }}</div>
               <div class="right-1">{{ item.currency }} {{ formatMoney(item.tradeGold) }}</div>
             </div>
             <div>
-              <div> 余额</div>
+              <div> {{ $t('user.balance') }}</div>
               <div class="right-1">{{ item.currency }} {{ formatMoney(item.gold) }}</div>
             </div>
           </div>

@@ -2,10 +2,10 @@
   <div class="editName">
     <van-nav-bar class="bg-title" :title="title" :border="false">
       <template #left>
-        <span @click="goBack()">取消</span>
+        <span @click="goBack()">{{ $t('user.cancellation') }}</span>
       </template>
       <template #right>
-        <span @click="handleSave()">保存</span>
+        <span @click="handleSave()">{{ $t('user.save') }}</span>
       </template>
     </van-nav-bar>
     <div class="content">
@@ -14,30 +14,30 @@
         :class="[username ? 'bb' : '']"
         name=""
         label=""
-        placeholder="输入昵称"
+        :placeholder="$t('user.nickname')"
         maxlength="16"
         clearable
-        :rules="[{ required: true, message: '请输入昵称' }]"
+        :rules="[{ required: true, message: $t('user.nickname') }]"
         @update:model-value="updateName"
       />
 
       <!--用户名规则  -->
-      <p class=" edit-name">7天可以修改一次昵称，请认真修改哦!</p>
-      <p class="userName">用户名必须:</p>
+      <p class=" edit-name">{{ $t('user.font7') }}</p>
+      <p class="userName">{{ $t('user.text3') }}:</p>
       <p class="explain">
         <img v-if="!ifStandard" class="noPitch" src="@/assets/images/login/noPitch.png" />
         <img v-else class="noPitch" src="@/assets/images/login/pitch.png" />
-        <span>4个字符 (最多16个)</span>
+        <span>{{ $t('user.font5') }}</span>
       </p>
       <p class="explain">
         <img v-if="!ifSpecial" class="noPitch" src="@/assets/images/login/noPitch.png" />
         <img v-else class="noPitch" src="@/assets/images/login/pitch.png" />
-        <span>1个字母和1个数字(不能包含特殊字符)</span>
+        <span>{{ $t('user.font6') }}</span>
       </p>
       <p class="explain">
         <img v-if="!ifSpace" class="noPitch" src="@/assets/images/login/noPitch.png" />
         <img v-else class="noPitch" src="@/assets/images/login/pitch.png" />
-        <span>不能有空格</span>
+        <span>{{ $t('user.text6') }}</span>
       </p>
     </div>
 

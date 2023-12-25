@@ -5,7 +5,7 @@
         <div class="avatar" @click="showInfo">
           <img :src="getImg(userInfo.headImg)" style="object-fit: contain;" />
         </div>
-        <div v-if="loginToken" class="wallet" @click="toUrl('/login')">
+        <div v-if="loginToken" class="wallet">
           <div class="cur">
             <img :src="USDTImg" style="object-fit: contain;" />
           </div>

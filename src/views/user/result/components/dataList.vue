@@ -12,7 +12,7 @@
   <!-- 状态 -->
   <div class="status">
     <div class="status_1">
-      <span>状态</span>
+      <span>{{ $t('user.state') }}</span>
       <div class="round" @click.stop="seStatus()">
         <span>{{ commonKey.value }}</span>
         <img class="img_1 " :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
@@ -29,7 +29,7 @@
   <div v-if="!list.arr.length" class="noData">
     <img class="img_1" src="@/assets/images/user/noData.png" />
     <p>
-      未查询到相关数据
+      {{ $t('user.noData') }}
     </p>
   </div>
   <van-popup v-model:show="showBottom" position="bottom" closeable round>

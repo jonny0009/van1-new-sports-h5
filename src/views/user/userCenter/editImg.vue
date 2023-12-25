@@ -2,10 +2,10 @@
   <div class="editName">
     <van-nav-bar class="bg-title" :title="title" :border="false">
       <template #left>
-        <span @click="goBack()">取消</span>
+        <span @click="goBack()">{{ $t('user.cancellation') }}</span>
       </template>
       <template #right>
-        <span @click="handleSave()">保存</span>
+        <span @click="handleSave()">{{ $t('user.save') }}</span>
       </template>
     </van-nav-bar>
     <div class="title">
@@ -13,8 +13,8 @@
     </div>
     <!-- 切换栏 -->
     <div class="area-btn_1">
-      <span :class="index == 1 ? 'active' : ''" @click="index = 1">足球明星</span>
-      <span :class="index == 2 ? 'active' : ''" @click="index = 2">其他人物</span>
+      <span :class="index == 1 ? 'active' : ''" @click="index = 1">{{ $t('user.football') }}</span>
+      <span :class="index == 2 ? 'active' : ''" @click="index = 2">{{ $t('user.otherCharacters') }}</span>
       <!-- <span :class="index == 3 ? 'active' : ''" @click="index = 3">背景颜色</span> -->
     </div>
     <div class="content">

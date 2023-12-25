@@ -7,11 +7,11 @@
     </van-nav-bar>
     <div class="content">
       <div class="top1">
-        <span>{{ "用户名" }}</span>
+        <span>{{ $t('user.userName') }}</span>
         <span class="font2">{{ userInfo.nickName }}</span>
       </div>
       <div class="top1">
-        <span>{{ "货币" }}</span>
+        <span>{{ $t('user.currency') }}</span>
         <span class="font2">{{ current || 'CNY' }}</span>
       </div>
       <div class="top1" @click="showPk(1)">
@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="top1" @click="showPk(3)">
-        <span>{{ "盘口" }}</span>
+        <span>{{ $t('user.Handicap') }}</span>
         <div class="font3">
           <span class="font2">{{ plateMask.value }}</span>
           <img class="arrow" src="@/assets/images/login/go@2x.png" />

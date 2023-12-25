@@ -1,15 +1,15 @@
 <template>
   <div class="result">
-    <van-nav-bar class="bg-title" :title="title">
+    <van-nav-bar class="bg-title" :title="$t('user.result')">
       <template #left>
         <img class="img_1" src="@/assets/images/login/return@2x.png" alt="" @click="goBack()" />
       </template>
     </van-nav-bar>
     <div class="content">
       <div class="area-btn_1">
-        <span :class="index == 1 ? 'active' : ''" @click.stop="index = 1">投注历史</span>
-        <span :class="index == 2 ? 'active' : ''" @click.stop="index = 2">流水历史</span>
-        <span :class="index == 3 ? 'active' : ''" @click.stop="index = 3">赛果</span>
+        <span :class="index == 1 ? 'active' : ''" @click.stop="index = 1">{{ $t('user.BettingHistory') }}</span>
+        <span :class="index == 2 ? 'active' : ''" @click.stop="index = 2">{{ $t('user.FlowingHistory') }}</span>
+        <span :class="index == 3 ? 'active' : ''" @click.stop="index = 3">{{ $t('user.matchResult') }}</span>
       </div>
       <dataList v-if="index === 1"></dataList>
       <RunningHistory v-if="index === 2"></RunningHistory>
@@ -31,8 +31,6 @@ const index = ref(1)
 const goBack = () => {
   $router.back()
 }
-
-const title = ref('结果')
 
 </script>
 
