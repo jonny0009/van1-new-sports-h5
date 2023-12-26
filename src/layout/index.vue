@@ -6,7 +6,7 @@
     <AppMain />
   </GlobalRefresh>
   <GlobalFooter />
-  <BettingSlip />
+  <BettingSlip v-if="betShow" />
   <BettingMore />
   <van-back-top bottom="100" right="20" class="GlobalTop">
     <van-icon name="down" />
@@ -21,12 +21,26 @@ import AppMain from './components/AppMain.vue'
 import GlobalFooter from './components/GlobalFooter/index.vue'
 import BettingSlip from '@/components/BettingSlip/index.vue'
 import BettingMore from '@/components/BettingMore/index.vue'
+import { useRouter } from 'vue-router'
+import { ref, watch } from 'vue'
+const { currentRoute } = useRouter()
+const betShow: any = ref(true)
+const unShow: any = ref(['game'])
+watch(
+  () => currentRoute.value,
+  (route: any) => {
+    const name: string = route.name
+    betShow.value = !unShow.value.includes(name)
+  },
+  { immediate: true }
+)
 </script>
 <style lang="scss">
 .GlobalTop {
   background: #7642fe;
   right: 40px !important;
   bottom: 200px !important;
+
   .van-icon {
     transform: rotate(180deg);
     font-weight: 600;

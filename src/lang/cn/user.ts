@@ -1,3 +1,4 @@
+
 export default {
   lang: '语言',
   search: '搜索',
@@ -44,7 +45,7 @@ export default {
   follow: '关注',
   fans: '粉丝',
   text7: '请输入您的个人简介...',
-  text8: '投注数据（近90天）',
+  text8: '投注数据（近{num}天）',
   NumberOfBets: '投注次数',
   beingFollowed: '被跟注次数',
   AverageBettingAmount: '平均投注额',
@@ -75,6 +76,29 @@ export default {
   // 新增===
   area: '地区',
   nextStep: '下一步',
+  session: '场串关',
+  practical: '实际赔付',
+  orderId: '注单ID',
+  matchResult: '赛果',
+  noData: '未查到相关数据',
+  time: '时间',
+  betId: '投注ID',
+  bet: '投注ID',
+  balance: '余额',
+  currency: '货币',
+  save: '保存',
+  nickname: '输入昵称',
+  font7: '天可以修改一次昵称，请认真修改哦!',
+  editText: '编辑',
+  betForm: '注单',
+  end: '已结束',
+  // 新增2=====
+  noFinal: '未结算',
+  final: '已结算',
+
+  today: '今日',
+  fortyEight: '近48小时',
+  sevenDay: '近7天',
 
   sports: {
     'officeNumber': '局号',

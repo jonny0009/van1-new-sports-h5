@@ -177,7 +177,7 @@ const goBack = () => {
   $router.push('/user/userInfo')
 }
 const goUrl = (url: string) => {
-  // $router.push('/user' + url)
+  $router.push('/user' + url)
 }
 const goElseUrl = (url: string) => {
   $router.push('/user' + url)
@@ -211,7 +211,7 @@ const dataList = reactive<{ arr: any }>({
 </script>
 
 <style lang="scss" scoped>
-@import './style/userInfo.scss';
+// @import './style/userInfo.scss';
 
 .note-2 {
   width: 638px;

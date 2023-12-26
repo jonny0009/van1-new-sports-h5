@@ -5,11 +5,14 @@
         <div class="avatar" @click="showInfo">
           <img :src="getImg(userInfo.headImg)" style="object-fit: contain;" />
         </div>
-        <div v-if="loginToken" class="wallet" @click="toUrl('/login')">
+        <div v-if="loginToken" class="wallet">
           <div class="cur">
-            <img :src="USDTImg" style="object-fit: contain;" />
+            <img v-if="currency==='CNY'" :src="CNY" style="object-fit: contain;" />
+            <img v-else-if="currency==='VNDK'" :src="VNDK" style="object-fit: contain;" />
+            <img v-else :src="USDTImg" style="object-fit: contain;" />
+            <!-- <img v-else :src="USDTImg" style="object-fit: contain;" /> -->
           </div>
-          <span v-points="balance.balance ||0" />
+          <span>{{ formatMoney(balance.balance) }}</span>
           <div class="transaction">
             <img :src="transactionImg" />
           </div>
@@ -37,13 +40,15 @@
                 <img class="headImg_1" fit="contain" src="@/assets/images/user/notice.svg" @click="toUser('/notice')" />
               </div>
               <div class="money">
-                <van-image class="headImg_2" fit="contain" :src="USDTImg" />
-                <span v-points="balance.balance ||0" />
+                <img v-if="currency==='CNY'" class="headImg_2" :src="CNY" style="object-fit: contain;" />
+                <img v-else-if="currency==='VNDK'" class="headImg_2" :src="VNDK" style="object-fit: contain;" />
+                <img v-else class="headImg_2" :src="USDTImg" style="object-fit: contain;" />
+                <span>{{ formatMoney(balance.balance) }}</span>
               </div>
             </div>
           </div>
           <p class="font_3 font_4">{{ userInfo.nickName }}</p>
-          <p class="font_3">{{ userInfo.email || '' }}</p>
+          <p class="font_3">{{ userInfo.loginName || '' }}</p>
         </div>
         <div class="line" />
         <!-- 导航 -->
@@ -56,10 +61,10 @@
             <img class="menu_1" fit="contain" src="@/assets/images/user/edit.svg" />
             <div class="menu_2">{{ $t('user.edit') }}</div>
           </div>
-          <div class="menu" @click="toUser('/customer')">
+          <!-- <div class="menu" @click="toUser('/customer')">
             <img class="menu_1" fit="contain" src="@/assets/images/user/icon2.svg" />
             <div class="menu_2">{{ $t('user.customer') }}</div>
-          </div>
+          </div> -->
         </div>
         <!-- logo -->
         <div class="logoImg">
@@ -78,14 +83,21 @@ import { ImageSource } from '@/config'
 import searchImg from '@/assets/images/globalLayout/header/search.png'
 import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
 import USDTImg from '@/assets/images/globalLayout/header/USDT.png'
+import CNY from '@/assets/images/user/CNY.svg'
+import VNDK from '@/assets/images/user/VNDK.svg'
+// import BAXI from '@/assets/images/user/BAXI.svg'
 import transactionImg from '@/assets/images/globalLayout/header/transaction.png'
 
 import logoImg from '@/assets/images/user/logo.png'
+
+import { formatMoney } from '@/utils/index'
+
 import { useRouter } from 'vue-router'
 import { ref, computed } from 'vue'
 import store from '@/store'
 const userInfo = computed(() => store.state.user.userInfo)
 const balance = computed(() => store.state.user.balance)
+const currency = computed(() => store.state.user.currency)
 
 const showLeft = ref(false)
 const loginToken = ref(getToken())
@@ -111,6 +123,7 @@ const getImg = (imgUrl: string) => {
 }
 
 const showInfo = () => {
+  store.dispatch('user/userInfo')
   showLeft.value = true
 }
 </script>
@@ -288,6 +301,11 @@ const showInfo = () => {
       color: #1F2630;
       letter-spacing: 0;
       font-weight: 400;
+      width: 250px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
     }
 
     .font_4 {
@@ -325,6 +343,7 @@ const showInfo = () => {
     .menu {
       display: flex;
       margin-bottom: 65px;
+      align-items: center;
 
       &_1 {
         height: 46px;

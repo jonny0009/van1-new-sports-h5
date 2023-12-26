@@ -21,5 +21,6 @@ export default {
   OUInfo: '全场 大小盘',
   M: '独赢',
   MInfo: '全场 1X2',
-  searchNoData: '未查询到相关数据'
+  searchNoData: '未查询到相关数据',
+  stayTuned: '敬请期待'
 }

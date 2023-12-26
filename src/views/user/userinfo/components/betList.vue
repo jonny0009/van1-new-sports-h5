@@ -3,10 +3,10 @@
     <!-- 战力 -->
     <div class="top-1 top-2">
       <img class="img_1" src="@/assets/images/user/bottom.png" alt="" />
-      <span>注单</span>
+      <span>{{ $t('user.betForm') }}</span>
       <div class="right">
         <!-- 显示5个,问号是进行中的 -->
-        <span>近期战绩:</span>
+        <span>{{ $t('user.RecentAchievements') }}:</span>
         <!-- <img class="img_1" src="@/assets/images/user/ask.svg" alt="" /> -->
         <span v-for="(item, index) in recordNum.arr" :key="index" class="img_1">
           <img v-if="item !== 1" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
@@ -26,7 +26,7 @@
             </div>
           </div>
           <div class="right">
-            已结束
+            {{ $t('user.end') }}
           </div>
         </div>
         <Single v-if="item.parlayNum == 1" :item="item" class="item"></Single>

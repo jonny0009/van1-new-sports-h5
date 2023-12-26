@@ -20,5 +20,6 @@ export default {
   OU: 'Tài xỉu',
   OUInfo: 'Trên/Dưới toàn bộ trận đấu',
   M: 'Thắng',
-  MInfo: 'Toàn trận 1X2'
+  MInfo: 'Toàn trận 1X2',
+  stayTuned: '敬请期待'
 }

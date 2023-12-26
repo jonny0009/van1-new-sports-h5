@@ -1,20 +1,16 @@
 <template>
   <div class="panel-bet">
-    <div v-if="betPlayList.length === 0" class="no-data">
+    <div v-if="betPlayListFilter.length === 0" class="no-data">
       <EmptyIcon />
     </div>
     <van-collapse v-else v-model="activeNames">
-      <van-collapse-item v-for="(play, i) in betPlayList" :key="i" :name="`${i + 1}`" :border="false">
+      <van-collapse-item v-for="(play, i) in betPlayListFilter" :key="i" :name="`${i + 1}`" :border="false">
         <template #title>
           <span v-play="play.playInfo"></span>
+          <!-- {{ play.dataInfo.playType }} -->
         </template>
-        <div class="bet">
-          <BettingOption
-            v-for="(item, ind) in play.dataInfo?.ratioData"
-            :key="ind"
-            class="bet-item"
-            :market-info="item"
-          >
+        <div class="bet" :class="getBetCol(play.dataInfo)">
+          <BettingOption v-for="(item, ind) in play.dataInfo.ratioData" :key="ind" class="bet-item" :market-info="item">
             <div class="top">
               <span>{{ item.ratioName }}</span>
             </div>
@@ -34,11 +30,21 @@
 <script lang="ts" setup>
 import { Ref, ref, onMounted, watch } from 'vue'
 import { MarketInfo } from '@/entitys/MarketInfo'
+import { computed } from 'vue'
 const props = defineProps({
   matchInfo: {
     type: Object,
     default: () => {}
   }
+})
+watch(
+  () => props.matchInfo,
+  () => {
+    getBetData()
+  }
+)
+onMounted(() => {
+  getBetData()
 })
 
 const activeNames = ref(['1'])
@@ -82,16 +88,18 @@ const getBetData = () => {
     betPlayList.value = []
   }
 }
-watch(
-  () => props.matchInfo,
-  () => {
-    getBetData()
-  }
-)
-
-onMounted(() => {
-  getBetData()
+const betPlayListFilter = computed(() => {
+  const noExist = ['HDNB2', 'HDNB', 'HTS2', 'HW3', 'W3_conner', 'W3', 'PD_conner', 'HT_conner', 'T_conner']
+  return betPlayList.value.filter((item) => !noExist.includes(item.dataInfo.playType))
 })
+
+const getBetCol = (dataInfo: any) => {
+  const { ratioData } = dataInfo
+  if (ratioData.length === 3) {
+    return 'col-3'
+  }
+  return 'col-2'
+}
 </script>
 
 <style lang="scss" scoped>
@@ -128,18 +136,23 @@ onMounted(() => {
 .bet {
   font-family: PingFangSC-Medium;
   font-size: 24px;
-  display: flex;
-  flex-wrap: wrap;
+  padding: 0 20px 20px 20px;
+  display: grid;
+  grid-gap: 20px;
+  &.col-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+  &.col-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
   &-item {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 310px;
-    height: 94px;
     background: #ffffff;
     color: #546371;
     border-radius: 20px;
-    margin: 0 0 20px 20px;
+    height: 94px;
     &.selected {
       background: #7643fd;
       color: #fff;

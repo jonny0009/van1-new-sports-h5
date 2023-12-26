@@ -1,7 +1,7 @@
 <template>
   <van-divider />
   <!-- 列表 -->
-  <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" class="dataList" @load="onLoad">
+  <van-list v-model:loading="loading" :finished="finished" finished-text="" class="dataList" @load="onLoad">
     <div v-for="(outItem,outIndex) in dataList.arr" :key="outIndex" class="dataList-item">
       <div class="date-title">{{ outItem.date }}</div>
       <div v-for="(item, index) in outItem.list" :key="index" class="item">
@@ -11,24 +11,24 @@
         <div class="line">
           <div class="left">
             <div class="left-1">
-              <div class="font">投注ID:</div>
+              <div class="font">{{ $t('user.betId') }}:</div>
               <span>
                 <span class="font-1">{{ item.payno }}</span>
                 <img v-copy="item.payno" class="img_1" src="@/assets/images/user/copy.svg" />
               </span>
             </div>
             <p class="left-2">
-              <span class="font">时间:</span>
+              <span class="font">{{ $t('user.time') }}:</span>
               <span>{{ formatToDateTime(item.createTime) }}</span>
             </p>
           </div>
           <div class="right">
             <div>
-              <div> 投注</div>
+              <div> {{ $t('user.bet') }}</div>
               <div class="right-1">{{ item.currency }} {{ formatMoney(item.tradeGold) }}</div>
             </div>
             <div>
-              <div> 余额</div>
+              <div> {{ $t('user.balance') }}</div>
               <div class="right-1">{{ item.currency }} {{ formatMoney(item.gold) }}</div>
             </div>
           </div>
@@ -37,7 +37,7 @@
       </div>
     </div>
   </van-list>
-  <div v-if="!list.arr.length" class="noData">
+  <div v-if="!list.arr.length&& finished" class="noData">
     <img class="img_1" src="@/assets/images/user/noData.png" />
     <p>
       未查询到相关数据
@@ -228,6 +228,22 @@ const getTitle = (type: any) => {
         }
       }
     }
+
+  }
+}
+.noData {
+  text-align: center;
+  font-family: PingFangSC-Medium;
+  font-size: 24px;
+  color: #96A5AA;
+  letter-spacing: 0;
+  font-weight: 500;
+
+  .img_1 {
+    margin-top: 331px;
+    width: 102px;
+    height: 121px;
+    margin-bottom: 57px;
 
   }
 }

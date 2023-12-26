@@ -44,16 +44,16 @@
       <!-- 3 -->
       <div class="top3">
         <div class="one">
-          <span>投注额：</span>
+          <span>{{ $t('user.BettingAmount') }}</span>
           <div>
             <!-- <img class="img_1" src="@/assets/images/user/num1.png" alt="" /> -->
             <span v-points="item.gold ||0"></span>
           </div>
         </div>
         <div class="one two">
-          <span v-if="item.state==3">实际赔付:</span>
-          <span v-if="item.state==2">实际赔付:</span>
-          <span v-if="item.state==1">可赔付额:</span>
+          <span v-if="item.state==3">{{ $t('user.practical') }}:</span>
+          <span v-if="item.state==2">{{ $t('user.practical') }}:</span>
+          <span v-if="item.state==1">{{ $t('user.CompensableAmount') }}:</span>
           <!-- <span v-else>可能赔付:</span> -->
           <div>
             <!-- <img class="img_1" src="@/assets/images/user/num2.png" alt="" /> -->
@@ -68,15 +68,15 @@
       <!-- num-->
       <div class="top4">
         <div class="one">
-          <span>注单号:</span>
+          <span>{{ $t('user.OrderID') }}:</span>
           <span>{{ item.orderId }}</span>
         </div>
         <div class="one">
-          <span>投注时间：</span>
-          <span>{{ item.createDate }}</span>
+          <span>{{ $t('user.OrderID') }}:</span>
+          <span>{{ item.BettingTime }}:</span>
         </div>
         <div v-if="item.state==3" class="one">
-          <span>结算时间：</span>
+          <span>{{ $t('user.SettlementTime') }}:</span>
           <span>{{ formatToDateTime(item.resultDate) }}</span>
         </div>
       </div>

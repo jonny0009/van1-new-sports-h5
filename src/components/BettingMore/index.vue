@@ -18,14 +18,20 @@
           </div>
           <div class="team-box">
             <div class="team-player host">
-              <img v-img="moreParams.homeLogo" :type="2" alt="" />
+              <div class="img-num">
+                <img v-img="moreParams.homeLogo" :type="2" alt="" />
+                <span>{{ setMatch.getScore(moreParams, 'H') }}</span>
+              </div>
               <strong>{{ moreParams.homeTeam }}</strong>
             </div>
             <div class="team-score">
-              <span class="default">{{ $t('live.inprogress') }}</span>
+              <span class="default" v-html="setMatch.showRBTime(moreParams)"></span>
             </div>
             <div class="team-player away">
-              <img v-img="moreParams.awayLogo" :type="2" alt="" />
+              <div class="img-num">
+                <span>{{ setMatch.getScore(moreParams, 'C') }}</span>
+                <img v-img="moreParams.awayLogo" :type="2" alt="" />
+              </div>
               <strong>{{ moreParams.awayTeam }}</strong>
             </div>
           </div>
@@ -33,7 +39,7 @@
 
         <div class="bettings">
           <Loading v-if="isLoading" />
-          <div v-else-if="betPlayList.length === 0" class="no-data">
+          <div v-else-if="betPlayListComputed.length === 0" class="no-data">
             <EmptyIcon />
           </div>
           <van-collapse v-else v-model="activeNames">
@@ -108,13 +114,18 @@
               </div>
             </van-collapse-item> -->
 
-            <van-collapse-item v-for="(play, index) in betPlayList" :key="index" :name="index + ''" :border="false">
+            <van-collapse-item
+              v-for="(play, index) in betPlayListComputed"
+              :key="index"
+              :name="index + ''"
+              :border="false"
+            >
               <template #title>
                 <span v-play="play.playInfo"></span>
               </template>
-              <div class="bet">
+              <div class="bet" :class="getBetCol(play.dataInfo)">
                 <BettingOption
-                  v-for="(item, ind) in play.dataInfo?.ratioData"
+                  v-for="(item, ind) in play.dataInfo.ratioData"
                   :key="ind"
                   class="bet-item"
                   :market-info="item"
@@ -143,10 +154,29 @@ import { computed, Ref, ref, watch } from 'vue'
 import { formatToDate } from '@/utils/date'
 import { matcheInfo } from '@/api/live'
 import { MarketInfo } from '@/entitys/MarketInfo'
+import { useMatch } from '@/utils/useMatch'
 import store from '@/store'
 
+const setMatch = useMatch()
 const showPopup = computed(() => store.state.betting.moreShow)
-const moreParams = computed(() => store.state.betting.moreParams)
+const moreParams = computed(() => {
+  return store.state.betting.moreParams
+})
+watch(
+  () => showPopup.value,
+  (flag: boolean) => {
+    if (flag) {
+      isLoading.value = true
+      betPlayList.value = []
+    }
+  }
+)
+watch(
+  () => moreParams.value,
+  () => {
+    getPlayData()
+  }
+)
 
 const loading = ref(false)
 const isLoading = ref(false)
@@ -160,7 +190,6 @@ const getPlayData = async () => {
     isLoading.value = false
   }
 }
-
 const betPlayList: Ref<any[]> = ref([])
 const buildBetList = (data: any) => {
   const { detail, gameType, systemId, homeTeam, awayTeam } = data
@@ -202,21 +231,18 @@ const buildBetList = (data: any) => {
   }
 }
 
-watch(
-  () => showPopup.value,
-  (flag: boolean) => {
-    if (flag) {
-      isLoading.value = true
-      betPlayList.value = []
-    }
+const betPlayListComputed = computed(() => {
+  const noExist = ['HDNB2', 'HDNB', 'HTS2', 'HW3', 'W3_conner', 'W3', 'PD_conner', 'HT_conner', 'T_conner']
+  return betPlayList.value.filter((item) => !noExist.includes(item.dataInfo.playType))
+})
+
+const getBetCol = (dataInfo: any) => {
+  const { ratioData } = dataInfo
+  if (ratioData.length === 3) {
+    return 'col-3'
   }
-)
-watch(
-  () => moreParams.value,
-  () => {
-    getPlayData()
-  }
-)
+  return 'col-2'
+}
 </script>
 
 <style lang="scss" scoped>
@@ -257,9 +283,18 @@ watch(
           height: 24px;
           margin-right: 6px;
         }
+        > span {
+          max-width: 320px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
         .svg-icon {
           margin-right: 6px;
         }
+      }
+      .date {
+        white-space: nowrap;
       }
     }
     &-box {
@@ -269,27 +304,42 @@ watch(
     }
 
     &-player {
-      width: 220px;
+      width: 200px;
       display: flex;
       flex-direction: column;
-      img {
-        display: block;
-        width: 62px;
-        height: 62px;
+      .img-num {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         margin-bottom: 17px;
+        width: 100%;
+        > img {
+          display: block;
+          width: 62px;
+          height: 62px;
+        }
+        > span {
+          font-size: 28px;
+        }
       }
       strong {
-        display: block;
         max-width: 200px;
+        display: block;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
       }
       &.host {
         align-items: flex-start;
+        .img-num > span {
+          padding-right: 20px;
+        }
       }
       &.away {
         align-items: flex-end;
+        .img-num > span {
+          padding-left: 20px;
+        }
       }
     }
 
@@ -297,8 +347,8 @@ watch(
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      padding: 15px 0 0 0;
       .default {
         color: #b1b8bf;
       }
@@ -334,18 +384,23 @@ watch(
     .bet {
       font-family: PingFangSC-Medium;
       font-size: 24px;
-      display: flex;
-      flex-wrap: wrap;
+      padding: 0 20px 20px 20px;
+      display: grid;
+      grid-gap: 20px;
+      &.col-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+      &.col-3 {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
       &-item {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        width: 310px;
-        height: 94px;
         background: #ffffff;
         color: #546371;
         border-radius: 20px;
-        margin: 0 0 20px 20px;
+        height: 94px;
         &.selected {
           background: #7643fd;
           color: #fff;

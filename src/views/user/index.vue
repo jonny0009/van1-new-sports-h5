@@ -7,7 +7,7 @@
   --van-toast-font-size: 28px;
 }
 
-.noData {
+  .noData {
   text-align: center;
   font-family: PingFangSC-Medium;
   font-size: 24px;

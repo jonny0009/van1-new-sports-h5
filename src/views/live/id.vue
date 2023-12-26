@@ -92,8 +92,8 @@ const videoError = ref(false)
 const videoWaiting = ref(false)
 const initVideo = () => {
   const { streamNa } = extendData.value
-  const { liveali } = streamNa
-  videoUrl.value = liveali.m3u8
+  const { liveali } = streamNa || {}
+  videoUrl.value = (liveali || {}).m3u8
   const options = {
     preload: 'auto',
     width: '100%',

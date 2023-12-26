@@ -6,7 +6,7 @@
       </template>
     </van-nav-bar>
     <div class="content">
-      <div v-if="!list.arr.length" class="noData">
+      <div v-if="!list.arr.length&& finished" class="noData">
         <img class="img_1" src="@/assets/images/user/noData.png" />
         <p>
           未查询到相关数据
@@ -131,6 +131,7 @@ const beforeClose = (position: any) => {
 :deep(.van-icon) {
   font-size: 40px;
 }
+
 </style>
 
 <style scoped>
