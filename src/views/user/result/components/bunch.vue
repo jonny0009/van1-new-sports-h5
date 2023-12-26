@@ -40,10 +40,17 @@
             <span v-play="item1">
             </span>
             <span>
-              <!-- 问号图标没找到 -->
-              <img v-if="item1.betResultDetail === 'W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
-              <img v-else-if="item1.betResultDetail === 'L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+
+              <!-- 平局图标没找到 -->
+              <img v-if="item1.betResultDetail == 'W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
+              <img v-else-if="item1.betResultDetail == 'L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+              <img v-else-if="item1.betResultDetail == 'LW'" class="img_1" src="@/assets/images/user/LW.png" alt="" />
+              <img v-else-if="item1.betResultDetail == 'LL'" class="img_1" src="@/assets/images/user/LL.png" alt="" />
+              <img v-else-if="item1.betResultDetail == 'P'" class="img_1" src="@/assets/images/user/P.svg" alt="" />
+              <img v-else-if="item1.betResultDetail == 'D'" class="img_1" src="@/assets/images/user/D.png" alt="" />
               <img v-else-if="item.state == 1" class="img_1" src="@/assets/images/user/icon23.png" alt="" />
+              <img v-else class="img_1" src="@/assets/images/user/D.png" alt="" />
+
             </span>
           </div>
           <div class="team">
