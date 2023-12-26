@@ -507,8 +507,9 @@ const setBallSelect = (val: any) => {
   color: #96A5AA;
   letter-spacing: 0;
   font-weight: 500;
+  margin: 0 auto;
 
-  .img_1 {
+  >.img_1 {
     margin-top: 331px;
     width: 102px;
     height: 121px;
