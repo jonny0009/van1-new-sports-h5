@@ -22,5 +22,16 @@ export default {
   M: '独赢',
   MInfo: '全场 1X2',
   searchNoData: '未查询到相关数据',
-  stayTuned: '敬请期待'
+  stayTuned: '敬请期待',
+
+  // 新
+  week: '周{number}',
+  HT: '中场休息',
+  '1H': '上半场',
+  '2H': '下半场',
+  STOP: '暂停',
+  bout: '第{number}盘',
+  set: '第${number}局',
+  down: '下',
+  up: '上'
 }
