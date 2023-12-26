@@ -24,8 +24,11 @@
               </div>
               <strong>{{ moreParams.homeTeam }}</strong>
             </div>
-            <div class="team-score">
+            <div class="team-score" @click="gotoLive">
               <span class="default" v-html="setMatch.showRBTime(moreParams)"></span>
+              <span class="icons" v-if="moreParams.showtype == 'RB'">
+                <SvgIcon name="live-play" />
+              </span>
             </div>
             <div class="team-player away">
               <div class="img-num">
@@ -43,75 +46,8 @@
             <EmptyIcon />
           </div>
           <van-collapse v-else v-model="activeNames">
-            <!-- <van-collapse-item title="竞猜分析" name="0" :border="false">
-              <div class="analyze">
-                <van-swipe indicator-color="#9417D5">
-                  <van-swipe-item v-for="item in 3" :key="item">
-                    <div class="analyze-header">
-                      <div class="host">
-                        <img src="@/assets/images/live/sub_d.png" alt="" />
-                        <span>水晶宫 U21</span>
-                      </div>
-                      <div class="away">
-                        <span>西汉姆 U21</span>
-                        <img src="@/assets/images/live/sub_u.png" alt="" />
-                      </div>
-                    </div>
-                    <div class="analyze-item">
-                      <div class="analyze-title">独赢 — 投注次数</div>
-                      <div class="analyze-content">
-                        <section class="host" style="flex: 33.3 1 0%">
-                          <div class="percent">33.3%</div>
-                          <div class="bar"></div>
-                          <div class="value">
-                            <span>1</span>
-                          </div>
-                        </section>
-                        <section class="draw" style="flex: 0 1 0%">
-                          <div class="percent">0%</div>
-                          <div class="bar"></div>
-                          <div class="value">
-                            <span>0</span>
-                          </div>
-                        </section>
-                        <section class="away active" style="flex: 66.7 1 0%">
-                          <div class="percent">66.7%</div>
-                          <div class="bar"></div>
-                          <div class="value">
-                            <span>3</span>
-                          </div>
-                        </section>
-                      </div>
-                    </div>
-                    <div class="analyze-item">
-                      <div class="analyze-title">独赢 — 投注次数</div>
-                      <div class="analyze-content">
-                        <section class="host" style="flex: 33.3 1 0%">
-                          <div class="percent">33.3%</div>
-                          <div class="bar"></div>
-                          <div class="value">
-                            <span>1</span>
-                          </div>
-                        </section>
-                        <section class="draw" style="flex: 0 1 0%">
-                          <div class="percent">0%</div>
-                          <div class="bar"></div>
-                          <div class="value">
-                            <span>0</span>
-                          </div>
-                        </section>
-                        <section class="away active" style="flex: 66.7 1 0%">
-                          <div class="percent">66.7%</div>
-                          <div class="bar"></div>
-                          <div class="value">
-                            <span>3</span>
-                          </div>
-                        </section>
-                      </div>
-                    </div>
-                  </van-swipe-item>
-                </van-swipe>
-              </div>
+            <!-- <van-collapse-item title="竞猜分析" name="-1" :border="false">
+              <BetAnalyze />
             </van-collapse-item> -->
 
             <van-collapse-item
@@ -130,15 +66,21 @@
                   class="bet-item"
                   :market-info="item"
                 >
-                  <div class="top">
-                    <span>{{ item.ratioName }}</span>
-                  </div>
-                  <div class="bot">
-                    <span class="num">{{ item.vior }}</span>
-                    <span v-show="false" class="ico">
-                      <img src="@/assets/images/live/sub.png" alt="" />
-                    </span>
-                  </div>
+                  <template #default="scope">
+                    <div class="bet-top">
+                      <span class="name">{{ item.ratioMatch || item.ratioName }}</span>
+                      <span class="tag">{{ item.ratioTag }}</span>
+                    </div>
+                    <div class="bet-bot">
+                      <img v-if="scope.lock" class="lock" src="@/assets/images/live/lock.png" alt="" />
+                      <template v-else>
+                        <span class="num">{{ item.vior }}</span>
+                        <span v-show="false" class="ico">
+                          <img src="@/assets/images/live/sub.png" alt="" />
+                        </span>
+                      </template>
+                    </div>
+                  </template>
                 </BettingOption>
               </div>
             </van-collapse-item>
@@ -156,6 +98,8 @@ import { matcheInfo } from '@/api/live'
 import { MarketInfo } from '@/entitys/MarketInfo'
 import { useMatch } from '@/utils/useMatch'
 import store from '@/store'
+import router from '@/router'
+// import BetAnalyze from './BetAnalyze.vue'
 
 const setMatch = useMatch()
 const showPopup = computed(() => store.state.betting.moreShow)
@@ -177,6 +121,14 @@ watch(
     getPlayData()
   }
 )
+
+const gotoLive = () => {
+  const { showtype, gidm } = moreParams.value
+  if (showtype == 'RB') {
+    router.push(`/live/${gidm}`)
+    store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
+  }
+}
 
 const loading = ref(false)
 const isLoading = ref(false)
@@ -349,8 +301,14 @@ const getBetCol = (dataInfo: any) => {
       flex-direction: column;
       align-items: center;
       padding: 15px 0 0 0;
-      .default {
-        color: #b1b8bf;
+      color: #b1b8bf;
+      overflow: hidden;
+      .icons {
+        color: #f2f2f2;
+        margin-top: 10px;
+      }
+      .svg-icon {
+        font-size: 38px;
       }
     }
   }
@@ -401,18 +359,29 @@ const getBetCol = (dataInfo: any) => {
         color: #546371;
         border-radius: 20px;
         height: 94px;
+        overflow: hidden;
         &.selected {
           background: #7643fd;
           color: #fff;
         }
       }
-      .top {
+      &-top {
+        display: flex;
+        justify-content: center;
         font-size: 24px;
         letter-spacing: 0;
         font-weight: 500;
-        text-align: center;
+        padding: 0 20px;
+        .name {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        .tag {
+          margin-left: 6px;
+        }
       }
-      .bot {
+      &-bot {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -428,105 +397,6 @@ const getBetCol = (dataInfo: any) => {
         }
         .lock {
           width: 22px;
-        }
-      }
-    }
-
-    .analyze {
-      height: 420px;
-      padding: 4px;
-      font-size: 24px;
-      .van-swipe {
-        height: 100%;
-        background: #ffffff;
-        border-radius: 10px;
-        .van-swipe-item {
-          padding: 0 8px;
-        }
-      }
-
-      &-header {
-        padding: 16px 8px 10px 8px;
-        border-bottom: 1px solid #e5ecf3;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        > div {
-          display: flex;
-          align-items: center;
-          color: #546371;
-          img {
-            width: 24px;
-            height: 24px;
-          }
-        }
-        .host img {
-          margin-right: 8px;
-        }
-        .away img {
-          margin-left: 8px;
-        }
-      }
-
-      &-title {
-        font-weight: 800;
-        color: #1f2630;
-        padding: 16px 0;
-        text-align: center;
-      }
-
-      &-content {
-        display: flex;
-        padding: 0 40px;
-        > section {
-          &:not(:first-child) {
-            margin-left: 8px;
-          }
-          .bar {
-            width: 100%;
-            height: 8px;
-            margin-top: 4px;
-            transition: all 0.3s;
-          }
-          .value {
-            visibility: hidden;
-            font-size: 24px;
-            line-height: 1.6;
-            transition: all 0.3s;
-          }
-          .percent {
-            font-weight: 800;
-            font-size: 24px;
-            line-height: 1.6;
-          }
-        }
-        > section.host {
-          color: #0065cd;
-          .bar {
-            background-color: #0065cd;
-          }
-        }
-        > section.draw {
-          color: #96a5aa;
-          .bar {
-            background-color: #96a5aa;
-          }
-        }
-        > section.away {
-          text-align: right;
-          color: #cb0028;
-          .bar {
-            background-color: #cb0028;
-          }
-        }
-        > section.active {
-          .bar {
-            height: 12px;
-            margin-top: 0;
-          }
-          .value {
-            visibility: visible;
-          }
         }
       }
     }

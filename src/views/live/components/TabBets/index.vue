@@ -11,15 +11,21 @@
         </template>
         <div class="bet" :class="getBetCol(play.dataInfo)">
           <BettingOption v-for="(item, ind) in play.dataInfo.ratioData" :key="ind" class="bet-item" :market-info="item">
-            <div class="top">
-              <span>{{ item.ratioName }}</span>
-            </div>
-            <div class="bot">
-              <span class="num">{{ item.vior }}</span>
-              <span v-show="false" class="ico">
-                <img src="@/assets/images/live/sub.png" alt="" />
-              </span>
-            </div>
+            <template #default="scope">
+              <div class="bet-top">
+                <span class="name">{{ item.ratioMatch || item.ratioName }}</span>
+                <span class="tag">{{ item.ratioTag }}</span>
+              </div>
+              <div class="bet-bot">
+                <img v-if="scope.lock" class="lock" src="@/assets/images/live/lock.png" alt="" />
+                <template v-else>
+                  <span class="num">{{ item.vior }}</span>
+                  <span v-show="false" class="ico">
+                    <img src="@/assets/images/live/sub.png" alt="" />
+                  </span>
+                </template>
+              </div>
+            </template>
           </BettingOption>
         </div>
       </van-collapse-item>
@@ -153,18 +159,29 @@ const getBetCol = (dataInfo: any) => {
     color: #546371;
     border-radius: 20px;
     height: 94px;
+    overflow: hidden;
     &.selected {
       background: #7643fd;
       color: #fff;
     }
   }
-  .top {
+  &-top {
+    display: flex;
+    justify-content: center;
     font-size: 24px;
     letter-spacing: 0;
     font-weight: 500;
-    text-align: center;
+    padding: 0 20px;
+    .name {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .tag {
+      margin-left: 6px;
+    }
   }
-  .bot {
+  &-bot {
     display: flex;
     align-items: center;
     justify-content: center;
