@@ -15,7 +15,11 @@
       </div>
     </div>
     <div class="odd-change-tips">
-      <span class="state-icon"></span>
+      <span
+        class="state-icon"
+        :class="oddChangesState ? 'checked' : 'close'"
+        @click="oddChangesState = !oddChangesState"
+      ></span>
       <span class="tips">接受所有盘口变化</span>
       <span class="tips-icon"></span>
     </div>
@@ -29,7 +33,15 @@ const quickKeys = ref([1, 10, 50, 100])
 const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '00', 'back']
 const mode = computed(() => store.state.betting.mode)
 const boardShow = computed(() => store.state.betting.boardShow)
-const quickEntry = (amount:any) => {
+const oddChangesState = computed({
+  get() {
+    return store.state.betting.oddChangesState
+  },
+  set(value: any) {
+    store.dispatch('betting/setOddChangesState', value)
+  }
+})
+const quickEntry = (amount: any) => {
   if (mode.value === 1) {
     store.dispatch('betting/changeSingleAmount', amount)
   } else {
@@ -37,7 +49,7 @@ const quickEntry = (amount:any) => {
   }
   close()
 }
-const inputEntry = (amount:any) => {
+const inputEntry = (amount: any) => {
   if (mode.value === 1) {
     store.dispatch('betting/inputSingleAmount', amount)
   } else {
@@ -135,7 +147,18 @@ const close = () => {
   .state-icon {
     width: 30px;
     height: 30px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &.checked{
+      background-image: url('@/assets/images/betting/check-state.png');
+    }
+    &.close{
+      background-image: url('@/assets/images/betting/closegray.png');
+    }
   }
+
   .state-icon {
     width: 23px;
     height: 23px;

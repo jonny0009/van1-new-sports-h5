@@ -33,6 +33,8 @@ watch(() => props.marketInfo.value, (newVal, oldVal) => {
   }
   const newIor = newVal * 1 || 0
   const oldIor = oldVal * 1 || 0
+  props.marketInfo.oldIor = oldIor
+
   if (+newIor > +oldIor) {
     props.marketInfo.iorChange = 'up-ior'
   } else if (+newIor < +oldIor) {
