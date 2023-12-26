@@ -26,6 +26,8 @@ import gameDefault from '@/assets/images/globalLayout/footer/game-default.png'
 import game from '@/assets/images/globalLayout/footer/game.png'
 import { ref, reactive } from 'vue'
 import router from '@/router'
+import { showToast } from 'vant'
+import lang from '@/lang'
 import store from '@/store'
 const getRouteName = () => {
   const routerName: any = router?.currentRoute?.value?.name || ''
@@ -51,6 +53,10 @@ const barFooterArrayChange = (): Array<any> => {
 const barFooterArr: any = reactive(barFooterArrayChange())
 const active = ref(getRouteName())
 const clickChangeActive = (item: any) => {
+  if (item.value === 'game') {
+    showToast(lang.global.t('home.stayTuned'))
+    return
+  }
   active.value = item.value
   barFooterArr.length = 0
   barFooterArr.push(...barFooterArrayChange())
