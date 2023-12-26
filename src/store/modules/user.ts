@@ -13,7 +13,8 @@ const userModule: Module<User, any> = {
     userInfo: {},
     balance: {},
     pendingData: [],
-    currency: {}
+    currency: '',
+    currencyData: []
   },
   mutations: {
     SET_TOKEN: (state, token: string) => {
@@ -72,7 +73,8 @@ const userModule: Module<User, any> = {
     async getCurrency({ state }, params = {}) {
       const res:any = await getCMerAccessWallet(params) || {}
       if (res.code === 200) {
-        state.currency = res.data || {}
+        state.currencyData = res.data || {}
+        state.currency = res.data[0].currency || {}
         this.dispatch('user/getBalance', { wid: res.data[0].walletId || '' })
       }
     },

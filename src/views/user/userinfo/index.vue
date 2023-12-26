@@ -44,13 +44,14 @@
     <div class="content">
       <div class="top-1">
         <img class="img_1" src="@/assets/images/user/data.png" alt="" />
-        <span>投注数据（近7天）</span>
+        <span>{{ $t('user.text8',{num:7}) }}</span>
       </div>
       <div class="circle">
         <div v-for="(item, index) in dataList.arr" :key="index" class="num-1">
           <div class="left"> <img class="img_1" :src="item.img" alt="" /></div>
           <div class="right">
-            <div>{{ item.num }}</div>
+            <div v-if="index===0">{{ item.num }}</div>
+            <div v-else>{{ formatMoney(item.num) }}</div>
             <div>{{ item.name }}</div>
           </div>
         </div>
@@ -78,6 +79,7 @@ import { showToast } from 'vant'
 import { ImageSource } from '@/config'
 import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
 import { formatToDateTime } from '@/utils/date'
+import { formatMoney } from '@/utils/index'
 
 import BetList from './components/betList.vue'
 

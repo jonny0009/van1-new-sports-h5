@@ -45,7 +45,7 @@ export default {
   follow: '关注',
   fans: '粉丝',
   text7: '请输入您的个人简介...',
-  text8: '投注数据（近90天）',
+  text8: '投注数据（近{num}天）',
   NumberOfBets: '投注次数',
   beingFollowed: '被跟注次数',
   AverageBettingAmount: '平均投注额',
@@ -92,6 +92,13 @@ export default {
   editText: '编辑',
   betForm: '注单',
   end: '已结束',
+  // 新增2=====
+  noFinal: '未结算',
+  final: '已结算',
+
+  today: '今日',
+  fortyEight: '近48小时',
+  sevenDay: '近7天',
 
   sports: {
     'officeNumber': '局号',

@@ -44,7 +44,7 @@ export default {
   follow: 'Theo dõi',
   fans: 'Pan hâm mộ',
   text7: 'Nhập tiểu sử cá nhân của bạn...',
-  text8: 'Dữ liệu cược (90 ngày gần đây)',
+  text8: 'Dữ liệu cược ({num} ngày gần đây)',
   NumberOfBets: 'Số lượng cược',
   beingFollowed: 'Số lần theo dõi',
   AverageBettingAmount: 'Số tiền cược trung bình',
