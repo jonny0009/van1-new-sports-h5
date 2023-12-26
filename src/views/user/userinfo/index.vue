@@ -19,7 +19,7 @@
             <span>{{ peopleInfo.nickName }}</span>
           </div>
           <div class="user-2">
-            {{ peopleInfo.email || '' }}
+            {{ userInfo.loginName|| '' }}
           </div>
           <div class="user-3">
             <img class="img_1" src="@/assets/images/user/star.svg" alt="" />
@@ -38,7 +38,7 @@
           </div>
         </div>
       </div>
-      <p class="note" @click="goUrl('/editUser')">{{ peopleInfo.profiles }}</p>
+      <span class="note" @click.stop="goUrl('/editUser')">{{ peopleInfo.profiles }}</span>
 
     </div>
     <div class="content">
@@ -90,33 +90,39 @@ const peopleInfo = ref<any>({})
 const userStandInfo = ref<any>({})
 const currentNumber = ref<any>('')
 
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
 const goBack = () => {
   $router.push('/home')
 }
 const goUrl = (url: string) => {
+  if (url.includes('selfFocus')) {
+    return
+  }
   $router.push('/user' + url)
 }
-const title = ref('个人档案')
+const title = ref(t('user.PersonalProfile'))
 const dataList = reactive<{ arr: any }>({
   arr: [
     {
       num: 0,
-      name: '胜率',
+      name: t('user.winRate'),
       img: data1
     },
     {
       num: 0,
-      name: '盈利',
+      name: t('user.profit'),
       img: data2
     },
     {
       num: 0,
-      name: '投注金额',
+      name: t('user.BetAmount'),
       img: data3
     },
     {
       num: 0,
-      name: '返还金额',
+      name: t('user.refund'),
       img: data4
     }
   ]
@@ -153,7 +159,8 @@ const getStandings = async () => {
   }
   userStandInfo.value = res.data
   currentNumber.value = userStandInfo.value.winRatio * 100 || 0
-  dataList.arr[0].num = (userStandInfo.value.winRatio * 100) + '%'
+  // dataList.arr[0].num = (userStandInfo.value.winRatio * 100)
+  dataList.arr[0].num = String(userStandInfo.value.winRatio * 100).replace(/^(.*\..{4}).*$/, '$1') + '%'
   dataList.arr[1].num = userStandInfo.value.winOrderAmount - userStandInfo.value.orderAmount || 0
   dataList.arr[2].num = userStandInfo.value.orderAmount || 0
   dataList.arr[3].num = userStandInfo.value.winOrderAmount || 0

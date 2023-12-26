@@ -123,7 +123,6 @@ const getImg = (imgUrl: string) => {
 }
 
 const showInfo = () => {
-  store.dispatch('user/userInfo')
   showLeft.value = true
 }
 </script>

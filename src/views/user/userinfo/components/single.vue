@@ -33,10 +33,17 @@
             <span v-play="item1">
             </span>
             <span>
-              <!-- 问号图标没找到 -->
-              <img v-if="item.state==1" class="img_1" src="@/assets/images/user/icon23.png" alt="" />
-              <img v-if="item1.betResultDetail==='W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
-              <img v-if="item1.betResultDetail==='L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+
+              <!-- 平局图标没找到 -->
+              <img v-if="item1.betResultDetail == 'W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
+              <img v-else-if="item1.betResultDetail == 'L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+              <img v-else-if="item1.betResultDetail == 'LW'" class="img_1" src="@/assets/images/user/LW.png" alt="" />
+              <img v-else-if="item1.betResultDetail == 'LL'" class="img_1" src="@/assets/images/user/LL.png" alt="" />
+              <img v-else-if="item1.betResultDetail == 'P'" class="img_1" src="@/assets/images/user/P.svg" alt="" />
+              <img v-else-if="item1.betResultDetail == 'D'" class="img_1" src="@/assets/images/user/D.png" alt="" />
+              <img v-else-if="item.state == 1" class="img_1" src="@/assets/images/user/icon23.png" alt="" />
+              <img v-else class="img_1" src="@/assets/images/user/D.png" alt="" />
+
             </span>
           </div>
         </div>
@@ -46,8 +53,12 @@
         <div class="one">
           <span>{{ $t('user.BettingAmount') }}</span>
           <div>
-            <!-- <img class="img_1" src="@/assets/images/user/num1.png" alt="" /> -->
-            <span v-points="item.gold ||0"></span>
+
+            <img v-if="currency==='CNY'" class="img_1" :src="CNY1" alt="" />
+            <img v-else-if="currency==='VNDK'" class="img_1" :src="VNDK1" alt="" />
+            <img v-else class="img_1" src="@/assets/images/user/USDT1.png" alt="" />
+
+            <span> {{ formatMoney(item.gold) }}</span>
           </div>
         </div>
         <div class="one two">
@@ -56,10 +67,20 @@
           <span v-if="item.state==1">{{ $t('user.CompensableAmount') }}:</span>
           <!-- <span v-else>可能赔付:</span> -->
           <div>
-            <!-- <img class="img_1" src="@/assets/images/user/num2.png" alt="" /> -->
-            <span v-if="item.state==3" v-points="item.winAndLossGold ||0" class="color-1"></span>
-            <span v-if="item.state==2" v-points="item.winAndLossGold ||0" class="color-1"></span>
-            <span v-if="item.state==1" v-points="getProfit(item)" class="num color-1"></span>
+
+            <img v-if="currency==='CNY'" class="img_1" :src="CNY2" alt="" />
+            <img v-else-if="currency==='VNDK'" class="img_1" :src="VNDK2" alt="" />
+            <img v-else class="img_1" src="@/assets/images/user/num2.png" alt="" />
+
+            <span v-if="item.state==3" v-points="item.winAndLossGold ||0" class="color-1">
+              {{ formatMoney(item.winAndLossGold) }}
+            </span>
+            <span v-if="item.state==2" v-points="item.winAndLossGold ||0" class="color-1">
+              {{ formatMoney(item.winAndLossGold) }}
+            </span>
+            <span v-if="item.state==1" v-points="getProfit(item)" class="num color-1">
+              {{ formatMoney(getProfit(item)) }}
+            </span>
           </div>
         </div>
       </div>
@@ -89,8 +110,19 @@
 </template>
 
 <script lang="ts" setup>
+
+import CNY1 from '@/assets/images/user/CNY1.svg'
+import VNDK1 from '@/assets/images/user/VNDK1.svg'
+import CNY2 from '@/assets/images/user/CNY2.svg'
+import VNDK2 from '@/assets/images/user/VNDK2.svg'
+
 // import { formatToDateTime } from '@/utils/date'
-// import { ref, reactive } from 'vue'
+import { formatMoney } from '@/utils/index'
+
+import { computed } from 'vue'
+import store from '@/store'
+const currency = computed(() => store.state.user.currency)
+
 const props = defineProps({
   item: {
     type: Object,

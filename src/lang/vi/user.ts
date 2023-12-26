@@ -93,6 +93,32 @@ export default {
   editText: 'Chỉnh sửa',
   betForm: 'Đặt cược',
   end: 'Đã kết thúc',
+  // 新增2=====
+  noFinal: 'Chưa thanh toán',
+  final: 'Giải quyết',
+  hk: 'Hồng Kông [HK]',
+  Europe: 'Đĩa châu Âu [DEC]',
+  today: 'Hôm nay',
+  fortyEight: 'Gần 48 giờ',
+  sevenDay: '7 ngày',
+
+  // 新增3
+  compensate: 'Thanh toán',
+  winRate: 'Tỷ lệ thắng',
+  profit: 'Lợi nhuận',
+  BetAmount: 'Số tiền đặt cược',
+  refund: 'Số tiền hoàn trả',
+  EditSuccessfully: 'Edit thành công',
+  text11: 'Vui lòng thay đổi theo quy định',
+  text12: 'Thông tin đăng nhập đã hết hạn, vui lòng đăng nhập lại',
+  affirm: 'Xác nhận',
+  usernameE: 'Tên người dùng/Hộp thư',
+  text13: 'Chưa có tài khoản? Thử đi.',
+  text14: 'Lỗi tài khoản hoặc mật khẩu',
+  text15: 'Tài khoản không tồn tại',
+  text16: 'Tài khoản bị cấm',
+  account: 'Số tài khoản',
+
   sports: {
     'officeNumber': 'số trò chơi',
     FT: 'Bóng đá',

@@ -49,15 +49,17 @@ import { ImageSource } from '@/config'
 
 import { showToast } from 'vant'
 
-import store from '@/store'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
+import store from '@/store'
 const userInfo = computed(() => store.state.user.userInfo)
 
 const index = ref(1)
 const userImg = ref<any>(headImg)
 const postImg = ref<any>('')
 
-const title = ref('编辑头像')
+const title = ref(t('user.EditAvatar'))
 
 const handleSave = async () => {
   const params = {
@@ -70,7 +72,8 @@ const handleSave = async () => {
   if (res.code !== 200) {
     return showToast(res.msg)
   }
-  showToast('编辑成功')
+  showToast(t('user.EditSuccessfully'))
+
   store.dispatch('user/userInfo')
   $router.push('/user/userInfo')
 }

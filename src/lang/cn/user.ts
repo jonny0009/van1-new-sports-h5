@@ -95,10 +95,27 @@ export default {
   // 新增2=====
   noFinal: '未结算',
   final: '已结算',
-
+  hk: '香港盘[HK]',
+  Europe: '欧洲盘[DEC]',
   today: '今日',
   fortyEight: '近48小时',
   sevenDay: '近7天',
+  // 新增3
+  compensate: '赔付',
+  winRate: '胜率',
+  profit: '盈利',
+  BetAmount: '投注金额',
+  refund: '返还金额',
+  EditSuccessfully: '编辑成功',
+  text11: '请按规则修改',
+  text12: '登录信息已失效,请重新登录',
+  affirm: '确认',
+  usernameE: '用户名/邮箱',
+  text13: '还没账号?试玩一下 ',
+  text14: '账号或密码错误 ',
+  text15: '账号不存在 ',
+  text16: '账号已禁用 ',
+  account: '账号 ',
 
   sports: {
     'officeNumber': '局号',

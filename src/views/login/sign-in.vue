@@ -5,13 +5,13 @@
         <img class="img_1" src="@/assets/images/login/arrow@2x.png" alt="" @click="goBack()" />
       </template>
       <template #title>
-        <span class="title">登录</span>
+        <span class="title">{{ t('user.logOn') }}</span>
       </template>
     </van-nav-bar>
     <div class="content">
       <div class="area-btn_1">
-        <span :class="index == 1 ? 'active' : ''" @click="index = 1">用户名/邮箱</span>
-        <span :class="index == 2 ? 'active' : ''" @click="index = 2">手机</span>
+        <span :class="index == 1 ? 'active' : ''" @click="index = 1">{{ t('user.usernameE') }}</span>
+        <span :class="index == 2 ? 'active' : ''" @click="index = 2">{{ t('user.mobilePhone') }}</span>
       </div>
 
       <van-form @submit="onSubmit">
@@ -21,8 +21,8 @@
             name=""
             label=""
             clearable
-            placeholder="用户名或电子邮箱"
-            :rules="[{ required: true, message: '请填写用户名或电子邮箱' }]"
+            :placeholder="t('user.text2')"
+            :rules="[{ required: true, message: t('user.text2') }]"
           />
           <div></div>
           <van-field
@@ -31,9 +31,9 @@
             name=""
             label=""
             class="van-cel"
-            placeholder="密码"
+            :placeholder="t('user.password')"
             clearable
-            :rules="[{ required: true, message: '请填写密码' }]"
+            :rules="[{ required: true, message: t('user.password') }]"
           />
           <div></div>
         </div>
@@ -42,9 +42,9 @@
             v-model="form.username"
             name=""
             label=""
-            placeholder="手机号码"
+            :placeholder="t('user.phoneNumber')"
             clearable
-            :rules="[{ required: true, message: '请填写手机号码' }]"
+            :rules="[{ required: true, message: t('user.phoneNumber') }]"
           />
           <div></div>
           <van-field
@@ -54,29 +54,33 @@
             label=""
             class="van-cel"
             clearable
-            placeholder="密码"
-            :rules="[{ required: true, message: '请填写密码' }]"
+            :placeholder="t('user.password')"
+            :rules="[{ required: true, message: t('user.password') }]"
           />
           <div></div>
         </div>
-        <p class="forgetPassword" @click="toForget()">忘记密码?</p>
+        <p class="forgetPassword" @click="toForget()">{{ t('user.forgotPassword') }}?</p>
         <van-button
           van-button
           class="loginBtn"
           :class="[Boolean(form.password && form.username) ? 'ifBtn' : '']"
           native-type="submit"
         >
-          登录
+          {{ t('user.logOn') }}
         </van-button>
       </van-form>
       <!-- <p class="literal">还没账号? <span class="register" @click="register">注册</span></p> -->
-      <p class="literal" @click="tryPlay">还没账号?试玩一下 </p>
+      <p class="literal" @click="tryPlay">{{ t('user.text13') }}</p>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, reactive, onMounted, computed } from 'vue'
+
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
 import store from '@/store'
 import { useRouter } from 'vue-router'
 import md5 from 'md5'
@@ -98,9 +102,9 @@ const form = reactive({
 onMounted(() => {
   // 浏览器指纹
   if (!localStore.getItem('appFingerprint')) {
-    Fingerprint2.get((components:any) => {
+    Fingerprint2.get((components: any) => {
       // 参数只有回调函数或者options为{}时，默认浏览器指纹依据所有配置信息进行生成
-      const values = components.map((component:any) => component.value) // 配置的值的数组
+      const values = components.map((component: any) => component.value) // 配置的值的数组
       const murmur = Fingerprint2.x64hash128(values.join(''), 31) // 生成浏览器指纹
 
       localStore.setItem('appFingerprint', murmur)
@@ -141,23 +145,19 @@ const onSubmit = async (values?: any) => {
     passWord: md5(encodeURI(form.password))
   }
   const res: any = await login(params)
-  if ([901008].includes(res.code)) {
-    showToast(
-      '会员功能关闭,' + '\t\n' + '您的会员功能已被暂时关闭,您将无法登录!如有疑问请联系客服:400-000-0000'
-    )
-    return false
-  }
   if (res.code === 200) {
     setToken(res.data)
     window.location.href = '/'
     // checkFirstEnter()
     return
   } else if (res.code === 205) {
-    showToast('账号或密码错误')
+    showToast(t('user.text14'))
   } else if (res.code === 204) {
-    showToast('账号不存在')
+    showToast(t('user.text15'))
   } else if (res.code === 207) {
-    showToast('账号已禁用')
+    showToast(t('user.text16'))
+  } else {
+    showToast(res.msg)
   }
 }
 // const checkFirstEnter = async () => {
@@ -171,10 +171,11 @@ const toForget = (values?: any) => {
 
 <style lang="scss" scope>
 :root {
-  --van-toast-text-padding:20px 30px;
-  --van-toast-font-size:28px;
+  --van-toast-text-padding: 20px 30px;
+  --van-toast-font-size: 28px;
 
 }
+
 .signIn {
   .img_1 {
     width: 35px;
@@ -318,6 +319,7 @@ const toForget = (values?: any) => {
 :deep(.van-icon) {
   font-size: 38px;
 }
+
 :deep(.van-toast__text) {
   font-size: 38px;
 }

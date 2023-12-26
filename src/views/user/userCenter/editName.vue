@@ -57,7 +57,10 @@ const ifSpecial = ref<Boolean>(false)
 const ifStandard = ref<Boolean>(false)
 import { showToast } from 'vant'
 
-const title = ref('编辑昵称')
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
+const title = ref(t('user.EditNickname'))
 
 const updateName = (str: string) => {
   if (!str) {
@@ -105,7 +108,7 @@ const getAccountInfo = async () => {
 }
 const handleSave = async () => {
   if (!ifStandard.value || !ifStandard.value || !ifStandard.value) {
-    return showToast('请按规则修改')
+    return showToast(t('user.text11'))
   }
   const params = {
     nickName: username.value,
@@ -115,7 +118,8 @@ const handleSave = async () => {
   if (res.code !== 200) {
     return showToast(res.msg)
   }
-  showToast('编辑成功')
+  showToast(t('user.EditSuccessfully'))
+
   store.dispatch('user/userInfo')
   $router.push('/user/userInfo')
 }
