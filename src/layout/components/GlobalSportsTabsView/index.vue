@@ -123,3 +123,17 @@ const clickChangeActive = (item:any) => {
   }
 }
 </style>
+
+<!--
+  color:transparent;
+  mask-image: -webkit-linear-gradient(-45deg, #caff55 20%, #45cd00 60%);
+  background-image: -webkit-linear-gradient(-45deg, #caff55 20%, #45cd00 60%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  color:transparent;
+  mask-image: -webkit-linear-gradient(-45deg, #caff55 20%, #45cd00 60%);
+  background-image: -webkit-linear-gradient(-45deg, #caff55 20%, #45cd00 60%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+-->
