@@ -40,5 +40,6 @@ export default {
   xup: '上{num}',
   xub: '下{num}',
   pause: '暂停',
-  xround: '第{num}局'
+  xround: '第{num}局',
+  hasReseve: '已有{num}预约'
 }

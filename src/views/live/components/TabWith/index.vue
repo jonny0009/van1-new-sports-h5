@@ -82,7 +82,7 @@
         <div class="footer">
           <BettingOption :market-info="item.marketInfo">
             <div class="button">
-              <span>{{ $t('betWith') }}</span>
+              <span>{{ $t('live.betWith') }}</span>
               <img src="@/assets/images/live/live_white_r.png" alt="" />
             </div>
           </BettingOption>

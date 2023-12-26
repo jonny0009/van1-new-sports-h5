@@ -7,6 +7,9 @@
         <span v-if="item.showType == 'RB'" v-html="setMatch.showRBTime(item)"></span>
         <span v-else>{{ formatToDateTime(item.gameDate, 'MM-DD HH:mm') }}</span>
       </div>
+      <div class="mask-reseve" v-if="item.showType != 'RB'">
+        <span>{{ $t('live.hasReseve', { num: watchNumText }) }}</span>
+      </div>
     </div>
 
     <div class="item-title">
@@ -122,6 +125,7 @@ const leagueIcon = computed(() => {
       bottom: 0;
       width: 100%;
       padding: 4px 10px;
+      z-index: 2;
     }
     .state {
       position: absolute;
@@ -134,6 +138,19 @@ const leagueIcon = computed(() => {
       font-size: 24px;
       background-image: linear-gradient(-68deg, #d700ff 0%, #af00ff 100%);
       border-radius: 10px 0px 10px 0px;
+    }
+    .mask-reseve {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      font-size: 22px;
+      color: #ffb900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 

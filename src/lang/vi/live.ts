@@ -37,8 +37,9 @@ export default {
   HT: 'Nghỉ giữa hiệp',
   H1: 'Hiệp 1',
   H2: 'Hiệp 2',
-  xup: '上{num}',
-  xub: '下{num}',
-  pause: '暂停',
-  xround: '第{num}局'
+  xup: 'Thượng {num}',
+  xub: 'Xuống {num}',
+  pause: 'tạm ngừng',
+  xround: '{num} vòng',
+  hasReseve: '{num} người đã đặt chỗ'
 }
