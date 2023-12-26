@@ -11,7 +11,12 @@
         1. up-ior
         2. down-ior
        -->
-      <!-- <i v-if="scope.iorChange" :class="scope.iorChange"></i> -->
+      <!--
+        <i
+          v-if="scope.iorChange"
+          :class="scope.iorChange"
+        ></i>
+      -->
       <i v-if="scope.lock" class="lock"></i>
       <span class="up-betting-name">
         <span class="text">
@@ -25,11 +30,17 @@
       </span>
       <div class="details">
         <div class="item">
-          <i class="vior-down"></i>
+          <i
+            class="vior-down"
+            :class="{'change-odds':scope.iorChange === 'down-ior'}"
+          ></i>
           <span class="vior">
             {{ item.marketInfo.vior }}
           </span>
-          <i class="vior-up"></i>
+          <i
+            class="vior-up"
+            :class="{'change-odds':scope.iorChange === 'up-ior'}"
+          ></i>
         </div>
       </div>
     </template>

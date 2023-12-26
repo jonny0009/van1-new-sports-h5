@@ -316,6 +316,9 @@
           line-height: 26px;
           font-size: 26px;
           color: #000000;
+          .vior{
+            padding: 0 10px;
+          }
         }
       }
       .lock{
@@ -528,7 +531,25 @@
   opacity: 0;
   transform: translateY(-53px)
 }
-.up-betting-odds-animate .trend-icon.blink{
+
+.vior-up,
+.vior-down{
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+}
+.vior-down{
+  background: url('@/assets/images/home/match/changeVior/vior-down.png') no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.vior-up{
+  background: url('@/assets/images/home/match/changeVior/vior-up.png') no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.change-odds{
   animation: blink 1s 3 forwards
 }
 

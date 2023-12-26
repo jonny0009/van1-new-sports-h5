@@ -44,5 +44,6 @@ export const Sports:any = {
   OP_SW: '游泳',
   OP_BS: '沙滩足球',
   OP_WS: '冬季运动',
-  OP_BD: '班迪球'
+  OP_BD: '班迪球',
+  AH: '主播'
 }
