@@ -24,7 +24,13 @@
         </span>
       </span>
       <div class="details">
-        <div class="item">{{ item.marketInfo.vior }}</div>
+        <div class="item">
+          <i class="vior-down"></i>
+          <span class="vior">
+            {{ item.marketInfo.vior }}
+          </span>
+          <i class="vior-up"></i>
+        </div>
       </div>
     </template>
   </BettingOption>

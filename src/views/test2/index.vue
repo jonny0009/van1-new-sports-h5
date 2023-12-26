@@ -1,21 +1,28 @@
 <template>
 
-  <van-pull-refresh v-model="isLoading" class="test-page" @refresh="onRefresh">
-    test2
-    <div style="height: 1000px;"></div>
-  </van-pull-refresh>
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <div
+    class="value"
+    :class="
+      [
+        {'listdown-leave-active':isShow},
+        {'listdown-leave-to':isShow},
+      ]
+    "
+    @click="isShowChange"
+  >101</div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-const isLoading = ref(false)
-const onRefresh = (val:any) => {
-  isLoading.value = false
-  // setTimeout(() => {
-  //   showToast('刷新成功')
-  //   isLoading.value = false
-  //   count.value++
-  // }, 1000)
+const isShow = ref(false)
+const isShowChange = () => {
+  isShow.value = !isShow.value
 }
 </script>
 
