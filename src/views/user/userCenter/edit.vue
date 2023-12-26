@@ -84,6 +84,7 @@ const popupList = reactive<{ arr: any[] }>({ arr: [] })
 
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
+const title = ref(t('user.account'))
 
 const plateMaskObj: any = localStore.getItem('plateMaskObj')
 const plateMask = ref<any>((plateMaskObj || {}))
@@ -123,7 +124,6 @@ onMounted(() => {
 const goBack = () => {
   $router.back()
 }
-const title = ref('账号')
 // 弹窗
 function showPk(val?: any) {
   popupIndex.value = val

@@ -64,6 +64,11 @@ const remark = ref('')
 const privacy = ref(0)
 const peopleInfo = ref<any>({})
 
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
+const title = ref(t('user.EditProfile'))
+
 // const dataList = reactive([])
 const goBack = () => {
   $router.push('/user/userInfo')
@@ -82,7 +87,7 @@ const handleSave = async () => {
   if (res.code !== 200) {
     return showToast(res.msg)
   }
-  showToast('编辑成功')
+  showToast(t('user.EditSuccessfully'))
   store.dispatch('user/userInfo')
   $router.push('/user/userInfo')
 }
@@ -96,7 +101,7 @@ const handlePrivacy = async (num :any) => {
   if (res.code !== 200) {
     return showToast(res.msg)
   }
-  showToast('编辑成功')
+  showToast(t('user.EditSuccessfully'))
 }
 const getImg = (imgUrl: string) => {
   if (imgUrl) {
@@ -104,7 +109,6 @@ const getImg = (imgUrl: string) => {
   }
   return avatarImg
 }
-const title = ref('编辑档案')
 onMounted(() => {
   getAccountInfo()
 })

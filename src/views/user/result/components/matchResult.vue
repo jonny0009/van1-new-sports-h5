@@ -96,20 +96,21 @@
   <div v-if="!list.arr.length &&finished" class="noData">
     <img class="img_1" src="@/assets/images/user/noData.png" />
     <p>
-      未查询到相关数据
+      {{ $t('user.noData') }}
     </p>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, reactive, onMounted, computed } from 'vue'
-
+import moment from 'moment'
 import { ImageSource } from '@/config'
 
 import store from '@/store'
 const ballListAll = computed(() => store.state.app.sports)
 
-import moment from 'moment'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 // import ball1 from '@/assets/images/login/ball1.svg'
 // import arrow from '@/assets/images/components/title/arrow.png'
 // getGameManyInfo
@@ -119,8 +120,8 @@ const list = reactive<{ arr: any }>({ arr: [] })
 // import { showToast } from 'vant'
 const loading = ref(false)
 const finished = ref(false)
-const popupTitle1 = ref('球类')
-const popupTitle = ref('时间')
+const popupTitle1 = ref(t('user.Balls'))
+const popupTitle = ref(t('user.time'))
 const commonKey = ref(
   {
     name: moment().format('MM/DD'),
@@ -130,7 +131,7 @@ const commonKey = ref(
 )
 const ballKey = ref(
   {
-    name: '足球',
+    name: t('user.sports.FT'),
     gameType: 'FT'
   }
 )
@@ -138,33 +139,15 @@ const showBottom1 = ref(false)
 const showBottom = ref(false)
 // const showTime = ref(false)
 const ballList = reactive<{ arr: any[] }>({
-  arr: [
-    {
-      name: '足球',
-      gameType: 'FT'
-    },
-    {
-      name: '篮球',
-      gameType: 'BK'
-    },
-    {
-      name: '网球',
-      gameType: 'TN'
-    },
-    {
-      name: '羽毛球',
-      gameType: 'OP_BM'
-    }
-
-  ]
+  arr: []
 })
 const popupList = reactive<{ arr: any[] }>({ arr: [] })
 
 onMounted(() => {
   // getNoAccount({})
-
   let arr = [...ballListAll.value]
-  arr = arr.filter((item: any) => item.gameCount !== 0 && item.gameType !== 'SY')
+  // item.gameCount !== 0 &&
+  arr = arr.filter((item: any) => item.gameType !== 'SY')
   arr = JSON.parse(JSON.stringify(arr))
   const sortArr: any = ['OP_BM', 'TN', 'BK', 'FT']
   arr.sort(function (a, b) {
