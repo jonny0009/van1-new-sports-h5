@@ -1,11 +1,7 @@
 <template>
   <div class="item">
     <div class="item-photo">
-      <van-image :src="item.cover || imgCover">
-        <template v-slot:error>
-          <img :src="imgCover" alt="" />
-        </template>
-      </van-image>
+      <van-image :src="imgCover" fit="cover"></van-image>
       <div class="state" v-if="item.showType == 'RB'">{{ $t('live.hotNow') }}</div>
       <div class="footer">
         <span v-if="item.showType == 'RB'" v-html="setMatch.showRBTime(item)"></span>
@@ -40,7 +36,7 @@
     </div>
 
     <div class="item-desc">
-      <div class="name">{{ item.leagueShortName }}</div>
+      <div class="name">{{ item.nickname || item.leagueShortName }}</div>
       <div class="hots">
         <img src="@/assets/images/live/s_hot.png" alt="" />
         <span>{{ watchNumText }}</span>
@@ -67,13 +63,18 @@ const setMatch: any = useMatch()
 const gameInfo = computed(() => props.item?.gameInfo)
 const imgCover = computed(() => {
   const item = props.item
-  const type: any = {
-    FT: 'FE/common/live/img_video_bg_FT.jpg',
-    BK: 'FE/common/live/img_video_bg_BK.jpg',
-    OP_VB: 'FE/common/live/img_video_bg_BK.jpg'
+  if (!item.anchorId) {
+    const type: any = {
+      FT: 'FE/common/live/img_video_bg_FT.jpg',
+      BK: 'FE/common/live/img_video_bg_BK.jpg',
+      OP_VB: 'FE/common/live/img_video_bg_BK.jpg'
+    }
+    return ImageSource + type[item.gameType]
   }
-  return ImageSource + type[item.gameType]
+
+  return ImageSource + item.cover
 })
+
 const watchNumText = computed(() => {
   const num = props.item.watchTotal.toLocaleString()
   if (props.item.showType == 'RB') {
@@ -104,8 +105,13 @@ const leagueIcon = computed(() => {
     width: 100%;
     height: 220px;
     .van-image {
+      position: relative;
       width: 100%;
       height: 100%;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
     .footer {
       color: #fff;

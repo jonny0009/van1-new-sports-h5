@@ -58,7 +58,7 @@ const navList = reactive([
   { type: 2, name: t('live.betWith'), unIcon: getIcon('nav_add_un.png'), onIcon: getIcon('nav_add_on.png') },
   { type: 3, name: t('live.more'), unIcon: getIcon('nav_more_un.png'), onIcon: getIcon('nav_more_on.png') }
 ])
-const navActive = ref(1)
+const navActive = ref(0)
 const compsList = [TabChat, TabBets, TabWith, TabMore]
 const onTab = (item: any) => {
   navActive.value = item.type
