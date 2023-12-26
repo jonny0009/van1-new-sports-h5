@@ -93,6 +93,15 @@ export default {
   editText: 'Chỉnh sửa',
   betForm: 'Đặt cược',
   end: 'Đã kết thúc',
+  // 新增2=====
+  noFinal: 'Chưa thanh toán',
+  final: 'Giải quyết',
+  hk: 'Hồng Kông [HK]',
+  Europe: 'Đĩa châu Âu [DEC]',
+  today: 'Hôm nay',
+  fortyEight: 'Gần 48 giờ',
+  sevenDay: 'Gần 7 ngày',
+
   sports: {
     'officeNumber': 'số trò chơi',
     FT: 'Bóng đá',

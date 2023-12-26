@@ -19,7 +19,7 @@
             <span>{{ peopleInfo.nickName }}</span>
           </div>
           <div class="user-2">
-            {{ peopleInfo.email || '' }}
+            {{ userInfo.loginName|| '' }}
           </div>
           <div class="user-3">
             <img class="img_1" src="@/assets/images/user/star.svg" alt="" />
@@ -38,7 +38,7 @@
           </div>
         </div>
       </div>
-      <p class="note" @click="goUrl('/editUser')">{{ peopleInfo.profiles }}</p>
+      <span class="note" @click.stop="goUrl('/editUser')">{{ peopleInfo.profiles }}</span>
 
     </div>
     <div class="content">
@@ -94,6 +94,9 @@ const goBack = () => {
   $router.push('/home')
 }
 const goUrl = (url: string) => {
+  if (url.includes('selfFocus')) {
+    return
+  }
   $router.push('/user' + url)
 }
 const title = ref('个人档案')

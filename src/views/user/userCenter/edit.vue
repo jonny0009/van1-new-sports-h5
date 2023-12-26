@@ -64,6 +64,12 @@ import store from '@/store'
 import { showToast } from 'vant'
 
 const languages = computed(() => store.state.app.queryCMerLanguage.accessLanguage)
+
+const languageType = computed(() => store.state.app.queryCMerLanguage.translate)
+
+const language: any = localStore.getItem('language')
+const lang = ref<any>(language || {})
+
 const userInfo = computed(() => store.state.user.userInfo)
 // const balance = computed(() => store.state.user.balance)
 const commonKey = reactive({ key: '' })
@@ -75,14 +81,35 @@ const popupIndex = ref(0)
 
 const popupList = reactive<{ arr: any[] }>({ arr: [] })
 
-const language: any = localStore.getItem('language')
-const lang = ref<any>(language || {})
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const plateMaskObj: any = localStore.getItem('plateMaskObj')
 const plateMask = ref<any>((plateMaskObj || {}))
 
+const plateData = reactive<{ arr: any[] }>({
+  arr: [
+    {
+      value: t('user.Europe'),
+      key: 'E'
+    },
+    {
+      value: t('user.hk'),
+      key: 'H'
+    }
+
+  ]
+})
+
 onMounted(() => {
+  store.dispatch('app/queryCMerLanguage')
   getCurrent()
+  const obj = plateData.arr.find((item: any) => {
+    if (item.key === plateMask.value.key || '') {
+      return item
+    }
+  })
+  plateMask.value = obj
 })
 const getCurrent = async () => {
   const res: any = await getCMerAccessWallet({})
@@ -101,21 +128,18 @@ function showPk(val?: any) {
   popupIndex.value = val
   popupList.arr = []
   if (val === 1) {
+    const languageObj = JSON.parse(JSON.stringify(languageType.value || '' as string))[lang.value.key]
+    languages.value.map((e: any) => {
+      if (languageObj[e.key]) {
+        e.value = languageObj[e.key]
+      }
+    })
     popupList.arr = languages.value
     commonKey.key = lang.value.key
     popupTitle.value = 'area'
   }
   if (val === 3) {
-    popupList.arr = [
-      {
-        value: '香港盘[HK]',
-        key: 'H'
-      },
-      {
-        value: '欧洲盘[DEC]',
-        key: 'E'
-      }
-    ]
+    popupList.arr = plateData.arr
     commonKey.key = plateMask.value.key
     popupTitle.value = 'Handicap'
   }
@@ -126,8 +150,10 @@ function showPk(val?: any) {
 async function setPk(val: any) {
   if (popupIndex.value === 1) {
     lang.value = val
+    const languageObj = JSON.parse(JSON.stringify(languageType.value || '' as string))[lang.value.key]
+    lang.value.value = languageObj[lang.value.key]
     localStorage.setItem('locale', val.key)
-    localStore.setItem('language', val)
+    localStore.setItem('language', lang.value)
     window.location.reload()
   }
 
@@ -142,7 +168,6 @@ async function setPk(val: any) {
 </script>
 
 <style lang="scss" scoped>
-
 .noticeDetail {
   .bg-title {
     width: 100%;
@@ -156,7 +181,7 @@ async function setPk(val: any) {
     }
   }
 
-  > .content {
+  >.content {
     height: calc(100vh - 150px);
     overflow-y: auto;
     padding: 42px 36px;
@@ -198,36 +223,37 @@ async function setPk(val: any) {
       }
     }
   }
+
   .popup-title {
-  font-family: PingFangSC-Semibold;
-  font-size: 32px;
-  color: #1F2630;
-  letter-spacing: 0;
-  font-weight: 600;
-  margin: 24px 0 0 38px;
-}
-
-.pk-list {
-  padding-top: 30px;
-
-  .item {
-    font-size: 26px;
+    font-family: PingFangSC-Semibold;
+    font-size: 32px;
     color: #1F2630;
-    letter-spacing: 1px;
-    padding: 40px;
-    border-bottom: 2px solid #eaeaea;
+    letter-spacing: 0;
+    font-weight: 600;
+    margin: 24px 0 0 38px;
+  }
 
-    p {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+  .pk-list {
+    padding-top: 30px;
+
+    .item {
+      font-size: 26px;
+      color: #1F2630;
+      letter-spacing: 1px;
+      padding: 40px;
+      border-bottom: 2px solid #eaeaea;
+
+      p {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .item-color {
+      color: #7642FD;
     }
   }
-
-  .item-color {
-    color: #7642FD;
-  }
-}
 
 }
 
