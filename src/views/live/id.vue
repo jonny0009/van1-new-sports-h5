@@ -58,7 +58,7 @@ const navList = reactive([
   { type: 2, name: t('live.betWith'), unIcon: getIcon('nav_add_un.png'), onIcon: getIcon('nav_add_on.png') },
   { type: 3, name: t('live.more'), unIcon: getIcon('nav_more_un.png'), onIcon: getIcon('nav_more_on.png') }
 ])
-const navActive = ref(0)
+const navActive = ref(1)
 const compsList = [TabChat, TabBets, TabWith, TabMore]
 const onTab = (item: any) => {
   navActive.value = item.type
@@ -92,8 +92,8 @@ const videoError = ref(false)
 const videoWaiting = ref(false)
 const initVideo = () => {
   const { streamNa } = extendData.value
-  const { liveali } = streamNa
-  videoUrl.value = liveali.m3u8
+  const { liveali } = streamNa || {}
+  videoUrl.value = (liveali || {}).m3u8
   const options = {
     preload: 'auto',
     width: '100%',
