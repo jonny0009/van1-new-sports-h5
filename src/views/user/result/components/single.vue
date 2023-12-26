@@ -57,9 +57,15 @@
           <!-- <span v-else>可能赔付:</span> -->
           <div>
             <!-- <img class="img_1" src="@/assets/images/user/num2.png" alt="" /> -->
-            <span v-if="item.state==3" v-points="item.winAndLossGold ||0" class="color-1"></span>
-            <span v-if="item.state==2" v-points="item.winAndLossGold ||0" class="color-1"></span>
-            <span v-if="item.state==1" v-points="getProfit(item)" class="num color-1"></span>
+            <span v-if="item.state==3" class="color-1">
+              {{ formatMoney(item.winAndLossGold) }}
+            </span>
+            <span v-if="item.state==2" class="color-1">
+              {{ formatMoney(item.winAndLossGold) }}
+            </span>
+            <span v-if="item.state==1" class="num color-1">
+              {{ formatMoney(getProfit(item)) }}
+            </span>
           </div>
         </div>
       </div>
@@ -72,8 +78,8 @@
           <span>{{ item.orderId }}</span>
         </div>
         <div class="one">
-          <span>{{ $t('user.OrderID') }}:</span>
-          <span>{{ item.BettingTime }}:</span>
+          <span>{{ $t('user.BettingTime') }}:</span>
+          <span>{{ item.createDate }}</span>
         </div>
         <div v-if="item.state==3" class="one">
           <span>{{ $t('user.SettlementTime') }}:</span>
@@ -86,6 +92,8 @@
 
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
+import { formatMoney } from '@/utils/index'
+
 // import { ref, reactive } from 'vue'
 const props = defineProps({
   item: {

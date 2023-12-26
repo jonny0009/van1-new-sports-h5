@@ -100,6 +100,8 @@ export default {
   today: '今日',
   fortyEight: '近48小时',
   sevenDay: '近7天',
+  // 新增3
+  compensate: '赔付',
 
   sports: {
     'officeNumber': '局号',

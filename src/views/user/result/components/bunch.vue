@@ -66,7 +66,9 @@
         <span>{{ $t('user.BettingAmount') }}:</span>
         <span>
           <!-- <img class="img_1" src="@/assets/images/user/num1.png" alt="" /> -->
-          <span v-points="item.gold || 0"></span>
+          <span>
+            {{ formatMoney(item.gold) }}
+          </span>
         </span>
       </div>
       <div class="money-num-2">
@@ -74,8 +76,12 @@
         <span v-if="item.state == 1">{{ $t('user.CompensableAmount') }}:</span>
         <span>
           <!-- <img class="img_1" src="@/assets/images/user/num2.png" alt="" /> -->
-          <span v-if="item.state == 3" v-points="item.winAndLossGold || 0" class="num"></span>
-          <span v-if="item.state == 1" v-points="getProfit(item)" class="num"></span>
+          <span v-if="item.state == 3" class="num">
+            {{ formatMoney(item.winAndLossGold) }}
+          </span>
+          <span v-if="item.state == 1" class="num">
+            {{ formatMoney(getProfit(item)) }}
+          </span>
         </span>
       </div>
     </div>
@@ -99,6 +105,8 @@
 
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
+import { formatMoney } from '@/utils/index'
+
 // import { ref, reactive } from 'vue'
 const props = defineProps({
   item: {

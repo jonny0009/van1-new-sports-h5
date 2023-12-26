@@ -78,7 +78,7 @@ import { showToast } from 'vant'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
-const timeIndex = ref(0)
+const timeIndex = ref(1)
 const beginTime = ref<any>('')
 const endTime = ref<any>('')
 const popupTitle = ref(t('user.state'))
@@ -146,7 +146,7 @@ const selectTime = (index: number) => {
   const endDate = nowDate
   const oneDayDate = 24 * 60 * 60 * 1000
   // 近24小时
-  if (index === 0) {
+  if (index === 1) {
     startDate = nowDate - oneDayDate
   }
   // 近48小时
@@ -154,10 +154,11 @@ const selectTime = (index: number) => {
   //   startDate = nowDate - oneDayDate * 2
   // }
   // 近7天
-  if (index === 1) {
+  if (index === 2) {
     startDate = nowDate - oneDayDate * 7
   }
-  //
+  // console.log();
+
   beginTime.value = startDate
   endTime.value = endDate
   loading.value = true
