@@ -91,31 +91,7 @@ const leagueList = reactive<{ arr: any }>({ arr: [] })
 const gameList = reactive<{ arr: any }>({ arr: [] })
 const ifHistory = ref<Boolean>(false)
 const listLoading = ref<any>(false)
-const ballList = reactive<{ arr: any }>(
-  {
-    arr: [
-      {
-        name: '足球',
-        img: ball1,
-        gameType: 'FT'
-      },
-      {
-        name: '篮球',
-        img: ball2,
-        gameType: 'BK'
-      },
-      {
-        name: '网球',
-        img: ball3,
-        gameType: 'TN'
-      },
-      {
-        name: '羽毛球',
-        img: ball4,
-        gameType: 'OP_BM'
-      }
-    ]
-  }
+const ballList = reactive<{ arr: any }>({ arr: [] }
 )
 onMounted(async () => {
   store.dispatch('app/getAllSports')

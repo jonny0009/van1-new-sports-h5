@@ -3,7 +3,7 @@
     <div class="match-title">
       <!-- {{ item.parlayNum }}场串关 -->
       <div class="title-left">
-        <div>{{ item.parlayNum }}场串关</div>
+        <div>{{ item.parlayNum }}{{ $t('user.session') }}</div>
         <div>
           <img v-for="i in Number(item.parlayNum)" :key="i" class="img_1" src="@/assets/images/user/num5.png" alt="" />
         </div>
@@ -63,15 +63,15 @@
     </div>
     <div class="money-num">
       <div class="money-num-1">
-        <span>投注额:</span>
+        <span>{{ $t('user.BettingAmount') }}:</span>
         <span>
           <!-- <img class="img_1" src="@/assets/images/user/num1.png" alt="" /> -->
           <span v-points="item.gold || 0"></span>
         </span>
       </div>
       <div class="money-num-2">
-        <span v-if="item.state == 3">实际赔付:</span>
-        <span v-if="item.state == 1">可赔付额:</span>
+        <span v-if="item.state == 3">{{ $t('user.practical') }}:</span>
+        <span v-if="item.state == 1">{{ $t('user.CompensableAmount') }}</span>
         <span>
           <!-- <img class="img_1" src="@/assets/images/user/num2.png" alt="" /> -->
           <span v-if="item.state == 3" v-points="item.winAndLossGold || 0" class="num"></span>
@@ -80,7 +80,7 @@
       </div>
     </div>
     <div class="addBtn-1">
-      <span>加注</span>
+      <span>{{ $t('user.fill') }}</span>
       <!-- <img class="img_1" src="@/assets/images/user/num8.png" alt="" /> -->
     </div>
     <!-- <div class="line" />

@@ -44,16 +44,16 @@
       <!-- 3 -->
       <div class="top3">
         <div class="one">
-          <span>投注额：</span>
+          <span>{{ $t('user.BettingAmount') }}</span>
           <div>
             <!-- <img class="img_1" src="@/assets/images/user/num1.png" alt="" /> -->
             <span v-points="item.gold ||0"></span>
           </div>
         </div>
         <div class="one two">
-          <span v-if="item.state==3">实际赔付:</span>
-          <span v-if="item.state==2">实际赔付:</span>
-          <span v-if="item.state==1">可赔付额:</span>
+          <span v-if="item.state==3">{{ $t('user.practical') }}:</span>
+          <span v-if="item.state==2">{{ $t('user.practical') }}:</span>
+          <span v-if="item.state==1">{{ $t('user.CompensableAmount') }}:</span>
           <!-- <span v-else>可能赔付:</span> -->
           <div>
             <!-- <img class="img_1" src="@/assets/images/user/num2.png" alt="" /> -->
@@ -64,7 +64,7 @@
         </div>
       </div>
       <div class="addBtn-1">
-        <span>加注</span>
+        <span>{{ $t('user.fill') }}</span>
         <!-- <img class="img_1" src="@/assets/images/user/num8.png" alt="" /> -->
       </div>
       <!-- line -->

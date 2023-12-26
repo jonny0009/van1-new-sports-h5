@@ -19,7 +19,7 @@
   </div>
   <van-divider />
   <!-- 列表 -->
-  <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" class="dataList" @load="onLoad">
+  <van-list v-model:loading="loading" :finished="finished" finished-text="" class="dataList" @load="onLoad">
     <div v-for="(item, index) in list.arr" :key="index" class="item">
       <div class="title">
         <div class="left  title-left">
@@ -93,6 +93,12 @@
       </div>
     </div>
   </van-popup>
+  <div v-if="!list.arr.length &&finished" class="noData">
+    <img class="img_1" src="@/assets/images/user/noData.png" />
+    <p>
+      未查询到相关数据
+    </p>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -509,6 +515,22 @@ const setBallSelect = (val: any) => {
 
   .item-color {
     color: #7642FD;
+  }
+}
+ .noData {
+  text-align: center;
+  font-family: PingFangSC-Medium;
+  font-size: 24px;
+  color: #96A5AA;
+  letter-spacing: 0;
+  font-weight: 500;
+
+  .img_1 {
+    margin-top: 331px;
+    width: 102px;
+    height: 121px;
+    margin-bottom: 57px;
+
   }
 }
 </style>

@@ -123,12 +123,12 @@ function showPk(val?: any) {
   if (val === 3) {
     popupList.arr = [
       {
-        value: '香港盘',
-        key: 'E'
+        value: '香港盘[HK]',
+        key: 'H'
       },
       {
-        value: '欧洲盘',
-        key: 'H'
+        value: '欧洲盘[DEC]',
+        key: 'E'
       }
     ]
     commonKey.key = plateMask.value.key

@@ -49,7 +49,7 @@ export const date = function (date: any, fmt = 'yyyy-MM-dd hh:mm:ss', number?: a
  * @param decPoint：小数点符号 默认.
  * @param thousandsSep：千分位符号 默认为,
  */
-export const formatMoney = (number: any, decimals = 0, decPoint = '.', thousandsSep = ',') => {
+export const formatMoney = (number: any, decimals = 2, decPoint = '.', thousandsSep = ',') => {
   const num = (number + '').replace(/[^0-9+-Ee.]/g, '')
   const n = !isFinite(+num) ? 0 : +num
   const prec = !isFinite(+decimals) ? 0 : Math.abs(decimals)

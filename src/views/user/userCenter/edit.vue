@@ -30,7 +30,7 @@
       </div>
     </div>
     <van-popup v-model:show="showBottom" position="bottom" closeable round>
-      <div class="popup-title">{{ popupTitle }}</div>
+      <div class="popup-title">{{ $t(`user.${popupTitle}`) }}</div>
       <div class="pk-list">
         <div
           v-for="(item, index) in popupList.arr"
@@ -103,21 +103,21 @@ function showPk(val?: any) {
   if (val === 1) {
     popupList.arr = languages.value
     commonKey.key = lang.value.key
-    popupTitle.value = '语言'
+    popupTitle.value = 'area'
   }
   if (val === 3) {
     popupList.arr = [
       {
-        value: '香港盘',
-        key: 'E'
+        value: '香港盘[HK]',
+        key: 'H'
       },
       {
-        value: '欧洲盘',
-        key: 'H'
+        value: '欧洲盘[DEC]',
+        key: 'E'
       }
     ]
     commonKey.key = plateMask.value.key
-    popupTitle.value = '盘口'
+    popupTitle.value = 'Handicap'
   }
 
   showBottom.value = true

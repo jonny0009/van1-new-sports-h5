@@ -8,30 +8,36 @@
         <img class="img_1" src="@/assets/images/user/selectTime.png" alt="" />
       </p>
     </div>
-  </div>
-  <!-- 状态 -->
-  <div class="status">
-    <div class="status_1">
-      <span>{{ $t('user.state') }}</span>
-      <div class="round" @click.stop="seStatus()">
-        <span>{{ commonKey.value }}</span>
-        <img class="img_1 " :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
+    <!-- 状态 -->
+    <div class="status">
+      <div class="status_1">
+        <span>{{ $t('user.state') }}</span>
+        <div class="round" @click.stop="seStatus()">
+          <span>{{ commonKey.value }}</span>
+          <img class="img_1 " :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
+        </div>
       </div>
     </div>
   </div>
+
   <!-- 列表 -->
-  <div v-if="list.arr.length" class="dataList">
-    <div v-for="(item, index) in list.arr" :key="index">
-      <Single v-if="item.parlayNum ==1" :item="item" class="item"></Single>
-      <Bunch v-if="item.parlayNum !=1 && item.state !==2" :item="item" class="item"></Bunch>
-    </div>
-  </div>
-  <div v-if="!list.arr.length" class="noData">
+  <!-- <div v-if="list.arr.length" class="dataList"> -->
+  <div v-if="!list.arr.length &&finished" class="noData">
     <img class="img_1" src="@/assets/images/user/noData.png" />
     <p>
       {{ $t('user.noData') }}
     </p>
   </div>
+  <van-list v-model:loading="loading" :finished="finished" finished-text="" @load="onLoad">
+    <div v-if="list.arr.length" class="dataList">
+      <div v-for="(item, index) in list.arr" :key="index">
+        <Single v-if="item.parlayNum ==1" :item="item" class="item"></Single>
+        <Bunch v-if="item.parlayNum !=1 && item.state !==2" :item="item" class="item"></Bunch>
+      </div>
+    </div>
+    <!-- </div> -->
+  </van-list>
+
   <van-popup v-model:show="showBottom" position="bottom" closeable round>
     <div class="popup-title">{{ popupTitle }}</div>
     <div class="pk-list">
@@ -68,41 +74,48 @@ import Single from './single.vue'
 import { betRecordTab } from '@/api/user'
 const list = reactive<{ arr: any }>({ arr: [] })
 import { showToast } from 'vant'
+
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
 const timeIndex = ref(0)
 const beginTime = ref<any>('')
 const endTime = ref<any>('')
-const popupTitle = ref('状态')
-const commonKey = ref({ key: '', value: '全部' })
+const popupTitle = ref(t('user.state'))
+const commonKey = ref({ key: '', value: t('user.whole') })
 const showBottom = ref(false)
+const loading = ref(false)
+const finished = ref(false)
+
 // const showTime = ref(false)
 const popupList = reactive<{ arr: any[] }>({
   arr: [
     {
-      value: '全部',
+      value: t('user.whole'),
       key: ''
     },
     {
-      value: '未结算',
+      value: t('user.noFinal'),
       key: '0'
     },
     {
-      value: '已结算',
+      value: t('user.final'),
       key: '1'
     }
   ]
 })
 const timeList = reactive([
   {
-    timeName: '今日'
-  },
-  {
-    timeName: '近48小时'
-  },
-  {
-    timeName: '近7天'
-  },
-  {
     timeName: ''
+  },
+  {
+    timeName: t('user.today')
+  },
+  // {
+  //   timeName: t('user.fortyEight')
+  // },
+  {
+    timeName: t('user.sevenDay')
   }
 
 ])
@@ -110,12 +123,19 @@ onMounted(() => {
   endTime.value = moment().valueOf()
   const oneDayDate = 24 * 60 * 60 * 1000
   beginTime.value = endTime.value - oneDayDate
-  getNoAccount()
+  // getNoAccount()
 })
+const onLoad = () => {
+  getNoAccount()
+}
 
 async function setPk(val: any) {
   commonKey.value = val
   showBottom.value = false
+  loading.value = true
+  finished.value = false
+  page = 0
+  list.arr = []
   getNoAccount()
   console.log(val)
 }
@@ -130,26 +150,31 @@ const selectTime = (index: number) => {
     startDate = nowDate - oneDayDate
   }
   // 近48小时
-  if (index === 1) {
-    startDate = nowDate - oneDayDate * 2
-  }
+  // if (index === 1) {
+  //   startDate = nowDate - oneDayDate * 2
+  // }
   // 近7天
-  if (index === 2) {
+  if (index === 1) {
     startDate = nowDate - oneDayDate * 7
   }
   //
   beginTime.value = startDate
   endTime.value = endDate
+  loading.value = true
+  finished.value = false
+  page = 0
+  list.arr = []
   getNoAccount()
 }
 const seStatus = () => {
   showBottom.value = true
 }
-
+let page: number = 0
 const getNoAccount = async () => {
+  page++
   const params = {
     orderState: commonKey.value.key,
-    page: 1,
+    page: page,
     pageSize: 10,
     beginTime: beginTime.value,
     endTime: endTime.value
@@ -157,9 +182,13 @@ const getNoAccount = async () => {
 
   const res: any = await betRecordTab(params)
   if (res.code !== 200) {
+    loading.value = false
+    finished.value = true
     return showToast(res.msg)
   }
   list.arr = res.data
+  loading.value = false
+  finished.value = true
 }
 
 // systemId
@@ -169,9 +198,10 @@ const getNoAccount = async () => {
 <style lang="scss" scoped>
 // 时间选择
 .timeSelect {
-  margin-top: 10px;
+  margin: 30px 0;
   display: flex;
-  // justify-content: space-around;
+  align-items: center;
+  justify-content: space-around;
 
   .time {
     width: 130px;
@@ -195,7 +225,8 @@ const getNoAccount = async () => {
   }
 
   .imgStyle {
-    margin-left: 180px;
+    // margin-left: 180px;
+    margin-right: 10px;
     width: 64px;
     height: 64px;
     padding: 15px;
@@ -217,10 +248,12 @@ const getNoAccount = async () => {
 
 // 状态
 .status {
-  margin-top: 20px;
+  margin-left: 30px;
+  // margin-top: 20px;
   display: flex;
   align-items: center;
-  // justify-content: center;
+
+  justify-content: flex-end;
   font-family: PingFangSC-Semibold;
   font-size: 24px;
   color: #1F2630;
@@ -312,6 +345,22 @@ const getNoAccount = async () => {
 
   .item-color {
     color: #7642FD;
+  }
+}
+.noData {
+  text-align: center;
+  font-family: PingFangSC-Medium;
+  font-size: 24px;
+  color: #96A5AA;
+  letter-spacing: 0;
+  font-weight: 500;
+
+  .img_1 {
+    margin-top: 331px;
+    width: 102px;
+    height: 121px;
+    margin-bottom: 57px;
+
   }
 }
 </style>
