@@ -52,7 +52,7 @@
           }"
         ></div>
       </div>
-      <Nothing v-if="results.length === 0 && markets.length === 0"></Nothing>
+      <Nothing v-if="results.length === 0 && markets.length === 0&&pendingData.length===0"></Nothing>
       <div
         v-else-if="type < 3 && markets.length"
         class="bet-content"
@@ -121,6 +121,7 @@ const betsProfit = computed(() => store.getters['betting/betsProfit'])
 const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
 const combosIor = computed(() => store.getters['betting/combosIor'])
 const userConfig = computed(() => store.state.user.userConfig)
+const pendingData = computed(() => store.state.user.pendingData)
 watch(() => isOne.value, () => {
   if (isOne.value) {
     open.value = true

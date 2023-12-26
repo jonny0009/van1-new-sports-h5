@@ -34,9 +34,9 @@
             </span>
             <span>
               <!-- 问号图标没找到 -->
-              <img v-if="item.state==1" class="img_1" src="@/assets/images/user/icon23.png" alt="" />
-              <img v-if="item1.betResultDetail==='W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
-              <img v-if="item1.betResultDetail==='L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+              <img v-if="item1.betResultDetail === 'W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
+              <img v-else-if="item1.betResultDetail === 'L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+              <img v-else-if="item.state == 1" class="img_1" src="@/assets/images/user/icon23.png" alt="" />
             </span>
           </div>
         </div>
