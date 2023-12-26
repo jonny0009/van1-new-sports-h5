@@ -2,7 +2,7 @@
   <ArrowTitle
     class="mt10 mb10"
     :src="titleRecommend"
-    text="推荐比赛"
+    :text="$t('home.goofMatch')"
     @returnSuccess="returnStatus"
   />
   <template v-if="!isShow">
