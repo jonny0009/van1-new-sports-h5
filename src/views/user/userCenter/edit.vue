@@ -12,7 +12,7 @@
       </div>
       <div class="top1">
         <span>{{ $t('user.currency') }}</span>
-        <span class="font2">{{ current || 'CNY' }}</span>
+        <span class="font2">{{ currency }}</span>
       </div>
       <div class="top1" @click="showPk(1)">
         <span>{{ $t('user.lang') }}</span>
@@ -57,11 +57,11 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { getCMerAccessWallet } from '@/api/user'
+// import { getCMerAccessWallet } from '@/api/user'
 const $router = useRouter()
 import localStore from '@/utils/localStore'
 import store from '@/store'
-import { showToast } from 'vant'
+// import { showToast } from 'vant'
 
 const languages = computed(() => store.state.app.queryCMerLanguage.accessLanguage)
 
@@ -71,9 +71,10 @@ const language: any = localStore.getItem('language')
 const lang = ref<any>(language || {})
 
 const userInfo = computed(() => store.state.user.userInfo)
+const currency = computed(() => store.state.user.currency)
 // const balance = computed(() => store.state.user.balance)
 const commonKey = reactive({ key: '' })
-const current = ref('')
+// const current = ref('')
 const showBottom = ref(false)
 
 const popupTitle = ref('')
@@ -103,7 +104,7 @@ const plateData = reactive<{ arr: any[] }>({
 
 onMounted(() => {
   store.dispatch('app/queryCMerLanguage')
-  getCurrent()
+  // getCurrent()
   const obj = plateData.arr.find((item: any) => {
     if (item.key === plateMask.value.key || '') {
       return item
@@ -111,14 +112,14 @@ onMounted(() => {
   })
   plateMask.value = obj
 })
-const getCurrent = async () => {
-  const res: any = await getCMerAccessWallet({})
-  if (res.code === 200) {
-    current.value = res.data[0].currency
-  } else {
-    showToast(res.msg)
-  }
-}
+// const getCurrent = async () => {
+//   const res: any = await getCMerAccessWallet({})
+//   if (res.code === 200) {
+//     current.value = res.data[0].currency
+//   } else {
+//     showToast(res.msg)
+//   }
+// }
 const goBack = () => {
   $router.back()
 }

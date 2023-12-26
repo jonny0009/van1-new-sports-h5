@@ -65,7 +65,9 @@
       <div class="money-num-1">
         <span>{{ $t('user.BettingAmount') }}:</span>
         <span>
-          <!-- <img class="img_1" src="@/assets/images/user/num1.png" alt="" /> -->
+          <img v-if="currency==='CNY'" class="img_1" :src="CNY1" alt="" />
+          <img v-else-if="currency==='VNDK'" class="img_1" :src="VNDK1" alt="" />
+          <img v-else class="img_1" src="@/assets/images/user/USDT1.png" alt="" />
           <span>
             {{ formatMoney(item.gold) }}
           </span>
@@ -75,7 +77,11 @@
         <span v-if="item.state == 3">{{ $t('user.practical') }}:</span>
         <span v-if="item.state == 1">{{ $t('user.CompensableAmount') }}:</span>
         <span>
-          <!-- <img class="img_1" src="@/assets/images/user/num2.png" alt="" /> -->
+
+          <img v-if="currency==='CNY'" class="img_1" :src="CNY2" alt="" />
+          <img v-else-if="currency==='VNDK'" class="img_1" :src="VNDK2" alt="" />
+          <img v-else class="img_1" src="@/assets/images/user/num2.png" alt="" />
+
           <span v-if="item.state == 3" class="num">
             {{ formatMoney(item.winAndLossGold) }}
           </span>
@@ -106,8 +112,15 @@
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
 import { formatMoney } from '@/utils/index'
+import CNY1 from '@/assets/images/user/CNY1.svg'
+import VNDK1 from '@/assets/images/user/VNDK1.svg'
+import CNY2 from '@/assets/images/user/CNY2.svg'
+import VNDK2 from '@/assets/images/user/VNDK2.svg'
 
-// import { ref, reactive } from 'vue'
+import { computed } from 'vue'
+import store from '@/store'
+const currency = computed(() => store.state.user.currency)
+
 const props = defineProps({
   item: {
     type: Object,

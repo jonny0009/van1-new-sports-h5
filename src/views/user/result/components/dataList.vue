@@ -78,7 +78,7 @@ import { showToast } from 'vant'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
-const timeIndex = ref(1)
+const timeIndex = ref(2)
 const beginTime = ref<any>('')
 const endTime = ref<any>('')
 const popupTitle = ref(t('user.state'))
@@ -122,7 +122,7 @@ const timeList = reactive([
 onMounted(() => {
   endTime.value = moment().valueOf()
   const oneDayDate = 24 * 60 * 60 * 1000
-  beginTime.value = endTime.value - oneDayDate
+  beginTime.value = endTime.value - oneDayDate * 7
   // getNoAccount()
 })
 const onLoad = () => {

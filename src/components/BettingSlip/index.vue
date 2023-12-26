@@ -52,7 +52,7 @@
           }"
         ></div>
       </div>
-      <Nothing v-if="results.length === 0 && markets.length === 0&&pendingData.length===0"></Nothing>
+      <Nothing v-if="results.length === 0 && markets.length === 0 && type !== 3"></Nothing>
       <div
         v-else-if="type < 3 && markets.length"
         class="bet-content"
@@ -74,11 +74,11 @@
         <Singles v-for="( market, index ) in markets " :key="index" :market-info="market"></Singles>
         <ActionBar />
       </div>
-      <Result v-if="results.length"></Result>
-      <Pending v-if="type == 3"></Pending>
+      <Result v-if="type !== 3"></Result>
+      <div v-if="type == 3" class="bet-content"><Pending></Pending></div>
     </div>
   </div>
-  <Keyboard></Keyboard>
+  <Keyboard v-if="type !== 3"></Keyboard>
 </template>
 <script lang="ts" setup>
 import { ref, computed, watch } from 'vue'
@@ -121,7 +121,6 @@ const betsProfit = computed(() => store.getters['betting/betsProfit'])
 const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
 const combosIor = computed(() => store.getters['betting/combosIor'])
 const userConfig = computed(() => store.state.user.userConfig)
-const pendingData = computed(() => store.state.user.pendingData)
 watch(() => isOne.value, () => {
   if (isOne.value) {
     open.value = true
@@ -346,11 +345,11 @@ hitTimer()
       position: relative;
 
       .bet-num {
-        display:inline-block;
+        display: inline-block;
         font-family: PingFangSC-Medium;
         font-size: 23px;
         color: #FFFFFF;
-        background-color:  #7642FD;;
+        background-color: #7642FD;
         letter-spacing: 0;
         text-align: center;
         font-weight: 500;
@@ -358,7 +357,7 @@ hitTimer()
         height: 38px;
         line-height: 40px;
         border-radius: 50%;
-        position:absolute;
+        position: absolute;
         top: -15px;
         right: 45px;
       }

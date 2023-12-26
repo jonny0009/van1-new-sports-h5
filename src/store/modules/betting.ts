@@ -1,6 +1,7 @@
 import localStore from '@/utils/localStore'
 import { Module } from 'vuex'
 import { Betting } from '#/store'
+import store from '@/store'
 import {
   betParams,
   buyCombosParams,
@@ -454,6 +455,7 @@ const bettingModule: Module<Betting, any> = {
           return { ...find, ...order }
         })
         dispatch('clearMarkets')
+        store.dispatch('user/pendingOrder')
       } else {
         return Promise.reject(lang.global.t('betting.errorTips'))
       }
@@ -483,6 +485,7 @@ const bettingModule: Module<Betting, any> = {
           }
         ]
         dispatch('clearMarkets')
+        store.dispatch('user/pendingOrder')
       } else {
         return Promise.reject(lang.global.t('betting.errorTips'))
       }

@@ -16,7 +16,7 @@
     height: calc(100vh - 150px);
     overflow-y: auto;
 
-    .noData {
+    > .noData {
       text-align: center;
       font-family: PingFangSC-Medium;
       font-size: 24px;
@@ -42,7 +42,8 @@
 
       .cell {
         background: #EFF1F2;
-        border-radius: 10px 0 0 10px;
+        // border-radius: 10px 0 0 10px;
+        border-radius: 20px;
         padding: 25px;
         height: 262px;
         position: relative;
