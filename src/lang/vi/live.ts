@@ -41,5 +41,5 @@ export default {
   xub: 'Xuống {num}',
   pause: 'tạm ngừng',
   xround: '{num} vòng',
-  hasReseve: '{num} người đã đặt chỗ'
+  xHas: 'Đã {num}'
 }

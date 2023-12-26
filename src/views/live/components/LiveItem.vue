@@ -8,7 +8,7 @@
         <span v-else>{{ formatToDateTime(item.gameDate, 'MM-DD HH:mm') }}</span>
       </div>
       <div class="mask-reseve" v-if="item.showType != 'RB'">
-        <span>{{ $t('live.hasReseve', { num: watchNumText }) }}</span>
+        <span>{{ $t('live.xHas', { num: watchNumText }) }}</span>
       </div>
     </div>
 
