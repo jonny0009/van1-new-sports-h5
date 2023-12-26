@@ -1,7 +1,7 @@
 <template>
   <div class="Single-wrap">
-    <div class="remove" @click="remove">
-      <van-icon name="cross" />
+    <div class="remove">
+      <van-icon name="cross" :class="{ fixed: marketInfo.errorCode }" @click.stop="remove" />
     </div>
     <div class="content">
       <div class="title">
@@ -121,7 +121,23 @@ const inputTouch = () => {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url('@/assets/images/betting/single-close-bg.png');
+    background-color: #c1c1c1;
+    border-radius: 20px 0 0 20px;
+
+    .van-icon {
+      font-size: 32px;
+
+      &.fixed {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        color: #fff;
+        z-index: 99;
+      }
+    }
   }
 
   .content {
@@ -191,6 +207,7 @@ const inputTouch = () => {
         background-repeat: no-repeat;
         background-position: center;
         transform: rotate(180deg);
+
         &.up {
           background-image: url('@/assets/images/betting/up.png');
         }

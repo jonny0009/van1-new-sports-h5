@@ -49,6 +49,7 @@ declare interface Betting {
   hitState: any
   moreShow: any
   moreParams: any
+  oddChangesState: any
 }
 
 declare module '@vue/runtime-core' {

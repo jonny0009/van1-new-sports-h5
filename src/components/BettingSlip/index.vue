@@ -52,7 +52,7 @@
           }"
         ></div>
       </div>
-      <Nothing v-if="results.length === 0 && markets.length === 0"></Nothing>
+      <Nothing v-if="results.length === 0 && markets.length === 0 && type < 3"></Nothing>
       <div
         v-else-if="type < 3 && markets.length"
         class="bet-content"
@@ -127,7 +127,9 @@ watch(() => isOne.value, () => {
   }
 })
 watch(() => markets.value.length, () => {
-  hitTimer()
+  if (!isOne.value) {
+    hitTimer()
+  }
 })
 watch(() => open.value, () => {
   if (open.value) {
@@ -345,11 +347,12 @@ hitTimer()
       position: relative;
 
       .bet-num {
-        display:inline-block;
+        display: inline-block;
         font-family: PingFangSC-Medium;
         font-size: 23px;
         color: #FFFFFF;
-        background-color:  #7642FD;;
+        background-color: #7642FD;
+        ;
         letter-spacing: 0;
         text-align: center;
         font-weight: 500;
@@ -357,7 +360,7 @@ hitTimer()
         height: 38px;
         line-height: 40px;
         border-radius: 50%;
-        position:absolute;
+        position: absolute;
         top: -15px;
         right: 45px;
       }
