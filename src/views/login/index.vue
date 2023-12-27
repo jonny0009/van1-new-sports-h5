@@ -62,9 +62,10 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import store from '@/store'
+// import store from '@/store'
 import localStore from '@/utils/localStore'
 // import { getPlateMask } from '@/api/user'
+// import { getToken } from '@/utils/auth'
 
 const $router = useRouter()
 const popupTitle = ref('')
@@ -77,30 +78,32 @@ const showBottom = ref(false)
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
-const plateMaskObj: any = localStore.getItem('plateMaskObj')
-const plateMask = ref<any>((plateMaskObj || {}))
+const plateMaskKey: any = localStore.getItem('plateMaskKey') || ''
+const plateMask = ref<any>({})
 
 const plateData = reactive<{ arr: any[] }>({
   arr: [
     {
-      value: t('user.Europe'),
-      key: 'E'
-    },
-    {
       value: t('user.hk'),
       key: 'H'
+    },
+    {
+      value: t('user.Europe'),
+      key: 'E'
     }
-
   ]
 })
-
+const defaultPlate = {
+  value: t('user.hk'),
+  key: 'H'
+}
 onMounted(() => {
   const obj = plateData.arr.find((item: any) => {
-    if (item.key === plateMask.value.key || '') {
+    if (item.key === plateMaskKey || '') {
       return item
     }
   })
-  plateMask.value = obj
+  plateMask.value = obj || defaultPlate
 })
 
 // 弹窗
@@ -118,9 +121,11 @@ function showPk(val?: any) {
 // 设置
 async function setPk(val: any) {
   if (popupIndex.value === 3) {
-    localStore.setItem('plateMaskObj', val)
+    localStore.setItem('plateMaskKey', val.key)
     plateMask.value = val
-    store.dispatch('user/configSettingNew', { handicapType: val.key })
+    // if (getToken()) {
+    //   store.dispatch('user/configSettingNew', { handicapType: val.key })
+    // }
   }
   showBottom.value = false
 }

@@ -17,14 +17,14 @@
       <div class="top1" @click="showPk(1)">
         <span>{{ $t('user.lang') }}</span>
         <div class="font3">
-          <span class="font2">{{ lang.value || '简体中文' }}</span>
+          <span class="font2">{{ lang?.value || '简体中文' }}</span>
           <img class="arrow" src="@/assets/images/login/go@2x.png" />
         </div>
       </div>
       <div class="top1" @click="showPk(3)">
         <span>{{ $t('user.Handicap') }}</span>
         <div class="font3">
-          <span class="font2">{{ plateMask.value }}</span>
+          <span class="font2">{{ plateMask?.value }}</span>
           <img class="arrow" src="@/assets/images/login/go@2x.png" />
         </div>
       </div>
@@ -56,16 +56,17 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted, reactive } from 'vue'
+import { queryCMerLanguage } from '@/api/auth'
+
 import { useRouter } from 'vue-router'
 // import { getCMerAccessWallet } from '@/api/user'
 const $router = useRouter()
 import localStore from '@/utils/localStore'
 import store from '@/store'
-// import { showToast } from 'vant'
+import { showToast } from 'vant'
 
-const languages = computed(() => store.state.app.queryCMerLanguage.accessLanguage)
-
-const languageType = computed(() => store.state.app.queryCMerLanguage.translate)
+const languages = reactive<{ arr: any[] }>({ arr: [] })
+const languageType = ref<any>({})
 
 const language: any = localStore.getItem('language')
 const lang = ref<any>(language || {})
@@ -86,41 +87,46 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const title = ref(t('user.account'))
 
-const plateMaskObj: any = localStore.getItem('plateMaskObj')
-const plateMask = ref<any>((plateMaskObj || {}))
+const plateMaskKey: any = localStore.getItem('plateMaskKey') || ''
+const plateMask = ref<any>({})
 
 const plateData = reactive<{ arr: any[] }>({
   arr: [
     {
-      value: t('user.Europe'),
-      key: 'E'
-    },
-    {
       value: t('user.hk'),
       key: 'H'
+    },
+    {
+      value: t('user.Europe'),
+      key: 'E'
     }
-
   ]
 })
-
+const defaultPlate = {
+  value: t('user.hk'),
+  key: 'H'
+}
 onMounted(() => {
-  store.dispatch('app/queryCMerLanguage')
+  // store.dispatch('app/queryCMerLanguage')
   // getCurrent()
+
   const obj = plateData.arr.find((item: any) => {
-    if (item.key === plateMask.value.key || '') {
+    if (item.key === plateMaskKey || '') {
       return item
     }
   })
-  plateMask.value = obj
+  plateMask.value = obj || defaultPlate
+  getLanguageList()
 })
-// const getCurrent = async () => {
-//   const res: any = await getCMerAccessWallet({})
-//   if (res.code === 200) {
-//     current.value = res.data[0].currency
-//   } else {
-//     showToast(res.msg)
-//   }
-// }
+const getLanguageList = async () => {
+  const res: any = await queryCMerLanguage()
+  if (res.code === 200) {
+    languages.arr = res.data.accessLanguage
+    languageType.value = res.data.translate
+  } else {
+    showToast(res.msg)
+  }
+}
 const goBack = () => {
   $router.back()
 }
@@ -129,15 +135,15 @@ function showPk(val?: any) {
   popupIndex.value = val
   popupList.arr = []
   if (val === 1) {
-    const languageObj = JSON.parse(JSON.stringify(languageType.value || '' as string))[lang.value.key]
-    languages.value.map((e: any) => {
+    const languageObj = languageType.value[lang.value.key || 'zh-cn']
+    languages.arr.map((e: any) => {
       if (languageObj[e.key]) {
         e.value = languageObj[e.key]
       }
     })
-    popupList.arr = languages.value
+    popupList.arr = languages.arr
     commonKey.key = lang.value.key
-    popupTitle.value = 'area'
+    popupTitle.value = 'lang'
   }
   if (val === 3) {
     popupList.arr = plateData.arr
@@ -159,7 +165,7 @@ async function setPk(val: any) {
   }
 
   if (popupIndex.value === 3) {
-    localStore.setItem('plateMaskObj', val)
+    localStore.setItem('plateMaskKey', val.key)
     plateMask.value = val
     store.dispatch('user/configSettingNew', { handicapType: val.key })
   }
