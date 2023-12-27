@@ -31,8 +31,9 @@
       <div class="details">
         <div class="item">
           <i
+            v-if="type === 'RB'"
             class="vior-down"
-            :class="{'change-odds':scope.iorChange === 'down-ior'}"
+            :class="{'change-odds': scope.iorChange === 'down-ior' && type === 'RB' }"
           ></i>
           <span class="vior">
             <!-- <span
@@ -54,8 +55,9 @@
             </span>
           </span>
           <i
+            v-if="type === 'RB'"
             class="vior-up"
-            :class="{'change-odds':scope.iorChange === 'up-ior'}"
+            :class="{'change-odds':scope.iorChange === 'up-ior' && type === 'RB' }"
           ></i>
         </div>
       </div>
@@ -68,6 +70,12 @@ defineProps({
     type: Array,
     default: function () {
       return []
+    }
+  },
+  type: {
+    type: String,
+    default: function () {
+      return 'RB'
     }
   }
 })
