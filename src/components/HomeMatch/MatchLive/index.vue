@@ -117,11 +117,11 @@
             <!-- <span class="num">149</span> -->
             <van-icon class="arrow" name="arrow" />
           </div>
-          <div class="match-footer__item" @click="goClick">
+          <!-- <div class="match-footer__item" @click="goClick">
             <span>投注动态</span>
-            <!-- <span class="num">45</span> -->
+            <span class="num">45</span>
             <van-icon class="arrow" name="arrow" />
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -152,29 +152,39 @@ const goClick = () => {
 //
 const sectionMap:any = {
   0: '',
+
   'Q1': '第一节',
   'Q2': '第二节',
   'Q3': '第三节',
   'Q4': '第四节',
+
   '1h': '第一节',
   '2h': '第二节',
   '3h': '第三节',
   '4h': '第四节',
+
   'OT': '加时赛',
+
   'HT': '中场休息',
+
   'H1': '上半场',
   'H2': '下半场',
+
   'q1': '第一节',
   'q2': '第二节',
   'q3': '第三节',
   'q4': '第四节',
+
   'ot': '加时赛',
+
   'ht': '中场休息',
+
   'h1': '上半场',
   'h2': '下半场'
 }
 const BKSection = (section:any) => {
-  return sectionMap[section]
+  const sectionToLowerCase = section.toLowerCase()
+  return sectionMap[sectionToLowerCase]
 }
 const currBkTime:any = ref('')
 const showRBTime = (raceinfo:any = {}) => {
@@ -267,7 +277,7 @@ const showRBTime = (raceinfo:any = {}) => {
           const bsScoreObj:any = gameInfo ? bsStObj(gameInfo) : ''
           const inningNum = gameInfo.inningNum ? gameInfo?.inningNum
             : bsScoreObj.se_now > 0 ? bsScoreObj.se_now : bsScoreObj.score.num
-          const juCount = `<span class="">第${inningNum}局</span>`
+          const juCount = `<span>第${inningNum}局</span>`
           return juCount
         }
       //
@@ -296,7 +306,7 @@ const showRBTime = (raceinfo:any = {}) => {
           }
           if (gameInfo?.se_now.indexOf('OT') > -1 || gameInfo?.se_now.indexOf('ot') > -1) {
           // 加时
-            return `加时 <span>${dateFormat(gameInfo.t_count * 1000, 'mm:ss')}</span>`
+            return `加时<span>${dateFormat(gameInfo.t_count * 1000, 'mm:ss')}</span>`
           }
           const seNow1 = gameInfo && gameInfo.se_now
           const tCount1 = gameInfo && +gameInfo.t_count

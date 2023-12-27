@@ -143,11 +143,11 @@
             <!-- <span class="num">149</span> -->
             <van-icon class="arrow" name="arrow" />
           </div>
-          <div class="match-footer__item" @click="goClick">
+          <!-- <div class="match-footer__item" @click="goClick">
             <span>投注动态</span>
-            <!-- <span class="num">45</span> -->
+            <span class="num">45</span>
             <van-icon class="arrow" name="arrow" />
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

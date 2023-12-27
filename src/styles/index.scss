@@ -523,13 +523,27 @@
 .listdown-leave-active{
   transition: all .5s ease
 }
-.listdown-enter-from {
+.listdown-enter-from{
   opacity: 0;
   transform: translateY(53px)
 }
 .listdown-leave-to{
   opacity: 0;
   transform: translateY(-53px)
+}
+
+@keyframes iorblink {
+  0% {
+      opacity: 0
+  }
+
+  50% {
+      opacity: 1
+  }
+
+  to {
+      opacity: 0
+  }
 }
 
 .vior-up,
@@ -552,7 +566,6 @@
 .change-odds{
   animation: blink 1s 3 forwards
 }
-
 @keyframes blink {
   0% {
       opacity: 0
@@ -566,4 +579,5 @@
       opacity: 0
   }
 }
+
 //end home page
