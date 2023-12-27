@@ -8,13 +8,13 @@
       <div class="result-info">
         <div class="title">
           <SportsIcon :icon-src="result.gameType" />
-          <div class="betting-name">{{ result.ratioName }}</div>
+          <div class="betting-name text-overflow">{{ result.ratioName }}</div>
         </div>
         <div class="details">
-          <div v-if="result.isChampion" class="play-name">{{ result.championType }}</div>
-          <div v-else v-play="result" class="play-name"></div>
-          <div v-if="result.isChampion" class="team-info">{{ $t('betting.champion') }}</div>
-          <div v-else class="team-info">{{ result.homeTeam }} VS {{ result.awayTeam }}</div>
+          <div v-if="result.isChampion" class="play-name text-overflow">{{ result.championType }}</div>
+          <div v-else v-play="result" class="play-name text-overflow"></div>
+          <div v-if="result.isChampion" class="team-info text-overflow">{{ $t('betting.champion') }}</div>
+          <div v-else class="team-info text-overflow">{{ result.homeTeam }} VS {{ result.awayTeam }}</div>
         </div>
       </div>
       <div class="betting-odds">@<span v-points="result.ior"></span></div>
@@ -32,7 +32,7 @@ const props = defineProps({
     default: () => { }
   }
 })
-const stateMap:any = {
+const stateMap: any = {
   PRE_HAND: -1,
   CONFIRM: 0,
   PROCESS: 1,
@@ -43,7 +43,7 @@ const stateMap:any = {
   REFUND: 6,
   FAIL: 7
 }
-const timer:any = ref()
+const timer: any = ref()
 const stateClass = computed(() => {
   if (props.result.errorCode) {
     return 'error'
@@ -64,12 +64,12 @@ const getAcceptOrderStateTask = async () => {
     clearInterval(timer.value)
     return false
   }
-  const res:any = await getOrderState({
+  const res: any = await getOrderState({
     orderIds: [props.result.betNo]
   })
   const { code, data } = res
   if (code === 200 && Array.isArray(data) && data.length) {
-    const resultItem:any = data[0]
+    const resultItem: any = data[0]
     const status = stateMap[resultItem.state]
     let errorCode = resultItem.errorCode
     if ([5, 6, 7].includes(status)) {
@@ -141,6 +141,7 @@ const getAcceptOrderStateTask = async () => {
       .title {
         display: flex;
         align-items: center;
+        overflow: hidden;
 
         .betting-name {
           margin-left: 8px;
