@@ -1,3 +1,4 @@
+import { hotSearch } from '@/api/user'
 
 export default {
   lang: '语言',
@@ -116,6 +117,9 @@ export default {
   text15: '账号不存在 ',
   text16: '账号已禁用 ',
   account: '账号 ',
+
+  // 新增4
+  hotSearch: '热门搜索 ',
 
   sports: {
     'officeNumber': '局号',

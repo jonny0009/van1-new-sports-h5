@@ -2,14 +2,12 @@
   <!-- 列表 -->
   <Nothing v-if="!pendingData.length"></Nothing>
   <div v-if="!pendingData.length" class="no-data-height" />
-
   <div v-if="pendingData.length" class="dataList">
     <div v-for="(item, index) in pendingData" :key="index">
       <Single v-if="item.parlayNum ==1" :item="item" class="item"></Single>
       <Bunch v-if="item.parlayNum !=1 && item.state !==2" :item="item" class="item"></Bunch>
     </div>
   </div>
-  <Nothing v-else></Nothing>
 </template>
 
 <script lang="ts" setup>

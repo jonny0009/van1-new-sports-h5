@@ -2,7 +2,7 @@
   <div class="search">
     <div class="search_box">
       <van-cell-group inset>
-        <van-field v-model="keyWords" center clearable :placeholder=" $t('user.search')" @update:model-value="getList">
+        <van-field v-model="keyWords" center clearable :placeholder="$t('user.search')" @update:model-value="getList">
           <template #left-icon>
             <van-image class="searchImg" fit="contain" :src="searchImg" />
           </template>
@@ -13,22 +13,37 @@
     <!-- {{ ballListAll }} -->
     <!-- 推荐 -->
     <div v-if="!keyWords" class="content">
-      <p v-if="!searchHistory.arr.length" class="font_1">{{ $t('user.recommend') }}</p>
-      <p v-else class="font_1 font-2">
-        <span>{{ $t('user.SearchHistory') }}</span>
-        <img class="img_3" src="@/assets/images/user/del.svg" alt="" @click="hanDleClear" />
-      </p>
-      <van-divider />
-      <div v-if="!ifHistory" class="historyList">
-        <div v-for="(item) in searchHistory.arr" :key="item" class="item">
-          <van-image class="itemImg" fit="contain" :src="time" />
-          <span class="font_2" @click="keyWordsSearch(item)">{{ item }}</span>
+      <!-- <p v-if="!searchHistory.arr.length" class="font_1">{{ $t('user.recommend') }}</p> -->
+      <div v-if="searchHistory.arr.length">
+        <p class="font_1 font-2">
+          <span>{{ $t('user.SearchHistory') }}</span>
+          <img class="img_3" src="@/assets/images/user/del.svg" alt="" @click="hanDleClear" />
+        </p>
+        <van-divider />
+        <div class="historyList">
+          <div v-for="(item) in searchHistory.arr" :key="item" class="item">
+            <van-image class="itemImg" fit="contain" :src="time" />
+            <span class="font_2" @click="keyWordsSearch(item)">{{ item }}</span>
+          </div>
         </div>
       </div>
+      <!-- 热门搜索 -->
+      <div v-if="hotList.arr.length" class="hot-recommend">
+        <p class="font_1">{{ $t('user.hotSearch') }}</p>
+        <van-divider />
+        <div class="hot-list">
+          <span v-for="(item) in hotList.arr" :key="item" class="item" @click="keyWordsSearch(item.hotSearchName)">
+            {{ item.hotSearchName }}
+          </span>
+        </div>
+      </div>
+      <!-- 推荐 -->
+      <p class="font_1">{{ $t('user.recommend') }}</p>
+      <van-divider />
       <div class="content-list">
         <div v-for="(item, index) in ballList.arr" :key="index" class="detail" @click="toUrlGame(item)">
           <div class="left">
-            <van-image class="itemImg" fit="contain" :src="getImg(item,index)" />
+            <van-image class="itemImg" fit="contain" :src="getImg(item, index)" />
             <span class="font_2">
               {{ $t(`user.sports.${item.gameType}`) }}
             </span>
@@ -54,7 +69,7 @@
 
 <script lang="ts" setup>
 import { ref, reactive, onMounted, computed } from 'vue'
-import { rightSearch } from '@/api/user'
+import { rightSearch, hotSearch } from '@/api/user'
 import { getAllSports } from '@/api/common'
 import { ImageSource } from '@/config'
 
@@ -90,11 +105,15 @@ const keyWords = ref('')
 const index = ref(1)
 const leagueList = reactive<{ arr: any }>({ arr: [] })
 const gameList = reactive<{ arr: any }>({ arr: [] })
-const ifHistory = ref<Boolean>(false)
+// const ifHistory = ref<Boolean>(false)
 const listLoading = ref<any>(false)
-const ballList = reactive<{ arr: any }>({ arr: [] }
-)
+
+const ballList = reactive<{ arr: any }>({ arr: [] })
+
+const hotList = reactive<{ arr: any }>({ arr: [] })
 onMounted(async () => {
+  // 热门搜索
+  getHotSearchList()
   // store.dispatch('app/getAllSports')
   getBallList()
 })
@@ -117,9 +136,20 @@ const getImg = (item: any, index) => {
   }
   return ball1
 }
+const getHotSearchList = async () => {
+  const params = {
+    lang: localStorage.getItem('locale') || 'zh-cn',
+    gameType: ''
+  }
+  const res: any = await hotSearch(params) || {}
+  if (res.code === 200) {
+    hotList.arr = res.data
+    console.log(hotList.arr, '====')
+  }
+}
 
 const getBallList = async () => {
-  const res:any = await getAllSports() || {}
+  const res: any = await getAllSports() || {}
   if (res.code === 200 && res.data) {
     let arr = res.data || {}
     // item.gameCount !== 0 &&
@@ -128,7 +158,7 @@ const getBallList = async () => {
     // 根据指定字符排序,原来倒着排才可以========
     // const sortArr: any = ['FT', 'BK', 'TN', 'OP_BM']
     const sortArr: any = ['OP_BM', 'TN', 'BK', 'FT']
-    arr.sort(function (a:any, b:any) {
+    arr.sort(function (a: any, b: any) {
       return sortArr.indexOf(b.gameType) - sortArr.indexOf(a.gameType)
     })
     ballList.arr = arr
@@ -156,9 +186,11 @@ const getList = async () => {
   }
   if (res.code === 200) {
     if (keyWords.value) {
-      searchHistory.arr.unshift(keyWords.value)
-      localStore.setItem('searchHistory', searchHistory.arr.slice(0, 6))
-      searchHistory.arr = localStore.getItem('searchHistory')
+      if (!searchHistory.arr.includes(keyWords.value)) {
+        searchHistory.arr.unshift(keyWords.value)
+        localStore.setItem('searchHistory', searchHistory.arr.slice(0, 6))
+        searchHistory.arr = localStore.getItem('searchHistory')
+      }
     }
     listLoading.value = false
     gameList.arr = res.data.gameInfo || []
@@ -260,6 +292,35 @@ const toUrlGame = (item: any) => {
           font-weight: 500;
           margin-left: 14px;
         }
+      }
+    }
+
+    // 热门推荐
+    .hot-recommend {
+      .hot-list {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+
+        .item {
+          display: inline-block;
+          font-family: PingFangSC-Medium;
+          margin-right: 20px;
+          margin-bottom: 13px;
+          // height: 60px;
+          padding: 15px 10px;
+          font-size: 24px;
+          color: #1F2630;
+          letter-spacing: 0;
+          font-weight: 500;
+          background: #EFF1F2;
+          border-radius: 10px;
+        }
+        .item-1{
+           color: #7642FD;;
+        }
+
       }
     }
 
