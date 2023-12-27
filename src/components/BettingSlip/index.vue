@@ -43,7 +43,7 @@
           @click="changeType(item.type)"
         >
           {{ item.title }}
-          <span v-if="item.type === 3" class="bet-num">{{ pendingNum.length || 0 }}</span>
+          <span v-if="item.type === 3 && pendingNum.length" class="bet-num">{{ pendingNum.length || 0 }}</span>
         </div>
         <div
           class="tab-line"
@@ -71,14 +71,16 @@
             @<span v-points="combosIor"></span>
           </div>
         </div>
-        <template v-if="mode===1">
+        <template v-if="mode === 1">
           <Singles v-for="( market, index ) in markets " :key="index" :market-info="market"></Singles>
         </template>
         <Parlay v-else parlay :markets="markets"></Parlay>
         <ActionBar v-if="open" />
       </div>
       <Result v-if="type !== 3"></Result>
-      <div v-if="type == 3" class="bet-content"><Pending></Pending></div>
+      <div v-if="type == 3" class="bet-content">
+        <Pending></Pending>
+      </div>
     </div>
   </div>
   <Keyboard v-if="type !== 3"></Keyboard>
@@ -227,7 +229,7 @@ hitTimer()
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-image: linear-gradient(270deg, var(--color-linear-gradient-1) 0%,  var(--color-linear-gradient-1) 100%);
+  background-image: linear-gradient(270deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-1) 100%);
   border-radius: 10px 10px 0px 0px;
 
   .bet-header-left {

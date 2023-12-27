@@ -6,7 +6,7 @@
     <AppMain />
   </GlobalRefresh>
   <GlobalFooter />
-  <BettingSlip v-if="betShow&&markets.length" />
+  <BettingSlip v-if="betShow && markets.length" />
   <BettingMore />
   <van-back-top bottom="100" right="20" class="GlobalTop">
     <van-icon name="down" />
