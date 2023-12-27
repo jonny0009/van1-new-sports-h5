@@ -69,6 +69,7 @@ export const gameInfo = (game:any) => {
 }
 
 export const tnStObj = (gameInfo:any) => {
+  const { t } = useI18n()
   const senow = gameInfo.se_now ? +gameInfo.se_now.replace(/[^0-9]/gi, '') : 0
   let scgameA
   let scgameH
@@ -242,6 +243,7 @@ export const getTnNext = (index:any, stObj:any, scorePan:any) => {
 }
 
 export const opScoreObj:any = (resultInfo:any, type:any = 5) => {
+  const { t } = useI18n()
   if (!resultInfo) {
     return ''
   }
@@ -334,6 +336,7 @@ export const getOpNext = (index:any, stObj:any, scorePan:any) => {
 }
 // bsStObj
 export const bsStObj = (gameInfo:any) => {
+  const { t } = useI18n()
   const target:any = {}
   target['se_now'] =
     gameInfo.se_now && gameInfo.se_now !== '0'
