@@ -83,19 +83,23 @@
         </span>
       </div>
       <div class="money-num-2">
-        <span v-if="item.state == 3">{{ $t('user.practical') }}:</span>
-        <span v-if="item.state == 1">{{ $t('user.CompensableAmount') }}:</span>
+
+        <span v-if="item.creditState == 0">{{ $t('user.CompensableAmount') }}:</span>
+        <span v-else-if="item.state !==3&& item.state !==5 &&item.state !==0">{{ $t('user.practical') }}:</span>
+
         <span>
 
-          <img v-if="currency==='CNY'" class="img_1" :src="CNY2" alt="" />
-          <img v-else-if="currency==='VNDK'" class="img_1" :src="VNDK2" alt="" />
-          <img v-else class="img_1" src="@/assets/images/user/num2.png" alt="" />
-
-          <span v-if="item.state == 3" class="num">
-            {{ formatMoney(item.winAndLossGold) }}
+          <span v-if="item.state !== 3 && item.state !== 5 && item.state !== 0">
+            <img v-if="currency==='CNY'" class="img_1" :src="CNY2" alt="" />
+            <img v-else-if="currency==='VNDK'" class="img_1" :src="VNDK2" alt="" />
+            <img v-else class="img_1" src="@/assets/images/user/num2.png" alt="" />
           </span>
-          <span v-if="item.state == 1" class="num">
+
+          <span v-if="item.creditState == 0" class="num">
             {{ formatMoney(getProfit(item)) }}
+          </span>
+          <span v-else-if="item.state !==3&& item.state !==5 &&item.state !==0" class="num">
+            {{ formatMoney(item.winAndLossGold) }}
           </span>
         </span>
       </div>
@@ -110,7 +114,7 @@
         <span>{{ $t('user.BettingTime') }}:</span>
         <span>{{ item.createDate }}</span>
       </div>
-      <div v-if="item.state == 3" class="one">
+      <div v-if="item.creditState == 1" class="one">
         <span>{{ $t('user.SettlementTime') }}:</span>
         <span>{{ formatToDateTime(item.resultDate) }}</span>
       </div>

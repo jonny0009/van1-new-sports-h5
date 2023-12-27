@@ -1,9 +1,12 @@
 import store from '@/store'
 import { getURLSearchParams } from '@/utils'
 import { getToken } from '@/utils/auth'
+import localStore from '@/utils/localStore'
 
 export default async () => {
   const searchParams = getURLSearchParams()
+  const plateMaskKey = localStore.getItem('plateMaskKey')
+
   if (searchParams.token) {
     store.commit('user/SET_TOKEN', searchParams.token)
   }
@@ -20,13 +23,15 @@ export default async () => {
   // 查询单双线玩法
   store.dispatch('app/getDoubleLineInfo')
   if (getToken()) {
-    store.dispatch('user/configSettingNew')
+    // store.dispatch('user/configSettingNew')
     // 获取账号信息
     store.dispatch('user/userInfo')
     // 获取钱包币种
     store.dispatch('user/getCurrency')
     // 获取注单数据
     store.dispatch('user/pendingOrder')
+    // 获取盘口或者默认盘口
+    store.dispatch('user/configSettingNew', { handicapType: plateMaskKey || 'H' })
     // 账户余额
     // store.dispatch('user/getBalance')
   }

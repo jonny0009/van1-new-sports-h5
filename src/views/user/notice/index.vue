@@ -19,7 +19,7 @@
               <p class="font_1">{{ item.title }}</p>
               <p class="font_2" v-html="replaceImgUrl(item.content)"></p>
               <div class="font_3">
-                <span>查看完整讯息</span>
+                <span>{{ $t('user.lookInfo') }}</span>
                 <span>{{ formatToDateTime(item.optTime) }}</span>
               </div>
             </div>
@@ -137,7 +137,7 @@ const beforeClose = (position: any) => {
 
 <style scoped>
 :deep(.van-nav-bar__content) {
-  height: 150px;
+  height: 96px;
 }
 
 :deep(.van-nav-bar__title) {

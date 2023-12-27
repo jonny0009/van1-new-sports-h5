@@ -1,7 +1,13 @@
 <template>
   <van-divider />
   <!-- 列表 -->
-  <van-list v-model:loading="loading" :finished="finished" finished-text="" class="dataList" @load="onLoad">
+  <div v-if="!list.arr.length && finished" class="noData">
+    <img class="img_1" src="@/assets/images/user/noData.png" />
+    <p>
+      {{ $t('user.noData') }}
+    </p>
+  </div>
+  <van-list v-if="list.arr.length ||!finished" v-model:loading="loading" :finished="finished" finished-text="" class="dataList" @load="onLoad">
     <div v-for="(outItem, outIndex) in dataList.arr" :key="outIndex" class="dataList-item">
       <div class="date-title">{{ outItem.date }}</div>
       <div v-for="(item, index) in outItem.list" :key="index" class="item">
@@ -47,12 +53,7 @@
       </div>
     </div>
   </van-list>
-  <div v-if="!list.arr.length && finished" class="noData">
-    <img class="img_1" src="@/assets/images/user/noData.png" />
-    <p>
-      {{ $t('user.noData') }}
-    </p>
-  </div>
+
 </template>
 
 <script lang="ts" setup>
@@ -144,7 +145,7 @@ const getTitle = (type: any) => {
 // 列表
 .dataList {
   margin-top: 20px;
-  height: calc(100vh - 330px);
+  height: calc(100vh - 280px);
   overflow-y: auto;
 
   >&-item {
@@ -252,13 +253,13 @@ const getTitle = (type: any) => {
 }
 
 .noData {
+  width: 100%;
   text-align: center;
   font-family: PingFangSC-Medium;
   font-size: 24px;
   color: #96A5AA;
   letter-spacing: 0;
   font-weight: 500;
-  margin: 0 auto;
 
   > .img_1 {
     margin-top: 331px;

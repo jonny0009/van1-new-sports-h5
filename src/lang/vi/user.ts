@@ -103,6 +103,7 @@ export default {
   sevenDay: '7 ngày',
   // 新增4
   hotSearch: 'Tìm kiếm phổ biến',
+  lookInfo: 'Xem tin nhắn đầy đủ',
 
   // 新增3
   compensate: 'Thanh toán',

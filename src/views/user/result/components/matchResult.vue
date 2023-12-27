@@ -18,8 +18,21 @@
     </div>
   </div>
   <van-divider />
+  <div v-if="!list.arr.length && finished" class="noData">
+    <img class="img_1" src="@/assets/images/user/noData.png" />
+    <p>
+      {{ $t('user.noData') }}
+    </p>
+  </div>
   <!-- 列表 -->
-  <van-list v-model:loading="loading" :finished="finished" finished-text="" class="dataList" @load="onLoad">
+  <van-list
+    v-if="list.arr.length || !finished"
+    v-model:loading="loading"
+    :finished="finished"
+    finished-text=""
+    class="dataList"
+    @load="onLoad"
+  >
     <div v-for="(item, index) in list.arr" :key="index" class="item">
       <div class="title">
         <div class="left  title-left">
@@ -93,12 +106,6 @@
       </div>
     </div>
   </van-popup>
-  <div v-if="!list.arr.length &&finished" class="noData">
-    <img class="img_1" src="@/assets/images/user/noData.png" />
-    <p>
-      {{ $t('user.noData') }}
-    </p>
-  </div>
 </template>
 
 <script lang="ts" setup>
@@ -175,7 +182,7 @@ const onLoad = async () => {
       list.arr.push(item)
     })
     loading.value = false
-    finished.value = list.arr.length === data.count
+    finished.value = list.arr.length === data.total
   } else {
     finished.value = true
     loading.value = false
@@ -500,14 +507,15 @@ const setBallSelect = (val: any) => {
     color: #7642FD;
   }
 }
- .noData {
+
+.noData {
+  width: 100%;
   text-align: center;
   font-family: PingFangSC-Medium;
   font-size: 24px;
   color: #96A5AA;
   letter-spacing: 0;
   font-weight: 500;
-  margin: 0 auto;
 
   >.img_1 {
     margin-top: 331px;
