@@ -20,7 +20,6 @@ const Props:any = defineProps({
 const showFUTime = computed(() => {
   const { showtype, gameDate, showType } = Props.raceinfo
   if (showtype === 'FU' || showType === 'FU') {
-    // 早盘
     if (Props.europSingle) {
       return `${dateFormat(gameDate, 'dd-MM')} ${dateFormat(gameDate, 'HH:mm')}`
     }

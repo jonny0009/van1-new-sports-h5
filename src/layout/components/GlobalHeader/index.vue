@@ -10,7 +10,6 @@
             <img v-if="currency==='CNY'" :src="CNY" style="object-fit: contain;" />
             <img v-else-if="currency==='VNDK'" :src="VNDK" style="object-fit: contain;" />
             <img v-else :src="USDTImg" style="object-fit: contain;" />
-            <!-- <img v-else :src="USDTImg" style="object-fit: contain;" /> -->
           </div>
           <span>{{ formatMoney(balance.balance) }}</span>
           <div class="transaction">

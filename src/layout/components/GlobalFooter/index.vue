@@ -29,6 +29,8 @@ import router from '@/router'
 import { showToast } from 'vant'
 import lang from '@/lang'
 import store from '@/store'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 const getRouteName = () => {
   const routerName: any = router?.currentRoute?.value?.name || ''
   return routerName.toLowerCase()
@@ -36,15 +38,15 @@ const getRouteName = () => {
 const barFooterArrayChange = (): Array<any> => {
   const barFooterArray = [
     {
-      text: '直播',
+      text: t('home.live'),
       value: 'live'
     },
     {
-      text: '体育',
+      text: t('home.sport'),
       value: 'home'
     },
     {
-      text: '赌场',
+      text: t('home.casino'),
       value: 'game'
     }
   ]

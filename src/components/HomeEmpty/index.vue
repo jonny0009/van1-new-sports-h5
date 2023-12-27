@@ -1,7 +1,9 @@
 <template>
   <div class="my-empty">
     <img class="my-empty__img" :src="emptyDefault">
-    <div class="my-empty__text">未查询到相关数据</div>
+    <div class="my-empty__text">
+      {{ $t('home.searchNoData') }}
+    </div>
   </div>
 </template>
 <script lang="ts" setup>

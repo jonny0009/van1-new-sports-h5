@@ -4,7 +4,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { matchDate } from '@/utils/matchDate.ts'
+import { matchDate } from '@/utils/home/matchDate.ts'
 defineProps({
   timeSendParams: {
     type: Object,

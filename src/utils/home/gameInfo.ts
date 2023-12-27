@@ -1,4 +1,6 @@
+import { useI18n } from 'vue-i18n'
 export const gameInfo = (game:any) => {
+  const { t } = useI18n()
   const obj:any = { status: '', text: '', time: '', scoreHome: '', scoreAway: '' }
   if (game && game.showtype === 'RB' && (game.gameInfo || game.runningData)) {
     const gameInfoObj = game.gameInfo || game.runningData || {}
@@ -24,22 +26,22 @@ export const gameInfo = (game:any) => {
     // 2H^32:11：下半场计时32:11
     if (reTime === 'HT^^') {
       obj.status = 'HT'
-      obj.text = '中场休息'
+      obj.text = t('home.HT')
     }
     if (game.gameType === 'FT') {
       // 足球
       if (re1 && re2) {
         if (re1 === '1H') {
           obj.status = '1H'
-          obj.text = '上半场'
+          obj.text = t('home.1H')
           obj.time = re2
         } else if (re1 === '2H') {
           obj.status = '2H'
-          obj.text = '下半场'
+          obj.text = t('home.2H')
           obj.time = re2
         } else if (re1 === 'LIVE' && re2 === '0') {
           obj.status = 'STOP'
-          obj.text = '暂停'
+          obj.text = t('home.stop')
         }
       }
     } else if (game.gameType === 'BK') {
@@ -67,7 +69,6 @@ export const gameInfo = (game:any) => {
 }
 
 export const tnStObj = (gameInfo:any) => {
-  // let senow, scgameA, scgameH, scsetA, scsetH  = gameInfo
   const senow = gameInfo.se_now ? +gameInfo.se_now.replace(/[^0-9]/gi, '') : 0
   let scgameA
   let scgameH
@@ -159,11 +160,12 @@ export const tnStObj = (gameInfo:any) => {
   const score2Home = score2arr[0]
   const score2Away = score2arr[1]
   if (senow) {
-    showText = `第${senow}盘` +
+    showText = t('home.bout', { number: senow }) +
      `${stObj[`sc${senow}stH`]}:${stObj[`sc${senow}stA`]}` +
      `(${scgameH || scgameA ? (scgameH || 0) + ':' + (scgameA || 0) : ''})`
 
-    panNum = `第${senow}盘`
+    panNum = t('home.bout', { number: senow })
+
     score1 = `${stObj[`sc${senow}stH`] || 0}:${stObj[`sc${senow}stA`] || 0}`
     score2 = `(${
       scgameH || scgameA ? (scgameH || 0) + ':' + (scgameA || 0) : ''
@@ -171,12 +173,12 @@ export const tnStObj = (gameInfo:any) => {
     score1Home = stObj[`sc${senow}stH`] || 0
     score1Away = stObj[`sc${senow}stA`] || 0
   } else if (currPanNum) {
-    showText = `第${currPanNum}盘` +
+    showText = t('home.bout', { number: currPanNum }) +
       `${stObj[`sc${currPanNum}stH`] || 0}:${
         stObj[`sc${currPanNum}stA`] || 0
       }` +
       `(${scgameH || scgameA ? (scgameH || 0) + ':' + (scgameA || 0) : ''})`
-    panNum = `第${currPanNum}盘`
+    panNum = t('home.bout', { number: currPanNum })
     score1 = `${stObj[`sc${currPanNum}stH`] || 0}:${
       stObj[`sc${currPanNum}stA`] || 0
     }`
@@ -292,7 +294,7 @@ export const opScoreObj:any = (resultInfo:any, type:any = 5) => {
   scObj = {
     scoreArr,
     currPanNum,
-    showText: `第${scorePan.num}局` + ` (${scorePan.scoreH} : ${scorePan.scoreA})`,
+    showText: t('home.set', { number: scorePan.num }) + ` (${scorePan.scoreH} : ${scorePan.scoreA})`,
     scorePan,
     scoreJu
   }
@@ -339,8 +341,8 @@ export const bsStObj = (gameInfo:any) => {
       : ''
   target['sc_half'] = gameInfo.sc_half
     ? +gameInfo.sc_half
-      ? '下'
-      : '上'
+      ? t('home.down')
+      : t('home.up')
     : ''
   target.score = opScoreObj(gameInfo, 9).scorePan
   target['sc_ot'] = gameInfo.sc_ot ? +gameInfo.sc_ot : ''

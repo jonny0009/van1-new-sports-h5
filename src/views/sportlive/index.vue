@@ -1,7 +1,7 @@
 <template>
   <div class="sportlive">
     <div v-if="gameTypeList.length" class="sportlive-Match-Tabs">
-      <TextButton text="推荐" :active="!gameType" @click="clickGameType({})" />
+      <TextButton :text="$t('sport.recommend')" :active="!gameType" @click="clickGameType({})" />
       <SportsButton v-for="(item,idx) in gameTypeList" :key="idx" :text="item.gameType" :active="gameType===item.gameType" @click="clickGameType(item)" />
     </div>
     <Loading v-if="!isLoading" />

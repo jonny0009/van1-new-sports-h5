@@ -26,6 +26,8 @@ import time from '@/assets/images/home/homeTabs/homeTabs-time.png'
 import important from '@/assets/images/home/homeTabs/homeTabs-important.png'
 import defaultImportant from '@/assets/images/home/homeTabs/homeTabs-default-important.png'
 import { ref, computed, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 import router from '@/router'
 const active = computed(() => {
   const getRouteNameObj:any = {
@@ -60,19 +62,19 @@ const homeBarArrayTable = (val:any):Array<any> => {
   const homeBarArrayTableArray:any = [
     {
       value: 'ImportantRecommend',
-      text: '重点推荐',
+      text: t('home.focusRecommend'),
       icon: defaultImportant,
       name: 'Home'
     },
     {
       value: 'TimeSort',
-      text: '按时间排',
+      text: t('home.timeSort'),
       icon: defaultTime,
       name: 'HomeTime'
     },
     {
       value: 'ChampionBet',
-      text: '冠军竞猜',
+      text: t('home.championBetting'),
       icon: defaultChampion,
       name: 'Champion'
     }

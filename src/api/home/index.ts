@@ -1,6 +1,4 @@
 import request from '@/utils/request'
-
-// 热门赛事
 export const firstLeagues = (params:any) => {
   return request({
     url: '/ai/mobile/matches/firstLeagues',
@@ -8,7 +6,6 @@ export const firstLeagues = (params:any) => {
     params
   })
 }
-// 推荐比赛
 export const recommendEvents = (params:any) => {
   return request({
     url: '/ai/mobile/recommend/events',
@@ -16,7 +13,6 @@ export const recommendEvents = (params:any) => {
     params
   })
 }
-
 export const apiRBCondition = (params:any) => {
   return request({
     url: '/ai/mobile/matches/getRBCondition',
@@ -24,7 +20,6 @@ export const apiRBCondition = (params:any) => {
     params
   })
 }
-
 export const apiCommonMatches = (params:any) => {
   return request({
     url: '/ai/mobile/matches/commonMatches',
