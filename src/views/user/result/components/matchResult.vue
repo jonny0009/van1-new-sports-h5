@@ -18,36 +18,47 @@
     </div>
   </div>
   <van-divider />
+  <div v-if="!list.arr.length && finished" class="noData">
+    <img class="img_1" src="@/assets/images/user/noData.png" />
+    <p>
+      {{ $t('user.noData') }}
+    </p>
+  </div>
   <!-- 列表 -->
-  <van-list v-model:loading="loading" :finished="finished" finished-text="" @load="onLoad">
-    <div v-if="list.arr.length" class="dataList">
-      <div v-for="(item, index) in list.arr" :key="index" class="item">
-        <div class="title">
-          <div class="left  title-left">
-            <img class="img_1" src="@/assets/images/login/ball1.svg" />
-            {{ item.leagueName }}
-          </div>
-          <div class="right">
-            {{ getMatchTime(item) }}
-          </div>
+  <van-list
+    v-if="list.arr.length || !finished"
+    v-model:loading="loading"
+    :finished="finished"
+    finished-text=""
+    class="dataList"
+    @load="onLoad"
+  >
+    <div v-for="(item, index) in list.arr" :key="index" class="item">
+      <div class="title">
+        <div class="left  title-left">
+          <img class="img_1" src="@/assets/images/login/ball1.svg" />
+          {{ item.leagueName }}
         </div>
-        <div class="match-content">
-          <div class="left">
-            <div class="left-1">
-              {{ item.homeTeamName }}
-            </div>
-            <img class="img_1" :src="getImg(item.homeTeamLogo)" alt="" />
+        <div class="right">
+          {{ getMatchTime(item) }}
+        </div>
+      </div>
+      <div class="match-content">
+        <div class="left">
+          <div class="left-1">
+            {{ item.homeTeamName }}
           </div>
-          <div class="center">
-            {{ item.result.GM_h || 0 }}
-            :
-            {{ item.result.GM_c || 0 }}
-          </div>
-          <div class="right">
-            <img class="img_2" :src="getImg(item.awayTeamLogo)" alt="" />
-            <div class="right-1">
-              {{ item.awayTeamName }}
-            </div>
+          <img class="img_1" :src="getImg(item.homeTeamLogo)" alt="" />
+        </div>
+        <div class="center">
+          {{ item.result.GM_h || 0 }}
+          :
+          {{ item.result.GM_c || 0 }}
+        </div>
+        <div class="right">
+          <img class="img_2" :src="getImg(item.awayTeamLogo)" alt="" />
+          <div class="right-1">
+            {{ item.awayTeamName }}
           </div>
         </div>
       </div>
@@ -95,12 +106,6 @@
       </div>
     </div>
   </van-popup>
-  <div v-if="!list.arr.length &&finished" class="noData">
-    <img class="img_1" src="@/assets/images/user/noData.png" />
-    <p>
-      {{ $t('user.noData') }}
-    </p>
-  </div>
 </template>
 
 <script lang="ts" setup>
@@ -177,7 +182,7 @@ const onLoad = async () => {
       list.arr.push(item)
     })
     loading.value = false
-    finished.value = list.arr.length === data.count
+    finished.value = list.arr.length === data.total
   } else {
     finished.value = true
     loading.value = false
@@ -357,7 +362,7 @@ const setBallSelect = (val: any) => {
 // 列表
 .dataList {
   margin-top: 20px;
-  height: calc(100vh - 440px);
+  height: calc(100vh - 390px);
   overflow-y: auto;
 
   .color-1 {
@@ -502,7 +507,8 @@ const setBallSelect = (val: any) => {
     color: #7642FD;
   }
 }
- .noData {
+
+.noData {
   width: 100%;
   text-align: center;
   font-family: PingFangSC-Medium;

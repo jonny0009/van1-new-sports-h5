@@ -1,60 +1,59 @@
 <template>
   <van-divider />
   <!-- 列表 -->
-  <van-list v-model:loading="loading" :finished="finished" finished-text="" @load="onLoad">
-    <div v-if="dataList.arr.length" class="dataList">
-      <div v-for="(outItem, outIndex) in dataList.arr" :key="outIndex" class="dataList-item">
-        <div class="date-title">{{ outItem.date }}</div>
-        <div v-for="(item, index) in outItem.list" :key="index" class="item">
-          <div class="title">
-            {{ getTitle(item.tradeType) }}
-          </div>
-          <div class="line">
-            <div class="left">
-              <div class="left-1">
-                <div class="font">{{ $t('user.betId') }}:</div>
-                <span>
-                  <span class="font-1">{{ item.payno }}</span>
-                  <img v-copy="item.payno" class="img_1" src="@/assets/images/user/copy.svg" />
-                </span>
-              </div>
-              <p class="left-2">
-                <span class="font">{{ $t('user.time') }}:</span>
-                <span>{{ formatToDateTime(item.createTime) }}</span>
-              </p>
-            </div>
-            <div class="right">
-              <div>
-                <div> {{ $t('user.compensate') }}</div>
-                <div class="right-1">
-                  <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
-                  <img v-else-if="item.currency === 'VNDK'" :src="VNDK1" style="object-fit: contain;" />
-                  <img v-else :src="USDT1" style="object-fit: contain;" />
-                  {{ formatMoney(item.tradeGold) }}
-                </div>
-
-              </div>
-              <div>
-                <div> {{ $t('user.balance') }}</div>
-                <div class="right-1">
-                  <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
-                  <img v-else-if="item.currency === 'VNDK'" :src="VNDK1" style="object-fit: contain;" />
-                  <img v-else :src="USDT1" style="object-fit: contain;" />
-                  {{ formatMoney(item.gold) }}</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </van-list>
   <div v-if="!list.arr.length && finished" class="noData">
     <img class="img_1" src="@/assets/images/user/noData.png" />
     <p>
       {{ $t('user.noData') }}
     </p>
   </div>
+  <van-list v-if="list.arr.length ||!finished" v-model:loading="loading" :finished="finished" finished-text="" class="dataList" @load="onLoad">
+    <div v-for="(outItem, outIndex) in dataList.arr" :key="outIndex" class="dataList-item">
+      <div class="date-title">{{ outItem.date }}</div>
+      <div v-for="(item, index) in outItem.list" :key="index" class="item">
+        <div class="title">
+          {{ getTitle(item.tradeType) }}
+        </div>
+        <div class="line">
+          <div class="left">
+            <div class="left-1">
+              <div class="font">{{ $t('user.betId') }}:</div>
+              <span>
+                <span class="font-1">{{ item.payno }}</span>
+                <img v-copy="item.payno" class="img_1" src="@/assets/images/user/copy.svg" />
+              </span>
+            </div>
+            <p class="left-2">
+              <span class="font">{{ $t('user.time') }}:</span>
+              <span>{{ formatToDateTime(item.createTime) }}</span>
+            </p>
+          </div>
+          <div class="right">
+            <div>
+              <div> {{ $t('user.compensate') }}</div>
+              <div class="right-1">
+                <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
+                <img v-else-if="item.currency === 'VNDK'" :src="VNDK1" style="object-fit: contain;" />
+                <img v-else :src="USDT1" style="object-fit: contain;" />
+                {{ formatMoney(item.tradeGold) }}
+              </div>
+
+            </div>
+            <div>
+              <div> {{ $t('user.balance') }}</div>
+              <div class="right-1">
+                <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
+                <img v-else-if="item.currency === 'VNDK'" :src="VNDK1" style="object-fit: contain;" />
+                <img v-else :src="USDT1" style="object-fit: contain;" />
+                {{ formatMoney(item.gold) }}</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </van-list>
+
 </template>
 
 <script lang="ts" setup>
@@ -146,7 +145,7 @@ const getTitle = (type: any) => {
 // 列表
 .dataList {
   margin-top: 20px;
-  height: calc(100vh - 330px);
+  height: calc(100vh - 280px);
   overflow-y: auto;
 
   >&-item {

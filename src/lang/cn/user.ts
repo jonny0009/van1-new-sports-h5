@@ -120,6 +120,7 @@ export default {
 
   // 新增4
   hotSearch: '热门搜索 ',
+  lookInfo: '查看完整讯息 ',
 
   sports: {
     'officeNumber': '局号',

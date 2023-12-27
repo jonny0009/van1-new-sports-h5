@@ -172,7 +172,7 @@ async function setPk(val: any) {
 .noticeDetail {
   .bg-title {
     width: 100%;
-    height: 150px;
+    height: 96px;
     background: url('@/assets/images/login/bg-tit@2x.png');
     background-size: 100% 100%;
 
@@ -183,7 +183,7 @@ async function setPk(val: any) {
   }
 
   >.content {
-    height: calc(100vh - 150px);
+    height: calc(100vh - 96px);
     overflow-y: auto;
     padding: 42px 36px;
 
@@ -270,7 +270,7 @@ async function setPk(val: any) {
 
 <style scoped>
 :deep(.van-nav-bar__content) {
-  height: 150px;
+  height: 96px;
 }
 
 :deep(.van-nav-bar__title) {

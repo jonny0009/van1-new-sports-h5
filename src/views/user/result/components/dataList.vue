@@ -28,12 +28,17 @@
       {{ $t('user.noData') }}
     </p>
   </div>
-  <van-list v-model:loading="loading" :finished="finished" finished-text="" @load="onLoad">
-    <div v-if="list.arr.length" class="dataList">
-      <div v-for="(item, index) in list.arr" :key="index">
-        <Single v-if="item.parlayNum ==1" :item="item" class="item"></Single>
-        <Bunch v-if="item.parlayNum !=1" :item="item" class="item"></Bunch>
-      </div>
+  <van-list
+    v-if="list.arr.length ||!finished"
+    v-model:loading="loading"
+    :finished="finished"
+    finished-text=""
+    class="dataList"
+    @load="onLoad"
+  >
+    <div v-for="(item, index) in list.arr" :key="index">
+      <Single v-if="item.parlayNum ==1" :item="item" class="item"></Single>
+      <Bunch v-if="item.parlayNum !=1" :item="item" class="item"></Bunch>
     </div>
     <!-- </div> -->
   </van-list>
@@ -293,7 +298,7 @@ const getNoAccount = async () => {
 
 // 列表
 .dataList {
-  height: calc(100vh - 450px);
+  height: calc(100vh - 380px);
   overflow-y: auto;
   margin-top: 20px;
 

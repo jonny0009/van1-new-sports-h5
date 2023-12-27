@@ -50,12 +50,12 @@ const goBack = () => {
 
 <style scoped>
 :deep(.van-nav-bar__content) {
-  height: 150px;
+  height: 96px;
 }
 
 :deep(.van-nav-bar__title) {
-  height: 90px;
-  line-height: 90px;
+  height: 96px;
+  line-height: 96px;
   font-family: PingFangSC-Medium;
   font-size: 28px;
   color: #FFFFFF;
