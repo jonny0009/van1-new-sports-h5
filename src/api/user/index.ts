@@ -21,6 +21,14 @@ export const rightSearch = (params:any) => {
     params
   })
 }
+// 热门搜索接口
+export const hotSearch = (params:any) => {
+  return request({
+    url: 'ai/hot/hotSearch',
+    method: 'get',
+    params
+  })
+}
 
 // 获取当前币种
 export const getCMerAccessWallet = (params:any) => {
