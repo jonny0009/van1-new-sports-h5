@@ -101,6 +101,8 @@ export default {
   today: 'Hôm nay',
   fortyEight: 'Gần 48 giờ',
   sevenDay: '7 ngày',
+  // 新增4
+  hotSearch: 'Tìm kiếm phổ biến',
 
   // 新增3
   compensate: 'Thanh toán',

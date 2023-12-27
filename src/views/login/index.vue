@@ -23,26 +23,6 @@
       </div>
 
       <div class="list-set">
-        <!-- <div class="item" @click="showPk(1)">
-          <div class="label-info flex align-center">
-            <div class="icon"><img src="@/assets/images/login/lang@2x.png" /></div>
-            <div class="label">{{ $t('user.lang') }}</div>
-          </div>
-          <div class="label-right">
-            <div class="label">{{ lang.key || '' }}</div>
-            <img class="arrow" src="@/assets/images/login/go@2x.png" />
-          </div>
-        </div> -->
-        <!-- <div class="item" @click="showPk(2)">
-          <div class="label-info flex align-center">
-            <div class="icon"><img src="@/assets/images/login/area@2x.png" /></div>
-            <div class="label">{{ $t('user.area') }}</div>
-          </div>
-          <div class="label-right">
-            <div class="label">{{ areaObj.value }}</div>
-            <img class="arrow" src="@/assets/images/login/go@2x.png" />
-          </div>
-        </div> -->
         <div class="item" @click="showPk(3)">
           <div class="label-info flex align-center">
             <div class="icon"><img src="@/assets/images/login/pankou@2x.png" /></div>
@@ -80,14 +60,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import store from '@/store'
 import localStore from '@/utils/localStore'
 // import { getPlateMask } from '@/api/user'
-const languages = computed(() => store.state.app.queryCMerLanguage.accessLanguage)
-const languageType = computed(() => store.state.app.queryCMerLanguage.translate)
-// const areaList = computed(() => store.state.app.businessConfig.betFont)
 
 const $router = useRouter()
 const popupTitle = ref('')
@@ -95,13 +72,7 @@ const commonKey = reactive({ key: '' })
 const popupIndex = ref(0)
 const popupList = reactive<{ arr: any[] }>({ arr: [] })
 
-const language: any = localStore.getItem('language')
-const lang = ref<any>(language || {})
-
 const showBottom = ref(false)
-
-// const areaSingle: any = localStore.getItem('areaObj')
-// const areaObj = ref<any>((areaSingle || {}))
 
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
@@ -136,28 +107,6 @@ onMounted(() => {
 function showPk(val?: any) {
   popupIndex.value = val
   popupList.arr = []
-  if (val === 1) {
-    popupList.arr = languages.value || []
-    commonKey.key = lang.value.key
-    popupTitle.value = `lang`
-
-    const languageObj = JSON.parse(JSON.stringify(languageType.value || '' as string))
-    const langObj = languageObj[lang.value.key]
-
-    languages.value.map((e: any) => {
-      if (langObj[e.key]) {
-        e.value = langObj[e.key]
-      }
-    })
-    popupList.arr = languages.value
-  }
-  // if (val === 2) {
-  //   popupList.arr = Object.keys(areaList.value || {}).map(function (key) {
-  //     return { key: key, value: areaList.value[key] }
-  //   })
-  //   commonKey.key = areaObj.value.key
-  //   popupTitle.value = 'area'
-  // }
   if (val === 3) {
     popupList.arr = plateData.arr
     commonKey.key = plateMask.value.key
@@ -168,17 +117,6 @@ function showPk(val?: any) {
 }
 // 设置
 async function setPk(val: any) {
-  if (popupIndex.value === 1) {
-    lang.value = val
-    localStorage.setItem('locale', val.key)
-    localStore.setItem('language', val)
-    window.location.reload()
-  }
-  // if (popupIndex.value === 2) {
-  //   localStore.setItem('areaObj', val)
-
-  //   areaObj.value = val
-  // }
   if (popupIndex.value === 3) {
     localStore.setItem('plateMaskObj', val)
     plateMask.value = val
