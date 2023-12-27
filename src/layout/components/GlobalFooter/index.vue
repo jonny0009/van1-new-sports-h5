@@ -33,7 +33,9 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const getRouteName = () => {
   const routerName: any = router?.currentRoute?.value?.name || ''
-  return routerName.toLowerCase()
+  const routerNameToLowerCase = routerName.toLowerCase()
+  const isrouterNameToLowerCase = ['live', 'game'].includes(routerNameToLowerCase)
+  return isrouterNameToLowerCase ? routerNameToLowerCase : 'home'
 }
 const barFooterArrayChange = (): Array<any> => {
   const barFooterArray = [
