@@ -23,8 +23,8 @@ const SportsClick = (item:any) => {
 const sportsList = computed(() => {
   const sports = store.state.app.sports || []
   const newSportsA = sports.filter((e:any) => {
-    // return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.gameCount
-    return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType)
+    return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.gameCount
+    // return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType)
   })
   let newSportsB:any = [
     { text: 'FT' },
