@@ -71,21 +71,21 @@ import earlyIcon from '@/assets/images/home/title-time.png'
 import recommendIcon from '@/assets/images/home/title-recommend.png'
 import ChampionList from './champion/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import router from '@/router'
-import { ref, onBeforeMount, computed } from 'vue'
+import { ref, onBeforeMount, computed, watch } from 'vue'
 import { apiChampionpPlayTypes } from '@/api/champion'
 import { firstLeagues, recommendEvents } from '@/api/home'
 
 import { MarketInfo } from '@/entitys/MarketInfo'
-
+const { currentRoute } = useRouter()
 const route = useRoute()
 
 const leagueId: any = ref(route.query.leagueId)
 const gameType: any = ref(route.params.type)
 const leagueLogo: any = ref()
 const leagueName: any = ref()
-console.log(leagueId.value)
+
 const isOpenRecommend: any = ref(true)
 const recommendCloseClick = (val:any) => {
   isOpenRecommend.value = !val
@@ -100,6 +100,18 @@ onBeforeMount(async () => {
   getFirstLeagues()
   initData()
 })
+
+watch(
+  () => currentRoute.value,
+  (route: any) => {
+    gameType.value = route.params.type
+    leagueId.value = ''
+    console.log(gameType.value)
+    getFirstLeagues()
+    initData()
+  }
+  // { immediate: true }
+)
 
 const initData = async () => {
   if (leagueId.value) {
@@ -124,6 +136,8 @@ const getFirstLeagues = async () => {
     const res:any = await firstLeagues({ gameType: gameType.value }) || {}
     if (res.code === 200 && res.data) {
       firstLeaguesList.value = res.data
+    } else {
+      firstLeaguesList.value = []
     }
   }
 }
@@ -137,9 +151,9 @@ const getRecommendEvents = async (params:any) => {
     getRecommendEventsIsLoading.value = false
     const res:any = await recommendEvents(params) || {}
     getRecommendEventsIsLoading.value = true
-    if (res.code === 200 && res.data) {
+    if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
       recommendList.value = res.data.baseData || []
-      if (res.data.baseData || res.data.baseData.length) {
+      if (res.data.baseData.length) {
         leagueLogo.value = res.data.baseData[0].leagueLogo
         leagueName.value = res.data.baseData[0].leagueShortName
       }
