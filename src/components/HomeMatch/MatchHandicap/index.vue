@@ -95,7 +95,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('R',sendParams)" :type="'RR'" />
+                    <Handicap :send-params="getHandicap('R',sendParams)" />
                   </div>
                 </div>
               </div>
@@ -107,7 +107,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('OU',sendParams)" :type="'RR'" />
+                    <Handicap :send-params="getHandicap('OU',sendParams)" />
                   </div>
                 </div>
               </div>
@@ -119,7 +119,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('M',sendParams)" :type="'RR'" />
+                    <Handicap :send-params="getHandicap('M',sendParams)" />
                   </div>
                 </div>
               </div>

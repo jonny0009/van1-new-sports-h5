@@ -35,24 +35,33 @@
             class="vior-down"
             :class="{'change-odds': scope.iorChange === 'down-ior' }"
           ></i>
-          <span class="vior">
-            <!-- <span
-              v-show="item.marketInfo.oldIor"
+          <template v-if="type === 'RB'">
+            <!--
+                <transition
+                @before-enter="beforeEnter"
+                @enter="enter"
+                @after-enter="afterEnter"
+                >
+              -->
+            <span
               class="oldIor"
-              :class="{
-                'ss' :scope.iorChange
-              }"
             >
               {{ item.marketInfo.oldIor }}
-            </span> -->
+            </span>
             <span
               class="vior"
-              :class="{
-                'ss' :scope.iorChange
-              }"
             >
               {{ item.marketInfo.vior }}
             </span>
+            <!--
+                </transition>
+              -->
+          </template>
+          <span
+            v-else
+            class="vior"
+          >
+            {{ item.marketInfo.vior }}
           </span>
           <i
             v-if="type === 'RB'"
@@ -75,7 +84,7 @@ defineProps({
   type: {
     type: String,
     default: function () {
-      return 'RB'
+      return 'RR'
     }
   }
 })

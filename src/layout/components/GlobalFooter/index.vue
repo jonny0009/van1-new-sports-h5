@@ -8,12 +8,12 @@
       @click="clickChangeActive(item)"
     >
       <template v-if="item.value === 'game'">
-        <img v-if="active === 'game'" class="img" :src="game" style="object-fit: contain" />
-        <img v-else :src="gameDefault" class="img" style="object-fit: contain" />
+        <img v-if="active === 'game'" class="img" :src="game" style="object-fit: contain" :class="item.value" />
+        <img v-else :src="gameDefault" class="img" style="object-fit: contain" :class="item.value" />
       </template>
       <template v-else>
-        <i v-if="item.value === 'live'" class="iconfont icon-live"></i>
-        <i v-else class="iconfont icon-sports"></i>
+        <i v-if="item.value === 'live'" class="iconfont icon-live" :class="item.value"></i>
+        <i v-else class="iconfont icon-sports" :class="item.value"></i>
       </template>
       <span>
         {{ item.text }}
@@ -101,6 +101,9 @@ const clickChangeActive = (item: any) => {
       align-items: flex-end;
       justify-content: center;
       font-weight: 100;
+      &.live{
+        font-size: 40px;
+      }
     }
     span {
       line-height: 24px;

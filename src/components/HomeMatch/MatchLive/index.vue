@@ -68,7 +68,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('RE',sendParams)" />
+                    <Handicap :send-params="getHandicap('RE',sendParams)" :type="'RB'" />
                   </div>
                 </div>
               </div>
@@ -82,7 +82,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('ROU',sendParams)" />
+                    <Handicap :send-params="getHandicap('ROU',sendParams)" :type="'RB'" />
                   </div>
                 </div>
               </div>
@@ -96,7 +96,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('RM',sendParams)" />
+                    <Handicap :send-params="getHandicap('RM',sendParams)" :type="'RB'" />
                   </div>
                 </div>
               </div>
@@ -235,9 +235,9 @@ const showRBTime = (raceinfo:any = {}) => {
           }
           // 上半场and下半场
           return secssion === '1H'
-            ? t('1HNumber', { number: newRaceTimeVal })
+            ? t('home.1HNumber', { number: newRaceTimeVal })
             //  `上半场<span class='time-h-Up'>${newRaceTimeVal}</span>`
-            : t('2HNumber', { number: newRaceTimeVal })
+            : t('home.2HNumber', { number: newRaceTimeVal })
           // `下半场<span class='time-h-d'>${newRaceTimeVal}</span>`
         } else if (gameInfo?.re_time) {
           // 比赛时间容错
@@ -326,7 +326,7 @@ const showRBTime = (raceinfo:any = {}) => {
       //
       // 排球
       case 'OP_VB': // 排球
-        return Obj ? t('t.set', {
+        return Obj ? t('home.set', {
           number: Obj.scorePan.num
         }) : ''
       //
