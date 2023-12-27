@@ -12,12 +12,18 @@
       <HomeEmpty v-if="!recommendEventsList.length" />
       <HomeMatchHandicap v-for="(item,idx) in recommendEventsList" :key="idx" :send-params="item" class="mb10" />
     </template>
+    <div v-if="recommendEventsList.length" class="Button-MatchMore mt10" @click="goToSport">
+      <span>
+        {{ $t('home.lookMoreMatch') }}
+      </span>
+    </div>
   </template>
 </template>
 <script lang="ts" setup>
 import titleRecommend from '@/assets/images/home/title-recommend.png'
 import { onBeforeMount, reactive, ref, computed, watch } from 'vue'
 import store from '@/store'
+import router from '@/router'
 import { recommendEvents } from '@/api/home'
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout:any = ref('')
@@ -58,5 +64,13 @@ onBeforeMount(() => {
 const isShow = ref(false)
 const returnStatus = (val:any) => {
   isShow.value = val
+}
+const goToSport = () => {
+  router.push({
+    name: 'Sport',
+    params: {
+      type: 'FT'
+    }
+  })
 }
 </script>
