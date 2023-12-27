@@ -19,33 +19,35 @@
   </div>
   <van-divider />
   <!-- 列表 -->
-  <van-list v-model:loading="loading" :finished="finished" finished-text="" class="dataList" @load="onLoad">
-    <div v-for="(item, index) in list.arr" :key="index" class="item">
-      <div class="title">
-        <div class="left  title-left">
-          <img class="img_1" src="@/assets/images/login/ball1.svg" />
-          {{ item.leagueName }}
-        </div>
-        <div class="right">
-          {{ getMatchTime(item) }}
-        </div>
-      </div>
-      <div class="match-content">
-        <div class="left">
-          <div class="left-1">
-            {{ item.homeTeamName }}
+  <van-list v-model:loading="loading" :finished="finished" finished-text="" @load="onLoad">
+    <div v-if="list.arr.length" class="dataList">
+      <div v-for="(item, index) in list.arr" :key="index" class="item">
+        <div class="title">
+          <div class="left  title-left">
+            <img class="img_1" src="@/assets/images/login/ball1.svg" />
+            {{ item.leagueName }}
           </div>
-          <img class="img_1" :src="getImg(item.homeTeamLogo)" alt="" />
+          <div class="right">
+            {{ getMatchTime(item) }}
+          </div>
         </div>
-        <div class="center">
-          {{ item.result.GM_h || 0 }}
-          :
-          {{ item.result.GM_c || 0 }}
-        </div>
-        <div class="right">
-          <img class="img_2" :src="getImg(item.awayTeamLogo)" alt="" />
-          <div class="right-1">
-            {{ item.awayTeamName }}
+        <div class="match-content">
+          <div class="left">
+            <div class="left-1">
+              {{ item.homeTeamName }}
+            </div>
+            <img class="img_1" :src="getImg(item.homeTeamLogo)" alt="" />
+          </div>
+          <div class="center">
+            {{ item.result.GM_h || 0 }}
+            :
+            {{ item.result.GM_c || 0 }}
+          </div>
+          <div class="right">
+            <img class="img_2" :src="getImg(item.awayTeamLogo)" alt="" />
+            <div class="right-1">
+              {{ item.awayTeamName }}
+            </div>
           </div>
         </div>
       </div>
@@ -355,7 +357,7 @@ const setBallSelect = (val: any) => {
 // 列表
 .dataList {
   margin-top: 20px;
-  height: calc(100vh - 390px);
+  height: calc(100vh - 440px);
   overflow-y: auto;
 
   .color-1 {
@@ -501,13 +503,13 @@ const setBallSelect = (val: any) => {
   }
 }
  .noData {
+  width: 100%;
   text-align: center;
   font-family: PingFangSC-Medium;
   font-size: 24px;
   color: #96A5AA;
   letter-spacing: 0;
   font-weight: 500;
-  margin: 0 auto;
 
   >.img_1 {
     margin-top: 331px;

@@ -32,7 +32,7 @@
     <div v-if="list.arr.length" class="dataList">
       <div v-for="(item, index) in list.arr" :key="index">
         <Single v-if="item.parlayNum ==1" :item="item" class="item"></Single>
-        <Bunch v-if="item.parlayNum !=1 && item.state !==2" :item="item" class="item"></Bunch>
+        <Bunch v-if="item.parlayNum !=1" :item="item" class="item"></Bunch>
       </div>
     </div>
     <!-- </div> -->
@@ -349,13 +349,13 @@ const getNoAccount = async () => {
   }
 }
 .noData {
+  width: 100%;
   text-align: center;
   font-family: PingFangSC-Medium;
   font-size: 24px;
   color: #96A5AA;
   letter-spacing: 0;
   font-weight: 500;
-  margin: 0 auto;
 
    >.img_1 {
     margin-top: 331px;

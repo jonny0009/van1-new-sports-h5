@@ -14,20 +14,22 @@
       </div>
       <div class="list">
         <van-list v-model:loading="loading" :finished="finished" finished-text="" @load="onLoad">
-          <van-swipe-cell v-for="(item, index) in list.arr" :key="index" :before-close="beforeClose" class="itemContent">
-            <div class="cell" @click="toDetail(item)">
-              <p class="font_1">{{ item.title }}</p>
-              <p class="font_2" v-html="replaceImgUrl(item.content)"></p>
-              <div class="font_3">
-                <span>查看完整讯息</span>
-                <span>{{ formatToDateTime(item.optTime) }}</span>
+          <div v-if="list.arr.length">
+            <van-swipe-cell v-for="(item, index) in list.arr" :key="index" :before-close="beforeClose" class="itemContent">
+              <div class="cell" @click="toDetail(item)">
+                <p class="font_1">{{ item.title }}</p>
+                <p class="font_2" v-html="replaceImgUrl(item.content)"></p>
+                <div class="font_3">
+                  <span>查看完整讯息</span>
+                  <span>{{ formatToDateTime(item.optTime) }}</span>
+                </div>
               </div>
-            </div>
             <!-- //1.0版本没有删除 -->
             <!-- <template #right>
               <img class="img_close" src="@/assets/images/user/close.png" />
             </template> -->
-          </van-swipe-cell>
+            </van-swipe-cell>
+          </div>
         </van-list>
       </div>
     </div>
