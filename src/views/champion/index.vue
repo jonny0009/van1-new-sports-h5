@@ -15,7 +15,9 @@
       </li>
     </ul>
     <ul class="league-tab-wrap">
-      <li :class="chooseLeagueId==='0'?'active':''" @click="clickLeague({leagueId:'0'})">{{ $t('sport.all') }}</li>
+      <li :class="chooseLeagueId==='0'?'active':''" @click="clickLeague({leagueId:'0'})">
+        <div class="all">{{ $t('sport.all') }}</div>
+      </li>
       <li v-for="(item, idx) in leagueListAll" :key="idx" :class="chooseLeagueId===item.leagueId ? 'active':''" @click="clickLeague(item)">
         <div class="img-wrap">
           <img
@@ -139,6 +141,12 @@ const clickSportPage = (item: any) => {
     display: flex;
   }
   .league-tab-wrap{
+    overflow-x: auto;
+    overflow-y: hidden;
+    &::-webkit-scrollbar {
+      height: 0;
+      display: none;
+    }
     li{
       font-family: PingFangSC-Medium;
       font-size: 24px;
@@ -150,6 +158,14 @@ const clickSportPage = (item: any) => {
         background: #7642FD;
       }
     }
+    .all{
+        border-radius: 50px;
+      height: 64px;
+      width: 64px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      }
     .img-wrap,li{
       border-radius: 50px;
       height: 64px;
@@ -157,6 +173,7 @@ const clickSportPage = (item: any) => {
       display: flex;
       justify-content: center;
       align-items: center;
+
       .van-image{
         background: white;
         border-radius: 25px;

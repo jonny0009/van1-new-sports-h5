@@ -28,7 +28,7 @@
       <div class="content-list">
         <div v-for="(item, index) in ballList.arr" :key="index" class="detail" @click="toUrlGame(item)">
           <div class="left">
-            <van-image class="itemImg" fit="contain" :src="getImg(item)" />
+            <van-image class="itemImg" fit="contain" :src="getImg(item,index)" />
             <span class="font_2">
               {{ $t(`user.sports.${item.gameType}`) }}
             </span>
@@ -55,6 +55,7 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted, computed } from 'vue'
 import { rightSearch } from '@/api/user'
+import { getAllSports } from '@/api/common'
 import { ImageSource } from '@/config'
 
 import searchImg from '@/assets/images/globalLayout/header/search.png'
@@ -82,7 +83,7 @@ import localStore from '@/utils/localStore'
 
 import store from '@/store'
 
-const ballListAll = computed(() => store.state.app.sports)
+// const ballListAll = computed(() => store.state.app.sports)
 
 const searchHistory = reactive<{ arr: any }>({ arr: localStore.getItem('searchHistory') || [] })
 const keyWords = ref('')
@@ -94,30 +95,44 @@ const listLoading = ref<any>(false)
 const ballList = reactive<{ arr: any }>({ arr: [] }
 )
 onMounted(async () => {
-  store.dispatch('app/getAllSports')
+  // store.dispatch('app/getAllSports')
   getBallList()
 })
 
-const getImg = (item: any) => {
-  if (item.icon) {
+const getImg = (item: any, index) => {
+  if (item.icon && index > 3) {
     return `${ImageSource}${item.icon}`
+  }
+  if (index === 0) {
+    return ball1
+  }
+  if (index === 1) {
+    return ball4
+  }
+  if (index === 2) {
+    return ball3
+  }
+  if (index === 3) {
+    return ball2
   }
   return ball1
 }
 
-const getBallList = () => {
-  let arr = [...ballListAll.value]
-  arr = arr.filter((item: any) => item.gameCount !== 0 && item.gameType !== 'SY')
-  arr = JSON.parse(JSON.stringify(arr))
-  // 原来倒着排才可以========
-  // const sortArr: any = ['FT', 'BK', 'TN', 'OP_BM']
-  const sortArr: any = ['OP_BM', 'TN', 'BK', 'FT']
-  arr.sort(function (a, b) {
-    return sortArr.indexOf(b.gameType) - sortArr.indexOf(a.gameType)
-  })
-  ballList.arr = arr
-
-  // 根据指定字符排序
+const getBallList = async () => {
+  const res:any = await getAllSports() || {}
+  if (res.code === 200 && res.data) {
+    let arr = res.data || {}
+    // item.gameCount !== 0 &&
+    arr = arr.filter((item: any) => item.gameType !== 'SY')
+    arr = JSON.parse(JSON.stringify(arr))
+    // 根据指定字符排序,原来倒着排才可以========
+    // const sortArr: any = ['FT', 'BK', 'TN', 'OP_BM']
+    const sortArr: any = ['OP_BM', 'TN', 'BK', 'FT']
+    arr.sort(function (a:any, b:any) {
+      return sortArr.indexOf(b.gameType) - sortArr.indexOf(a.gameType)
+    })
+    ballList.arr = arr
+  }
 }
 
 const hanDleClear = async () => {

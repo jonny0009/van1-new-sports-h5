@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="(item1,index1) in props.item.betDTOList" :key="index1">
+    <div v-for="(item1, index1) in props.item.betDTOList" :key="index1">
       <div class="top">
         <div class="left">
           <div class="top-img">
@@ -25,7 +25,7 @@
             <span>
               {{ item1.betItem }}
             </span>
-            <span class="color-2" :class="[item1.betResultDetail==='L'?'color-3':'']">
+            <span class="color-2" :class="[item1.betResultDetail === 'L' ? 'color-3' : '']">
               @{{ item1.ioRatio }}
             </span>
           </div>
@@ -33,10 +33,17 @@
             <span v-play="item1">
             </span>
             <span>
-              <!-- 问号图标没找到 -->
-              <img v-if="item.state==1" class="img_1" src="@/assets/images/user/icon23.png" alt="" />
-              <img v-if="item1.betResultDetail==='W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
-              <img v-if="item1.betResultDetail==='L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+
+              <!-- 平局图标没找到 -->
+              <img v-if="item1.betResultDetail == 'W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
+              <img v-else-if="item1.betResultDetail == 'L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+              <img v-else-if="item1.betResultDetail == 'LW'" class="img_1" src="@/assets/images/user/LW.png" alt="" />
+              <img v-else-if="item1.betResultDetail == 'LL'" class="img_1" src="@/assets/images/user/LL.png" alt="" />
+              <img v-else-if="item1.betResultDetail == 'P'" class="img_1" src="@/assets/images/user/P.svg" alt="" />
+              <img v-else-if="item1.betResultDetail == 'D'" class="img_1" src="@/assets/images/user/D.png" alt="" />
+              <img v-else-if="item.state == 1" class="img_1" src="@/assets/images/user/icon23.png" alt="" />
+              <img v-else class="img_1" src="@/assets/images/user/D.png" alt="" />
+
             </span>
           </div>
         </div>
@@ -46,20 +53,34 @@
         <div class="one">
           <span>{{ $t('user.BettingAmount') }}</span>
           <div>
-            <!-- <img class="img_1" src="@/assets/images/user/num1.png" alt="" /> -->
-            <span v-points="item.gold ||0"></span>
+
+            <img v-if="currency === 'CNY'" class="img_1" :src="CNY1" alt="" />
+            <img v-else-if="currency === 'VNDK'" class="img_1" :src="VNDK1" alt="" />
+            <img v-else class="img_1" src="@/assets/images/user/USDT1.png" alt="" />
+
+            <span> {{ formatMoney(item.gold) }}</span>
           </div>
         </div>
         <div class="one two">
-          <span v-if="item.state==3">{{ $t('user.practical') }}:</span>
-          <span v-if="item.state==2">{{ $t('user.practical') }}:</span>
-          <span v-if="item.state==1">{{ $t('user.CompensableAmount') }}:</span>
+          <span v-if="item.state == 3">{{ $t('user.practical') }}:</span>
+          <span v-if="item.state == 2">{{ $t('user.practical') }}:</span>
+          <span v-if="item.state == 1">{{ $t('user.CompensableAmount') }}:</span>
           <!-- <span v-else>可能赔付:</span> -->
           <div>
-            <!-- <img class="img_1" src="@/assets/images/user/num2.png" alt="" /> -->
-            <span v-if="item.state==3" v-points="item.winAndLossGold ||0" class="color-1"></span>
-            <span v-if="item.state==2" v-points="item.winAndLossGold ||0" class="color-1"></span>
-            <span v-if="item.state==1" v-points="getProfit(item)" class="num color-1"></span>
+
+            <img v-if="currency === 'CNY'" class="img_1" :src="CNY2" alt="" />
+            <img v-else-if="currency === 'VNDK'" class="img_1" :src="VNDK2" alt="" />
+            <img v-else class="img_1" src="@/assets/images/user/num2.png" alt="" />
+
+            <span v-if="item.state == 3" class="color-1">
+              {{ formatMoney(item.winAndLossGold) }}
+            </span>
+            <span v-if="item.state == 2" class="color-1">
+              {{ formatMoney(item.winAndLossGold) }}
+            </span>
+            <span v-if="item.state == 1" class="num color-1">
+              {{ formatMoney(getProfit(item)) }}
+            </span>
           </div>
         </div>
       </div>
@@ -72,10 +93,10 @@
           <span>{{ item.orderId }}</span>
         </div>
         <div class="one">
-          <span>{{ $t('user.OrderID') }}:</span>
-          <span>{{ item.BettingTime }}:</span>
+          <span>{{ $t('user.BettingTime') }}:</span>
+          <span>{{ item.createDate }}</span>
         </div>
-        <div v-if="item.state==3" class="one">
+        <div v-if="item.state == 3" class="one">
           <span>{{ $t('user.SettlementTime') }}:</span>
           <span>{{ formatToDateTime(item.resultDate) }}</span>
         </div>
@@ -85,17 +106,27 @@
 </template>
 
 <script lang="ts" setup>
+import CNY1 from '@/assets/images/user/CNY1.svg'
+import VNDK1 from '@/assets/images/user/VNDK1.svg'
+import CNY2 from '@/assets/images/user/CNY2.svg'
+import VNDK2 from '@/assets/images/user/VNDK2.svg'
+
 import { formatToDateTime } from '@/utils/date'
-// import { ref, reactive } from 'vue'
+import { formatMoney } from '@/utils/index'
+
+import { computed } from 'vue'
+import store from '@/store'
+const currency = computed(() => store.state.user.currency)
+
 const props = defineProps({
   item: {
     type: Object,
-    default: () => {}
+    default: () => { }
   }
 })
-const getProfit = (item:any) => {
+const getProfit = (item: any) => {
   let money = item.gold
-  item.betDTOList.map((i:any) => {
+  item.betDTOList.map((i: any) => {
     money = money * i.ioRatio
   })
 
@@ -106,144 +137,144 @@ const getProfit = (item:any) => {
 
 <style lang="scss" scoped>
 .color-1 {
-    color: #7642FD;
+  color: #7642FD;
+}
+
+.top {
+  display: flex;
+
+  .top-img {
+    height: 80px;
+    width: 80px;
+    position: relative;
+
+    .img_1 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 50px;
+      width: 50px;
+    }
+
+    .img_2 {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      height: 50px;
+      width: 50px;
+    }
   }
- .top {
+
+  .right {
+    margin-left: 18px;
+
+    .font_1 {
+      font-family: PingFangSC-Semibold;
+      font-size: 28px;
+      color: #1F2630;
+      letter-spacing: 0;
+      font-weight: 600;
+    }
+
+    .font_2 {
+      font-family: PingFangSC-Semibold;
+      font-size: 24px;
+      color: #546371;
+      letter-spacing: 0;
+      font-weight: 600;
+    }
+  }
+}
+
+.top2 {
+  margin-top: 20px;
+  background: #E2E6E8;
+  border-radius: 20px;
+  padding: 20px 10px;
+  display: flex;
+  align-items: center;
+
+  .left {
+    margin-right: 15px;
+
+    .img_1 {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  .right {
+    .one {
       display: flex;
-
-      .top-img {
-        height: 80px;
-        width: 80px;
-        position: relative;
-
-        .img_1 {
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 50px;
-          width: 50px;
-        }
-
-        .img_2 {
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          height: 50px;
-          width: 50px;
-        }
-      }
-
-      .right {
-        margin-left: 18px;
-
-        .font_1 {
-          font-family: PingFangSC-Semibold;
-          font-size: 28px;
-          color: #1F2630;
-          letter-spacing: 0;
-          font-weight: 600;
-        }
-
-        .font_2 {
-          font-family: PingFangSC-Semibold;
-          font-size: 24px;
-          color: #546371;
-          letter-spacing: 0;
-          font-weight: 600;
-        }
-      }
+      width: 550px;
+      justify-content: space-between;
+      font-family: PingFangSC-Semibold;
+      font-size: 28px;
+      color: #1F2630;
+      letter-spacing: 0;
+      font-weight: 600;
     }
 
-    .top2 {
-      margin-top: 20px;
-      background: #E2E6E8;
-      border-radius: 20px;
-      padding: 20px 10px;
-      display: flex;
-      align-items: center;
+    .two {
+      font-family: PingFangSC-Semibold;
+      font-size: 24px;
+      color: #546371;
+      letter-spacing: 0;
+      font-weight: 600;
 
-      .left {
-        margin-right: 15px;
-
-        .img_1 {
-          width: 60px;
-          height: 60px;
-        }
-      }
-
-      .right {
-        .one {
-          display: flex;
-          width: 550px;
-          justify-content: space-between;
-          font-family: PingFangSC-Semibold;
-          font-size: 28px;
-          color: #1F2630;
-          letter-spacing: 0;
-          font-weight: 600;
-        }
-
-        .two {
-          font-family: PingFangSC-Semibold;
-          font-size: 24px;
-          color: #546371;
-          letter-spacing: 0;
-          font-weight: 600;
-
-          .img_1 {
-            width: 40px;
-            height: 30px;
-          }
-        }
+      .img_1 {
+        width: 40px;
+        height: 30px;
       }
     }
+  }
+}
 
-    .top3 {
-      margin-top: 9px;
+.top3 {
+  margin-top: 9px;
 
-      .one {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-family: PingFangSC-Semibold;
-        font-size: 24px;
-        color: #546371;
-        letter-spacing: 0;
-        font-weight: 600;
+  .one {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: PingFangSC-Semibold;
+    font-size: 24px;
+    color: #546371;
+    letter-spacing: 0;
+    font-weight: 600;
 
-        .img_1 {
-          width: 20px;
-          height: 19px;
-        }
-      }
-
-      .two {
-        font-family: PingFangSC-Semibold;
-        font-size: 28px;
-        color: #546371;
-        letter-spacing: 0;
-        font-weight: 600;
-      }
+    .img_1 {
+      width: 20px;
+      height: 19px;
     }
+  }
 
-    .line {
-      background: #E0E3E7;
-      height: 2px;
-    }
+  .two {
+    font-family: PingFangSC-Semibold;
+    font-size: 28px;
+    color: #546371;
+    letter-spacing: 0;
+    font-weight: 600;
+  }
+}
 
-    .top4 {
-      margin-top: 10px;
+.line {
+  background: #E0E3E7;
+  height: 2px;
+}
 
-      .one {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-family: PingFangSC-Regular;
-        font-size: 22px;
-        color: #96A5AA;
-        letter-spacing: 0;
-        font-weight: 400;
-      }
-    }
+.top4 {
+  margin-top: 10px;
 
+  .one {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: PingFangSC-Regular;
+    font-size: 22px;
+    color: #96A5AA;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+}
 </style>

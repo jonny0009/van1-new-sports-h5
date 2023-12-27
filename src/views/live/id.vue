@@ -1,19 +1,14 @@
 <template>
   <div class="live-page">
     <div class="match">
-      <div class="match-video">
-        <video ref="videoRef" class="video-js" playsinline></video>
+      <div v-show="!videoError" class="match-video">
+        <video ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
+        <div class="mask-loading" v-if="videoWaiting">
+          <div class="icon"></div>
+          <div class="text">{{ $t('live.effLoading') }}...</div>
+        </div>
       </div>
-      <div v-if="videoWaiting" class="match-loading mask">
-        <div class="icon"></div>
-        <div class="text">{{ $t('live.effLoading') }}...</div>
-      </div>
-      <div v-if="videoError" class="match-error mask">
-        <div class="text">{{ $t('live.vidLoadFail') }}</div>
-      </div>
-      <div v-if="notExtend" class="match-error mask">
-        <div class="text">{{ $t('live.noData') }}</div>
-      </div>
+      <MatchGame v-if="videoError" :matchInfo="matchData" />
     </div>
 
     <div class="tab">
@@ -28,7 +23,6 @@
         <span>{{ item.name }}</span>
       </div>
     </div>
-
     <div class="panel">
       <component :is="compsList[navActive]" :matchInfo="matchData" @more-video="onMoreVideo" />
     </div>
@@ -46,6 +40,7 @@ import TabChat from './components/TabChat/index.vue'
 import TabBets from './components/TabBets/index.vue'
 import TabWith from './components/TabWith/index.vue'
 import TabMore from './components/TabMore/index.vue'
+import MatchGame from './components/MatchGame.vue'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
@@ -72,7 +67,6 @@ const getMatcheInfo = async () => {
 }
 
 const extendData: Ref<any> = ref({})
-const notExtend = ref(false)
 const getExtendInfo = async () => {
   const gidm = route.params['id']
   const res: any = await extendInfo({ gidm })
@@ -81,7 +75,7 @@ const getExtendInfo = async () => {
     initVideo()
   } else {
     extendData.value = {}
-    notExtend.value = true
+    videoError.value = true
   }
 }
 
@@ -167,8 +161,22 @@ onUnmounted(() => {
 
 .match {
   position: relative;
-  height: 440px;
-  .mask {
+  min-height: 280px;
+  &-video {
+    width: 100%;
+    height: 440px;
+    background: #000;
+    display: flex;
+    align-items: center;
+    .video-js {
+      font-size: 20px;
+      height: 100%;
+      video {
+        object-fit: cover;
+      }
+    }
+  }
+  .mask-loading {
     position: absolute;
     left: 0;
     top: 0;
@@ -178,23 +186,6 @@ onUnmounted(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  }
-  &-video {
-    width: 100%;
-    height: 100%;
-    background: #000;
-    display: flex;
-    align-items: center;
-    .video-js {
-      font-size: 20px;
-      height: 100%;
-    }
-    video {
-      object-fit: cover;
-    }
-  }
-
-  &-loading {
     .icon {
       width: 120px;
       height: 120px;
@@ -205,12 +196,6 @@ onUnmounted(() => {
       font-size: 24px;
       color: rgba(255, 255, 255, 0.5);
       margin-top: 20px;
-    }
-  }
-  &-error {
-    font-size: 24px;
-    .text {
-      color: #f2f2f2;
     }
   }
 }

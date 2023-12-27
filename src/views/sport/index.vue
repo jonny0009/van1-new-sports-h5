@@ -13,20 +13,33 @@
         />
       </div>
     </div>
-
-    <ArrowTitle v-if="!leagueId" class="mt10 mb10" :src="recommendIcon" :text="$t('sport.recommend')" @returnSuccess="recommendCloseClick" />
-    <ArrowTitle v-else class="mt10 mb10" :src="leagueLogo" :text="leagueName" @returnSuccess="recommendCloseClick" />
-
-    <template v-if="isOpenRecommend">
-      <Loading v-if="!getRecommendEventsIsLoading" />
-      <template v-else>
-        <div v-if="recommendList.length" class="recommend-list">
-          <HomeMatchHandicap v-for="(item,idx) in recommendList" v-show="isOpenRecommend" :key="idx" :send-params="item" />
-        </div>
-        <HomeEmpty v-else></HomeEmpty>
+    <!-- 联赛 -->
+    <template v-if="recommendList.length && leagueId">
+      <ArrowTitle class="mt10 mb10" :src="leagueLogo" :text="leagueName" @returnSuccess="recommendCloseClick" />
+      <template v-if="isOpenRecommend">
+        <Loading v-if="!getRecommendEventsIsLoading" />
+        <template v-else>
+          <div v-if="recommendList.length" class="recommend-list">
+            <HomeMatchHandicap v-for="(item,idx) in recommendList" v-show="isOpenRecommend" :key="idx" :send-params="item" />
+          </div>
+          <HomeEmpty v-else></HomeEmpty>
+        </template>
       </template>
     </template>
-
+    <!-- 推荐 -->
+    <template v-if="!leagueId">
+      <ArrowTitle class="mt10 mb10" :src="recommendIcon" :text="$t('sport.recommend')" @returnSuccess="recommendCloseClick" />
+      <template v-if="isOpenRecommend">
+        <Loading v-if="!getRecommendEventsIsLoading" />
+        <template v-else>
+          <div v-if="recommendList.length" class="recommend-list">
+            <HomeMatchHandicap v-for="(item,idx) in recommendList" v-show="isOpenRecommend" :key="idx" :send-params="item" />
+          </div>
+          <HomeEmpty v-else></HomeEmpty>
+        </template>
+      </template>
+    </template>
+    <!-- 早盘 -->
     <template v-if="!leagueId">
       <ArrowTitle class="mt10 mb10" :src="earlyIcon" :text="$t('sport.early')" @returnSuccess="earlyCloseClick" />
       <template v-if="isOpenEarly">
@@ -39,7 +52,7 @@
         </template>
       </template>
     </template>
-
+    <!-- 冠军 -->
     <ChampionList v-if="championList.length && leagueId" :champion-list="championList" />
 
     <!-- <div class="Button-MatchMore mt20">

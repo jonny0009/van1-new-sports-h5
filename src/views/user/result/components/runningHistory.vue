@@ -2,7 +2,7 @@
   <van-divider />
   <!-- 列表 -->
   <van-list v-model:loading="loading" :finished="finished" finished-text="" class="dataList" @load="onLoad">
-    <div v-for="(outItem,outIndex) in dataList.arr" :key="outIndex" class="dataList-item">
+    <div v-for="(outItem, outIndex) in dataList.arr" :key="outIndex" class="dataList-item">
       <div class="date-title">{{ outItem.date }}</div>
       <div v-for="(item, index) in outItem.list" :key="index" class="item">
         <div class="title">
@@ -24,12 +24,22 @@
           </div>
           <div class="right">
             <div>
-              <div> {{ $t('user.bet') }}</div>
-              <div class="right-1">{{ item.currency }} {{ formatMoney(item.tradeGold) }}</div>
+              <div> {{ $t('user.compensate') }}</div>
+              <div class="right-1">
+                <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
+                <img v-else-if="item.currency === 'VNDK'" :src="VNDK1" style="object-fit: contain;" />
+                <img v-else :src="USDT1" style="object-fit: contain;" />
+                {{ formatMoney(item.tradeGold) }}
+              </div>
+
             </div>
             <div>
               <div> {{ $t('user.balance') }}</div>
-              <div class="right-1">{{ item.currency }} {{ formatMoney(item.gold) }}</div>
+              <div class="right-1">
+                <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
+                <img v-else-if="item.currency === 'VNDK'" :src="VNDK1" style="object-fit: contain;" />
+                <img v-else :src="USDT1" style="object-fit: contain;" />
+                {{ formatMoney(item.gold) }}</div>
             </div>
           </div>
         </div>
@@ -37,10 +47,10 @@
       </div>
     </div>
   </van-list>
-  <div v-if="!list.arr.length&& finished" class="noData">
+  <div v-if="!list.arr.length && finished" class="noData">
     <img class="img_1" src="@/assets/images/user/noData.png" />
     <p>
-      未查询到相关数据
+      {{ $t('user.noData') }}
     </p>
   </div>
 </template>
@@ -50,6 +60,10 @@ import { ref, reactive, onMounted } from 'vue'
 import { formatToDateTime } from '@/utils/date'
 import { formatMoney } from '@/utils/index'
 import moment from 'moment'
+
+import CNY1 from '@/assets/images/user/CNY1.svg'
+import VNDK1 from '@/assets/images/user/VNDK1.svg'
+import USDT1 from '@/assets/images/user/USDT1.png'
 
 const loading = ref(false)
 const finished = ref(false)
@@ -132,7 +146,8 @@ const getTitle = (type: any) => {
   margin-top: 20px;
   height: calc(100vh - 330px);
   overflow-y: auto;
-  > &-item{
+
+  >&-item {
     margin-bottom: 10px;
   }
 
@@ -225,12 +240,17 @@ const getTitle = (type: any) => {
           color: #000000;
           letter-spacing: 0;
           font-weight: 600;
+          img{
+            width: 20px;
+            height: 20px;
+          }
         }
       }
     }
 
   }
 }
+
 .noData {
   text-align: center;
   font-family: PingFangSC-Medium;
@@ -238,13 +258,13 @@ const getTitle = (type: any) => {
   color: #96A5AA;
   letter-spacing: 0;
   font-weight: 500;
+  margin: 0 auto;
 
-  .img_1 {
+  > .img_1 {
     margin-top: 331px;
     width: 102px;
     height: 121px;
     margin-bottom: 57px;
 
   }
-}
-</style>
+}</style>

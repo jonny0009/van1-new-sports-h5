@@ -83,6 +83,8 @@ export const hitParams = (bets: any) => {
 // 筛选投注参数
 export const buyParams = (markets: any, s: any, t: any) => {
   const { userConfig } = store.state.user || {}
+  const oddChangesState = store.state.betting.oddChangesState || false
+  const autoOdd = oddChangesState ? 'S' : 'N'
   const { handicapType } = userConfig || {}
   const autoRatio = userConfig.acceptAll === 1 ? 'S' : 'N'
   // 当前选择的盘口 欧洲盘/香港盘
@@ -167,10 +169,10 @@ export const buyParams = (markets: any, s: any, t: any) => {
     oddfType,
     betSubList,
     autoRatio,
+    autoOdd,
     betType: 1,
     isCredit: 'N',
-    orderSource: 'AI',
-    autoOdd: 'N'
+    orderSource: 'AI'
   }
 }
 // 筛选串关点水参数
@@ -201,6 +203,8 @@ export const combosHitParams = (combosMarkets: any) => {
 export const buyCombosParams = (markets: Array<MarketInfo>, combos: any, { s, t, gold }: any) => {
   const { userConfig } = store.state.user || {}
   const autoRatio = userConfig.acceptAll === 1 ? 'S' : 'N'
+  const oddChangesState = store.state.betting.oddChangesState || false
+  const autoOdd = oddChangesState ? 'S' : 'N'
   const betSubList = markets.map((bet: any) => {
     const {
       gidm,
@@ -254,9 +258,10 @@ export const buyCombosParams = (markets: Array<MarketInfo>, combos: any, { s, t,
     betSubList,
     comboInfo,
     autoRatio,
+    autoOdd,
     isCredit: 'N',
-    orderSource: 'AI',
-    autoOdd: 'N'
+    orderSource: 'AI'
+
   }
 }
 

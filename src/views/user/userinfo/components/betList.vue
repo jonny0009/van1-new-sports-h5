@@ -21,8 +21,8 @@
           <div class="left" @click="goUrl('/elseInfo')">
             <img class="img_1" :src="getImg(props.peopleInfo.headImg)" alt="" />
             <div class="name">
-              <div>ai-sport</div>
-              <div>@ai-sport</div>
+              <div>{{ userInfo.nickName }}</div>
+              <div class="name-2">{{ userInfo.loginName }}</div>
             </div>
           </div>
           <div class="right">
@@ -109,7 +109,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 
 import Bunch from './bunch.vue'
 import Single from './single.vue'
@@ -118,9 +118,12 @@ import { betRecordTab } from '@/api/user'
 
 import { showToast } from 'vant'
 
-import { useRouter } from 'vue-router'
-const $router = useRouter()
+// import { useRouter } from 'vue-router'
+// const $router = useRouter()
 import moment from 'moment'
+
+import store from '@/store'
+const userInfo = computed(() => store.state.user.userInfo)
 
 import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
 
@@ -177,7 +180,9 @@ const getBetList = async () => {
   console.log()
 }
 const goUrl = (url: string) => {
-  $router.push('/user' + url)
+  console.log(url, '他人未开放===')
+
+  // $router.push('/user' + url)
 }
 </script>
 

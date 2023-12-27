@@ -1,6 +1,7 @@
 import localStore from '@/utils/localStore'
 import { Module } from 'vuex'
 import { Betting } from '#/store'
+import store from '@/store'
 import {
   betParams,
   buyCombosParams,
@@ -17,10 +18,16 @@ import { points } from '@/utils'
 import lang from '@/lang'
 // 投注单store
 const MarketListKey = '_MarketList_'
+const AcceptAllMarketOddChangesKey = 'Accept_All_Market_Odd_Changes'
 const markets = localStore.getItem(MarketListKey) || []
+let oddChangesState: any = localStore.getItem(AcceptAllMarketOddChangesKey)
+if (oddChangesState === null) {
+  oddChangesState = false
+}
 const bettingModule: Module<Betting, any> = {
   namespaced: true,
   state: {
+    oddChangesState,
     markets,
     comboMarkets: [],
     combos: [],
@@ -135,6 +142,10 @@ const bettingModule: Module<Betting, any> = {
     }
   },
   actions: {
+    setOddChangesState({ state }, val) {
+      localStore.setItem(AcceptAllMarketOddChangesKey, val)
+      state.oddChangesState = val
+    },
     setMode({ state }, mode) {
       state.mode = mode
     },
@@ -152,7 +163,7 @@ const bettingModule: Module<Betting, any> = {
       }
     },
     changeComboAmount({ state }, amount) {
-      state.comboAmount = amount
+      state.comboAmount = amount * 1 || ''
     },
     inputSingleAmount({ state }, amount) {
       const find = state.markets.find((marketInfo: MarketInfo) => marketInfo.playOnlyId === state.editId)
@@ -174,7 +185,7 @@ const bettingModule: Module<Betting, any> = {
         const e = '' + state.comboAmount
         e.length === 1 ? state.comboAmount = 0 : state.comboAmount = e.substring(0, e.length - 1)
       } else {
-        state.comboAmount = state.comboAmount + amount
+        state.comboAmount = (state.comboAmount + amount) * 1 || ''
       }
       if (state.comboAmount * 1 === 0) {
         state.comboAmount = ''
@@ -441,6 +452,10 @@ const bettingModule: Module<Betting, any> = {
       dispatch('setHitState', 0)
       await dispatch('marketHit', true)
       const params: any = buyParams(state.markets, state.s, state.t)
+      if (params.betSubList.length === 0) {
+        dispatch('setHitState', 0)
+        return false
+      }
       const res: any = await moreBetting(params).finally(() => {
         dispatch('setHitState', 1)
       })
@@ -454,6 +469,7 @@ const bettingModule: Module<Betting, any> = {
           return { ...find, ...order }
         })
         dispatch('clearMarkets')
+        store.dispatch('user/pendingOrder')
       } else {
         return Promise.reject(lang.global.t('betting.errorTips'))
       }
@@ -483,6 +499,7 @@ const bettingModule: Module<Betting, any> = {
           }
         ]
         dispatch('clearMarkets')
+        store.dispatch('user/pendingOrder')
       } else {
         return Promise.reject(lang.global.t('betting.errorTips'))
       }

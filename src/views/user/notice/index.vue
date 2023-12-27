@@ -9,11 +9,11 @@
       <div v-if="!list.arr.length&& finished" class="noData">
         <img class="img_1" src="@/assets/images/user/noData.png" />
         <p>
-          未查询到相关数据
+          {{ $t('user.noData') }}
         </p>
       </div>
       <div class="list">
-        <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+        <van-list v-model:loading="loading" :finished="finished" finished-text="" @load="onLoad">
           <van-swipe-cell v-for="(item, index) in list.arr" :key="index" :before-close="beforeClose" class="itemContent">
             <div class="cell" @click="toDetail(item)">
               <p class="font_1">{{ item.title }}</p>
@@ -23,9 +23,10 @@
                 <span>{{ formatToDateTime(item.optTime) }}</span>
               </div>
             </div>
-            <template #right>
+            <!-- //1.0版本没有删除 -->
+            <!-- <template #right>
               <img class="img_close" src="@/assets/images/user/close.png" />
-            </template>
+            </template> -->
           </van-swipe-cell>
         </van-list>
       </div>

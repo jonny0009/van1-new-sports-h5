@@ -58,6 +58,7 @@ export class MarketInfo {
   showtype: any
   session: any
   ior: any
+  oldIor: any
   leagueName: any
   homeTeam: any
   awayTeam: any
