@@ -6,7 +6,7 @@
     <AppMain />
   </GlobalRefresh>
   <GlobalFooter />
-  <BettingSlip v-if="betShow" />
+  <BettingSlip v-if="betShow&&markets.length" />
   <BettingMore />
   <van-back-top bottom="100" right="20" class="GlobalTop">
     <van-icon name="down" />
@@ -22,10 +22,12 @@ import GlobalFooter from './components/GlobalFooter/index.vue'
 import BettingSlip from '@/components/BettingSlip/index.vue'
 import BettingMore from '@/components/BettingMore/index.vue'
 import { useRouter } from 'vue-router'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
+import store from '@/store'
 const { currentRoute } = useRouter()
 const betShow: any = ref(true)
 const unShow: any = ref(['game'])
+const markets = computed(() => store.state.betting.markets)
 watch(
   () => currentRoute.value,
   (route: any) => {

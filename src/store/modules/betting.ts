@@ -69,7 +69,7 @@ const bettingModule: Module<Betting, any> = {
         const { gold = 0, errorCode, ior, isEuropePlay } = bet
         if (gold && !errorCode) {
           const buyGold = +gold || 0
-          let winCountGold = buyGold * ior - buyGold
+          let winCountGold = buyGold * ior
           if (isEuropePlay && handicapType === 'H') {
             winCountGold = buyGold * ior
           }
@@ -101,7 +101,7 @@ const bettingModule: Module<Betting, any> = {
             comboArray.map((bet: any) => {
               iorCount *= bet.ior * 1
             })
-            betsGolds += iorCount * state.comboAmount - state.comboAmount
+            betsGolds += iorCount * state.comboAmount
           })
         }
       })
@@ -159,7 +159,11 @@ const bettingModule: Module<Betting, any> = {
     changeSingleAmount({ state }, amount) {
       const find = state.markets.find((marketInfo: MarketInfo) => marketInfo.playOnlyId === state.editId)
       if (find) {
-        find.gold = amount
+        find.gold = amount * 1 || ''
+        const goldMax = find.goldMax * 1
+        if (find.gold * 1 > goldMax) {
+          find.gold = goldMax
+        }
       }
     },
     changeComboAmount({ state }, amount) {
@@ -172,18 +176,22 @@ const bettingModule: Module<Betting, any> = {
       }
       if (amount === 'back') {
         const e = '' + find.gold
-        e.length === 1 ? find.gold = 0 : find.gold = e.substring(0, e.length - 1)
+        e.length === 1 ? (find.gold = 0) : (find.gold = e.substring(0, e.length - 1))
       } else {
-        find.gold = find.gold + amount
+        find.gold = (find.gold + amount) * 1 || ''
       }
       if (find.gold * 1 === 0) {
         find.gold = ''
+      }
+      const goldMax = find.goldMax * 1
+      if (find.gold * 1 > goldMax) {
+        find.gold = goldMax
       }
     },
     inputComboAmount({ state }, amount) {
       if (amount === 'back') {
         const e = '' + state.comboAmount
-        e.length === 1 ? state.comboAmount = 0 : state.comboAmount = e.substring(0, e.length - 1)
+        e.length === 1 ? (state.comboAmount = 0) : (state.comboAmount = e.substring(0, e.length - 1))
       } else {
         state.comboAmount = (state.comboAmount + amount) * 1 || ''
       }
@@ -199,7 +207,7 @@ const bettingModule: Module<Betting, any> = {
     // 添加投注项
     addMarket({ state }, marketInfo: MarketInfo) {
       const marketItem = betParams(marketInfo)
-      marketItem.gold = ''
+      marketItem.gold = 0
       if (state.markets.length === 0) {
         state.isOne = true
       } else {
@@ -262,7 +270,7 @@ const bettingModule: Module<Betting, any> = {
           if (!(isEuropePlay && handicapType === 'H') && eoIor) {
             newBetData.ior = eoIor
           }
-          const newIor = (newBetData.ior * 1 || ior * 1)
+          const newIor = newBetData.ior * 1 || ior * 1
           if (oldIor * 1 !== newIor) {
             if (oldIor * 1 > newIor) {
               iorChange = 'up'
@@ -485,9 +493,11 @@ const bettingModule: Module<Betting, any> = {
         t: state.comboT
       })
       dispatch('setHitState', 0)
-      const res: any = await comboBetting(params).finally(() => {
-        dispatch('setHitState', 1)
-      }).catch(() => {})
+      const res: any = await comboBetting(params)
+        .finally(() => {
+          dispatch('setHitState', 1)
+        })
+        .catch(() => {})
       if (res?.code === 200 && res?.data) {
         const { errorCode } = res?.data || {}
         state.results = [

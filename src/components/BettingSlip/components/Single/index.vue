@@ -6,13 +6,13 @@
     <div class="content">
       <div class="title">
         <SportsIcon :icon-src="marketInfo.gameType" />
-        <div class="betting-name">{{ marketInfo.ratioName }}</div>
+        <div class="betting-name text-overflow">{{ marketInfo.ratioName }}</div>
       </div>
       <div class="details">
-        <div v-if="marketInfo.isChampion" class="play-name">{{ marketInfo.championType }}</div>
-        <div v-else v-play="marketInfo" class="play-name"></div>
-        <div v-if="marketInfo.isChampion" class="team-info">{{ $t('betting.champion') }}</div>
-        <div v-else class="team-info">{{ marketInfo.homeTeam }} VS {{ marketInfo.awayTeam }}</div>
+        <div v-if="marketInfo.isChampion" class="play-name text-overflow">{{ marketInfo.championType }}</div>
+        <div v-else v-play="marketInfo" class="play-name text-overflow"></div>
+        <div v-if="marketInfo.isChampion" class="team-info text-overflow">{{ $t('betting.champion') }}</div>
+        <div v-else class="team-info text-overflow">{{ marketInfo.homeTeam }} VS {{ marketInfo.awayTeam }}</div>
       </div>
       <div class="betting-odds" :class="marketInfo.iorChange">
         @<span v-points="marketInfo.ior"></span>
@@ -148,10 +148,12 @@ const inputTouch = () => {
     flex-direction: column;
     justify-content: space-between;
     position: relative;
+    overflow: hidden;
 
     .title {
       display: flex;
       align-items: center;
+      overflow: hidden;
 
       .betting-name {
         margin-left: 8px;
@@ -164,6 +166,7 @@ const inputTouch = () => {
     }
 
     .details {
+      overflow: hidden;
       .play-name {
         font-family: PingFangSC-Medium;
         font-size: 24px;
