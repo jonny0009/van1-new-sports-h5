@@ -32,7 +32,7 @@
     v-if="list.arr.length ||!finished"
     v-model:loading="loading"
     :finished="finished"
-    finished-text=""
+    :finished-text="$t('live.noMore')"
     class="dataList"
     @load="onLoad"
   >

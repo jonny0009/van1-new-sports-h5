@@ -75,8 +75,7 @@ const highlightText = (field: any, text: any) => {
 }
 .matchList-1 {
   overflow-y: auto;
-  height: 1100px;
-
+  height: calc(100vh - 250px);
 }
 
 // 比赛

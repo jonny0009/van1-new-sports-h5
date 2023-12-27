@@ -12,8 +12,8 @@
           {{ $t('user.noData') }}
         </p>
       </div>
-      <div class="list">
-        <van-list v-model:loading="loading" :finished="finished" finished-text="" @load="onLoad">
+      <div v-if="list.arr.length || !finished" class="list">
+        <van-list v-model:loading="loading" :finished="finished" :finished-text="$t('live.noMore')" @load="onLoad">
           <van-swipe-cell v-for="(item, index) in list.arr" :key="index" :before-close="beforeClose" class="itemContent">
             <div class="cell" @click="toDetail(item)">
               <p class="font_1">{{ item.title }}</p>

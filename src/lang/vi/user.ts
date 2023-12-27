@@ -104,6 +104,8 @@ export default {
   // 新增4
   hotSearch: 'Tìm kiếm phổ biến',
   lookInfo: 'Xem tin nhắn đầy đủ',
+  betNum: 'Đặt cược',
+  noMoreMatch: 'Không còn trận đấu nào nữa. ',
 
   // 新增3
   compensate: 'Thanh toán',

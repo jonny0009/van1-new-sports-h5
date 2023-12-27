@@ -29,7 +29,7 @@
     v-if="list.arr.length || !finished"
     v-model:loading="loading"
     :finished="finished"
-    finished-text=""
+    :finished-text="$t('user.noMoreMatch')"
     class="dataList"
     @load="onLoad"
   >

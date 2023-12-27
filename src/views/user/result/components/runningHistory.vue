@@ -7,7 +7,14 @@
       {{ $t('user.noData') }}
     </p>
   </div>
-  <van-list v-if="list.arr.length ||!finished" v-model:loading="loading" :finished="finished" finished-text="" class="dataList" @load="onLoad">
+  <van-list
+    v-if="list.arr.length ||!finished"
+    v-model:loading="loading"
+    :finished="finished"
+    :finished-text="$t('live.noMore')"
+    class="dataList"
+    @load="onLoad"
+  >
     <div v-for="(outItem, outIndex) in dataList.arr" :key="outIndex" class="dataList-item">
       <div class="date-title">{{ outItem.date }}</div>
       <div v-for="(item, index) in outItem.list" :key="index" class="item">
@@ -30,7 +37,8 @@
           </div>
           <div class="right">
             <div>
-              <div> {{ $t('user.compensate') }}</div>
+              <div v-if="item.payWay==4"> {{ $t('user.compensate') }}</div>
+              <div v-else> {{ $t('user.betNum') }}</div>
               <div class="right-1">
                 <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
                 <img v-else-if="item.currency === 'VNDK'" :src="VNDK1" style="object-fit: contain;" />
