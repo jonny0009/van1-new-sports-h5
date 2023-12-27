@@ -26,22 +26,22 @@ export const gameInfo = (game:any) => {
     // 2H^32:11：下半场计时32:11
     if (reTime === 'HT^^') {
       obj.status = 'HT'
-      obj.text = t('home.HT')
+      obj.text = t('live.HT')
     }
     if (game.gameType === 'FT') {
       // 足球
       if (re1 && re2) {
         if (re1 === '1H') {
           obj.status = '1H'
-          obj.text = t('home.1H')
+          obj.text = t('live.H1')
           obj.time = re2
         } else if (re1 === '2H') {
           obj.status = '2H'
-          obj.text = t('home.2H')
+          obj.text = t('live.H2')
           obj.time = re2
         } else if (re1 === 'LIVE' && re2 === '0') {
           obj.status = 'STOP'
-          obj.text = t('home.stop')
+          obj.text = t('live.pause')
         }
       }
     } else if (game.gameType === 'BK') {
