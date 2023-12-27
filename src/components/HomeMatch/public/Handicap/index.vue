@@ -33,7 +33,7 @@
           <i
             v-if="type === 'RB'"
             class="vior-down"
-            :class="{'change-odds': scope.iorChange === 'down-ior' && type === 'RB' }"
+            :class="{'change-odds': scope.iorChange === 'down-ior' }"
           ></i>
           <span class="vior">
             <!-- <span
@@ -57,7 +57,7 @@
           <i
             v-if="type === 'RB'"
             class="vior-up"
-            :class="{'change-odds':scope.iorChange === 'up-ior' && type === 'RB' }"
+            :class="{'change-odds':scope.iorChange === 'up-ior' }"
           ></i>
         </div>
       </div>
