@@ -7,8 +7,8 @@
       class="value"
       :class="
         [
-          {'listdown-leave-active':isShow.value},
-          {'listdown-leave-to':isShow.value},
+          {'listdown-leave-active':isShow},
+          {'listdown-leave-to':isShow},
         ]
       "
       @click="isShowChange"
