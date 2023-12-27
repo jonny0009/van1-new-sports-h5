@@ -1,12 +1,11 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1702990919037') format('truetype');
+  src: url('iconfont.ttf?t=1703664977412') format('truetype');
 }
 
 .iconfont {
   font-family: "iconfont" !important;
-  font-size: 36px;
-  height: 36px;
+  font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -122,5 +121,13 @@
 
 .icon-a-xuanzeshijian-icon:before {
   content: "\e61c";
+}
+
+.icon-dianshi:before {
+  content: "\e61d";
+}
+
+.icon-blueGame:before {
+  content: "\e61e";
 }
 

@@ -7,42 +7,42 @@
   "glyphs": [
     {
       "icon_id": "38617898",
-      "name": "american football",
+      "name": "FT(us)",
       "font_class": "a-americanfootball",
       "unicode": "e601",
       "unicode_decimal": 58881
     },
     {
       "icon_id": "38617899",
-      "name": "boxing",
+      "name": "拳击",
       "font_class": "boxing",
       "unicode": "e602",
       "unicode_decimal": 58882
     },
     {
       "icon_id": "38617900",
-      "name": "hockey",
+      "name": "hockey冰球",
       "font_class": "hockey",
       "unicode": "e603",
       "unicode_decimal": 58883
     },
     {
       "icon_id": "38617901",
-      "name": "cricket",
+      "name": "板球",
       "font_class": "cricket",
       "unicode": "e604",
       "unicode_decimal": 58884
     },
     {
       "icon_id": "38617902",
-      "name": "football",
+      "name": "橄榄球",
       "font_class": "football",
       "unicode": "e605",
       "unicode_decimal": 58885
     },
     {
       "icon_id": "38617903",
-      "name": "baseball",
+      "name": "棒球",
       "font_class": "baseball",
       "unicode": "e606",
       "unicode_decimal": 58886
@@ -56,14 +56,14 @@
     },
     {
       "icon_id": "38617905",
-      "name": "gaming",
+      "name": "op",
       "font_class": "gaming",
       "unicode": "e608",
       "unicode_decimal": 58888
     },
     {
       "icon_id": "38617906",
-      "name": "beach volleyball",
+      "name": "沙滩排球",
       "font_class": "a-beachvolleyball",
       "unicode": "e609",
       "unicode_decimal": 58889
@@ -77,7 +77,7 @@
     },
     {
       "icon_id": "38617908",
-      "name": "pingpong",
+      "name": "pingpong兵乓球",
       "font_class": "pingpong",
       "unicode": "e60b",
       "unicode_decimal": 58891
@@ -91,14 +91,14 @@
     },
     {
       "icon_id": "38617910",
-      "name": "BT",
+      "name": "bk",
       "font_class": "a-lanqiu-icon-1",
       "unicode": "e60d",
       "unicode_decimal": 58893
     },
     {
       "icon_id": "38617911",
-      "name": "BK",
+      "name": "tn",
       "font_class": "a-wangqiu-icon-1",
       "unicode": "e60e",
       "unicode_decimal": 58894
@@ -112,14 +112,14 @@
     },
     {
       "icon_id": "38617913",
-      "name": "indoor soccer",
+      "name": "室内 FT",
       "font_class": "a-indoorsoccer",
       "unicode": "e610",
       "unicode_decimal": 58896
     },
     {
       "icon_id": "38617914",
-      "name": "snooker",
+      "name": "snooker(斯诺克)",
       "font_class": "snooker",
       "unicode": "e611",
       "unicode_decimal": 58897
@@ -200,6 +200,20 @@
       "font_class": "a-xuanzeshijian-icon",
       "unicode": "e61c",
       "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "38743962",
+      "name": "电视",
+      "font_class": "dianshi",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "38743977",
+      "name": "blueGame",
+      "font_class": "blueGame",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
     }
   ]
 }
