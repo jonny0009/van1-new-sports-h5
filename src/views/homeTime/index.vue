@@ -26,7 +26,7 @@
       <van-list
         v-model="loading"
         :finished="finished"
-        finished-text="没有更多了"
+        :finished-text="$t('live.noMore')"
         @load="onLoad"
       >
         <template v-if="!isShow">
