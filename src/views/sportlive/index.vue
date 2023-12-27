@@ -96,7 +96,7 @@ const startInterval = () => {
     setIntervalSendData()
   }, 100)
 }
-const setIntervalDate:any = ref(15 * 1000)
+const setIntervalDate:any = ref(5 * 1000)
 const setIntervalSendData = () => {
   if (+pushSwitch.value === 1) {
     setIntervalDate.value = 2 * 60 * 1000

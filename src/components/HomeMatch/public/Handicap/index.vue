@@ -35,7 +35,7 @@
             :class="{'change-odds':scope.iorChange === 'down-ior'}"
           ></i>
           <span class="vior">
-            <span
+            <!-- <span
               v-show="item.marketInfo.oldIor"
               class="oldIor"
               :class="{
@@ -43,7 +43,7 @@
               }"
             >
               {{ item.marketInfo.oldIor }}
-            </span>
+            </span> -->
             <span
               class="vior"
               :class="{

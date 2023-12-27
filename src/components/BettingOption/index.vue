@@ -27,14 +27,13 @@ const lock = computed(() => {
 const selected = computed(() => !!markets.value.find((marketInfo: MarketInfo) => marketInfo.playOnlyId === props.marketInfo.playOnlyId))
 
 // 监听赔率变化
-watch(() => props.marketInfo.value, (newVal, oldVal) => {
-  if (newVal === void 0 || oldVal === void 0) {
+watch(() => props.marketInfo, (newVal:any, oldVal:any) => {
+  if (newVal.ior === void 0 || oldVal.ior === void 0) {
     return false
   }
-  const newIor = newVal * 1 || 0
-  const oldIor = oldVal * 1 || 0
+  const newIor = newVal.ior * 1 || 0
+  const oldIor = oldVal.ior * 1 || 0
   props.marketInfo.oldIor = oldIor
-
   if (+newIor > +oldIor) {
     props.marketInfo.iorChange = 'up-ior'
   } else if (+newIor < +oldIor) {
