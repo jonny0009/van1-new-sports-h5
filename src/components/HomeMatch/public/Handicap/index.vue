@@ -35,8 +35,23 @@
             :class="{'change-odds':scope.iorChange === 'down-ior'}"
           ></i>
           <span class="vior">
-            {{ item.marketInfo.oldIor }}
-            {{ item.marketInfo.vior }}
+            <span
+              v-show="item.marketInfo.oldIor"
+              class="oldIor"
+              :class="{
+                'ss' :scope.iorChange
+              }"
+            >
+              {{ item.marketInfo.oldIor }}
+            </span>
+            <span
+              class="vior"
+              :class="{
+                'ss' :scope.iorChange
+              }"
+            >
+              {{ item.marketInfo.vior }}
+            </span>
           </span>
           <i
             class="vior-up"

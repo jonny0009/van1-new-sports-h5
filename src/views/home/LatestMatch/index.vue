@@ -12,7 +12,7 @@
       <HomeEmpty v-if="!recommendEventsList.length" class="marginAuto"></HomeEmpty>
       <HomeMatchHandicap v-for="(item,idx) in recommendEventsList" v-else :key="idx" :send-params="item" class="mb10" />
     </template>
-    <div v-if="recommendEventsList.length" class="Button-MatchMore mt20" @click="goHomeTime">
+    <div v-if="recommendEventsList.length" class="Button-MatchMore mt10" @click="goHomeTime">
       <span>
         查看更多比赛
       </span>

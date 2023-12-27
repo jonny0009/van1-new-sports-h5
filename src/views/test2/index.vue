@@ -6,6 +6,36 @@
   <br />
   <br />
   <br />
+
+  <div class="vShow" @click="isShowChange">
+    <div
+      class="old-v"
+      :class="
+        [
+          {'listdown-leave-active':isShow},
+          {'listdown-move':isShow},
+          {'listdown-leave-to':isShow},
+        ]
+      "
+    >1</div>
+    <div
+      class="new-v"
+      :class="
+        [
+          {'listdown-leave-active':isShow},
+          {'listdown-enter-to':isShow},
+        ]
+      "
+    >2</div>
+  </div>
+
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+
   <div
     class="value"
     :class="
@@ -30,6 +60,9 @@ const isShowChange = () => {
 .test-page{
   height: 100%;
   overflow: hidden;
+}
+.vShow{
+  text-align: center;
 }
 
 </style>

@@ -9,6 +9,11 @@
       <MatchLive v-for="(item,idx) in commonMatchesList" :key="idx" :send-params="item" />
       <HomeEmpty v-if="!commonMatchesList.length"></HomeEmpty>
     </template>
+    <div v-if="commonMatchesList.length" class="Button-MatchMore mt10">
+      <span>
+        没有更多
+      </span>
+    </div>
     <div class="footerHeight"></div>
   </div>
 </template>
