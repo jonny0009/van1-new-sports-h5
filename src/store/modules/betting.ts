@@ -199,7 +199,7 @@ const bettingModule: Module<Betting, any> = {
     // 添加投注项
     addMarket({ state }, marketInfo: MarketInfo) {
       const marketItem = betParams(marketInfo)
-      marketItem.gold = 10
+      marketItem.gold = ''
       if (state.markets.length === 0) {
         state.isOne = true
       } else {
