@@ -15,7 +15,7 @@
           ]"
           @click="Rclick"
         >
-          让分
+          {{ $t('home.R') }}
         </span>
         <span
           class="btn OU"
@@ -26,7 +26,7 @@
           ]"
           @click="OUclick"
         >
-          大小
+          {{ $t('home.OU') }}
         </span>
         <span
           class="btn M"
@@ -37,7 +37,7 @@
           ]"
           @click="Mclick"
         >
-          独赢
+          {{ $t('home.M') }}
         </span>
       </div>
     </div>
@@ -80,13 +80,12 @@
           </div>
           <!--  -->
           <div class="up-match__body">
-            <!-- 全场 亚洲让分盘 -->
             <div v-if="RrefShow && sendParams.R" ref="Rref" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center" :class="`flex-cross-center-${sendParams.gidm}${sendParams.systemId}`">
-                  全场 亚洲让分盘
+                  {{ $t('home.RInfo') }}
                   <van-popover placement="top" theme="dark" trigger="click" class="newPopover" :to="`.flex-cross-center-${sendParams.gidm}${sendParams.systemId}`">
-                    <div class="popover-text">全场让分盘</div>
+                    <div class="popover-text">{{ $t('home.RInfo2') }}</div>
                     <template #reference>
                       <van-icon name="info" />
                     </template>
@@ -101,10 +100,9 @@
                 </div>
               </div>
             </div>
-            <!-- 全场 大小盘  -->
             <div v-if="OUrefShow && sendParams.OU" ref="OUref" class="match-betting-item">
               <div class="match-betting-item__title">
-                <div class="flex-cross-center">全场 大小盘</div>
+                <div class="flex-cross-center">{{ $t('home.OUInfo') }}</div>
               </div>
               <div class="match-betting-item__content">
                 <div class="betting-select">
@@ -114,10 +112,9 @@
                 </div>
               </div>
             </div>
-            <!-- 全场 1X2 -->
             <div v-if="MrefShow && sendParams.M" ref="Mref" class="match-betting-item">
               <div class="match-betting-item__title">
-                <div class="flex-cross-center">全场 1X2</div>
+                <div class="flex-cross-center">{{ $t('home.MInfo') }}</div>
               </div>
               <div class="match-betting-item__content">
                 <div class="betting-select">
@@ -139,7 +136,7 @@
             class="match-footer__item"
             @click="store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })"
           >
-            <span>更多玩法</span>
+            <span>{{ $t('home.morePlay') }}</span>
             <!-- <span class="num">149</span> -->
             <van-icon class="arrow" name="arrow" />
           </div>
@@ -161,7 +158,7 @@ import TimeView from '@/components/HomeMatch/public/time/index.vue'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 import { computed } from 'vue'
 import store from '@/store'
-import { showDialog } from 'vant'
+// import { showDialog } from 'vant'
 const props = defineProps({
   sendParams: {
     type: Object,
@@ -207,14 +204,14 @@ const Mclick = () => {
     value: !MrefShow.value
   })
 }
-const goClick = () => {
-  showDialog({
-    message: '投注动态即将推出',
-    theme: 'round-button'
-  }).then(() => {
-  // on close
-  })
-}
+// const goClick = () => {
+//   showDialog({
+//     message: '投注动态即将推出',
+//     theme: 'round-button'
+//   }).then(() => {
+//   // on close
+//   })
+// }
 
 const showFUTime = computed(() => {
   const { gameDate } = props.sendParams || {}

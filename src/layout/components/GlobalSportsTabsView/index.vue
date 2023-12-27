@@ -20,7 +20,7 @@
 </template>
 <script lang="ts" setup>
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import router from '@/router'
 import { useRoute } from 'vue-router'
 import store from '@/store'

@@ -2,7 +2,7 @@
   <ArrowTitle
     class="mt10 mb10"
     :src="titleTime"
-    text="早盘"
+    :text="$t('home.latestMatch')"
     @returnSuccess="returnStatus"
   />
   <template v-if="!isShow">
@@ -14,7 +14,7 @@
     </template>
     <div v-if="recommendEventsList.length" class="Button-MatchMore mt10" @click="goHomeTime">
       <span>
-        查看更多比赛
+        {{ $t('home.lookMoreMatch') }}
       </span>
     </div>
   </template>

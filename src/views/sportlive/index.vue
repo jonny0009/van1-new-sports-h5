@@ -11,7 +11,7 @@
     </template>
     <div v-if="commonMatchesList.length" class="Button-MatchMore mt10">
       <span>
-        没有更多
+        {{ $t('home.lookMoreMatch') }}
       </span>
     </div>
     <div class="footerHeight"></div>

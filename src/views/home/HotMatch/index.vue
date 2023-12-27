@@ -2,7 +2,7 @@
   <ArrowTitle
     class="mt10 mb10"
     :src="titleHot"
-    text="热门赛事"
+    :text="$t('home.hotMatch')"
     @returnSuccess="returnStatus"
   />
   <div v-if="!isShow" class="Hot-Match-Group-Warp">

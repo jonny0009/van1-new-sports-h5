@@ -53,13 +53,12 @@
           </div>
           <!--  -->
           <div class="up-match__body">
-            <!-- 全场 亚洲让分盘 -->
             <div v-if="sendParams.RE" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">
-                  全场 亚洲让分盘
+                  {{ $t('home.RInfo') }}
                   <van-popover placement="top" theme="dark" trigger="click" class="newPopover" :to="`.flex-cross-center-${sendParams.gidm}${sendParams.systemId}`">
-                    <div class="popover-text">全场让分盘</div>
+                    <div class="popover-text">{{ $t('home.RInfo2') }}</div>
                     <template #reference>
                       <van-icon name="info" />
                     </template>
@@ -74,11 +73,10 @@
                 </div>
               </div>
             </div>
-            <!-- 全场 大小盘  -->
             <div v-if="sendParams.ROU" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">
-                  全场 大小盘
+                  {{ $t('home.OUInfo') }}
                 </div>
               </div>
               <div class="match-betting-item__content">
@@ -89,11 +87,10 @@
                 </div>
               </div>
             </div>
-            <!-- 全场 1X2 -->
             <div v-if="sendParams.RM" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">
-                  全场 1X2
+                  {{ $t('home.MInfo') }}
                 </div>
               </div>
               <div class="match-betting-item__content">
@@ -113,7 +110,7 @@
       <div class="up-match__footer">
         <div class="match-footer">
           <div class="match-footer__item" @click="store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })">
-            <span>更多玩法</span>
+            <span>{{ $t('home.morePlay') }}</span>
             <!-- <span class="num">149</span> -->
             <van-icon class="arrow" name="arrow" />
           </div>
@@ -138,16 +135,16 @@ import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
 import TimeView from '@/components/HomeMatch/public/time/index.vue'
 // import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 // script
-import { showDialog } from 'vant'
+// import { showDialog } from 'vant'
 import store from '@/store'
-const goClick = () => {
-  showDialog({
-    message: '投注动态即将推出',
-    theme: 'round-button'
-  }).then(() => {
-  // on close
-  })
-}
+// const goClick = () => {
+//   showDialog({
+//     message: '投注动态即将推出',
+//     theme: 'round-button'
+//   }).then(() => {
+//   // on close
+//   })
+// }
 
 //
 const sectionMap:any = {

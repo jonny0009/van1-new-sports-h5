@@ -57,7 +57,7 @@
 
     <!-- <div class="Button-MatchMore mt20">
       <span>
-        查看更多比赛
+        {{ $t('home.lookMoreMatch') }}
       </span>
     </div> -->
 
