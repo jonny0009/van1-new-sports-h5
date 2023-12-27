@@ -29,7 +29,7 @@
             <div class="label">{{ $t('user.Handicap') }}</div>
           </div>
           <div class="label-right">
-            <div class="label">{{ plateMask.value }}</div>
+            <div class="label">{{ plateMask?.value }}</div>
             <img class="arrow" src="@/assets/images/login/go@2x.png" />
           </div>
         </div>
