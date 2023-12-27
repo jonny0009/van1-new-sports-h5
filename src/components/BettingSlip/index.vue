@@ -223,7 +223,7 @@ hitTimer()
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-image: linear-gradient(270deg, #9C10FE 0%, #7541FD 100%);
+  background-image: linear-gradient(270deg, var(--color-linear-gradient-1) 0%,  var(--color-linear-gradient-1) 100%);
   border-radius: 10px 10px 0px 0px;
 
   .bet-header-left {
