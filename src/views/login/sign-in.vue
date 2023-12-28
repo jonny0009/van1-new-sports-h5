@@ -87,7 +87,7 @@ import md5 from 'md5'
 // getLanguages
 import { login, tryLogin } from '@/api/login'
 import { showToast } from 'vant'
-import { setToken } from '@/utils/auth'
+import { setToken, removeToken } from '@/utils/auth'
 import localStore from '@/utils/localStore'
 import Fingerprint2 from 'fingerprintjs2'
 import aesUtil from '@/utils/aesUtil'
@@ -132,6 +132,8 @@ const tryPlay = async () => {
       setToken(token)
       // setUserInfo()
       window.location.href = '/'
+    } else {
+      showToast(res.msg)
     }
   }
 }

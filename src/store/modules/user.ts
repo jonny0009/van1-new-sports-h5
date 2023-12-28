@@ -4,6 +4,7 @@ import { getCMerAccessWallet, betRecordTab } from '@/api/user'
 import { User } from '#/store'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { configSettingNew } from '@/api/auth'
+import localStore from '@/utils/localStore'
 
 const userModule: Module<User, any> = {
   namespaced: true,
@@ -59,8 +60,7 @@ const userModule: Module<User, any> = {
     },
     // 用户配置
     async configSettingNew({ state }, params = {}) {
-      console.log(params, '====1111')
-
+      localStore.setItem('plateMaskKey', params.handicapType)
       const res = await configSettingNew(params)
       state.userConfig = res.data || {}
     },
