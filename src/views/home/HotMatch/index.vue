@@ -5,39 +5,41 @@
     :text="$t('home.hotMatch')"
     @returnSuccess="returnStatus"
   />
-  <div v-if="!isShow" class="Hot-Match-Group-Warp">
-    <div
-      class="Hot-Match-Group"
-      :class="[{ 'noData': noDataToggle }]"
-      @touchstart="start($event)"
-      @touchmove="move($event)"
-    >
-      <Loading v-if="!isLoading" />
-      <template v-else>
-        <HomeEmpty v-if="noDataToggle"></HomeEmpty>
-        <van-image
-          v-for="(item,idx) in firstLeaguesList"
-          v-else
-          :key="idx"
-          :src="imgUrlFormat(item.icon)"
-          fit="contain"
-          lazy-load
-          @click="goSportClick(item)"
-        >
-          <template #loading>
-            <van-loading type="spinner" class="van-new-loading" size="36px" />
-          </template>
-          <template #error>
-            <div class="onImgError"></div>
-          </template>
-        </van-image>
+  <Transition>
+    <div v-show="!isShow" class="Hot-Match-Group-Warp">
+      <div
+        class="Hot-Match-Group"
+        :class="[{ 'noData': noDataToggle }]"
+        @touchstart="start($event)"
+        @touchmove="move($event)"
+      >
+        <Loading v-if="!isLoading" />
+        <template v-else>
+          <HomeEmpty v-if="noDataToggle"></HomeEmpty>
+          <van-image
+            v-for="(item,idx) in firstLeaguesList"
+            v-else
+            :key="idx"
+            :src="imgUrlFormat(item.icon)"
+            fit="contain"
+            lazy-load
+            @click="goSportClick(item)"
+          >
+            <template #loading>
+              <van-loading type="spinner" class="van-new-loading" size="36px" />
+            </template>
+            <template #error>
+              <div class="onImgError"></div>
+            </template>
+          </van-image>
+        </template>
+      </div>
+      <template v-if="!noDataToggle">
+        <div class="mask-left" style="display: none;"></div>
+        <div class="mask-right"></div>
       </template>
     </div>
-    <template v-if="!noDataToggle">
-      <div class="mask-left" style="display: none;"></div>
-      <div class="mask-right"></div>
-    </template>
-  </div>
+  </Transition>
 </template>
 <script lang="ts" setup>
 import titleHot from '@/assets/images/home/title-hot.png'
