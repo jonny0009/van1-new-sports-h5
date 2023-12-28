@@ -23,7 +23,8 @@ export default async () => {
   // 查询单双线玩法
   store.dispatch('app/getDoubleLineInfo')
   if (getToken()) {
-    // store.dispatch('user/configSettingNew')
+    // 商户语言
+    await store.dispatch('app/queryCMerLanguage')
     // 获取账号信息
     store.dispatch('user/userInfo')
     // 获取钱包币种
