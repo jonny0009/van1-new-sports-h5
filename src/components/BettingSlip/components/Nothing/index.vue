@@ -1,7 +1,7 @@
 <template>
   <div class="betting-slip-empty">
     <EmptyIcon />
-    <div class="empty-title">您的选择将出现在此</div>
+    <div class="empty-title">{{ $t('betting.notBets') }}</div>
   </div>
 </template>
 <script lang="ts" setup>

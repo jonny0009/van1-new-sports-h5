@@ -8,7 +8,7 @@
       <div class="content">
         <div class="result-info">
           <div class="title">
-            <div class="betting-name">{{ result.count }}场串关</div>
+            <div class="betting-name">{{ $t('betting.combos', { num: result.count }) }}</div>
           </div>
           <div class="details">
             <SportsIcon v-for="(item, index1) in result.list" :key="index1" :icon-src="item.gameType" />

@@ -1,7 +1,7 @@
 <template>
   <div class="betting-slip-empty">
     <EmptyIcon />
-    <div class="empty-title">没有进行中的注单</div>
+    <div class="empty-title">{{ $t('betting.notPendingOrders') }}</div>
   </div>
 </template>
 <script lang="ts" setup>
