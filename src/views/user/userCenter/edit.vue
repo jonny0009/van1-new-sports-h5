@@ -164,7 +164,6 @@ async function setPk(val: any) {
   }
 
   if (popupIndex.value === 3) {
-    localStore.setItem('plateMaskKey', val.key)
     plateMask.value = val
     store.dispatch('user/configSettingNew', { handicapType: val.key })
   }
