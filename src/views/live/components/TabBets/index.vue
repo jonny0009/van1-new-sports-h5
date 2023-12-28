@@ -1,29 +1,40 @@
 <template>
   <div class="panel-bet">
-    <div v-if="betPlayListFilter.length === 0" class="no-data">
+    <div v-if="Object.keys(betPlayMap).length === 0" class="no-data">
       <EmptyIcon />
     </div>
     <van-collapse v-else v-model="activeNames">
-      <van-collapse-item v-for="(play, i) in betPlayListFilter" :key="i" :name="`${i + 1}`" :border="false">
+      <van-collapse-item v-for="(play, i) in Object.keys(betPlayMap)" :key="i" :name="`${i + 1}`" :border="false">
         <template #title>
-          <span v-play="play.playInfo"></span>
-          <!-- {{ play.dataInfo.playType }} -->
+          <span v-play="betPlayMap[play].playInfo"></span>
         </template>
-        <div class="bet" :class="getBetCol(play.dataInfo)">
-          <BettingOption v-for="(item, ind) in play.dataInfo.ratioData" :key="ind" class="bet-item" :market-info="item">
+        <div :class="['bet', betPlayMap[play].ratioList?.length === 3 ? 'col-3' : 'col-2']">
+          <BettingOption
+            class="bet-item"
+            v-for="(item, ind) in betPlayMap[play].ratioList"
+            :key="ind"
+            :market-info="item"
+          >
             <template #default="scope">
               <div class="bet-top">
                 <span class="name">{{ item.ratioMatch || item.ratioName }}</span>
                 <span class="tag">{{ item.ratioTag }}</span>
               </div>
               <div class="bet-bot">
-                <img v-if="scope.lock" class="lock" src="@/assets/images/live/lock.png" alt="" />
-                <template v-else>
+                <img class="lock" v-if="scope.lock" src="@/assets/images/live/lock.png" alt="" />
+                <div class="odds" v-else>
+                  <i
+                    class="vior-down"
+                    v-if="matchInfo.showtype == 'RB'"
+                    :class="{ 'change-odds': scope.iorChange === 'down-ior' }"
+                  ></i>
                   <span class="num">{{ item.vior }}</span>
-                  <span v-show="false" class="ico">
-                    <img src="@/assets/images/live/sub.png" alt="" />
-                  </span>
-                </template>
+                  <i
+                    class="vior-up"
+                    v-if="matchInfo.showtype == 'RB'"
+                    :class="{ 'change-odds': scope.iorChange === 'up-ior' }"
+                  ></i>
+                </div>
               </div>
             </template>
           </BettingOption>
@@ -56,56 +67,68 @@ onMounted(() => {
 const activeNames = ref(['1'])
 const betPlayList: Ref<any[]> = ref([])
 const getBetData = () => {
-  const { detail, gameType, systemId, homeTeam, awayTeam } = props.matchInfo
+  const { detail, gameType, systemId, homeTeamAbbr, awayTeamAbbr } = props.matchInfo
   if (detail && detail.length > 0) {
-    const dataList = detail.map((ele: any) => {
+    const playDataList: any[] = []
+    detail.forEach((ele: any) => {
       const { playData, game } = ele
-
-      const result = playData.map((item: any) => {
+      for (const item of playData) {
         const dataInfo = { ...item }
         const playInfo = {
           gameType: gameType,
+          homeTeam: homeTeamAbbr,
+          awayTeam: awayTeamAbbr,
           playType: dataInfo.playType,
           championType: game.championType,
           session: game.session
         }
-        dataInfo.ratioData = item.ratioData.map((ratioInfo: any) => {
+        const ratioList = dataInfo.ratioData.map((ratioInfo: any) => {
           return new MarketInfo({
             ...ratioInfo,
             systemId: systemId,
             gameType: gameType,
-            homeTeam: homeTeam,
-            awayTeam: awayTeam,
+            homeTeam: homeTeamAbbr,
+            awayTeam: awayTeamAbbr,
             gameId: game.gameId,
             gidm: game.gidm,
             playType: dataInfo.playType,
             sw: dataInfo.sw,
             championType: dataInfo.championType,
-            ratio: dataInfo.ratio || '0'
+            ratio: dataInfo.ratio
           })
         })
-        return { playInfo, dataInfo }
-      })
-
-      return result
+        playDataList.push({
+          typeTemp: `${playInfo.playType}-${playInfo.session}`,
+          playInfo,
+          ratioList
+        })
+      }
     })
-    betPlayList.value = dataList.flat()
-  } else {
-    betPlayList.value = []
+    const noExist = ['HDNB2', 'HDNB', 'HTS2', 'HW3', 'W3_conner', 'W3', 'PD_conner', 'HT_conner', 'T_conner']
+    betPlayList.value = playDataList.filter((item) => !noExist.includes(item.playInfo.playType))
   }
 }
-const betPlayListFilter = computed(() => {
-  const noExist = ['HDNB2', 'HDNB', 'HTS2', 'HW3', 'W3_conner', 'W3', 'PD_conner', 'HT_conner', 'T_conner']
-  return betPlayList.value.filter((item) => !noExist.includes(item.dataInfo.playType))
-})
 
-const getBetCol = (dataInfo: any) => {
-  const { ratioData } = dataInfo
-  if (ratioData.length === 3) {
-    return 'col-3'
-  }
-  return 'col-2'
-}
+const betPlayMap = computed(() => {
+  const playTypeList = betPlayList.value.map((m: any) => m.typeTemp)
+  const playTypeData = Array.from(new Set(playTypeList))
+
+  const resultMap: any = {}
+  playTypeData.forEach((type: string) => {
+    resultMap[type] = {
+      typeTemp: type,
+      ratioList: []
+    }
+    for (const item of betPlayList.value) {
+      if (item.typeTemp == type) {
+        resultMap[type].playInfo = item.playInfo
+        resultMap[type].ratioList.push(...item.ratioList)
+      }
+    }
+  })
+
+  return resultMap
+})
 </script>
 
 <style lang="scss" scoped>
@@ -187,13 +210,12 @@ const getBetCol = (dataInfo: any) => {
     justify-content: center;
     font-size: 28px;
     margin-top: 4px;
-    img {
-      display: block;
-      width: 100%;
-    }
-    .ico {
-      width: 22px;
-      margin-left: 12px;
+    .odds {
+      display: flex;
+      align-items: center;
+      .num {
+        margin: 0 10px;
+      }
     }
     .lock {
       width: 22px;

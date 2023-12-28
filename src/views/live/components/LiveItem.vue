@@ -9,6 +9,7 @@
       </div>
       <div class="mask-reseve" v-if="item.showType != 'RB'">
         <span>{{ $t('live.xHas', { num: watchNumText }) }}</span>
+        <span>{{ $t('live.clickSub') }}</span>
       </div>
     </div>
 
@@ -151,6 +152,7 @@ const leagueIcon = computed(() => {
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
     }
   }
 

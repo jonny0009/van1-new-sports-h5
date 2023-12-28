@@ -57,7 +57,7 @@
         <div class="ticket">
           <div class="ticket-txt">
             <div class="icon">
-              <img src="" alt="" />
+              <img src="@/assets/images/live/plate.png" alt="" />
             </div>
             <div class="info">
               <strong>{{ item.betItem }}</strong>
