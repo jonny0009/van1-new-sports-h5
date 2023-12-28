@@ -68,12 +68,11 @@ const gameInfo = computed(() => props.item?.gameInfo)
 const imgCover = computed(() => {
   const item = props.item
   if (!item.anchorId) {
-    const type: any = {
-      FT: 'FE/common/live/img_video_bg_FT.jpg',
-      BK: 'FE/common/live/img_video_bg_BK.jpg',
-      OP_VB: 'FE/common/live/img_video_bg_BK.jpg'
+    if (item.gameType == 'BK') {
+      return ImageSource + 'FE/common/live/img_video_bg_BK.jpg'
+    } else {
+      return ImageSource + 'FE/common/live/img_video_bg_FT.jpg'
     }
-    return ImageSource + type[item.gameType]
   }
 
   return ImageSource + item.cover
