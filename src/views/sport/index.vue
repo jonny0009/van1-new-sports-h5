@@ -102,7 +102,7 @@ const isOpenRecommend: any = ref(true)
 const recommendPage: any = ref(1)
 const recommendPageSize: any = ref(10)
 const earlyPage: any = ref(1)
-const earlyPageSize: any = ref(50)
+const earlyPageSize: any = ref(10)
 const earlyLoadAll: any = ref(false)
 const recommendLoadAll: any = ref(false)
 const recommendCloseClick = (val:any) => {
