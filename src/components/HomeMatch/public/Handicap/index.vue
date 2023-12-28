@@ -28,9 +28,6 @@
           <div v-if="type === 'RB'" class="RB-ChangeIor">
             <transition
               name="listdown"
-              @before-enter="beforeEnter"
-              @enter="enter"
-              @after-enter="afterEnter"
             >
               <div
                 v-if="item.marketInfo.iorChangeTransition === 'up-ior'"
