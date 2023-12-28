@@ -161,11 +161,16 @@ img:not([src]) {
   word-break: normal;
 }
 
+.animate__animated {
+  animation-duration: 1s;
+  animation-fill-mode: both
+}
+
 
 .animate__fadeOutLeft {
-  -webkit-animation-name: fadeOutLeft;
   animation-name: fadeOutLeft
 }
+
 @keyframes fadeOutLeft {
   0% {
       opacity: 1

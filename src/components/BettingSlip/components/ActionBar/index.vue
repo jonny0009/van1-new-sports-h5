@@ -52,7 +52,7 @@ const combosProfit = computed(() => store.getters['betting/combosProfit'])
 const effectiveMarkets = computed(() => store.getters['betting/effectiveMarkets'])
 const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
 const golds = computed(() => mode.value === 1 ? betsGolds.value : combosBetGolds.value)
-const profit = computed(() => mode.value === 1 ? betsProfit.value : combosProfit.value)
+const profit = computed(() => mode.value === 1 ? betsProfit.value * 1 + golds.value * 1 : combosProfit.value * 1 + golds.value * 1)
 
 const bettingState = computed(() => {
   if (mode.value === 1) {
@@ -132,9 +132,6 @@ const inputTouch = () => {
     text-align: justify;
     font-weight: 600;
 
-    &.selected {
-      color: #dfe4e5;
-    }
   }
 
   .cursor {
@@ -214,7 +211,7 @@ const inputTouch = () => {
 
   .confirm-button-wrap {
     width: 0 50px;
-    margin-top: 150px;
+    margin-top: 100px;
     position: relative;
 
     .delete-btn {

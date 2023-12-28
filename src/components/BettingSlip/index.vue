@@ -72,7 +72,7 @@
           </div>
         </div>
         <template v-if="mode === 1">
-          <Singles v-for="( market, index ) in markets " :key="index" :market-info="market"></Singles>
+          <Singles v-for="market in markets " :key="market.playOnlyId" :market-info="market"></Singles>
         </template>
         <Parlay v-else parlay :markets="markets"></Parlay>
         <ActionBar v-if="open" />
