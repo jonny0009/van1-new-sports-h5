@@ -26,12 +26,7 @@ const sportsList = computed(() => {
     return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.gameCount
     // return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType)
   })
-  let newSportsB:any = [
-    { text: 'FT' },
-    { text: 'BK' },
-    { text: 'TN' },
-    { text: 'OP_BM' }
-  ]
+  let newSportsB:any = []
   if (newSportsA.length) {
     const newSportsC = newSportsA.map((e:any) => {
       return {
