@@ -6,7 +6,7 @@
           <div class="text">{{ key }}</div>
         </div>
       </div>
-      <div class="seize finish" @click="close">完成</div>
+      <div class="seize finish" @click="close">{{ $t('betting.finish') }}</div>
     </div>
     <div class="keyboard-input-body">
       <div v-for="key in keys" :key="key" class="input-item" @click="inputEntry(key)">
@@ -20,7 +20,7 @@
         :class="oddChangesState ? 'checked' : 'close'"
         @click="oddChangesState = !oddChangesState"
       ></span>
-      <span class="tips">接受所有盘口变化</span>
+      <span class="tips">{{ $t('betting.oddChangTips') }}</span>
       <span class="tips-icon"></span>
     </div>
 

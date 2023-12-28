@@ -19,9 +19,9 @@
         </div>
         <div class="team-score">
           <span class="default" v-html="setMatch.showRBTime(matchInfo)"></span>
-          <span class="icons" v-if="matchInfo.showtype == 'RB'">
+          <!-- <span class="icons" v-if="matchInfo.showtype == 'RB'">
             <SvgIcon name="live-play" />
-          </span>
+          </span> -->
         </div>
         <div class="team-player away">
           <div class="img-num">
@@ -51,11 +51,11 @@ const setMatch = useMatch()
 const matchInfo = computed(() => props.matchInfo)
 const matchCover = computed(() => {
   const item = matchInfo.value
-  const type: any = {
-    FT: 'FE/common/live/img_video_bg_FT.jpg',
-    BK: 'FE/common/live/img_video_bg_BK.jpg'
+  if (item.gameType == 'BK') {
+    return ImageSource + 'FE/common/live/img_video_bg_BK.jpg'
+  } else {
+    return ImageSource + 'FE/common/live/img_video_bg_FT.jpg'
   }
-  return ImageSource + type[item.gameType]
 })
 </script>
 

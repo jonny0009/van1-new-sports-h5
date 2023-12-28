@@ -37,6 +37,12 @@
           </div>
           <HomeEmpty v-else></HomeEmpty>
         </template>
+        <div v-if="!isLoadingRecommend && recommendList.length" class="Button-MatchMore mt20" :class="recommendLoadAll?'no-more':''" @click="moreRecommend">
+          <span>
+            {{ recommendLoadAll?$t('live.noMore'):$t('home.lookMoreMatch') }}
+          </span>
+        </div>
+        <Loading v-if="isLoadingRecommend" />
       </template>
     </template>
     <!-- 早盘 -->
@@ -50,7 +56,14 @@
           </div>
           <HomeEmpty v-else></HomeEmpty>
         </template>
+        <div v-if="!isLoadingEarly && earlyList.length" class="Button-MatchMore mt20" :class="earlyLoadAll?'no-more':''" @click="moreEarly">
+          <span>
+            {{ earlyLoadAll?$t('live.noMore'):$t('home.lookMoreMatch') }}
+          </span>
+        </div>
+        <Loading v-if="isLoadingEarly" />
       </template>
+
     </template>
     <!-- 冠军 -->
     <ChampionList v-if="championList.length && leagueId" :champion-list="championList" />
@@ -85,8 +98,13 @@ const leagueId: any = ref(route.query.leagueId)
 const gameType: any = ref(route.params.type)
 const leagueLogo: any = ref()
 const leagueName: any = ref()
-
 const isOpenRecommend: any = ref(true)
+const recommendPage: any = ref(1)
+const recommendPageSize: any = ref(10)
+const earlyPage: any = ref(1)
+const earlyPageSize: any = ref(10)
+const earlyLoadAll: any = ref(false)
+const recommendLoadAll: any = ref(false)
 const recommendCloseClick = (val:any) => {
   isOpenRecommend.value = !val
 }
@@ -106,11 +124,12 @@ watch(
   (route: any) => {
     gameType.value = route.params.type
     leagueId.value = ''
+    recommendPage.value = 1
+    earlyPage.value = 1
     console.log(gameType.value)
     getFirstLeagues()
     initData()
   }
-  // { immediate: true }
 )
 
 const initData = async () => {
@@ -121,10 +140,12 @@ const initData = async () => {
     getChampionpPlayTypes()
   } else {
     // 推荐
-    const recommendParames:any = ref({ gameType: gameType.value, gradeType: 1, page: 1, pageSize: 20 })
+    const recommendParames:any = ref({ gameType: gameType.value, gradeType: 1,
+      page: recommendPage.value, pageSize: recommendPageSize.value })
     getRecommendEvents(recommendParames.value)
     // 早盘
-    const earlyParames:any = ref({ gameType: gameType.value, gradeType: 2, page: 1, pageSize: 20 })
+    const earlyParames:any = ref({ gameType: gameType.value, gradeType: 2,
+      page: earlyPage.value, pageSize: earlyPageSize.value })
     getRecommendEvents(earlyParames.value)
   }
 }
@@ -140,6 +161,51 @@ const getFirstLeagues = async () => {
       firstLeaguesList.value = []
     }
   }
+}
+
+// 早盘更多
+const isLoadingEarly: any = ref(false)
+const moreEarly = async () => {
+  if (earlyLoadAll.value) {
+    return
+  }
+  earlyPage.value = earlyPage.value + 1
+  const earlyParames:any = ref({ gameType: gameType.value, gradeType: 2,
+    page: earlyPage.value, pageSize: earlyPageSize.value })
+  isLoadingEarly.value = true
+  const res:any = await recommendEvents(earlyParames.value) || {}
+  if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
+    earlyList.value.push(...res.data.baseData)
+    console.log(earlyList.value.length)
+  }
+  if (earlyList.value.length < earlyPage.value * earlyPageSize.value) {
+    earlyLoadAll.value = true
+  } else {
+    earlyLoadAll.value = false
+  }
+  isLoadingEarly.value = false
+}
+
+// 推荐更多
+const isLoadingRecommend: any = ref(false)
+const moreRecommend = async () => {
+  if (recommendLoadAll.value) {
+    return
+  }
+  recommendPage.value = recommendPage.value + 1
+  const recommendParames:any = ref({ gameType: gameType.value, gradeType: 1,
+    page: recommendPage.value, pageSize: recommendPageSize.value })
+  isLoadingRecommend.value = true
+  const res:any = await recommendEvents(recommendParames.value) || {}
+  if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
+    recommendList.value.push(...res.data.baseData)
+  }
+  if (recommendList.value.length < recommendPage.value * recommendPageSize.value) {
+    recommendLoadAll.value = true
+  } else {
+    recommendLoadAll.value = false
+  }
+  isLoadingRecommend.value = false
 }
 
 const recommendList: any = ref([])
@@ -222,7 +288,7 @@ const clickLeague = (item: any) => {
 
 <style lang="scss" scoped>
 .sport-page{
-  padding: 0 36px 350px;
+  padding: 0 36px;
   .my-scroll__content{
     width: 100%;
     overflow-x: auto;

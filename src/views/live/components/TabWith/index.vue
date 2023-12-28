@@ -17,7 +17,7 @@
           <span>@{{ item.nikeName }}</span>
         </div>
         <div class="right">
-          <span class="state">{{ $t('live.inprogress') }}</span>
+          <span class="state" v-if="props.matchInfo.showtype == 'RB'">{{ $t('live.inprogress') }}</span>
         </div>
       </div>
 
@@ -31,7 +31,7 @@
           </div>
           <div class="label-flex">
             <img src="@/assets/images/live/live_purple.png" alt="" />
-            <span>-</span>
+            <span v-html="setMatch.showRBTime(props.matchInfo)"></span>
           </div>
         </div>
         <div class="team">
@@ -41,7 +41,7 @@
               <span>{{ item.homeTeam }}</span>
             </div>
             <div class="score">
-              <span>{{ getScore(item, 'H') }}</span>
+              <span>{{ setMatch.getScore(props.matchInfo, 'H') || '-' }}</span>
             </div>
           </div>
           <div class="team-cell">
@@ -50,14 +50,14 @@
               <span>{{ item.awayTeam }}</span>
             </div>
             <div class="score">
-              <span>{{ getScore(item, 'C') }}</span>
+              <span>{{ setMatch.getScore(props.matchInfo, 'C') || '-' }}</span>
             </div>
           </div>
         </div>
         <div class="ticket">
           <div class="ticket-txt">
             <div class="icon">
-              <img src="" alt="" />
+              <img src="@/assets/images/live/plate.png" alt="" />
             </div>
             <div class="info">
               <strong>{{ item.betItem }}</strong>
@@ -71,11 +71,11 @@
         <div class="betting">
           <div class="betting-cell bt1">
             <strong>{{ $t('live.betAmout') }}：</strong>
-            <span>0.00</span>
+            <span>{{ item.golds }}</span>
           </div>
           <div class="betting-cell bt2">
             <strong>{{ $t('live.betProfit') }}：</strong>
-            <span>0.00</span>
+            <span>{{ (item.golds * item.ior).toFixed(2) }}</span>
           </div>
         </div>
 
@@ -96,13 +96,14 @@
 import { onMounted, Ref, ref, watch } from 'vue'
 import { betRecord, betRecordAll } from '@/api/live'
 import { MarketInfo } from '@/entitys/MarketInfo'
-import { getScore } from '@/utils/home/getScore'
+import { useMatch } from '@/utils/useMatch'
 const props = defineProps({
   matchInfo: {
     type: Object,
     default: () => {}
   }
 })
+const setMatch = useMatch()
 
 const navActive = ref(1)
 const onNavClick = (num: number) => {
@@ -322,6 +323,10 @@ onMounted(() => {
           background: #96a5aa;
           border-radius: 60%;
           margin-right: 15px;
+          > img {
+            display: block;
+            width: 100%;
+          }
         }
         .info {
           > span {
@@ -381,6 +386,9 @@ onMounted(() => {
           width: 26px;
           margin-left: 10px;
         }
+      }
+      .betting-option-wrap.selected {
+        background-color: transparent !important;
       }
     }
   }

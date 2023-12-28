@@ -20,7 +20,7 @@
       <!-- 内容框 -->
       <p class="explain">{{ $t('user.Personal') }}</p>
       <div class="explain-box">
-        <van-field v-model="remark" rows="10" autosize type="textarea" maxlength="256" show-word-limit />
+        <van-field v-model="remark" rows="10" autosize type="textarea" maxlength="50" show-word-limit />
       </div>
       <p class="explain privacy">{{ $t('user.PrivacySettings') }}</p>
 

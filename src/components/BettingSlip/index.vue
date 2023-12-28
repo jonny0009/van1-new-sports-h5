@@ -62,7 +62,7 @@
       >
         <div v-if="mode === 2" class="betting-slip-combo-header">
           <div class="up-betting-combo">
-            <div class="text">{{ comboMarkets.length }}场串关</div>
+            <div class="text">{{ $t('betting.combos', { num: comboMarkets.length }) }}</div>
             <div class="icons">
               <SportsIcon v-for="(item, index) in comboMarkets" :key="index" :icon-src="item.gameType" />
             </div>

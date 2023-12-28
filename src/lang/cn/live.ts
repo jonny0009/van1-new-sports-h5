@@ -41,5 +41,6 @@ export default {
   xub: '下{num}',
   pause: '暂停',
   xround: '第{num}局',
-  xHas: '已有{num}'
+  xHas: '已有{num}',
+  clickSub: '点击预约'
 }
