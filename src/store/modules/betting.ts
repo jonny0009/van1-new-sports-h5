@@ -209,7 +209,9 @@ const bettingModule: Module<Betting, any> = {
       const marketItem = betParams(marketInfo)
       marketItem.gold = 0
       if (state.markets.length === 0) {
-        state.isOne = true
+        setTimeout(() => {
+          state.isOne = true
+        })
       } else {
         state.isOne = false
       }

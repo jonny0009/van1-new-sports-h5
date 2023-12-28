@@ -54,7 +54,7 @@
       </div>
       <Nothing v-if="results.length === 0 && markets.length === 0 && type !== 3"></Nothing>
       <div
-        v-else-if="type < 3 && markets.length"
+        v-else-if="type < 3 && markets.length && results.length === 0"
         class="bet-content"
         :style="{
           paddingBottom: boardShow ? '175px' : '8px'
@@ -77,7 +77,7 @@
         <Parlay v-else parlay :markets="markets"></Parlay>
         <ActionBar v-if="open" />
       </div>
-      <Result v-if="type !== 3"></Result>
+      <Result v-if="type !== 3 && results.length"></Result>
       <div v-if="type == 3" class="bet-content">
         <Pending></Pending>
       </div>
