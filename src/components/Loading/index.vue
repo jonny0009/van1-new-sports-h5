@@ -1,6 +1,6 @@
 <template>
   <div class="Loading">
-    <van-loading color="#96a5aa" size="24px" />加载中...
+    <van-loading color="#96a5aa" size="24px" />{{ $t('home.loading') }}
   </div>
 </template>
 <script lang="ts" setup>

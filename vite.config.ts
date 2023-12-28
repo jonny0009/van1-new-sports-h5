@@ -15,7 +15,7 @@ export default () => {
       })
     ],
     resolve: {
-      extensions: ['.ts', '.js', '.vue'],
+      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
       alias: {
         '@': resolve(process.cwd(), '/src'),
         '#': resolve(process.cwd(), '/types')
