@@ -25,9 +25,15 @@
             class="vior-down"
             :class="{'change-odds': scope.iorChange === 'down-ior' }"
           ></i>
-          <div v-if="type === 'RB'" class="RB-ChangeIor">
+          <div
+            v-if="type === 'RB'"
+            class="RB-ChangeIor"
+            :class="{
+              'no-RBtransition': !['up-ior','down-ior'].includes(item.marketInfo.iorChangeTransition)
+            }"
+          >
             <transition
-              name="listdown"
+              :name="['up-ior','down-ior'].includes(item.marketInfo.iorChangeTransition) ? 'listdown':''"
             >
               <div
                 v-if="item.marketInfo.iorChangeTransition === 'up-ior'"

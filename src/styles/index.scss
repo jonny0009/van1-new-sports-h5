@@ -314,6 +314,7 @@
       .details{
         .item{
           line-height: 26px;
+          min-height: 26px;
           font-size: 26px;
           color: #000000;
           .vior{
@@ -524,7 +525,7 @@
 
 
 
-
+//end home page
 
 
 
@@ -564,7 +565,7 @@
   }
 }
 
-//end home page
+
 .listup-enter-active,
 .listup-leave-active,
 .listup-move {
@@ -581,6 +582,7 @@
 .listup-leave-active {
   position: absolute
 }
+
 .listdown-enter-active,
 .listdown-leave-active,
 .listdown-move {
@@ -602,4 +604,18 @@
   display: inline-block;
   position: relative;
   line-height: 24px;
+  min-height: 24px;
+}
+.no-RBtransition{
+  .listdown-enter-active,
+  .listdown-leave-active,
+  .listdown-move {
+    transition: all 0s ease
+  }
+
+  .listup-enter-active,
+  .listup-leave-active,
+  .listup-move {
+    transition: all 0s ease
+  }
 }
