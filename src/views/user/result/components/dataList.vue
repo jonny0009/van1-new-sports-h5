@@ -192,9 +192,14 @@ const getNoAccount = async () => {
     finished.value = true
     return showToast(res.msg)
   }
-  list.arr = res.data
-  loading.value = false
-  finished.value = true
+  const data = res.data
+  if (res.code === 200) {
+    data.forEach((item: any) => {
+      list.arr.push(item)
+    })
+    loading.value = false
+    finished.value = !data.length
+  }
 }
 
 // systemId

@@ -141,7 +141,7 @@ function showPk(val?: any) {
       }
     })
     popupList.arr = languages.arr
-    commonKey.key = lang.value.key
+    commonKey.key = lang.value.key || 'zh-cn'
     popupTitle.value = 'lang'
   }
   if (val === 3) {

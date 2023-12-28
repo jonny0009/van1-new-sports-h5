@@ -82,6 +82,8 @@ const onLoad = async () => {
     finished.value = list.arr.length === data.totalCount
   } else {
     showToast(res.msg)
+    loading.value = false
+    finished.value = true
   }
 }
 
