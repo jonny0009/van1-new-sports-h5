@@ -41,5 +41,6 @@ export default {
   xub: 'Xuống {num}',
   pause: 'tạm ngừng',
   xround: '{num} vòng',
-  xHas: 'Đã {num}'
+  xHas: 'Đã {num}',
+  clickSub: 'Bấm để đặt chỗ'
 }

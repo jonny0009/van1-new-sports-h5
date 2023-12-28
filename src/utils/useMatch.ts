@@ -47,7 +47,7 @@ export function useMatch() {
         case 'FT':
           if (!gameInfo) {
             // 原本data显示空
-            return t('live.notstarted')
+            return t('live.inprogress')
           }
           if (homeTeamSuffix?.includes('点球') || homeTeamSuffix?.includes('點球')) {
             gameInfo.raceType = 'dianqiu'
@@ -113,17 +113,17 @@ export function useMatch() {
             return `${panNum}<span>${score1}${score2}</span>`
           }
           // 原本data显示空
-          return t('live.notstarted')
+          return t('live.inprogress')
         //
         // 棒
         case 'BS':
           if (!gameInfo) {
             // 原本data显示空
-            return t('live.notstarted')
+            return t('live.inprogress')
           } else {
             if (gidm && gidm.indexOf('ic') > -1) {
               // 原本data显示空
-              return t('live.notstarted')
+              return t('live.inprogress')
             }
             const bsScoreObj: any = gameInfo ? bsStObj(gameInfo) : ''
             const inningNum = gameInfo.inningNum
@@ -176,7 +176,7 @@ export function useMatch() {
         case 'OP_TN':
           if (!gameInfo) {
             // 原本data显示空
-            return t('live.notstarted')
+            return t('live.inprogress')
           } else {
             const newSeNow: any = gameInfo?.se_now.replace(/[^0-9]/gi, '') || ''
             return newSeNow
@@ -195,7 +195,7 @@ export function useMatch() {
           return t('live.inprogress')
       }
       // 原本data显示空
-      return t('live.notstarted')
+      return t('live.inprogress')
     } else {
       // 原本data显示空
       return t('live.notstarted')
