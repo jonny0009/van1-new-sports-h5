@@ -132,11 +132,11 @@
     height: 310px;
   }
 
-  .userInfo, .content {
+  > .content {
     margin-top: -10px;
     border-radius: 10px 10px 0px 0px;
     height: calc(100vh - 350px);
-    // overflow-y: auto;
+    overflow-y: auto;
     padding: 42px 36px;
     background-color: #FFFFFF;
 

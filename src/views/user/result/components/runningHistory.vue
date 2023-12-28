@@ -88,7 +88,7 @@ onMounted(() => {
   TradeTyp()
 })
 
-let page: number = 0
+let page: number = 1
 const onLoad = async () => {
   page++
   const params: any = {
@@ -127,7 +127,7 @@ const onLoad = async () => {
 
     dataList.arr = listFlag
     loading.value = false
-    finished.value = list.arr.length === data.total
+    finished.value = !data.transferRecordRspList.length
   } else {
     showToast(res.msg)
   }

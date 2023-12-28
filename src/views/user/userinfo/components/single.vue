@@ -96,10 +96,10 @@
           </div>
         </div>
       </div>
-      <div class="addBtn-1">
+      <!-- <div class="addBtn-1">
         <span>{{ $t('user.fill') }}</span>
-        <!-- <img class="img_1" src="@/assets/images/user/num8.png" alt="" /> -->
-      </div>
+        <img class="img_1" src="@/assets/images/user/num8.png" alt="" />
+      </div> -->
       <!-- line -->
       <!-- <div class="line" /> -->
       <!-- num-->
