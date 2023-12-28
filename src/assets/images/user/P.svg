@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="20.0000012px" viewBox="0 0 24 20.0000012" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>刷新- icon@2x</title>
-    <g id="刷新--icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <path d="M12,17.9999861 C10.519,17.9999861 9.1355,17.5879866 7.9445,16.8839876 L6.488,18.3404857 C8.12173227,19.4245737 10.0393044,20.0018971 12,19.9999965 C17.523,19.9999965 22,15.5229893 22,9.99999648 L20,9.99999648 C20,14.4109908 16.411,17.9999861 12,17.9999861 Z M12,4.71840394e-06 C6.477,4.71840394e-06 2,4.47700365 2,10.0000047 L4,10.0000047 C4,5.58900221 7.589,2.00000472 12,2.00000472 C13.481,2.00000472 14.8645,2.41200633 16.0555,3.11600542 L17.512,1.65950731 C15.8782677,0.575419269 13.9606956,-0.00190416057 12,4.71840394e-06 L12,4.71840394e-06 Z M18,10.0000017 L24,10.0000017 L21,6.00000167 L18,10.0000017 Z M6,9.99999648 L0,9.99999648 L3,13.9999965 L6,9.99999648 Z" id="形状" fill="#FFFFFF" fill-rule="nonzero"></path>
+<svg width="40px" height="30px" viewBox="0 0 40 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 6</title>
+    <g id="导航" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="结果new1" transform="translate(-653, -3360)">
+            <g id="编组-5" transform="translate(36, 2996)">
+                <g id="编组-6" transform="translate(617, 364)">
+                    <rect id="矩形备份-5" fill="#FAB307" x="0" y="0" width="40" height="30" rx="4"></rect>
+                    <g id="编组-6备份" transform="translate(14, 11)" fill="#FFFFFF">
+                        <rect id="矩形" x="0" y="0" width="12" height="2"></rect>
+                        <rect id="矩形备份-13" x="0" y="7" width="12" height="2"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
     </g>
 </svg>

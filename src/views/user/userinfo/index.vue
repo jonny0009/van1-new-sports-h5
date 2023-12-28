@@ -58,7 +58,7 @@
       </div>
       <!-- 注单列表 -->
       <bet-list :people-info="peopleInfo"></bet-list>
-      <div class="foot" />
+      <!-- <div class="foot" /> -->
     </div>
 
   </div>

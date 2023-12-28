@@ -1,5 +1,5 @@
 <template>
-  <div v-if="list.arr.length">
+  <div>
     <!-- 战力 -->
     <div class="top-1 top-2">
       <img class="img_1" src="@/assets/images/user/bottom.png" alt="" />
@@ -8,14 +8,21 @@
         <!-- 显示5个,问号是进行中的 -->
         <span>{{ $t('user.RecentAchievements') }}:</span>
         <!-- <img class="img_1" src="@/assets/images/user/ask.svg" alt="" /> -->
-        <span v-for="(item, index) in recordNum.arr" :key="index" class="img_1">
-          <img v-if="item !== 1" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+        <span v-for="(item, index) in list.arr.slice(0,5)" :key="index" class="img_1">
+          <img v-if="item.winAndLossGold <0" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
           <img v-else class="img_1" src="@/assets/images/user/win.svg" alt="" />
         </span>
       </div>
     </div>
     <!-- 列表 -->
-    <div class="dataList">
+
+    <van-list
+      v-model:loading="loading"
+      :finished="finished"
+      :finished-text="$t('live.noMore')"
+      class="dataList"
+      @load="getBetList"
+    >
       <div v-for="(item, index) in list.arr" :key="index">
         <div class="top-3">
           <div class="left" @click="goUrl('/elseInfo')">
@@ -32,7 +39,7 @@
         <Single v-if="item.parlayNum == 1" :item="item" class="item"></Single>
         <Bunch v-if="item.parlayNum != 1 && item.state !== 2" :item="item" class="item"></Bunch>
       </div>
-    </div>
+    </van-list>
 
     <!-- <div class="top4">
       <div class="game-1">
@@ -129,7 +136,9 @@ import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
 
 const beginTime = ref<any>('')
 const endTime = ref<any>('')
-const recordNum = ref<any>({})
+
+const loading = ref(false)
+const finished = ref(false)
 
 const list = reactive<{ arr: any }>({ arr: [] })
 import { ImageSource } from '@/config'
@@ -152,12 +161,14 @@ onMounted(() => {
   const oneDayDate = 24 * 60 * 60 * 1000
   beginTime.value = endTime.value - oneDayDate * 7
   // 获取结算已结算注单
-  getBetList()
+  // getBetList()
 })
+let page: number = 0
 const getBetList = async () => {
+  page++
   const params = {
     orderState: '1',
-    page: 1,
+    page: page,
     pageSize: 5,
     beginTime: beginTime.value,
     endTime: endTime.value
@@ -165,19 +176,18 @@ const getBetList = async () => {
 
   const res: any = await betRecordTab(params)
   if (res.code !== 200) {
+    loading.value = false
+    finished.value = true
     return showToast(res.msg)
   }
-  list.arr = res.data
-  const resultArr: any = []
-  list.arr.map((item: any) => {
-    if (item.winAndLossGold >= 0) {
-      resultArr.push(1)
-    } else {
-      resultArr.push(0)
-    }
-  })
-  recordNum.value.arr = resultArr
-  console.log()
+  const data = res.data
+  if (res.code === 200) {
+    data.forEach((item: any) => {
+      list.arr.push(item)
+    })
+    loading.value = false
+    finished.value = !data.length
+  }
 }
 const goUrl = (url: string) => {
   console.log(url, '他人未开放===')
@@ -188,11 +198,10 @@ const goUrl = (url: string) => {
 
 <style lang="scss" scoped>
 @import '../index.scss';
+
 // 列表
 .dataList {
-  // height: calc(100vh - 450px);
-  // overflow-y: auto;
-  margin-top: 20px;
+  margin-top: 30px;
 
   .color-1 {
     color: #7642FD;
@@ -201,6 +210,7 @@ const goUrl = (url: string) => {
   .color-2 {
     color: #1EBB52;
   }
+
   .color-3 {
     color: red;
   }
