@@ -25,8 +25,8 @@ export default {
   stayTuned: '敬请期待',
 
   // 新
-  '1HNumber': `上半场<span class='time-h-Up'>{number}</span>`, //
-  '2HNumber': `下半场<span class='time-h-d'>{number}</span>`, //
+  '1HNumber': `上半场<span class='time-h-Up'>{number}</span>`,
+  '2HNumber': `下半场<span class='time-h-d'>{number}</span>`,
   'bout': '第{number}盘',
   'set': '第{number}局',
   'down': '下',

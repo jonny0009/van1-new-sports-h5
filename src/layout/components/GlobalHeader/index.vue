@@ -1,5 +1,5 @@
 <template>
-  <div class="global-bar-header">
+  <div ref="refGlobalBarHeader" class="global-bar-header">
     <div class="headerView">
       <div class="headerView-fixed">
         <div class="avatar" @click="showInfo">
@@ -129,7 +129,6 @@ const showInfo = () => {
 <style lang="scss" scoped>
 .headerView {
   height: 96px;
-
   .headerView-fixed {
     position: fixed;
     z-index: 99;
@@ -143,7 +142,6 @@ const showInfo = () => {
     justify-content: center;
     background: linear-gradient(to bottom, #181f2a 0, #2a0572 100%);
   }
-
   .wallet {
     height: 56px;
     line-height: 56px;
@@ -157,7 +155,6 @@ const showInfo = () => {
     font-size: 26px;
     font-family: PingFangSC-Semibold, SF-Pro-Bold, system-ui;
     padding: 0 66px;
-
     .transaction,
     .cur {
       position: absolute;
@@ -169,29 +166,24 @@ const showInfo = () => {
       display: flex;
       justify-content: center;
       align-items: center;
-
       img {
         width: 24px;
         height: 24px;
         display: block;
       }
     }
-
     .cur {
       left: 6px;
-
       img {
         width: 40px;
         height: 40px;
       }
     }
-
     .transaction {
       background: #7642fe;
       right: 6px;
     }
   }
-
   .avatar {
     position: absolute;
     left: 30px;
@@ -207,7 +199,6 @@ const showInfo = () => {
       height: 84px;
     }
   }
-
   .right-area {
     position: absolute;
     top: 0;
@@ -215,7 +206,6 @@ const showInfo = () => {
     right: 30px;
     display: flex;
     align-items: center;
-
     .search {
       width: 40px;
       height: 40px;
@@ -223,7 +213,6 @@ const showInfo = () => {
     }
   }
 }
-
 .userInfo {
   background: #FFFFFF;
   font-family: PingFangSC-Medium;
@@ -231,28 +220,22 @@ const showInfo = () => {
   color: #000000;
   letter-spacing: 0;
   font-weight: 500;
-
   .top {
     padding: 84px 52px;
-
     &_1 {
       display: flex;
       align-items: center;
     }
-
     .headImg {
       width: 100px;
       height: 120px;
     }
-
     .right {
       margin-left: 34px;
-
       .head {
         display: flex;
         align-items: center;
         justify-content: space-between;
-
         &_1 {
           background: #E5ECF3;
           border-radius: 24px;
@@ -263,13 +246,11 @@ const showInfo = () => {
           letter-spacing: 0;
           font-weight: 500;
         }
-
         .headImg_1 {
           height: 34px;
           width: 34px;
         }
       }
-
       .money {
         margin-top: 18px;
         background-image: linear-gradient(90deg, #7642FD 0%, #491CAB 100%);
@@ -284,7 +265,6 @@ const showInfo = () => {
         padding: 2px;
         display: flex;
         align-items: center;
-
         .headImg_2 {
           height: 34px;
           width: 34px;
@@ -292,7 +272,6 @@ const showInfo = () => {
         }
       }
     }
-
     .font_3 {
       font-family: PingFangSC-Regular;
       font-size: 24px;
@@ -305,25 +284,21 @@ const showInfo = () => {
       text-overflow: ellipsis;
 
     }
-
     .font_4 {
       color: #000000;
       font-weight: 500;
     }
   }
-
   .line {
     margin-top: -20px;
     background: #E5ECF3;
     height: 2px;
     width: 100%;
   }
-
   .logoImg {
     margin-top: 280px;
     text-align: center;
   }
-
   .logo {
     width: 197px;
     height: 175px;

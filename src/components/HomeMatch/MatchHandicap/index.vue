@@ -1,46 +1,48 @@
 <template>
   <div class="homeMatchHandicap">
-    <div class="home-tabs-play">
 
-      <TimeView :time-send-params="sendParams" />
-
-      <div class="play">
-        <div class="flex-1"></div>
-        <span
-          class="btn R"
-          :class="[
-            {
-              active: RrefShow
-            }
-          ]"
-          @click="Rclick"
-        >
-          {{ $t('home.R') }}
-        </span>
-        <span
-          class="btn OU"
-          :class="[
-            {
-              active: OUrefShow
-            }
-          ]"
-          @click="OUclick"
-        >
-          {{ $t('home.OU') }}
-        </span>
-        <span
-          class="btn M"
-          :class="[
-            {
-              active: MrefShow
-            }
-          ]"
-          @click="Mclick"
-        >
-          {{ $t('home.M') }}
-        </span>
+    <van-sticky :offset-top="50">
+      <div class="home-tabs-play">
+        <TimeView :time-send-params="sendParams" />
+        <div class="play">
+          <div class="flex-1"></div>
+          <span
+            class="btn R"
+            :class="[
+              {
+                active: RrefShow
+              }
+            ]"
+            @click="Rclick"
+          >
+            {{ $t('home.R') }}
+          </span>
+          <span
+            class="btn OU"
+            :class="[
+              {
+                active: OUrefShow
+              }
+            ]"
+            @click="OUclick"
+          >
+            {{ $t('home.OU') }}
+          </span>
+          <span
+            class="btn M"
+            :class="[
+              {
+                active: MrefShow
+              }
+            ]"
+            @click="Mclick"
+          >
+            {{ $t('home.M') }}
+          </span>
+        </div>
       </div>
-    </div>
+    </van-sticky>
+
     <div class="home-match">
       <div class="up-match-group__body">
         <div class="up-match">

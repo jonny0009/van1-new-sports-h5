@@ -31,6 +31,7 @@ watch(refreshChangeTime, (val) => {
   if (val) {
     clearTimeout(timeout.value)
     timeout.value = setTimeout(() => {
+      isShow.value = false
       getRecommendEvents()
     }, 100)
   }
