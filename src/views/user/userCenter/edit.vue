@@ -109,7 +109,6 @@ const defaultPlate = {
 onMounted(() => {
   // store.dispatch('app/queryCMerLanguage')
   // getCurrent()
-
   const obj = plateData.arr.find((item: any) => {
     if (item.key === plateMaskKey || '') {
       return item

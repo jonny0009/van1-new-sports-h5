@@ -1,4 +1,3 @@
-import { hotSearch } from '@/api/user'
 
 export default {
   lang: '语言',
@@ -89,7 +88,7 @@ export default {
   currency: '货币',
   save: '保存',
   nickname: '输入昵称',
-  font7: '天可以修改一次昵称，请认真修改哦!',
+  font7: '7天可以修改一次昵称，请认真修改哦!',
   editText: '编辑',
   betForm: '注单',
   end: '已结束',
@@ -121,6 +120,12 @@ export default {
   // 新增4
   hotSearch: '热门搜索 ',
   lookInfo: '查看完整讯息 ',
+  betNum: '投注 ',
+  noMoreMatch: '没有更多赛事了 ',
+
+  // 新增5
+  editPend: '受理中 ',
+  affirmPend: '确认中 ',
 
   sports: {
     'officeNumber': '局号',
