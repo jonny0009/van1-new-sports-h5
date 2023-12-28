@@ -1,6 +1,6 @@
 <template>
   <div class="login-page">
-    <van-nav-bar class="bg-title">
+    <van-nav-bar class="bg-title" :class="[changeImg?'theme':'' ]">
       <template #left>
         <img class="img_1" src="@/assets/images/login/return@2x.png" alt="" @click="goBack()" />
       </template>
@@ -69,6 +69,7 @@ import localStore from '@/utils/localStore'
 
 const $router = useRouter()
 const popupTitle = ref('')
+const changeImg = ref(true)
 const commonKey = reactive({ key: '' })
 const popupIndex = ref(0)
 const popupList = reactive<{ arr: any[] }>({ arr: [] })
@@ -164,6 +165,9 @@ const login = () => {
     height: 37px;
   }
 }
+// .theme{
+//   background: url('@/assets/images/globalLayout/header/avatar.png');
+// }
 
 .content {
   background: #ffffff;
