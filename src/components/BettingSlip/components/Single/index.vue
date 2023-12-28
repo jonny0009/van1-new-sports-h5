@@ -1,41 +1,46 @@
 <template>
-  <div class="Single-wrap">
-    <div class="remove">
-      <van-icon name="cross" :class="{ fixed: marketInfo.errorCode }" @click.stop="remove" />
-    </div>
-    <div class="content">
-      <div class="title">
-        <SportsIcon :icon-src="marketInfo.gameType" />
-        <div class="betting-name text-overflow">{{ marketInfo.ratioName }}</div>
+  <transition
+    :class="`animate__animated ${state?'animate__fadeOutLeft':''}`"
+    mode="out-in"
+  >
+    <div class="Single-wrap">
+      <div class="remove">
+        <van-icon name="cross" :class="{ fixed: marketInfo.errorCode }" @click.stop="remove" />
       </div>
-      <div class="details">
-        <div v-if="marketInfo.isChampion" class="play-name text-overflow">{{ marketInfo.championType }}</div>
-        <div v-else v-play="marketInfo" class="play-name text-overflow"></div>
-        <div v-if="marketInfo.isChampion" class="team-info text-overflow">{{ $t('betting.champion') }}</div>
-        <div v-else class="team-info text-overflow">{{ marketInfo.homeTeam }} VS {{ marketInfo.awayTeam }}</div>
-      </div>
-      <div class="betting-odds" :class="marketInfo.iorChange">
-        @<span v-points="marketInfo.ior"></span>
-        <span class="ior-change" :class="marketInfo.iorChange"></span>
-      </div>
-      <div v-if="mode === 1" class="action">
-        <div v-if="marketInfo.iorChange" class="betting-slip-accept-button" @click="clearIorChange">
-          接受赔率
+      <div class="content">
+        <div class="title">
+          <SportsIcon :icon-src="marketInfo.gameType" />
+          <div class="betting-name text-overflow">{{ marketInfo.ratioName }}</div>
         </div>
-        <div v-else ref="inputBtn" class="betting-slip-input" @click="inputTouch">
-          <span class="currency"><van-icon name="balance-o" /></span>
-          <div style="flex: 1 1 0%;"></div>
-          <span class="amount" :class="{ selected: marketInfo.playOnlyId === editId }">{{ marketInfo.gold }}</span>
-          <span v-show="marketInfo.playOnlyId === editId" class="cursor">|</span>
+        <div class="details">
+          <div v-if="marketInfo.isChampion" class="play-name text-overflow">{{ marketInfo.championType }}</div>
+          <div v-else v-play="marketInfo" class="play-name text-overflow"></div>
+          <div v-if="marketInfo.isChampion" class="team-info text-overflow">{{ $t('betting.champion') }}</div>
+          <div v-else class="team-info text-overflow">{{ marketInfo.homeTeam }} VS {{ marketInfo.awayTeam }}</div>
+        </div>
+        <div class="betting-odds" :class="marketInfo.iorChange">
+          @<span v-points="marketInfo.ior"></span>
+          <span class="ior-change" :class="marketInfo.iorChange"></span>
+        </div>
+        <div v-if="mode === 1" class="action">
+          <div v-if="marketInfo.iorChange" class="betting-slip-accept-button" @click="clearIorChange">
+            {{ $t('betting.acceptOdds') }}
+          </div>
+          <div v-else ref="inputBtn" class="betting-slip-input" @click="inputTouch">
+            <span class="currency"><van-icon name="balance-o" /></span>
+            <div style="flex: 1 1 0%;"></div>
+            <span class="amount" :class="{ selected: marketInfo.playOnlyId === editId }">{{ marketInfo.gold }}</span>
+            <span v-show="marketInfo.playOnlyId === editId" class="cursor">|</span>
+          </div>
         </div>
       </div>
+      <div v-if="isCombo" class="combo-enable"></div>
+      <div v-if="marketInfo.errorCode" class="error-popup">
+        <div class="lock"></div>
+        <div class="tips"> {{ $t('betting.eventClosure') }}</div>
+      </div>
     </div>
-    <div v-if="isCombo" class="combo-enable"></div>
-    <div v-if="marketInfo.errorCode" class="error-popup">
-      <div class="lock"></div>
-      <div class="tips">赛事封单</div>
-    </div>
-  </div>
+  </transition>
 </template>
 <script lang="ts" setup>
 import store from '@/store'
@@ -52,8 +57,10 @@ const editId = computed(() => store.state.betting.editId)
 const comboMarketPlayOnlyIds = computed(() => store.getters['betting/comboMarketPlayOnlyIds'])
 const isCombo = computed(() => comboMarketPlayOnlyIds.value.includes(props.marketInfo.playOnlyId) && mode.value === 2)
 
+const state = ref(false)
 const remove = () => {
-  store.dispatch('betting/deleteMarket', props.marketInfo.playOnlyId)
+  state.value = true
+  // store.dispatch('betting/deleteMarket', props.marketInfo.playOnlyId)
 }
 const clearIorChange = () => {
   store.dispatch('betting/clearIorChange', props.marketInfo.playOnlyId)
@@ -167,6 +174,7 @@ const inputTouch = () => {
 
     .details {
       overflow: hidden;
+
       .play-name {
         font-family: PingFangSC-Medium;
         font-size: 24px;
