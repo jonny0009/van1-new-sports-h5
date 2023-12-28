@@ -175,7 +175,7 @@ const getChampionpPlayTypes = async () => {
   if (leagueId.value) {
     const res:any = await apiChampionpPlayTypes({ page: 1, pageSize: 10, leagueIds: leagueId.value }) || {}
     if (res.code === 200 && res.data) {
-      const gameDetail:any = res.data.gameDetail
+      const gameDetail:any = res?.data?.gameDetail || []
       const champions = gameDetail.map((details:any) => {
         const { systemId, gameId, gidm, gameType } = details
         const playType = details.champion.playType

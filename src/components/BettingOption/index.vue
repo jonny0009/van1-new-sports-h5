@@ -36,10 +36,13 @@ watch(() => props.marketInfo, (newVal:any, oldVal:any) => {
   props.marketInfo.oldIor = oldIor
   if (+newIor > +oldIor) {
     props.marketInfo.iorChange = 'up-ior'
+    props.marketInfo.iorChangeTransition = 'up-ior'
   } else if (+newIor < +oldIor) {
     props.marketInfo.iorChange = 'down-ior'
+    props.marketInfo.iorChangeTransition = 'down-ior'
   } else {
     props.marketInfo.iorChange = ''
+    props.marketInfo.iorChangeTransition = ''
   }
   if (props.marketInfo.iorChange) {
     setTimeout(() => {

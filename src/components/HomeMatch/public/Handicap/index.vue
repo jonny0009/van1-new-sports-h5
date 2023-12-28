@@ -7,16 +7,6 @@
     class="betting-option"
   >
     <template #default="scope">
-      <!--
-        1. up-ior
-        2. down-ior
-       -->
-      <!--
-        <i
-          v-if="scope.iorChange"
-          :class="scope.iorChange"
-        ></i>
-      -->
       <i v-if="scope.lock" class="lock"></i>
       <span class="up-betting-name">
         <span class="text">
@@ -35,28 +25,27 @@
             class="vior-down"
             :class="{'change-odds': scope.iorChange === 'down-ior' }"
           ></i>
-          <template v-if="type === 'RB'">
-            <!--
-                <transition
-                @before-enter="beforeEnter"
-                @enter="enter"
-                @after-enter="afterEnter"
-                >
-              -->
-            <span
-              class="oldIor"
+          <div v-if="type === 'RB'" class="RB-ChangeIor">
+            <transition
+              name="listdown"
+              @before-enter="beforeEnter"
+              @enter="enter"
+              @after-enter="afterEnter"
             >
-              {{ item.marketInfo.oldIor }}
-            </span>
-            <span
-              class="vior"
-            >
-              {{ item.marketInfo.vior }}
-            </span>
-            <!--
-                </transition>
-              -->
-          </template>
+              <div
+                v-if="item.marketInfo.iorChangeTransition === 'up-ior'"
+                class="vior"
+              >
+                {{ item.marketInfo.iorChangeTransition === 'up-ior'? item.marketInfo.vior : item.marketInfo.oldIor }}
+              </div>
+              <div v-else-if="item.marketInfo.iorChangeTransition === 'down-ior'" class="vior">
+                {{ item.marketInfo.iorChangeTransition === 'down-ior'? item.marketInfo.vior : item.marketInfo.oldIor }}
+              </div>
+              <div v-else class="vior">
+                {{ item.marketInfo.vior }}
+              </div>
+            </transition>
+          </div>
           <span
             v-else
             class="vior"
@@ -88,4 +77,6 @@ defineProps({
     }
   }
 })
+
 </script>
+
