@@ -145,7 +145,7 @@ const goBack = () => {
 
   }
 
-  .content {
+  >.content {
     padding: 56px 50px;
 
     .setPassWorld {

@@ -1,5 +1,5 @@
 <template>
-  <div class="editName">
+  <div class="editImg">
     <van-nav-bar class="bg-title" :title="title" :border="false">
       <template #left>
         <span @click="goBack()">{{ $t('user.cancellation') }}</span>
@@ -17,7 +17,7 @@
       <span :class="index == 2 ? 'active' : ''" @click="index = 2">{{ $t('user.otherCharacters') }}</span>
       <!-- <span :class="index == 3 ? 'active' : ''" @click="index = 3">背景颜色</span> -->
     </div>
-    <div class="content">
+    <div class="editName-content">
       <div v-if="index === 1" class="img-style">
         <div v-for="i in 16" :key="i" class="select-img">
           <van-image class="img_1" fit="contain" :src="getImgUrl(i, 1)" @click="getSelectImg(i,1)" />
@@ -127,7 +127,7 @@ const goBack = () => {
 </script>
 
 <style lang="scss" scope>
-.editName {
+.editImg {
 
   .bg-title {
     width: 100%;
@@ -183,10 +183,10 @@ const goBack = () => {
     }
   }
 
-  .content {
+   > .editName-content {
     margin-top: -16px;
     padding: 40px 55px 0;
-    height: calc(100vh - 530px);
+    height: calc(100vh - 535px);
     overflow-y: auto;
     // padding: 56px 50px;
     background: #EFF1F2;
