@@ -89,7 +89,7 @@
     <div class="popup-title">{{ popupTitle1 }}</div>
     <div class="pk-list">
       <div
-        v-for="(item, index) in ballList.arr"
+        v-for="(item, index) in sportsList"
         :key="index"
         class="item"
         :class="[ballKey.gameType === item.gameType ? 'item-color' : '']"
@@ -112,18 +112,11 @@
 import { ref, reactive, onMounted, computed } from 'vue'
 import moment from 'moment'
 import { ImageSource } from '@/config'
-
 import store from '@/store'
-const ballListAll = computed(() => store.state.app.sports)
-
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
-// import ball1 from '@/assets/images/login/ball1.svg'
-// import arrow from '@/assets/images/components/title/arrow.png'
-// getGameManyInfo
 import { matchResult } from '@/api/user'
 const list = reactive<{ arr: any }>({ arr: [] })
-
 // import { showToast } from 'vant'
 const loading = ref(false)
 const finished = ref(false)
@@ -144,23 +137,33 @@ const ballKey = ref(
 )
 const showBottom1 = ref(false)
 const showBottom = ref(false)
-// const showTime = ref(false)
-const ballList = reactive<{ arr: any[] }>({
-  arr: []
-})
+
 const popupList = reactive<{ arr: any[] }>({ arr: [] })
 
 onMounted(() => {
-  // getNoAccount({})
-  let arr = [...ballListAll.value]
-  // item.gameCount !== 0 &&
-  arr = arr.filter((item: any) => item.gameType !== 'SY')
-  arr = JSON.parse(JSON.stringify(arr))
-  const sortArr: any = ['OP_BM', 'TN', 'BK', 'FT']
-  arr.sort(function (a, b) {
-    return sortArr.indexOf(b.gameType) - sortArr.indexOf(a.gameType)
+  store.dispatch('app/getAllSports')
+})
+const sportsList = computed(() => {
+  const sports = store.state.app.sports || []
+  const newSportsA = sports.filter((e:any) => {
+    return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.gameCount
   })
-  ballList.arr = arr
+  let newSportsB:any = [
+
+  ]
+  if (newSportsA.length) {
+    const newSportsC = newSportsA.map((e:any) => {
+      return {
+        value: e.gameType,
+        gameType: e.gameType,
+        gameCount: e.gameCount,
+        name: 'Sport'
+      }
+    })
+    newSportsB = [...newSportsC]
+  }
+
+  return newSportsB
 })
 let page: number = 0
 const onLoad = async () => {
