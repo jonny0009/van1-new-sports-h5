@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
 import { onMounted, computed } from 'vue'
-import Nothing from '../../components/Nothing/index.vue'
+import Nothing from '../../components/Nothing/Pending.vue'
 import Bunch from './bunch.vue'
 import Single from './single.vue'
 import store from '@/store'

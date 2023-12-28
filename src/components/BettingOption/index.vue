@@ -9,6 +9,7 @@ import store from '@/store'
 import Subscriber from '@/utils/subscriber'
 import { showToast } from 'vant'
 import { computed, watch } from 'vue'
+import { points } from '@/utils'
 const props = defineProps({
   marketInfo: {
     type: Object,
@@ -33,7 +34,7 @@ watch(() => props.marketInfo, (newVal:any, oldVal:any) => {
   }
   const newIor = newVal.ior * 1 || 0
   const oldIor = oldVal.ior * 1 || 0
-  props.marketInfo.oldIor = oldIor
+  props.marketInfo.oldIor = points(oldIor) || ''
   if (+newIor > +oldIor) {
     props.marketInfo.iorChange = 'up-ior'
     props.marketInfo.iorChangeTransition = 'up-ior'

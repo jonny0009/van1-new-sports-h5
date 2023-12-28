@@ -58,6 +58,7 @@ const highlightText = (field: any, text: any) => {
 
 <style lang="scss" scoped>
  .noData {
+  width: 100%;
   text-align: center;
   font-family: PingFangSC-Medium;
   font-size: 24px;
@@ -75,8 +76,7 @@ const highlightText = (field: any, text: any) => {
 }
 .matchList-1 {
   overflow-y: auto;
-  height: 1100px;
-
+  height: calc(100vh - 250px);
 }
 
 // 比赛

@@ -59,6 +59,8 @@ const userModule: Module<User, any> = {
     },
     // 用户配置
     async configSettingNew({ state }, params = {}) {
+      console.log(params, '====1111')
+
       const res = await configSettingNew(params)
       state.userConfig = res.data || {}
     },

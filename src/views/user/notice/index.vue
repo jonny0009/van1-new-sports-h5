@@ -12,14 +12,14 @@
           {{ $t('user.noData') }}
         </p>
       </div>
-      <div class="list">
-        <van-list v-model:loading="loading" :finished="finished" finished-text="" @load="onLoad">
+      <div v-if="list.arr.length || !finished" class="list">
+        <van-list v-model:loading="loading" :finished="finished" :finished-text="$t('live.noMore')" @load="onLoad">
           <van-swipe-cell v-for="(item, index) in list.arr" :key="index" :before-close="beforeClose" class="itemContent">
             <div class="cell" @click="toDetail(item)">
               <p class="font_1">{{ item.title }}</p>
               <p class="font_2" v-html="replaceImgUrl(item.content)"></p>
               <div class="font_3">
-                <span>查看完整讯息</span>
+                <span>{{ $t('user.lookInfo') }}</span>
                 <span>{{ formatToDateTime(item.optTime) }}</span>
               </div>
             </div>
@@ -82,6 +82,8 @@ const onLoad = async () => {
     finished.value = list.arr.length === data.totalCount
   } else {
     showToast(res.msg)
+    loading.value = false
+    finished.value = true
   }
 }
 
@@ -137,7 +139,7 @@ const beforeClose = (position: any) => {
 
 <style scoped>
 :deep(.van-nav-bar__content) {
-  height: 150px;
+  height: 96px;
 }
 
 :deep(.van-nav-bar__title) {

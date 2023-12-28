@@ -224,8 +224,9 @@ const toUrlGame = (item: any) => {
     padding-right: 16px;
 
     :deep(.van-field) {
-      width: 616px;
+      width: 600px;
       height: 68px;
+      // line-height: 68px;
       background: #EFF1F2;
       border-radius: 34px;
     }
@@ -406,11 +407,11 @@ const toUrlGame = (item: any) => {
 }
 
 :deep(.van-field__control) {
-  height: 50px;
-  font-size: 30px;
+  font-size: 28px;
+  font-weight: 500;
 }
 
 :deep(.van-icon) {
-  font-size: 40px;
+  font-size: 45px;
 }
 </style>

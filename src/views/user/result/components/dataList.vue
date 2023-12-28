@@ -28,12 +28,17 @@
       {{ $t('user.noData') }}
     </p>
   </div>
-  <van-list v-model:loading="loading" :finished="finished" finished-text="" @load="onLoad">
-    <div v-if="list.arr.length" class="dataList">
-      <div v-for="(item, index) in list.arr" :key="index">
-        <Single v-if="item.parlayNum ==1" :item="item" class="item"></Single>
-        <Bunch v-if="item.parlayNum !=1 && item.state !==2" :item="item" class="item"></Bunch>
-      </div>
+  <van-list
+    v-if="list.arr.length ||!finished"
+    v-model:loading="loading"
+    :finished="finished"
+    :finished-text="$t('live.noMore')"
+    class="dataList"
+    @load="onLoad"
+  >
+    <div v-for="(item, index) in list.arr" :key="index">
+      <Single v-if="item.parlayNum ==1" :item="item" class="item"></Single>
+      <Bunch v-if="item.parlayNum !=1" :item="item" class="item"></Bunch>
     </div>
     <!-- </div> -->
   </van-list>
@@ -187,9 +192,14 @@ const getNoAccount = async () => {
     finished.value = true
     return showToast(res.msg)
   }
-  list.arr = res.data
-  loading.value = false
-  finished.value = true
+  const data = res.data
+  if (res.code === 200) {
+    data.forEach((item: any) => {
+      list.arr.push(item)
+    })
+    loading.value = false
+    finished.value = !data.length
+  }
 }
 
 // systemId
@@ -293,7 +303,7 @@ const getNoAccount = async () => {
 
 // 列表
 .dataList {
-  height: calc(100vh - 450px);
+  height: calc(100vh - 380px);
   overflow-y: auto;
   margin-top: 20px;
 
@@ -349,13 +359,13 @@ const getNoAccount = async () => {
   }
 }
 .noData {
+  width: 100%;
   text-align: center;
   font-family: PingFangSC-Medium;
   font-size: 24px;
   color: #96A5AA;
   letter-spacing: 0;
   font-weight: 500;
-  margin: 0 auto;
 
    >.img_1 {
     margin-top: 331px;

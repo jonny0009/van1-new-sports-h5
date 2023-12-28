@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="list.arr.length">
     <!-- 战力 -->
     <div class="top-1 top-2">
       <img class="img_1" src="@/assets/images/user/bottom.png" alt="" />
@@ -15,7 +15,7 @@
       </div>
     </div>
     <!-- 列表 -->
-    <div v-if="list.arr.length" class="dataList">
+    <div class="dataList">
       <div v-for="(item, index) in list.arr" :key="index">
         <div class="top-3">
           <div class="left" @click="goUrl('/elseInfo')">
