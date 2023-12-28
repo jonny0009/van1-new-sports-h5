@@ -6,7 +6,7 @@
     <AppMain />
   </GlobalRefresh>
   <GlobalFooter />
-  <BettingSlip v-if="betShow && markets.length" />
+  <BettingSlip v-if="betShow && isOpen" />
   <BettingMore />
   <van-back-top bottom="100" right="20" class="GlobalTop">
     <van-icon name="down" />
@@ -28,6 +28,8 @@ const { currentRoute } = useRouter()
 const betShow: any = ref(true)
 const unShow: any = ref(['game'])
 const markets = computed(() => store.state.betting.markets)
+const isOpen = ref(markets.value.length > 0)
+
 watch(
   () => currentRoute.value,
   (route: any) => {
@@ -36,6 +38,12 @@ watch(
   },
   { immediate: true }
 )
+watch(() => markets.value.length, () => {
+  if (markets.value.length) {
+    isOpen.value = true
+  }
+})
+
 </script>
 <style lang="scss">
 .GlobalTop {
