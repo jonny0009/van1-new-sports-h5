@@ -1,11 +1,7 @@
 <template>
   <div class="item">
     <div class="photo">
-      <van-image :src="item.cover || imgCover">
-        <template v-slot:error>
-          <img :src="imgCover" alt="" />
-        </template>
-      </van-image>
+      <van-image :src="imgCover" fit="cover"></van-image>
       <span class="state" v-if="item.showType == 'RB'">{{ $t('live.hotNow') }}</span>
     </div>
 
@@ -65,11 +61,14 @@ const props = defineProps({
 const gameInfo = computed(() => props.item?.gameInfo)
 const imgCover = computed(() => {
   const item = props.item
-  const type: any = {
-    FT: 'FE/common/live/img_video_bg_FT.jpg',
-    BK: 'FE/common/live/img_video_bg_BK.jpg'
+  if (!item.anchorId) {
+    if (item.gameType == 'BK') {
+      return ImageSource + 'FE/common/live/img_video_bg_BK.jpg'
+    } else {
+      return ImageSource + 'FE/common/live/img_video_bg_FT.jpg'
+    }
   }
-  return ImageSource + type[item.gameType]
+  return ImageSource + item.cover
 })
 const watchNumText = computed(() => {
   const num = props.item.watchTotal.toLocaleString()
