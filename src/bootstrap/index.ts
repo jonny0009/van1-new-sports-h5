@@ -2,7 +2,8 @@ import store from '@/store'
 import { getURLSearchParams } from '@/utils'
 import { getToken } from '@/utils/auth'
 import localStore from '@/utils/localStore'
-
+import { lib } from 'xcsport-lib'
+const { modifyRatioTypeListMapping } = lib
 export default async () => {
   const searchParams = getURLSearchParams()
   const plateMaskKey = localStore.getItem('plateMaskKey')
@@ -18,6 +19,7 @@ export default async () => {
   await store.dispatch('app/merchantConfig')
   // 模块控制
   await store.dispatch('app/moduleConfig')
+  modifyRatioTypeListMapping()
   // 获取全部体育项
   store.dispatch('app/getAllSports')
   // 查询单双线玩法
