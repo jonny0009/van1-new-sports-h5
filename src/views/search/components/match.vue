@@ -99,6 +99,7 @@ const highlightText = (field: any, text: any) => {
 
 <style lang="scss" scoped>
 .noData {
+  width: 100%;
   text-align: center;
   font-family: PingFangSC-Medium;
   font-size: 24px;
