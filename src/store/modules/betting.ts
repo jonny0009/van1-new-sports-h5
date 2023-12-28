@@ -69,7 +69,7 @@ const bettingModule: Module<Betting, any> = {
         const { gold = 0, errorCode, ior, isEuropePlay } = bet
         if (gold && !errorCode) {
           const buyGold = +gold || 0
-          let winCountGold = buyGold * ior
+          let winCountGold = buyGold * ior - buyGold
           if (isEuropePlay && handicapType === 'H') {
             winCountGold = buyGold * ior
           }
@@ -101,7 +101,7 @@ const bettingModule: Module<Betting, any> = {
             comboArray.map((bet: any) => {
               iorCount *= bet.ior * 1
             })
-            betsGolds += iorCount * state.comboAmount
+            betsGolds += iorCount * state.comboAmount - state.comboAmount
           })
         }
       })
