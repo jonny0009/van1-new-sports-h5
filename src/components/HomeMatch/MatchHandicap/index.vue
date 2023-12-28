@@ -1,7 +1,6 @@
 <template>
   <div class="homeMatchHandicap">
-
-    <van-sticky :offset-top="50">
+    <van-sticky :offset-top="offsetTop">
       <div class="home-tabs-play">
         <TimeView :time-send-params="sendParams" />
         <div class="play">
@@ -42,7 +41,6 @@
         </div>
       </div>
     </van-sticky>
-
     <div class="home-match">
       <div class="up-match-group__body">
         <div class="up-match">
@@ -169,6 +167,9 @@ const props = defineProps({
     }
   }
 })
+
+const offsetTop = computed(() => store.state.app.globalBarHeaderHeight)
+
 const getTeam = ({ homeTeamAbbr, awayTeamAbbr, homeTeam, awayTeam }: any) => {
   if (!homeTeamAbbr) {
     return ''

@@ -92,7 +92,7 @@ import logoImg from '@/assets/images/user/logo.png'
 import { formatMoney } from '@/utils/index'
 
 import { useRouter } from 'vue-router'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import store from '@/store'
 const userInfo = computed(() => store.state.user.userInfo)
 const balance = computed(() => store.state.user.balance)
@@ -124,6 +124,14 @@ const getImg = (imgUrl: string) => {
 const showInfo = () => {
   showLeft.value = true
 }
+const refGlobalBarHeader = ref()
+onMounted(() => {
+  store.dispatch('app/setKeyValue', {
+    key: 'globalBarHeaderHeight',
+    value: refGlobalBarHeader?.value?.offsetHeight || 48
+  })
+})
+
 </script>
 
 <style lang="scss" scoped>

@@ -20,6 +20,8 @@
   </template>
 </template>
 <script lang="ts" setup>
+import Dayjs from 'dayjs'
+const dateUtil = Dayjs
 import titleRecommend from '@/assets/images/home/title-recommend.png'
 import { onBeforeMount, reactive, ref, computed, watch } from 'vue'
 import store from '@/store'
@@ -41,7 +43,9 @@ const isLoading = ref(false)
 const getRecommendEvents = async (gameType:any = 'FT') => {
   const params = {
     gradeType: 1,
-    gameType: gameType
+    gameType: gameType,
+    startDate: dateUtil(new Date()).format('YYYY-MM-DD') + ' 00:00:00',
+    endDate: dateUtil(new Date()).format('YYYY-MM-DD') + ' 23:59:59'
   }
   isLoading.value = false
   const res:any = await recommendEvents(params)

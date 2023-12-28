@@ -7,14 +7,14 @@ import { getAllSports, getDoubleLineInfo } from '@/api/common'
 const appModule: Module<App, any> = {
   namespaced: true,
   state: {
-    imgChangeTime: '',
     state: true,
     queryCMerLanguage: {},
     businessConfig: {},
     merchantConfig: {},
     moduleConfig: {},
     doubleLineInfo: {},
-    sports: []
+    sports: [],
+    globalBarHeaderHeight: 48
   },
   mutations: {
   },

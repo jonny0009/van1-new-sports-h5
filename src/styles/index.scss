@@ -543,7 +543,8 @@
 .van-sticky--fixed{
   .home-tabs-play{
     background: rgba(255, 255, 255, .5);
-    backdrop-filter: blur(13px);
+    backdrop-filter: blur(6px);
+    // backdrop-filter: blur(13px);
   }
 }
 

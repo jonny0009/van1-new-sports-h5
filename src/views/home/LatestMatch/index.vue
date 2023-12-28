@@ -20,6 +20,8 @@
   </template>
 </template>
 <script lang="ts" setup>
+import Dayjs from 'dayjs'
+const dateUtil = Dayjs
 import titleTime from '@/assets/images/home/title-time.png'
 import { onBeforeMount, reactive, ref, computed, watch } from 'vue'
 import store from '@/store'
@@ -42,7 +44,9 @@ const getRecommendEvents = async (gameType:any = 'FT') => {
   isLoading.value = false
   const params = {
     gradeType: 2,
-    gameType: gameType
+    gameType: gameType,
+    startDate: dateUtil(new Date()).format('YYYY-MM-DD') + ' 00:00:00',
+    endDate: dateUtil(new Date()).format('YYYY-MM-DD') + ' 23:59:59'
   }
   const res:any = await recommendEvents(params)
   isLoading.value = true
@@ -54,11 +58,7 @@ const getRecommendEvents = async (gameType:any = 'FT') => {
   }
 }
 const goHomeTime = () => {
-  const params:any = { name: 'HomeTime', params: { 'refreshTime': new Date().getTime() } }
-  store.dispatch('app/setKeyValue', {
-    key: 'imgChangeTime',
-    value: new Date().getTime()
-  })
+  const params:any = { name: 'HomeTime' }
   router.push(params)
 }
 const returnSportsSuccess = (val:any) => {
