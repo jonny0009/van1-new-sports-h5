@@ -23,8 +23,8 @@
       <div class="top2">
         <div class="left">
           <div class="top-img">
-            <img class="img_1" src="@/assets/images/user/num3.png" alt="" />
-            <img class="img_2" src="@/assets/images/user/num9.png" alt="" />
+            <img class="img_1" src="@/assets/images/user/num3.svg" alt="" />
+            <img class="img_2" src="@/assets/images/user/num9.svg" alt="" />
           </div>
         </div>
         <div class="right">
@@ -37,8 +37,8 @@
             </span>
           </div>
           <div class="one two">
-            <span v-play="item1">
-            </span>
+            <span v-if="item1.homeTeam && item1.awayTeam" v-play="item1" />
+            <span v-else>?</span>
             <span>
 
               <!-- 平局图标没找到 -->
@@ -54,7 +54,7 @@
             </span>
           </div>
           <div class="team">
-            {{ item1.homeTeam }} v {{ item1.awayTeam }}
+            {{ item1.homeTeam ?item1.homeTeam:'?' }} v {{ item1.awayTeam?item1.awayTeam:'?' }}
             <span v-if="item1.resultScore">
               [{{ item1.resultScore }}]
             </span>
@@ -84,21 +84,31 @@
       </div>
       <div class="money-num-2">
 
-        <span v-if="item.creditState == 0">{{ $t('user.CompensableAmount') }}:</span>
+        <span v-if="item.state == 0|| item.state==-1||item.state== 1">{{ $t('user.CompensableAmount') }}:</span>
         <span v-else-if="item.state !==3&& item.state !==5 &&item.state !==0">{{ $t('user.practical') }}:</span>
 
         <span>
 
-          <span v-if="item.state !== 3 && item.state !== 5 && item.state !== 0">
+          <!-- 受理状态 -->
+          <span v-if="item.state !== 3 &&item.state !== 5 ">
+            <span v-if="item.state == -1" style="color:#FF9A00 ;">
+              {{ $t('user.editPend') }}
+            </span>
+            <span v-if="item.state == 0" style="color:#FF9A00 ;">
+              {{ $t('user.affirmPend') }}
+            </span>
+          </span>
+
+          <span v-if="item.state !== 3 && item.state !== 5">
             <img v-if="currency==='CNY'" class="img_1" :src="CNY2" alt="" />
             <img v-else-if="currency==='VNDK'" class="img_1" :src="VNDK2" alt="" />
             <img v-else class="img_1" src="@/assets/images/user/num2.png" alt="" />
           </span>
 
-          <span v-if="item.creditState == 0" class="num">
+          <span v-if="item.state == 0|| item.state==-1||item.state== 1" class="num">
             {{ formatMoney(getProfit(item)) }}
           </span>
-          <span v-else-if="item.state !==3&& item.state !==5 &&item.state !==0" class="num">
+          <span v-else-if="item.state !==3&& item.state !==5 " class="num">
             {{ formatMoney(item.winAndLossGold) }}
           </span>
         </span>
@@ -142,11 +152,14 @@ const props = defineProps({
   }
 })
 const getProfit = (item: any) => {
+  const plateMaskKey = localStorage.getItem('plateMaskKey')
   let money = item.gold
   item.betDTOList.map((i: any) => {
     money = money * i.ioRatio
   })
-
+  if (plateMaskKey?.includes('H')) {
+    return money + item.gold
+  }
   return money
 }
 

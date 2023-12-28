@@ -123,6 +123,10 @@ export default {
   betNum: '投注 ',
   noMoreMatch: '没有更多赛事了 ',
 
+  // 新增5
+  editPend: '受理中 ',
+  affirmPend: '确认中 ',
+
   sports: {
     'officeNumber': '局号',
     FT: '足球',

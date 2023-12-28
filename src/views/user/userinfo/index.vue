@@ -160,7 +160,7 @@ const getStandings = async () => {
   userStandInfo.value = res.data
   currentNumber.value = userStandInfo.value.winRatio * 100 || 0
   // dataList.arr[0].num = (userStandInfo.value.winRatio * 100)
-  dataList.arr[0].num = String(userStandInfo.value.winRatio * 100).replace(/^(.*\..{4}).*$/, '$1') + '%'
+  dataList.arr[0].num = String(userStandInfo.value.winRatio * 100).replace(/^(.*\..{2}).*$/, '$1') + '%'
   dataList.arr[1].num = userStandInfo.value.winOrderAmount - userStandInfo.value.orderAmount || 0
   dataList.arr[2].num = userStandInfo.value.orderAmount || 0
   dataList.arr[3].num = userStandInfo.value.winOrderAmount || 0
