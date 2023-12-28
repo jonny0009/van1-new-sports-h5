@@ -12,7 +12,7 @@
         <img v-else :src="gameDefault" class="img" style="object-fit: contain" :class="item.value" />
       </template>
       <template v-else>
-        <i v-if="item.value === 'live'" class="iconfont icon-live" :class="item.value"></i>
+        <i v-if="item.value === 'live'" class="iconfont icon-footer-live" :class="item.value"></i>
         <i v-else class="iconfont icon-sports" :class="item.value"></i>
       </template>
       <span>
