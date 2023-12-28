@@ -56,17 +56,14 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted, reactive } from 'vue'
-import { queryCMerLanguage } from '@/api/auth'
+// import { queryCMerLanguage } from '@/api/auth'
 
 import { useRouter } from 'vue-router'
 // import { getCMerAccessWallet } from '@/api/user'
 const $router = useRouter()
 import localStore from '@/utils/localStore'
 import store from '@/store'
-import { showToast } from 'vant'
-
-const languages = reactive<{ arr: any[] }>({ arr: [] })
-const languageType = ref<any>({})
+// import { showToast } from 'vant'
 
 const language: any = localStore.getItem('language')
 const lang = ref<any>(language || {})
@@ -107,7 +104,7 @@ const defaultPlate = {
   key: 'H'
 }
 onMounted(() => {
-  // store.dispatch('app/queryCMerLanguage')
+  store.dispatch('app/queryCMerLanguage')
   // getCurrent()
   const obj = plateData.arr.find((item: any) => {
     if (item.key === plateMaskKey || '') {
@@ -115,17 +112,18 @@ onMounted(() => {
     }
   })
   plateMask.value = obj || defaultPlate
-  getLanguageList()
 })
-const getLanguageList = async () => {
-  const res: any = await queryCMerLanguage()
-  if (res.code === 200) {
-    languages.arr = res.data.accessLanguage
-    languageType.value = res.data.translate
-  } else {
-    showToast(res.msg)
-  }
-}
+const languageList = computed(() => {
+  let LanguageB:any = []
+  const LanguageA = store.state.app.queryCMerLanguage.accessLanguage || []
+  const LanguageType = store.state.app.queryCMerLanguage.translate || {}
+  LanguageA.map((item: any) => {
+    item.value = LanguageType[item.key][item.key]
+  })
+  LanguageB = [...LanguageA]
+  return LanguageB
+})
+
 const goBack = () => {
   $router.back()
 }
@@ -134,13 +132,7 @@ function showPk(val?: any) {
   popupIndex.value = val
   popupList.arr = []
   if (val === 1) {
-    const languageObj = languageType.value[lang.value.key || 'zh-cn']
-    languages.arr.map((e: any) => {
-      if (languageObj[e.key]) {
-        e.value = languageObj[e.key]
-      }
-    })
-    popupList.arr = languages.arr
+    popupList.arr = languageList.value || []
     commonKey.key = lang.value.key || 'zh-cn'
     popupTitle.value = 'lang'
   }
@@ -156,10 +148,8 @@ function showPk(val?: any) {
 async function setPk(val: any) {
   if (popupIndex.value === 1) {
     lang.value = val
-    const languageObj = JSON.parse(JSON.stringify(languageType.value || '' as string))[lang.value.key]
-    lang.value.value = languageObj[lang.value.key]
     localStorage.setItem('locale', val.key)
-    localStore.setItem('language', lang.value)
+    localStore.setItem('language', val)
     window.location.reload()
   }
 
