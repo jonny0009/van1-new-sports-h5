@@ -9,12 +9,12 @@
       </div>
       <div class="mask-reseve" v-if="item.showType != 'RB'">
         <span>{{ $t('live.xHas', { num: watchNumText }) }}</span>
-        <span>{{ $t('live.clickSub') }}</span>
+        <span>{{ $t('live.playNow') }}</span>
       </div>
     </div>
 
     <div class="item-title">
-      <SvgIcon :name="leagueIcon" />
+      <SvgIcon v-if="leagueIcon" :name="leagueIcon" />
       <span>{{ item.leagueName }}</span>
     </div>
 
@@ -74,7 +74,6 @@ const imgCover = computed(() => {
       return ImageSource + 'FE/common/live/img_video_bg_FT.jpg'
     }
   }
-
   return ImageSource + item.cover
 })
 

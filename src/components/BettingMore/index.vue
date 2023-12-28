@@ -106,8 +106,6 @@ import router from '@/router'
 const setMatch = useMatch()
 const showPopup = computed(() => store.state.betting.moreShow)
 const moreParams = computed(() => {
-  console.log(store.state.betting.moreParams)
-
   return store.state.betting.moreParams
 })
 watch(
@@ -175,15 +173,16 @@ const getBetData = (data: any) => {
             gidm: game.gidm,
             playType: dataInfo.playType,
             sw: dataInfo.sw,
-            championType: dataInfo.championType,
-            ratio: dataInfo.ratio
+            championType: dataInfo.championType
           })
         })
-        playDataList.push({
-          typeTemp: `${playInfo.playType}-${playInfo.session}`,
-          playInfo,
-          ratioList
-        })
+        if (dataInfo.ratioData?.length > 0) {
+          playDataList.push({
+            typeTemp: `${playInfo.playType}-${playInfo.session}`,
+            playInfo,
+            ratioList
+          })
+        }
       }
     })
     const noExist = ['HDNB2', 'HDNB', 'HTS2', 'HW3', 'W3_conner', 'W3', 'PD_conner', 'HT_conner', 'T_conner']

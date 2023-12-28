@@ -42,5 +42,6 @@ export default {
   pause: 'tạm ngừng',
   xround: '{num} vòng',
   xHas: 'Đã {num}',
-  clickSub: 'Bấm để đặt chỗ'
+  clickSub: 'Bấm để đặt chỗ',
+  playNow: 'Bắt đầu chơi'
 }

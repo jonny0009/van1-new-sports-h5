@@ -42,5 +42,6 @@ export default {
   pause: '暂停',
   xround: '第{num}局',
   xHas: '已有{num}',
-  clickSub: '点击预约'
+  clickSub: '点击预约',
+  playNow: '即将播放'
 }
