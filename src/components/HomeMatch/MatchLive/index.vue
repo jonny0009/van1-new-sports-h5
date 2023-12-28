@@ -14,7 +14,7 @@
             <div class="flex-cross-center">
               <div class="up-match-time">
                 <!-- <SportsIcon :icon-src="'live'" /> -->
-                <div class="up-match-time-html" v-html="showRBTime(sendParams)"></div>
+                <div class="up-match-time-html" :class="sendParams.gameType" v-html="showRBTime(sendParams)"></div>
               </div>
             </div>
           </div>
@@ -321,7 +321,9 @@ const showRBTime = (raceinfo:any = {}) => {
           return t('home.img')
         } else {
           const newSeNow:any = gameInfo?.se_now.replace(/[^0-9]/gi, '') || ''
-          return newSeNow
+          return t('home.set', {
+            number: newSeNow
+          })
         }
       //
       // 排球

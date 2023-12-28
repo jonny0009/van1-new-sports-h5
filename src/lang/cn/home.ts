@@ -28,7 +28,7 @@ export default {
   '1HNumber': `上半场<span class='time-h-Up'>{number}</span>`, //
   '2HNumber': `下半场<span class='time-h-d'>{number}</span>`, //
   'bout': '第{number}盘',
-  'set': '第${number}局',
+  'set': '第{number}局',
   'down': '下',
   'up': '上',
   'img': '进行中',
