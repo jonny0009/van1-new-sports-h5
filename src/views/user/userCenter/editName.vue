@@ -139,19 +139,22 @@ const goBack = () => {
     // background: url('@/assets/images/login/bg-tit@2x.png');
     background-size: 100% 100%;
     font-family: PingFangSC-Semibold;
-    color: #7642FD;
+    color: var(--color-bg-1);
     letter-spacing: 0;
     font-weight: 600;
+    background-color: var(--color-background-color);
 
   }
 
   >.content {
     padding: 56px 50px;
+    height: 88.8vh;
+    background-color: var(--color-background-color);
 
     .setPassWorld {
       font-family: PingFangSC-Semibold;
       font-size: 34px;
-      color: #000000;
+      color: var(--color-search-box-text-1);
       letter-spacing: 0;
       font-weight: 600;
       margin-left: 10px;
@@ -163,7 +166,7 @@ const goBack = () => {
     margin-top: 12px;
     font-family: PingFangSC-Semibold;
     font-size: 24px;
-    color: #000000;
+    color: var(--color-search-box-text-1);
     letter-spacing: 0;
     font-weight: 600;
     margin-left: 15px;
@@ -183,7 +186,7 @@ const goBack = () => {
     align-items: center;
     font-family: PingFangSC-Regular;
     font-size: 24px;
-    color: #000000;
+    color: var(--color-search-box-text-1);
     letter-spacing: 0;
     font-weight: 400;
     margin-left: 15px;
@@ -194,44 +197,6 @@ const goBack = () => {
       margin-right: 14px;
     }
 
-  }
-
-  .loginBtn {
-    height: 80px;
-    width: 650px;
-    margin-top: 80px;
-    border-radius: 80px;
-    font-family: PingFangSC-Semibold;
-    font-size: 28px;
-    color: #1F2630;
-    letter-spacing: 0;
-    font-weight: 600;
-    line-height: 80px;
-    text-align: center;
-    background: #DFE4E5;
-  }
-
-  .registerBtn {
-    background: #7642FD;
-    color: #FFFF;
-  }
-
-  .literal {
-    margin-top: 40px;
-    text-align: center;
-    font-family: PingFangSC-Semibold;
-    font-size: 24px;
-    color: #000000;
-    letter-spacing: 0;
-    font-weight: 600;
-  }
-
-  .register {
-    font-family: PingFangSC-Semibold;
-    font-size: 24px;
-    color: #7642FD;
-    letter-spacing: 0;
-    font-weight: 600;
   }
 
   .van-cel {
@@ -258,7 +223,7 @@ const goBack = () => {
 }
 
 :deep(.bb.van-cell::after) {
-  border-bottom: 8px solid #7642FD;
+  border-bottom: 8px solid var(--color-bg-1);
 }
 
 :deep(.van-cell::after) {
@@ -291,10 +256,9 @@ const goBack = () => {
   line-height: 90px;
   font-family: PingFangSC-Medium;
   font-size: 28px;
-  color: #FFFFFF;
   letter-spacing: 0;
   text-align: center;
   font-weight: 500;
-  color: black;
+  color:var( --color-search-box-text-1);
 }
 </style>

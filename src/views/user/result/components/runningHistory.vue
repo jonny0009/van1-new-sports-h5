@@ -8,7 +8,7 @@
     </p>
   </div>
   <van-list
-    v-if="list.arr.length ||!finished"
+    v-if="list.arr.length || !finished"
     v-model:loading="loading"
     :finished="finished"
     :finished-text="$t('live.noMore')"
@@ -38,7 +38,7 @@
           </div>
           <div class="right">
             <div>
-              <div v-if="item.payWay==4"> {{ $t('user.compensate') }}</div>
+              <div v-if="item.payWay == 4"> {{ $t('user.compensate') }}</div>
               <div v-else> {{ $t('user.betNum') }}</div>
               <div class="right-1">
                 <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
@@ -54,7 +54,8 @@
                 <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
                 <img v-else-if="item.currency === 'VNDK'" :src="VNDK1" style="object-fit: contain;" />
                 <img v-else :src="USDT1" style="object-fit: contain;" />
-                {{ formatMoney(item.gold) }}</div>
+                {{ formatMoney(item.gold) }}
+              </div>
             </div>
           </div>
         </div>
@@ -62,7 +63,6 @@
       </div>
     </div>
   </van-list>
-
 </template>
 
 <script lang="ts" setup>
@@ -89,7 +89,7 @@ onMounted(() => {
   TradeTyp()
 })
 
-let page: number = 1
+let page: number = 0
 const onLoad = async () => {
   page++
   const params: any = {
@@ -164,7 +164,7 @@ const getTitle = (type: any) => {
   }
 
   .color-1 {
-    color: #7642FD;
+    color: var(--color-bg-1);
   }
 
   .color-2 {
@@ -174,7 +174,7 @@ const getTitle = (type: any) => {
   .date-title {
     font-family: PingFangSC-Semibold;
     font-size: 24px;
-    color: #1F2630;
+    color: var(--color-search-box-text-1);
     letter-spacing: 0;
     font-weight: 600;
     margin-bottom: 10px;
@@ -182,7 +182,7 @@ const getTitle = (type: any) => {
   }
 
   .item {
-    background: #EFF1F2;
+    background: var(--van-result-box);
     border-radius: 22px;
     padding: 15px 20px;
     margin-bottom: 20px;
@@ -190,7 +190,7 @@ const getTitle = (type: any) => {
     >.title {
       font-family: PingFangSC-Medium;
       font-size: 24px;
-      color: #1F2630;
+      color: var(--color-search-box-text-1);
       letter-spacing: 0;
       font-weight: 500;
     }
@@ -204,7 +204,7 @@ const getTitle = (type: any) => {
       .left {
         font-family: PingFangSC-Regular;
         font-size: 22px;
-        color: #96A5AA;
+        color: var(--color-search-box-text-2);
         letter-spacing: 0;
         font-weight: 400;
 
@@ -242,17 +242,18 @@ const getTitle = (type: any) => {
       .right {
         font-family: PingFangSC-Regular;
         font-size: 22px;
-        color: #96A5AA;
+        color: var(--color-search-box-text-2);
         letter-spacing: 0;
         font-weight: 400;
 
         &-1 {
           font-family: PingFangSC-Semibold;
           font-size: 28px;
-          color: #000000;
+          color: var(--color-search-box-text-1);
           letter-spacing: 0;
           font-weight: 600;
-          img{
+
+          img {
             width: 20px;
             height: 20px;
           }
@@ -268,15 +269,16 @@ const getTitle = (type: any) => {
   text-align: center;
   font-family: PingFangSC-Medium;
   font-size: 24px;
-  color: #96A5AA;
+  color: var(--color-no-data-font);
   letter-spacing: 0;
   font-weight: 500;
 
-  > .img_1 {
+  >.img_1 {
     margin-top: 331px;
     width: 102px;
     height: 121px;
     margin-bottom: 57px;
 
   }
-}</style>
+}
+</style>

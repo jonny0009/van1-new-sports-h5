@@ -41,78 +41,6 @@
         <Bunch v-if="item.parlayNum != 1 && item.state !== 2" :item="item" class="item"></Bunch>
       </div>
     </van-list>
-
-    <!-- <div class="top4">
-      <div class="game-1">
-        <img class="img_1" src="@/assets/images/user/num5.png" alt="" />
-        <span>
-          中华台北 - 超级联赛
-        </span>
-      </div>
-      <div class="game-1 game-2">
-        <img class="img_1" src="@/assets/images/user/num7.png" alt="" />
-        <span>
-          半场
-        </span>
-      </div>
-      <div class="game-3">
-        <div class="match-1">
-          <div class="left">
-            <img class="img_1" src="@/assets/images/user/bottom1.png" alt="" />
-            <span>
-              台北
-            </span>
-          </div>
-          <div class="right">
-            2
-          </div>
-        </div>
-        <div class="match-1 match-2">
-          <div class="left">
-            <img class=" img_2" src="@/assets/images/user/bottom2.png" alt="" />
-            <span>
-              台北天龙
-            </span>
-          </div>
-          <div class="right">
-            0
-          </div>
-        </div>
-
-      </div>
-      <div class="game-3 game-4">
-        <div class="match-1">
-          <div class="left">
-            <img class="img_1" src="@/assets/images/user/plate.png" alt="" />
-            <div>
-              <p>大于 2</p>
-              <p class="plate">全场 大小盘</p>
-            </div>
-          </div>
-          <div class="right-1">
-            @3.64
-          </div>
-        </div>
-      </div>
-      <div class="game-5">
-        <p>投注额：</p>
-        <div>
-          <img class="img_1" src="@/assets/images/user/num1.png" alt="" />
-          <span>1.00</span>
-        </div>
-      </div>
-      <div class="game-5 game-6">
-        <p>实际赔付:</p>
-        <div>
-          <img class="img_1" src="@/assets/images/user/num2.png" alt="" />
-          <span class="num">3.65</span>
-        </div>
-      </div>
-      <div class="addBtn-1">
-        <span>加注</span>
-        <img class="img_1" src="@/assets/images/user/num8.png" alt="" />
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -205,7 +133,7 @@ const goUrl = (url: string) => {
   margin-top: 30px;
 
   .color-1 {
-    color: #7642FD;
+    color: var(--color-bg-1);
   }
 
   .color-2 {
@@ -217,7 +145,7 @@ const goUrl = (url: string) => {
   }
 
   .item {
-    background: #EFF1F2;
+    background: var(--color-search-box-frame);
     border-radius: 22px;
     padding: 15px 20px;
     margin-bottom: 20px;

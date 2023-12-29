@@ -15,7 +15,7 @@
       </div>
       <div class="edit-name">
         <span>{{ $t('user.EditNickname') }}</span>
-        <img class="img_1" src="@/assets/images/user/edit.png" alt="" @click="goUrl('/editName')" />
+        <img class="img_1" src="@/assets/images/user/edit1.png" alt="" @click="goUrl('/editName')" />
       </div>
       <!-- 内容框 -->
       <p class="explain">{{ $t('user.Personal') }}</p>
@@ -132,24 +132,24 @@ const getAccountInfo = async () => {
   .bg-title {
     width: 100%;
     height: 150px;
-    // background: url('@/assets/images/login/bg-tit@2x.png');
-    background-size: 100% 100%;
     font-family: PingFangSC-Semibold;
-    color: #7642FD;
+    color: var( --color-bg-1);
     letter-spacing: 0;
     font-weight: 600;
+    background-color: var(--color-background-color);
 
   }
 
   >.content {
     height: calc(100vh - 150px);
     padding: 0px 40px;
+    background-color: var(--color-background-color);
 
     .head {
       // width: 106px;
       width: 126px;
       height: 126px;
-      background-color: #FFFFFF;
+      background-color: var(--color-background-color);
       border-radius: 106px;
       margin: 0 auto;
       overflow: hidden;
@@ -182,7 +182,7 @@ const getAccountInfo = async () => {
       margin-top: 22px;
       font-family: PingFangSC-Semibold;
       font-size: 26px;
-      color: #1F2630;
+      color: var(--color-search-box-text-1);
       letter-spacing: 0;
       text-align: center;
       font-weight: 600;
@@ -201,7 +201,7 @@ const getAccountInfo = async () => {
       margin-top: 15px;
       font-family: PingFangSC-Semibold;
       font-size: 22px;
-      color: #96A5AA;
+      color: var(--color-search-box-text-2);
       letter-spacing: 0;
       font-weight: 600;
       margin-bottom: 18px;
@@ -221,7 +221,7 @@ const getAccountInfo = async () => {
       .top-1 {
         font-family: PingFangSC-Semibold;
         font-size: 26px;
-        color: #1F2630;
+        color: var(--color-search-box-text-1);
         letter-spacing: 0;
         font-weight: 600;
         display: flex;
@@ -246,7 +246,7 @@ const getAccountInfo = async () => {
         margin-top: 15px;
         font-family: PingFangSC-Semibold;
         font-size: 23px;
-        color: #96A5AA;
+        color: var(--color-search-box-text-2);
         letter-spacing: 0;
         line-height: 29px;
         font-weight: 600;
@@ -285,11 +285,10 @@ const getAccountInfo = async () => {
   line-height: 90px;
   font-family: PingFangSC-Medium;
   font-size: 28px;
-  color: #FFFFFF;
   letter-spacing: 0;
   text-align: center;
   font-weight: 500;
-  color: black;
+  color: var(--color-search-box-text-1);
 }
 
 :deep(.van-icon) {
@@ -300,11 +299,11 @@ const getAccountInfo = async () => {
   margin-top: -30px;
   font-size: 22px;
   margin-right: 20px;
-  color: #96A5AA;
+  color: var(--color-search-box-text-2);
 }
 
 :deep(.van-field__control) {
-  background: #EFF1F2;
+  background: var(--color-search-box-frame);
   border-radius: 20px;
   /* width: 666px; */
   height: 276px;
