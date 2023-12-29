@@ -4,10 +4,22 @@
       <div class="top">
         <div class="left">
           <div class="top-img">
-            <img v-if="item1.homeLogo" class="img_1" :src="getImg(item1.homeLogo)" alt="" />
-            <img v-else class="img_1" src="@/assets/images/user/num3.svg" alt="" />
-            <img v-if="item1.awayLogo" class="img_2" :src="getImg(item1.awayLogo)" alt="" />
-            <img v-else class="img_2" src="@/assets/images/user/num9.svg" alt="" />
+
+            <img
+              v-img="item1.homeLogo"
+              class="img_1"
+              alt=""
+              :type="4"
+              style="object-fit: contain;"
+            >
+            <img
+              v-img="item1.awayLogo"
+              class="img_2"
+              alt=""
+              :type="5"
+              style="object-fit: contain;"
+            >
+
           </div>
         </div>
         <div class="right">
@@ -128,7 +140,6 @@ import CNY1 from '@/assets/images/user/CNY1.svg'
 import VNDK1 from '@/assets/images/user/VNDK1.svg'
 import CNY2 from '@/assets/images/user/CNY2.svg'
 import VNDK2 from '@/assets/images/user/VNDK2.svg'
-import { ImageSource } from '@/config'
 
 // import { formatToDateTime } from '@/utils/date'
 import { formatMoney } from '@/utils/index'
@@ -143,16 +154,9 @@ const props = defineProps({
     default: () => {}
   }
 })
-const getImg = (imgUrl: string) => {
-  return `${ImageSource}${imgUrl}`
-}
+
 const getProfit = (item: any) => {
-  // const plateMaskKey = localStorage.getItem('plateMaskKey')
-  let money = item.gold
-  item.betDTOList.map((i: any) => {
-    money = money * i.ioRatio
-  })
-  return money
+  return item.gold * item.sioRatio
 }
 
 </script>
