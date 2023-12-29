@@ -23,8 +23,10 @@
       <div class="top2">
         <div class="left">
           <div class="top-img">
-            <img class="img_1" src="@/assets/images/user/num3.svg" alt="" />
-            <img class="img_2" src="@/assets/images/user/num9.svg" alt="" />
+            <img v-if="item1.homeLogo" class="img_1" :src="getImg(item1.homeLogo)" alt="" />
+            <img v-else class="img_1" src="@/assets/images/user/num3.svg" alt="" />
+            <img v-if="item1.awayLogo" class="img_2" :src="getImg(item1.awayLogo)" alt="" />
+            <img v-else class="img_2" src="@/assets/images/user/num9.svg" alt="" />
           </div>
         </div>
         <div class="right">
@@ -142,6 +144,7 @@ import CNY1 from '@/assets/images/user/CNY1.svg'
 import VNDK1 from '@/assets/images/user/VNDK1.svg'
 import CNY2 from '@/assets/images/user/CNY2.svg'
 import VNDK2 from '@/assets/images/user/VNDK2.svg'
+import { ImageSource } from '@/config'
 
 import { computed } from 'vue'
 import store from '@/store'
@@ -153,6 +156,9 @@ const props = defineProps({
     default: () => { }
   }
 })
+const getImg = (imgUrl: string) => {
+  return `${ImageSource}${imgUrl}`
+}
 const getProfit = (item: any) => {
   // const plateMaskKey = localStorage.getItem('plateMaskKey')
   let money = item.gold
