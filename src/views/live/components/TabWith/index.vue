@@ -175,7 +175,7 @@ onMounted(() => {
       font-size: 24px;
     }
     .active {
-      background: #7642fd;
+      background-image: linear-gradient(180deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-2) 100%);
       color: #fff;
     }
   }

@@ -7,9 +7,8 @@
 
     <div class="main">
       <div class="main-title">
-        <SvgIcon v-if="item.gameType == 'FT'" name="live-football" />
-        <SvgIcon v-if="item.gameType == 'BK'" name="live-basketball" />
-        <span>{{ item.leagueName }}</span>
+        <SvgIcon v-if="leagueIcon" :name="leagueIcon" />
+        <strong>{{ item.leagueName }}</strong>
       </div>
 
       <div class="main-team">
@@ -47,7 +46,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { ImageSource } from '@/config'
-// import { formatToDateTime } from '@/utils/date'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
@@ -77,15 +75,26 @@ const watchNumText = computed(() => {
   }
   return t('live.xReserve', { num })
 })
+
+const leagueIcon = computed(() => {
+  const icon: any = {
+    FT: 'live-football',
+    BK: 'live-basketball',
+    TN: 'live-tennisball',
+    OP_BM: 'live-badminton'
+  }
+  return icon[props.item.gameType]
+})
 </script>
 
 <style lang="scss" scoped>
 .item {
-  background: #eff1f2;
-  border-radius: 10px;
-  height: 220px;
   display: flex;
   overflow: hidden;
+  background: #eff1f2;
+  color: #0e3d66;
+  border-radius: 10px;
+  height: 220px;
   margin: 0 0 20px 0;
   .photo {
     position: relative;
@@ -107,7 +116,12 @@ const watchNumText = computed(() => {
       padding: 0 10px;
       color: #fff;
       font-size: 24px;
-      background-image: linear-gradient(-68deg, #d700ff 0%, #af00ff 100%);
+      // background-image: linear-gradient(-68deg, #d700ff 0%, #af00ff 100%);
+      background-image: linear-gradient(
+        -68deg,
+        var(--color-linear-gradient-tag-1) 0%,
+        var(--color-linear-gradient-tag-2) 100%
+      );
       border-radius: 10px 0px 10px 0px;
     }
   }
@@ -125,7 +139,7 @@ const watchNumText = computed(() => {
         height: 24px;
         margin-right: 8px;
       }
-      > span {
+      > strong {
         max-width: 260px;
         overflow: hidden;
         white-space: nowrap;
@@ -174,7 +188,6 @@ const watchNumText = computed(() => {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      color: #1f2630;
       font-size: 24px;
       font-weight: 800;
       padding: 0 0;

@@ -15,7 +15,7 @@
 
     <div class="item-title">
       <SvgIcon v-if="leagueIcon" :name="leagueIcon" />
-      <span>{{ item.leagueName }}</span>
+      <strong>{{ item.leagueName }}</strong>
     </div>
 
     <div class="item-team">
@@ -99,8 +99,9 @@ const leagueIcon = computed(() => {
 .item {
   width: 330px;
   height: 440px;
-  background: #eff1f2;
   border-radius: 10px;
+  color: #0e3d66;
+  background: #eff1f2;
   overflow: hidden;
   &-photo {
     position: relative;
@@ -135,7 +136,12 @@ const leagueIcon = computed(() => {
       padding: 0 10px;
       color: #fff;
       font-size: 24px;
-      background-image: linear-gradient(-68deg, #d700ff 0%, #af00ff 100%);
+      // background-image: linear-gradient(-68deg, #d700ff 0%, #af00ff 100%);
+      background-image: linear-gradient(
+        -68deg,
+        var(--color-linear-gradient-tag-1) 0%,
+        var(--color-linear-gradient-tag-2) 100%
+      );
       border-radius: 10px 0px 10px 0px;
     }
     .mask-reseve {
@@ -164,7 +170,7 @@ const leagueIcon = computed(() => {
       height: 24px;
       margin-right: 8px;
     }
-    > span {
+    > strong {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -213,7 +219,6 @@ const leagueIcon = computed(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: #1f2630;
     font-size: 24px;
     font-weight: 800;
     padding: 0 8px;

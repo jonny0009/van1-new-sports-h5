@@ -112,7 +112,7 @@ onMounted(() => {})
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #1f2630;
+    color: #0e3d66;
     font-size: 24px;
     font-family: PingFangSC-Semibold, SF-Pro-Bold, system-ui;
     font-weight: 800;
@@ -123,7 +123,7 @@ onMounted(() => {})
     .svg-icon {
       font-size: 38px;
       margin-right: 14px;
-      color: #999;
+      color: #88a6bb;
     }
     > img {
       width: auto;
@@ -131,7 +131,7 @@ onMounted(() => {})
       margin-right: 14px;
     }
     &.active {
-      background: #7643fd;
+      background-image: linear-gradient(180deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-2) 100%);
       color: #fff;
       .svg-icon {
         color: #fff;

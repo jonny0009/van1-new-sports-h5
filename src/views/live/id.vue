@@ -251,7 +251,7 @@ onUnmounted(() => {
       margin-right: 14px;
     }
     &.active {
-      background: #7643fd;
+      background-image: linear-gradient(180deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-2) 100%);
       color: #fff;
     }
   }

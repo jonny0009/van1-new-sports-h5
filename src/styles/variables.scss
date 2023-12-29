@@ -2,24 +2,27 @@
 :root {
   --color-primary: #7642fe;
   --color-linear-gradient-1: #7642fe;
-  --color-linear-gradient-2: #7541FD;
-  --color-bg-1: #7642FD;
+  --color-linear-gradient-2: #7541fd;
+  --color-bg-1: #7642fd;
   --color-text-1: #546371;
   --color-linear-gradient-background-title-1: #181f2a;
   --color-linear-gradient-background-title-2: #2a0572;
-  --color-background-color: #F4F5FA;
-  ;
+  --color-background-color: #f4f5fa;
+
+  --color-linear-gradient-tag-1: #d700ff;
+  --color-linear-gradient-tag-2: #af00ff;
 }
 // 蓝色版本
 :root[theme='blue'] {
-  --color-primary: #48A3FF;
-  --color-linear-gradient-1: #48A3FF;
-  --color-linear-gradient-2: #2C88E5;
-  --color-bg-1: #488DD2;
-  --color-text-1: #56809F;
-  --color-linear-gradient-background-title-1: #FFFFFF;
-  --color-linear-gradient-background-title-2: #FFFFFF;
-  --color-background-color: #FFFFFF;
+  --color-primary: #48a3ff;
+  --color-linear-gradient-1: #48a3ff;
+  --color-linear-gradient-2: #2c88e5;
+  --color-bg-1: #488dd2;
+  --color-text-1: #56809f;
+  --color-linear-gradient-background-title-1: #ffffff;
+  --color-linear-gradient-background-title-2: #ffffff;
+  --color-background-color: #ffffff;
 
+  --color-linear-gradient-tag-1: #00c8ff;
+  --color-linear-gradient-tag-2: #006bff;
 }
-

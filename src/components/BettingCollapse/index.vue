@@ -119,7 +119,7 @@ const activeNames = ref(['1'])
       height: 94px;
       overflow: hidden;
       &.selected {
-        background: #7643fd;
+        background-color: var(--color-primary) !important;
         color: #fff;
       }
     }
