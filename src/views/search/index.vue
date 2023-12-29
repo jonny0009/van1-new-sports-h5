@@ -190,7 +190,7 @@ const toUrlGame = (item: any) => {
     padding-right: 16px;
 
     :deep(.van-field) {
-      width: 600px;
+      width: 585px;
       height: 68px;
       padding-top: 13px;
       // line-height: 34px;
@@ -209,6 +209,7 @@ const toUrlGame = (item: any) => {
       color: #7642FD;
       letter-spacing: 0;
       font-weight: 600;
+      white-space: nowrap;
     }
   }
 
