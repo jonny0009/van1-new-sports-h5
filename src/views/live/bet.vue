@@ -57,22 +57,22 @@ const setMatch = useMatch()
 const { getPlayGroupType } = useBetting()
 onMounted(() => {
   getMatcheInfo()
-  // onInterval()
+  onInterval()
 })
 
-// let intervalTimer: any = null
-// const onInterval = () => {
-//   unInterval()
-//   intervalTimer = setInterval(() => {
-//     getMatcheInfo(false)
-//   }, 5000)
-// }
-// const unInterval = () => {
-//   if (intervalTimer) {
-//     clearInterval(intervalTimer)
-//     intervalTimer = null
-//   }
-// }
+let intervalTimer: any = null
+const onInterval = () => {
+  unInterval()
+  intervalTimer = setInterval(() => {
+    getMatcheInfo(false)
+  }, 5000)
+}
+const unInterval = () => {
+  if (intervalTimer) {
+    clearInterval(intervalTimer)
+    intervalTimer = null
+  }
+}
 
 const matchInfo: any = ref({})
 const isLoading = ref(false)
