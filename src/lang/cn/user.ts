@@ -72,6 +72,8 @@ export default {
   otherCharacters: '其他人物',
   Background: '背景颜色',
   Followed: '已关注',
+  news: '消息',
+  loadingText: '加载中...',
 
   // 新增===
   area: '地区',

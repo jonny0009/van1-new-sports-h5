@@ -33,6 +33,7 @@
     v-model:loading="loading"
     :finished="finished"
     :finished-text="$t('live.noMore')"
+    :loading-text="$t('user.loadingText')"
     class="dataList"
     @load="onLoad"
   >
@@ -256,9 +257,11 @@ defineExpose({
     display: flex;
     align-items: center;
     margin-right: 30px;
-
     .round {
-      width: 165px;
+      // width: 165px;
+      // width: 170px;
+      white-space: nowrap;
+      padding: 0 25px;
       height: 52px;
       text-align: center;
       line-height: 52px;
@@ -266,10 +269,11 @@ defineExpose({
       border-radius: 32px;
       margin-left: 10px;
       position: relative;
+      font-size: 23px;
 
       .img_1 {
         position: absolute;
-        right: 20px;
+        right: 10px;
         top: 20px;
         height: 10px;
         width: 10px;
