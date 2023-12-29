@@ -7,14 +7,20 @@
       </template>
     </van-nav-bar>
     <div class="content">
-      <div v-if="!list.arr.length&& finished" class="noData">
+      <div v-if="!list.arr.length && finished" class="noData">
         <img class="img_1" src="@/assets/images/user/noData.png" />
         <p>
           {{ $t('user.noData') }}
         </p>
       </div>
       <div v-if="list.arr.length || !finished" class="list">
-        <van-list v-model:loading="loading" :finished="finished" :finished-text="$t('live.noMore')" :loading-text="$t('user.loadingText')" @load="onLoad">
+        <van-list
+          v-model:loading="loading"
+          :finished="finished"
+          :finished-text="$t('live.noMore')"
+          :loading-text="$t('user.loadingText')"
+          @load="onLoad"
+        >
           <van-swipe-cell v-for="(item, index) in list.arr" :key="index" :before-close="beforeClose" class="itemContent">
             <div class="cell" @click="toDetail(item)">
               <p class="font_1">{{ item.title }}</p>
@@ -137,7 +143,6 @@ const beforeClose = (position: any) => {
 :deep(.van-icon) {
   font-size: 40px;
 }
-
 </style>
 
 <style scoped>
@@ -153,6 +158,7 @@ const beforeClose = (position: any) => {
   letter-spacing: 0;
   text-align: center;
   font-weight: 500;
+  color: var(--title-text-font-color);
 }
 
 :deep(.van-icon) {

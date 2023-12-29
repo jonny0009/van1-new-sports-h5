@@ -179,6 +179,7 @@ const handleClose = (item: any) => {
   letter-spacing: 0;
   text-align: center;
   font-weight: 500;
+  color: var(--title-text-font-color);
 }
 
 :deep(.van-icon) {

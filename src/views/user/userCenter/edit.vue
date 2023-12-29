@@ -166,15 +166,13 @@ async function setPk(val: any) {
 <style lang="scss" scoped>
 .noticeDetail {
   .bg-title {
-    // width: 100%;
-    // height: 96px;
-    // background: url('@/assets/images/login/bg-tit@2x.png');
-    // background-size: 100% 100%;
-
+    background-color: var(--title-background-color-2);
     .img_1 {
       margin-top: -15px;
       width: 36px;
       height: 36px;
+      color: var(--title-text-font-color);
+
     }
   }
 
@@ -279,6 +277,8 @@ async function setPk(val: any) {
   letter-spacing: 0;
   text-align: center;
   font-weight: 500;
+  color: var(--title-text-font-color);
+
 }
 
 :deep(.van-icon) {
