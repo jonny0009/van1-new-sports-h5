@@ -2,7 +2,8 @@
   <div class="noticeDetail">
     <van-nav-bar class="bg-title" :title="title">
       <template #left>
-        <img class="img_1" src="@/assets/images/login/return@2x.png" alt="" @click="goBack()" />
+        <!-- <img class="img_1" src="@/assets/images/login/return@2x.png" alt="" @click="goBack()" /> -->
+        <van-icon name="arrow-left" class="img_1" @click="goBack()" />
       </template>
     </van-nav-bar>
     <div class="content">
@@ -65,12 +66,13 @@ const replaceImgUrl = (str: any) => {
 
 .noticeDetail {
   .bg-title {
-    width: 100%;
-    height: 150px;
-    background: url('@/assets/images/login/bg-tit@2x.png');
-    background-size: 100% 100%;
+    // width: 100%;
+    // height: 150px;
+    // background: url('@/assets/images/login/bg-tit@2x.png');
+    // background-size: 100% 100%;
 
     .img_1 {
+      margin-top: -15px;
       width: 36px;
       height: 36px;
     }
@@ -80,6 +82,8 @@ const replaceImgUrl = (str: any) => {
     height: calc(100vh - 350px);
     overflow-y: auto;
     padding: 42px 36px;
+    font-weight: 400px;
+    color: var(--color-text-1);
 
   }
 
@@ -107,7 +111,7 @@ const replaceImgUrl = (str: any) => {
 
 <style scoped>
 :deep(.van-nav-bar__content) {
-  height: 150px;
+  height: 96px;
 }
 
 :deep(.van-nav-bar__title) {
@@ -115,7 +119,6 @@ const replaceImgUrl = (str: any) => {
   line-height: 90px;
   font-family: PingFangSC-Medium;
   font-size: 28px;
-  color: #FFFFFF;
   letter-spacing: 0;
   text-align: center;
   font-weight: 500;

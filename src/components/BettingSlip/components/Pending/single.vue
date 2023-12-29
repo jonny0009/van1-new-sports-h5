@@ -107,7 +107,7 @@
               {{ formatMoney(getProfit(item)) }}
             </span>
             <span v-else-if="item.state !==3&& item.state !==5 " class="color-1">
-              {{ formatMoney(item.winAndLossGold) }}
+              {{ formatMoney(item.winGold) }}
             </span>
           </div>
         </div>

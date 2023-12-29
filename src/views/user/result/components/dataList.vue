@@ -200,11 +200,11 @@ defineExpose({
     width: 130px;
     height: 64px;
     // padding: 16px 40px;
-    background: #EFF1F2;
+    background: var(--van-result-box);
     border-radius: 32px;
     font-family: PingFangSC-Medium;
     font-size: 24px;
-    color: #2C333C;
+    color: var(--color-search-box-text-1);
     letter-spacing: 0;
     text-align: center;
     font-weight: 500;
@@ -213,7 +213,7 @@ defineExpose({
   }
 
   .timeActive {
-    background: #7642FD;
+    background: var(--color-bg-1);
     color: #FFFFFF;
   }
 
@@ -223,7 +223,7 @@ defineExpose({
     width: 64px;
     height: 64px;
     padding: 15px;
-    background: #EFF1F2;
+    background: var(--color-search-box-frame);
 
     // background: #7642FD;
     border-radius: 50%;
@@ -249,7 +249,7 @@ defineExpose({
   justify-content: flex-end;
   font-family: PingFangSC-Semibold;
   font-size: 24px;
-  color: #1F2630;
+  color: var( --color-search-box-text-1);
   letter-spacing: 0;
   font-weight: 600;
 
@@ -265,7 +265,7 @@ defineExpose({
       height: 52px;
       text-align: center;
       line-height: 52px;
-      background: #EFF1F2;
+      background: var(--color-search-box-frame);
       border-radius: 32px;
       margin-left: 10px;
       position: relative;
@@ -294,7 +294,7 @@ defineExpose({
   // padding: 0 36px;
 
   .color-1 {
-    color: #7642FD;
+    color: var(--color-bg-1);
   }
 
   .color-2 {
@@ -305,7 +305,7 @@ defineExpose({
   }
 
   .item {
-    background: #EFF1F2;
+    background: var(--color-search-box-frame);
     border-radius: 22px;
     padding: 15px 20px;
     margin-bottom: 20px;
@@ -317,7 +317,7 @@ defineExpose({
 .popup-title {
   font-family: PingFangSC-Semibold;
   font-size: 32px;
-  color: #1F2630;
+  color: var(--color-search-box-text-1);
   letter-spacing: 0;
   font-weight: 600;
   margin: 24px 0 0 38px;
@@ -341,7 +341,7 @@ defineExpose({
   }
 
   .item-color {
-    color: #7642FD;
+    color: var(--color-bg-1);
   }
 }
 .noData {
@@ -349,7 +349,7 @@ defineExpose({
   text-align: center;
   font-family: PingFangSC-Medium;
   font-size: 24px;
-  color: #96A5AA;
+  color: var(--color-no-data-font);
   letter-spacing: 0;
   font-weight: 500;
 

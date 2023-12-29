@@ -1,11 +1,7 @@
 .notice {
   .bg-title {
-    width: 100%;
-    height: 96px;
-    background: url('@/assets/images/login/bg-tit@2x.png');
-    background-size: 100% 100%;
-
     .img_1 {
+      margin-top: -15px;
       width: 36px;
       height: 36px;
     }
@@ -14,6 +10,7 @@
 
    > .content  {
     height: calc(100vh - 96px);
+    background-color: var(--color-background-color);
     overflow-y: auto;
 
     > .noData {
@@ -21,7 +18,7 @@
       text-align: center;
       font-family: PingFangSC-Medium;
       font-size: 24px;
-      color: #96A5AA;
+      color: var(--color-no-data-font);
       letter-spacing: 0;
       font-weight: 500;
 
@@ -42,7 +39,7 @@
       }
 
       .cell {
-        background: #EFF1F2;
+        background: var(--color-search-box-frame);
         // border-radius: 10px 0 0 10px;
         border-radius: 20px;
         padding: 25px;
@@ -53,7 +50,7 @@
         .font_1 {
           font-family: PingFangSC-Semibold;
           font-size: 28px;
-          color: #1F2630;
+          color: var( --color-search-box-text-1);
           letter-spacing: 0;
           font-weight: 600;
           overflow: hidden;//溢出隐藏
@@ -67,9 +64,9 @@
           margin-top: 20px;
           font-family: PingFangSC-Medium;
           font-size: 24px;
-          color: #546371;
+          color: var(--color-text-1);
           letter-spacing: 0;
-          font-weight: 500;
+          font-weight: 400;
           overflow: hidden;//溢出隐藏
           text-overflow: ellipsis;//省略号
           display: -webkit-box;//

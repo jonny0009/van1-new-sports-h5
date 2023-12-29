@@ -101,11 +101,6 @@ export default {
   today: 'Hôm nay',
   fortyEight: 'Gần 48 giờ',
   sevenDay: '7 ngày',
-  // 新增4
-  hotSearch: 'Tìm kiếm phổ biến',
-  lookInfo: 'Xem tin nhắn đầy đủ',
-  betNum: 'Đặt cược',
-  noMoreMatch: 'Không còn trận đấu nào nữa. ',
 
   // 新增3
   compensate: 'Thanh toán',
@@ -123,8 +118,18 @@ export default {
   text15: 'Tài khoản không tồn tại',
   text16: 'Tài khoản bị cấm',
   account: 'Số tài khoản',
+
+  // 新增4
+  hotSearch: 'Tìm kiếm phổ biến',
+  lookInfo: 'Xem tin nhắn đầy đủ',
+  betNum: 'Đặt cược',
+  noMoreMatch: 'Không còn trận đấu nào nữa. ',
   news: 'Thông điệp',
   loadingText: 'Đang tải......',
+  // 新增5
+  editPend: 'Đang thụ lý ',
+  affirmPend: 'Trong xác nhận ',
+  noDataRelated: 'Không truy vấn dữ liệu liên quan',
 
   sports: {
     'officeNumber': 'số trò chơi',

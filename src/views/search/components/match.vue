@@ -25,10 +25,10 @@
         <van-image class="goImg" fit="contain" :src="goImg" />
       </div>
     </div>
-    <div v-if="!props.gameList.length " class="noData">
+    <div v-if="!props.gameList.length" class="noData">
       <img class="img_1" src="@/assets/images/user/noData.png" />
       <p>
-        未查询到相关数据
+        {{ $t('user.noDataRelated') }}
       </p>
     </div>
   </div>
@@ -103,7 +103,7 @@ const highlightText = (field: any, text: any) => {
   text-align: center;
   font-family: PingFangSC-Medium;
   font-size: 24px;
-  color: #96A5AA;
+  color: var(--color-no-data-font);
   letter-spacing: 0;
   font-weight: 500;
 
@@ -115,88 +115,90 @@ const highlightText = (field: any, text: any) => {
 
   }
 }
- .matchList-1 {
-      overflow-y: auto;
-      height: calc(100vh - 250px);
+
+.matchList-1 {
+  overflow-y: auto;
+  height: calc(100vh - 240px);
+}
+
+// 比赛
+.left1 {
+  margin-top: 20px;
+  width: 678px;
+  height: 120px;
+  background: var(--color-search-box-frame);
+  border-radius: 10px;
+  padding: 28px 20px;
+  display: flex;
+  align-items: center;
+  font-family: PingFangSC-Semibold;
+  font-size: 24px;
+  color: var(--color-search-box-text-1);
+  letter-spacing: 0;
+  font-weight: 600;
+
+  // .itemImg {
+  //   height: 100px;
+  //   width: 100px;
+  //   background:orange;
+  //   margin-right: 10px;
+  // }
+}
+
+.left2 {
+  justify-content: space-between;
+  align-items: center;
+
+  .left3 {
+    display: flex;
+    align-items: center;
+  }
+
+  .itemImg {
+    height: 80px;
+    width: 80px;
+    // background:orange;
+    margin-right: 0px;
+    position: relative;
+
+    &-1 {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 50px;
+      height: 50px;
     }
 
-    // 比赛
-    .left1 {
-      margin-top: 20px;
-      width: 678px;
-      height: 120px;
-      background: #EFF1F2;
-      border-radius: 10px;
-      padding: 28px 20px;
+    &-2 {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  .center {
+    margin-left: 30px;
+    font-size: 24px;
+    color: var(--color-search-box-text-1);
+
+    &_1 {
       display: flex;
       align-items: center;
-      font-family: PingFangSC-Semibold;
       font-size: 24px;
-      color: #1F2630;
-      letter-spacing: 0;
-      font-weight: 600;
+      color: #96A5AA;
 
-      // .itemImg {
-      //   height: 100px;
-      //   width: 100px;
-      //   background:orange;
-      //   margin-right: 10px;
-      // }
-    }
-
-    .left2 {
-      justify-content: space-between;
-      align-items: center;
-
-      .left3 {
-        display: flex;
-        align-items: center;
-      }
-
-      .itemImg {
-        height: 80px;
-        width: 80px;
-        // background:orange;
-        margin-right: 0px;
-        position: relative;
-        &-1{
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 50px;
-          height: 50px;
-        }
-        &-2{
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          width: 50px;
-          height: 50px;
-        }
-      }
-
-      .center {
-        margin-left: 30px;
-        font-size: 24px;
-        color: #1F2630;
-
-        &_1 {
-          display: flex;
-          align-items: center;
-          font-size: 24px;
-          color: #96A5AA;
-
-          .ball4 {
-            margin-right: 10px;
-            height: 24px;
-            width: 24px;
-          }
-        }
-      }
-
-      .goImg {
-        width: 30px;
-        height: 35px;
+      .ball4 {
+        margin-right: 10px;
+        height: 24px;
+        width: 24px;
       }
     }
-</style>
+  }
+
+  .goImg {
+    width: 30px;
+    height: 35px;
+  }
+}</style>

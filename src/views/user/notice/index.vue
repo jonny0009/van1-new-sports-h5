@@ -2,7 +2,8 @@
   <div class="notice">
     <van-nav-bar class="bg-title" :title="title">
       <template #left>
-        <img class="img_1" src="@/assets/images/login/return@2x.png" alt="" @click="goBack()" />
+        <!-- <img class="img_1" src="@/assets/images/login/return@2x.png" alt="" @click="goBack()" /> -->
+        <van-icon name="arrow-left" class="img_1" @click="goBack()" />
       </template>
     </van-nav-bar>
     <div class="content">
@@ -149,7 +150,6 @@ const beforeClose = (position: any) => {
   line-height: 90px;
   font-family: PingFangSC-Medium;
   font-size: 28px;
-  color: #FFFFFF;
   letter-spacing: 0;
   text-align: center;
   font-weight: 500;
