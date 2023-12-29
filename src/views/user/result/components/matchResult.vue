@@ -30,6 +30,7 @@
     v-model:loading="loading"
     :finished="finished"
     :finished-text="$t('user.noMoreMatch')"
+    :loading-text="$t('user.loadingText')"
     class="dataList"
     @load="onLoad"
   >

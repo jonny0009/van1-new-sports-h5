@@ -2,6 +2,8 @@ import axios from 'axios'
 import router from '@/router'
 import { showDialog } from 'vant'
 import { getToken, removeToken } from './auth'
+// import { useI18n } from 'vue-i18n'
+// const { t } = useI18n()
 // .env.development/.env.production配置
 const baseURL: any = import.meta.env.VITE_BASE_API
 const service = axios.create({
@@ -54,10 +56,15 @@ service.interceptors.response.use(
   (response: any) => {
     if (authCode.includes(response.data.code)) {
       removeToken()
+      const locale = localStorage.getItem('locale')
+      const loginText:any = {
+        message: locale === 'vi-vn' ? 'Thông tin đăng nhập đã hết hạn, vui lòng đăng nhập lại' : '登录信息已失效',
+        affirm: locale === 'vi-vn' ? 'Xác nhận' : '确认'
+      }
       showDialog({
-        message: '登录信息已失效,请重新登录',
+        message: loginText.message,
         theme: 'round-button',
-        confirmButtonText: '确认'
+        confirmButtonText: loginText.affirm
       }).then(() => {
         router.push('/login')
       })

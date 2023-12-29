@@ -14,7 +14,7 @@ export default {
   FlowingHistory: 'Lịch sử giao dịch',
   state: 'Trạng thái',
   Balls: 'Thể thao',
-  whole: 'Chọn toàn bộ',
+  whole: 'Tất cả',
   BettingAmount: 'Số tiền đặt cược',
   CompensableAmount: 'Số tiền có thể nhận được',
   OrderID: 'ID cược',
@@ -68,8 +68,8 @@ export default {
   font4: 'Biệt danh phải chứa ít nhất',
   font5: '4 ký tự (tối đa 16 ký tự)',
   font6: '1 chữ cái và 1 số (không chứa ký tự đặc biệt)',
-  EditAvatar: 'Chỉnh sửa hình đại diện',
-  football: 'Cầu thủ bóng đá nổi tiếng',
+  EditAvatar: 'Đầu Edit',
+  football: 'Ngôi sao bóng đá',
   otherCharacters: 'Nhân vật khác',
   Background: 'Màu nền',
   Followed: 'Đã theo dõi',
@@ -94,7 +94,7 @@ export default {
   betForm: 'Đặt cược',
   end: 'Đã kết thúc',
   // 新增2=====
-  noFinal: 'Chưa thanh toán',
+  noFinal: 'Không tính',
   final: 'Giải quyết',
   hk: 'Hồng Kông [HK]',
   Europe: 'Đĩa châu Âu [DEC]',
@@ -123,6 +123,8 @@ export default {
   text15: 'Tài khoản không tồn tại',
   text16: 'Tài khoản bị cấm',
   account: 'Số tài khoản',
+  news: 'Thông điệp',
+  loadingText: 'Đang tải......',
 
   sports: {
     'officeNumber': 'số trò chơi',

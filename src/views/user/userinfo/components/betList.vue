@@ -21,6 +21,7 @@
       :finished="finished"
       :finished-text="$t('live.noMore')"
       class="dataList"
+      :loading-text="$t('user.loadingText')"
       @load="getBetList"
     >
       <div v-for="(item, index) in list.arr" :key="index">
