@@ -192,7 +192,7 @@ const toUrlGame = (item: any) => {
     :deep(.van-field) {
       width: 600px;
       height: 68px;
-      padding-top: 15px;
+      padding-top: 13px;
       // line-height: 34px;
       background: #EFF1F2;
       border-radius: 34px;

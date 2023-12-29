@@ -64,48 +64,6 @@
       </div>
     </div>
   </van-list>
-  <van-popup v-model:show="showBottom" position="bottom" closeable round :style="{ height: '50%' }">
-    <div class="popup-title">{{ popupTitle }}</div>
-    <div class="pk-list">
-      <div
-        v-for="(item, index) in popupList.arr"
-        :key="index"
-        class="item"
-        :class="[commonKey.key === item.key ? 'item-color' : '']"
-        @click="setPk(item)"
-      >
-        <p>
-          <span>
-            {{ item.name }}
-          </span>
-          <span v-if="commonKey.key === item.key">
-            <van-icon name="success" />
-          </span>
-        </p>
-      </div>
-    </div>
-  </van-popup>
-  <van-popup v-model:show="showBottom1" position="bottom" closeable round :style="{ height: '50%' }">
-    <div class="popup-title">{{ popupTitle1 }}</div>
-    <div class="pk-list">
-      <div
-        v-for="(item, index) in sportsList"
-        :key="index"
-        class="item"
-        :class="[ballKey.gameType === item.gameType ? 'item-color' : '']"
-        @click="setBallSelect(item)"
-      >
-        <p>
-          <span>
-            {{ $t(`user.sports.${item.gameType}`) }}
-          </span>
-          <span v-if="ballKey.gameType === item.gameType">
-            <van-icon name="success" />
-          </span>
-        </p>
-      </div>
-    </div>
-  </van-popup>
 </template>
 
 <script lang="ts" setup>
@@ -131,15 +89,14 @@ const commonKey = ref(
 )
 const ballKey = ref(
   {
-    name: t('user.sports.FT'),
-    gameType: 'FT'
+    gameType: 'FT',
+    key: 'FT'
   }
 )
 const showBottom1 = ref(false)
 const showBottom = ref(false)
 
-const popupList = reactive<{ arr: any[] }>({ arr: [] })
-
+const emit = defineEmits(['valueChange'])
 onMounted(() => {
   store.dispatch('app/getAllSports')
 })
@@ -154,10 +111,8 @@ const sportsList = computed(() => {
   if (newSportsA.length) {
     const newSportsC = newSportsA.map((e:any) => {
       return {
-        value: e.gameType,
         gameType: e.gameType,
-        gameCount: e.gameCount,
-        name: 'Sport'
+        key: e.gameType
       }
     })
     newSportsB = [...newSportsC]
@@ -165,61 +120,7 @@ const sportsList = computed(() => {
 
   return newSportsB
 })
-let page: number = 0
-const onLoad = async () => {
-  page++
-  const params: any = {
-    page: page,
-    gameSort: 3,
-    leagueIds: '',
-    gameType: ballKey.value.gameType,
-    matchTime: commonKey.value.value,
-    pageSize: 10,
-    gameStatus: 1,
-    groupId: 3
-  }
-  const res: any = await matchResult(params)
-  const data = res.data
-  if (res.code === 200) {
-    data.list.forEach((item: any) => {
-      list.arr.push(item)
-    })
-    loading.value = false
-    finished.value = list.arr.length === data.total
-  } else {
-    finished.value = true
-    loading.value = false
-    // showToast(res.msg)
-  }
-}
-
-const getImg = (item: any) => {
-  if (item) {
-    return `${ImageSource}${item}`
-  }
-  return ''
-}
-
-async function setPk(val: any) {
-  page = 0
-  commonKey.value = val
-  showBottom.value = false
-  loading.value = true
-  finished.value = false
-  list.arr = []
-  onLoad()
-  console.log(val)
-}
-// 获取游戏时间
-const getMatchTime = (item: any) => {
-  if (item.gameDate) {
-    return moment(item.gameDate).format('MM/DD HH:mm')
-  }
-  if (item.matchTime) {
-    return moment(item.gameDate).format('MM/DD HH:mm')
-  }
-}
-const seStatus = () => {
+const timeArrList = computed(() => {
   const timeArr = [
     {
       name: moment().format('MM/DD'),
@@ -298,11 +199,67 @@ const seStatus = () => {
       key: 14
     }
   ]
-  popupList.arr = timeArr
+  return timeArr
+})
+let page: number = 0
+const onLoad = async () => {
+  page++
+  const params: any = {
+    page: page,
+    gameSort: 3,
+    leagueIds: '',
+    gameType: ballKey.value.gameType,
+    matchTime: commonKey.value.value,
+    pageSize: 10,
+    gameStatus: 1,
+    groupId: 3
+  }
+  const res: any = await matchResult(params)
+  const data = res.data
+  if (res.code === 200) {
+    data.list.forEach((item: any) => {
+      list.arr.push(item)
+    })
+    loading.value = false
+    finished.value = list.arr.length === data.total
+  } else {
+    finished.value = true
+    loading.value = false
+    // showToast(res.msg)
+  }
+}
+const getImg = (item: any) => {
+  if (item) {
+    return `${ImageSource}${item}`
+  }
+  return ''
+}
+// 获取游戏时间
+const getMatchTime = (item: any) => {
+  if (item.gameDate) {
+    return moment(item.gameDate).format('MM/DD HH:mm')
+  }
+  if (item.matchTime) {
+    return moment(item.gameDate).format('MM/DD HH:mm')
+  }
+}
+const seStatus = () => {
   showBottom.value = true
+  emit('valueChange', true, popupTitle.value, timeArrList.value, commonKey.value, 3)
 }
 const setBall = () => {
   showBottom1.value = true
+  emit('valueChange', true, popupTitle1.value, sportsList.value, ballKey.value, 2)
+}
+async function setPk(val: any) {
+  page = 0
+  commonKey.value = val
+  showBottom.value = false
+  loading.value = true
+  finished.value = false
+  list.arr = []
+  onLoad()
+  console.log(val)
 }
 
 const setBallSelect = (val: any) => {
@@ -314,15 +271,16 @@ const setBallSelect = (val: any) => {
   list.arr = []
   onLoad()
 }
-
-// systemId
+defineExpose({
+  setBallSelect, setPk, showBottom1, showBottom
+})
 
 </script>
 
 <style lang="scss" scoped>
 // 状态
 .status {
-  margin-top: 20px;
+  // margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
