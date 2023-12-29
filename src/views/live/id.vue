@@ -136,12 +136,28 @@ const onMoreVideo = (item: any) => {
   getMatcheInfo()
 }
 
+let intervalTimer: any = null
+const onInterval = () => {
+  unInterval()
+  intervalTimer = setInterval(() => {
+    getMatcheInfo()
+  }, 5000)
+}
+const unInterval = () => {
+  if (intervalTimer) {
+    clearInterval(intervalTimer)
+    intervalTimer = null
+  }
+}
+
 onMounted(() => {
+  onInterval()
   getMatcheInfo()
   getExtendInfo()
 })
 
 onUnmounted(() => {
+  unInterval()
   player && player.dispose()
   player = null
 })

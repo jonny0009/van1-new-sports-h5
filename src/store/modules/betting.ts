@@ -2,6 +2,7 @@ import localStore from '@/utils/localStore'
 import { Module } from 'vuex'
 import { Betting } from '#/store'
 import store from '@/store'
+import router from '@/router'
 import {
   betParams,
   buyCombosParams,
@@ -202,6 +203,7 @@ const bettingModule: Module<Betting, any> = {
     setMoreShow({ state }, { status, moreParams }) {
       state.moreShow = status
       state.moreParams = moreParams
+      router.push(`/bet/${moreParams.gidm}`)
     },
 
     // 添加投注项

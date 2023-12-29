@@ -12,6 +12,11 @@ export default {
       name: 'LiveId',
       path: ':id',
       component: () => import('@/views/live/id.vue')
+    },
+    {
+      name: 'LiveBet',
+      path: '/bet/:id',
+      component: () => import('@/views/live/bet.vue')
     }
   ]
 }
