@@ -1,7 +1,7 @@
 export default {
   lang: 'Ngôn ngữ',
   search: 'Tìm kiếm',
-  cancellation: 'Hủy thành công',
+  cancellation: 'Hủy bỏ',
   recommend: 'Được đề xuất',
   league: 'Liên đoàn',
   competition: 'Thi đấu',

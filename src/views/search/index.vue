@@ -101,14 +101,14 @@ onMounted(async () => {
 
 const sportsList = computed(() => {
   const sports = store.state.app.sports || []
-  const newSportsA = sports.filter((e:any) => {
+  const newSportsA = sports.filter((e: any) => {
     return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.gameCount
   })
-  let newSportsB:any = [
+  let newSportsB: any = [
 
   ]
   if (newSportsA.length) {
-    const newSportsC = newSportsA.map((e:any) => {
+    const newSportsC = newSportsA.map((e: any) => {
       return {
         value: e.gameType,
         gameType: e.gameType,
@@ -156,7 +156,7 @@ const getList = async () => {
     if (keyWords.value) {
       if (!searchHistory.arr.includes(keyWords.value)) {
         searchHistory.arr.unshift(keyWords.value)
-        localStore.setItem('searchHistory', searchHistory.arr.slice(0, 6))
+        localStore.setItem('searchHistory', searchHistory.arr.slice(0, 100))
         searchHistory.arr = localStore.getItem('searchHistory')
       }
     }
@@ -205,14 +205,14 @@ const toUrlGame = (item: any) => {
 
     .cancel {
       font-family: PingFangSC-Semibold;
-      font-size: 28px;
+      font-size: 26px;
       color: #7642FD;
       letter-spacing: 0;
       font-weight: 600;
     }
   }
 
-  > .content {
+  >.content {
     margin-top: 31px;
     padding: 0 36px;
 
@@ -240,6 +240,8 @@ const toUrlGame = (item: any) => {
       align-items: center;
       flex-wrap: wrap;
       margin-bottom: 20px;
+      max-height: 108px;
+      overflow: hidden;
 
       .item {
         display: flex;
@@ -285,8 +287,10 @@ const toUrlGame = (item: any) => {
           background: #EFF1F2;
           border-radius: 10px;
         }
-        .item-1{
-           color: #7642FD;;
+
+        .item-1 {
+          color: #7642FD;
+          ;
         }
 
       }
