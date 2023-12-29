@@ -104,6 +104,7 @@ const gotoLive = () => {
 }
 .bet-container {
   padding: 0 36px;
+  padding-bottom: calc(88px + 96px);
   .team {
     height: 252px;
     background: url('@/assets/images/live/game_mask.png') no-repeat;

@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Ref, ref, watch } from 'vue'
+import { Ref, ref, watch, onMounted } from 'vue'
 import { useBetting } from '@/utils/useBetting'
 import BettingCollapse from '@/components/BettingCollapse/index.vue'
 
@@ -30,6 +30,9 @@ watch(
     fetchData()
   }
 )
+onMounted(() => {
+  fetchData()
+})
 </script>
 
 <style lang="scss" scoped>
