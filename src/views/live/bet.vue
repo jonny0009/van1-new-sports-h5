@@ -1,5 +1,5 @@
 <template>
-  <div class="betting-more-container">
+  <div class="bet-container">
     <div class="team">
       <div class="team-header">
         <div class="league">
@@ -97,7 +97,12 @@ const gotoLive = () => {
 </script>
 
 <style lang="scss" scoped>
-.betting-more-container {
+.no-data {
+  display: flex;
+  justify-content: center;
+  padding: 50px 0 0 0;
+}
+.bet-container {
   padding: 0 36px;
   .team {
     height: 252px;
