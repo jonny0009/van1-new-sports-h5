@@ -12,6 +12,7 @@
     v-model:loading="loading"
     :finished="finished"
     :finished-text="$t('live.noMore')"
+    :loading-text="$t('user.loadingText')"
     class="dataList"
     @load="onLoad"
   >
@@ -88,7 +89,7 @@ onMounted(() => {
   TradeTyp()
 })
 
-let page: number = 0
+let page: number = 1
 const onLoad = async () => {
   page++
   const params: any = {
@@ -127,7 +128,7 @@ const onLoad = async () => {
 
     dataList.arr = listFlag
     loading.value = false
-    finished.value = list.arr.length === data.total
+    finished.value = !data.transferRecordRspList.length
   } else {
     showToast(res.msg)
   }
@@ -143,7 +144,9 @@ const TradeTyp = async () => {
 const getTitle = (type: any) => {
   if (typeList.arr.length) {
     const target = typeList.arr.find((item: any) => item.tradeType === type)
-    return target.desc || ''
+    const closeType = JSON.parse(target.manyName)
+    const lang: any = localStorage.getItem('locale') || {}
+    return closeType[lang] || ''
   }
 }
 

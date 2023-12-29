@@ -13,7 +13,7 @@
         </p>
       </div>
       <div v-if="list.arr.length || !finished" class="list">
-        <van-list v-model:loading="loading" :finished="finished" :finished-text="$t('live.noMore')" @load="onLoad">
+        <van-list v-model:loading="loading" :finished="finished" :finished-text="$t('live.noMore')" :loading-text="$t('user.loadingText')" @load="onLoad">
           <van-swipe-cell v-for="(item, index) in list.arr" :key="index" :before-close="beforeClose" class="itemContent">
             <div class="cell" @click="toDetail(item)">
               <p class="font_1">{{ item.title }}</p>
@@ -42,9 +42,11 @@ import { ImageSource } from '@/config'
 import { formatToDateTime } from '@/utils/date'
 import { showToast } from 'vant'
 
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 // import { showConfirmDialog } from 'vant'
 const $router = useRouter()
-const title = ref('消息')
+const title = t('user.news')
 const loading = ref(false)
 const finished = ref(false)
 const list = reactive<{ arr: any }>({ arr: [] })

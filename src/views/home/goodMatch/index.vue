@@ -5,19 +5,21 @@
     :text="$t('home.goofMatch')"
     @returnSuccess="returnStatus"
   />
-  <template v-if="!isShow">
-    <SportsTabs class="mb10 mt20" @returnSportsSuccess="returnSportsSuccess" />
-    <Loading v-if="!isLoading" />
-    <template v-else>
-      <HomeEmpty v-if="!recommendEventsList.length" />
-      <HomeMatchHandicap v-for="(item,idx) in recommendEventsList" :key="idx" :send-params="item" class="mb10" />
-    </template>
-    <div v-if="recommendEventsList.length" class="Button-MatchMore mt10" @click="goToSport">
-      <span>
-        {{ $t('home.lookMoreMatch') }}
-      </span>
+  <Transition>
+    <div v-if="!isShow" class="goodMatch">
+      <SportsTabs class="mb10 mt20" @returnSportsSuccess="returnSportsSuccess" />
+      <Loading v-if="!isLoading" />
+      <template v-else>
+        <HomeEmpty v-if="!recommendEventsList.length" />
+        <HomeMatchHandicap v-for="(item,idx) in recommendEventsList" :key="idx" :send-params="item" class="mb10" />
+      </template>
+      <div v-if="recommendEventsList.length" class="Button-MatchMore mt10" @click="goToSport">
+        <span>
+          {{ $t('home.lookMoreMatch') }}
+        </span>
+      </div>
     </div>
-  </template>
+  </Transition>
 </template>
 <script lang="ts" setup>
 import Dayjs from 'dayjs'

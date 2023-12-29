@@ -1,8 +1,5 @@
 <template>
-  <transition
-    :class="`animate__animated ${state?'animate__fadeOutLeft':''}`"
-    mode="out-in"
-  >
+  <transition :class="`animate__animated ${state ? 'animate__fadeOutLeft' : ''}`">
     <div class="Single-wrap">
       <div class="remove">
         <van-icon name="cross" :class="{ fixed: marketInfo.errorCode }" @click.stop="remove" />
@@ -60,8 +57,11 @@ const isCombo = computed(() => comboMarketPlayOnlyIds.value.includes(props.marke
 const state = ref(false)
 const remove = () => {
   state.value = true
-  // store.dispatch('betting/deleteMarket', props.marketInfo.playOnlyId)
+  setTimeout(() => {
+    store.dispatch('betting/deleteMarket', props.marketInfo.playOnlyId)
+  }, 500)
 }
+
 const clearIorChange = () => {
   store.dispatch('betting/clearIorChange', props.marketInfo.playOnlyId)
 }
@@ -275,10 +275,6 @@ const inputTouch = () => {
         letter-spacing: 0.8px;
         text-align: justify;
         font-weight: 600;
-
-        &.selected {
-          color: #dfe4e5;
-        }
       }
 
       .cursor {

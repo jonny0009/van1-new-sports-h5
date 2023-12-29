@@ -165,7 +165,7 @@ const goBack = () => {
       letter-spacing: 0;
       font-weight: 600;
       text-align: center;
-      width: 212px;
+      width: 240px;
     }
 
     .active {

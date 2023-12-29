@@ -11,7 +11,6 @@ export default {
     _handleLoad(el, binding)
   },
   updated(el: any, binding: any) {
-    _handleError(el)
     _handleLoad(el, binding)
   }
 }

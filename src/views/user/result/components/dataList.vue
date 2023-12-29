@@ -33,6 +33,7 @@
     v-model:loading="loading"
     :finished="finished"
     :finished-text="$t('live.noMore')"
+    :loading-text="$t('user.loadingText')"
     class="dataList"
     @load="onLoad"
   >
@@ -40,35 +41,12 @@
       <Single v-if="item.parlayNum ==1" :item="item" class="item"></Single>
       <Bunch v-if="item.parlayNum !=1" :item="item" class="item"></Bunch>
     </div>
-    <!-- </div> -->
   </van-list>
-
-  <van-popup v-model:show="showBottom" position="bottom" closeable round>
-    <div class="popup-title">{{ popupTitle }}</div>
-    <div class="pk-list">
-      <div
-        v-for="(item, index) in popupList.arr"
-        :key="index"
-        class="item"
-        :class="[commonKey.key === item.key ? 'item-color' : '']"
-        @click="setPk(item)"
-      >
-        <p>
-          <span>
-            {{ item.value }}
-          </span>
-          <span v-if="commonKey.key === item.key">
-            <van-icon name="success" />
-          </span>
-        </p>
-      </div>
-    </div>
-  </van-popup>
 
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, defineExpose } from 'vue'
 import moment from 'moment'
 
 import Bunch from './bunch.vue'
@@ -91,6 +69,8 @@ const commonKey = ref({ key: '', value: t('user.whole') })
 const showBottom = ref(false)
 const loading = ref(false)
 const finished = ref(false)
+
+const emit = defineEmits(['valueChange'])
 
 // const showTime = ref(false)
 const popupList = reactive<{ arr: any[] }>({
@@ -133,10 +113,12 @@ onMounted(() => {
 const onLoad = () => {
   getNoAccount()
 }
-
+const seStatus = () => {
+  showBottom.value = true
+  emit('valueChange', true, popupTitle.value, popupList.arr, commonKey.value, 1)
+}
 async function setPk(val: any) {
   commonKey.value = val
-  showBottom.value = false
   loading.value = true
   finished.value = false
   page = 0
@@ -172,9 +154,7 @@ const selectTime = (index: number) => {
   list.arr = []
   getNoAccount()
 }
-const seStatus = () => {
-  showBottom.value = true
-}
+
 let page: number = 0
 const getNoAccount = async () => {
   page++
@@ -201,15 +181,17 @@ const getNoAccount = async () => {
     finished.value = !data.length
   }
 }
-
-// systemId
+defineExpose({
+  setPk, showBottom
+})
 
 </script>
 
 <style lang="scss" scoped>
 // 时间选择
 .timeSelect {
-  margin: 30px 0;
+  // margin: 30px 0;
+  margin: 10px 0;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -275,9 +257,11 @@ const getNoAccount = async () => {
     display: flex;
     align-items: center;
     margin-right: 30px;
-
     .round {
-      width: 165px;
+      // width: 165px;
+      // width: 170px;
+      white-space: nowrap;
+      padding: 0 25px;
       height: 52px;
       text-align: center;
       line-height: 52px;
@@ -285,10 +269,11 @@ const getNoAccount = async () => {
       border-radius: 32px;
       margin-left: 10px;
       position: relative;
+      font-size: 23px;
 
       .img_1 {
         position: absolute;
-        right: 20px;
+        right: 10px;
         top: 20px;
         height: 10px;
         width: 10px;
@@ -306,6 +291,7 @@ const getNoAccount = async () => {
   height: calc(100vh - 380px);
   overflow-y: auto;
   margin-top: 20px;
+  // padding: 0 36px;
 
   .color-1 {
     color: #7642FD;

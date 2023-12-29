@@ -6,14 +6,51 @@
       </template>
     </van-nav-bar>
     <div class="content">
+
       <div class="area-btn_1">
-        <span :class="index == 1 ? 'active' : ''" @click.stop="index = 1">{{ $t('user.BettingHistory') }}</span>
-        <span :class="index == 2 ? 'active' : ''" @click.stop="index = 2">{{ $t('user.FlowingHistory') }}</span>
-        <span :class="index == 3 ? 'active' : ''" @click.stop="index = 3">{{ $t('user.matchResult') }}</span>
+        <span :class="index == 0 ? 'active' : ''" @click.stop="handleSwipe(0)">{{ $t('user.BettingHistory') }}</span>
+        <span :class="index == 1 ? 'active' : ''" @click.stop="handleSwipe(1)">{{ $t('user.FlowingHistory') }}</span>
+        <span :class="index == 2 ? 'active' : ''" @click.stop="handleSwipe(2)">{{ $t('user.matchResult') }}</span>
       </div>
-      <dataList v-if="index === 1"></dataList>
-      <RunningHistory v-if="index === 2"></RunningHistory>
-      <MatchResult v-if="index === 3"></MatchResult>
+      <van-swipe ref="swipe" :loop="false" :show-indicators="false" :duration="300" @change="HandleSlide">
+        <van-swipe-item>
+          <dataList ref="childRefA" @valueChange="setStatus"></dataList>
+        </van-swipe-item>
+        <van-swipe-item>
+          <RunningHistory></RunningHistory>
+        </van-swipe-item>
+        <van-swipe-item>
+          <MatchResult ref="childRefB" @valueChange="setStatus"></MatchResult>
+        </van-swipe-item>
+      </van-swipe>
+      <!-- 弹窗===11 -->
+      <van-popup v-model:show="showBottom" position="bottom" :duration="0.2" closeable round :style="{ maxHeight: '50%' }" @close="handleClose('close')">
+        <div class="popup-title">{{ popupTitle }}</div>
+        <div class="pk-list">
+          <div
+            v-for="(item, index) in popupList.arr"
+            :key="index"
+            class="item"
+            :class="[commonKey.key === item.key ? 'item-color' : '']"
+            @click="setPk(item)"
+          >
+            <p>
+              <span v-if="way===1">
+                {{ item.value }}
+              </span>
+              <span v-if="way===2">
+                {{ $t(`user.sports.${item.gameType}`) }}
+              </span>
+              <span v-if="way===3">
+                {{ item.name }}
+              </span>
+              <span v-if="commonKey.key === item.key">
+                <van-icon name="success" />
+              </span>
+            </p>
+          </div>
+        </div>
+      </van-popup>
     </div>
   </div>
 </template>
@@ -21,21 +58,72 @@
 <script lang="ts" setup>
 import dataList from './components/dataList.vue'
 
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import RunningHistory from './components/runningHistory.vue'
 import MatchResult from './components/matchResult.vue'
+
+// import { useI18n } from 'vue-i18n'
+// const { t } = useI18n()
+
+const popupTitle = ref<any>('')
+const commonKey = ref<any>({})
+const popupList = reactive<{ arr: any[] }>({ arr: [] })
+
 const $router = useRouter()
-const index = ref(1)
+const way = ref(1)
+const index = ref(0)
+const swipe = ref()
+const childRefA = ref()
+const childRefB = ref()
+const showBottom = ref(false)
 
 const goBack = () => {
   $router.back()
 }
-
+const HandleSlide = (step: any) => {
+  index.value = Number(step)
+}
+const handleSwipe = (step:any) => {
+  index.value = step
+  swipe.value.swipeTo(step)
+  console.log()
+}
+const setStatus = (value: any, popupTitleChild: any, popupListChild: any, commonKeyChild: any, wayChild:any) => {
+  popupTitle.value = popupTitleChild
+  commonKey.value = commonKeyChild
+  popupList.arr = [...popupListChild]
+  way.value = wayChild
+  showBottom.value = value
+}
+async function setPk(val: any) {
+  showBottom.value = false
+  commonKey.value = val
+  if (way.value === 1) {
+    childRefA.value.setPk(val)
+  }
+  if (way.value === 2) {
+    childRefB.value.setBallSelect(val)
+  }
+  if (way.value === 3) {
+    childRefB.value.setPk(val)
+  }
+}
+const handleClose = (item: any) => {
+  console.log(item)
+  if (way.value === 1) {
+    childRefA.value.showBottom = false
+  }
+  if (way.value === 2) {
+    childRefB.value.showBottom1 = false
+  }
+  if (way.value === 3) {
+    childRefB.value.showBottom = false
+  }
+}
 </script>
 
 <style lang="scss" scoped>
-
 @import './index.scss';
 
 :deep(.van-field__control) {
@@ -45,6 +133,36 @@ const goBack = () => {
 
 :deep(.van-icon) {
   font-size: 40px;
+}
+.popup-title {
+  font-family: PingFangSC-Semibold;
+  font-size: 32px;
+  color: #1F2630;
+  letter-spacing: 0;
+  font-weight: 600;
+  margin: 24px 0 0 38px;
+}
+
+.pk-list {
+  padding-top: 30px;
+
+  .item {
+    font-size: 26px;
+    color: #1F2630;
+    letter-spacing: 1px;
+    padding: 40px;
+    border-bottom: 2px solid #eaeaea;
+
+    p {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .item-color {
+    color: #7642FD;
+  }
 }
 </style>
 

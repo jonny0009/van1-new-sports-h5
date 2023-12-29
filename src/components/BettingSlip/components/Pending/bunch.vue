@@ -23,8 +23,22 @@
       <div class="top2">
         <div class="left">
           <div class="top-img">
-            <img class="img_1" src="@/assets/images/user/num3.svg" alt="" />
-            <img class="img_2" src="@/assets/images/user/num9.svg" alt="" />
+
+            <img
+              v-img="item1.homeLogo"
+              class="img_1"
+              alt=""
+              :type="4"
+              style="object-fit: contain;"
+            >
+            <img
+              v-img="item1.awayLogo"
+              class="img_2"
+              alt=""
+              :type="5"
+              style="object-fit: contain;"
+            >
+
           </div>
         </div>
         <div class="right">
@@ -41,15 +55,15 @@
             <span v-else>?</span>
             <span>
 
-              <!-- 平局图标没找到 -->
-              <img v-if="item1.betResultDetail == 'W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
+              <!-- 平局图标找到了 -->
+              <img v-if="item.state == 1" class="img_1" src="@/assets/images/user/postpone.svg" alt="" />
+              <img v-else-if="item1.betResultDetail == 'W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
               <img v-else-if="item1.betResultDetail == 'L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
               <img v-else-if="item1.betResultDetail == 'LW'" class="img_1" src="@/assets/images/user/LW.png" alt="" />
-              <img v-else-if="item1.betResultDetail == 'LL'" class="img_1" src="@/assets/images/user/LL.png" alt="" />
+              <img v-else-if="item1.betResultDetail == 'LL'" class="img_1" src="@/assets/images/user/LL.svg" alt="" />
               <img v-else-if="item1.betResultDetail == 'P'" class="img_1" src="@/assets/images/user/P.svg" alt="" />
-              <img v-else-if="item1.betResultDetail == 'D'" class="img_1" src="@/assets/images/user/D.png" alt="" />
-              <img v-else-if="item.state == 1" class="img_1" src="@/assets/images/user/icon23.png" alt="" />
-              <img v-else class="img_1" src="@/assets/images/user/D.png" alt="" />
+              <img v-else-if="item1.betResultDetail == 'D'" class="img_1" src="@/assets/images/user/D1.png" alt="" />
+              <img v-else class="img_1" src="@/assets/images/user/D1.png" alt="" />
 
             </span>
           </div>
@@ -151,16 +165,9 @@ const props = defineProps({
     default: () => { }
   }
 })
+
 const getProfit = (item: any) => {
-  const plateMaskKey = localStorage.getItem('plateMaskKey')
-  let money = item.gold
-  item.betDTOList.map((i: any) => {
-    money = money * i.ioRatio
-  })
-  if (plateMaskKey?.includes('H')) {
-    return money + item.gold
-  }
-  return money
+  return item.gold * item.sioRatio
 }
 
 </script>

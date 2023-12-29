@@ -23,7 +23,7 @@
           </div>
           <div class="user-3">
             <img class="img_1" src="@/assets/images/user/star.svg" alt="" />
-            <span>{{ $t('user.RegistrationTime') }} {{ formatToDateTime(peopleInfo.createTime) }}</span>
+            <span>{{ $t('user.RegistrationTime') }} {{ formatToDateTime(userInfo.createTime) }}</span>
           </div>
           <div class="user-4">
             <div class="left" @click="goUrl('/selfFocus?num=1')">
@@ -58,7 +58,7 @@
       </div>
       <!-- 注单列表 -->
       <bet-list :people-info="peopleInfo"></bet-list>
-      <div class="foot" />
+      <!-- <div class="foot" /> -->
     </div>
 
   </div>

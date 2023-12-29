@@ -70,7 +70,7 @@ const bettingModule: Module<Betting, any> = {
         const { gold = 0, errorCode, ior, isEuropePlay } = bet
         if (gold && !errorCode) {
           const buyGold = +gold || 0
-          let winCountGold = buyGold * ior
+          let winCountGold = buyGold * ior - buyGold
           if (isEuropePlay && handicapType === 'H') {
             winCountGold = buyGold * ior
           }
@@ -102,7 +102,7 @@ const bettingModule: Module<Betting, any> = {
             comboArray.map((bet: any) => {
               iorCount *= bet.ior * 1
             })
-            betsGolds += iorCount * state.comboAmount
+            betsGolds += iorCount * state.comboAmount - state.comboAmount
           })
         }
       })
@@ -211,7 +211,9 @@ const bettingModule: Module<Betting, any> = {
       const marketItem = betParams(marketInfo)
       marketItem.gold = 0
       if (state.markets.length === 0) {
-        state.isOne = true
+        setTimeout(() => {
+          state.isOne = true
+        })
       } else {
         state.isOne = false
       }

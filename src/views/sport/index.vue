@@ -300,9 +300,9 @@ const clickLeague = (item: any) => {
     }
     .betting-sport-nav{
       margin-top: 26px;
-      // margin-left: 21px;
       margin-bottom: 5px;
-      width: 1600px;
+      // width: 1600px;
+      width: 100%;
       max-height: 140px;
       white-space: normal;
       position: relative;
