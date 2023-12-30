@@ -27,9 +27,6 @@
   --color-sidebar-font: #FFFFFF;
   // 未查到相关数据
   --color-no-data-font: #96A5AA;
-  // 消息
-  --color-notice-title-1: #181F2A;
-  --color-notice-title-2: #260B62;
   
   --title-text-font-color:#FFFFFF;
   // --van-primary-color:#FFFFFF;
@@ -40,6 +37,10 @@
   // 个人中心
   --color-linear-gradient-user-info-1: #181f2a;
   --color-linear-gradient-user-info-2: #2a0572;
+  // 登录按钮
+  --color-login-button-color-1:#623AF8;
+  --color-login-button-color-2:#4121AF;
+  --color-login-border-line-1:#97a6ab;
 
 }
 // 蓝色版本
@@ -54,10 +55,9 @@
   --color-linear-gradient-background-title-2: #FFFFFF;
   --color-background-color: #F4F5FA;
   // --color-background-color: #ffffff;
-
+  
   --color-linear-gradient-tag-1: #00c8ff;
   --color-linear-gradient-tag-2: #006bff;
-
   // 搜索页面
   --color-search-box: #DDEFFC;
   --color-search-box-text: #56809F;
@@ -71,9 +71,6 @@
   --color-sidebar-font: #0E3D66;
    // 未查到相关数据
    --color-no-data-font: #88A6BB;
-   // 消息
-  --color-notice-title-1: #181F2A;
-  --color-notice-title-2: #260B62;
 
   --title-text-font-color:#56809F;
   // --van-primary-color:#56809F;
@@ -84,9 +81,10 @@
     // 个人中心
   --color-linear-gradient-user-info-1: #0A2E9B;
   --color-linear-gradient-user-info-2: #4B75FF;
+   // 登录按钮
+   --color-login-button-color-1:#48A3FF;
+   --color-login-button-color-2:#2C88E5 ;
+   --color-login-border-line-1:#F4F5FA;
 
-
-
-  --color-linear-gradient-tag-1: #00c8ff;
-  --color-linear-gradient-tag-2: #006bff;
+  
 }

@@ -1,8 +1,8 @@
 <template>
   <div class="register">
-    <van-nav-bar class="signInBar" :border="false">
+    <van-nav-bar class="bg-title" :border="false">
       <template #left>
-        <img class="img_1" src="@/assets/images/login/arrow@2x.png" alt="" @click="goBack()" />
+        <van-icon name="arrow-left" class="img_1" @click="goBack()" />
       </template>
       <template #title>
         <span class="title">{{ $t('user.register') }}</span>
@@ -103,25 +103,34 @@ const handleRegister = (e?: any) => {
 
 <style lang="scss" scope>
 .register {
-  .img_1 {
-      width: 35px;
-      height: 35px;
+  .bg-title {
+    background-color: var(--color-background-color);
+
+    .img_1 {
+      margin-top: -15px;
+      width: 36px;
+      height: 36px;
+      color: var(--title-text-font-color);
+
     }
+  }
   .title {
     // font-family: PingFangSC-Semibold;
     font-size: 28px;
-    color: #000;
+    color: var(--color-search-box-text-1);
     letter-spacing: 0;
     font-weight: 600;
   }
 
   .content {
+    height: calc(100vh - 90px);
+    background-color: var(--color-background-color);
     padding: 56px 50px;
 
     .setPassWorld {
       font-family: PingFangSC-Semibold;
       font-size: 34px;
-      color: #000000;
+      color: var( --color-search-box-text-1);
       letter-spacing: 0;
       font-weight: 600;
       margin-left: 10px;
@@ -133,7 +142,7 @@ const handleRegister = (e?: any) => {
     margin-top: 12px;
     font-family: PingFangSC-Semibold;
     font-size: 24px;
-    color: #000000;
+    color: var( --color-search-box-text-1);
     letter-spacing: 0;
     font-weight: 600;
     margin-left: 15px;
@@ -145,7 +154,7 @@ const handleRegister = (e?: any) => {
     align-items: center;
     font-family: PingFangSC-Regular;
     font-size: 24px;
-    color: #000000;
+    color:var( --color-search-box-text-1) ;
     letter-spacing: 0;
     font-weight: 400;
     margin-left: 15px;
@@ -160,21 +169,22 @@ const handleRegister = (e?: any) => {
 
   .loginBtn {
     height: 80px;
-    width: 650px;
+    // width: 650px;
+    width: 100%;
     margin-top: 80px;
     border-radius: 80px;
     font-family: PingFangSC-Semibold;
     font-size: 28px;
-    color: #1F2630;
+    color: var(--color-search-box-text-1);
     letter-spacing: 0;
     font-weight: 600;
     line-height: 80px;
     text-align: center;
-    background: #DFE4E5;
+    background: var(--color-search-box-frame);
   }
 
   .registerBtn {
-    background: #7642FD;
+    background: var(--color-search-box-text);
     color: #FFFF;
   }
 
@@ -191,7 +201,7 @@ const handleRegister = (e?: any) => {
   .register {
     font-family: PingFangSC-Semibold;
     font-size: 24px;
-    color: #7642FD;
+    color: var( --color-bg-1);
     letter-spacing: 0;
     font-weight: 600;
   }
@@ -214,21 +224,23 @@ const handleRegister = (e?: any) => {
 :deep(input::placeholder) {
   font-family: PingFangSC-Semibold;
   font-size: 24px;
-  color: #97a6ab;
+  color: var(--color-search-box-text-2);
   letter-spacing: 0;
   font-weight: 600;
 }
 
 :deep(.bb.van-cell::after) {
-  border-bottom: 8px solid #7642FD;
+  border-bottom: 8px solid var(--color-bg-1);
 }
 
 :deep(.van-cell::after) {
-  border-bottom: 2px solid #97a6ab;
+  border-bottom: 2px solid var(--color-search-box-text-2);
 }
-
+:deep(.van-field){
+  background: var(--color-background-color);
+}
 :deep(.van-cel::after) {
-  border-bottom: 2px solid #97a6ab !important;
+  border-bottom: 2px solid var(--color-search-box-text-2) !important;
 }
 :deep(.van-field__control) {
   height: 50px;

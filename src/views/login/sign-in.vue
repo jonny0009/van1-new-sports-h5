@@ -1,8 +1,8 @@
 <template>
   <div class="signIn">
-    <van-nav-bar class="signInBar" :border="false">
+    <van-nav-bar class="bg-title" :border="false">
       <template #left>
-        <img class="img_1" src="@/assets/images/login/arrow@2x.png" alt="" @click="goBack()" />
+        <van-icon name="arrow-left" class="img_1" @click="goBack()" />
       </template>
       <template #title>
         <span class="title">{{ t('user.logOn') }}</span>
@@ -87,7 +87,7 @@ import md5 from 'md5'
 // getLanguages
 import { login, tryLogin } from '@/api/login'
 import { showToast } from 'vant'
-import { setToken, removeToken } from '@/utils/auth'
+import { setToken } from '@/utils/auth'
 import localStore from '@/utils/localStore'
 import Fingerprint2 from 'fingerprintjs2'
 import aesUtil from '@/utils/aesUtil'
@@ -179,21 +179,30 @@ const toForget = (values?: any) => {
 }
 
 .signIn {
-  .img_1 {
-    width: 35px;
-    height: 35px;
+  .bg-title {
+    background-color: var(--color-background-color);
+
+    .img_1 {
+      margin-top: -15px;
+      width: 36px;
+      height: 36px;
+      color: var(--title-text-font-color);
+
+    }
   }
 
   .title {
     // font-family: PingFangSC-Semibold;
     font-size: 28px;
-    color: #000;
+    color: var(--color-search-box-text-1);
     letter-spacing: 0;
     font-weight: 600;
 
   }
 
-  .content {
+  >.content {
+    height: calc(100vh - 96px);
+    background-color: var(--color-background-color);
     padding: 28px 25px;
 
   }
@@ -205,13 +214,13 @@ const toForget = (values?: any) => {
     span {
       font-family: PingFangSC-Semibold;
       font-size: 28px;
-      color: #97a6ab;
+      color: var(--color-search-box-text-2);
       letter-spacing: 0;
       font-weight: 600;
     }
 
     .active {
-      color: #000000;
+      color: var(--color-search-box-text-1);
 
       &::after {
         content: '';
@@ -219,7 +228,7 @@ const toForget = (values?: any) => {
         height: 6px;
         display: block;
         margin: 20px auto;
-        border-bottom: 6px solid #000;
+        border-bottom: 6px solid var(--color-search-box-text-1);
         border-radius: 6px;
       }
     }
@@ -241,21 +250,23 @@ const toForget = (values?: any) => {
 
   .loginBtn {
     height: 80px;
-    width: 650px;
+    // width: 650px;
+    width: 100%;
     margin-top: 50px;
     border-radius: 80px;
     font-family: PingFangSC-Semibold;
     font-size: 27px;
-    color: #1F2630;
+    color: var(--color-search-box-text-1);
     letter-spacing: 0;
     font-weight: 600;
     line-height: 80px;
     text-align: center;
-    background: #DFE4E5;
+    background: var(--color-search-box-frame);
+    border: none;
   }
 
   .ifBtn {
-    background: #7642FD;
+    background: var(--color-search-box-text);
     color: #FFFF;
   }
 
@@ -264,7 +275,7 @@ const toForget = (values?: any) => {
     text-align: center;
     font-family: PingFangSC-Semibold;
     font-size: 24px;
-    color: #000000;
+    color: var(--color-search-box-text-1);
     letter-spacing: 0;
     font-weight: 600;
   }
@@ -272,7 +283,7 @@ const toForget = (values?: any) => {
   .register {
     font-family: PingFangSC-Semibold;
     font-size: 24px;
-    color: #7642FD;
+    color: var(--color-bg-1);
     letter-spacing: 0;
     font-weight: 600;
   }
@@ -281,7 +292,7 @@ const toForget = (values?: any) => {
     margin-top: 60px;
 
     &::after {
-      border-bottom: 1px solid #97a6ab;
+      border-bottom: 1px solid var(--color-search-box-text-2);
     }
   }
 }
@@ -289,28 +300,43 @@ const toForget = (values?: any) => {
 
 <style scoped>
 :deep(.van-nav-bar__content) {
-  height: 180px;
+  height: 96px;
+}
+
+:deep(.van-nav-bar__title) {
+  height: 90px;
+  line-height: 90px;
+  font-family: PingFangSC-Medium;
+  font-size: 28px;
+  letter-spacing: 0;
+  text-align: center;
+  font-weight: 500;
+  color: var(--title-text-font-color);
+
 }
 
 :deep(input::placeholder) {
   /* font-family: PingFangSC-Semibold; */
   font-size: 24px;
-  color: #97a6ab;
+  color: var(--color-search-box-text-2);
   /* letter-spacing: 0; */
   font-weight: 600;
 }
 
 :deep(.van-cell::after) {
-  border-bottom: 2px solid #97a6ab;
+  border-bottom: 2px solid var(--color-search-box-text-2);
 }
 
 :deep(.van-cel::after) {
-  border-bottom: 2px solid #97a6ab !important;
+  border-bottom: 2px solid var(--color-search-box-text-2) !important;
 }
 
 :deep(.van-field__control) {
   height: 50px;
   font-size: 32px;
+}
+:deep(.van-field){
+  background: var(--color-background-color);
 }
 
 :deep(.van-field__error-message) {

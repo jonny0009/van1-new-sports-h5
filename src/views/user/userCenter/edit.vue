@@ -30,7 +30,7 @@
         </div>
       </div>
     </div>
-    <van-popup v-model:show="showBottom" position="bottom" closeable round>
+    <van-popup v-model:show="showBottom" position="bottom" :duration="0.2" closeable round>
       <div class="popup-title">{{ $t(`user.${popupTitle}`) }}</div>
       <div class="pk-list">
         <div
