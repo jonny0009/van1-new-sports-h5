@@ -250,7 +250,9 @@ const goBack = () => {
 :deep(.van-nav-bar__right) {
   font-size: 26px;
 }
-
+:deep(.van-field){
+  background: var(--color-background-color);
+}
 :deep(.van-nav-bar__title) {
   height: 90px;
   line-height: 90px;

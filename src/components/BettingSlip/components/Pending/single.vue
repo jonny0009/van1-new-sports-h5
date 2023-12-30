@@ -160,7 +160,7 @@ const getProfit = (item: any) => {
 
 <style lang="scss" scoped>
 .color-1 {
-    color: #7642FD;
+    color: var(--color-bg-1);
   }
  .top {
       display: flex;
@@ -193,7 +193,7 @@ const getProfit = (item: any) => {
         .font_1 {
           font-family: PingFangSC-Semibold;
           font-size: 28px;
-          color: #1F2630;
+          color: var(--color-search-box-text-1);
           letter-spacing: 0;
           font-weight: 600;
         }
@@ -201,7 +201,7 @@ const getProfit = (item: any) => {
         .font_2 {
           font-family: PingFangSC-Semibold;
           font-size: 24px;
-          color: #546371;
+          color: var(--color-text-1);
           letter-spacing: 0;
           font-weight: 600;
         }
@@ -232,7 +232,7 @@ const getProfit = (item: any) => {
           justify-content: space-between;
           font-family: PingFangSC-Semibold;
           font-size: 28px;
-          color: #1F2630;
+          color: var(--color-search-box-text-1);
           letter-spacing: 0;
           font-weight: 600;
         }
@@ -240,7 +240,7 @@ const getProfit = (item: any) => {
         .two {
           font-family: PingFangSC-Semibold;
           font-size: 24px;
-          color: #546371;
+          color: var(--color-text-1);
           letter-spacing: 0;
           font-weight: 600;
 
@@ -261,7 +261,7 @@ const getProfit = (item: any) => {
         align-items: center;
         font-family: PingFangSC-Semibold;
         font-size: 24px;
-        color: #546371;
+        color: var( --color-text-1);
         letter-spacing: 0;
         font-weight: 600;
 
@@ -274,7 +274,7 @@ const getProfit = (item: any) => {
       .two {
         font-family: PingFangSC-Semibold;
         font-size: 28px;
-        color: #546371;
+        color: var( --color-text-1);
         letter-spacing: 0;
         font-weight: 600;
       }
@@ -294,7 +294,7 @@ const getProfit = (item: any) => {
         justify-content: space-between;
         font-family: PingFangSC-Regular;
         font-size: 22px;
-        color: #96A5AA;
+        color: var(--color-search-box-text-2);
         letter-spacing: 0;
         font-weight: 400;
       }
