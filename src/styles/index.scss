@@ -220,7 +220,7 @@
         display: flex;
         align-items: center;
         font-size: 24px;
-        color: var(--color-text-1);
+        color: var(--color-text-3);
         padding-top: 5px;
         .iconfont {
           font-size: 24px;
@@ -233,8 +233,9 @@
       }
       .up-match-time{
         font-size: 24px;
-        color: var(--color-text-1);
+        color: var(--color-text-3);
         display: flex;
+        white-space:nowrap;
       }
     }
     //
@@ -252,7 +253,7 @@
         align-items: center;
         font-size: 24px;
         border-right: 1px solid #eff1f2;
-        color: var(--color-text-1);
+        color: var(--color-text-3);
         &:last-child{
           border-right: 0;
         }
@@ -307,7 +308,7 @@
       margin: 10px 20px;
       font-size: 24px;
       line-height: 24px;
-      color: var(--color-text-1);
+      color: var(--color-text-3);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -327,7 +328,7 @@
        &> span{
           line-height: 24px;
           font-size: 24px;
-          color: var(--color-text-1);
+          color: var(--color-text-3);
           white-space: nowrap; 
           overflow: hidden;
           text-overflow:ellipsis;
@@ -406,7 +407,7 @@
     .match-info-live__header{
       margin: 0 13px;
       padding: 20px 0;
-      color: var(--color-text-1);
+      color: var(--color-text-3);
       .up-match-league {
         display: inline-flex;
         align-items: center;
@@ -419,6 +420,7 @@
         line-height: 26px;
         padding: 10px 20px 0;
         display: flex;
+        white-space:nowrap;
         .iconfont {
           font-size: 26px !important;
           color: var(--color-primary);
