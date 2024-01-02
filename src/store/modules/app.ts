@@ -3,11 +3,13 @@ import { App } from '#/store'
 import localStore from '@/utils/localStore'
 import { businessConfig, merchantConfig, moduleConfig, queryCMerLanguage } from '@/api/auth'
 import { getAllSports, getDoubleLineInfo } from '@/api/common'
+import { getTheme, setTheme } from '@/utils/auth'
 
 const appModule: Module<App, any> = {
   namespaced: true,
   state: {
     state: true,
+    theme: getTheme(),
     queryCMerLanguage: {},
     businessConfig: {},
     merchantConfig: {},
@@ -17,6 +19,10 @@ const appModule: Module<App, any> = {
     globalBarHeaderHeight: 48
   },
   mutations: {
+    SET_THEME: (state, theme: string) => {
+      state.theme = theme
+      setTheme(theme)
+    }
   },
   actions: {
     setKeyValue(state:any, { key, value }) {
