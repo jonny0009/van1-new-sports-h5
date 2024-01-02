@@ -478,19 +478,19 @@
     display: none;
   }
   img{
-    width: 200px;
+    width: 176px;
     height: 176px;
-    min-width: 200px;
+    min-width: 176px;
     display: block;
     flex-shrink: 1;
-    border-radius: 26px;
-    background: #eff2f2;
+    border-radius: 46px;
+    background: var(--color-global-imgBg);
   }
   & > .van-image{
     width: 200px;
     height: 176px;
     flex-shrink: 1;
-    margin-right: 14px;
+    margin-right: 36px;
     .van-image__error{
       width: 200px;
       height: 176px;

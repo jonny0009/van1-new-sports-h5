@@ -1,7 +1,6 @@
 <template>
   <div class="barTabsView">
 
-    <div class="flex-1"></div>
     <div
       v-for="(item, idx) in homeBarArray"
       :key="idx"
@@ -18,7 +17,6 @@
         :class="item.value"
       />
     </div>
-    <div class="flex-1"></div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -95,13 +93,14 @@ const homeBarArray:any = ref(homeBarArrayTable(''))
 <style lang="scss" scoped>
 .barTabsView{
   display:flex;
+  margin: 0 40px;
+  grid-gap: 36px;
   overflow: auto;
   &::-webkit-scrollbar {
     height: 0;
     display: none;
   }
   .item{
-    margin:0 10px;
     flex-shrink: 1;
   }
 }

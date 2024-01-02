@@ -172,7 +172,7 @@ const direction = ref({})
       width: 30px;
       height: 100%;
       pointer-events: none;
-      background: linear-gradient(90deg,#fff,hsla(0,0%,100%,0));
+      background: var(--color-global-maskBg);
     }
     .mask-right{
       position: absolute;
@@ -181,7 +181,7 @@ const direction = ref({})
       width: 30px;
       height: 100%;
       pointer-events: none;
-      background: linear-gradient(270deg,#fff,hsla(0,0%,100%,0));
+      background: var(--color-global-maskBg);
     }
   }
 </style>

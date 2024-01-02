@@ -2,7 +2,7 @@
   <div class="homeTime-page">
     <ArrowTitle class="mt10 mb20" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
     <template v-if="!isShow">
-      <SportsTabs class="mb10" @returnSportsSuccess="returnSportsSuccess" />
+      <SportsTabs class="pb10" @returnSportsSuccess="returnSportsSuccess" />
       <tabsTime @returnTimeSuccess="returnTimeSuccess" />
       <van-list
         v-model="loading"

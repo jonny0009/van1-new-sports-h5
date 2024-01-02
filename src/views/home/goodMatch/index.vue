@@ -7,7 +7,7 @@
   />
   <Transition>
     <div v-if="!isShow" class="goodMatch">
-      <SportsTabs class="mb10 mt20" @returnSportsSuccess="returnSportsSuccess" />
+      <SportsTabs class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess" />
       <Loading v-if="!isLoading" />
       <template v-else>
         <HomeEmpty v-if="!recommendEventsList.length" />
