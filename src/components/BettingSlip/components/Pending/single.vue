@@ -97,7 +97,7 @@
             </span>
 
             <!-- 币种 -->
-            <span v-if="item.state !== 3 && item.state !== 5">
+            <span v-if="item.state !== 3 && item.state !== 5 ||item1.betResultDetail == 'LL'">
               <img v-if="currency==='CNY'" class="img_1" :src="CNY2" alt="" />
               <img v-else-if="currency==='VNDK'" class="img_1" :src="VNDK2" alt="" />
               <img v-else class="img_1" src="@/assets/images/user/num2.png" alt="" />
