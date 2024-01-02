@@ -118,6 +118,7 @@ const returnTimeSuccess = (val:any) => {
     params.startDate = ''
     params.endDate = ''
   }
+  finished.value = false
   params.page = 1
   console.log(params)
   getRecommendEvents()
@@ -125,6 +126,7 @@ const returnTimeSuccess = (val:any) => {
 const returnSportsSuccess = (val:any) => {
   isLoading.value = true
   params.gameType = val
+  finished.value = false
   params.page = 1
   getRecommendEvents()
 }

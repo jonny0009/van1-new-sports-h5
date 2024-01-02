@@ -70,6 +70,9 @@ SportsName.value = `icon-${props.text}`
   &.active{
     background: var(--color-primary);
     color:#fff;
+    .iconfont {
+      color:#fff;
+    }
   }
   span{
     font-size: 24px;

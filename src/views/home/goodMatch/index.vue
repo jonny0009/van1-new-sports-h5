@@ -61,6 +61,7 @@ const getRecommendEvents = async (gameType:any = 'FT') => {
   }
 }
 const returnSportsSuccess = (val:any) => {
+  gameType.value = val
   getRecommendEvents(val)
 }
 const init = () => {
@@ -73,11 +74,13 @@ const isShow = ref(false)
 const returnStatus = (val:any) => {
   isShow.value = val
 }
+
+const gameType = ref('FT')
 const goToSport = () => {
   router.push({
     name: 'Sport',
     params: {
-      type: 'FT'
+      type: gameType.value
     }
   })
 }
