@@ -44,7 +44,7 @@
         <div class="right">
           <div class="one">
             <span>
-              {{ item1.betItem }}
+              {{ getLangBet(item1.betItemLang) }}
             </span>
             <span class="color-2" :class="[item1.betResultDetail === 'L' ? 'color-3' : '']">
               @{{ item1.ioRatio }}
@@ -68,7 +68,7 @@
             </span>
           </div>
           <div class="team">
-            {{ item1.homeTeam ?item1.homeTeam:'?' }} v {{ item1.awayTeam?item1.awayTeam:'?' }}
+            {{ getTeam(item1).homeTeam }} v {{ getTeam(item1).awayTeam }}
             <span v-if="item1.resultScore">
               [{{ item1.resultScore }}]
             </span>
@@ -76,7 +76,7 @@
           <div class="team">
             <img class="img_1" src="@/assets/images/user/num5.png" alt="" />
             <span>
-              {{ item1.leagueName }}
+              {{ getTeam(item1).leagueShortName }}
             </span>
           </div>
         </div>
@@ -158,6 +158,7 @@ import VNDK2 from '@/assets/images/user/VNDK2.svg'
 import { computed } from 'vue'
 import store from '@/store'
 const currency = computed(() => store.state.user.currency)
+const teamNameList = computed(() => store.state.user.teamNameList || [])
 
 const props = defineProps({
   item: {
@@ -168,6 +169,31 @@ const props = defineProps({
 
 const getProfit = (item: any) => {
   return item.gold * item.sioRatio
+}
+// 获取多语言队伍名称
+const getTeam = (item: any) => {
+  if (teamNameList.value.length) {
+    const item1 = teamNameList.value.find((e: any) => e.gidm === item.systemId)
+    if (item1) {
+      return item1
+    }
+    return {
+      homeTeam: '?',
+      awayTeam: '?',
+      leagueShortName: '?'
+    }
+  }
+  return {
+    homeTeam: '?',
+    awayTeam: '?',
+    leagueShortName: '?'
+  }
+}
+// 获取多语言bet
+const getLangBet = (item: any) => {
+  const itemA = JSON.parse(item)
+  const lang = localStorage.getItem('locale') || 'zh-cn'
+  return itemA[lang]
 }
 
 </script>

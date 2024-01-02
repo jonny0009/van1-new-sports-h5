@@ -26,7 +26,7 @@
         >
           <template #node>
             <div class="icon-wrapper">
-              <SvgIcon v-if="userConfig.acceptAll" name="betting-check" />
+              <SvgIcon v-if="userConfig.acceptAll" name="betting-check" class="accept-ior" />
             </div>
           </template>
         </van-switch>
@@ -268,7 +268,7 @@ hitTimer()
     border-radius: 50%;
     font-family: PingFangSC-Medium;
     font-size: 28px;
-    color: #7642FD;
+    color: var(--color-bet-text-1);
     letter-spacing: 0;
     text-align: center;
     font-weight: 500;
@@ -316,7 +316,9 @@ hitTimer()
     }
 
     .icon-wrapper {
-      color: #fff;
+      .accept-ior{
+        color: var( --color-bet-iorbg-1);
+      }
     }
   }
 }
@@ -346,7 +348,7 @@ hitTimer()
       text-align: center;
       font-family: PingFangSC-Medium;
       font-size: 28px;
-      color: #919191;
+      color: var(--color-bet-tabtext-1);
       letter-spacing: 0;
       text-align: center;
       font-weight: 500;
@@ -371,7 +373,7 @@ hitTimer()
       }
 
       &.active {
-        color: #000000;
+        color: var(--color-bet-tabtext-2);
       }
 
     }
@@ -411,7 +413,7 @@ hitTimer()
       .cur-odds {
         font-family: PingFangSC-Semibold;
         font-size: 30px;
-        color: #7642FD;
+        color: var(--color-bet-iortext);
         letter-spacing: 0;
         font-weight: 600;
       }

@@ -266,7 +266,8 @@ const toForget = (values?: any) => {
   }
 
   .ifBtn {
-    background: var(--color-search-box-text);
+    // background: var(--color-search-box-text);
+    background-image: linear-gradient(to right, var(--color-login-button-color-1), var(--color-login-button-color-2));
     color: #FFFF;
   }
 
