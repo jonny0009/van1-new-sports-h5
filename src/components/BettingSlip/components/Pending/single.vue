@@ -82,7 +82,7 @@
           <!-- 未结算的注单显示：可赔付额；取消/延期，输的注单不显示赔付额这一栏 -->
           <!-- creditState 0 未结算 1 已结算-->
           <span v-if="item.state == 0|| item.state==-1||item.state== 1">{{ $t('user.CompensableAmount') }}:</span>
-          <span v-else-if="item.state !==3&& item.state !==5">{{ $t('user.practical') }}:</span>
+          <span v-else-if="item.state !==3&& item.state !==5 ||item1.betResultDetail == 'LL'">{{ $t('user.practical') }}:</span>
 
           <div>
 
@@ -106,7 +106,7 @@
             <span v-if="item.creditState == 0" class="num color-1">
               {{ formatMoney(getProfit(item)) }}
             </span>
-            <span v-else-if="item.state !==3&& item.state !==5 " class="color-1">
+            <span v-else-if="item.state !==3&& item.state !==5 ||item1.betResultDetail == 'LL'" class="color-1">
               {{ formatMoney(item.winGold) }}
             </span>
           </div>
