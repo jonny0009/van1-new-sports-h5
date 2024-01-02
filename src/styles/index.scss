@@ -40,15 +40,15 @@
 }
 .van-button--primary {
   color: #fff !important;
-  background: #7642fe !important;
-  border: 1px solid #7642fe !important;
+  background: var(--color-primary) !important;
+  border: 1px solid var(--color-primary) !important;
 }
 .van-calendar__day--end, 
 .van-calendar__day--start,
 .van-calendar__day--start-end,
 .van-calendar__day--multiple-middle, 
 .van-calendar__day--multiple-selected{
-  background: #7642fe !important;
+  background: var(--color-primary) !important;
 }
 // icon 2023/12/19
 @font-face {
@@ -166,7 +166,7 @@
         align-items: center;
         flex-shrink: 0;
         &.active{
-          background: #7642FD;
+          background: var(--color-primary);
           color: #FFFFFF;
         }
         &:last-child{
@@ -418,7 +418,7 @@
         display: flex;
         .iconfont {
           font-size: 26px !important;
-          color: #7642fe;
+          color: var(--color-primary);
           font-weight: 100;
           height: auto;
         }
@@ -457,7 +457,7 @@
   }
 }
 .Button-MatchMore{
-  color: #7642FD;
+  color:  var(--color-primary);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -530,7 +530,7 @@
 .betting-option-wrap {
   display: inline-block;
   &.selected{
-    background-color: #7642fd !important;
+    background-color: var(--color-primary) !important;
     .up-betting-name{
       .text{
         color: rgba(255, 255, 255, .8) !important;

@@ -188,7 +188,7 @@ onMounted(() => {
       }
     }
     .transaction {
-      background: #7642fe;
+      background: var(--color-primary);
       right: 6px;
     }
   }

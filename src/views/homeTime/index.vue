@@ -156,6 +156,6 @@ onBeforeMount(() => {
   height: auto !important;
 }
 .van-calendar__day--middle{
-  color: #7642fe
+  color: var(--color-primary)
 }
 </style>

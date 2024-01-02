@@ -73,7 +73,7 @@ defineProps({
     line-height:24px;
   }
   &.active{
-    background:#7642fe;
+    background: var(--color-primary);
     color:#fff;
   }
   .img{

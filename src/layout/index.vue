@@ -54,7 +54,7 @@ watch(
 </script>
 <style lang="scss">
 .GlobalTop {
-  background: #7642fe;
+  background: var(--color-primary);
   right: 40px !important;
   bottom: 100px !important;
   .van-icon {

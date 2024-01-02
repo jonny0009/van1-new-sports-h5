@@ -125,7 +125,7 @@ const clickChangeActive = (item:any) => {
       height: auto;
     }
     &.active{
-      color:#7642fe;
+      color:var(--color-primary);
     }
     // &.OP_DJ{
     //   .iconfont{

@@ -97,7 +97,7 @@ const refHomeTimePage = ref()
       white-space:nowrap;
     }
     &.active{
-      background: #7642fe;
+      background: var(--color-primary);
       color: #fff;
     }
   }

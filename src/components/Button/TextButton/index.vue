@@ -61,7 +61,7 @@ textval.value = props.text
     font-size: 24px;
   }
   &.active{
-    background:#7642fe;
+    background: var(--color-primary);
     color:#fff;
   }
   &::before{
