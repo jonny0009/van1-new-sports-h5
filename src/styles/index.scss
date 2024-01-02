@@ -38,6 +38,18 @@
     font-size: 24px;
   }
 }
+.van-button--primary {
+  color: #fff !important;
+  background: #7642fe !important;
+  border: 1px solid #7642fe !important;
+}
+.van-calendar__day--end, 
+.van-calendar__day--start,
+.van-calendar__day--start-end,
+.van-calendar__day--multiple-middle, 
+.van-calendar__day--multiple-selected{
+  background: #7642fe !important;
+}
 // icon 2023/12/19
 @font-face {
   font-family: "iconfont"; /* Project id  */

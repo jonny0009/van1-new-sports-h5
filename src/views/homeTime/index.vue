@@ -33,12 +33,12 @@
   </div>
 </template>
 <script lang="ts" setup>
+import Dayjs from 'dayjs' // YYYY-MM-DD HH:mm:ss
 import tabsTime from './tabsTime/index.vue'
 import titleTime from '@/assets/images/home/title-time.png'
 import { recommendEvents } from '@/api/home'
 import store from '@/store'
 import { onBeforeMount, ref, reactive, computed, watch } from 'vue'
-
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout:any = ref('')
 watch(refreshChangeTime, (val) => {
@@ -103,7 +103,24 @@ const onLoad = () => {
   }
 }
 const returnTimeSuccess = (val:any) => {
-  console.log(val)
+  if (val) {
+    if ((val || '').includes('/')) {
+      const [startTime, endTime] = val.split('-')
+      const newStartTime = startTime.replaceAll('/', '-')
+      const newEndTime = endTime.replaceAll('/', '-')
+      params.startDate = newStartTime + ' 00:00:00'
+      params.endDate = newEndTime + ' 23:59:59'
+    } else {
+      params.startDate = Dayjs().format('YYYY-MM-DD HH:mm:ss')
+      params.endDate = Dayjs().add(val, 'hour').format('YYYY-MM-DD HH:mm:ss')
+    }
+  } else {
+    params.startDate = ''
+    params.endDate = ''
+  }
+  params.page = 1
+  console.log(params)
+  getRecommendEvents()
 }
 const returnSportsSuccess = (val:any) => {
   isLoading.value = true
@@ -137,5 +154,8 @@ onBeforeMount(() => {
 <style lang="scss">
 .new_loading{
   height: auto !important;
+}
+.van-calendar__day--middle{
+  color: #7642fe
 }
 </style>
