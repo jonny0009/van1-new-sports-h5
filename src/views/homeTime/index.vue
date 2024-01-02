@@ -2,27 +2,8 @@
   <div class="homeTime-page">
     <ArrowTitle class="mt10 mb20" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
     <template v-if="!isShow">
-      <SportsTabs class="mb20" @returnSportsSuccess="returnSportsSuccess" />
-      <!--
-      <div class="homeTime-Time-Tabs mt10">
-        <div class="item active">
-          <span class="name">
-            全部
-          </span>
-          <div class="number">
-            946
-          </div>
-        </div>
-        <div class="item">
-          <span class="name">
-            全部
-          </span>
-          <div class="number">
-            946
-          </div>
-        </div>
-      </div>
-    -->
+      <SportsTabs class="mb10" @returnSportsSuccess="returnSportsSuccess" />
+      <tabsTime @returnTimeSuccess="returnTimeSuccess" />
       <van-list
         v-model="loading"
         :finished="finished"
@@ -39,7 +20,6 @@
             />
             <HomeEmpty v-if="!recommendEventsList.length"></HomeEmpty>
           </template>
-
           <Loading
             v-if="!isLoading || loading"
             :class="{
@@ -53,10 +33,12 @@
   </div>
 </template>
 <script lang="ts" setup>
+import tabsTime from './tabsTime/index.vue'
 import titleTime from '@/assets/images/home/title-time.png'
 import { recommendEvents } from '@/api/home'
 import store from '@/store'
 import { onBeforeMount, ref, reactive, computed, watch } from 'vue'
+
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout:any = ref('')
 watch(refreshChangeTime, (val) => {
@@ -120,6 +102,9 @@ const onLoad = () => {
     }
   }
 }
+const returnTimeSuccess = (val:any) => {
+  console.log(val)
+}
 const returnSportsSuccess = (val:any) => {
   isLoading.value = true
   params.gameType = val
@@ -146,38 +131,7 @@ onBeforeMount(() => {
   padding: 0 40px;
 
 }
-.homeTime-Time-Tabs{
-  .item{
-    height: 62px;
-    padding: 0 10px 0 20px;
-    border-radius: 42px;
-    background-color: #eff2f2;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    margin-right: 20px;
-    .number{
-      margin-left: 20px;
-      padding: 0 13px;
-      height: 46px;
-      border-radius: 30px;
-      color: #546371;
-      background-color: #e5ecf3;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .name{
-      height: 24px;
-      line-height: 24px;
-    }
-    &.active{
-      background: #7642fe;
-      color: #fff;
-    }
-  }
-}
+
 </style>
 
 <style lang="scss">
