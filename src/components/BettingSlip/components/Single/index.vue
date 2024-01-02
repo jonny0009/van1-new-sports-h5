@@ -128,12 +128,12 @@ const inputTouch = () => {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    background-color: #c1c1c1;
+    background-color: var(--color-bet-removebg);
     border-radius: 20px 0 0 20px;
 
     .van-icon {
       font-size: 32px;
-
+      color: #fff;
       &.fixed {
         position: absolute;
         top: 0;
@@ -141,7 +141,6 @@ const inputTouch = () => {
         margin: auto;
         display: flex;
         align-items: center;
-        color: #fff;
         z-index: 99;
       }
     }
@@ -197,7 +196,7 @@ const inputTouch = () => {
       align-items: center;
       font-family: PingFangSC-Semibold;
       font-size: 30px;
-      color: #7642FD;
+      color: var(--color-bet-iortext);
       letter-spacing: 1px;
       font-weight: 600;
 
@@ -263,7 +262,7 @@ const inputTouch = () => {
         height: 50px;
         line-height: 50px;
         text-align: center;
-        background-color: #7642fe;
+        background-color: var(--color-bet-iorchangebg);
         color: #fff;
         border-radius: 12px;
       }

@@ -42,6 +42,21 @@
   --color-login-button-color-2:#4121AF;
   --color-login-border-line-1:#97a6ab;
 
+  // 投注单
+  --color-bet-text-1:#7642FD;
+  --color-bet-tabtext-1:#919191;
+  --color-bet-tabtext-2:#000000;
+  --color-bet-iortext:#7642FD;
+  --color-bet-keyboardtext:#7642FD;
+
+  --color-bet-iorbg-1:#7642FD;
+  --color-bet-iorbg-2:#7642FD;
+  --color-bet-removebg:#c1c1c1;
+  --color-bet-confirmbg:#7440fe;
+  --color-bet-iorchangebg: #7642fe;
+
+  --color-bet-nocomboborder:  #48A3FF;
+
 }
 // 蓝色版本
 :root[data-theme='blue'] {
@@ -86,5 +101,18 @@
    --color-login-button-color-2:#2C88E5 ;
    --color-login-border-line-1:#F4F5FA;
 
-  
+   // 投注单
+   --color-bet-text-1:#48A3FF;
+   --color-bet-tabtext-1:#88A6BB;
+   --color-bet-tabtext-2:#0E3D66;
+   --color-bet-iortext:#48A3FF;
+   --color-bet-keyboardtext:#48A3FF;
+
+   --color-bet-iorbg-1:#48A3FF;
+   --color-bet-iorbg-2:#48A3FF;
+   --color-bet-removebg: #88A6BB;
+   --color-bet-confirmbg: #308ce9;
+   --color-bet-iorchangebg:  #48A3FF;
+
+   --color-bet-nocomboborder:  #48A3FF;
 }

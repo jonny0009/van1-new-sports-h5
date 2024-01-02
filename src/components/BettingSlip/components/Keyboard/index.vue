@@ -104,7 +104,7 @@ const close = () => {
   .finish {
     font-family: PingFangSC-Semibold;
     font-size: 30px;
-    color: #7642FD;
+    color: var(--color-bet-keyboardtext);
     letter-spacing: 0;
     text-align: center;
     font-weight: 600;
@@ -122,7 +122,7 @@ const close = () => {
     align-items: center;
     font-family: PingFangSC-Semibold;
     font-size: 50px;
-    color: #7642FD;
+    color: var(--color-bet-keyboardtext);
     letter-spacing: 0;
     text-align: center;
     font-weight: 600;
@@ -163,13 +163,22 @@ const close = () => {
     width: 23px;
     height: 23px;
   }
+  .tips-icon {
+    margin-left: 5px;
+    width: 23px;
+    height: 23px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('@/assets/images/betting/info.png');
+  }
 
   .tips {
     display: inline-block;
     margin: 0 5px;
     font-family: PingFangSC-Medium;
     font-size: 24px;
-    color: #7642FD;
+    color: var(--color-bet-keyboardtext);
     letter-spacing: 0;
     text-align: center;
     font-weight: 500;
