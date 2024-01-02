@@ -20,8 +20,19 @@ import store from '@/store'
 const pendingData = computed(() => store.state.user.pendingData)
 onMounted(() => {
   // store.dispatch('user/pendingOrder')
+  getTeamLang()
 })
 
+const getTeamLang = () => {
+  const gidmsArr:any = []
+  pendingData.value.map((m:any) => {
+    m.betDTOList.map((n:any) => {
+      const { systemId } = n
+      gidmsArr.push(systemId)
+    })
+  })
+  store.dispatch('user/getMoreTeamList', gidmsArr.join())
+}
 </script>
 
 <style lang="scss" scoped>

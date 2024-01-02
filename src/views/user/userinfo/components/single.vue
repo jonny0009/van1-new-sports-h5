@@ -23,10 +23,10 @@
           </div>
         </div>
         <div class="right">
-          <div class="font_1">{{ item1.homeTeam ?item1.homeTeam:'?' }} v {{ item1.awayTeam?item1.awayTeam:'?' }}
+          <div class="font_1">{{ getTeam(item1).homeTeam }} v {{ getTeam(item1).awayTeam }}
             <span v-if="item1.resultScore" class="color-1"> [{{ item1.resultScore }}]</span>
           </div>
-          <div class="font_2">{{ item1.leagueName }}</div>
+          <div class="font_2">{{ getTeam(item1).leagueShortName }}</div>
         </div>
       </div>
       <!-- 2 -->
@@ -37,7 +37,7 @@
         <div class="right">
           <div class="one">
             <span>
-              {{ item1.betItem }}
+              {{ getLangBet(item1.betItemLang) }}
             </span>
             <span class="color-2" :class="[item1.betResultDetail==='L'?'color-3':'']">
               @{{ item1.ioRatio }}
@@ -147,6 +147,7 @@ import { formatMoney } from '@/utils/index'
 import { computed } from 'vue'
 import store from '@/store'
 const currency = computed(() => store.state.user.currency)
+const teamNameList = computed(() => store.state.user.teamNameList || [])
 
 const props = defineProps({
   item: {
@@ -158,7 +159,31 @@ const props = defineProps({
 const getProfit = (item: any) => {
   return item.gold * item.sioRatio
 }
-
+// 获取多语言队伍名称
+const getTeam = (item: any) => {
+  if (teamNameList.value.length) {
+    const item1 = teamNameList.value.find((e: any) => e.gidm === item.systemId)
+    if (item1) {
+      return item1
+    }
+    return {
+      homeTeam: '?',
+      awayTeam: '?',
+      leagueShortName: '?'
+    }
+  }
+  return {
+    homeTeam: '?',
+    awayTeam: '?',
+    leagueShortName: '?'
+  }
+}
+// 获取多语言bet
+const getLangBet = (item: any) => {
+  const itemA = JSON.parse(item)
+  const lang = localStorage.getItem('locale') || 'zh-cn'
+  return itemA[lang]
+}
 </script>
 
 <style lang="scss" scoped>
