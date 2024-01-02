@@ -1,13 +1,13 @@
 <template>
   <ArrowTitle
-    class="mt10 mb10"
+    class="mt10"
     :src="titleRecommend"
     :text="$t('home.goofMatch')"
     @returnSuccess="returnStatus"
   />
   <Transition>
     <div v-if="!isShow" class="goodMatch">
-      <SportsTabs class="mb10 mt20" @returnSportsSuccess="returnSportsSuccess" />
+      <SportsTabs class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess" />
       <Loading v-if="!isLoading" />
       <template v-else>
         <HomeEmpty v-if="!recommendEventsList.length" />
@@ -61,6 +61,7 @@ const getRecommendEvents = async (gameType:any = 'FT') => {
   }
 }
 const returnSportsSuccess = (val:any) => {
+  gameType.value = val
   getRecommendEvents(val)
 }
 const init = () => {
@@ -73,11 +74,13 @@ const isShow = ref(false)
 const returnStatus = (val:any) => {
   isShow.value = val
 }
+
+const gameType = ref('FT')
 const goToSport = () => {
   router.push({
     name: 'Sport',
     params: {
-      type: 'FT'
+      type: gameType.value
     }
   })
 }

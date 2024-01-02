@@ -55,7 +55,7 @@ textval.value = props.text
   transition: all .3s;
   font-size: 24px;
   &.active{
-    background:#7642fe;
+    background: var(--color-primary);
     color:#fff;
   }
   .img{

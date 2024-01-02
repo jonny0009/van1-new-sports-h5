@@ -1,28 +1,9 @@
 <template>
   <div class="homeTime-page">
-    <ArrowTitle class="mt10 mb20" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
+    <ArrowTitle class="mt10 mb10" :src="titleTime" :text="$t('home.latestMatch')" @returnSuccess="returnStatus" />
     <template v-if="!isShow">
-      <SportsTabs class="mb20" @returnSportsSuccess="returnSportsSuccess" />
-      <!--
-      <div class="homeTime-Time-Tabs mt10">
-        <div class="item active">
-          <span class="name">
-            全部
-          </span>
-          <div class="number">
-            946
-          </div>
-        </div>
-        <div class="item">
-          <span class="name">
-            全部
-          </span>
-          <div class="number">
-            946
-          </div>
-        </div>
-      </div>
-    -->
+      <SportsTabs class="pb10" @returnSportsSuccess="returnSportsSuccess" />
+      <tabsTime @returnTimeSuccess="returnTimeSuccess" />
       <van-list
         v-model="loading"
         :finished="finished"
@@ -39,7 +20,6 @@
             />
             <HomeEmpty v-if="!recommendEventsList.length"></HomeEmpty>
           </template>
-
           <Loading
             v-if="!isLoading || loading"
             :class="{
@@ -53,6 +33,8 @@
   </div>
 </template>
 <script lang="ts" setup>
+import Dayjs from 'dayjs' // YYYY-MM-DD HH:mm:ss
+import tabsTime from './tabsTime/index.vue'
 import titleTime from '@/assets/images/home/title-time.png'
 import { recommendEvents } from '@/api/home'
 import store from '@/store'
@@ -120,9 +102,31 @@ const onLoad = () => {
     }
   }
 }
+const returnTimeSuccess = (val:any) => {
+  if (val) {
+    if ((val || '').includes('/')) {
+      const [startTime, endTime] = val.split('-')
+      const newStartTime = startTime.replaceAll('/', '-')
+      const newEndTime = endTime.replaceAll('/', '-')
+      params.startDate = newStartTime + ' 00:00:00'
+      params.endDate = newEndTime + ' 23:59:59'
+    } else {
+      params.startDate = Dayjs().format('YYYY-MM-DD HH:mm:ss')
+      params.endDate = Dayjs().add(val, 'hour').format('YYYY-MM-DD HH:mm:ss')
+    }
+  } else {
+    params.startDate = ''
+    params.endDate = ''
+  }
+  finished.value = false
+  params.page = 1
+  console.log(params)
+  getRecommendEvents()
+}
 const returnSportsSuccess = (val:any) => {
   isLoading.value = true
   params.gameType = val
+  finished.value = false
   params.page = 1
   getRecommendEvents()
 }
@@ -146,42 +150,14 @@ onBeforeMount(() => {
   padding: 0 40px;
 
 }
-.homeTime-Time-Tabs{
-  .item{
-    height: 62px;
-    padding: 0 10px 0 20px;
-    border-radius: 42px;
-    background-color: #eff2f2;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    margin-right: 20px;
-    .number{
-      margin-left: 20px;
-      padding: 0 13px;
-      height: 46px;
-      border-radius: 30px;
-      color: #546371;
-      background-color: #e5ecf3;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .name{
-      height: 24px;
-      line-height: 24px;
-    }
-    &.active{
-      background: #7642fe;
-      color: #fff;
-    }
-  }
-}
+
 </style>
 
 <style lang="scss">
 .new_loading{
   height: auto !important;
+}
+.van-calendar__day--middle{
+  color: var(--color-primary)
 }
 </style>

@@ -117,7 +117,7 @@ const setClearInterval = () => {
   padding: 0 40px;
 }
 .sportlive-Match-Tabs{
-  margin: 10px 0;
+  padding: 20px 0;
   display: flex;
   overflow: auto;
   &::-webkit-scrollbar {

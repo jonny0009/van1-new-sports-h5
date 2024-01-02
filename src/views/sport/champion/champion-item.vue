@@ -104,7 +104,7 @@ const clickOpen = () => {
         }
       }
       .selected{
-        background-color: #7642fe;
+        background-color: var(--color-primary);
         .text{
           color: hsla(0,0%,100%,.8) !important;
         }

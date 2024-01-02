@@ -52,8 +52,8 @@ textval.value = props.text
   line-height: 66px;
   border-radius:30px;
   padding:0 20px;
-  background: #eff2f2;
-  color: #1f2630;
+  background: var(--color-global-buttonBg);
+  color: var(--color-global-buttonCl);
   transition: all .3s;
   font-size: 24px;
   span{
@@ -61,7 +61,7 @@ textval.value = props.text
     font-size: 24px;
   }
   &.active{
-    background:#7642fe;
+    background: var(--color-primary);
     color:#fff;
   }
   &::before{
