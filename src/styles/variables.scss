@@ -25,8 +25,15 @@
   --color-global-showWalletbg: linear-gradient(90deg, #7642fe, #491cab);
   --color-global-transactionbg:#7642fe;;
   --color-global-bg: linear-gradient(to bottom, #181f2a 0, #2a0572 100%);
-  --color-global-maskBg:  linear-gradient(270deg,#fff,hsla(0,0%,100%,0));
-  --color-global-imgBg:  #eff2f2;
+  --color-global-maskBg: linear-gradient(270deg,#fff,hsla(0,0%,100%,0));
+  --color-global-imgBg: #eff2f2;
+  
+  //赛事列表
+  --color-match-Bg:#131616;
+  --color-match-BetBg:#fff;
+  --color-match-IorCl:#000;
+  --color-match-brBg:#eff2f2;
+  --color-match-brWidth: 1px;
 
   // 搜索页面
   --color-search-box: #EFF1F2;
@@ -87,6 +94,12 @@
   --color-global-maskBg:  linear-gradient(270deg,#f4f5fa,hsla(0,0%,100%,0));
   --color-global-imgBg: #fff;
 
+  //赛事列表
+  --color-match-Bg:#fefffe;
+  --color-match-BetBg:#f4f5fa;
+  --color-match-IorCl:#0E3D66;
+  --color-match-brBg:  #f4f5fa;
+  --color-match-brWidth:  0;
 
   // 搜索页面
   --color-search-box: #DDEFFC;
