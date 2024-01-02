@@ -17,19 +17,22 @@ const props = defineProps({
   matchInfo: {
     type: Object,
     default: () => {}
-  }
+  },
+  nav: [String, Number]
 })
 
 const playBetList: Ref<any> = ref([])
 const fetchData = async () => {
   playBetList.value = await getPlayGroupType(props.matchInfo)
 }
+
 watch(
   () => props.matchInfo,
   () => {
     fetchData()
   }
 )
+
 onMounted(() => {
   fetchData()
 })

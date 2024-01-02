@@ -38,7 +38,7 @@
 
 <script lang="ts" setup>
 import websocket from '@/plugins/socket/websocket'
-import { watch, Ref, ref, computed, nextTick } from 'vue'
+import { watch, Ref, ref, computed, nextTick, onMounted } from 'vue'
 import { intoRoom, lastMessageByPage } from '@/api/live'
 import { getToken } from '@/utils/auth'
 import store from '@/store'
@@ -56,6 +56,9 @@ watch(
     getIntoRoom()
   }
 )
+onMounted(() => {
+  getIntoRoom()
+})
 
 const userInfo = computed(() => store.state.user.userInfo)
 const disabledSend = computed(() => {

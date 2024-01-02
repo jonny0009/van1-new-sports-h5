@@ -11,16 +11,21 @@
       <MatchGame v-if="videoError" :matchInfo="matchData" />
     </div>
 
-    <van-tabs v-model:active="navActive" swipeable>
-      <van-tab v-for="(item, index) in navList" :title="item.name">
-        <component
-          v-if="navActive == index"
-          :is="compsList[navActive]"
-          :matchInfo="matchData"
-          @more-video="onMoreVideo"
-        />
-      </van-tab>
-    </van-tabs>
+    <div class="tab">
+      <div
+        class="tab-item"
+        v-for="(item, i) in navList"
+        :key="i"
+        :class="{ active: navActive === item.type }"
+        @click="onTab(item)"
+      >
+        <img :src="navActive === item.type ? item.onIcon : item.unIcon" alt="" />
+        <span>{{ item.name }}</span>
+      </div>
+    </div>
+    <div class="panel">
+      <component :is="compsList[navActive]" :matchInfo="matchData" @more-video="onMoreVideo" />
+    </div>
   </div>
 </template>
 
@@ -43,13 +48,16 @@ const route = useRoute()
 const router = useRouter()
 const getIcon = (name: string) => getAssetsImage(name, 'live')
 const navList = reactive([
-  { name: t('live.chatroom'), unIcon: getIcon('nav_chat_un.png'), onIcon: getIcon('nav_chat_on.png') },
-  { name: t('live.bet'), unIcon: getIcon('nav_bet_un.png'), onIcon: getIcon('nav_bet_on.png') },
-  { name: t('live.betWith'), unIcon: getIcon('nav_add_un.png'), onIcon: getIcon('nav_add_on.png') },
-  { name: t('live.more'), unIcon: getIcon('nav_more_un.png'), onIcon: getIcon('nav_more_on.png') }
+  { type: 0, name: t('live.chatroom'), unIcon: getIcon('nav_chat_un.png'), onIcon: getIcon('nav_chat_on.png') },
+  { type: 1, name: t('live.bet'), unIcon: getIcon('nav_bet_un.png'), onIcon: getIcon('nav_bet_on.png') },
+  { type: 2, name: t('live.betWith'), unIcon: getIcon('nav_add_un.png'), onIcon: getIcon('nav_add_on.png') },
+  { type: 3, name: t('live.more'), unIcon: getIcon('nav_more_un.png'), onIcon: getIcon('nav_more_on.png') }
 ])
 const navActive = ref(0)
 const compsList = [TabChat, TabBets, TabWith, TabMore]
+const onTab = (item: any) => {
+  navActive.value = item.type
+}
 
 const matchData: Ref<any> = ref({})
 const getMatcheInfo = async () => {
@@ -161,21 +169,10 @@ onUnmounted(() => {
   flex-direction: column;
   height: calc(100vh - (96px + 88px));
   padding: 0;
-
-  .van-tabs {
+  .panel {
+    overflow-y: auto;
+    font-size: 24px;
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    .van-swipe-item {
-      overflow-y: auto;
-    }
-  }
-  .van-tabs :deep(.van-tabs__content) {
-    flex: 1;
-    .van-tab__panel {
-      height: 100%;
-    }
   }
 }
 
