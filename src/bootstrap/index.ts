@@ -1,5 +1,5 @@
 import store from '@/store'
-import { getURLSearchParams } from '@/utils'
+import { getURLSearchParams, setTheme } from '@/utils'
 import { getToken } from '@/utils/auth'
 import localStore from '@/utils/localStore'
 import { lib } from 'xcsport-lib'
@@ -11,6 +11,10 @@ export default async () => {
   if (searchParams.token) {
     store.commit('user/SET_TOKEN', searchParams.token)
   }
+  if (searchParams.theme) {
+    store.commit('app/SET_THEME', searchParams.theme)
+  }
+  setTheme()
   // 商户语言
   // await store.dispatch('app/queryCMerLanguage')
   // 商户配置

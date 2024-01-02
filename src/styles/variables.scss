@@ -44,7 +44,7 @@
 
 }
 // 蓝色版本
-:root[theme='blue'] {
+:root[data-theme='blue'] {
   --color-primary: #48A3FF;
   --color-linear-gradient-1: #48A3FF;
   --color-linear-gradient-2: #2C88E5;
