@@ -1,3 +1,5 @@
+import { getTheme } from './auth'
+
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const getQueryStringByName = function (name: string) {
@@ -133,4 +135,9 @@ export const getURLSearchParams = () => {
     }
   })
   return params
+}
+
+// 设置主题色
+export const setTheme = () => {
+  document.documentElement.dataset.theme = getTheme() || ''
 }
