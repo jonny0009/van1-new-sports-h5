@@ -1,5 +1,5 @@
 <template>
-  <div ref="refHomeTime" class="homeTime-Time-Tabs mt10 mb10">
+  <div ref="refHomeTime" class="homeTime-Time-Tabs  pb10">
     <div ref="refHomeTimePage" class="homeTime-TimePage">
       <div
         v-for="(item,idx) in homeTimeArray"
@@ -80,7 +80,8 @@ const refHomeTimePage = ref()
     height: 62px;
     padding: 0 20px 0 20px;
     border-radius: 42px;
-    background-color: #eff2f2;
+    background: var(--color-global-buttonBg);
+    box-shadow: var(--color-global-buttonShadow);
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -104,7 +105,8 @@ const refHomeTimePage = ref()
   .more{
     width: 62px;
     height: 62px;
-    background-color: #eff2f2;
+    background: var(--color-global-buttonBg);
+    box-shadow: var(--color-global-buttonShadow);
     border-radius: 100%;
     display: flex;
     justify-content: center;

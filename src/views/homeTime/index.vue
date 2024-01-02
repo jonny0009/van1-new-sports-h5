@@ -1,6 +1,6 @@
 <template>
   <div class="homeTime-page">
-    <ArrowTitle class="mt10 mb20" :src="titleTime" text="早盘" @returnSuccess="returnStatus" />
+    <ArrowTitle class="mt10 mb10" :src="titleTime" :text="$t('home.latestMatch')" @returnSuccess="returnStatus" />
     <template v-if="!isShow">
       <SportsTabs class="pb10" @returnSportsSuccess="returnSportsSuccess" />
       <tabsTime @returnTimeSuccess="returnTimeSuccess" />
