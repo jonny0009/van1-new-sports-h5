@@ -156,11 +156,12 @@ const direction = ref({})
 
 <style lang="scss" scoped>
   .onImgError{
-    width: 200px;
+    width: 176px;
     height: 176px;
     display: inline-block;
     background: url('@/assets/images/home/other/league.png') no-repeat center;
-    background-size: contain;
+    background-size: cover;
+    border-radius: 46px;
   }
 
   .Hot-Match-Group-Warp{

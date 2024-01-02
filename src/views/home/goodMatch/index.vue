@@ -1,6 +1,6 @@
 <template>
   <ArrowTitle
-    class="mt10 mb10"
+    class="mt10"
     :src="titleRecommend"
     :text="$t('home.goofMatch')"
     @returnSuccess="returnStatus"
