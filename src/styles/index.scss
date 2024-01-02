@@ -32,7 +32,7 @@
     left: 210px !important;
   }
   .van-popover__content{
-    background: #1f2630 !important;
+    background: var(--color-text-2) !important;
     border-radius:10px;
     padding: 10px;
     font-size: 24px;
@@ -130,7 +130,7 @@
 //
 // home page
 .homeMatchHandicap{
-  color: #1f2630;
+  color: var(--color-text-2);
   .home-tabs-play{
     height: 68px;
     display: flex;
@@ -155,7 +155,7 @@
         border-radius: 8px;
         font-size: 24px;
         background: #eff2f2;
-        color: #1f2630;
+        color: var(--color-text-2);
         min-width:110px;
         padding: 0 10px;
         min-height:40px;
@@ -212,7 +212,7 @@
         display: flex;
         .match-team-name{
           font-size: 28px;
-          color: #1F2630;
+          color:var(--color-text-2);
           font-weight: 600;
         }
       }
@@ -220,7 +220,7 @@
         display: flex;
         align-items: center;
         font-size: 24px;
-        color: #546371;
+        color: var(--color-text-1);
         padding-top: 5px;
         .iconfont {
           font-size: 24px;
@@ -233,7 +233,7 @@
       }
       .up-match-time{
         font-size: 24px;
-        color: #546371;
+        color: var(--color-text-1);
         display: flex;
       }
     }
@@ -252,7 +252,7 @@
         align-items: center;
         font-size: 24px;
         border-right: 1px solid #eff1f2;
-        color: #546371;
+        color: var(--color-text-1);
         &:last-child{
           border-right: 0;
         }
@@ -304,7 +304,7 @@
       margin: 10px 20px;
       font-size: 24px;
       line-height: 24px;
-      color: #546371;
+      color: var(--color-text-1);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -324,7 +324,7 @@
        &> span{
           line-height: 24px;
           font-size: 24px;
-          color: #546371;
+          color: var(--color-text-1);
           white-space: nowrap; 
           overflow: hidden;
           text-overflow:ellipsis;
@@ -403,7 +403,7 @@
     .match-info-live__header{
       margin: 0 13px;
       padding: 20px 0;
-      color: #546371;
+      color: var(--color-text-1);
       .up-match-league {
         display: inline-flex;
         align-items: center;
@@ -449,7 +449,7 @@
           justify-content: center;
           align-items: center;
           font-size: 24px;
-          color: #1f2630;
+          color: var(--color-text-2);
         }
       }
     }

@@ -116,7 +116,7 @@ const clickChangeActive = (item:any) => {
     display:flex;
     justify-content:center;
     align-items:center;
-    color:#546371;
+    color: var(--color-text-1);
     min-width: 124px;
     .iconfont{
       position: relative;
