@@ -7,7 +7,14 @@
   </GlobalRefresh>
   <GlobalFooter />
   <BettingSlip v-if="betShow && isOpen" />
-  <van-back-top bottom="100" right="20" class="GlobalTop">
+  <van-back-top
+    bottom="100"
+    right="20"
+    class="GlobalTop"
+    :class="{
+      'showBettingSlip': betShow && isOpen
+    }"
+  >
     <van-icon name="down" />
   </van-back-top>
 </template>
@@ -49,11 +56,14 @@ watch(
 .GlobalTop {
   background: #7642fe;
   right: 40px !important;
-  bottom: 200px !important;
-
+  bottom: 100px !important;
   .van-icon {
     transform: rotate(180deg);
     font-weight: 600;
+  }
+
+  &.showBettingSlip{
+    bottom: 200px !important;
   }
 }
 </style>
