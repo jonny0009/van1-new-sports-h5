@@ -1,6 +1,6 @@
 <template>
-  <div class="homeMatchHandicap">
-    <van-sticky :offset-top="offsetTop">
+  <div ref="container" class="homeMatchHandicap">
+    <van-sticky :offset-top="offsetTop" :container="container" z-index="5">
       <div class="home-tabs-play">
         <TimeView :time-send-params="sendParams" />
         <div class="play">
@@ -156,7 +156,7 @@ import { getHandicap } from '@/utils/home/getHandicap'
 import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
 import TimeView from '@/components/HomeMatch/public/time/index.vue'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import store from '@/store'
 // import { showDialog } from 'vant'
 const props = defineProps({
@@ -169,6 +169,7 @@ const props = defineProps({
 })
 
 const offsetTop = computed(() => store.state.app.globalBarHeaderHeight)
+const container = ref(null)
 
 const getTeam = ({ homeTeamAbbr, awayTeamAbbr, homeTeam, awayTeam }: any) => {
   if (!homeTeamAbbr) {

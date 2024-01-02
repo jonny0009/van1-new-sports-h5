@@ -41,13 +41,14 @@ watch(refreshChangeTime, (val) => {
   }
 })
 const recommendEventsList = reactive([])
+
 const isLoading = ref(false)
 const getRecommendEvents = async (gameType:any = 'FT') => {
   const params = {
     gradeType: 1,
     gameType: gameType,
-    startDate: dateUtil(new Date()).format('YYYY-MM-DD') + ' 00:00:00',
-    endDate: dateUtil(new Date()).format('YYYY-MM-DD') + ' 23:59:59'
+    startDate: dateUtil().format('YYYY-MM-DD') + ' 00:00:00',
+    endDate: dateUtil().add(1, 'day').format('YYYY-MM-DD') + ' 23:59:59'
   }
   isLoading.value = false
   const res:any = await recommendEvents(params)
