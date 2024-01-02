@@ -61,10 +61,12 @@ SportsName.value = `icon-${props.text}`
   padding-right: 36px;
   background: var(--color-global-buttonBg);
   box-shadow: var(--color-global-buttonShadow);
-  color: var(--color-global-minButtonCl);
+  color: var(--color-global-buttonCl);
   transition: all .3s;
   font-size: 24px;
+  font-weight: 600;
   .iconfont {
+    font-weight: 100;
     color: var(--color-global-minButtonicoCl);
   }
   &.active{
