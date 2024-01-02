@@ -144,18 +144,18 @@ onMounted(() => {
     top: 0;
     width: 100%;
     height: 96px;
-    color: #fff;
+    color: var(--color-global-textCl);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(to bottom, #181f2a 0, #2a0572 100%);
+    background:  var(--color-global-bg);
   }
   .wallet {
     height: 56px;
     line-height: 56px;
     min-width: 300px;
     display: inline-block;
-    background: linear-gradient(90deg, #7642fe, #491cab);
+    background: var(--color-global-showWalletbg);
     border-radius: 100px;
     position: relative;
     text-align: center;
@@ -188,7 +188,7 @@ onMounted(() => {
       }
     }
     .transaction {
-      background: var(--color-primary);
+      background: var(--color-global-transactionbg);
       right: 6px;
     }
   }
