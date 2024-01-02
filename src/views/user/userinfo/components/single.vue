@@ -81,7 +81,7 @@
           <!-- 未结算的注单显示：可赔付额；取消/延期，输的注单不显示赔付额这一栏 -->
           <!-- creditState 0 未结算 1 已结算-->
           <span v-if="item.state == 0|| item.state==-1||item.state== 1">{{ $t('user.CompensableAmount') }}:</span>
-          <span v-else-if="item.state !==3&& item.state !==5 &&item.state !==0">{{ $t('user.practical') }}:</span>
+          <span v-else-if="item.state !==3&& item.state !==5 || item1.betResultDetail == 'LL'">{{ $t('user.practical') }}:</span>
 
           <div>
             <!-- 受理状态 -->
@@ -93,7 +93,7 @@
                 {{ $t('user.affirmPend') }}
               </span>
             </span>
-            <span v-if="item.state !== 3 && item.state !== 5 ||item1.betResultDetail == 'LL'">
+            <span v-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail == 'LL'">
               <img v-if="currency==='CNY'" class="img_1" :src="CNY2" alt="" />
               <img v-else-if="currency==='VNDK'" class="img_1" :src="VNDK2" alt="" />
               <img v-else class="img_1" src="@/assets/images/user/num2.png" alt="" />
@@ -102,7 +102,7 @@
             <span v-if="item.state == 0|| item.state==-1||item.state== 1" class="num color-1">
               {{ formatMoney(getProfit(item)) }}
             </span>
-            <span v-else-if="item.state !== 3 && item.state !== 5||item1.betResultDetail == 'LL' " class="color-1">
+            <span v-else-if="item.state !== 3 && item.state !== 5|| item1.betResultDetail == 'LL' " class="color-1">
               {{ formatMoney(item.winGold) }}
             </span>
 
