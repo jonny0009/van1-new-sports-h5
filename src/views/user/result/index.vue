@@ -2,7 +2,7 @@
   <div class="result">
     <van-nav-bar class="bg-title" :title="$t('user.result')">
       <template #left>
-        <img class="img_1" src="@/assets/images/login/return@2x.png" alt="" @click="goBack()" />
+        <van-icon name="arrow-left" class="img_1" @click="goBack()" />
       </template>
     </van-nav-bar>
     <div class="content">
@@ -137,7 +137,7 @@ const handleClose = (item: any) => {
 .popup-title {
   font-family: PingFangSC-Semibold;
   font-size: 32px;
-  color: #1F2630;
+  color: var( --color-search-box-text-1);
   letter-spacing: 0;
   font-weight: 600;
   margin: 24px 0 0 38px;
@@ -148,7 +148,7 @@ const handleClose = (item: any) => {
 
   .item {
     font-size: 26px;
-    color: #1F2630;
+    color: var( --color-search-box-text-1);
     letter-spacing: 1px;
     padding: 40px;
     border-bottom: 2px solid #eaeaea;
@@ -161,7 +161,7 @@ const handleClose = (item: any) => {
   }
 
   .item-color {
-    color: #7642FD;
+    color: var(--color-bg-1);
   }
 }
 </style>
@@ -176,10 +176,10 @@ const handleClose = (item: any) => {
   line-height: 96px;
   font-family: PingFangSC-Medium;
   font-size: 28px;
-  color: #FFFFFF;
   letter-spacing: 0;
   text-align: center;
   font-weight: 500;
+  color: var(--title-text-font-color);
 }
 
 :deep(.van-icon) {

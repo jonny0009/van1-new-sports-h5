@@ -72,8 +72,6 @@ export default {
   otherCharacters: '其他人物',
   Background: '背景颜色',
   Followed: '已关注',
-  news: '消息',
-  loadingText: '加载中...',
 
   // 新增===
   area: '地区',
@@ -124,10 +122,12 @@ export default {
   lookInfo: '查看完整讯息 ',
   betNum: '投注 ',
   noMoreMatch: '没有更多赛事了 ',
-
+  news: '消息',
+  loadingText: '加载中...',
   // 新增5
   editPend: '受理中 ',
   affirmPend: '确认中 ',
+  noDataRelated: '未查询到相关数据',
 
   sports: {
     'officeNumber': '局号',

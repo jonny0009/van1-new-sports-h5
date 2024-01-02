@@ -128,16 +128,17 @@ const goBack = () => {
 
 <style lang="scss" scope>
 .editImg {
-
+  background: var(--color-background-color);
   .bg-title {
     width: 100%;
     height: 150px;
     // background: url('@/assets/images/login/bg-tit@2x.png');
     background-size: 100% 100%;
     font-family: PingFangSC-Semibold;
-    color: #7642FD;
+    color: var( --color-bg-1);
     letter-spacing: 0;
     font-weight: 600;
+    background: var(--color-background-color);
 
   }
 
@@ -145,11 +146,14 @@ const goBack = () => {
     width: 210px;
     height: 252px;
     margin: 0 auto;
-    background: #FFF;
+    background: var(--color-background-color);
+    border-radius: 60%;
+    overflow: hidden;
 
     .img_1 {
       width: 100%;
       height: 100%;
+      border-radius: 60%;
     }
   }
 
@@ -161,15 +165,16 @@ const goBack = () => {
     span {
       font-family: PingFangSC-Semibold;
       font-size: 28px;
-      color: #97a6ab;
+      color: var(--color-search-box-text-2);
       letter-spacing: 0;
       font-weight: 600;
       text-align: center;
-      width: 240px;
+      width: 250px;
+      white-space: normal;
     }
 
     .active {
-      color: #000000;
+      color: var( --color-search-box-text-1);
 
       &::after {
         content: '';
@@ -177,7 +182,7 @@ const goBack = () => {
         height: 7px;
         display: block;
         margin: 15px auto;
-        border-bottom: 6px solid #000;
+        border-bottom: 6px solid var( --color-search-box-text-1);
         border-radius: 7px;
       }
     }
@@ -189,7 +194,7 @@ const goBack = () => {
     height: calc(100vh - 535px);
     overflow-y: auto;
     // padding: 56px 50px;
-    background: #EFF1F2;
+    background: var(--van-result-box);
 
     .img-style {
       display: flex;
@@ -200,7 +205,7 @@ const goBack = () => {
     .select-img {
       width: 137px;
       height: 137px;
-      background: #EFF1F2;
+      background: var(--van-result-box);
       margin-right: 22px;
       margin-bottom: 36px;
       border-radius: 50%;
@@ -278,31 +283,6 @@ const goBack = () => {
   height: 90px;
 }
 
-:deep(input::placeholder) {
-  font-family: PingFangSC-Semibold;
-  font-size: 24px;
-  color: #97a6ab;
-  letter-spacing: 0;
-  font-weight: 600;
-}
-
-:deep(.bb.van-cell::after) {
-  border-bottom: 8px solid #7642FD;
-}
-
-:deep(.van-cell::after) {
-  border-bottom: 2px solid #97a6ab;
-}
-
-:deep(.van-cel::after) {
-  border-bottom: 2px solid #97a6ab !important;
-}
-
-:deep(.van-field__control) {
-  height: 50px;
-  font-size: 30px;
-}
-
 :deep(.van-icon) {
   font-size: 40px;
 }
@@ -320,10 +300,9 @@ const goBack = () => {
   line-height: 90px;
   font-family: PingFangSC-Medium;
   font-size: 28px;
-  color: #FFFFFF;
   letter-spacing: 0;
   text-align: center;
   font-weight: 500;
-  color: black;
+  color:var( --color-search-box-text-1);
 }
 </style>

@@ -182,7 +182,8 @@ const toUrlGame = (item: any) => {
 <style lang="scss" scoped>
 .search {
   padding: 30px 0;
-
+  background-color: var(--color-background-color);
+  height: 100vh;
   .search_box {
     display: flex;
     align-items: center;
@@ -194,7 +195,7 @@ const toUrlGame = (item: any) => {
       height: 68px;
       padding-top: 13px;
       // line-height: 34px;
-      background: #EFF1F2;
+      background: var(--color-search-box);
       border-radius: 34px;
     }
 
@@ -206,7 +207,7 @@ const toUrlGame = (item: any) => {
     .cancel {
       font-family: PingFangSC-Semibold;
       font-size: 26px;
-      color: #7642FD;
+      color: var(--color-search-box-text);
       letter-spacing: 0;
       font-weight: 600;
       white-space: nowrap;
@@ -216,6 +217,7 @@ const toUrlGame = (item: any) => {
   >.content {
     margin-top: 31px;
     padding: 0 36px;
+    background-color: var(--color-background-color);
 
     .font_1 {
       font-family: PingFangSC-Semibold;
@@ -249,7 +251,7 @@ const toUrlGame = (item: any) => {
         align-items: center;
         margin-bottom: 20px;
         margin-left: 40px;
-
+        color: var(--color-search-box-text-1);
         .itemImg {
           height: 34px;
           width: 34px;
@@ -258,7 +260,6 @@ const toUrlGame = (item: any) => {
         .font_2 {
           font-family: PingFangSC-Medium;
           font-size: 24px;
-          color: #1F2630;
           letter-spacing: 0;
           font-weight: 500;
           margin-left: 14px;
@@ -282,16 +283,11 @@ const toUrlGame = (item: any) => {
           // height: 60px;
           padding: 15px 10px;
           font-size: 24px;
-          color: #1F2630;
+          color: var(--color-search-box-text-1);
           letter-spacing: 0;
           font-weight: 500;
-          background: #EFF1F2;
+          background: var(--color-search-box-frame);
           border-radius: 10px;
-        }
-
-        .item-1 {
-          color: #7642FD;
-          ;
         }
 
       }
@@ -305,7 +301,7 @@ const toUrlGame = (item: any) => {
 
     .detail {
       margin-top: 20px;
-      background: #EFF1F2;
+      background: var( --color-search-box-frame);
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -319,7 +315,7 @@ const toUrlGame = (item: any) => {
         .font_2 {
           font-family: PingFangSC-Medium;
           font-size: 24px;
-          color: #1F2630;
+          color: var(--color-search-box-text-1);
           letter-spacing: 0;
           font-weight: 500;
           margin-left: 20px;
@@ -334,7 +330,7 @@ const toUrlGame = (item: any) => {
       .right {
         font-family: PingFangSC-Medium;
         font-size: 28px;
-        color: #96A5AA;
+        color: var(--color-search-box-text-2);
         letter-spacing: 0;
         text-align: right;
         font-weight: 500;
@@ -361,7 +357,7 @@ const toUrlGame = (item: any) => {
       }
 
       .active {
-        color: #000000;
+        color: var(--color-search-box-text-1);
 
         &::after {
           content: '';
@@ -386,5 +382,8 @@ const toUrlGame = (item: any) => {
 
 :deep(.van-icon) {
   font-size: 45px;
+}
+:deep(.van-cell-group--inset){
+  background-color: var(--color-background-color);
 }
 </style>

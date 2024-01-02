@@ -120,7 +120,7 @@
             {{ formatMoney(getProfit(item)) }}
           </span>
           <span v-else-if="item.state !==3&& item.state !==5 " class="num">
-            {{ formatMoney(item.winAndLossGold) }}
+            {{ formatMoney(item.winGold) }}
           </span>
         </span>
       </div>
@@ -177,7 +177,7 @@ const getProfit = (item: any) => {
   .title-left {
     font-family: PingFangSC-Semibold;
     font-size: 28px;
-    color: #1F2630;
+    color: var(--color-search-box-text-1);
     font-weight: 600;
 
     .img_1 {
@@ -195,7 +195,7 @@ const getProfit = (item: any) => {
     width: 188px;
     font-family: PingFangSC-Medium;
     font-size: 32px;
-    color: #FFFFFF;
+    color: var(--color-background-color);
     letter-spacing: 0;
     font-weight: 500;
     padding-right: 20px;
@@ -226,7 +226,7 @@ const getProfit = (item: any) => {
 
 .top2 {
   margin-top: 20px;
-  background: #E2E6E8;
+  background: var(--van-result-box-1);
   border-radius: 20px;
   padding: 20px 10px;
   display: flex;
@@ -265,7 +265,7 @@ const getProfit = (item: any) => {
       justify-content: space-between;
       font-family: PingFangSC-Semibold;
       font-size: 28px;
-      color: #1F2630;
+      color: var(--color-search-box-text-1);
       letter-spacing: 0;
       font-weight: 600;
     }
@@ -287,7 +287,7 @@ const getProfit = (item: any) => {
       padding: 0px 15px;
       font-family: PingFangSC-Regular;
       font-size: 24px;
-      color: #546371;
+      color: var(--color-text-1);
       letter-spacing: 0;
       font-weight: 400;
       display: flex;
@@ -297,7 +297,7 @@ const getProfit = (item: any) => {
         margin-left: 8px;
         font-family: PingFangSC-Semibold;
         font-size: 24px;
-        color: #7642FD;
+        color: var( --color-bg-1);
         letter-spacing: 0;
         font-weight: 600;
       }
@@ -317,7 +317,7 @@ const getProfit = (item: any) => {
   &-1 {
     font-family: PingFangSC-Semibold;
     font-size: 24px;
-    color: #546371;
+    color: var(--color-text-1);
     letter-spacing: 0;
     font-weight: 600;
     display: flex;
@@ -334,7 +334,7 @@ const getProfit = (item: any) => {
   &-2 {
     font-family: PingFangSC-Semibold;
     font-size: 28px;
-    color: #546371;
+    color: var(--color-text-1);
     letter-spacing: 0;
     font-weight: 600;
     display: flex;
@@ -349,7 +349,7 @@ const getProfit = (item: any) => {
 
     .num {
       font-size: 30px;
-      color: #7642FD;
+      color: var(--color-bg-1);
     }
   }
 }
@@ -369,7 +369,7 @@ const getProfit = (item: any) => {
     justify-content: space-between;
     font-family: PingFangSC-Regular;
     font-size: 22px;
-    color: #96A5AA;
+    color: var(--color-no-data-font);
     letter-spacing: 0;
     font-weight: 400;
   }

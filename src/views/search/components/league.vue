@@ -4,10 +4,10 @@
       <van-image class="itemImg" fit="contain" :src="ball3" />
       <div class="font_2" v-html="highlightText(props.keyWords, item.name)"></div>
     </div>
-    <div v-if="!props.leagueList.length " class="noData">
+    <div v-if="!props.leagueList.length" class="noData">
       <img class="img_1" src="@/assets/images/user/noData.png" />
       <p>
-        未查询到相关数据
+        {{ $t('user.noDataRelated') }}
       </p>
     </div>
   </div>
@@ -57,12 +57,12 @@ const highlightText = (field: any, text: any) => {
 </script>
 
 <style lang="scss" scoped>
- .noData {
+.noData {
   width: 100%;
   text-align: center;
   font-family: PingFangSC-Medium;
   font-size: 24px;
-  color: #96A5AA;
+  color: var(--color-no-data-font);
   letter-spacing: 0;
   font-weight: 500;
 
@@ -74,9 +74,10 @@ const highlightText = (field: any, text: any) => {
 
   }
 }
+
 .matchList-1 {
   overflow-y: auto;
-  height: calc(100vh - 250px);
+  height: calc(100vh - 240px);
 }
 
 // 比赛
@@ -84,14 +85,14 @@ const highlightText = (field: any, text: any) => {
   margin-top: 20px;
   width: 678px;
   height: 120px;
-  background: #EFF1F2;
+  background: var(--color-search-box-frame);
   border-radius: 10px;
   padding: 28px 20px;
   display: flex;
   align-items: center;
   font-family: PingFangSC-Semibold;
   font-size: 24px;
-  color: #1F2630;
+  color: var(--color-search-box-text-1);
   letter-spacing: 0;
   font-weight: 600;
 
@@ -99,44 +100,6 @@ const highlightText = (field: any, text: any) => {
     height: 64px;
     width: 64px;
     margin-right: 15px;
-  }
-}
-
-.left2 {
-  justify-content: space-between;
-  align-items: center;
-
-  .left3 {
-    display: flex;
-    align-items: center;
-  }
-
-  .itemImg {
-    width: 50px;
-    height: 50px;
-  }
-
-  .center {
-    margin-left: 30px;
-    font-size: 24px;
-    color: #1F2630;
-
-    &_1 {
-      display: flex;
-      align-items: center;
-      font-size: 24px;
-      color: #96A5AA;
-
-      .ball4 {
-        height: 24px;
-        width: 24px;
-      }
-    }
-  }
-
-  .goImg {
-    width: 30px;
-    height: 35px;
   }
 }
 </style>

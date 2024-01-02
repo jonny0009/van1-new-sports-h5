@@ -222,7 +222,9 @@ onMounted(() => {
   }
 }
 .userInfo {
+  // background: var(--color-background-color);
   background: #FFFFFF;
+  height: 100vh;
   font-family: PingFangSC-Medium;
   font-size: 28px;
   color: #000000;
@@ -245,12 +247,12 @@ onMounted(() => {
         align-items: center;
         justify-content: space-between;
         &_1 {
-          background: #E5ECF3;
+          background: var(--color-search-box-sidebar);
           border-radius: 24px;
           padding: 7px 18px;
           font-family: PingFangSC-Medium;
           font-size: 24px;
-          color: #000000;
+          color: var(--color-search-box-text-1);
           letter-spacing: 0;
           font-weight: 500;
         }
@@ -261,13 +263,13 @@ onMounted(() => {
       }
       .money {
         margin-top: 18px;
-        background-image: linear-gradient(90deg, #7642FD 0%, #491CAB 100%);
+        background-image: linear-gradient(90deg, var(--color-search-box-sidebar-1) 0%, var(--color-search-box-sidebar-2) 100%);
         border-radius: 28px;
         height: 40px;
         width: 292px;
         font-family: PingFangSC-Medium;
         font-size: 24px;
-        color: #FFFFFF;
+        color: var(--color-sidebar-font);
         letter-spacing: 0;
         font-weight: 500;
         padding: 2px;
@@ -283,7 +285,7 @@ onMounted(() => {
     .font_3 {
       font-family: PingFangSC-Regular;
       font-size: 24px;
-      color: #1F2630;
+      color: var(--color-search-box-text-1);
       letter-spacing: 0;
       font-weight: 400;
       width: 250px;
@@ -293,7 +295,7 @@ onMounted(() => {
 
     }
     .font_4 {
-      color: #000000;
+      color: var(--color-search-box-text-1);
       font-weight: 500;
     }
   }
@@ -317,7 +319,7 @@ onMounted(() => {
     padding: 54px;
     font-family: PingFangSC-Medium;
     font-size: 28px;
-    color: #000000;
+    color: var(--color-search-box-text-1);
     letter-spacing: 0;
     font-weight: 500;
 

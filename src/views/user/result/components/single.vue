@@ -104,7 +104,7 @@
               {{ formatMoney(getProfit(item)) }}
             </span>
             <span v-else-if="item.state !== 3 && item.state !== 5 " class="color-1">
-              {{ formatMoney(item.winAndLossGold) }}
+              {{ formatMoney(item.winGold) }}
             </span>
 
           </div>
@@ -158,7 +158,7 @@ const getProfit = (item: any) => {
 
 <style lang="scss" scoped>
 .color-1 {
-  color: #7642FD;
+  color: var(--color-bg-1);
 }
 
 .top {
@@ -192,7 +192,7 @@ const getProfit = (item: any) => {
     .font_1 {
       font-family: PingFangSC-Semibold;
       font-size: 28px;
-      color: #1F2630;
+      color: var(--color-search-box-text-1);
       letter-spacing: 0;
       font-weight: 600;
     }
@@ -200,7 +200,7 @@ const getProfit = (item: any) => {
     .font_2 {
       font-family: PingFangSC-Semibold;
       font-size: 24px;
-      color: #546371;
+      color: var(--color-text-1);
       letter-spacing: 0;
       font-weight: 600;
     }
@@ -209,7 +209,7 @@ const getProfit = (item: any) => {
 
 .top2 {
   margin-top: 20px;
-  background: #E2E6E8;
+  background: var(--van-result-box-1);
   border-radius: 20px;
   padding: 20px 10px;
   display: flex;
@@ -231,7 +231,7 @@ const getProfit = (item: any) => {
       justify-content: space-between;
       font-family: PingFangSC-Semibold;
       font-size: 28px;
-      color: #1F2630;
+      color: var(--color-search-box-text-1);
       letter-spacing: 0;
       font-weight: 600;
     }
@@ -239,7 +239,7 @@ const getProfit = (item: any) => {
     .two {
       font-family: PingFangSC-Semibold;
       font-size: 24px;
-      color: #546371;
+      color: var( --color-text-1);
       letter-spacing: 0;
       font-weight: 600;
 
@@ -260,7 +260,7 @@ const getProfit = (item: any) => {
     align-items: center;
     font-family: PingFangSC-Semibold;
     font-size: 24px;
-    color: #546371;
+    color: var(--color-text-1);
     letter-spacing: 0;
     font-weight: 600;
 
@@ -273,7 +273,7 @@ const getProfit = (item: any) => {
   .two {
     font-family: PingFangSC-Semibold;
     font-size: 28px;
-    color: #546371;
+    color: var(--color-text-1);
     letter-spacing: 0;
     font-weight: 600;
   }

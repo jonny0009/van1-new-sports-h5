@@ -287,7 +287,7 @@ defineExpose({
   justify-content: center;
   font-family: PingFangSC-Semibold;
   font-size: 24px;
-  color: #1F2630;
+  color: var(--color-search-box-text-1);
   letter-spacing: 0;
   font-weight: 600;
 
@@ -301,7 +301,7 @@ defineExpose({
       height: 52px;
       text-align: center;
       line-height: 52px;
-      background: #EFF1F2;
+      background: var(--color-search-box-frame);
       border-radius: 32px;
       margin-left: 10px;
       position: relative;
@@ -328,7 +328,7 @@ defineExpose({
   overflow-y: auto;
 
   .color-1 {
-    color: #7642FD;
+    color: var(--color-bg-1);
   }
 
   .color-2 {
@@ -340,7 +340,7 @@ defineExpose({
   }
 
   .item {
-    background: #EFF1F2;
+    background: var(--color-search-box-frame);
     border-radius: 22px;
     padding: 20px 20px 25px 20px;
     margin-bottom: 20px;
@@ -348,7 +348,7 @@ defineExpose({
     >.title {
       font-family: PingFangSC-Medium;
       font-size: 24px;
-      color: #1F2630;
+      color: var(--color-search-box-text-1);
       letter-spacing: 0;
       font-weight: 500;
       display: flex;
@@ -368,7 +368,7 @@ defineExpose({
       .right {
         font-family: PingFangSC-Regular;
         font-size: 22px;
-        color: #96A5AA;
+        color: var( --color-search-box-text-2);
         letter-spacing: 0;
         text-align: right;
         font-weight: 400;
@@ -382,7 +382,7 @@ defineExpose({
       justify-content: space-around;
       font-family: PingFangSC-Semibold;
       font-size: 24px;
-      color: #1F2630;
+      color: var(--color-search-box-text-1);
       letter-spacing: 0;
       font-weight: 600;
 
@@ -409,7 +409,7 @@ defineExpose({
         width: 200px;
         font-family: PingFangSC-Semibold;
         font-size: 32px;
-        color: #000000;
+        color: var(--color-search-box-text-1);
         letter-spacing: 0;
         text-align: center;
         font-weight: 600;
@@ -438,44 +438,12 @@ defineExpose({
   }
 }
 
-// 弹窗
-.popup-title {
-  font-family: PingFangSC-Semibold;
-  font-size: 32px;
-  color: #1F2630;
-  letter-spacing: 0;
-  font-weight: 600;
-  margin: 24px 0 0 38px;
-}
-
-.pk-list {
-  padding-top: 30px;
-
-  .item {
-    font-size: 26px;
-    color: #1F2630;
-    letter-spacing: 1px;
-    padding: 40px;
-    border-bottom: 2px solid #eaeaea;
-
-    p {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-  }
-
-  .item-color {
-    color: #7642FD;
-  }
-}
-
 .noData {
   width: 100%;
   text-align: center;
   font-family: PingFangSC-Medium;
   font-size: 24px;
-  color: #96A5AA;
+  color: var(--color-search-box-text-2);
   letter-spacing: 0;
   font-weight: 500;
 
