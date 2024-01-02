@@ -1,6 +1,6 @@
 import { Module } from 'vuex'
 import { login, playAccount, getBalance } from '@/api/login'
-import { getCMerAccessWallet, betRecordTab } from '@/api/user'
+import { getCMerAccessWallet, betRecordTab, getGameManyInfo } from '@/api/user'
 import { User } from '#/store'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { configSettingNew } from '@/api/auth'
@@ -15,7 +15,8 @@ const userModule: Module<User, any> = {
     balance: {},
     pendingData: [],
     currency: '',
-    currencyData: []
+    currencyData: [],
+    teamNameList: []
   },
   mutations: {
     SET_TOKEN: (state, token: string) => {
@@ -86,6 +87,13 @@ const userModule: Module<User, any> = {
       const res:any = await getBalance(params) || {}
       if (res.code === 200) {
         state.balance = res.data || {}
+      }
+    },
+    // 队伍多语言
+    async getMoreTeamList({ state }, params) {
+      const res:any = await getGameManyInfo({ gidms: params }) || []
+      if (res.code === 200) {
+        state.teamNameList = [...state.teamNameList, ...res.data]
       }
     },
     // 进行中的注单

@@ -115,7 +115,7 @@ export const betRecordTab = (data:any) => {
 export const getGameManyInfo = (params:any) => {
   return request({
     url: 'ai/mobile/dataPageServer/api/c/game/getGameManyInfo',
-    method: 'post',
+    method: 'get',
     params
   })
 }
