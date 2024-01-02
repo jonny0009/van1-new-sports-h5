@@ -359,7 +359,7 @@ hitTimer()
         font-family: PingFangSC-Medium;
         font-size: 23px;
         color: #FFFFFF;
-        background-color: #7642FD;
+        background-color: var(--color-bg-1);
         letter-spacing: 0;
         text-align: center;
         font-weight: 500;
