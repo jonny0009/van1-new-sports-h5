@@ -13,34 +13,6 @@
     background-color: var(--color-background-color);
     padding: 20px 36px;
     height: 92.8vh;
-    .area-btn_1 {
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: space-around;
-
-      span {
-        font-family: PingFangSC-Semibold;
-        font-size: 28px;
-        color: var(--color-search-box-text-2);
-        letter-spacing: 0;
-        font-weight: 600;
-      }
-
-      .active {
-        color: var(--color-search-box-text-1);
-
-        &::after {
-          content: '';
-          width: 50%;
-          height: 6px;
-          display: block;
-          margin: 15px auto;
-          border-bottom: 6px solid var(--color-search-box-text-1);
-          border-radius: 6px;
-        }
-      }
-    }
-
    
   }
 

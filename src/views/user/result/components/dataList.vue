@@ -200,8 +200,7 @@ defineExpose({
 <style lang="scss" scoped>
 // 时间选择
 .timeSelect {
-  // margin: 30px 0;
-  margin: 10px 0;
+  margin-top: 23px;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -298,7 +297,7 @@ defineExpose({
 
 // 列表
 .dataList {
-  height: calc(100vh - 380px);
+  height: calc(100vh - 350px);
   overflow-y: auto;
   margin-top: 20px;
   // padding: 0 36px;
