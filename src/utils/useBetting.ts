@@ -48,6 +48,7 @@ export function useBetting() {
               awayTeam: awayTeamAbbr,
               gameId: game.gameId,
               gidm: game.gidm,
+              strong: game.strong,
               playType: dataInfo.playType,
               sw: dataInfo.sw,
               championType: dataInfo.championType

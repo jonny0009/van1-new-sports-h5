@@ -21,5 +21,24 @@ export default {
   OUInfo: 'Trên/Dưới toàn bộ trận đấu',
   M: 'Thắng',
   MInfo: 'Toàn trận 1X2',
-  stayTuned: '敬请期待'
+
+  // 机翻译
+  stayTuned: 'Giữ nguyên',
+  '1HNumber': `nửa đầu<span class='time-h-Up'>{number}</span>`,
+  '2HNumber': `một nửa thứ hai<span class='time-h-d'>{number}</span>`,
+  'bout': 'Đĩa {number}',
+  'set': 'Trò chơi {number}',
+  'down': 'Xuống',
+  'up': 'thượng đẳng',
+  'img': 'trong tiến trình',
+  'PenaltyKickWar': 'Đá luân lưu',
+  'addTimeNumber': `Tăng ca<span>{number}</span>`,
+  'live': 'Live streaming',
+  'Sunday': 'Chủ nhật',
+  'Monday': 'vào thứ Hai',
+  'Tuesday': 'Thứ ba',
+  'Wednesday': 'Thứ Tư',
+  'Thursday': 'Thứ năm',
+  'Friday': 'Thứ sáu',
+  'Saturday': 'Thứ bảy'
 }
