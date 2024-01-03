@@ -272,6 +272,7 @@ const getTitle = (type: any) => {
   color: var(--color-no-data-font);
   letter-spacing: 0;
   font-weight: 500;
+  height: 850px;
 
   >.img_1 {
     margin-top: 331px;
