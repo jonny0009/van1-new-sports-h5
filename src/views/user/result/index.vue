@@ -198,6 +198,7 @@ const handleClose = (item: any) => {
 :deep(.van-tab__text--ellipsis){
   font-size: 28px;;
   overflow: visible !important;
+  white-space:nowrap;
 }
 :deep(.van-tabs__nav--line){
   background-color: var(--color-background-color);
