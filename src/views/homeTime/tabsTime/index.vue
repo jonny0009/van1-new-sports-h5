@@ -111,7 +111,7 @@ const refHomeTimePage = ref()
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--color-text-1);
+    color: var(--color-text-3);
     white-space: nowrap;
     flex-shrink: 0;
   }

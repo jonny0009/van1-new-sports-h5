@@ -40,6 +40,7 @@ watch(
   (route: any) => {
     const name: string = route.name
     betShow.value = !unShow.value.includes(name)
+    ifShowFixedBet()
   },
   { immediate: true }
 )
@@ -49,8 +50,18 @@ watch(
     if (markets.value.length) {
       isOpen.value = true
     }
+    ifShowFixedBet()
   }
 )
+
+const ifShowFixedBet = () => {
+  if (betShow.value && isOpen.value) {
+    store.dispatch('app/setKeyValue', {
+      key: 'showFixedBet',
+      value: true
+    })
+  }
+}
 </script>
 <style lang="scss">
 .GlobalTop {

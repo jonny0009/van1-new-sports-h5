@@ -8,6 +8,7 @@ import { getTheme, setTheme } from '@/utils/auth'
 const appModule: Module<App, any> = {
   namespaced: true,
   state: {
+    showFixedBet: false,
     state: true,
     theme: getTheme(),
     queryCMerLanguage: {},
