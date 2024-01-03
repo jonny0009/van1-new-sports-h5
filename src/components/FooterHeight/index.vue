@@ -1,11 +1,15 @@
 <template>
-  <div class="footerHeight" :class="showFixedBet"></div>
+  <div class="footerHeight" :class="{showFixedBetx}"></div>
 </template>
 <script lang="ts" setup>
 import store from '@/store'
-import { computed } from 'vue'
-// showFixedBet
-const showFixedBet = computed(() => store.state.app.showFixedBet)
+import { computed, onMounted } from 'vue'
+// showFixedBetx
+const showFixedBetx = computed(() => store.state.app.showFixedBet)
+onMounted(() => {
+  console.log(store.state.app)
+})
+
 </script>
 <style lang="scss" scoped>
 </style>

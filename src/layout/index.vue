@@ -40,6 +40,11 @@ const ifShowFixedBet = () => {
       key: 'showFixedBet',
       value: true
     })
+  } else {
+    store.dispatch('app/setKeyValue', {
+      key: 'showFixedBet',
+      value: false
+    })
   }
 }
 watch(

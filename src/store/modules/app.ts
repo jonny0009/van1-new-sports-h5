@@ -27,7 +27,7 @@ const appModule: Module<App, any> = {
   },
   actions: {
     setKeyValue(state:any, { key, value }) {
-      state[key] = value
+      state.state[key] = value
     },
     async queryCMerLanguage({ state }) {
       const res:any = await queryCMerLanguage() || {}
