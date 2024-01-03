@@ -58,6 +58,8 @@ const getRecommendEvents = async (gameType:any = 'FT') => {
     const { baseData } = data
     recommendEventsList.length = 0
     recommendEventsList.push(...baseData)
+
+    console.log(recommendEventsList)
   }
 }
 const returnSportsSuccess = (val:any) => {
