@@ -18,5 +18,6 @@ export default {
   notBets: '您的选择将出现在此',
   combos: '{num}场串关',
   acceptOdds: '接受赔率',
-  eventClosure: '赛事封单'
+  eventClosure: '赛事封单',
+  noComboTips: '已选内容无法进行组合'
 }

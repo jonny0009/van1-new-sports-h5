@@ -10,7 +10,7 @@
     </div>
     <div class="keyboard-input-body">
       <div v-for="key in keys" :key="key" class="input-item" @click="inputEntry(key)">
-        <span v-if="key === 'back'" class="back"></span>
+        <span v-if="key === 'back'" class="back" :style="{backgroundImage:`url(${deleteBg})`}"></span>
         <span v-else>{{ key }}</span>
       </div>
     </div>
@@ -29,10 +29,20 @@
 <script lang="ts" setup>
 import store from '@/store'
 import { computed, ref } from 'vue'
+import delete0 from '@/assets/images/betting/delete-left0.png?url'
+import deleteBlue from '@/assets/images/betting/delete-left1.png?url'
 const quickKeys = ref([1, 10, 50, 100])
 const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '00', 'back']
 const mode = computed(() => store.state.betting.mode)
 const boardShow = computed(() => store.state.betting.boardShow)
+const theme = computed(() => store.state.app.theme)
+
+const deleteBg = computed(() => {
+  if (theme.value === 'blue') {
+    return deleteBlue
+  }
+  return delete0
+})
 const oddChangesState = computed({
   get() {
     return store.state.betting.oddChangesState
@@ -133,7 +143,6 @@ const close = () => {
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
-      background-image: url('@/assets/images/betting/delete-left.png');
     }
   }
 }

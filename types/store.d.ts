@@ -3,6 +3,7 @@ import { Store } from 'vuex'
 import { RouteRecordRaw } from 'vue-router'
 
 declare interface App {
+  showFixedBet: boolean
   theme: any
   globalBarHeaderHeight:any
   doubleLineInfo: any

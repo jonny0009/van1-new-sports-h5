@@ -12,7 +12,7 @@
         <span class="bet-arrow" :class="{ open }"></span>
       </div>
       <div v-if="open" class="bet-switch-wrap">
-        <span class="label">{{ $t('betting.ratioChangTips') }}</span>
+        <span class="label text-overflow">{{ $t('betting.ratioChangTips') }}</span>
         <van-switch
           v-model="userConfig.acceptAll"
           :size="20"
@@ -301,6 +301,7 @@ hitTimer()
   .bet-switch-wrap {
     display: flex;
     align-items: center;
+    overflow: hidden;
 
     .label {
       font-family: PingFangSC-Medium;

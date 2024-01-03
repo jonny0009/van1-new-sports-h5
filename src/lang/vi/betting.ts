@@ -18,5 +18,6 @@ export default {
   notBets: 'Lựa chọn của bạn sẽ xuất hiện ở đây',
   combos: '{num} cược kết hợp',
   acceptOdds: 'Chấp nhận tỷ lệ cược',
-  eventClosure: 'Đóng cửa sự kiện'
+  eventClosure: 'Đóng cửa sự kiện',
+  noComboTips: 'Nội dung đã chọn không thể kết hợp'
 }
