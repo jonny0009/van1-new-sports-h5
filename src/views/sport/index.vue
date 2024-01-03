@@ -15,7 +15,7 @@
     </div>
     <!-- 联赛 -->
     <template v-if="recommendList.length && leagueId">
-      <ArrowTitle class="mt10 mb10" :src="leagueLogo" :text="leagueName" @returnSuccess="recommendCloseClick" />
+      <ArrowTitle class="mt10 mb10" :src="leagueLogo" type="6" :text="leagueName" @returnSuccess="recommendCloseClick" />
       <template v-if="isOpenRecommend">
         <Loading v-if="!getRecommendEventsIsLoading" />
         <template v-else>
@@ -217,20 +217,30 @@ const getRecommendEvents = async (params:any) => {
     getRecommendEventsIsLoading.value = false
     const res:any = await recommendEvents(params) || {}
     getRecommendEventsIsLoading.value = true
+    let listFlag:any = []
     if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
-      recommendList.value = res.data.baseData || []
-      if (res.data.baseData.length) {
-        leagueLogo.value = res.data.baseData[0].leagueLogo
-        leagueName.value = res.data.baseData[0].leagueShortName
-      }
+      listFlag = res.data.baseData
+    }
+    if (listFlag.length) {
+      // 早盘
       if (!leagueId.value) {
-        earlyList.value = res.data.baseData || []
+        earlyList.value = listFlag
       } else {
-        earlyList.value = []
+        // 推荐 - 选择联赛
+        leagueLogo.value = listFlag[0].leagueLogo
+        leagueName.value = listFlag[0].leagueShortName
+        recommendList.value = listFlag
       }
     } else {
-      recommendList.value = []
-      earlyList.value = []
+      // 早盘
+      if (!leagueId.value) {
+        earlyList.value = []
+      } else {
+        // 推荐 - 选择联赛
+        leagueLogo.value = ''
+        leagueName.value = ''
+        recommendList.value = []
+      }
     }
   }
 }

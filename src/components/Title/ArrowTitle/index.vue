@@ -6,7 +6,7 @@
     }"
     @click="clickChangActive"
   >
-    <img v-img="props.src" :type="1" class="img mr10" style="object-fit: contain;" />
+    <img v-img="props.src" :type="type" class="img mr10" style="object-fit: contain;" />
     <span>
       {{ props.text }}
     </span>
@@ -21,6 +21,12 @@ const props = defineProps({
     type: String,
     default: function () {
       return ''
+    }
+  },
+  type: {
+    type: String,
+    default: function () {
+      return '1'
     }
   },
   text: {
