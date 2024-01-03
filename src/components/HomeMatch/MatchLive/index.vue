@@ -59,12 +59,12 @@
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">
                   {{ $t('home.RInfo') }}
-                  <van-popover placement="top" theme="dark" trigger="click" class="newPopover" :to="`.flex-cross-center-${sendParams.gidm}${sendParams.systemId}`">
+                  <!-- <van-popover placement="top" theme="dark" trigger="click" class="newPopover" :to="`.flex-cross-center-${sendParams.gidm}${sendParams.systemId}`">
                     <div class="popover-text">{{ $t('home.RInfo2') }}</div>
                     <template #reference>
                       <van-icon name="info" />
                     </template>
-                  </van-popover>
+                  </van-popover> -->
                 </div>
               </div>
               <div class="match-betting-item__content">
