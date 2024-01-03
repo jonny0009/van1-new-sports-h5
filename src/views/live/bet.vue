@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, ref, onMounted } from 'vue'
+import { Ref, ref, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { matcheInfo } from '@/api/live'
 import { useMatch } from '@/utils/useMatch'
@@ -58,6 +58,9 @@ const { getPlayGroupType } = useBetting()
 onMounted(() => {
   getMatcheInfo()
   onInterval()
+})
+onUnmounted(() => {
+  unInterval()
 })
 
 let intervalTimer: any = null
