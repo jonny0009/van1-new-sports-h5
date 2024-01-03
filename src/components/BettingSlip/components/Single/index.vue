@@ -32,7 +32,7 @@
         </div>
       </div>
       <div v-if="isCombo" class="combo-enable"></div>
-      <div v-if="marketInfo.errorCode" class="error-popup">
+      <div v-if="marketInfo.errorCode || marketInfo.golaMin * 1 === 0 || marketInfo.golaMax * 1 === 0" class="error-popup">
         <div class="lock"></div>
         <div class="tips"> {{ $t('betting.eventClosure') }}</div>
       </div>
@@ -134,6 +134,7 @@ const inputTouch = () => {
     .van-icon {
       font-size: 32px;
       color: #fff;
+
       &.fixed {
         position: absolute;
         top: 0;
