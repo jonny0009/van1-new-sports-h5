@@ -66,34 +66,37 @@ const replaceImgUrl = (str: any) => {
 
 .noticeDetail {
   .bg-title {
-    // width: 100%;
-    // height: 150px;
-    // background: url('@/assets/images/login/bg-tit@2x.png');
-    // background-size: 100% 100%;
-
+    background-color: var(--title-background-color-2);
     .img_1 {
       margin-top: -15px;
       width: 36px;
       height: 36px;
+      color: var(--title-text-font-color);
     }
+
   }
 
   .content {
-    height: calc(100vh - 350px);
+    height: calc(100vh - 296px);
     overflow-y: auto;
     padding: 42px 36px;
     font-weight: 400px;
+    background-color: var(--color-background-color);
+
     color: var(--color-text-1);
 
   }
 
   .noticeTime {
+    background-color: var(--color-background-color);
     font-family: PingFangSC-Regular;
     font-size: 24px;
     color: #546371;
     letter-spacing: 0;
     text-align: right;
     font-weight: 400;
+    height: 200px;
+    line-height: 100px;
     padding: 42px 36px;
     text-align: right;
   }
@@ -122,6 +125,7 @@ const replaceImgUrl = (str: any) => {
   letter-spacing: 0;
   text-align: center;
   font-weight: 500;
+  color: var(--title-text-font-color);
 }
 
 :deep(.van-icon) {
