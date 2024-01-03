@@ -2,6 +2,7 @@ import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 const target = 'http://dev.new-sports-h5.xc.com/'
+// http://cn2.new-sports-h5.aisports.io/home
 
 export default () => {
   return {
