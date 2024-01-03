@@ -119,6 +119,16 @@ export const getGameManyInfo = (params:any) => {
     params
   })
 }
+// 冠军多语言
+// gidm=48935924,6525841347224326144,6525841345152335872
+
+export const selectChampionManyName = (params:any) => {
+  return request({
+    url: 'ai/mobile/dataConfig/api/c/selectChampionManyName',
+    method: 'get',
+    params
+  })
+}
 
 // 余额类型   无参数
 export const getTradeTypeEnums = (params:any) => {
