@@ -129,7 +129,7 @@ const bettingModule: Module<Betting, any> = {
     // 有效投注注数
     effectiveMarkets(state) {
       return state.markets.filter((order: any) => {
-        return !order.errorCode && order.gold * 1
+        return !order.errorCode && order.gold * 1 && !order.iorChange
       })
     },
     // 有效投注注数

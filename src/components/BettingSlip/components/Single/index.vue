@@ -19,7 +19,7 @@
           @<span v-points="marketInfo.ior"></span>
           <span class="ior-change" :class="marketInfo.iorChange"></span>
         </div>
-        <div v-if="mode === 1" class="action">
+        <div v-if="accountState" class="action">
           <div v-if="marketInfo.iorChange" class="betting-slip-accept-button" @click="clearIorChange">
             {{ $t('betting.acceptOdds') }}
           </div>
@@ -47,6 +47,10 @@ const props = defineProps({
   marketInfo: {
     type: Object,
     default: () => { }
+  },
+  accountState: {
+    type: Boolean,
+    default: false
   }
 })
 const mode = computed(() => store.state.betting.mode)
