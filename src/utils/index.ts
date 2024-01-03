@@ -104,10 +104,18 @@ export const points = (value: any, n = 2) => {
  * @param url
  */
 export const createScript = (url: string, async: boolean = true) => {
-  const el = document.createElement('script')
-  el.src = `${url}?r=${Date.now()}`
-  el.async = async
-  document.getElementsByTagName('head')[0].appendChild(el)
+  return new Promise((resolve: any) => {
+    const el = document.createElement('script')
+    el.src = `${url}?r=${Date.now()}`
+    el.async = async
+    document.getElementsByTagName('head')[0].appendChild(el)
+    el.onload = () => {
+      resolve()
+    }
+    el.onerror = () => {
+      resolve()
+    }
+  })
 }
 
 export const imgUrlFormat = (url: string) => {

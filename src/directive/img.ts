@@ -40,6 +40,9 @@ function _handleLoad(el: any, { value = '' }: any) {
   img.onload = function () {
     el.src = url
   }
+  img.onerror = function () {
+    _handleError(el)
+  }
   img.src = url
 }
 

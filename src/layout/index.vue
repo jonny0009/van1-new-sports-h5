@@ -33,6 +33,7 @@ const { currentRoute } = useRouter()
 const betShow: any = ref(true)
 const unShow: any = ref(['game'])
 const markets = computed(() => store.state.betting.markets)
+const results = computed(() => store.state.betting.results)
 const isOpen = ref(markets.value.length > 0)
 const ifShowFixedBet = () => {
   if (betShow.value && isOpen.value) {
@@ -61,6 +62,16 @@ watch(
   () => {
     if (markets.value.length) {
       isOpen.value = true
+    } else if (results.value.length === 0) {
+      isOpen.value = false
+    }
+  }
+)
+watch(
+  () => results.value.length,
+  () => {
+    if (results.value.length === 0 && markets.value.length === 0) {
+      isOpen.value = false
     }
     ifShowFixedBet()
   }
@@ -72,12 +83,13 @@ watch(
   background: var(--color-primary);
   right: 40px !important;
   bottom: 100px !important;
+
   .van-icon {
     transform: rotate(180deg);
     font-weight: 600;
   }
 
-  &.showBettingSlip{
+  &.showBettingSlip {
     bottom: 200px !important;
   }
 }

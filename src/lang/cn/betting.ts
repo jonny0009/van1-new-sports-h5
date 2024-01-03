@@ -11,6 +11,7 @@ export default {
   betting: '下单中...',
   errorTips: '网络异常！',
   orderCheck: '已受理注单',
+  orderPending: '受理中注单',
   orderError: '未受理注单',
   finish: '完成',
   oddChangTips: '接受所有盘口变化',
@@ -18,5 +19,6 @@ export default {
   notBets: '您的选择将出现在此',
   combos: '{num}场串关',
   acceptOdds: '接受赔率',
-  eventClosure: '赛事封单'
+  eventClosure: '赛事封单',
+  noComboTips: '已选内容无法进行组合'
 }
