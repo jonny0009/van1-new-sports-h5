@@ -31,7 +31,7 @@ class WebSocketItem {
           // 连接发生错误时的处理函数
           this.stompClient.disconnect()
           this.stompClient = null
-          console.warn(`socket断开连接=>${err}`)
+          console.error(`socket断开连接=>${err}`)
           console.info(`socket开始尝试重新连接....`)
           await sleep(3000)
           await this.connect()

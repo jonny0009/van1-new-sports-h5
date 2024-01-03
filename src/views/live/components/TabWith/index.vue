@@ -29,7 +29,7 @@
             <span>{{ item.leagueShortName }}</span>
           </div>
           <div class="label-flex">
-            <img src="@/assets/images/live/live_purple.png" alt="" />
+            <i class="iconfont icon-dianshi" />
             <span v-html="setMatch.showRBTime(props.matchInfo)"></span>
           </div>
         </div>
@@ -70,11 +70,17 @@
         <div class="betting">
           <div class="betting-cell bt1">
             <strong>{{ $t('live.betAmout') }}：</strong>
-            <span>{{ item.golds }}</span>
+            <span>
+              <SvgIcon name="usdt" />
+              {{ item.golds }}
+            </span>
           </div>
           <div class="betting-cell bt2">
             <strong>{{ $t('live.betProfit') }}：</strong>
-            <span>{{ (item.golds * item.ior).toFixed(2) }}</span>
+            <span>
+              <SvgIcon name="usdt" />
+              {{ (item.golds * item.ior).toFixed(2) }}
+            </span>
           </div>
         </div>
 
@@ -158,8 +164,7 @@ onMounted(() => {
   padding: 50px 0 0 0;
 }
 .panel-with {
-  padding: 0 36px;
-  padding-top: 20px;
+  padding: 20px 36px;
   .top-nav {
     display: flex;
     margin-bottom: 42px;
@@ -257,6 +262,10 @@ onMounted(() => {
       }
       .svg-icon {
         color: #999;
+        margin: 0 10px 0 5px;
+      }
+      .iconfont {
+        color: var(--color-primary);
         margin: 0 10px 0 5px;
       }
     }
@@ -361,9 +370,13 @@ onMounted(() => {
         &.bt2 {
           font-size: 28px;
         }
+        .svg-icon {
+          zoom: 0.8;
+          vertical-align: -2px;
+        }
       }
       &-cell.bt2 > span {
-        color: #7642fd;
+        color: var(--color-primary);
       }
     }
     .footer {
@@ -373,8 +386,12 @@ onMounted(() => {
       .button {
         width: 638px;
         height: 68px;
-        background: url('@/assets/images/live/btn_purple.png') no-repeat;
-        background-size: 100% 100%;
+        background-image: linear-gradient(
+          180deg,
+          var(--color-linear-gradient-1) 0%,
+          var(--color-linear-gradient-2) 100%
+        );
+        border-radius: 34px;
         font-size: 28px;
         color: #eff1f2;
         letter-spacing: 0;
