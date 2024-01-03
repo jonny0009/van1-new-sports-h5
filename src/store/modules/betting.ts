@@ -247,6 +247,7 @@ const bettingModule: Module<Betting, any> = {
     updateMarket({ state, rootState }, newBet) {
       const userConfig = rootState.user.userConfig
       const { handicapType } = userConfig || {}
+      const autoRatio = userConfig.acceptAll === 1
       // 获取新的点水参数
       const { ratioKey, errorCode, eoIor, ior, score, showType, ratio, strong, gameDate } = newBet
       const newBetsMap: any = {}
@@ -275,7 +276,7 @@ const bettingModule: Module<Betting, any> = {
             newBetData.ior = eoIor
           }
           const newIor = newBetData.ior * 1 || ior * 1
-          if (oldIor * 1 !== newIor) {
+          if (oldIor * 1 !== newIor && autoRatio) {
             if (oldIor * 1 > newIor) {
               iorChange = 'up'
             } else {
