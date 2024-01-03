@@ -11,5 +11,12 @@ export default {
   betting: 'Đang đặt cược...',
   errorTips: 'Mạng bất thường！',
   orderCheck: 'Cược được chấp nhận',
-  orderError: 'Cược không được chấp nhận'
+  orderError: 'Cược không được chấp nhận',
+  finish: 'Hoàn thành',
+  oddChangTips: 'Chấp nhận tất cả các thay đổi cược',
+  notPendingOrders: 'Không có đơn cược đang chờ',
+  notBets: 'Lựa chọn của bạn sẽ xuất hiện ở đây',
+  combos: '{num} cược kết hợp',
+  acceptOdds: 'Chấp nhận tỷ lệ cược',
+  eventClosure: 'Đóng cửa sự kiện'
 }
