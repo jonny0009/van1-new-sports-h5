@@ -68,7 +68,7 @@ const clickOpen = () => {
         justify-content: space-between;
         align-items: center;
         padding: 10px 10px;
-        background-color: white;
+        background-color: var(--color-match-BetBg);
         border-radius: 26px;
         overflow: hidden;
         transition: background-color .2s;
