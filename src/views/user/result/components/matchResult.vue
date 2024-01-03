@@ -438,7 +438,7 @@ defineExpose({
   }
 }
 
-> .noData {
+ .noData {
   width: 100%;
   text-align: center;
   font-family: PingFangSC-Medium;
