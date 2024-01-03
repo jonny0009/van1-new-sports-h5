@@ -56,7 +56,13 @@ const markets = computed(() => store.state.betting.markets)
 const matchData: Ref<any> = ref({})
 const getMatcheInfo = async (gidm = route.params['id']) => {
   const res = await matcheInfo({ gidm })
-  matchData.value = res.data || {}
+  const data = res.data || {}
+  matchData.value = { ...data }
+  if (data.detail && data.detail.length > 0) {
+    const { game } = data.detail[0]
+    const gameInfo = game.gameInfo || {}
+    matchData.value.gameInfo = gameInfo
+  }
 }
 
 const extendData: Ref<any> = ref({})
