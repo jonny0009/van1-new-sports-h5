@@ -6,25 +6,38 @@
       </template>
     </van-nav-bar>
     <div class="content">
-
-      <div class="area-btn_1">
-        <span :class="index == 0 ? 'active' : ''" @click.stop="handleSwipe(0)">{{ $t('user.BettingHistory') }}</span>
-        <span :class="index == 1 ? 'active' : ''" @click.stop="handleSwipe(1)">{{ $t('user.FlowingHistory') }}</span>
-        <span :class="index == 2 ? 'active' : ''" @click.stop="handleSwipe(2)">{{ $t('user.matchResult') }}</span>
-      </div>
-      <van-swipe ref="swipe" :loop="false" :show-indicators="false" :duration="300" @change="HandleSlide">
-        <van-swipe-item>
+      <!-- tab切换栏 -->
+      <van-tabs
+        v-model:active="index"
+        :swipeable="true"
+        line-height="3px"
+        color="#1F2630 "
+        title-inactive-color="#96A5AA"
+        title-active-color="#1F2630"
+        line-width="40px"
+        :duration="0.3"
+      >
+        <van-tab :title="$t('user.BettingHistory')">
           <dataList ref="childRefA" @valueChange="setStatus"></dataList>
-        </van-swipe-item>
-        <van-swipe-item>
+        </van-tab>
+        <van-tab :title="$t('user.FlowingHistory')">
           <RunningHistory></RunningHistory>
-        </van-swipe-item>
-        <van-swipe-item>
+        </van-tab>
+        <van-tab :title="$t('user.matchResult')">
           <MatchResult ref="childRefB" @valueChange="setStatus"></MatchResult>
-        </van-swipe-item>
-      </van-swipe>
+        </van-tab>
+      </van-tabs>
+
       <!-- 弹窗===11 -->
-      <van-popup v-model:show="showBottom" position="bottom" :duration="0.2" closeable round :style="{ maxHeight: '50%' }" @close="handleClose('close')">
+      <van-popup
+        v-model:show="showBottom"
+        position="bottom"
+        :duration="0.2"
+        closeable
+        round
+        :style="{ maxHeight: '50%' }"
+        @close="handleClose('close')"
+      >
         <div class="popup-title">{{ popupTitle }}</div>
         <div class="pk-list">
           <div
@@ -35,13 +48,13 @@
             @click="setPk(item)"
           >
             <p>
-              <span v-if="way===1">
+              <span v-if="way === 1">
                 {{ item.value }}
               </span>
-              <span v-if="way===2">
+              <span v-if="way === 2">
                 {{ $t(`user.sports.${item.gameType}`) }}
               </span>
-              <span v-if="way===3">
+              <span v-if="way === 3">
                 {{ item.name }}
               </span>
               <span v-if="commonKey.key === item.key">
@@ -73,7 +86,6 @@ const popupList = reactive<{ arr: any[] }>({ arr: [] })
 const $router = useRouter()
 const way = ref(1)
 const index = ref(0)
-const swipe = ref()
 const childRefA = ref()
 const childRefB = ref()
 const showBottom = ref(false)
@@ -81,15 +93,8 @@ const showBottom = ref(false)
 const goBack = () => {
   $router.back()
 }
-const HandleSlide = (step: any) => {
-  index.value = Number(step)
-}
-const handleSwipe = (step:any) => {
-  index.value = step
-  swipe.value.swipeTo(step)
-  console.log()
-}
-const setStatus = (value: any, popupTitleChild: any, popupListChild: any, commonKeyChild: any, wayChild:any) => {
+
+const setStatus = (value: any, popupTitleChild: any, popupListChild: any, commonKeyChild: any, wayChild: any) => {
   popupTitle.value = popupTitleChild
   commonKey.value = commonKeyChild
   popupList.arr = [...popupListChild]
@@ -134,10 +139,11 @@ const handleClose = (item: any) => {
 :deep(.van-icon) {
   font-size: 40px;
 }
+
 .popup-title {
   font-family: PingFangSC-Semibold;
   font-size: 32px;
-  color: var( --color-search-box-text-1);
+  color: var(--color-search-box-text-1);
   letter-spacing: 0;
   font-weight: 600;
   margin: 24px 0 0 38px;
@@ -148,7 +154,7 @@ const handleClose = (item: any) => {
 
   .item {
     font-size: 26px;
-    color: var( --color-search-box-text-1);
+    color: var(--color-search-box-text-1);
     letter-spacing: 1px;
     padding: 40px;
     border-bottom: 2px solid #eaeaea;
@@ -184,5 +190,16 @@ const handleClose = (item: any) => {
 
 :deep(.van-icon) {
   font-size: 48px;
+}
+
+:deep(.van-tabs--line .van-tabs__wrap) {
+  height: 65px;
+}
+:deep(.van-tab__text--ellipsis){
+  font-size: 28px;;
+  overflow: visible !important;
+}
+:deep(.van-tabs__nav--line){
+  background-color: var(--color-background-color);
 }
 </style>

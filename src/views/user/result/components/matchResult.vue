@@ -281,7 +281,7 @@ defineExpose({
 <style lang="scss" scoped>
 // 状态
 .status {
-  // margin-top: 20px;
+  margin-top: 23px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -324,7 +324,7 @@ defineExpose({
 // 列表
 .dataList {
   margin-top: 20px;
-  height: calc(100vh - 390px);
+  height: calc(100vh - 360px);
   overflow-y: auto;
 
   .color-1 {
