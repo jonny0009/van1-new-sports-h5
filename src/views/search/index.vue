@@ -325,6 +325,7 @@ const toUrlGame = (item: any) => {
       .itemImg {
         height: 38px;
         width: 38px;
+        color: var(--color-search-box-text-2);
       }
 
       .right {
