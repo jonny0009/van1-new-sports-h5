@@ -201,8 +201,8 @@ const onSend = () => {
     .action {
       .van-button {
         color: #fff;
-        background: #7642fd;
-        border-color: #7642fd;
+        background: var(--color-primary);
+        border-color: var(--color-primary);
         border-radius: 32px;
         width: 120px;
         height: 64px;

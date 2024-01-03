@@ -19,9 +19,6 @@
         </div>
         <div class="team-score">
           <span class="default" v-html="setMatch.showRBTime(matchInfo)"></span>
-          <!-- <span class="icons" v-if="matchInfo.showtype == 'RB'">
-            <SvgIcon name="live-play" />
-          </span> -->
         </div>
         <div class="team-player away">
           <div class="img-num">

@@ -4,17 +4,17 @@ export default {
   component: Layout,
   children: [
     {
-      name: 'Live',
+      name: 'Broadcast',
       path: '',
       component: () => import('@/views/live/index.vue')
     },
     {
-      name: 'LiveId',
+      name: 'BroadcastDetail',
       path: ':id',
       component: () => import('@/views/live/id.vue')
     },
     {
-      name: 'LiveBet',
+      name: 'BroadcastBetting',
       path: '/bet/:id',
       component: () => import('@/views/live/bet.vue')
     }

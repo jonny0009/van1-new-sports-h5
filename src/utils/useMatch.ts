@@ -77,10 +77,10 @@ export function useMatch() {
           // 非加时赛
           if (gameInfo?.re_time === 'HT^^' || gameInfo?.re_time === 'HT') {
             // 中场休息
-            return '中场休息'
+            return t('live.HT')
           } else if (gameInfo?.re_time && new RegExp('LIVE').test(gameInfo?.re_time)) {
             // 暂停
-            return '暂停'
+            return t('live.pause')
           } else if (gameInfo?.re_time && gameInfo?.re_time.indexOf('^') > -1) {
             // 比赛进行中
             const [secssion, raceTime] = gameInfo.re_time.split('^')
