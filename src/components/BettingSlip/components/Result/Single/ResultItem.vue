@@ -2,7 +2,7 @@
   <div class="result-item">
     <div class="title">
       <span class="state-icon" :class="stateClass"></span>
-      {{ result.errorCode ? $t('betting.orderError') : $t('betting.orderCheck') }}
+      {{ stateTips }}
     </div>
     <div class="content">
       <div class="result-info">
@@ -26,6 +26,8 @@
 import { getOrderState } from '@/api/betting'
 import { onBeforeMount, ref } from 'vue'
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 const props = defineProps({
   result: {
     type: Object,
@@ -51,6 +53,14 @@ const stateClass = computed(() => {
     return 'accepting'
   }
   return 'check'
+})
+const stateTips = computed(() => {
+  if (props.result.errorCode) {
+    return t('betting.orderError')
+  } else if (![1, 2].includes(+props.result.status)) {
+    return t('betting.orderPending')
+  }
+  return t('betting.orderCheck')
 })
 onBeforeMount(() => {
   console.log(props.result.betNo)

@@ -11,6 +11,7 @@ export default {
   betting: 'Đang đặt cược...',
   errorTips: 'Mạng bất thường！',
   orderCheck: 'Cược được chấp nhận',
+  orderPending: 'Chấp nhận đặt cược',
   orderError: 'Cược không được chấp nhận',
   finish: 'Hoàn thành',
   oddChangTips: 'Chấp nhận tất cả các thay đổi cược',
