@@ -1,5 +1,5 @@
 <template>
-  <div class="live-page" :class="{ 'has-bet': markets.length > 0 }">
+  <div class="live-page" :class="{ 'has-bet': showFixedBetx }">
     <div class="match" :class="{ 'no-vid': videoError }">
       <div v-show="!videoError" class="match-video">
         <video ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
@@ -51,7 +51,7 @@ const navList = reactive([
 ])
 const navActive = ref(0)
 const compsList = [TabChat, TabBets, TabWith, TabMore]
-const markets = computed(() => store.state.betting.markets)
+const showFixedBetx = computed(() => store.state.app.showFixedBet)
 
 const matchData: Ref<any> = ref({})
 const getMatcheInfo = async (gidm = route.params['id']) => {
