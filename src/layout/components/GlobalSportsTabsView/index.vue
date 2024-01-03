@@ -66,11 +66,24 @@ const getRouteName = () => {
 
 const active:any = computed(() => {
   const route = useRoute()
-  let active = route.query.type || route.params.type
+  let active = route.query.type || route.params.type || ''
   if (!active) {
-    active = getRouteName()
+    active = getRouteName() || ''
   }
-  return active || 'home'
+  //
+  const sports = [
+    'FT', 'BK', 'TN', 'BS', 'JC',
+    'BF', 'BK_AFT', 'OP_DJ', 'OP_IH',
+    'OP_RU', 'OP_HB', 'OP', 'RB',
+    'OP_MMA', 'OP_BO', 'OP_SN', 'OP_DR',
+    'OP_TN', 'OP_FH', 'OP_FB', 'OP_BV',
+    'OP_CK', 'OP_VB', 'OP_MS', 'OP_BA', 'OP_GF',
+    'DR', 'OP_BM', 'OP_JR', 'OP_LO', 'OP_CY',
+    'OP_OF', 'OP_SB', 'OP_FU', 'OP_TT',
+    'OP_GY', 'OP_TAF', 'OP_SS', 'OP_SW',
+    'OP_BS', 'OP_WS', 'OP_BD', 'sportlive'
+  ]
+  return sports.includes(active) ? active : 'home'
 })
 
 const clickChangeActive = (item:any) => {
@@ -103,7 +116,7 @@ const clickChangeActive = (item:any) => {
     display:flex;
     justify-content:center;
     align-items:center;
-    color:#546371;
+    color: var(--color-text-3);
     min-width: 124px;
     .iconfont{
       position: relative;
@@ -112,7 +125,7 @@ const clickChangeActive = (item:any) => {
       height: auto;
     }
     &.active{
-      color:#7642fe;
+      color:var(--color-primary);
     }
     // &.OP_DJ{
     //   .iconfont{

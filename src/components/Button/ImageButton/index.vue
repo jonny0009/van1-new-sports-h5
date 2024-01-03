@@ -63,17 +63,18 @@ defineProps({
   border-radius:30px;
   padding-left: 17px;
   padding-right: 40px;
-  background: #eff2f2;
-  color: #1f2630;
+  background: var(--color-global-buttonBg);
+  color: var( --color-global-buttonCl);
   transition: all .3s;
   font-size: 24px;
   font-weight: bold;
+  box-shadow: var(--color-global-buttonShadow);
   span{
     font-size: 24px;
     line-height:24px;
   }
   &.active{
-    background:#7642fe;
+    background: var(--color-primary);
     color:#fff;
   }
   .img{

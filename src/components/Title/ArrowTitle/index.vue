@@ -46,7 +46,7 @@ defineExpose({
   display: flex;
   align-items: center;
   font-weight: 600;
-  color: #1F2630;
+  color: var(--color-text-2);
   &> span{
     font-size: 32px;
     display: inline-block;

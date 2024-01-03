@@ -110,7 +110,7 @@ const inputTouch = () => {
   width: 676px;
   height: 50px;
   margin: 20px auto 0;
-  border: 2px solid rgba(118, 66, 253, 1);
+  border: 2px solid var(--color-bet-combomoneyborder);
   border-radius: 10px;
   display: flex;
   justify-content: space-between;
@@ -203,7 +203,7 @@ const inputTouch = () => {
     .value {
       font-family: PingFangSC-Semibold;
       font-size: 28px;
-      color: #7642FD;
+      color: var( --color-bet-iortext);
       letter-spacing: 0;
       font-weight: 600;
     }
@@ -231,7 +231,7 @@ const inputTouch = () => {
       height: 80px;
       margin: auto;
       text-align: center;
-      background-color: #7440fe;
+      background-color: var(--color-bet-confirmbg);
       color: #fff;
       border-radius: 40px;
       border: none;

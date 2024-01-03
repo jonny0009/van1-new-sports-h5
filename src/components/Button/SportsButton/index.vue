@@ -17,7 +17,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { Sports } from '@/config/sports'
+import lang from '@/lang'
 import { ref, watch } from 'vue'
 const props = defineProps({
   active: {
@@ -45,7 +45,7 @@ watch(props, (val) => {
 })
 
 const textVal = ref('')
-textVal.value = Sports[props.text]
+textVal.value = lang.global.t(`sport.sports.${props.text}`) || props.text
 
 const SportsName = ref('icon-FT')
 SportsName.value = `icon-${props.text}`
@@ -59,13 +59,22 @@ SportsName.value = `icon-${props.text}`
   border-radius:30px;
   padding-left: 17px;
   padding-right: 36px;
-  background: #eff2f2;
-  color: #96a5aa;
+  background: var(--color-global-buttonBg);
+  box-shadow: var(--color-global-buttonShadow);
+  color: var(--color-global-buttonCl);
   transition: all .3s;
   font-size: 24px;
+  font-weight: 600;
+  .iconfont {
+    font-weight: 100;
+    color: var(--color-global-minButtonicoCl);
+  }
   &.active{
-    background:#7642fe;
+    background: var(--color-primary);
     color:#fff;
+    .iconfont {
+      color:#fff;
+    }
   }
   span{
     font-size: 24px;

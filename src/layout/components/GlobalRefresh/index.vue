@@ -20,5 +20,6 @@ const onRefresh = () => {
 <style lang="scss" >
 .GlobalRefresh {
   min-height: calc(100vh - 96px);
+  background: var(--color-global-wrapBg);
 }
 </style>

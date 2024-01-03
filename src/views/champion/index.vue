@@ -152,10 +152,10 @@ const clickSportPage = (item: any) => {
       font-size: 24px;
       font-weight: 500;
       margin: 0 8px;
-      background: #EFF1F2;
+      background: var(--color-champion-choose-bg);
       &.active{
         color: #FFFFFF;
-        background: #7642FD;
+        background: var(--color-primary);
       }
     }
     .all{
@@ -186,7 +186,7 @@ const clickSportPage = (item: any) => {
     .up-league-item{
       margin-bottom: 16px;
       height: 100px;
-      background: #EFF1F2;
+      background: var(--color-champion-item-bg);
       border-radius: 24px;
       display: flex;
       align-items: center;

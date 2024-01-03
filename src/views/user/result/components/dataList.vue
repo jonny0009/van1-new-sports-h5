@@ -56,6 +56,7 @@ import Single from './single.vue'
 // getGameManyInfo
 import { betRecordTab } from '@/api/user'
 const list = reactive<{ arr: any }>({ arr: [] })
+import store from '@/store'
 import { showToast } from 'vant'
 
 import { useI18n } from 'vue-i18n'
@@ -177,6 +178,15 @@ const getNoAccount = async () => {
     data.forEach((item: any) => {
       list.arr.push(item)
     })
+    // 获取多语言
+    const gidmsArr:any = []
+    list.arr.map((m:any) => {
+      m.betDTOList.map((n:any) => {
+        const { systemId } = n
+        gidmsArr.push(systemId)
+      })
+    })
+    store.dispatch('user/getMoreTeamList', gidmsArr.join())
     loading.value = false
     finished.value = !data.length
   }

@@ -114,7 +114,7 @@ const clickChangeActive = (item: any) => {
       display: block;
     }
     &.active {
-      color: #7642fe;
+      color:  var(--color-primary);
     }
   }
 }

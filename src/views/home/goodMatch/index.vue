@@ -1,13 +1,13 @@
 <template>
   <ArrowTitle
-    class="mt10 mb10"
+    class="mt10"
     :src="titleRecommend"
     :text="$t('home.goofMatch')"
     @returnSuccess="returnStatus"
   />
   <Transition>
     <div v-if="!isShow" class="goodMatch">
-      <SportsTabs class="mb10 mt20" @returnSportsSuccess="returnSportsSuccess" />
+      <SportsTabs class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess" />
       <Loading v-if="!isLoading" />
       <template v-else>
         <HomeEmpty v-if="!recommendEventsList.length" />
@@ -41,13 +41,14 @@ watch(refreshChangeTime, (val) => {
   }
 })
 const recommendEventsList = reactive([])
+
 const isLoading = ref(false)
 const getRecommendEvents = async (gameType:any = 'FT') => {
   const params = {
     gradeType: 1,
     gameType: gameType,
-    startDate: dateUtil(new Date()).format('YYYY-MM-DD') + ' 00:00:00',
-    endDate: dateUtil(new Date()).format('YYYY-MM-DD') + ' 23:59:59'
+    startDate: dateUtil().format('YYYY-MM-DD') + ' 00:00:00',
+    endDate: dateUtil().add(1, 'day').format('YYYY-MM-DD') + ' 23:59:59'
   }
   isLoading.value = false
   const res:any = await recommendEvents(params)
@@ -60,6 +61,7 @@ const getRecommendEvents = async (gameType:any = 'FT') => {
   }
 }
 const returnSportsSuccess = (val:any) => {
+  gameType.value = val
   getRecommendEvents(val)
 }
 const init = () => {
@@ -72,11 +74,13 @@ const isShow = ref(false)
 const returnStatus = (val:any) => {
   isShow.value = val
 }
+
+const gameType = ref('FT')
 const goToSport = () => {
   router.push({
     name: 'Sport',
     params: {
-      type: 'FT'
+      type: gameType.value
     }
   })
 }

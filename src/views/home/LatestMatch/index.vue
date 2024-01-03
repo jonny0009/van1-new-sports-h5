@@ -1,13 +1,12 @@
 <template>
   <ArrowTitle
-    class="mt10 mb10"
     :src="titleTime"
     :text="$t('home.latestMatch')"
     @returnSuccess="returnStatus"
   />
   <Transition>
     <div v-show="!isShow" class="LatestMatch">
-      <SportsTabs class="mb10 mt20" @returnSportsSuccess="returnSportsSuccess" />
+      <SportsTabs class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess" />
       <Loading v-if="!isLoading" />
       <template v-else>
         <HomeEmpty v-if="!recommendEventsList.length" class="marginAuto"></HomeEmpty>
@@ -47,8 +46,8 @@ const getRecommendEvents = async (gameType:any = 'FT') => {
   const params = {
     gradeType: 2,
     gameType: gameType,
-    startDate: dateUtil(new Date()).format('YYYY-MM-DD') + ' 00:00:00',
-    endDate: dateUtil(new Date()).format('YYYY-MM-DD') + ' 23:59:59'
+    startDate: dateUtil().format('YYYY-MM-DD') + ' 00:00:00',
+    endDate: dateUtil().add(1, 'day').format('YYYY-MM-DD') + ' 23:59:59'
   }
   const res:any = await recommendEvents(params)
   isLoading.value = true

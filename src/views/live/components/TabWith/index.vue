@@ -8,15 +8,15 @@
     <div class="no-data" v-if="list.length === 0">
       <EmptyIcon />
     </div>
-    <div class="item" v-else v-for="(item, index) in list" :key="index">
+    <div v-for="(item, index) in list" v-else :key="index" class="item">
       <div class="header">
-        <img class="avatar" v-img="item.headImg" :type="3" alt="" />
+        <img v-img="item.headImg" class="avatar" :type="3" alt="" />
         <div class="title">
           <strong>{{ item.nikeName }}</strong>
           <span>@{{ item.nikeName }}</span>
         </div>
         <div class="right">
-          <span class="state" v-if="props.matchInfo.showtype == 'RB'">{{ $t('live.inprogress') }}</span>
+          <span v-if="props.matchInfo.showtype == 'RB'" class="state">{{ $t('live.inprogress') }}</span>
         </div>
       </div>
 
@@ -36,7 +36,7 @@
         <div class="team">
           <div class="team-cell">
             <div class="palyer">
-              <img src="@/assets/images/empty/team.png" v-img="item.homeLogo" :type="2" alt="" />
+              <img v-img="item.homeLogo" src="@/assets/images/empty/team.png" :type="2" alt="" />
               <span>{{ item.homeTeam }}</span>
             </div>
             <div class="score">
@@ -45,7 +45,7 @@
           </div>
           <div class="team-cell">
             <div class="palyer">
-              <img src="@/assets/images/empty/team.png" v-img="item.awayLogo" :type="2" alt="" />
+              <img v-img="item.awayLogo" src="@/assets/images/empty/team.png" :type="2" alt="" />
               <span>{{ item.awayTeam }}</span>
             </div>
             <div class="score">

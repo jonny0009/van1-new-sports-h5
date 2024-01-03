@@ -14,7 +14,7 @@
   padding: 50px;
 }
 .van-dialog__confirm, .van-dialog__confirm:active{
-  background-image: linear-gradient(to right, #623AF8, #4121AF);
+  background-image: linear-gradient(to right, var(--color-login-button-color-1), var(--color-login-button-color-2));
 }
 
 </style>

@@ -32,11 +32,23 @@
     left: 210px !important;
   }
   .van-popover__content{
-    background: #1f2630 !important;
+    background: var(--color-text-2) !important;
     border-radius:10px;
     padding: 10px;
     font-size: 24px;
   }
+}
+.van-button--primary {
+  color: #fff !important;
+  background: var(--color-primary) !important;
+  border: 1px solid var(--color-primary) !important;
+}
+.van-calendar__day--end, 
+.van-calendar__day--start,
+.van-calendar__day--start-end,
+.van-calendar__day--multiple-middle, 
+.van-calendar__day--multiple-selected{
+  background: var(--color-primary) !important;
 }
 // icon 2023/12/19
 @font-face {
@@ -79,6 +91,7 @@
 .icon-OP_FU:before{content:"\e610"}
 .icon-OP_OF:before{content:"\e613"}
 .icon-footer-live:before{content:"\e61d"}
+.icon-timeMore:before{content:"\e61c"}
 //
 //
 // 默认=>icon=>对照表
@@ -117,7 +130,7 @@
 //
 // home page
 .homeMatchHandicap{
-  color: #1f2630;
+  color: var(--color-text-2);
   .home-tabs-play{
     height: 68px;
     display: flex;
@@ -142,7 +155,7 @@
         border-radius: 8px;
         font-size: 24px;
         background: #eff2f2;
-        color: #1f2630;
+        color: var(--color-text-2);
         min-width:110px;
         padding: 0 10px;
         min-height:40px;
@@ -153,7 +166,7 @@
         align-items: center;
         flex-shrink: 0;
         &.active{
-          background: #7642FD;
+          background: var(--color-primary);
           color: #FFFFFF;
         }
         &:last-child{
@@ -199,7 +212,7 @@
         display: flex;
         .match-team-name{
           font-size: 28px;
-          color: #1F2630;
+          color:var(--color-text-2);
           font-weight: 600;
         }
       }
@@ -207,7 +220,7 @@
         display: flex;
         align-items: center;
         font-size: 24px;
-        color: #546371;
+        color: var(--color-text-3);
         padding-top: 5px;
         .iconfont {
           font-size: 24px;
@@ -220,8 +233,9 @@
       }
       .up-match-time{
         font-size: 24px;
-        color: #546371;
+        color: var(--color-text-3);
         display: flex;
+        white-space:nowrap;
       }
     }
     //
@@ -239,7 +253,7 @@
         align-items: center;
         font-size: 24px;
         border-right: 1px solid #eff1f2;
-        color: #546371;
+        color: var(--color-text-3);
         &:last-child{
           border-right: 0;
         }
@@ -263,7 +277,7 @@
     // end footer
     // body
     .up-match {
-      background-color: #eff2f2;
+      background-color: var(--color-match-Bg);
       border-top-left-radius: 26px;
       border-top-right-radius: 26px;
       overflow: hidden;
@@ -271,7 +285,10 @@
       font-weight: 800;
     }
     .up-match__footer{
-      border:  1px solid #eff2f2;
+      background: #fff;
+      border: 1px solid var(--color-match-brBg);
+      border-right-width: var(--color-match-brWidth);
+      border-left-width: var(--color-match-brWidth);
       border-bottom-left-radius: 26px;
       border-bottom-right-radius: 26px;
     }
@@ -291,7 +308,7 @@
       margin: 10px 20px;
       font-size: 24px;
       line-height: 24px;
-      color: #546371;
+      color: var(--color-text-3);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -302,7 +319,7 @@
       flex-direction:column;
       flex: 1;
       padding: 10px 5px 18px;
-      background-color: #ffffff;
+      background-color: var(--color-match-BetBg);
       border-radius: 20px;
       overflow: hidden;
       text-align: center;
@@ -311,7 +328,7 @@
        &> span{
           line-height: 24px;
           font-size: 24px;
-          color: #546371;
+          color: var(--color-text-3);
           white-space: nowrap; 
           overflow: hidden;
           text-overflow:ellipsis;
@@ -335,7 +352,7 @@
           line-height: 26px;
           min-height: 26px;
           font-size: 26px;
-          color: #000000;
+          color: var(--color-match-IorCl);
           .vior{
             padding: 0 5px;
           }
@@ -390,7 +407,7 @@
     .match-info-live__header{
       margin: 0 13px;
       padding: 20px 0;
-      color: #546371;
+      color: var(--color-text-3);
       .up-match-league {
         display: inline-flex;
         align-items: center;
@@ -403,9 +420,10 @@
         line-height: 26px;
         padding: 10px 20px 0;
         display: flex;
+        white-space:nowrap;
         .iconfont {
           font-size: 26px !important;
-          color: #7642fe;
+          color: var(--color-primary);
           font-weight: 100;
           height: auto;
         }
@@ -436,7 +454,7 @@
           justify-content: center;
           align-items: center;
           font-size: 24px;
-          color: #1f2630;
+          color: var(--color-text-2);
         }
       }
     }
@@ -444,7 +462,7 @@
   }
 }
 .Button-MatchMore{
-  color: #7642FD;
+  color:  var(--color-global-moreCl);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -465,19 +483,19 @@
     display: none;
   }
   img{
-    width: 200px;
+    width: 176px;
     height: 176px;
-    min-width: 200px;
+    min-width: 176px;
     display: block;
     flex-shrink: 1;
-    border-radius: 26px;
-    background: #eff2f2;
+    border-radius: 46px;
+    background: var(--color-global-imgBg);
   }
   & > .van-image{
     width: 200px;
     height: 176px;
     flex-shrink: 1;
-    margin-right: 14px;
+    margin-right: 36px;
     .van-image__error{
       width: 200px;
       height: 176px;
@@ -517,7 +535,7 @@
 .betting-option-wrap {
   display: inline-block;
   &.selected{
-    background-color: #7642fd !important;
+    background-color: var(--color-primary) !important;
     .up-betting-name{
       .text{
         color: rgba(255, 255, 255, .8) !important;

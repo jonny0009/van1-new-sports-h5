@@ -79,7 +79,7 @@ const goUrl = (url: string) => {
 const handleSave = async () => {
   // $router.push('/user/userInfo')
   const params = {
-    nickName: '',
+    nickName: userInfo.value.nickName,
     headImg: '',
     profiles: remark.value
   }

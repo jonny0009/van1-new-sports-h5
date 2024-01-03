@@ -1,8 +1,10 @@
 <template>
-  <div class="homeMatchHandicap">
-    <div class="home-tabs-play">
-      <TimeView :time-send-params="sendParams" />
-    </div>
+  <div ref="container" class="homeMatchHandicap">
+    <van-sticky :offset-top="offsetTop" :container="container" z-index="5">
+      <div class="home-tabs-play">
+        <TimeView :time-send-params="sendParams" />
+      </div>
+    </van-sticky>
     <div class="home-match">
       <div class="up-match-group__body">
         <div class="up-match">
@@ -125,7 +127,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { tnStObj, bsStObj, opScoreObj } from '@/utils/home/gameInfo'
 import { dateFormat } from '@/utils/date'
 import { getScore } from '@/utils/home/getScore'
@@ -148,7 +150,8 @@ import store from '@/store'
 //   // on close
 //   })
 // }
-
+const container = ref(null)
+const offsetTop = computed(() => store.state.app.globalBarHeaderHeight)
 //
 const sectionMap:any = {
   0: '',
