@@ -1,4 +1,3 @@
-
 export default {
   single: '单关',
   parlay: '串关',
