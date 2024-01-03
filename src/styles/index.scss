@@ -416,7 +416,7 @@
     // end body
     // live
     .match-info-live__header{
-      margin: 0 13px;
+      margin: 0 20px;
       padding: 20px 0;
       color: var(--color-text-3);
       .up-match-league {
@@ -424,12 +424,12 @@
         align-items: center;
         font-size: 24px;
         line-height: 24px;
-        padding: 0 20px;
+        padding: 0 20px 0 0;
       }
       .up-match-time{
         font-size: 24px;
         line-height: 26px;
-        padding: 10px 20px 0;
+        padding: 10px 0 0;
         display: flex;
         white-space:nowrap;
         .iconfont {
@@ -438,11 +438,16 @@
           font-weight: 100;
           height: auto;
         }
+        .up-match-time-html{
+          &>span{
+            margin-left: 10px;
+          }
+        }
       }
     }
     .up-match-score{
-      margin: 0 13px;
-      padding: 20px 0;
+      margin: 0 20px;
+      padding: 0 0 10px;
       .item{
         display: flex;
         align-items: center;
