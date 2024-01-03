@@ -94,7 +94,7 @@ const homeBarArray:any = ref(homeBarArrayTable(''))
 .barTabsView{
   display:flex;
   margin: 0 40px;
-  grid-gap: 36px;
+  // grid-gap: 36px;
   overflow: auto;
   &::-webkit-scrollbar {
     height: 0;
@@ -102,6 +102,13 @@ const homeBarArray:any = ref(homeBarArrayTable(''))
   }
   .item{
     flex-shrink: 1;
+    margin: 0 18px;
+    &:first-child{
+      margin: 0 18px 0 0;
+    }
+    &:last-child{
+      margin: 0 0 0 18px;
+    }
   }
 }
 </style>
