@@ -74,7 +74,8 @@
       </span>
     </div> -->
 
-    <div class="footerHeight"></div>
+    <FooterHeight />
+
   </div></template>
 
 <script lang="ts" setup>

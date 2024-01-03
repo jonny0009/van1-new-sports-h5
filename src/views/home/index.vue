@@ -6,7 +6,7 @@
     <GoodMatch ref="refGoodMatch" />
     <!-- 早盘 -->
     <LatestMatch ref="refLatestMatch" />
-    <div class="footerHeight"></div>
+    <FooterHeight />
   </div>
 </template>
 
