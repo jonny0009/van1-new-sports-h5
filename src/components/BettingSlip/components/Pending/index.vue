@@ -24,14 +24,21 @@ onMounted(() => {
 })
 
 const getTeamLang = () => {
-  const gidmsArr:any = []
+  // 获取多语言
+  const gidmsArr: any = []
+  // 冠军国际化
+  const championGidms: any = []
   pendingData.value.map((m:any) => {
     m.betDTOList.map((n:any) => {
-      const { systemId } = n
+      const { championType, systemId, gidm } = n
+      if (championType) {
+        championGidms.push(gidm)
+      }
       gidmsArr.push(systemId)
     })
   })
   store.dispatch('user/getMoreTeamList', gidmsArr.join())
+  store.dispatch('user/getChampionLang', championGidms.join())
 }
 </script>
 

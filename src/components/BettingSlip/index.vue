@@ -12,12 +12,12 @@
         <span class="bet-arrow" :class="{ open }"></span>
       </div>
       <div v-if="open" class="bet-switch-wrap">
-        <span class="label">{{ $t('betting.ratioChangTips') }}</span>
+        <span class="label text-overflow">{{ $t('betting.ratioChangTips') }}</span>
         <van-switch
           v-model="userConfig.acceptAll"
           :size="20"
           active-color="#fff"
-          inactive-color="#baa0fe"
+          :inactive-color="inactiveColor"
           class="bet-ior-switch"
           :active-value="1"
           :inactive-value="0"
@@ -72,9 +72,9 @@
           </div>
         </div>
         <template v-if="mode === 1">
-          <Singles v-for="market in markets " :key="market.playOnlyId" :market-info="market"></Singles>
+          <Singles v-for="market in markets " :key="market.playOnlyId" :account-state="true" :market-info="market"></Singles>
         </template>
-        <Parlay v-else parlay :markets="markets"></Parlay>
+        <Parlay v-else :markets="markets"></Parlay>
         <ActionBar v-if="open" />
       </div>
       <Result v-if="type !== 3 && results.length"></Result>
@@ -116,6 +116,14 @@ const tabs = ref([
 ])
 const tableLeft = computed(() => {
   return `calc(100% / 3 * ${type.value - 1} + (100% / 3 - 27vw) / 2 )`
+})
+const theme = computed(() => store.state.app.theme)
+
+const inactiveColor = computed(() => {
+  if (theme.value === 'blue') {
+    return '#a3d0fe'
+  }
+  return '#baa0fe'
 })
 const pendingNum = computed(() => store.state.user.pendingData)
 const isOne = computed(() => store.state.betting.isOne)
@@ -301,6 +309,7 @@ hitTimer()
   .bet-switch-wrap {
     display: flex;
     align-items: center;
+    overflow: hidden;
 
     .label {
       font-family: PingFangSC-Medium;

@@ -19,11 +19,26 @@
           @<span v-points="marketInfo.ior"></span>
           <span class="ior-change" :class="marketInfo.iorChange"></span>
         </div>
-        <div v-if="mode === 1" class="action">
-          <div v-if="marketInfo.iorChange" class="betting-slip-accept-button" @click="clearIorChange">
+        <div v-if="accountState && !marketInfo.iorChange && goldRule" class="gold-tips">
+          {{ $t('betting.goldTips', { min: marketInfo.goldMin, max: marketInfo.goldMax }) }}
+          <div class="tips-arrow"></div>
+        </div>
+        <div v-if="accountState" class="action">
+          <div
+            v-if="marketInfo.ratioChange"
+            class="betting-slip-accept-button"
+            @click="clearOddChange"
+          >
+            {{ $t('betting.acceptRatios') }}
+          </div>
+          <div
+            v-else-if="marketInfo.iorChange"
+            class="betting-slip-accept-button"
+            @click="clearIorChange"
+          >
             {{ $t('betting.acceptOdds') }}
           </div>
-          <div v-else ref="inputBtn" class="betting-slip-input" @click="inputTouch">
+          <div v-else ref="inputBtn" class="betting-slip-input" :class="{ error: goldRule }" @click="inputTouch">
             <span class="currency"><van-icon name="balance-o" /></span>
             <div style="flex: 1 1 0%;"></div>
             <span class="amount" :class="{ selected: marketInfo.playOnlyId === editId }">{{ marketInfo.gold }}</span>
@@ -32,7 +47,10 @@
         </div>
       </div>
       <div v-if="isCombo" class="combo-enable"></div>
-      <div v-if="marketInfo.errorCode" class="error-popup">
+      <div
+        v-if="marketInfo.errorCode || marketInfo.golaMin * 1 === 0 || marketInfo.golaMax * 1 === 0"
+        class="error-popup"
+      >
         <div class="lock"></div>
         <div class="tips"> {{ $t('betting.eventClosure') }}</div>
       </div>
@@ -47,12 +65,25 @@ const props = defineProps({
   marketInfo: {
     type: Object,
     default: () => { }
+  },
+  accountState: {
+    type: Boolean,
+    default: false
   }
 })
 const mode = computed(() => store.state.betting.mode)
 const editId = computed(() => store.state.betting.editId)
 const comboMarketPlayOnlyIds = computed(() => store.getters['betting/comboMarketPlayOnlyIds'])
 const isCombo = computed(() => comboMarketPlayOnlyIds.value.includes(props.marketInfo.playOnlyId) && mode.value === 2)
+const goldRule = computed(() => {
+  if (props.marketInfo.gold * 1 <= 0) {
+    return false
+  }
+  if (props.marketInfo.gold * 1 > props.marketInfo.goldMax * 1 || props.marketInfo.gold * 1 < props.marketInfo.goldMin * 1) {
+    return true
+  }
+  return false
+})
 
 const state = ref(false)
 const remove = () => {
@@ -64,6 +95,9 @@ const remove = () => {
 
 const clearIorChange = () => {
   store.dispatch('betting/clearIorChange', props.marketInfo.playOnlyId)
+}
+const clearOddChange = () => {
+  store.dispatch('betting/clearOddChange', props.marketInfo.playOnlyId)
 }
 const inputTouch = () => {
   store.dispatch('betting/setBoardShow', { status: true, playOnlyId: props.marketInfo.playOnlyId })
@@ -134,6 +168,7 @@ const inputTouch = () => {
     .van-icon {
       font-size: 32px;
       color: #fff;
+
       &.fixed {
         position: absolute;
         top: 0;
@@ -228,6 +263,37 @@ const inputTouch = () => {
       }
     }
 
+    .gold-tips {
+      position: absolute;
+      background: #FB0738;
+      border-radius: 22px;
+      padding: 5px 12px;
+      right: 12px;
+      bottom: 70px;
+      font-family: PingFangSC-Semibold;
+      font-size: 20px;
+      color: #FFFFFF;
+      letter-spacing: 0.67px;
+      text-align: justify;
+      font-weight: 600;
+
+      .tips-arrow {
+        position: absolute;
+        margin-bottom: 6px;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 6px;
+        bottom: -6px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        border-top-color: #FB0738;
+        border-bottom-width: 0;
+      }
+    }
+
     .action {
       position: absolute;
       right: 10px;
@@ -253,7 +319,12 @@ const inputTouch = () => {
         color: #000000;
         letter-spacing: 0.8px;
         text-align: justify;
-        font-weight: 600
+        font-weight: 600;
+
+        &.error {
+          border: 2px solid rgba(251, 7, 56, 1);
+        }
+
       }
 
       .betting-slip-accept-button {

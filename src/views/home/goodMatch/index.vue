@@ -22,7 +22,9 @@
   </Transition>
 </template>
 <script lang="ts" setup>
+
 import Dayjs from 'dayjs'
+import { arrayGetKey } from '@/utils/home/arrayGetKey'
 const dateUtil = Dayjs
 import titleRecommend from '@/assets/images/home/title-recommend.png'
 import { onBeforeMount, reactive, ref, computed, watch } from 'vue'
@@ -60,6 +62,8 @@ const getRecommendEvents = async (gameType:any = 'FT') => {
     recommendEventsList.push(...baseData)
 
     console.log(recommendEventsList)
+
+    console.log(arrayGetKey(recommendEventsList, 'gameDate'))
   }
 }
 const returnSportsSuccess = (val:any) => {

@@ -5,7 +5,7 @@
   </div>
   <div v-if="notComboMarkets.length" class="not-combo-tips">
     <span class="icon"></span>
-    <span class="tips">已选内容无法进行组合</span>
+    <span class="tips">{{ $t('betting.noComboTips') }}</span>
   </div>
 </template>
 <script lang="ts" setup>

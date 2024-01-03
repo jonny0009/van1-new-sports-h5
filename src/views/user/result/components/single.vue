@@ -11,10 +11,21 @@
           </div>
         </div>
         <div class="right">
-          <div class="font_1">{{ getTeam(item1).homeTeam }} v {{ getTeam(item1).awayTeam }}
+
+          <div class="font_1">
+
+            <span v-if="item1.championType">
+              {{ $t('betting.champion') }}
+            </span>
+            <span v-else>
+              {{ getTeam(item1).homeTeam }} v {{ getTeam(item1).awayTeam }}
+            </span>
+
             <span v-if="item1.resultScore" class="color-1"> [{{ item1.resultScore }}]</span>
           </div>
-          <div class="font_2">{{ getTeam(item1).leagueShortName }}</div>
+
+          <div v-if="item1.championType" class="font_2">{{ getChampionName(item1.systemId) }}</div>
+          <div v-else class="font_2">{{ getTeam(item1).leagueShortName }}</div>
 
         </div>
       </div>
@@ -26,15 +37,19 @@
         <div class="right">
           <div class="one">
             <span>
-              <!-- {{ item1.betItem }} -->
               {{ getLangBet(item1.betItemLang) }}
             </span>
             <span class="color-2" :class="[item1.betResultDetail === 'L' ? 'color-3' : '']">
               @{{ item1.ioRatio }}
             </span>
           </div>
+
           <div class="one two">
-            <span v-if="item1.homeTeam && item1.awayTeam" v-play="item1" />
+            <span v-if="item1.championType">
+              {{ getChampionName(item1.gameId) }}
+            </span>
+
+            <span v-else-if="item1.homeTeam && item1.awayTeam" v-play="item1" />
             <span v-else>?</span>
             <span>
 
@@ -58,9 +73,9 @@
           <span>{{ $t('user.BettingAmount') }}</span>
           <div>
 
-            <img v-if="currency === 'CNY'" class="img_1" :src="CNY1" alt="" />
-            <img v-else-if="currency === 'VNDK'" class="img_1" :src="VNDK1" alt="" />
-            <img v-else class="img_1" src="@/assets/images/user/USDT1.png" alt="" />
+            <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
+            <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
+            <SvgIcon v-else name="user-usdt" class="img_1" />
 
             <span> {{ formatMoney(item.gold) }}</span>
           </div>
@@ -86,9 +101,9 @@
 
             <!-- 币种 -->
             <span v-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail == 'LL'">
-              <img v-if="currency === 'CNY'" class="img_1" :src="CNY2" alt="" />
-              <img v-else-if="currency === 'VNDK'" class="img_1" :src="VNDK2" alt="" />
-              <img v-else class="img_1" src="@/assets/images/user/num2.png" alt="" />
+              <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
+              <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
+              <SvgIcon v-else name="user-usdt" class="img_1" />
             </span>
 
             <span v-if="item.state == 0 || item.state == -1 || item.state == 1" class="num color-1">
@@ -123,11 +138,6 @@
 </template>
 
 <script lang="ts" setup>
-import CNY1 from '@/assets/images/user/CNY1.svg'
-import VNDK1 from '@/assets/images/user/VNDK1.svg'
-import CNY2 from '@/assets/images/user/CNY2.svg'
-import VNDK2 from '@/assets/images/user/VNDK2.svg'
-
 import { formatToDateTime } from '@/utils/date'
 import { formatMoney } from '@/utils/index'
 
@@ -135,6 +145,7 @@ import { computed } from 'vue'
 import store from '@/store'
 const currency = computed(() => store.state.user.currency)
 const teamNameList = computed(() => store.state.user.teamNameList || [])
+const championLangList = computed(() => store.state.user.championLangList || [])
 
 const props = defineProps({
   item: {
@@ -162,6 +173,18 @@ const getTeam = (item: any) => {
     homeTeam: '?',
     awayTeam: '?',
     leagueShortName: '?'
+  }
+}
+// 获取冠军赛果句话
+const getChampionName = (item: any) => {
+  if (championLangList.value.length) {
+    const item1 = championLangList.value.find((e: any) => e.ratioId === item)
+    if (item1) {
+      return item1.ratioName
+    }
+    return '?'
+  } else {
+    return '?'
   }
 }
 // 获取多语言bet
@@ -282,8 +305,9 @@ const getLangBet = (item: any) => {
     font-weight: 600;
 
     .img_1 {
-      width: 20px;
-      height: 19px;
+      width: 17px;
+      height: 21px;
+      color: var(--color-text-1);
     }
   }
 
@@ -293,6 +317,11 @@ const getLangBet = (item: any) => {
     color: var(--color-text-1);
     letter-spacing: 0;
     font-weight: 600;
+    .img_1 {
+      width: 20px;
+      height: 25px;
+      color: var(--color-bg-1);
+    }
   }
 }
 

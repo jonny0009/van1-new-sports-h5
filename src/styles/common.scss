@@ -156,7 +156,10 @@ img:not([src]) {
 }
 
 .footerHeight {
-  height: 200px
+  height: 110px;
+  &.showFixedBetx{
+    height: 200px;
+  }
 }
 
 .marginAuto {

@@ -2,9 +2,14 @@
   <div ref="refGlobalBarHeader" class="global-bar-header">
     <div class="headerView">
       <div class="headerView-fixed">
-        <div class="avatar" @click="showInfo">
-          <img :src="getImg(userInfo.headImg)" style="object-fit: contain;" />
+
+        <div v-if="$route.meta.showheadGoBack" class="arrowLeft" @click="goBackClick">
+          <van-icon name="arrow-left" />
         </div>
+        <div v-else class="avatar" @click="showInfo">
+          <img v-img="userInfo.headImg" :type="3" style="object-fit: cover;" />
+        </div>
+
         <div v-if="loginToken" class="wallet">
           <div class="cur">
             <img v-if="currency==='CNY'" :src="CNY" style="object-fit: contain;" />
@@ -76,7 +81,7 @@
 </template>
 <script lang="ts" setup>
 import { getToken } from '@/utils/auth'
-
+import router from '@/router'
 import { ImageSource } from '@/config'
 
 import searchImg from '@/assets/images/globalLayout/header/search.png'
@@ -124,6 +129,11 @@ const getImg = (imgUrl: string) => {
 const showInfo = () => {
   showLeft.value = true
 }
+
+const goBackClick = () => {
+  router.go(-1)
+}
+
 const refGlobalBarHeader = ref()
 onMounted(() => {
   store.dispatch('app/setKeyValue', {
@@ -149,6 +159,19 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
     background:  var(--color-global-bg);
+    .arrowLeft{
+      width: 96px;
+      height: 96px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .van-icon{
+        font-size: 44px;
+      }
+    }
   }
   .wallet {
     height: 56px;

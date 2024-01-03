@@ -2,13 +2,15 @@
   <div class="login-page">
     <van-nav-bar class="bg-title" :class="[changeImg ? 'theme' : '']">
       <template #left>
-        <img class="img_1" src="@/assets/images/login/return@2x.png" alt="" @click="goBack()" />
+        <van-icon name="arrow-left" class="img_1" @click="goBack()" />
       </template>
       <template #title>
         <img class="img_2" src="@/assets/images/login/ai-logo@2x.png" alt="" />
+        <!-- <SvgIcon name="user-logo" class="img_2" /> -->
       </template>
       <template #right>
         <img class="img_3" src="@/assets/images/login/service@2x.png" alt="" />
+        <!-- <SvgIcon name="user-service" class="img_3" /> -->
       </template>
     </van-nav-bar>
     <div class="content">
@@ -149,22 +151,28 @@ const login = () => {
   .bg-title {
     width: 100%;
     height: 150px;
+    // background-color: var(--title-background-color-2);
     background: url('@/assets/images/login/bg-tit@2x.png');
     background-size: 100% 100%;
 
     .img_1 {
+      margin-top: -15px;
       width: 36px;
       height: 36px;
+      // color: var(--title-text-font-color);
+      color: #ffffff;
     }
 
     .img_2 {
       width: 77px;
       height: 63px;
+      // color: var(--title-text-font-color);
     }
 
     .img_3 {
       width: 34px;
       height: 37px;
+      color: var(--title-text-font-color);
     }
   }
 

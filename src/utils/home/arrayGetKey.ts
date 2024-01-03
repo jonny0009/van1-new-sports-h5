@@ -2,10 +2,10 @@
 export function arrayGetKey(array: any, key:any) {
   var tempArr:any = []
   var Data:any = []
-  array.map((i:any) => {
+  array.map((x:any, i:any) => {
     if (tempArr.indexOf(array[i][key]) === -1) {
       Data.push({
-        key: array[i][key],
+        [key]: array[i][key],
         dataInfo: [array[i]]
       })
       tempArr.push(array[i][key])

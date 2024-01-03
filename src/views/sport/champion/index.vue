@@ -56,7 +56,8 @@ const CloseClick = (val:any) => {
     .league-champion-item{
       padding: 20px;
       border-radius: 32px;
-      background: #96a5aa26;
+      background: var(--color-match-Bg);
+
       margin-bottom: 20px;
       .league-champion-item__header{
         display: flex;

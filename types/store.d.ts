@@ -3,6 +3,7 @@ import { Store } from 'vuex'
 import { RouteRecordRaw } from 'vue-router'
 
 declare interface App {
+  showFixedBet: any
   theme: any
   globalBarHeaderHeight:any
   doubleLineInfo: any
@@ -22,6 +23,7 @@ declare interface User {
   pendingData: any
   currencyData: any
   teamNameList: any
+  championLangList: any
   token: string | undefined | null
 }
 declare interface Betting {

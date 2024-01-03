@@ -28,7 +28,7 @@
           />
         </template>
       </van-list>
-      <div class="footerHeight"></div>
+      <FooterHeight />
     </template>
   </div>
 </template>
@@ -39,6 +39,7 @@ import titleTime from '@/assets/images/home/title-time.png'
 import { recommendEvents } from '@/api/home'
 import store from '@/store'
 import { onBeforeMount, ref, reactive, computed, watch } from 'vue'
+
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout:any = ref('')
 watch(refreshChangeTime, (val) => {
@@ -120,7 +121,6 @@ const returnTimeSuccess = (val:any) => {
   }
   finished.value = false
   params.page = 1
-  console.log(params)
   getRecommendEvents()
 }
 const returnSportsSuccess = (val:any) => {

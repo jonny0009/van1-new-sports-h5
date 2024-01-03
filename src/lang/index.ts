@@ -6,7 +6,6 @@ const lang = localStorage.getItem('locale') || 'zh-cn'
 import { Locale } from 'vant'
 import enUS from 'vant/es/locale/lang/en-US'
 import viVN from 'vant/es/locale/lang/vi-VN'
-console.log(lang)
 if (lang === 'en-us') {
   Locale.use('en-US', enUS)
 }
