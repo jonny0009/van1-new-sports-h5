@@ -34,7 +34,14 @@ const betShow: any = ref(true)
 const unShow: any = ref(['game'])
 const markets = computed(() => store.state.betting.markets)
 const isOpen = ref(markets.value.length > 0)
-
+const ifShowFixedBet = () => {
+  if (betShow.value && isOpen.value) {
+    store.dispatch('app/setKeyValue', {
+      key: 'showFixedBet',
+      value: true
+    })
+  }
+}
 watch(
   () => currentRoute.value,
   (route: any) => {
@@ -54,14 +61,6 @@ watch(
   }
 )
 
-const ifShowFixedBet = () => {
-  if (betShow.value && isOpen.value) {
-    store.dispatch('app/setKeyValue', {
-      key: 'showFixedBet',
-      value: true
-    })
-  }
-}
 </script>
 <style lang="scss">
 .GlobalTop {
