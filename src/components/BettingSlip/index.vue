@@ -17,7 +17,7 @@
           v-model="userConfig.acceptAll"
           :size="20"
           active-color="#fff"
-          inactive-color="#baa0fe"
+          :inactive-color="inactiveColor"
           class="bet-ior-switch"
           :active-value="1"
           :inactive-value="0"
@@ -116,6 +116,14 @@ const tabs = ref([
 ])
 const tableLeft = computed(() => {
   return `calc(100% / 3 * ${type.value - 1} + (100% / 3 - 27vw) / 2 )`
+})
+const theme = computed(() => store.state.app.theme)
+
+const inactiveColor = computed(() => {
+  if (theme.value === 'blue') {
+    return '#a3d0fe'
+  }
+  return '#baa0fe'
 })
 const pendingNum = computed(() => store.state.user.pendingData)
 const isOne = computed(() => store.state.betting.isOne)

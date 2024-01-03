@@ -1,4 +1,5 @@
 import localStore from '@/utils/localStore'
+import errorCodes from '@/utils/betting/errorCodes'
 import { Module } from 'vuex'
 import { Betting } from '#/store'
 import store from '@/store'
@@ -14,9 +15,11 @@ import {
 } from '@/utils/betting'
 import { MarketInfo } from '@/entitys/MarketInfo'
 import { betComboOrder, comboBetting, moreBetting, morePW } from '@/api/betting'
-import createBetItem from 'xcsport-lib'
 import { points } from '@/utils'
 import lang from '@/lang'
+import { createBetItem, config } from 'xcsport-lib'
+const { letBallMap } = config
+
 // 投注单store
 const MarketListKey = '_MarketList_'
 const AcceptAllMarketOddChangesKey = 'Accept_All_Market_Odd_Changes'
@@ -129,7 +132,13 @@ const bettingModule: Module<Betting, any> = {
     // 有效投注注数
     effectiveMarkets(state) {
       return state.markets.filter((order: any) => {
-        return !order.errorCode && order.gold * 1 && !order.iorChange
+        return (
+          !order.errorCode &&
+          order.gold * 1 >= order.goldMin * 1 &&
+          order.gold * 1 <= order.goldMax * 1 &&
+          !order.iorChange &&
+          !order.ratioChange
+        )
       })
     },
     // 有效投注注数
@@ -243,11 +252,20 @@ const bettingModule: Module<Betting, any> = {
         find.iorChange = ''
       }
     },
+    clearOddChange({ state }, playOnlyId) {
+      const find = state.markets.find((marketInfo: MarketInfo) => {
+        return marketInfo.playOnlyId === playOnlyId
+      })
+      if (find) {
+        find.ratioChange = ''
+      }
+    },
     // update投注项
     updateMarket({ state, rootState }, newBet) {
       const userConfig = rootState.user.userConfig
       const { handicapType } = userConfig || {}
       const autoRatio = userConfig.acceptAll === 1
+      const autoOdd = state.oddChangesState || false
       // 获取新的点水参数
       const { ratioKey, errorCode, eoIor, ior, score, showType, ratio, strong, gameDate } = newBet
       const newBetsMap: any = {}
@@ -258,6 +276,7 @@ const bettingModule: Module<Betting, any> = {
         // 替换点水返回的并且有值的属性
         const currentBet = newBetsMap[ratioKey]
         let iorChange = ''
+        let ratioChange = ''
         if (currentBet) {
           const newBetData: any = {}
           // 旧的点水
@@ -281,6 +300,13 @@ const bettingModule: Module<Betting, any> = {
               iorChange = 'up'
             } else {
               iorChange = 'down'
+            }
+          }
+          if (oldRatio * 1 !== ratio * 1 && autoOdd) {
+            if (oldRatio * 1 > ratio) {
+              ratioChange = 'up'
+            } else {
+              ratioChange = 'down'
             }
           }
 
@@ -315,7 +341,7 @@ const bettingModule: Module<Betting, any> = {
               newBetData[key] = bet[key]
             }
           })
-          replaceBet = { ...bet, ...currentBet, ...newBetData, iorChange }
+          replaceBet = { ...bet, ...currentBet, ...newBetData, iorChange, ratioChange }
           // 异常情况下回显
           if (errorCode && session) {
             replaceBet.session = session
@@ -472,7 +498,8 @@ const bettingModule: Module<Betting, any> = {
       const res: any = await moreBetting(params).finally(() => {
         dispatch('setHitState', 1)
       })
-      if (res?.code === 200 && res?.data) {
+      const code = res?.code
+      if (code === 200 && res?.data) {
         const bettingData = res.data.bettingData || []
         state.results = bettingData.map((order: MarketInfo) => {
           const playOnlyId = MarketInfo.getPlayOnlyId(order)
@@ -484,7 +511,21 @@ const bettingModule: Module<Betting, any> = {
         dispatch('clearMarkets')
         store.dispatch('user/pendingOrder')
       } else {
-        return Promise.reject(lang.global.t('betting.errorTips'))
+        let errorStr: string = ''
+        if (errorCodes.netErrorCodes.indexOf(code) > -1) {
+          errorStr = lang.global.t('betting.errors1.error1')
+        } else if (errorCodes.betFailCodes.indexOf(code) > -1) {
+          errorStr = lang.global.t('betting.errors1.error2')
+        } else if (errorCodes.unusualAccountCodes.indexOf(code) > -1) {
+          errorStr = lang.global.t('betting.errors1.error3')
+        } else if (errorCodes.memberLoginCountCode === code) {
+          errorStr = lang.global.t('betting.errors1.error4')
+        } else if (errorCodes.pwMatchCloseCodes.indexOf(code) > -1) {
+          errorStr = lang.global.t('betting.errors1.error5')
+        } else {
+          errorStr = lang.global.t('betting.errors1.error6')
+        }
+        return Promise.reject(errorStr)
       }
     },
     // 串关下单
