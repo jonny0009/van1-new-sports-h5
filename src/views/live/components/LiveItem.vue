@@ -136,7 +136,6 @@ const leagueIcon = computed(() => {
       padding: 0 10px;
       color: #fff;
       font-size: 24px;
-      // background-image: linear-gradient(-68deg, #d700ff 0%, #af00ff 100%);
       background-image: linear-gradient(
         -68deg,
         var(--color-linear-gradient-tag-1) 0%,

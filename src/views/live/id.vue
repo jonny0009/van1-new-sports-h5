@@ -126,7 +126,7 @@ const onMoreVideo = (item: any) => {
   player?.src(item.m3u8)
   player?.load()
   player?.play()
-  router.replace(`/live/${item.gidm}`)
+  router.replace(`/broadcast/${item.gidm}`)
   getMatcheInfo(item.gidm)
 }
 

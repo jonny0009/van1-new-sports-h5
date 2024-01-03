@@ -127,7 +127,7 @@ watch(
 const gotoLive = () => {
   const { showtype, gidm } = moreParams.value
   if (showtype == 'RB') {
-    router.push(`/live/${gidm}`)
+    router.push(`/broadcast/${gidm}`)
     store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
   }
 }

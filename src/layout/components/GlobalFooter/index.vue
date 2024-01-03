@@ -34,14 +34,14 @@ const { t } = useI18n()
 const getRouteName = () => {
   const routerName: any = router?.currentRoute?.value?.name || ''
   const routerNameToLowerCase = routerName.toLowerCase()
-  const isrouterNameToLowerCase = ['live', 'game'].includes(routerNameToLowerCase)
+  const isrouterNameToLowerCase = ['broadcast', 'game'].includes(routerNameToLowerCase)
   return isrouterNameToLowerCase ? routerNameToLowerCase : 'home'
 }
 const barFooterArrayChange = (): Array<any> => {
   const barFooterArray = [
     {
       text: t('home.live'),
-      value: 'live'
+      value: 'broadcast'
     },
     {
       text: t('home.sport'),
@@ -101,7 +101,7 @@ const clickChangeActive = (item: any) => {
       align-items: flex-end;
       justify-content: center;
       font-weight: 100;
-      &.live{
+      &.live {
         font-size: 40px;
       }
     }
@@ -114,7 +114,7 @@ const clickChangeActive = (item: any) => {
       display: block;
     }
     &.active {
-      color:  var(--color-primary);
+      color: var(--color-primary);
     }
   }
 }

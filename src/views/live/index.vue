@@ -81,7 +81,7 @@ const onLoad = async () => {
 }
 
 const onItemClick = (item: any) => {
-  router.push(`/live/${item.gidm}`)
+  router.push(`/broadcast/${item.gidm}`)
 }
 
 onMounted(() => {})

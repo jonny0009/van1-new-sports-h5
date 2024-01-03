@@ -1,6 +1,6 @@
 import Layout from '@/layout/index.vue'
 export default {
-  path: '/live',
+  path: '/broadcast',
   component: Layout,
   children: [
     {
