@@ -110,7 +110,7 @@ const inputTouch = () => {
   width: 676px;
   height: 50px;
   margin: 20px auto 0;
-  border: 2px solid rgba(118, 66, 253, 1);
+  border: 2px solid var(--color-bet-combomoneyborder);
   border-radius: 10px;
   display: flex;
   justify-content: space-between;

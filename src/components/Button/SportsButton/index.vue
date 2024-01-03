@@ -17,7 +17,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { Sports } from '@/config/sports'
+import lang from '@/lang'
 import { ref, watch } from 'vue'
 const props = defineProps({
   active: {
@@ -45,7 +45,7 @@ watch(props, (val) => {
 })
 
 const textVal = ref('')
-textVal.value = Sports[props.text]
+textVal.value = lang.global.t(`sport.sports.${props.text}`) || props.text
 
 const SportsName = ref('icon-FT')
 SportsName.value = `icon-${props.text}`
