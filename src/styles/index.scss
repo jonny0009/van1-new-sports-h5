@@ -393,9 +393,19 @@
     .betting-select__list{
       width: 100%;
       display: flex;
-      grid-gap: 20px;
+      // grid-gap: 20px;
+      // grid-template-columns: 1fr 1fr;
       padding: 0 20px;
       box-sizing: border-box;
+      .betting-option-wrap.betting-option{
+        margin: 0 10px;
+        &:first-child{
+          margin: 0 10px 0 0;
+        }
+        &:last-child{
+          margin: 0 0 0 10px;
+        }
+      }
     }
     .up-match__body{
       padding-bottom: 20px;
