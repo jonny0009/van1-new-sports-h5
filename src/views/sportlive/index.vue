@@ -9,7 +9,7 @@
       <MatchLive v-for="(item,idx) in commonMatchesList" :key="idx" :send-params="item" />
       <HomeEmpty v-if="!commonMatchesList.length"></HomeEmpty>
     </template>
-    <div v-if="commonMatchesList.length" class="Button-MatchMore mt10">
+    <div v-if="commonMatchesList.length" class="Button-MatchMore mt10" @click="noMoreclick">
       <span>
         {{ $t('live.noMore') }}
       </span>
@@ -66,6 +66,9 @@ const getApiCommonMatches = async (toggleLoading:any = true) => {
   } else {
     commonMatchesList.value = []
   }
+}
+const noMoreclick = () => {
+  return
 }
 const clickGameType = (item:any) => {
   gameType.value = item.gameType
