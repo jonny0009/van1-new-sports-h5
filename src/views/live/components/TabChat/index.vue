@@ -61,6 +61,9 @@ const disabledSend = computed(() => {
 })
 const disabledField = computed(() => {
   const { isSend } = chatRoomInfo.value
+  if (!getToken()) {
+    return true
+  }
   if (isSend == 0) {
     return true
   }
@@ -176,13 +179,13 @@ const onSend = () => {
 
 <style lang="scss" scoped>
 .chat {
-  height: 100%;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  height: 100%;
   &-bottom {
     display: flex;
     align-items: center;
+    min-height: 100px;
     height: 100px;
     padding: 5px 12px;
     .van-form {
@@ -211,10 +214,11 @@ const onSend = () => {
   }
 
   &-section {
+    flex: 1;
     overflow-y: auto;
     background: #f4f5f8;
-    flex: 1;
     padding: 24px;
+    height: 100%;
     .item {
       position: relative;
       margin-bottom: 24px;
