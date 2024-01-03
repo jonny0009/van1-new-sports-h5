@@ -121,7 +121,6 @@ const returnTimeSuccess = (val:any) => {
   }
   finished.value = false
   params.page = 1
-  console.log(params)
   getRecommendEvents()
 }
 const returnSportsSuccess = (val:any) => {
