@@ -11,10 +11,21 @@
           </div>
         </div>
         <div class="right">
-          <div class="font_1">{{ getTeam(item1).homeTeam }} v {{ getTeam(item1).awayTeam }}
+
+          <div class="font_1">
+
+            <span v-if="item1.championType">
+              {{ $t('betting.champion') }}
+            </span>
+            <span v-else>
+              {{ getTeam(item1).homeTeam }} v {{ getTeam(item1).awayTeam }}
+            </span>
+
             <span v-if="item1.resultScore" class="color-1"> [{{ item1.resultScore }}]</span>
           </div>
-          <div class="font_2">{{ getTeam(item1).leagueShortName }}</div>
+
+          <div v-if="item1.championType" class="font_2">{{ getChampionName(item1.systemId) }}</div>
+          <div v-else class="font_2">{{ getTeam(item1).leagueShortName }}</div>
 
         </div>
       </div>
@@ -26,15 +37,19 @@
         <div class="right">
           <div class="one">
             <span>
-              <!-- {{ item1.betItem }} -->
               {{ getLangBet(item1.betItemLang) }}
             </span>
             <span class="color-2" :class="[item1.betResultDetail === 'L' ? 'color-3' : '']">
               @{{ item1.ioRatio }}
             </span>
           </div>
+
           <div class="one two">
-            <span v-if="item1.homeTeam && item1.awayTeam" v-play="item1" />
+            <span v-if="item1.championType">
+              {{ getChampionName(item1.gameId) }}
+            </span>
+
+            <span v-else-if="item1.homeTeam && item1.awayTeam" v-play="item1" />
             <span v-else>?</span>
             <span>
 
@@ -135,6 +150,7 @@ import { computed } from 'vue'
 import store from '@/store'
 const currency = computed(() => store.state.user.currency)
 const teamNameList = computed(() => store.state.user.teamNameList || [])
+const championLangList = computed(() => store.state.user.championLangList || [])
 
 const props = defineProps({
   item: {
@@ -162,6 +178,18 @@ const getTeam = (item: any) => {
     homeTeam: '?',
     awayTeam: '?',
     leagueShortName: '?'
+  }
+}
+// 获取冠军赛果句话
+const getChampionName = (item: any) => {
+  if (championLangList.value.length) {
+    const item1 = championLangList.value.find((e: any) => e.ratioId === item)
+    if (item1) {
+      return item1.ratioName
+    }
+    return '?'
+  } else {
+    return '?'
   }
 }
 // 获取多语言bet
