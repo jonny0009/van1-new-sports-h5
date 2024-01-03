@@ -438,7 +438,7 @@ defineExpose({
   }
 }
 
-.noData {
+> .noData {
   width: 100%;
   text-align: center;
   font-family: PingFangSC-Medium;
@@ -446,6 +446,7 @@ defineExpose({
   color: var(--color-search-box-text-2);
   letter-spacing: 0;
   font-weight: 500;
+  height: 850px;
 
   >.img_1 {
     margin-top: 331px;
