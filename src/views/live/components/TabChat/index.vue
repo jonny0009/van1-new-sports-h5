@@ -50,15 +50,6 @@ const props = defineProps({
     default: () => {}
   }
 })
-watch(
-  () => props.matchInfo,
-  () => {
-    getIntoRoom()
-  }
-)
-onMounted(() => {
-  getIntoRoom()
-})
 
 const userInfo = computed(() => store.state.user.userInfo)
 const disabledSend = computed(() => {
@@ -75,7 +66,6 @@ const disabledField = computed(() => {
   }
   return false
 })
-
 const placeholder = computed(() => {
   const { isSend, bettingTotal } = chatRoomInfo.value
   if (!getToken()) {
@@ -87,12 +77,20 @@ const placeholder = computed(() => {
   return t('live.chatTip') + '...'
 })
 
+const matchInfo = computed(() => props.matchInfo)
+watch(
+  () => matchInfo.value,
+  () => {
+    getIntoRoom()
+  }
+)
+onMounted(() => {})
+
 const chatRoomInfo: Ref<any> = ref({})
 const getIntoRoom = async () => {
-  const { gidm, systemId } = props.matchInfo
   const params = {
-    gidm: gidm,
-    systemId: systemId,
+    gidm: matchInfo.value.gidm,
+    systemId: matchInfo.value.systemId,
     anchorId: undefined,
     version: '3.9.0'
   }

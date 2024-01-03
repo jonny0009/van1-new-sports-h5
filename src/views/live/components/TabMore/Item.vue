@@ -95,7 +95,6 @@ const leagueIcon = computed(() => {
   color: #0e3d66;
   border-radius: 10px;
   height: 220px;
-  margin: 0 0 20px 0;
   .photo {
     position: relative;
     width: 330px;

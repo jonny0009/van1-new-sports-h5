@@ -5,8 +5,7 @@
       <span :class="{ active: navActive == 2 }" @click="onNavClick(2)">{{ $t('live.allBetWith') }}</span>
     </div>
 
-    <Loading v-if="loading" />
-    <div class="no-data" v-else-if="list.length === 0">
+    <div class="no-data" v-if="list.length === 0">
       <EmptyIcon />
     </div>
     <div class="item" v-else v-for="(item, index) in list" :key="index">
@@ -160,6 +159,7 @@ onMounted(() => {
 }
 .panel-with {
   padding: 0 36px;
+  padding-top: 20px;
   .top-nav {
     display: flex;
     margin-bottom: 42px;

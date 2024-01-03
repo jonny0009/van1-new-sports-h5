@@ -1,5 +1,5 @@
 <template>
-  <div class="live-page">
+  <div class="live-page" :class="{ 'has-bet': markets.length > 0 }">
     <div class="match">
       <div v-show="!videoError" class="match-video">
         <video ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
@@ -11,7 +11,7 @@
       <MatchGame v-if="videoError" :matchInfo="matchData" />
     </div>
 
-    <van-tabs v-model:active="navActive" swipeable>
+    <van-tabs v-model:active="navActive" swipeable @change="onTabChange">
       <van-tab v-for="(item, index) in navList" :title="item.name">
         <component
           v-if="navActive == index"
@@ -27,7 +27,7 @@
 <script lang="ts" setup>
 import 'video.js/dist/video-js.min.css'
 import videojs from 'video.js'
-import { reactive, Ref, ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { reactive, Ref, ref, onMounted, onUnmounted, nextTick, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { matcheInfo, extendInfo } from '@/api/live'
 import { getAssetsImage } from '@/utils/tools'
@@ -37,8 +37,9 @@ import TabWith from './components/TabWith/index.vue'
 import TabMore from './components/TabMore/index.vue'
 import MatchGame from './components/MatchGame.vue'
 import { useI18n } from 'vue-i18n'
-const { t } = useI18n()
+import store from '@/store'
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const getIcon = (name: string) => getAssetsImage(name, 'live')
@@ -50,10 +51,10 @@ const navList = reactive([
 ])
 const navActive = ref(0)
 const compsList = [TabChat, TabBets, TabWith, TabMore]
+const markets = computed(() => store.state.betting.markets)
 
 const matchData: Ref<any> = ref({})
-const getMatcheInfo = async () => {
-  const gidm = route.params['id']
+const getMatcheInfo = async (gidm = route.params['id']) => {
   const res = await matcheInfo({ gidm })
   matchData.value = res.data || {}
 }
@@ -119,13 +120,14 @@ const initVideo = () => {
 }
 
 const onMoreVideo = (item: any) => {
+  unInterval()
   videoError.value = false
   navActive.value = 0
-  player.src(item.m3u8)
-  player.load()
-  player.play()
+  player?.src(item.m3u8)
+  player?.load()
+  player?.play()
   router.replace(`/live/${item.gidm}`)
-  getMatcheInfo()
+  getMatcheInfo(item.gidm)
 }
 
 let intervalTimer: any = null
@@ -142,8 +144,16 @@ const unInterval = () => {
   }
 }
 
+const onTabChange = (index: number) => {
+  if (index == 0) {
+    unInterval()
+  } else {
+    onInterval()
+  }
+  getMatcheInfo()
+}
+
 onMounted(() => {
-  onInterval()
   getMatcheInfo()
   getExtendInfo()
 })
@@ -161,6 +171,9 @@ onUnmounted(() => {
   flex-direction: column;
   height: calc(100vh - (96px + 88px));
   padding: 0;
+  &.has-bet {
+    height: calc(100vh - (96px + 96px + 88px));
+  }
 
   .van-tabs {
     flex: 1;
@@ -169,6 +182,11 @@ onUnmounted(() => {
     overflow: hidden;
     .van-swipe-item {
       overflow-y: auto;
+    }
+  }
+  .van-tabs :deep(.van-tabs__wrap) {
+    .van-tabs__line {
+      background: var(--color-primary);
     }
   }
   .van-tabs :deep(.van-tabs__content) {

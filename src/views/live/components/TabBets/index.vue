@@ -45,6 +45,6 @@ onMounted(() => {
   padding: 100px 0 0 0;
 }
 .panel-bet {
-  padding: 0 36px;
+  padding: 20px 36px;
 }
 </style>

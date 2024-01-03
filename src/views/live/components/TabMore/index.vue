@@ -63,5 +63,9 @@ onMounted(() => {
 }
 .panel-more {
   padding: 0 36px;
+  padding-top: 20px;
+  .more-item {
+    padding: 0 0 20px 0;
+  }
 }
 </style>
