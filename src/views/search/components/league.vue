@@ -50,7 +50,7 @@ const toLeague = async (item: any) => {
 const highlightText = (field: any, text: any) => {
   // 使用正则表达式替换文本中的相同字段，并添加样式
   const regex = new RegExp(field, 'gi')
-  const highlightedText = text.replace(regex, `<span style="color: #7642FD;font-weight:600">${field}</span>`)
+  const highlightedText = text.replace(regex, `<span style="color:var(--color-bg-1);font-weight:600">${field}</span>`)
   return highlightedText
 }
 

@@ -2,10 +2,21 @@
   <div class="matchList-1">
     <div v-for="(item, index) in props.gameList" :key="index" class="left1 left2" @click="toMatch(item)">
       <div class="left3">
-        <!-- <van-image class="itemImg" fit="contain" :src="getImg(item.homeLogo)" /> -->
         <div class="itemImg">
-          <img class="itemImg-1" fit="contain" :src="getImg(item.homeLogo)" />
-          <img class="itemImg-2" fit="contain" :src="getImg(item.awayLogo)" />
+          <img
+            v-img="item.homeLogo"
+            class="itemImg-1"
+            alt=""
+            :type="4"
+            style="object-fit: contain;"
+          >
+          <img
+            v-img="item.awayLogo"
+            class="itemImg-2"
+            alt=""
+            :type="5"
+            style="object-fit: contain;"
+          >
         </div>
         <div class="center">
           <div>
@@ -35,11 +46,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ImageSource } from '@/config'
-
 import moment from 'moment'
 import goImg from '@/assets/images/login/go@2x.png'
-import ball4 from '@/assets/images/login/ball4.svg'
 import store from '@/store'
 
 import { useRouter } from 'vue-router'
@@ -68,13 +76,7 @@ const getMatchTime = (item: any) => {
     return ''
   }
 }
-const getImg = (imgUrl?: any) => {
-  console.log(imgUrl)
-  if (imgUrl) {
-    return `${ImageSource}${imgUrl}`
-  }
-  return ball4
-}
+
 const toMatch = async (item: any) => {
   store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
 
@@ -91,7 +93,7 @@ const toMatch = async (item: any) => {
 const highlightText = (field: any, text: any) => {
   // 使用正则表达式替换文本中的相同字段，并添加样式
   const regex = new RegExp(field, 'gi')
-  const highlightedText = text.replace(regex, `<span style="color: #7642FD;font-weight:600">${field}</span>`)
+  const highlightedText = text.replace(regex, `<span style="color:var(--color-bg-1);font-weight:600">${field}</span>`)
   return highlightedText
 }
 
