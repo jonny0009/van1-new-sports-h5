@@ -65,6 +65,7 @@ watch(
     } else if (results.value.length === 0) {
       isOpen.value = false
     }
+    ifShowFixedBet()
   }
 )
 watch(
