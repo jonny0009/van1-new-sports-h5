@@ -2,6 +2,7 @@
   <ArrowTitle
     :src="titleTime"
     :text="$t('home.latestMatch')"
+    class="mt10"
     @returnSuccess="returnStatus"
   />
   <Transition>

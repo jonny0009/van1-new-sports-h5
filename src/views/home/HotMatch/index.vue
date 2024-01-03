@@ -10,8 +10,6 @@
       <div
         class="Hot-Match-Group"
         :class="[{ 'noData': noDataToggle }]"
-        @touchstart="start($event)"
-        @touchmove="move($event)"
       >
         <Loading v-if="!isLoading" />
         <template v-else>
@@ -94,64 +92,6 @@ const isShow = ref(false)
 const returnStatus = (val:any) => {
   isShow.value = val
 }
-//
-// 左右滑动事件
-const getAngle = (angx:any, angy:any) => {
-  return Math.atan2(angy, angx) * 180 / Math.PI
-}
-const getDirection = (startx:any, starty:any, endx:any, endy:any) => {
-  var angx = endx - startx
-  var angy = endy - starty
-  var result = 0 // 默认标记没有滑动
-  // 如果滑动距离太短
-  if (Math.abs(angx) < 2 && Math.abs(angy) < 2) {
-    return result
-  }
-  var angle = getAngle(angx, angy)
-  if (angle >= -135 && angle <= -45) {
-    result = 1 // 向上
-    // console.log('向上')
-  } else if (angle > 45 && angle < 135) {
-    result = 2 // 向下
-    // console.log('向下')
-  } else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
-    result = 3 // 向左
-    // console.log('向左')
-  } else if (angle >= -45 && angle <= 45) {
-    result = 4 // 向右
-    // console.log('向右')
-  }
-  return result
-}
-
-const startPos:any = ref({})
-const start = (event:any) => {
-  const touchS = event.targetTouches[0] // touches数组对象获得屏幕上所有的touch，取第一个touch
-  startPos.value = {
-    x: touchS.pageX,
-    y: touchS.pageY,
-    time: new Date()
-  } // 取第一个touch的坐标值
-}
-const move = (event:any) => {
-  const touchE = event.changedTouches[0]
-  endPos.value = {
-    x: touchE.pageX,
-    y: touchE.pageY,
-    timeStemp: new Date()
-  }
-
-  const { x, y } = startPos.value
-  direction.value = getDirection(x, y, endPos.value.x, endPos.value.y)
-
-  // console.log(event)
-  // // 当屏幕有多个touch或者页面被缩放过，就不执行move操作
-  // if (event.targetTouches.length > 1 || event.scale && event.scale !== 1) return
-}
-
-const endPos:any = ref({})
-const direction = ref({})
-
 </script>
 
 <style lang="scss" scoped>
