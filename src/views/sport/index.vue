@@ -221,25 +221,23 @@ const getRecommendEvents = async (params:any) => {
     if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
       listFlag = res.data.baseData
     }
-    if (listFlag.length) {
-      // 早盘
-      if (!leagueId.value) {
-        earlyList.value = listFlag
-      } else {
-        // 推荐 - 选择联赛
+
+    // 推荐 - 选择联赛
+    if (params.gradeType === 1 || leagueId.value) {
+      if (listFlag.length) {
         leagueLogo.value = listFlag[0].leagueLogo
         leagueName.value = listFlag[0].leagueShortName
         recommendList.value = listFlag
-      }
-    } else {
-      // 早盘
-      if (!leagueId.value) {
-        earlyList.value = []
       } else {
-        // 推荐 - 选择联赛
         leagueLogo.value = ''
         leagueName.value = ''
         recommendList.value = []
+      }
+    } else if (params.gradeType === 2) {
+      if (listFlag.length) {
+        earlyList.value = listFlag
+      } else {
+        earlyList.value = []
       }
     }
   }
