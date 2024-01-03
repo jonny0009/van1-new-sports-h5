@@ -7,7 +7,7 @@
           <van-icon name="arrow-left" />
         </div>
         <div v-else class="avatar" @click="showInfo">
-          <img :src="getImg(userInfo.headImg)" style="object-fit: contain;" />
+          <img v-img="userInfo.headImg" :type="3" style="object-fit: cover;" />
         </div>
 
         <div v-if="loginToken" class="wallet">
