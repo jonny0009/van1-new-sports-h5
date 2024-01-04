@@ -1,5 +1,5 @@
 <template>
-  <div ref="container" class="homeMatchHandicap">
+  <div ref="container" class="homeMatchHandicap" :data-val="offsetTop">
     <van-sticky :offset-top="offsetTop" :container="container" z-index="5">
       <div class="home-tabs-play">
         <TimeView :time-send-params="sendParams" />
@@ -214,7 +214,16 @@ const Mclick = () => {
 }
 
 const container = ref(null)
-const offsetTop = computed(() => store.state.app.globalBarHeaderHeight || 48)
+const offsetTop = computed(() => {
+  const offsetTop = store.state.app.globalBarHeaderHeight || 48
+  var offsetTopval = 48
+  if (offsetTop > 60) {
+    offsetTopval = 48
+  } else {
+    offsetTopval = offsetTop
+  }
+  return offsetTopval
+})
 //
 const sectionMap:any = {
   0: '',
