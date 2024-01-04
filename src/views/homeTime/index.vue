@@ -5,7 +5,7 @@
         <template #title>
           <ArrowTitle class="mt10 mb10" :src="titleTime" :text="$t('home.latestMatch')" />
         </template>
-        <SportsTabs class="pb10" @returnSportsSuccess="returnSportsSuccess" />
+        <SportsTabs ref="refSportsTabs" class="pb10" @returnSportsSuccess="returnSportsSuccess" />
         <tabsTime @returnTimeSuccess="returnTimeSuccess" />
         <van-list
           v-model="loading"
@@ -46,8 +46,10 @@ import { onBeforeMount, ref, reactive, computed, watch } from 'vue'
 const activeNames = ref('1')
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout:any = ref('')
+const refSportsTabs = ref()
 watch(refreshChangeTime, (val) => {
   if (val) {
+    refSportsTabs.value?.resetParams()
     activeNames.value = '1'
     clearTimeout(timeout.value)
     timeout.value = setTimeout(async () => {

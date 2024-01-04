@@ -55,9 +55,9 @@ const noDataToggle = computed(() => firstLeaguesList.length === 0)
 const timeout:any = ref('')
 watch(refreshChangeTime, (val) => {
   if (val) {
+    activeNames.value = '1'
     clearTimeout(timeout.value)
     timeout.value = setTimeout(() => {
-      activeNames.value = '1'
       getFirstLeagues()
     }, 100)
   }

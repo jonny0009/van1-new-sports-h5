@@ -9,7 +9,7 @@
         />
       </template>
       <div class="LatestMatch">
-        <SportsTabs class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess" />
+        <SportsTabs ref="refSportsTabs" class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess" />
         <Loading v-if="!isLoading" />
         <template v-else>
           <HomeEmpty v-if="!recommendEventsList.length" class="marginAuto"></HomeEmpty>
@@ -35,11 +35,13 @@ import { recommendEvents } from '@/api/home'
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout:any = ref('')
 const activeNames = ref('1')
+const refSportsTabs = ref()
 watch(refreshChangeTime, (val) => {
   if (val) {
+    refSportsTabs.value?.resetParams()
+    activeNames.value = '1'
     clearTimeout(timeout.value)
     timeout.value = setTimeout(() => {
-      activeNames.value = '1'
       getRecommendEvents()
     }, 100)
   }
