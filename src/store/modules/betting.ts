@@ -136,6 +136,7 @@ const bettingModule: Module<Betting, any> = {
           !order.errorCode &&
           order.gold * 1 >= order.goldMin * 1 &&
           order.gold * 1 <= order.goldMax * 1 &&
+          order.gold * 1 > 0 &&
           !order.iorChange &&
           !order.ratioChange
         )
@@ -216,7 +217,7 @@ const bettingModule: Module<Betting, any> = {
     },
 
     // 添加投注项
-    addMarket({ state }, marketInfo: MarketInfo) {
+    addMarket({ state, dispatch }, marketInfo: MarketInfo) {
       const marketItem = betParams(marketInfo)
       marketItem.gold = 0
       if (state.markets.length === 0) {
@@ -226,6 +227,7 @@ const bettingModule: Module<Betting, any> = {
       } else {
         state.isOne = false
       }
+      dispatch('clearResult')
       state.markets.push(marketItem)
       localStore.setItem(MarketListKey, state.markets)
     },
@@ -295,14 +297,14 @@ const bettingModule: Module<Betting, any> = {
             newBetData.ior = eoIor
           }
           const newIor = newBetData.ior * 1 || ior * 1
-          if (oldIor * 1 !== newIor && autoRatio) {
+          if (oldIor * 1 !== newIor && !autoRatio) {
             if (oldIor * 1 > newIor) {
               iorChange = 'up'
             } else {
               iorChange = 'down'
             }
           }
-          if (oldRatio * 1 !== ratio * 1 && autoOdd) {
+          if (oldRatio * 1 !== ratio * 1 && !autoOdd) {
             if (oldRatio * 1 > ratio) {
               ratioChange = 'up'
             } else {

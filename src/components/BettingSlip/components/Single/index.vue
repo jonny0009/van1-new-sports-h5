@@ -2,7 +2,7 @@
   <transition :class="`animate__animated ${state ? 'animate__fadeOutLeft' : ''}`">
     <div class="Single-wrap">
       <div class="remove">
-        <van-icon name="cross" :class="{ fixed: marketInfo.errorCode }" @click.stop="remove" />
+        <van-icon name="cross" :class="{ fixed: error }" @click.stop="remove" />
       </div>
       <div class="content">
         <div class="title">
@@ -48,7 +48,7 @@
       </div>
       <div v-if="isCombo" class="combo-enable"></div>
       <div
-        v-if="marketInfo.errorCode || marketInfo.golaMin * 1 === 0 || marketInfo.golaMax * 1 === 0"
+        v-if="error"
         class="error-popup"
       >
         <div class="lock"></div>
@@ -72,6 +72,7 @@ const props = defineProps({
   }
 })
 const mode = computed(() => store.state.betting.mode)
+const error = computed(() => props.marketInfo.errorCode || props.marketInfo.goldMax * 1 === 0 || props.marketInfo.goldMin * 1 === 0)
 const editId = computed(() => store.state.betting.editId)
 const comboMarketPlayOnlyIds = computed(() => store.getters['betting/comboMarketPlayOnlyIds'])
 const isCombo = computed(() => comboMarketPlayOnlyIds.value.includes(props.marketInfo.playOnlyId) && mode.value === 2)

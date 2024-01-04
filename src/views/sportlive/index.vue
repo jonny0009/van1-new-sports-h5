@@ -1,9 +1,12 @@
 <template>
   <div class="sportlive">
     <div v-if="gameTypeList.length" class="sportlive-Match-Tabs">
-      <TextButton :text="$t('sport.recommend')" :active="!gameType" @click="clickGameType({})" />
+      <TextButton :text="$t('sport.all')" :active="!gameType" @click="clickGameType({})" />
       <SportsButton v-for="(item,idx) in gameTypeList" :key="idx" :text="item.gameType" :active="gameType===item.gameType" @click="clickGameType(item)" />
     </div>
+
+    <swipeLive />
+
     <Loading v-if="!isLoading" />
     <template v-else>
       <MatchLive v-for="(item,idx) in commonMatchesList" :key="idx" :send-params="item" />
@@ -20,6 +23,7 @@
 <script lang="ts" setup>
 import TextButton from '@/components/Button/TextButton/index.vue'
 import MatchLive from '@/components/HomeMatch/MatchLive/index.vue'
+import swipeLive from './swipeLive/index.vue'
 import store from '@/store'
 import { ref, onBeforeMount, onActivated, onDeactivated, onBeforeUnmount, computed, watch } from 'vue'
 import { apiRBCondition, apiCommonMatches } from '@/api/home'
@@ -87,6 +91,18 @@ onDeactivated(() => {
 })
 onBeforeUnmount(() => {
   setClearInterval()
+  store.dispatch('home/setKeyValue', {
+    key: 'RrefShow',
+    value: true
+  })
+  store.dispatch('home/setKeyValue', {
+    key: 'OUrefShow',
+    value: true
+  })
+  store.dispatch('home/setKeyValue', {
+    key: 'MrefShow',
+    value: true
+  })
 })
 const pushSwitch:any = computed(() => store.state.app.businessConfig.pushSwitch)
 watch(pushSwitch, () => {

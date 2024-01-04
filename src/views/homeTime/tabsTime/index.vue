@@ -20,13 +20,23 @@
   <van-calendar v-model:show="show" type="range" @confirm="onConfirm" />
 </template>
 <script lang="ts" setup>
+
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
 import { ref, nextTick } from 'vue'
 import Dayjs from 'dayjs' // YYYY-MM-DD HH:mm:ss
 const homeTimeArray = ref([
-  { text: '全部', defaultToggle: true, values: '' },
-  { text: '8小时', defaultToggle: true, values: '8' },
-  { text: '24小时', defaultToggle: true, values: '24' },
-  { text: '7天', defaultToggle: true, values: '168' }
+  { text: t('sport.all'), defaultToggle: true, values: '' },
+  { text: t('home.numberHour', {
+    number: '8'
+  }), defaultToggle: true, values: '8' },
+  { text: t('home.numberHour', {
+    number: '24'
+  }), defaultToggle: true, values: '24' },
+  { text: t('home.numberDay', {
+    number: '7'
+  }), defaultToggle: true, values: '168' }
 ])
 
 const active = ref('')
@@ -37,17 +47,18 @@ const TimeClick = (item:any) => {
 }
 
 const show = ref(false)
-const onConfirm = (values) => {
+const onConfirm = (values:any) => {
   const [start, end] = values
   show.value = false
   const newHomeTimeArray = homeTimeArray.value.filter(e => {
     return e.defaultToggle
   })
+  const customizeVal:any = `${Dayjs(start).format('YYYY/MM/DD')} - ${Dayjs(end).format('YYYY/MM/DD')}`
   homeTimeArray.value = [...newHomeTimeArray, {
-    text: `${Dayjs(start).format('YYYY/MM/DD')} - ${Dayjs(end).format('YYYY/MM/DD')}`,
-    values: `${Dayjs(start).format('YYYY/MM/DD')}-${Dayjs(end).format('YYYY/MM/DD')}`
+    text: customizeVal,
+    values: customizeVal
   }]
-  active.value = `${Dayjs(start).format('YYYY/MM/DD')}-${Dayjs(end).format('YYYY/MM/DD')}`
+  active.value = customizeVal
   emit('returnTimeSuccess', active.value)
   nextTick(() => {
     refHomeTime.value?.scrollTo(refHomeTimePage.value?.clientWidth, 0)
@@ -66,11 +77,19 @@ const refHomeTimePage = ref()
 <style lang="scss" scoped>
 .homeTime-Time-Tabs{
   display: flex;
-  grid-gap: 32px;
   overflow: auto;
   .homeTime-TimePage{
     display: flex;
-    grid-gap: 32px;
+    // grid-gap: 32px;
+    & > div{
+      margin: 0 8px;
+      &:first-child{
+        margin: 0 8px 0 0;
+      }
+      &:last-child{
+        margin: 0 0 0 8px;
+      }
+    }
   }
   &::-webkit-scrollbar {
     height: 0;
@@ -86,7 +105,7 @@ const refHomeTimePage = ref()
     justify-content: center;
     align-items: center;
     font-size: 24px;
-    min-width: 120px;
+    min-width: 150px;
     white-space: nowrap;
     flex-shrink: 0;
     &:last-child{

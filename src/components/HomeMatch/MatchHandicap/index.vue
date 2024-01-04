@@ -167,9 +167,17 @@ const props = defineProps({
     }
   }
 })
-
-const offsetTop = computed(() => store.state.app.globalBarHeaderHeight)
 const container = ref(null)
+const offsetTop = computed(() => {
+  const offsetTop = store.state.app.globalBarHeaderHeight || 48
+  var offsetTopval = 48
+  if (offsetTop > 60) {
+    offsetTopval = 48
+  } else {
+    offsetTopval = offsetTop
+  }
+  return offsetTopval
+})
 
 const getTeam = ({ homeTeamAbbr, awayTeamAbbr, homeTeam, awayTeam }: any) => {
   if (!homeTeamAbbr) {

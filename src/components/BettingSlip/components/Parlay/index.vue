@@ -1,7 +1,7 @@
 <template>
-  <Singles v-for="( market, index ) in comboMarkets " :key="index" :market-info="market"></Singles>
+  <Singles v-for="market in comboMarkets " :key="market.playOnlyId" :market-info="market"></Singles>
   <div v-if="notComboMarkets.length" class="nothing-combo-wrap">
-    <Singles v-for="( market, index ) in notComboMarkets " :key="index" :market-info="market"></Singles>
+    <Singles v-for="market in notComboMarkets " :key="market.playOnlyId" :market-info="market"></Singles>
   </div>
   <div v-if="notComboMarkets.length" class="not-combo-tips">
     <span class="icon"></span>
@@ -28,7 +28,7 @@ const notComboMarkets = computed(() => props.markets.filter((market: MarketInfo)
 <style scoped lang="scss">
 .nothing-combo-wrap {
   border: 6px solid rgba(250, 179, 7, 1);
-  border-radius: 20px;
+  border-radius: 28px;
   margin: 25px 38px 10px;
 
   .Single-wrap {

@@ -2,7 +2,7 @@
   <div class="sport-page">
     <div class="my-scroll__content">
       <div class="betting-sport-nav">
-        <TextButton :text="$t('sport.recommend')" :active="!leagueId" @click="clickLeague({})" />
+        <TextButton :text="$t('sport.all')" :active="!leagueId" @click="clickLeague({})" />
         <ImageButton
           v-for="(item,idx) in firstLeaguesList"
           :key="idx"
@@ -13,70 +13,80 @@
         />
       </div>
     </div>
+
     <!-- 联赛 -->
     <template v-if="recommendList.length && leagueId">
-      <ArrowTitle class="mt10 mb10" :src="leagueLogo" type="6" :text="leagueName" @returnSuccess="recommendCloseClick" />
-      <template v-if="isOpenRecommend">
-        <Loading v-if="!getRecommendEventsIsLoading" />
-        <template v-else>
-          <div v-if="recommendList.length" class="recommend-list">
-            <HomeMatchHandicap v-for="(item,idx) in recommendList" v-show="isOpenRecommend" :key="idx" :send-params="item" />
-          </div>
-          <HomeEmpty v-else></HomeEmpty>
-        </template>
-      </template>
+      <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
+        <van-collapse-item name="1">
+          <template #title>
+            <ArrowTitle class="mt10 mb10" :src="leagueLogo" type="6" :text="leagueName" />
+          </template>
+          <Loading v-if="!getRecommendEventsIsLoading" />
+          <template v-else>
+            <div v-if="recommendList.length" class="recommend-list">
+              <HomeMatchHandicap v-for="(item,idx) in recommendList" :key="idx" :send-params="item" />
+            </div>
+            <HomeEmpty v-else></HomeEmpty>
+          </template>
+        </van-collapse-item>
+      </van-collapse>
     </template>
+
     <!-- 推荐 -->
     <template v-if="!leagueId">
-      <ArrowTitle class="mt10 mb10" :src="recommendIcon" :text="$t('sport.recommend')" @returnSuccess="recommendCloseClick" />
-      <template v-if="isOpenRecommend">
-        <Loading v-if="!getRecommendEventsIsLoading" />
-        <template v-else>
-          <div v-if="recommendList.length" class="recommend-list">
-            <HomeMatchHandicap v-for="(item,idx) in recommendList" v-show="isOpenRecommend" :key="idx" :send-params="item" />
+      <van-collapse v-model="activeNamesB" accordion :border="false" class="GlobalCollapse">
+        <van-collapse-item name="b1">
+          <template #title>
+            <ArrowTitle class="mt10 mb10" :src="recommendIcon" :text="$t('sport.recommend')" />
+          </template>
+          <Loading v-if="!getRecommendEventsIsLoading" />
+          <template v-else>
+            <div v-if="recommendList.length" class="recommend-list">
+              <HomeMatchHandicap v-for="(item,idx) in recommendList" :key="idx" :send-params="item" />
+            </div>
+            <HomeEmpty v-else></HomeEmpty>
+          </template>
+          <div v-if="!isLoadingRecommend && recommendList.length" class="Button-MatchMore mt20" :class="recommendLoadAll?'no-more':''" @click="moreRecommend">
+            <span>
+              {{ recommendLoadAll?$t('live.noMore'):$t('home.lookMoreMatch') }}
+            </span>
           </div>
-          <HomeEmpty v-else></HomeEmpty>
-        </template>
-        <div v-if="!isLoadingRecommend && recommendList.length" class="Button-MatchMore mt20" :class="recommendLoadAll?'no-more':''" @click="moreRecommend">
-          <span>
-            {{ recommendLoadAll?$t('live.noMore'):$t('home.lookMoreMatch') }}
-          </span>
-        </div>
-        <Loading v-if="isLoadingRecommend" />
-      </template>
+          <Loading v-if="isLoadingRecommend" />
+        </van-collapse-item>
+      </van-collapse>
     </template>
+
     <!-- 早盘 -->
     <template v-if="!leagueId">
-      <ArrowTitle class="mt10 mb10" :src="earlyIcon" :text="$t('sport.early')" @returnSuccess="earlyCloseClick" />
-      <template v-if="isOpenEarly">
-        <Loading v-if="!getRecommendEventsIsLoading" />
-        <template v-else>
-          <div v-if="earlyList.length" class="early-list">
-            <HomeMatchHandicap v-for="(item,idx) in earlyList" v-show="isOpenEarly" :key="idx" :send-params="item" />
+      <van-collapse v-model="activeNamesC" accordion :border="false" class="GlobalCollapse">
+        <van-collapse-item name="c1">
+          <template #title>
+            <ArrowTitle class="mt10 mb10" :src="earlyIcon" :text="$t('sport.early')" />
+          </template>
+          <Loading v-if="!getRecommendEventsIsLoading" />
+          <template v-else>
+            <div v-if="earlyList.length" class="early-list">
+              <HomeMatchHandicap v-for="(item,idx) in earlyList" :key="idx" :send-params="item" />
+            </div>
+            <HomeEmpty v-else></HomeEmpty>
+          </template>
+          <div v-if="!isLoadingEarly && earlyList.length" class="Button-MatchMore mt20" :class="earlyLoadAll?'no-more':''" @click="moreEarly">
+            <span>
+              {{ earlyLoadAll?$t('live.noMore'):$t('home.lookMoreMatch') }}
+            </span>
           </div>
-          <HomeEmpty v-else></HomeEmpty>
-        </template>
-        <div v-if="!isLoadingEarly && earlyList.length" class="Button-MatchMore mt20" :class="earlyLoadAll?'no-more':''" @click="moreEarly">
-          <span>
-            {{ earlyLoadAll?$t('live.noMore'):$t('home.lookMoreMatch') }}
-          </span>
-        </div>
-        <Loading v-if="isLoadingEarly" />
-      </template>
-
+          <Loading v-if="isLoadingEarly" />
+        </van-collapse-item>
+      </van-collapse>
     </template>
+
     <!-- 冠军 -->
     <ChampionList v-if="championList.length && leagueId" :champion-list="championList" />
 
-    <!-- <div class="Button-MatchMore mt20">
-      <span>
-        {{ $t('home.lookMoreMatch') }}
-      </span>
-    </div> -->
-
     <FooterHeight />
 
-  </div></template>
+  </div>
+</template>
 
 <script lang="ts" setup>
 
@@ -86,8 +96,7 @@ import recommendIcon from '@/assets/images/home/title-recommend.png'
 import ChampionList from './champion/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
 import { useRoute, useRouter } from 'vue-router'
-import router from '@/router'
-import { ref, onBeforeMount, computed, watch } from 'vue'
+import { ref, onBeforeMount, watch } from 'vue'
 import { apiChampionpPlayTypes } from '@/api/champion'
 import { firstLeagues, recommendEvents } from '@/api/home'
 
@@ -95,25 +104,20 @@ import { MarketInfo } from '@/entitys/MarketInfo'
 const { currentRoute } = useRouter()
 const route = useRoute()
 
+const activeNames = ref('1')
+const activeNamesB = ref('b1')
+const activeNamesC = ref('c1')
+
 const leagueId: any = ref(route.query.leagueId)
 const gameType: any = ref(route.params.type)
 const leagueLogo: any = ref()
 const leagueName: any = ref()
-const isOpenRecommend: any = ref(true)
 const recommendPage: any = ref(1)
 const recommendPageSize: any = ref(10)
 const earlyPage: any = ref(1)
 const earlyPageSize: any = ref(10)
 const earlyLoadAll: any = ref(false)
 const recommendLoadAll: any = ref(false)
-const recommendCloseClick = (val:any) => {
-  isOpenRecommend.value = !val
-}
-
-const isOpenEarly: any = ref(true)
-const earlyCloseClick = (val:any) => {
-  isOpenEarly.value = !val
-}
 
 onBeforeMount(async () => {
   getFirstLeagues()
@@ -273,24 +277,6 @@ const getChampionpPlayTypes = async () => {
 const clickLeague = (item: any) => {
   leagueId.value = item.leagueId
   initData()
-  // if (item.leagueId) {
-  //   router.push({
-  //     name: 'Sport',
-  //     query: {
-  //       leagueId: item.leagueId
-  //     },
-  //     params: {
-  //       type: item.gameType
-  //     }
-  //   })
-  // } else {
-  //   router.push({
-  //     name: 'Sport',
-  //     params: {
-  //       type: item.gameType
-  //     }
-  //   })
-  // }
 }
 
 </script>

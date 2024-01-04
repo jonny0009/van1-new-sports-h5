@@ -25,7 +25,7 @@
           @click.stop
         >
           <template #node>
-            <div class="icon-wrapper">
+            <div class="icon-wrapper" :style="{ color: checkColor }">
               <SvgIcon v-if="userConfig.acceptAll" name="betting-check" class="accept-ior" />
             </div>
           </template>
@@ -126,6 +126,12 @@ const inactiveColor = computed(() => {
   }
   return '#baa0fe'
 })
+const checkColor = computed(() => {
+  if (theme.value === 'blue') {
+    return 'betting-check-blue'
+  }
+  return 'betting-check'
+})
 const pendingNum = computed(() => store.state.user.pendingData)
 const isOne = computed(() => store.state.betting.isOne)
 const mode = computed(() => store.state.betting.mode)
@@ -136,6 +142,8 @@ const betsProfit = computed(() => store.getters['betting/betsProfit'])
 const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
 const combosIor = computed(() => store.getters['betting/combosIor'])
 const userConfig = computed(() => store.state.user.userConfig)
+store.dispatch('betting/setMode', 1)
+const emit = defineEmits(['close'])
 watch(() => isOne.value, () => {
   if (isOne.value) {
     open.value = true
@@ -156,7 +164,18 @@ watch(() => open.value, () => {
 })
 const toogle = () => {
   open.value = !open.value
+  emit('close', open.value)
+  bodyOverflow()
 }
+const bodyOverflow = () => {
+  if (open.value) {
+    document.documentElement.classList.add('popup-overflow-hidden')
+  } else {
+    document.documentElement.classList.remove('popup-overflow-hidden')
+  }
+}
+bodyOverflow()
+
 const changeType = (mode: any) => {
   type.value = mode
   store.dispatch('betting/setMode', mode)
@@ -188,6 +207,9 @@ const hitTimer = () => {
   }, 10 * 1000)
 }
 hitTimer()
+defineExpose({
+  open
+})
 
 </script>
 <style lang="scss" scoped>
@@ -201,6 +223,7 @@ hitTimer()
   bottom: 0;
   opacity: 0;
   margin: auto;
+  overflow: hidden;
   background-color: rgba(0, 0, 0, .3);
 
   &.open {
@@ -324,7 +347,9 @@ hitTimer()
     .bet-ior-switch {
       margin-left: 10px;
 
-      :deep(.van-switch__node){
+      :deep(.van-switch__node) {
+        width: calc(var(--van-switch-height) - 4px);
+        height: calc(var(--van-switch-height) - 4px);
         top: 0;
         bottom: 0;
         margin: auto;
@@ -332,13 +357,18 @@ hitTimer()
     }
 
     .icon-wrapper {
-      width: 40px;
-      height: 40px;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-bet-iorbg-1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       .accept-ior {
-        width: 40px;
-        height: 40px;
-        color: var(--color-bet-iorbg-1);
+        width: 0.7em;
+        height: 0.7em;
+        color: #fff;
       }
     }
   }

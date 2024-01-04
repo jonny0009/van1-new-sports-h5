@@ -6,7 +6,7 @@
     <AppMain />
   </GlobalRefresh>
   <GlobalFooter />
-  <BettingSlip v-if="betShow && isOpen" />
+  <BettingSlip v-if="betShow && isOpen" ref="bettingSlip" @close="betClose" />
   <van-back-top
     v-if="backTopShow"
     bottom="100"
@@ -34,8 +34,8 @@ const { currentRoute } = useRouter()
 const betShow: any = ref(true)
 const unShow: any = ref(['game'])
 const markets = computed(() => store.state.betting.markets)
-const results = computed(() => store.state.betting.results)
 const isOpen = ref(markets.value.length > 0)
+const bettingSlip = ref()
 const ifShowFixedBet = () => {
   if (betShow.value && isOpen.value) {
     store.dispatch('app/setKeyValue', {
@@ -63,21 +63,18 @@ watch(
   () => {
     if (markets.value.length) {
       isOpen.value = true
-    } else if (results.value.length === 0) {
+    } else if (!bettingSlip.value.open && markets.value.length === 0) {
       isOpen.value = false
     }
     ifShowFixedBet()
   }
 )
-watch(
-  () => results.value.length,
-  () => {
-    if (results.value.length === 0 && markets.value.length === 0) {
-      isOpen.value = false
-    }
-    ifShowFixedBet()
+const betClose = (state: boolean) => {
+  if (!state && markets.value.length === 0) {
+    isOpen.value = false
   }
-)
+  ifShowFixedBet()
+}
 
 const backTopShow = computed(() => {
   const route: any = currentRoute.value

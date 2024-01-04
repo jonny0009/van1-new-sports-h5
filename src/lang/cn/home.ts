@@ -41,5 +41,7 @@ export default {
   'Wednesday': '周三',
   'Thursday': '周四',
   'Friday': '周五',
-  'Saturday': '周六'
+  'Saturday': '周六',
+  'numberHour': '{number}小时',
+  'numberDay': '{number}天'
 }

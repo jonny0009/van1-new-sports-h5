@@ -2,8 +2,12 @@
   <div v-if="mode === 2" ref="inputBtn" class="combo-input betting-slip-input" @click="inputTouch">
     <span class="currency"><van-icon name="balance-o" /></span>
     <div style="flex: 1 1 0%;"></div>
-    <span class="amount" :class="{ selected:boardShow }">{{ comboAmount }}</span>
+    <span class="amount" :class="{ selected: boardShow }">{{ comboAmount }}</span>
     <span v-show="boardShow" class="cursor">|</span>
+    <div v-if="goldRule" class="gold-tips">
+      {{ $t('betting.goldTips', { min: combos.goldMin, max: combos.goldMax }) }}
+      <div class="tips-arrow"></div>
+    </div>
   </div>
   <div class="action-bar">
     <div class="bet-golds">
@@ -19,13 +23,7 @@
     </div>
     <div class="confirm-button-wrap">
       <SvgIcon v-if="hitState === 1" name="betting-trash" class="delete-btn" @click="clear"></SvgIcon>
-      <button
-        v-if="hitState === 1"
-        v-debounce="buy"
-        type="button"
-        class="confirm-button"
-        :disabled="bettingState"
-      >
+      <button v-if="hitState === 1" v-debounce="buy" type="button" class="confirm-button" :disabled="bettingState">
         {{ $t('betting.buy') }}
       </button>
       <div v-else class="confirm-button">
@@ -44,6 +42,7 @@ const errorTimer = ref()
 const boardShow = computed(() => store.state.betting.boardShow)
 const hitState = computed(() => store.state.betting.hitState)
 const mode = computed(() => store.state.betting.mode)
+const combos = computed(() => store.state.betting.combos[0])
 const comboAmount = computed(() => store.state.betting.comboAmount)
 const betsGolds = computed(() => store.getters['betting/betsGolds'])
 const betsProfit = computed(() => store.getters['betting/betsProfit'])
@@ -53,12 +52,20 @@ const effectiveMarkets = computed(() => store.getters['betting/effectiveMarkets'
 const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
 const golds = computed(() => mode.value === 1 ? betsGolds.value : combosBetGolds.value)
 const profit = computed(() => mode.value === 1 ? betsProfit.value * 1 + golds.value * 1 : combosProfit.value * 1 + golds.value * 1)
-
+const goldRule = computed(() => {
+  if (comboAmount.value * 1 <= 0 || mode.value !== 2) {
+    return false
+  }
+  if (combos.value && (combos.value.goldMin * 1 > comboAmount.value * 1 || combos.value.goldMax * 1 < comboAmount.value * 1)) {
+    return true
+  }
+  return false
+})
 const bettingState = computed(() => {
   if (mode.value === 1) {
     return effectiveMarkets.value.length === 0
   }
-  return comboMarkets.value.length <= 1 || !profit.value
+  return comboMarkets.value.length <= 1 || !profit.value || goldRule.value
 })
 
 const clear = () => {
@@ -104,7 +111,39 @@ const inputTouch = () => {
   }
 }
 
+.gold-tips {
+  position: absolute;
+  background: #FB0738;
+  border-radius: 22px;
+  padding: 5px 12px;
+  right: 12px;
+  bottom: 60px;
+  font-family: PingFangSC-Semibold;
+  font-size: 20px;
+  color: #FFFFFF;
+  letter-spacing: 0.67px;
+  text-align: justify;
+  font-weight: 600;
+
+  .tips-arrow {
+    position: absolute;
+    margin-bottom: 6px;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 6px;
+    bottom: -6px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-top-color: #FB0738;
+    border-bottom-width: 0;
+  }
+}
+
 .combo-input {
+  position: relative;
   display: flex;
   align-items: center;
   width: 676px;
@@ -123,7 +162,8 @@ const inputTouch = () => {
   color: #000000;
   letter-spacing: 0.8px;
   text-align: justify;
-  font-weight: 600 ;
+  font-weight: 600;
+
   .amount {
     font-family: PingFangSC-Semibold;
     font-size: 24px;
@@ -203,7 +243,7 @@ const inputTouch = () => {
     .value {
       font-family: PingFangSC-Semibold;
       font-size: 28px;
-      color: var( --color-bet-iortext);
+      color: var(--color-bet-iortext);
       letter-spacing: 0;
       font-weight: 600;
     }
