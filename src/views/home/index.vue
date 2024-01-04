@@ -15,7 +15,7 @@ import HotMatch from './HotMatch/index.vue'
 import GoodMatch from './GoodMatch/index.vue'
 import LatestMatch from './LatestMatch/index.vue'
 import store from '@/store'
-import { onMounted } from 'vue'
+import { onMounted, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
 
@@ -25,7 +25,20 @@ onMounted(() => {
     store.dispatch('betting/setMoreShow', { status: true, moreParams: params })
   }
 })
-
+onBeforeUnmount(() => {
+  store.dispatch('home/setKeyValue', {
+    key: 'RrefShow',
+    value: true
+  })
+  store.dispatch('home/setKeyValue', {
+    key: 'OUrefShow',
+    value: true
+  })
+  store.dispatch('home/setKeyValue', {
+    key: 'MrefShow',
+    value: true
+  })
+})
 </script>
 <style lang="scss" scoped>
 .home-page{

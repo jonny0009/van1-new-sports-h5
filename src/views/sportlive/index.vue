@@ -1,7 +1,7 @@
 <template>
   <div class="sportlive">
     <div v-if="gameTypeList.length" class="sportlive-Match-Tabs">
-      <TextButton :text="$t('sport.recommend')" :active="!gameType" @click="clickGameType({})" />
+      <TextButton :text="$t('sport.all')" :active="!gameType" @click="clickGameType({})" />
       <SportsButton v-for="(item,idx) in gameTypeList" :key="idx" :text="item.gameType" :active="gameType===item.gameType" @click="clickGameType(item)" />
     </div>
     <Loading v-if="!isLoading" />
@@ -87,6 +87,18 @@ onDeactivated(() => {
 })
 onBeforeUnmount(() => {
   setClearInterval()
+  store.dispatch('home/setKeyValue', {
+    key: 'RrefShow',
+    value: true
+  })
+  store.dispatch('home/setKeyValue', {
+    key: 'OUrefShow',
+    value: true
+  })
+  store.dispatch('home/setKeyValue', {
+    key: 'MrefShow',
+    value: true
+  })
 })
 const pushSwitch:any = computed(() => store.state.app.businessConfig.pushSwitch)
 watch(pushSwitch, () => {
