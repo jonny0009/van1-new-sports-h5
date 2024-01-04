@@ -40,5 +40,7 @@ export default {
   'Wednesday': 'Thứ Tư',
   'Thursday': 'Thứ năm',
   'Friday': 'Thứ sáu',
-  'Saturday': 'Thứ bảy'
+  'Saturday': 'Thứ bảy',
+  'numberHour': '{number}tiếng',
+  'numberDay': '{number}ngày'
 }

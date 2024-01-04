@@ -20,13 +20,23 @@
   <van-calendar v-model:show="show" type="range" @confirm="onConfirm" />
 </template>
 <script lang="ts" setup>
+
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
 import { ref, nextTick } from 'vue'
 import Dayjs from 'dayjs' // YYYY-MM-DD HH:mm:ss
 const homeTimeArray = ref([
-  { text: '全部', defaultToggle: true, values: '' },
-  { text: '8小时', defaultToggle: true, values: '8' },
-  { text: '24小时', defaultToggle: true, values: '24' },
-  { text: '7天', defaultToggle: true, values: '168' }
+  { text: t('sport.all'), defaultToggle: true, values: '' },
+  { text: t('home.numberHour', {
+    number: '8'
+  }), defaultToggle: true, values: '8' },
+  { text: t('home.numberHour', {
+    number: '24'
+  }), defaultToggle: true, values: '24' },
+  { text: t('home.numberDay', {
+    number: '7'
+  }), defaultToggle: true, values: '168' }
 ])
 
 const active = ref('')
