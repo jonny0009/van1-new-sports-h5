@@ -1,43 +1,46 @@
 <template>
-  <ArrowTitle
-    class="mt10 mb10"
-    :src="titleHot"
-    :text="$t('home.hotMatch')"
-    @returnSuccess="returnStatus"
-  />
-  <Transition>
-    <div v-show="!isShow" class="Hot-Match-Group-Warp">
-      <div
-        class="Hot-Match-Group"
-        :class="[{ 'noData': noDataToggle }]"
-      >
-        <Loading v-if="!isLoading" />
-        <template v-else>
-          <HomeEmpty v-if="noDataToggle"></HomeEmpty>
-          <van-image
-            v-for="(item,idx) in firstLeaguesList"
-            v-else
-            :key="idx"
-            :src="imgUrlFormat(item.icon)"
-            fit="contain"
-            lazy-load
-            @click="goSportClick(item)"
-          >
-            <template #loading>
-              <van-loading type="spinner" class="van-new-loading" size="36px" />
-            </template>
-            <template #error>
-              <div class="onImgError"></div>
-            </template>
-          </van-image>
+  <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
+    <van-collapse-item name="1">
+      <template #title>
+        <ArrowTitle
+          class="mt10 mb10"
+          :src="titleHot"
+          :text="$t('home.hotMatch')"
+        />
+      </template>
+      <div class="Hot-Match-Group-Warp">
+        <div
+          class="Hot-Match-Group"
+          :class="[{ 'noData': noDataToggle }]"
+        >
+          <Loading v-if="!isLoading" />
+          <template v-else>
+            <HomeEmpty v-if="noDataToggle"></HomeEmpty>
+            <van-image
+              v-for="(item,idx) in firstLeaguesList"
+              v-else
+              :key="idx"
+              :src="imgUrlFormat(item.icon)"
+              fit="contain"
+              lazy-load
+              @click="goSportClick(item)"
+            >
+              <template #loading>
+                <van-loading type="spinner" class="van-new-loading" size="36px" />
+              </template>
+              <template #error>
+                <div class="onImgError"></div>
+              </template>
+            </van-image>
+          </template>
+        </div>
+        <template v-if="!noDataToggle">
+          <div class="mask-left" style="display: none;"></div>
+          <div class="mask-right"></div>
         </template>
       </div>
-      <template v-if="!noDataToggle">
-        <div class="mask-left" style="display: none;"></div>
-        <div class="mask-right"></div>
-      </template>
-    </div>
-  </Transition>
+    </van-collapse-item>
+  </van-collapse>
 </template>
 <script lang="ts" setup>
 import titleHot from '@/assets/images/home/title-hot.png'
@@ -46,6 +49,7 @@ import store from '@/store'
 import { imgUrlFormat } from '@/utils/index'
 import { firstLeagues } from '@/api/home'
 import router from '@/router'
+const activeNames = ref('1')
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const noDataToggle = computed(() => firstLeaguesList.length === 0)
 const timeout:any = ref('')
@@ -53,7 +57,7 @@ watch(refreshChangeTime, (val) => {
   if (val) {
     clearTimeout(timeout.value)
     timeout.value = setTimeout(() => {
-      isShow.value = false
+      activeNames.value = '1'
       getFirstLeagues()
     }, 100)
   }
@@ -88,10 +92,6 @@ const init = () => {
 onBeforeMount(() => {
   init()
 })
-const isShow = ref(false)
-const returnStatus = (val:any) => {
-  isShow.value = val
-}
 </script>
 
 <style lang="scss" scoped>

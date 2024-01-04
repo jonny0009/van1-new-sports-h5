@@ -1,25 +1,28 @@
 <template>
-  <ArrowTitle
-    class="mt10"
-    :src="titleRecommend"
-    :text="$t('home.goofMatch')"
-    @returnSuccess="returnStatus"
-  />
-  <Transition>
-    <div v-if="!isShow" class="goodMatch">
-      <SportsTabs class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess" />
-      <Loading v-if="!isLoading" />
-      <template v-else>
-        <HomeEmpty v-if="!recommendEventsList.length" />
-        <HomeMatchHandicap v-for="(item,idx) in recommendEventsList" :key="idx" :send-params="item" class="mb10" />
+  <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
+    <van-collapse-item name="1">
+      <template #title>
+        <ArrowTitle
+          class="mt10"
+          :src="titleRecommend"
+          :text="$t('home.goofMatch')"
+        />
       </template>
-      <div v-if="recommendEventsList.length" class="Button-MatchMore mt10" @click="goToSport">
-        <span>
-          {{ $t('home.lookMoreMatch') }}
-        </span>
+      <div class="goodMatch">
+        <SportsTabs class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess" />
+        <Loading v-if="!isLoading" />
+        <template v-else>
+          <HomeEmpty v-if="!recommendEventsList.length" />
+          <HomeMatchHandicap v-for="(item,idx) in recommendEventsList" :key="idx" :send-params="item" class="mb10" />
+        </template>
+        <div v-if="recommendEventsList.length" class="Button-MatchMore mt10" @click="goToSport">
+          <span>
+            {{ $t('home.lookMoreMatch') }}
+          </span>
+        </div>
       </div>
-    </div>
-  </Transition>
+    </van-collapse-item>
+  </van-collapse>
 </template>
 <script lang="ts" setup>
 
@@ -33,11 +36,12 @@ import router from '@/router'
 import { recommendEvents } from '@/api/home'
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout:any = ref('')
+const activeNames = ref('1')
 watch(refreshChangeTime, (val) => {
   if (val) {
     clearTimeout(timeout.value)
     timeout.value = setTimeout(() => {
-      isShow.value = false
+      activeNames.value = '1'
       getRecommendEvents()
     }, 100)
   }
@@ -76,10 +80,6 @@ const init = () => {
 onBeforeMount(() => {
   init()
 })
-const isShow = ref(false)
-const returnStatus = (val:any) => {
-  isShow.value = val
-}
 
 const gameType = ref('FT')
 const goToSport = () => {
