@@ -1,6 +1,6 @@
 import { Module } from 'vuex'
 import { login, playAccount, getBalance } from '@/api/login'
-import { getCMerAccessWallet, betRecordTab, getGameManyInfo, selectChampionManyName } from '@/api/user'
+import { getCMerAccessWallet, betRecordTab, getGameManyInfo, selectChampionManyName, playerInfo } from '@/api/user'
 import { User } from '#/store'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { configSettingNew } from '@/api/auth'
@@ -17,7 +17,8 @@ const userModule: Module<User, any> = {
     currency: '',
     currencyData: [],
     teamNameList: [],
-    championLangList: []
+    championLangList: [],
+    peopleInfo: {}
   },
   mutations: {
     SET_TOKEN: (state, token: string) => {
@@ -94,14 +95,21 @@ const userModule: Module<User, any> = {
     async getMoreTeamList({ state }, params) {
       const res:any = await getGameManyInfo({ gidms: params }) || []
       if (res.code === 200) {
-        state.teamNameList = [...state.teamNameList, ...res.data]
+        state.teamNameList = [...state.teamNameList, ...res.data || []]
       }
     },
     // 冠军国际化
     async getChampionLang({ state }, params) {
       const res:any = await selectChampionManyName({ gidm: params }) || []
       if (res.code === 200) {
-        state.championLangList = [...state.championLangList, ...res.data]
+        state.championLangList = [...state.championLangList, ...res.data || []]
+      }
+    },
+    // 获取账户信息
+    async getAccountInfo({ state }, params) {
+      const res:any = await playerInfo({ fPlayerId: state.userInfo.playerId }) || []
+      if (res.code === 200) {
+        state.peopleInfo = res.data || {}
       }
     },
     // 进行中的注单

@@ -25,6 +25,7 @@ declare interface User {
   currencyData: any
   teamNameList: any
   championLangList: any
+  peopleInfo: any
   token: string | undefined | null
 }
 declare interface Betting {

@@ -65,7 +65,7 @@ const toUrl = (url: string) => {
 }
 
 const showInfo = () => {
-  childNav.value.showLeft = true
+  childNav.value.openNav()
 }
 
 const goBackClick = () => {

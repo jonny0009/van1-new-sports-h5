@@ -65,7 +65,15 @@
         </div>
       </van-popup>
       <!-- 时间弹窗 -->
-      <van-calendar v-model:show="show" type="range" :min-date="minDate" :max-date="maxDate" @confirm="onConfirm" />
+      <van-calendar
+        v-model:show="show"
+        type="range"
+        :min-date="minDate"
+        :max-date="maxDate"
+        :default-date="defaultDate"
+        @confirm="onConfirm"
+        @close="setDateBottom()"
+      />
 
     </div>
   </div>
@@ -99,8 +107,12 @@ const currentDate = moment().valueOf()
 const oneDayDate = 24 * 60 * 60 * 1000
 const maxDate = ref(new Date())
 const minDate = ref(new Date(currentDate - oneDayDate * 7))
+const defaultDate = ref<any>([
+  new Date(currentDate - oneDayDate * 7),
+  new Date()
+])
 
-onMounted(() => {})
+onMounted(() => { })
 const goBack = () => {
   $router.back()
 }
@@ -132,6 +144,10 @@ const onConfirm = (val: any) => {
   childRefA.value.setDateTime(val)
   show.value = false
 }
+const setDateBottom = () => {
+  childRefA.value.showBottom2 = false
+}
+
 const handleClose = (item: any) => {
   console.log(item)
   if (way.value === 1) {
@@ -213,15 +229,19 @@ const handleClose = (item: any) => {
 :deep(.van-tabs--line .van-tabs__wrap) {
   height: 65px;
 }
-:deep(.van-tab__text--ellipsis){
-  font-size: 28px;;
+
+:deep(.van-tab__text--ellipsis) {
+  font-size: 28px;
+  ;
   overflow: visible !important;
-  white-space:nowrap;
+  white-space: nowrap;
 }
-:deep(.van-tabs__nav--line){
+
+:deep(.van-tabs__nav--line) {
   background-color: var(--color-background-color);
 }
-:deep(.van-calendar__day--middle){
-  color:var(--color-primary) ;
+
+:deep(.van-calendar__day--middle) {
+  color: var(--color-primary);
 }
 </style>
