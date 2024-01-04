@@ -51,7 +51,7 @@
             </div>
             <div class="flex-cross-center">
               <div class="up-match-time">
-                <SportsIcon v-show="showSportsIcon(sendParams)" :icon-src="'live'" />
+                <SportsIcon v-show="showSportsIcon(sendParams)" :icon-src="'live'" class="mr5" />
                 <div class="up-match-time-html" :class="sendParams.gameType" v-html="showRBTime(sendParams)"></div>
               </div>
             </div>
@@ -431,7 +431,8 @@ const props = defineProps({
 
 const showSportsIcon = (item:any) => {
   const { live, merchantAnchor, merchantStreamNa } = item
-  if (live !== 1 || (merchantAnchor && merchantAnchor?.length && merchantStreamNa && merchantStreamNa?.length)) {
+
+  if (live * 1 !== 1 || (merchantAnchor && merchantAnchor?.length && merchantStreamNa && merchantStreamNa?.length)) {
     return true
   }
   return false
