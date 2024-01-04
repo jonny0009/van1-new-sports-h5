@@ -1,5 +1,5 @@
 <template>
-  <div class="live-page">
+  <div class="live-page" :class="{ 'has-bet': showFixedBet }">
     <van-tabs
       v-model:active="navActive"
       swipeable
@@ -35,14 +35,16 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, Ref, onMounted } from 'vue'
+import { reactive, ref, Ref, onMounted, computed } from 'vue'
 import LiveItem from './components/LiveItem.vue'
 import { anchorLiveList } from '@/api/live'
 import router from '@/router'
 import { useI18n } from 'vue-i18n'
+import store from '@/store'
 
 onMounted(() => {})
 
+const showFixedBet = computed(() => store.state.app.showFixedBet)
 const { t } = useI18n()
 const navList = reactive([
   { type: 'RB', title: t('live.hot'), iconName: 'live-hot' },
@@ -106,7 +108,10 @@ const onItemClick = (item: any) => {
 <style lang="scss" scoped>
 .live-page {
   height: 100%;
-  padding-bottom: calc(88px + 96px);
+  padding-bottom: 88px;
+  &.has-bet {
+    padding-bottom: calc(88px + 96px);
+  }
 
   .van-tabs {
     :deep(.van-tabs__wrap) {
