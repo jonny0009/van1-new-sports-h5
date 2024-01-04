@@ -49,6 +49,7 @@ export function useBetting() {
               gameId: game.gameId,
               gidm: game.gidm,
               strong: game.strong,
+              hstrong: game.hstrong,
               playType: dataInfo.playType,
               sw: dataInfo.sw,
               championType: dataInfo.championType
