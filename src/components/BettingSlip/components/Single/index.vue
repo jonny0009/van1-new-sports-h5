@@ -72,7 +72,12 @@ const props = defineProps({
   }
 })
 const mode = computed(() => store.state.betting.mode)
-const error = computed(() => props.marketInfo.errorCode || props.marketInfo.goldMax * 1 === 0 || props.marketInfo.goldMin * 1 === 0)
+const error = computed(() => {
+  if (props.marketInfo.goldMax === '') {
+    return false
+  }
+  return props.marketInfo.errorCode || props.marketInfo.goldMax * 1 === 0 || props.marketInfo.goldMin * 1 === 0
+})
 const editId = computed(() => store.state.betting.editId)
 const comboMarketPlayOnlyIds = computed(() => store.getters['betting/comboMarketPlayOnlyIds'])
 const isCombo = computed(() => comboMarketPlayOnlyIds.value.includes(props.marketInfo.playOnlyId) && mode.value === 2)

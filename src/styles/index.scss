@@ -482,9 +482,22 @@
     // end body
     // live
     .match-info-live__header{
+      position: relative;
       margin: 0 20px;
       padding: 20px 0;
       color: var(--color-text-3);
+      .live-icon{
+        color: var(--color-primary);
+        width: 60px;
+        height: 60px;
+        position: absolute;
+        // background-color: red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 20px;
+        right: 0px;
+      }
       .up-match-league {
         display: inline-flex;
         align-items: center;
