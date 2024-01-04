@@ -109,6 +109,10 @@ const onItemClick = (item: any) => {
   padding-bottom: calc(88px + 96px);
 
   .van-tabs {
+    :deep(.van-tabs__wrap) {
+      height: 110px;
+    }
+
     .tab-title {
       height: 64px;
       padding: 0 20px;
@@ -122,7 +126,6 @@ const onItemClick = (item: any) => {
       font-family: PingFangSC-Semibold, SF-Pro-Bold, system-ui;
       font-weight: 800;
       transition: all 0.3s;
-      margin-top: 20px;
       .svg-icon {
         font-size: 38px;
         margin-right: 14px;
@@ -146,7 +149,7 @@ const onItemClick = (item: any) => {
     .flex-item {
       display: flex;
       justify-content: center;
-      margin: 30px 0 0 0;
+      margin: 0 0 30px 0;
     }
   }
 
