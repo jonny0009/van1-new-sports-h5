@@ -53,11 +53,12 @@ const onConfirm = (values:any) => {
   const newHomeTimeArray = homeTimeArray.value.filter(e => {
     return e.defaultToggle
   })
+  const customizeVal:any = `${Dayjs(start).format('YYYY/MM/DD')} - ${Dayjs(end).format('YYYY/MM/DD')}`
   homeTimeArray.value = [...newHomeTimeArray, {
-    text: `${Dayjs(start).format('YYYY/MM/DD')} - ${Dayjs(end).format('YYYY/MM/DD')}`,
-    values: `${Dayjs(start).format('YYYY/MM/DD')}-${Dayjs(end).format('YYYY/MM/DD')}`
+    text: customizeVal,
+    values: customizeVal
   }]
-  active.value = `${Dayjs(start).format('YYYY/MM/DD')}-${Dayjs(end).format('YYYY/MM/DD')}`
+  active.value = customizeVal
   emit('returnTimeSuccess', active.value)
   nextTick(() => {
     refHomeTime.value?.scrollTo(refHomeTimePage.value?.clientWidth, 0)
