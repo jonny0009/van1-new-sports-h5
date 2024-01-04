@@ -93,7 +93,7 @@ const initVideo = () => {
     width: '100%',
     height: '100%',
     autoplay: true,
-    muted: true,
+    muted: false,
     controls: true,
     fluid: true,
     bigPlayButton: false,
