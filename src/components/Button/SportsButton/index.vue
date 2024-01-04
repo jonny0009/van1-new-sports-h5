@@ -18,7 +18,8 @@
 </template>
 <script lang="ts" setup>
 import lang from '@/lang'
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
+import store from '@/store'
 const props = defineProps({
   active: {
     type: Boolean,
@@ -33,14 +34,14 @@ const props = defineProps({
     }
   }
 })
-
+const theme = computed(() => store.state.app.theme || 'default')
 const activeVal = ref(false)
 activeVal.value = props.active
 watch(props, (val) => {
   if (val) {
     const { active, text } = val
     activeVal.value = active
-    SportsName.value = `icon-${text}`
+    SportsName.value = `icon-${theme.value}-${text}`
   }
 })
 
@@ -48,7 +49,7 @@ const textVal = ref('')
 textVal.value = lang.global.t(`sport.sports.${props.text}`) || props.text
 
 const SportsName = ref('icon-FT')
-SportsName.value = `icon-${props.text}`
+SportsName.value = `icon-${theme.value}-${props.text}`
 </script>
 <style lang="scss" scoped>
 .SportsButton{

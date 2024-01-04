@@ -8,8 +8,13 @@
       @click="clickChangeActive(item)"
     >
       <template v-if="item.value === 'game'">
-        <img v-if="active === 'game'" class="img" :src="game" style="object-fit: contain" :class="item.value" />
-        <img v-else :src="gameDefault" class="img" style="object-fit: contain" :class="item.value" />
+        <template v-if="ifThemeBlue">
+          <i class="iconfont icon-footer-game" :class="item.value"></i>
+        </template>
+        <template v-else>
+          <img v-if="active === 'game'" class="img" :src="game" style="object-fit: contain" :class="item.value" />
+          <img v-else :src="gameDefault" class="img" style="object-fit: contain" :class="item.value" />
+        </template>
       </template>
       <template v-else>
         <i v-if="item.value === 'broadcast'" class="iconfont icon-footer-live" :class="item.value"></i>
@@ -24,13 +29,18 @@
 <script lang="ts" setup>
 import gameDefault from '@/assets/images/globalLayout/footer/game-default.png'
 import game from '@/assets/images/globalLayout/footer/game.png'
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import router from '@/router'
 import { showToast } from 'vant'
 import lang from '@/lang'
 import store from '@/store'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
+
+const ifThemeBlue = computed(() => {
+  return store.state.app.theme === 'blue'
+})
+
 const getRouteName = () => {
   const routerName: any = router?.currentRoute?.value?.name || ''
   const routerNameToLowerCase = routerName.toLowerCase()
