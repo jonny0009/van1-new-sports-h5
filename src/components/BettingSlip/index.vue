@@ -163,9 +163,9 @@ const toogle = () => {
 }
 const bodyOverflow = () => {
   if (open.value) {
-    document.body.classList.add('popup-overflow-hidden')
+    document.documentElement.classList.add('popup-overflow-hidden')
   } else {
-    document.body.classList.remove('popup-overflow-hidden')
+    document.documentElement.classList.remove('popup-overflow-hidden')
   }
 }
 bodyOverflow()
@@ -217,6 +217,7 @@ defineExpose({
   bottom: 0;
   opacity: 0;
   margin: auto;
+  overflow: hidden;
   background-color: rgba(0, 0, 0, .3);
 
   &.open {

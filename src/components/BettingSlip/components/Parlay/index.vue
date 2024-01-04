@@ -28,7 +28,7 @@ const notComboMarkets = computed(() => props.markets.filter((market: MarketInfo)
 <style scoped lang="scss">
 .nothing-combo-wrap {
   border: 6px solid rgba(250, 179, 7, 1);
-  border-radius: 20px;
+  border-radius: 24px;
   margin: 25px 38px 10px;
 
   .Single-wrap {

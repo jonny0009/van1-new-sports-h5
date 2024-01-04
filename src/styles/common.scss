@@ -205,4 +205,8 @@ img:not([src]) {
 
 .popup-overflow-hidden {
   overflow: hidden !important;
+
+  body {
+    overflow: hidden !important;
+  }
 }
