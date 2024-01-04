@@ -1,5 +1,5 @@
 <template>
-  <div class="live-page" :class="{ 'has-bet': showFixedBetx }">
+  <div class="live-page" :class="{ 'has-bet': showFixedBet }">
     <div class="match" :class="{ 'no-vid': videoError }">
       <div v-show="!videoError" class="match-video">
         <video ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
@@ -51,7 +51,7 @@ const navList = reactive([
 ])
 const navActive = ref(0)
 const compsList = [TabChat, TabBets, TabWith, TabMore]
-const showFixedBetx = computed(() => store.state.app.showFixedBet)
+const showFixedBet = computed(() => store.state.app.showFixedBet)
 
 const matchData: Ref<any> = ref({})
 const getMatcheInfo = async (gidm = route.params['id']) => {
@@ -83,6 +83,7 @@ const videoRef = ref<HTMLDivElement | string>('')
 const videoUrl = ref(null)
 const videoError = ref(false)
 const videoWaiting = ref(false)
+const videoIsInpicture = ref(false)
 const initVideo = () => {
   const { streamNa } = extendData.value
   const { liveali } = streamNa || {}
@@ -102,12 +103,20 @@ const initVideo = () => {
       {
         src: videoUrl.value,
         type: 'application/x-mpegURL'
+        // src: '//vjs.zencdn.net/v/oceans.mp4',
+        // type: 'video/mp4'
       }
     ]
   }
   nextTick(() => {
     player = videojs(videoRef.value, options, () => {
       player.log('onPlayerReady')
+      const videoPip = document.pictureInPictureElement
+      if (videoPip) {
+        player.exitPictureInPicture().then(() => {
+          player.log('画中画模式已关闭')
+        })
+      }
     })
 
     player.on('waiting', () => {
@@ -122,7 +131,27 @@ const initVideo = () => {
       videoError.value = true
       videoWaiting.value = false
     })
+
+    player.on('enterpictureinpicture', () => {
+      videoIsInpicture.value = true
+      store.commit('app/SET_PIP_GIDM', route.params['id'])
+    })
+
+    player.on('leavepictureinpicture', () => {
+      videoIsInpicture.value = false
+
+      if (route.name !== 'BroadcastDetail') {
+        const gidm = store.state.app.pictureinpictureGidm
+        router.push(`/broadcast/${gidm}`)
+      }
+    })
   })
+}
+const disposePlayer = () => {
+  if (!videoIsInpicture.value) {
+    player && player.dispose()
+    player = null
+  }
 }
 
 const onMoreVideo = (item: any) => {
@@ -168,8 +197,7 @@ onMounted(() => {
 onUnmounted(() => {
   document.body.removeAttribute('style')
   unInterval()
-  player && player.dispose()
-  player = null
+  disposePlayer()
 })
 </script>
 

@@ -7,13 +7,11 @@ export default {
       name: 'Broadcast',
       path: '',
       component: () => import('@/views/live/index.vue')
-
     },
     {
       name: 'BroadcastDetail',
       path: ':id',
       component: () => import('@/views/live/id.vue')
-
     },
     {
       name: 'BroadcastBetting',

@@ -158,6 +158,8 @@ const leagueIcon = computed(() => {
       align-items: center;
       justify-content: center;
       flex-direction: column;
+      border-radius: 10px;
+      overflow: hidden;
     }
   }
 

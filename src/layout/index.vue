@@ -12,7 +12,7 @@
     right="20"
     class="GlobalTop"
     :class="{
-      'showBettingSlip': betShow && isOpen
+      showBettingSlip: betShow && isOpen
     }"
   >
     <van-icon name="down" />
@@ -77,13 +77,12 @@ watch(
     ifShowFixedBet()
   }
 )
-
 </script>
 <style lang="scss">
 .GlobalTop {
   background: var(--color-primary);
   right: 40px !important;
-  bottom: 100px !important;
+  bottom: 200px !important;
 
   .van-icon {
     transform: rotate(180deg);

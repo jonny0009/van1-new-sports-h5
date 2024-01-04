@@ -13,6 +13,7 @@ declare interface App {
   businessConfig: any
   queryCMerLanguage: any
   state: boolean
+  pictureinpictureGidm: any
 }
 
 declare interface User {
