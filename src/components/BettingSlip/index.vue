@@ -324,7 +324,9 @@ hitTimer()
     .bet-ior-switch {
       margin-left: 10px;
 
-      :deep(.van-switch__node){
+      :deep(.van-switch__node) {
+        width: 40px;
+        height: 40px;
         top: 0;
         bottom: 0;
         margin: auto;
