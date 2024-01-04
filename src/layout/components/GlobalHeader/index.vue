@@ -36,11 +36,11 @@
         <div class="top">
           <div class="top_1">
             <div class="left">
-              <van-image class="headImg" fit="contain" :src="getImg(userInfo.headImg)" />
+              <van-image class="headImg" fit="contain" :src="getImg(userInfo.headImg)" @click.stop="toUser('/userInfo')" />
             </div>
             <div class="right">
               <div class="head">
-                <div class="head_1" @click="toUser('/userInfo')"> {{ $t('user.ViewProfile') }} </div>
+                <div class="head_1" @click.self="toUser('/userInfo')"> {{ $t('user.ViewProfile') }} </div>
                 <img class="headImg_1" fit="contain" src="@/assets/images/user/notice.svg" @click="toUser('/notice')" />
               </div>
               <div class="money">

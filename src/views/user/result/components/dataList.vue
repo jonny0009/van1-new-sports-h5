@@ -4,7 +4,7 @@
       <div v-if="item.timeName" class="time" :class="timeIndex == index ? 'timeActive' : ''" @click.stop="selectTime(index)">
         {{ item.timeName }}
       </div>
-      <p v-else class="imgStyle">
+      <p v-else class="imgStyle" @click.stop="setDate()">
         <img class="img_1" src="@/assets/images/user/selectTime.png" alt="" />
       </p>
     </div>
@@ -71,7 +71,7 @@ const showBottom = ref(false)
 const loading = ref(false)
 const finished = ref(false)
 
-const emit = defineEmits(['valueChange'])
+const emit = defineEmits(['valueChange', 'timeChange'])
 
 // const showTime = ref(false)
 const popupList = reactive<{ arr: any[] }>({
@@ -117,6 +117,22 @@ const onLoad = () => {
 const seStatus = () => {
   showBottom.value = true
   emit('valueChange', true, popupTitle.value, popupList.arr, commonKey.value, 1)
+}
+// 日期弹窗
+const setDate = () => {
+  // emit('timeChange', true)
+}
+const setDateTime = (values:any) => {
+  const [start, end] = values
+  endTime.value = moment(end).valueOf()
+  beginTime.value = moment(start).valueOf()
+  loading.value = true
+  finished.value = false
+  page = 0
+  list.arr = []
+  getNoAccount()
+
+  // emit('timeChange', true)
 }
 async function setPk(val: any) {
   commonKey.value = val
@@ -198,7 +214,7 @@ const getNoAccount = async () => {
   }
 }
 defineExpose({
-  setPk, showBottom
+  setPk, setDateTime, showBottom
 })
 
 </script>
@@ -210,6 +226,7 @@ defineExpose({
   display: flex;
   align-items: center;
   justify-content: space-around;
+  // overflow: auto;
 
   .time {
     width: 130px;
