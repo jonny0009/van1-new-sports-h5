@@ -331,8 +331,8 @@ defineExpose({
       margin-left: 10px;
 
       :deep(.van-switch__node) {
-        width: calc(var(--van-switch-height) - 6px);
-        height: calc(var(--van-switch-height) - 6px);
+        width: calc(var(--van-switch-height) - 4px);
+        height: calc(var(--van-switch-height) - 4px);
         top: 0;
         bottom: 0;
         margin: auto;
