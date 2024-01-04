@@ -18,7 +18,7 @@
         :duration="0.3"
       >
         <van-tab :title="$t('user.BettingHistory')">
-          <dataList ref="childRefA" @valueChange="setStatus"></dataList>
+          <dataList ref="childRefA" @valueChange="setStatus" @timeChange="setDate"></dataList>
         </van-tab>
         <van-tab :title="$t('user.FlowingHistory')">
           <RunningHistory></RunningHistory>
@@ -64,14 +64,18 @@
           </div>
         </div>
       </van-popup>
+      <!-- 时间弹窗 -->
+      <van-calendar v-model:show="show" first-day-of-week="1" type="range" :min-date="minDate" :max-date="maxDate" @confirm="onConfirm" />
+
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import dataList from './components/dataList.vue'
+// import moment from 'moment'
 
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import RunningHistory from './components/runningHistory.vue'
 import MatchResult from './components/matchResult.vue'
@@ -89,7 +93,18 @@ const index = ref(0)
 const childRefA = ref()
 const childRefB = ref()
 const showBottom = ref(false)
+const show = ref(false)
 
+const maxDate = ref()
+const minDate = ref()
+
+onMounted(() => {
+  // console.log(new Date(2010, 0, 31), '=====')
+
+  // maxDate.value = moment().toDate()
+  // minDate.value = moment().toDate()
+  // getNoAccount()
+})
 const goBack = () => {
   $router.back()
 }
@@ -113,6 +128,13 @@ async function setPk(val: any) {
   if (way.value === 3) {
     childRefB.value.setPk(val)
   }
+}
+const setDate = (val: any) => {
+  show.value = val
+}
+const onConfirm = (val: any) => {
+  childRefA.value.setDateTime(val)
+  show.value = false
 }
 const handleClose = (item: any) => {
   console.log(item)
