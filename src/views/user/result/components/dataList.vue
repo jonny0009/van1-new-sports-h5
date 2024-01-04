@@ -250,7 +250,7 @@ defineExpose({
 
 // 列表
 .dataList {
-  height: calc(100vh - 350px);
+  height: calc(100vh - 340px);
   overflow-y: auto;
   margin-top: 20px;
   // padding: 0 36px;

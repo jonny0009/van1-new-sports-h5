@@ -6,10 +6,9 @@
       </template>
     </van-nav-bar>
     <div class="content">
-      <!-- tab切换栏   :swipeable="true"-->
+      <!-- tab切换栏   swipeable"-->
       <van-tabs
         v-model:active="index"
-        :swipeable="true"
         line-height="3px"
         color="#1F2630 "
         title-inactive-color="#96A5AA"

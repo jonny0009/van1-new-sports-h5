@@ -1,14 +1,9 @@
 <template>
+  <div class="ball-type">
+    <sports-tabs @returnSportsSuccess="setBallSelect"></sports-tabs>
+  </div>
   <!-- 状态 -->
   <div class="status">
-    <div class="status_1">
-      <span>{{ $t('user.Balls') }}</span>
-      <div class="round" @click="setBall()">
-        <!-- <span>{{ ballKey.gameType }}</span> -->
-        <span>{{ $t(`user.sports.${ballKey.gameType}`) }}</span>
-        <img class="img_1 " :class="[showBottom1 ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
-      </div>
-    </div>
     <div class="status_1">
       <span>{{ $t('user.time') }}</span>
       <div class="round" @click="seStatus()">
@@ -69,17 +64,20 @@
 
 <script lang="ts" setup>
 import { ref, reactive, onMounted, computed } from 'vue'
+
+import SportsTabs from '@/components/tabs/SportsTabs/index.vue'
+
 import moment from 'moment'
 import { ImageSource } from '@/config'
 import store from '@/store'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 import { matchResult } from '@/api/user'
+
 const list = reactive<{ arr: any }>({ arr: [] })
 // import { showToast } from 'vant'
 const loading = ref(false)
 const finished = ref(false)
-const popupTitle1 = ref(t('user.Balls'))
 const popupTitle = ref(t('user.time'))
 const commonKey = ref(
   {
@@ -94,33 +92,13 @@ const ballKey = ref(
     key: 'FT'
   }
 )
-const showBottom1 = ref(false)
 const showBottom = ref(false)
 
 const emit = defineEmits(['valueChange'])
 onMounted(() => {
   store.dispatch('app/getAllSports')
 })
-const sportsList = computed(() => {
-  const sports = store.state.app.sports || []
-  const newSportsA = sports.filter((e:any) => {
-    return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.gameCount
-  })
-  let newSportsB:any = [
 
-  ]
-  if (newSportsA.length) {
-    const newSportsC = newSportsA.map((e:any) => {
-      return {
-        gameType: e.gameType,
-        key: e.gameType
-      }
-    })
-    newSportsB = [...newSportsC]
-  }
-
-  return newSportsB
-})
 const timeArrList = computed(() => {
   const timeArr = [
     {
@@ -229,6 +207,7 @@ const onLoad = async () => {
     // showToast(res.msg)
   }
 }
+
 const getImg = (item: any) => {
   if (item) {
     return `${ImageSource}${item}`
@@ -248,10 +227,7 @@ const seStatus = () => {
   showBottom.value = true
   emit('valueChange', true, popupTitle.value, timeArrList.value, commonKey.value, 3)
 }
-const setBall = () => {
-  showBottom1.value = true
-  emit('valueChange', true, popupTitle1.value, sportsList.value, ballKey.value, 2)
-}
+
 async function setPk(val: any) {
   page = 0
   commonKey.value = val
@@ -262,26 +238,29 @@ async function setPk(val: any) {
   onLoad()
   console.log(val)
 }
-
+// 设置球类型
 const setBallSelect = (val: any) => {
+  ballKey.value = { gameType: val, key: val }
   page = 0
-  ballKey.value = val
-  showBottom1.value = false
   loading.value = true
   finished.value = false
   list.arr = []
   onLoad()
 }
 defineExpose({
-  setBallSelect, setPk, showBottom1, showBottom
+  setPk, showBottom
 })
 
 </script>
 
 <style lang="scss" scoped>
+//球类型
+.ball-type{
+  margin-top: 20px;
+}
 // 状态
 .status {
-  margin-top: 23px;
+  margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -324,7 +303,7 @@ defineExpose({
 // 列表
 .dataList {
   margin-top: 20px;
-  height: calc(100vh - 360px);
+  height: calc(100vh - 435px);
   overflow-y: auto;
 
   .color-1 {
