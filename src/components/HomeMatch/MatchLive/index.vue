@@ -46,6 +46,7 @@
         <div class="up-match">
           <!--  -->
           <div class="match-info-live__header border-bottom">
+            <div v-if="showSportsIcon(sendParams)" class="live-icon" @click="goToDetail(sendParams)"><i v class="iconfont icon-footer-live"></i></div>
             <div class="up-match-league">
               <div class="text">{{ getLeagueShortName(sendParams) }}</div>
             </div>
@@ -172,7 +173,7 @@ import { getHandicap } from '@/utils/home/getHandicap'
 import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
 import TimeView from '@/components/HomeMatch/public/time/index.vue'
 // import SportsIcon from '@/components/Button/SportsIcon/index.vue'
-
+import router from '@/router'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 // script
@@ -448,4 +449,7 @@ const showSportsIcon = (item:any) => {
   return false
 }
 
+const goToDetail = (item:any) => {
+  router.push(`/broadcast/${item.gidm}`)
+}
 </script>
