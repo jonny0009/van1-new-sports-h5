@@ -323,6 +323,12 @@ hitTimer()
 
     .bet-ior-switch {
       margin-left: 10px;
+
+      :deep(.van-switch__node){
+        top: 0;
+        bottom: 0;
+        margin: auto;
+      }
     }
 
     .icon-wrapper {
