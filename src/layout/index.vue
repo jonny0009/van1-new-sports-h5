@@ -8,6 +8,7 @@
   <GlobalFooter />
   <BettingSlip v-if="betShow && isOpen" />
   <van-back-top
+    v-if="backTopShow"
     bottom="100"
     right="20"
     class="GlobalTop"
@@ -77,12 +78,18 @@ watch(
     ifShowFixedBet()
   }
 )
+
+const backTopShow = computed(() => {
+  const route: any = currentRoute.value
+  const routeNames = ['BroadcastDetail']
+  return !routeNames.includes(route.name)
+})
 </script>
 <style lang="scss">
 .GlobalTop {
   background: var(--color-primary);
   right: 40px !important;
-  bottom: 200px !important;
+  bottom: 100px !important;
 
   .van-icon {
     transform: rotate(180deg);

@@ -1,7 +1,11 @@
 <template>
   <div class="item">
     <div class="photo">
-      <van-image :src="imgCover" fit="cover"></van-image>
+      <van-image :src="imgCover" fit="cover">
+        <template v-slot:error>
+          <img :src="imageSource + 'FE/common/live/img_video_bg_FT.jpg'" alt="" />
+        </template>
+      </van-image>
       <span class="state" v-if="item.showType == 'RB'">{{ $t('live.hotNow') }}</span>
     </div>
 
@@ -44,7 +48,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { ImageSource } from '@/config'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
@@ -56,6 +60,7 @@ const props = defineProps({
   }
 })
 
+const imageSource = ref(ImageSource)
 const gameInfo = computed(() => props.item?.gameInfo)
 const imgCover = computed(() => {
   const item = props.item
