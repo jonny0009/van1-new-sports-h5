@@ -18,7 +18,7 @@
         </template>
 
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-          <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+          <van-list v-model:loading="loading" :finished="finished" :finished-text="t('live.noMore')" @load="onLoad">
             <div class="no-data" v-if="finished && list.length === 0">
               <EmptyIcon />
             </div>
