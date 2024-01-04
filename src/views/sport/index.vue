@@ -2,7 +2,7 @@
   <div class="sport-page">
     <div class="my-scroll__content">
       <div class="betting-sport-nav">
-        <TextButton :text="$t('sport.recommend')" :active="!leagueId" @click="clickLeague({})" />
+        <TextButton :text="$t('sport.all')" :active="!leagueId" @click="clickLeague({})" />
         <ImageButton
           v-for="(item,idx) in firstLeaguesList"
           :key="idx"

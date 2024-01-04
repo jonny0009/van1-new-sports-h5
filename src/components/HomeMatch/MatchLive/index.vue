@@ -1,8 +1,44 @@
 <template>
-  <div ref="container" class="homeMatchHandicap">
+  <div ref="container" class="homeMatchHandicap" :data-val="offsetTop">
     <van-sticky :offset-top="offsetTop" :container="container" z-index="5">
       <div class="home-tabs-play">
         <TimeView :time-send-params="sendParams" />
+        <div class="play">
+          <div class="flex-1"></div>
+          <span
+            class="btn R"
+            :class="[
+              {
+                active: RrefShow
+              }
+            ]"
+            @click="Rclick"
+          >
+            {{ $t('home.R') }}
+          </span>
+          <span
+            class="btn OU"
+            :class="[
+              {
+                active: OUrefShow
+              }
+            ]"
+            @click="OUclick"
+          >
+            {{ $t('home.OU') }}
+          </span>
+          <span
+            class="btn M"
+            :class="[
+              {
+                active: MrefShow
+              }
+            ]"
+            @click="Mclick"
+          >
+            {{ $t('home.M') }}
+          </span>
+        </div>
       </div>
     </van-sticky>
     <div class="home-match">
@@ -15,7 +51,7 @@
             </div>
             <div class="flex-cross-center">
               <div class="up-match-time">
-                <!-- <SportsIcon :icon-src="'live'" /> -->
+                <SportsIcon v-show="showSportsIcon(sendParams)" :icon-src="'live'" class="mr5" />
                 <div class="up-match-time-html" :class="sendParams.gameType" v-html="showRBTime(sendParams)"></div>
               </div>
             </div>
@@ -55,7 +91,7 @@
           </div>
           <!--  -->
           <div class="up-match__body">
-            <div v-if="sendParams.RE" class="match-betting-item">
+            <div v-if="RrefShow && sendParams.RE" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">
                   {{ $t('home.RInfo') }}
@@ -75,7 +111,7 @@
                 </div>
               </div>
             </div>
-            <div v-if="sendParams.ROU" class="match-betting-item">
+            <div v-if="OUrefShow && sendParams.ROU" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">
                   {{ $t('home.OUInfo') }}
@@ -89,7 +125,7 @@
                 </div>
               </div>
             </div>
-            <div v-if="sendParams.RM" class="match-betting-item">
+            <div v-if="MrefShow && sendParams.RM" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">
                   {{ $t('home.MInfo') }}
@@ -127,7 +163,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onBeforeUnmount } from 'vue'
 import { tnStObj, bsStObj, opScoreObj } from '@/utils/home/gameInfo'
 import { dateFormat } from '@/utils/date'
 import { getScore } from '@/utils/home/getScore'
@@ -150,8 +186,44 @@ import store from '@/store'
 //   // on close
 //   })
 // }
+
+const RrefShow = computed(() => store.state.home.RrefShow)
+const Rclick = () => {
+  //
+  store.dispatch('home/setKeyValue', {
+    key: 'RrefShow',
+    value: !RrefShow.value
+  })
+}
+const OUrefShow = computed(() => store.state.home.OUrefShow)
+const OUclick = () => {
+  //
+  store.dispatch('home/setKeyValue', {
+    key: 'OUrefShow',
+    value: !OUrefShow.value
+  })
+}
+
+const MrefShow = computed(() => store.state.home.MrefShow)
+const Mclick = () => {
+  //
+  store.dispatch('home/setKeyValue', {
+    key: 'MrefShow',
+    value: !MrefShow.value
+  })
+}
+
 const container = ref(null)
-const offsetTop = computed(() => store.state.app.globalBarHeaderHeight)
+const offsetTop = computed(() => {
+  const offsetTop = store.state.app.globalBarHeaderHeight || 48
+  var offsetTopval = 48
+  if (offsetTop > 60) {
+    offsetTopval = 48
+  } else {
+    offsetTopval = offsetTop
+  }
+  return offsetTopval
+})
 //
 const sectionMap:any = {
   0: '',
@@ -247,7 +319,8 @@ const showRBTime = (raceinfo:any = {}) => {
           return gameInfo.re_time
         }
         // 比赛时间容错
-        return '-' + ':' + '-'
+        // return '-' + ':' + '-'
+        return t('live.pause') // 暂停
       // 网球
       //
       case 'TN':
@@ -365,4 +438,14 @@ const props = defineProps({
     }
   }
 })
+
+const showSportsIcon = (item:any) => {
+  const { live, merchantAnchor, merchantStreamNa } = item
+
+  if (live * 1 !== 1 || (merchantAnchor && merchantAnchor?.length && merchantStreamNa && merchantStreamNa?.length)) {
+    return true
+  }
+  return false
+}
+
 </script>
