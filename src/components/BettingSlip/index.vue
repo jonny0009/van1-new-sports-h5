@@ -25,7 +25,7 @@
           @click.stop
         >
           <template #node>
-            <div class="icon-wrapper">
+            <div class="icon-wrapper" :style="{ color: checkColor }">
               <SvgIcon v-if="userConfig.acceptAll" name="betting-check" class="accept-ior" />
             </div>
           </template>
@@ -125,6 +125,12 @@ const inactiveColor = computed(() => {
     return '#a3d0fe'
   }
   return '#baa0fe'
+})
+const checkColor = computed(() => {
+  if (theme.value === 'blue') {
+    return 'betting-check-blue'
+  }
+  return 'betting-check'
 })
 const pendingNum = computed(() => store.state.user.pendingData)
 const isOne = computed(() => store.state.betting.isOne)
@@ -353,11 +359,16 @@ defineExpose({
     .icon-wrapper {
       width: 100%;
       height: 100%;
+      background-color: var(--color-bet-iorbg-1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       .accept-ior {
-        width: 100%;
-        height: 100%;
-        color: var(--color-bet-iorbg-1);
+        width: 0.7em;
+        height: 0.7em;
+        color: #fff;
       }
     }
   }
