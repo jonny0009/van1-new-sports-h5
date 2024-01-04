@@ -136,6 +136,8 @@ const betsProfit = computed(() => store.getters['betting/betsProfit'])
 const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
 const combosIor = computed(() => store.getters['betting/combosIor'])
 const userConfig = computed(() => store.state.user.userConfig)
+store.dispatch('betting/setMode', 1)
+const emit = defineEmits(['close'])
 watch(() => isOne.value, () => {
   if (isOne.value) {
     open.value = true
@@ -156,6 +158,7 @@ watch(() => open.value, () => {
 })
 const toogle = () => {
   open.value = !open.value
+  emit('close', open.value)
 }
 const changeType = (mode: any) => {
   type.value = mode
@@ -188,6 +191,9 @@ const hitTimer = () => {
   }, 10 * 1000)
 }
 hitTimer()
+defineExpose({
+  open
+})
 
 </script>
 <style lang="scss" scoped>
@@ -325,8 +331,8 @@ hitTimer()
       margin-left: 10px;
 
       :deep(.van-switch__node) {
-        width: calc(var(--van-switch-height) - 4px);
-        height: calc(var(--van-switch-height) - 4px);
+        width: calc(var(--van-switch-height) - 6px);
+        height: calc(var(--van-switch-height) - 6px);
         top: 0;
         bottom: 0;
         margin: auto;
