@@ -1,13 +1,17 @@
 <template>
   <div class="timeSelect">
-    <div v-for="(item, index) in timeList" :key="index">
-      <div v-if="item.timeName" class="time" :class="timeIndex == index ? 'timeActive' : ''" @click.stop="selectTime(index)">
-        {{ item.timeName }}
-      </div>
-      <p v-else class="imgStyle" @click.stop="setDate()">
+    <div>
+      <p class="imgStyle" @click.stop="setDate()">
         <img class="img_1" src="@/assets/images/user/selectTime.png" alt="" />
       </p>
     </div>
+    <!-- 时间 -->
+    <div v-for="(item, index) in timeList" :key="index">
+      <div class="time" :class="{'timeActive':timeIndex == item.id }" @click.stop="selectTime(item)">
+        {{ item.timeName }}
+      </div>
+    </div>
+
     <!-- 状态 -->
     <div class="status">
       <div class="status_1">
@@ -22,14 +26,14 @@
 
   <!-- 列表 -->
   <!-- <div v-if="list.arr.length" class="dataList"> -->
-  <div v-if="!list.arr.length &&finished" class="noData">
+  <div v-if="!list.arr.length && finished" class="noData">
     <img class="img_1" src="@/assets/images/user/noData.png" />
     <p>
       {{ $t('user.noData') }}
     </p>
   </div>
   <van-list
-    v-if="list.arr.length ||!finished"
+    v-if="list.arr.length || !finished"
     v-model:loading="loading"
     :finished="finished"
     :finished-text="$t('live.noMore')"
@@ -38,14 +42,14 @@
     @load="onLoad"
   >
     <div v-for="(item, index) in list.arr" :key="index">
-      <Single v-if="item.parlayNum ==1" :item="item" class="item"></Single>
-      <Bunch v-if="item.parlayNum !=1" :item="item" class="item"></Bunch>
+      <Single v-if="item.parlayNum == 1" :item="item" class="item"></Single>
+      <Bunch v-if="item.parlayNum != 1" :item="item" class="item"></Bunch>
     </div>
   </van-list>
-
 </template>
 
 <script lang="ts" setup>
+// nextTick
 import { ref, reactive, onMounted, defineExpose } from 'vue'
 import moment from 'moment'
 
@@ -62,7 +66,7 @@ import { showToast } from 'vant'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
-const timeIndex = ref(2)
+const timeIndex = ref(3)
 const beginTime = ref<any>('')
 const endTime = ref<any>('')
 const popupTitle = ref(t('user.state'))
@@ -92,16 +96,16 @@ const popupList = reactive<{ arr: any[] }>({
 })
 const timeList = reactive([
   {
-    timeName: ''
-  },
-  {
-    timeName: t('user.today')
+    timeName: t('user.today'),
+    id: 1
   },
   // {
-  //   timeName: t('user.fortyEight')
+  //   timeName: t('user.fortyEight'),
+  //   id: 2
   // },
   {
-    timeName: t('user.sevenDay')
+    timeName: t('user.sevenDay'),
+    id: 3
   }
 
 ])
@@ -109,7 +113,6 @@ onMounted(() => {
   endTime.value = moment().valueOf()
   const oneDayDate = 24 * 60 * 60 * 1000
   beginTime.value = endTime.value - oneDayDate * 7
-  // getNoAccount()
 })
 const onLoad = () => {
   getNoAccount()
@@ -120,12 +123,13 @@ const seStatus = () => {
 }
 // 日期弹窗
 const setDate = () => {
-  // emit('timeChange', true)
+  emit('timeChange', true)
 }
-const setDateTime = (values:any) => {
+const setDateTime = (values: any) => {
   const [start, end] = values
   endTime.value = moment(end).valueOf()
   beginTime.value = moment(start).valueOf()
+
   loading.value = true
   finished.value = false
   page = 0
@@ -143,14 +147,14 @@ async function setPk(val: any) {
   getNoAccount()
   console.log(val)
 }
-const selectTime = (index: number) => {
-  timeIndex.value = index
+const selectTime = (item: any) => {
+  timeIndex.value = item.id
   const nowDate = moment().valueOf()
   let startDate = ref<any>('')
   const endDate = nowDate
   const oneDayDate = 24 * 60 * 60 * 1000
   // 近24小时
-  if (index === 1) {
+  if (item.id === 1) {
     startDate = nowDate - oneDayDate
   }
   // 近48小时
@@ -158,7 +162,7 @@ const selectTime = (index: number) => {
   //   startDate = nowDate - oneDayDate * 2
   // }
   // 近7天
-  if (index === 2) {
+  if (item.id === 3) {
     startDate = nowDate - oneDayDate * 7
   }
   // console.log();
@@ -197,9 +201,9 @@ const getNoAccount = async () => {
     // 获取多语言
     const gidmsArr: any = []
     // 冠军国际化
-    const championGidms:any = []
-    list.arr.map((m:any) => {
-      m.betDTOList.map((n:any) => {
+    const championGidms: any = []
+    list.arr.map((m: any) => {
+      m.betDTOList.map((n: any) => {
         const { championType, systemId, gidm } = n
         if (championType) {
           championGidms.push(gidm)
@@ -281,7 +285,7 @@ defineExpose({
   justify-content: flex-end;
   font-family: PingFangSC-Semibold;
   font-size: 24px;
-  color: var( --color-search-box-text-1);
+  color: var(--color-search-box-text-1);
   letter-spacing: 0;
   font-weight: 600;
 
@@ -289,6 +293,7 @@ defineExpose({
     display: flex;
     align-items: center;
     margin-right: 30px;
+
     .round {
       // width: 165px;
       // width: 170px;
@@ -376,6 +381,7 @@ defineExpose({
     color: var(--color-bg-1);
   }
 }
+
 .noData {
   width: 100%;
   text-align: center;
@@ -386,7 +392,7 @@ defineExpose({
   font-weight: 500;
   height: 850px;
 
-   >.img_1 {
+  >.img_1 {
     margin-top: 331px;
     width: 102px;
     height: 121px;

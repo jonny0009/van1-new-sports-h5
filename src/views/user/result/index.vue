@@ -6,7 +6,7 @@
       </template>
     </van-nav-bar>
     <div class="content">
-      <!-- tab切换栏 -->
+      <!-- tab切换栏   :swipeable="true"-->
       <van-tabs
         v-model:active="index"
         :swipeable="true"
@@ -65,7 +65,7 @@
         </div>
       </van-popup>
       <!-- 时间弹窗 -->
-      <van-calendar v-model:show="show" first-day-of-week="1" type="range" :min-date="minDate" :max-date="maxDate" @confirm="onConfirm" />
+      <van-calendar v-model:show="show" type="range" :min-date="minDate" :max-date="maxDate" @confirm="onConfirm" />
 
     </div>
   </div>
@@ -73,7 +73,7 @@
 
 <script lang="ts" setup>
 import dataList from './components/dataList.vue'
-// import moment from 'moment'
+import moment from 'moment'
 
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
@@ -95,16 +95,12 @@ const childRefB = ref()
 const showBottom = ref(false)
 const show = ref(false)
 
-const maxDate = ref()
-const minDate = ref()
+const currentDate = moment().valueOf()
+const oneDayDate = 24 * 60 * 60 * 1000
+const maxDate = ref(new Date())
+const minDate = ref(new Date(currentDate - oneDayDate * 7))
 
-onMounted(() => {
-  // console.log(new Date(2010, 0, 31), '=====')
-
-  // maxDate.value = moment().toDate()
-  // minDate.value = moment().toDate()
-  // getNoAccount()
-})
+onMounted(() => {})
 const goBack = () => {
   $router.back()
 }
@@ -224,5 +220,8 @@ const handleClose = (item: any) => {
 }
 :deep(.van-tabs__nav--line){
   background-color: var(--color-background-color);
+}
+:deep(.van-calendar__day--middle){
+  color:var(--color-primary) ;
 }
 </style>
