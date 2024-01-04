@@ -127,12 +127,6 @@ const clickChangeActive = (item:any) => {
     &.active{
       color:var(--color-primary);
     }
-    // &.OP_DJ{
-    //   .iconfont{
-    //     top: 4px;
-    //     font-size:54px;
-    //   }
-    // }
 
     &.BK_AFT{
       .iconfont{

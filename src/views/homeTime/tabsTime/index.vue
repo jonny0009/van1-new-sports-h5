@@ -66,11 +66,19 @@ const refHomeTimePage = ref()
 <style lang="scss" scoped>
 .homeTime-Time-Tabs{
   display: flex;
-  grid-gap: 32px;
   overflow: auto;
   .homeTime-TimePage{
     display: flex;
-    grid-gap: 32px;
+    // grid-gap: 32px;
+    & > div{
+      margin: 0 8px;
+      &:first-child{
+        margin: 0 8px 0 0;
+      }
+      &:last-child{
+        margin: 0 0 0 8px;
+      }
+    }
   }
   &::-webkit-scrollbar {
     height: 0;
@@ -86,7 +94,7 @@ const refHomeTimePage = ref()
     justify-content: center;
     align-items: center;
     font-size: 24px;
-    min-width: 120px;
+    min-width: 150px;
     white-space: nowrap;
     flex-shrink: 0;
     &:last-child{

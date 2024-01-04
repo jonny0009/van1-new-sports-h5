@@ -22,7 +22,7 @@
         <div class="img-wrap">
           <img
             v-img="item.leagueIcon"
-            type="1"
+            type="6"
             width="23"
             height="23"
             fit="contain"
@@ -35,7 +35,7 @@
       <div v-for="(item, idx) in leagueList" :key="idx" class="up-league-item" @click="clickSportPage(item)">
         <img
           v-img="item.leagueIcon"
-          type="1"
+          type="6"
           fit="contain"
           class="my-image icon"
         />
