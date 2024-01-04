@@ -297,14 +297,14 @@ const bettingModule: Module<Betting, any> = {
             newBetData.ior = eoIor
           }
           const newIor = newBetData.ior * 1 || ior * 1
-          if (oldIor * 1 !== newIor && autoRatio) {
+          if (oldIor * 1 !== newIor && !autoRatio) {
             if (oldIor * 1 > newIor) {
               iorChange = 'up'
             } else {
               iorChange = 'down'
             }
           }
-          if (oldRatio * 1 !== ratio * 1 && autoOdd) {
+          if (oldRatio * 1 !== ratio * 1 && !autoOdd) {
             if (oldRatio * 1 > ratio) {
               ratioChange = 'up'
             } else {
