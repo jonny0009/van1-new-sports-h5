@@ -1,5 +1,5 @@
 <template>
-  <div class="bet-container">
+  <div class="bet-container" :class="{ 'has-bet': showFixedBet }">
     <div class="team">
       <div class="team-header">
         <div class="league">
@@ -43,17 +43,19 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, ref, onMounted, onUnmounted } from 'vue'
+import { Ref, ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { matcheInfo } from '@/api/live'
 import { useMatch } from '@/utils/useMatch'
 import { useBetting } from '@/utils/useBetting'
 import { formatToDate } from '@/utils/date'
 import BettingCollapse from '@/components/BettingCollapse/index.vue'
+import store from '@/store'
 
 const route = useRoute()
 const router = useRouter()
 const setMatch = useMatch()
+const showFixedBet = computed(() => store.state.app.showFixedBet)
 const { getPlayGroupType } = useBetting()
 onMounted(() => {
   getMatcheInfo()
@@ -107,7 +109,10 @@ const gotoLive = () => {
 }
 .bet-container {
   padding: 0 36px;
-  padding-bottom: calc(88px + 96px);
+  padding-bottom: 88px;
+  &.has-bet {
+    padding-bottom: calc(88px + 96px);
+  }
   .team {
     height: 252px;
     background: url('@/assets/images/live/game_mask.png') no-repeat;
