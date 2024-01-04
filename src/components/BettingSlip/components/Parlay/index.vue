@@ -1,7 +1,7 @@
 <template>
-  <Singles v-for="( market, index ) in comboMarkets " :key="index" :market-info="market"></Singles>
+  <Singles v-for="market in comboMarkets " :key="market.playOnlyId" :market-info="market"></Singles>
   <div v-if="notComboMarkets.length" class="nothing-combo-wrap">
-    <Singles v-for="( market, index ) in notComboMarkets " :key="index" :market-info="market"></Singles>
+    <Singles v-for="market in notComboMarkets " :key="market.playOnlyId" :market-info="market"></Singles>
   </div>
   <div v-if="notComboMarkets.length" class="not-combo-tips">
     <span class="icon"></span>
