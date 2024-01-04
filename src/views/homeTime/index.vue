@@ -1,35 +1,39 @@
 <template>
   <div class="homeTime-page">
-    <ArrowTitle class="mt10 mb10" :src="titleTime" :text="$t('home.latestMatch')" @returnSuccess="returnStatus" />
-    <template v-if="!isShow">
-      <SportsTabs class="pb10" @returnSportsSuccess="returnSportsSuccess" />
-      <tabsTime @returnTimeSuccess="returnTimeSuccess" />
-      <van-list
-        v-model="loading"
-        :finished="finished"
-        :finished-text="$t('live.noMore')"
-        @load="onLoad"
-      >
-        <template v-if="!isShow">
-          <template v-if="isLoading">
-            <HomeMatchHandicap
-              v-for="(item,idx) in recommendEventsList"
-              :key="idx"
-              :send-params="item"
-              :class="{'mt20':idx !== 0}"
-            />
-            <HomeEmpty v-if="!recommendEventsList.length"></HomeEmpty>
-          </template>
-          <Loading
-            v-if="!isLoading || loading"
-            :class="{
-              'new_loading mt10' : loading
-            }"
-          />
+    <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
+      <van-collapse-item name="1">
+        <template #title>
+          <ArrowTitle class="mt10 mb10" :src="titleTime" :text="$t('home.latestMatch')" />
         </template>
-      </van-list>
-      <FooterHeight />
-    </template>
+        <SportsTabs class="pb10" @returnSportsSuccess="returnSportsSuccess" />
+        <tabsTime @returnTimeSuccess="returnTimeSuccess" />
+        <van-list
+          v-model="loading"
+          :finished="finished"
+          :finished-text="$t('live.noMore')"
+          @load="onLoad"
+        >
+          <template v-if="!isShow">
+            <template v-if="isLoading">
+              <HomeMatchHandicap
+                v-for="(item,idx) in recommendEventsList"
+                :key="idx"
+                :send-params="item"
+                :class="{'mt20':idx !== 0}"
+              />
+              <HomeEmpty v-if="!recommendEventsList.length"></HomeEmpty>
+            </template>
+            <Loading
+              v-if="!isLoading || loading"
+              :class="{
+                'new_loading mt10' : loading
+              }"
+            />
+          </template>
+        </van-list>
+        <FooterHeight />
+      </van-collapse-item>
+    </van-collapse>
   </div>
 </template>
 <script lang="ts" setup>
@@ -39,11 +43,12 @@ import titleTime from '@/assets/images/home/title-time.png'
 import { recommendEvents } from '@/api/home'
 import store from '@/store'
 import { onBeforeMount, ref, reactive, computed, watch } from 'vue'
-
+const activeNames = ref('1')
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout:any = ref('')
 watch(refreshChangeTime, (val) => {
   if (val) {
+    activeNames.value = '1'
     clearTimeout(timeout.value)
     timeout.value = setTimeout(async () => {
       await initData()
@@ -130,10 +135,7 @@ const returnSportsSuccess = (val:any) => {
   params.page = 1
   getRecommendEvents()
 }
-const isShow = ref(false)
-const returnStatus = (val:any) => {
-  isShow.value = val
-}
+
 const initData = () => {
   params.page = 1
   params.gameType = 'FT'

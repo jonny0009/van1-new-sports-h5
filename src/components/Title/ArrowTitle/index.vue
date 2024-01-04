@@ -65,15 +65,13 @@ defineExpose({
   .arrow{
     width: 18px;
     height: 18px;
-    margin-top: 8px;
     transition: all 0.5s;
   }
   &.active{
     .arrow{
       transform: rotate(180deg);
-      margin-top: 18px;
+      margin-top: 8px;
     }
   }
 }
-//    transform: rotate(90deg);
 </style>
