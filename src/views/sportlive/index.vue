@@ -4,6 +4,9 @@
       <TextButton :text="$t('sport.all')" :active="!gameType" @click="clickGameType({})" />
       <SportsButton v-for="(item,idx) in gameTypeList" :key="idx" :text="item.gameType" :active="gameType===item.gameType" @click="clickGameType(item)" />
     </div>
+
+    <swipeLive />
+
     <Loading v-if="!isLoading" />
     <template v-else>
       <MatchLive v-for="(item,idx) in commonMatchesList" :key="idx" :send-params="item" />
@@ -20,6 +23,7 @@
 <script lang="ts" setup>
 import TextButton from '@/components/Button/TextButton/index.vue'
 import MatchLive from '@/components/HomeMatch/MatchLive/index.vue'
+import swipeLive from './swipeLive/index.vue'
 import store from '@/store'
 import { ref, onBeforeMount, onActivated, onDeactivated, onBeforeUnmount, computed, watch } from 'vue'
 import { apiRBCondition, apiCommonMatches } from '@/api/home'
