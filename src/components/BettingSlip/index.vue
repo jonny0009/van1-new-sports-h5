@@ -159,7 +159,17 @@ watch(() => open.value, () => {
 const toogle = () => {
   open.value = !open.value
   emit('close', open.value)
+  bodyOverflow()
 }
+const bodyOverflow = () => {
+  if (open.value) {
+    document.body.classList.add('popup-overflow-hidden')
+  } else {
+    document.body.classList.remove('popup-overflow-hidden')
+  }
+}
+bodyOverflow()
+
 const changeType = (mode: any) => {
   type.value = mode
   store.dispatch('betting/setMode', mode)
