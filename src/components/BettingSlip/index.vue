@@ -325,8 +325,8 @@ hitTimer()
       margin-left: 10px;
 
       :deep(.van-switch__node) {
-        width: 40px;
-        height: 40px;
+        width: calc(var(--van-switch-height) - 4px);
+        height: calc(var(--van-switch-height) - 4px);
         top: 0;
         bottom: 0;
         margin: auto;
@@ -334,12 +334,12 @@ hitTimer()
     }
 
     .icon-wrapper {
-      width: 40px;
-      height: 40px;
+      width: 100%;
+      height: 100%;
 
       .accept-ior {
-        width: 40px;
-        height: 40px;
+        width: 100%;
+        height: 100%;
         color: var(--color-bet-iorbg-1);
       }
     }
