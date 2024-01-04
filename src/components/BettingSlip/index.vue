@@ -72,7 +72,8 @@
           </div>
         </div>
         <template v-if="mode === 1">
-          <Singles v-for="market in markets " :key="market.playOnlyId" :account-state="true" :market-info="market"></Singles>
+          <Singles v-for="market in markets " :key="market.playOnlyId" :account-state="true" :market-info="market">
+          </Singles>
         </template>
         <Parlay v-else :markets="markets"></Parlay>
         <ActionBar v-if="open" />
@@ -325,8 +326,13 @@ hitTimer()
     }
 
     .icon-wrapper {
-      .accept-ior{
-        color: var( --color-bet-iorbg-1);
+      width: 40px;
+      height: 40px;
+
+      .accept-ior {
+        width: 40px;
+        height: 40px;
+        color: var(--color-bet-iorbg-1);
       }
     }
   }
