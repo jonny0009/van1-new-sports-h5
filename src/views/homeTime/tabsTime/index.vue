@@ -37,7 +37,7 @@ const TimeClick = (item:any) => {
 }
 
 const show = ref(false)
-const onConfirm = (values) => {
+const onConfirm = (values:any) => {
   const [start, end] = values
   show.value = false
   const newHomeTimeArray = homeTimeArray.value.filter(e => {
