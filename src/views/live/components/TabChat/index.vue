@@ -21,11 +21,13 @@
     <div class="chat-bottom">
       <van-form @submit="onSend" submit-on-enter>
         <van-field
+          ref="msgInputRef"
           v-model="msgInput"
           autocomplete="off"
           :placeholder="placeholder"
           :disabled="disabledField"
           :maxlength="50"
+          @focus="onMsgFocus"
         />
         <button native-type="submit" hidden />
       </van-form>
@@ -174,6 +176,12 @@ const onSend = () => {
   }
   websocket.send('/chat/sendMsg', JSON.stringify(msgObj))
   msgInput.value = ''
+}
+
+const msgInputRef = ref()
+const onMsgFocus = () => {
+  const ele: any = msgInputRef.value.$el
+  ele.scrollIntoView()
 }
 </script>
 
