@@ -540,6 +540,9 @@
     }
     .iconfont{
       position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     &.OP_BM{
       .iconfont{
