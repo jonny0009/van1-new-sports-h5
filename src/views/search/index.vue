@@ -194,8 +194,7 @@ const toUrlGame = (item: any) => {
       width: 585px;
       height: 68px;
       padding-top: 13px;
-      // line-height: 34px;
-      background: var(--color-search-box);
+      background: var(--color-search-box) !important;
       border-radius: 34px;
     }
 
