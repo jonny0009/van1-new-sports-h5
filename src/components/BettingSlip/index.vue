@@ -17,7 +17,7 @@
           v-model="userConfig.acceptAll"
           :size="20"
           active-color="#fff"
-          inactive-color="#baa0fe"
+          :inactive-color="inactiveColor"
           class="bet-ior-switch"
           :active-value="1"
           :inactive-value="0"
@@ -72,7 +72,8 @@
           </div>
         </div>
         <template v-if="mode === 1">
-          <Singles v-for="market in markets " :key="market.playOnlyId" :account-state="true" :market-info="market"></Singles>
+          <Singles v-for="market in markets " :key="market.playOnlyId" :account-state="true" :market-info="market">
+          </Singles>
         </template>
         <Parlay v-else :markets="markets"></Parlay>
         <ActionBar v-if="open" />
@@ -116,6 +117,14 @@ const tabs = ref([
 ])
 const tableLeft = computed(() => {
   return `calc(100% / 3 * ${type.value - 1} + (100% / 3 - 27vw) / 2 )`
+})
+const theme = computed(() => store.state.app.theme)
+
+const inactiveColor = computed(() => {
+  if (theme.value === 'blue') {
+    return '#a3d0fe'
+  }
+  return '#baa0fe'
 })
 const pendingNum = computed(() => store.state.user.pendingData)
 const isOne = computed(() => store.state.betting.isOne)
@@ -314,11 +323,22 @@ hitTimer()
 
     .bet-ior-switch {
       margin-left: 10px;
+
+      :deep(.van-switch__node){
+        top: 0;
+        bottom: 0;
+        margin: auto;
+      }
     }
 
     .icon-wrapper {
-      .accept-ior{
-        color: var( --color-bet-iorbg-1);
+      width: 40px;
+      height: 40px;
+
+      .accept-ior {
+        width: 40px;
+        height: 40px;
+        color: var(--color-bet-iorbg-1);
       }
     }
   }

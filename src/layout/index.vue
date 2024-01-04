@@ -8,11 +8,12 @@
   <GlobalFooter />
   <BettingSlip v-if="betShow && isOpen" />
   <van-back-top
+    v-if="backTopShow"
     bottom="100"
     right="20"
     class="GlobalTop"
     :class="{
-      'showBettingSlip': betShow && isOpen
+      showBettingSlip: betShow && isOpen
     }"
   >
     <van-icon name="down" />
@@ -78,6 +79,11 @@ watch(
   }
 )
 
+const backTopShow = computed(() => {
+  const route: any = currentRoute.value
+  const routeNames = ['BroadcastDetail']
+  return !routeNames.includes(route.name)
+})
 </script>
 <style lang="scss">
 .GlobalTop {

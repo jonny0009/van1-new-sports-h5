@@ -1,6 +1,6 @@
 <template>
-  <div class="live-page" :class="{ 'has-bet': markets.length > 0 }">
-    <div class="match">
+  <div class="live-page" :class="{ 'has-bet': showFixedBet }">
+    <div class="match" :class="{ 'no-vid': videoError }">
       <div v-show="!videoError" class="match-video">
         <video ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
         <div class="mask-loading" v-if="videoWaiting">
@@ -51,7 +51,7 @@ const navList = reactive([
 ])
 const navActive = ref(0)
 const compsList = [TabChat, TabBets, TabWith, TabMore]
-const markets = computed(() => store.state.betting.markets)
+const showFixedBet = computed(() => store.state.app.showFixedBet)
 
 const matchData: Ref<any> = ref({})
 const getMatcheInfo = async (gidm = route.params['id']) => {
@@ -73,7 +73,7 @@ const getExtendInfo = async () => {
     extendData.value = res.data
     initVideo()
   } else {
-    extendData.value = {}
+    extendData.value = null
     videoError.value = true
   }
 }
@@ -83,6 +83,7 @@ const videoRef = ref<HTMLDivElement | string>('')
 const videoUrl = ref(null)
 const videoError = ref(false)
 const videoWaiting = ref(false)
+const videoIsInpicture = ref(false)
 const initVideo = () => {
   const { streamNa } = extendData.value
   const { liveali } = streamNa || {}
@@ -102,12 +103,20 @@ const initVideo = () => {
       {
         src: videoUrl.value,
         type: 'application/x-mpegURL'
+        // src: '//vjs.zencdn.net/v/oceans.mp4',
+        // type: 'video/mp4'
       }
     ]
   }
   nextTick(() => {
     player = videojs(videoRef.value, options, () => {
       player.log('onPlayerReady')
+      const videoPip = document.pictureInPictureElement
+      if (videoPip) {
+        player.exitPictureInPicture().then(() => {
+          player.log('画中画模式已关闭')
+        })
+      }
     })
 
     player.on('waiting', () => {
@@ -122,7 +131,27 @@ const initVideo = () => {
       videoError.value = true
       videoWaiting.value = false
     })
+
+    player.on('enterpictureinpicture', () => {
+      videoIsInpicture.value = true
+      store.commit('app/SET_PIP_GIDM', route.params['id'])
+    })
+
+    player.on('leavepictureinpicture', () => {
+      videoIsInpicture.value = false
+
+      if (route.name !== 'BroadcastDetail') {
+        const gidm = store.state.app.pictureinpictureGidm
+        router.push(`/broadcast/${gidm}`)
+      }
+    })
   })
+}
+const disposePlayer = () => {
+  if (!videoIsInpicture.value) {
+    player && player.dispose()
+    player = null
+  }
 }
 
 const onMoreVideo = (item: any) => {
@@ -160,25 +189,30 @@ const onTabChange = (index: number) => {
 }
 
 onMounted(() => {
+  document.body.style.overflow = 'hidden'
   getMatcheInfo()
   getExtendInfo()
 })
 
 onUnmounted(() => {
+  document.body.removeAttribute('style')
   unInterval()
-  player && player.dispose()
-  player = null
+  disposePlayer()
 })
 </script>
 
 <style lang="scss" scoped>
 .live-page {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - (96px + 88px));
-  padding: 0;
+  padding: 96px 0 88px 0;
   &.has-bet {
-    height: calc(100vh - (96px + 96px + 88px));
+    padding-bottom: calc(88px + 96px);
   }
 
   .van-tabs {
@@ -186,29 +220,34 @@ onUnmounted(() => {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    .van-swipe-item {
-      overflow-y: auto;
+    :deep(.van-tabs__wrap) {
+      min-height: var(--van-tabs-line-height);
+      .van-tabs__line {
+        background: var(--color-primary);
+      }
     }
-  }
-  .van-tabs :deep(.van-tabs__wrap) {
-    .van-tabs__line {
-      background: var(--color-primary);
-    }
-  }
-  .van-tabs :deep(.van-tabs__content) {
-    flex: 1;
-    .van-tab__panel {
-      height: 100%;
+    :deep(.van-tabs__content) {
+      flex: 1;
+      .van-tab__panel {
+        height: 100%;
+        overflow-y: auto;
+      }
     }
   }
 }
 
 .match {
   position: relative;
-  min-height: 280px;
+  background: #000;
+  min-height: 440px;
+  height: 440px;
+  &.no-vid {
+    min-height: 280px;
+    height: 280px;
+  }
   &-video {
     width: 100%;
-    height: 440px;
+    height: 100%;
     background: #000;
     display: flex;
     align-items: center;
@@ -244,43 +283,43 @@ onUnmounted(() => {
   }
 }
 
-.tab {
-  width: 100%;
-  height: 120px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  padding: 0 32px;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  &-item {
-    height: 64px;
-    padding: 0 20px;
-    background: #eff1f2;
-    border-radius: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #1f2630;
-    font-size: 24px;
-    font-family: PingFangSC-Semibold, SF-Pro-Bold, system-ui;
-    font-weight: 800;
-    transition: all 0.3s;
-    &:not(:last-child) {
-      margin-right: 16px;
-    }
-    > img {
-      width: auto;
-      height: 38px;
-      margin-right: 14px;
-    }
-    &.active {
-      background-image: linear-gradient(180deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-2) 100%);
-      color: #fff;
-    }
-  }
-}
+// .tab {
+//   width: 100%;
+//   height: 120px;
+//   overflow-x: auto;
+//   overflow-y: hidden;
+//   white-space: nowrap;
+//   display: flex;
+//   align-items: center;
+//   padding: 0 32px;
+//   &::-webkit-scrollbar {
+//     display: none;
+//   }
+//   &-item {
+//     height: 64px;
+//     padding: 0 20px;
+//     background: #eff1f2;
+//     border-radius: 32px;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     color: #1f2630;
+//     font-size: 24px;
+//     font-family: PingFangSC-Semibold, SF-Pro-Bold, system-ui;
+//     font-weight: 800;
+//     transition: all 0.3s;
+//     &:not(:last-child) {
+//       margin-right: 16px;
+//     }
+//     > img {
+//       width: auto;
+//       height: 38px;
+//       margin-right: 14px;
+//     }
+//     &.active {
+//       background-image: linear-gradient(180deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-2) 100%);
+//       color: #fff;
+//     }
+//   }
+// }
 </style>

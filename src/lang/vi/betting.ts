@@ -19,6 +19,16 @@ export default {
   notBets: 'Lựa chọn của bạn sẽ xuất hiện ở đây',
   combos: '{num} cược kết hợp',
   acceptOdds: 'Chấp nhận tỷ lệ cược',
+  acceptRatios: 'Chấp nhận thay đổi cổng đĩa',
   eventClosure: 'Đóng cửa sự kiện',
-  noComboTips: 'Nội dung đã chọn không thể kết hợp'
+  noComboTips: 'Nội dung đã chọn không thể kết hợp',
+  goldTips: 'Amount range:{min} ~ {max}',
+  errors1: {
+    error1: 'Hết giờ kết nối',
+    error2: 'Đặt cược thất bại',
+    error3: 'Tài khoản của bạn xuất hiện thông tin bất thường, đã bị đóng băng, nếu cần đóng băng, vui lòng liên hệ nhân viên hỗ trợ',
+    error4: 'Chỉ cho phép đăng nhập 5 lần trong một phút~',
+    error5: 'Đĩa bạn chọn đã đóng',
+    error6: 'Mạng bất thường, vui lòng kiểm tra mạng!'
+  }
 }

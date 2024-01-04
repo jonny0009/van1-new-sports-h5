@@ -1,7 +1,11 @@
 <template>
   <div class="item">
     <div class="item-photo">
-      <van-image :src="imgCover" fit="cover"></van-image>
+      <van-image :src="imgCover" fit="cover">
+        <template v-slot:error>
+          <img :src="imageSource + 'FE/common/live/img_video_bg_FT.jpg'" alt="" />
+        </template>
+      </van-image>
       <div class="state" v-if="item.showType == 'RB'">{{ $t('live.hotNow') }}</div>
       <div class="footer">
         <span v-if="item.showType == 'RB'" v-html="setMatch.showRBTime(item)"></span>
@@ -50,7 +54,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { ImageSource } from '@/config'
 import { formatToDateTime } from '@/utils/date'
 import { useMatch } from '@/utils/useMatch'
@@ -63,6 +67,7 @@ const props = defineProps({
     default: () => {}
   }
 })
+const imageSource = ref(ImageSource)
 const setMatch: any = useMatch()
 const gameInfo = computed(() => props.item?.gameInfo)
 const imgCover = computed(() => {
@@ -111,6 +116,8 @@ const leagueIcon = computed(() => {
       position: relative;
       width: 100%;
       height: 100%;
+      border-radius: 10px;
+      overflow: hidden;
       img {
         width: 100%;
         height: 100%;
@@ -156,6 +163,8 @@ const leagueIcon = computed(() => {
       align-items: center;
       justify-content: center;
       flex-direction: column;
+      border-radius: 10px;
+      overflow: hidden;
     }
   }
 

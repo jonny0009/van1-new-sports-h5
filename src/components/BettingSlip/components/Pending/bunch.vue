@@ -87,9 +87,9 @@
         <span>{{ $t('user.BettingAmount') }}:</span>
         <span>
 
-          <img v-if="currency==='CNY'" class="img_1" :src="CNY1" alt="" />
-          <img v-else-if="currency==='VNDK'" class="img_1" :src="VNDK1" alt="" />
-          <img v-else class="img_1" src="@/assets/images/user/USDT1.png" alt="" />
+          <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
+          <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
+          <SvgIcon v-else name="user-usdt" class="img_1" />
 
           <span>
             {{ formatMoney(item.gold) }}
@@ -114,9 +114,9 @@
           </span>
 
           <span v-if="item.state !== 3 && item.state !== 5">
-            <img v-if="currency==='CNY'" class="img_1" :src="CNY2" alt="" />
-            <img v-else-if="currency==='VNDK'" class="img_1" :src="VNDK2" alt="" />
-            <img v-else class="img_1" src="@/assets/images/user/num2.png" alt="" />
+            <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
+            <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
+            <SvgIcon v-else name="user-usdt" class="img_1" />
           </span>
 
           <span v-if="item.state == 0|| item.state==-1||item.state== 1" class="num">
@@ -149,11 +149,6 @@
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
 import { formatMoney } from '@/utils/index'
-
-import CNY1 from '@/assets/images/user/CNY1.svg'
-import VNDK1 from '@/assets/images/user/VNDK1.svg'
-import CNY2 from '@/assets/images/user/CNY2.svg'
-import VNDK2 from '@/assets/images/user/VNDK2.svg'
 
 import { computed } from 'vue'
 import store from '@/store'
@@ -355,9 +350,10 @@ const getLangBet = (item: any) => {
     justify-content: space-between;
 
     .img_1 {
-      height: 20px;
-      width: 20px;
       margin-right: 5px;
+      width: 17px;
+      height: 21px;
+      color: var(--color-text-1);
     }
   }
 
@@ -372,9 +368,10 @@ const getLangBet = (item: any) => {
     justify-content: space-between;
 
     .img_1 {
-      height: 24px;
-      width: 24px;
       margin-right: 5px;
+      width: 20px;
+      height: 25px;
+      color: var(--color-bg-1);
     }
 
     .num {

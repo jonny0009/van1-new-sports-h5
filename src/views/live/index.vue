@@ -64,7 +64,7 @@ const onLoad = async () => {
   if (navActive.value == 'RB') {
     params.rbType = 1
   } else {
-    params.videoType = 2
+    // params.videoType = 2
     params.gameType = navActive.value
   }
   const res: any = await anchorLiveList(params)

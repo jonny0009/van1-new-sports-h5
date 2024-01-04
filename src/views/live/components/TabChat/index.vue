@@ -21,11 +21,13 @@
     <div class="chat-bottom">
       <van-form @submit="onSend" submit-on-enter>
         <van-field
+          ref="msgInputRef"
           v-model="msgInput"
           autocomplete="off"
           :placeholder="placeholder"
           :disabled="disabledField"
           :maxlength="50"
+          @focus="onMsgFocus"
         />
         <button native-type="submit" hidden />
       </van-form>
@@ -61,6 +63,9 @@ const disabledSend = computed(() => {
 })
 const disabledField = computed(() => {
   const { isSend } = chatRoomInfo.value
+  if (!getToken()) {
+    return true
+  }
   if (isSend == 0) {
     return true
   }
@@ -172,17 +177,23 @@ const onSend = () => {
   websocket.send('/chat/sendMsg', JSON.stringify(msgObj))
   msgInput.value = ''
 }
+
+const msgInputRef = ref()
+const onMsgFocus = () => {
+  const ele: any = msgInputRef.value.$el
+  ele.scrollIntoView()
+}
 </script>
 
 <style lang="scss" scoped>
 .chat {
-  height: 100%;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  height: 100%;
   &-bottom {
     display: flex;
     align-items: center;
+    min-height: 100px;
     height: 100px;
     padding: 5px 12px;
     .van-form {
@@ -211,10 +222,11 @@ const onSend = () => {
   }
 
   &-section {
+    flex: 1;
     overflow-y: auto;
     background: #f4f5f8;
-    flex: 1;
     padding: 24px;
+    height: 100%;
     .item {
       position: relative;
       margin-bottom: 24px;

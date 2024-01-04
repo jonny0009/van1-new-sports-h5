@@ -1,24 +1,12 @@
 <template>
   <div>
-    <div v-for="(item1,index1) in props.item.betDTOList" :key="index1">
+    <div v-for="(item1, index1) in props.item.betDTOList" :key="index1">
       <div class="top">
         <div class="left">
           <div class="top-img">
 
-            <img
-              v-img="item1.homeLogo"
-              class="img_1"
-              alt=""
-              :type="4"
-              style="object-fit: contain;"
-            >
-            <img
-              v-img="item1.awayLogo"
-              class="img_2"
-              alt=""
-              :type="5"
-              style="object-fit: contain;"
-            >
+            <img v-img="item1.homeLogo" class="img_1" alt="" :type="4" style="object-fit: contain;">
+            <img v-img="item1.awayLogo" class="img_2" alt="" :type="5" style="object-fit: contain;">
 
           </div>
         </div>
@@ -50,7 +38,7 @@
             <span>
               {{ getLangBet(item1.betItemLang) }}
             </span>
-            <span class="color-2" :class="[item1.betResultDetail==='L'?'color-3':'']">
+            <span class="color-2" :class="[item1.betResultDetail === 'L' ? 'color-3' : '']">
               @{{ item1.ioRatio }}
             </span>
           </div>
@@ -84,9 +72,9 @@
           <span>{{ $t('user.BettingAmount') }}</span>
           <div>
 
-            <img v-if="currency==='CNY'" class="img_1" :src="CNY1" alt="" />
-            <img v-else-if="currency==='VNDK'" class="img_1" :src="VNDK1" alt="" />
-            <img v-else class="img_1" src="@/assets/images/user/USDT1.png" alt="" />
+            <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
+            <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
+            <SvgIcon v-else name="user-usdt" class="img_1" />
 
             <span>
               {{ formatMoney(item.gold) }}
@@ -97,13 +85,14 @@
           <!-- state 1下单成功 2 赢 3输 4和 5取消  0 确认中-->
           <!-- 未结算的注单显示：可赔付额；取消/延期，输的注单不显示赔付额这一栏 -->
           <!-- creditState 0 未结算 1 已结算-->
-          <span v-if="item.state == 0|| item.state==-1||item.state== 1">{{ $t('user.CompensableAmount') }}:</span>
-          <span v-else-if="item.state !==3&& item.state !==5 ||item1.betResultDetail == 'LL'">{{ $t('user.practical') }}:</span>
+          <span v-if="item.state == 0 || item.state == -1 || item.state == 1">{{ $t('user.CompensableAmount') }}:</span>
+          <span v-else-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail == 'LL'">{{ $t('user.practical')
+          }}:</span>
 
           <div>
 
             <!-- 受理状态 -->
-            <span v-if="item.state !== 3 &&item.state !== 5 ">
+            <span v-if="item.state !== 3 && item.state !== 5">
               <span v-if="item.state == -1" style="color:#FF9A00 ;">
                 {{ $t('user.editPend') }}
               </span>
@@ -113,16 +102,16 @@
             </span>
 
             <!-- 币种 -->
-            <span v-if="item.state !== 3 && item.state !== 5 ||item1.betResultDetail == 'LL'">
-              <img v-if="currency==='CNY'" class="img_1" :src="CNY2" alt="" />
-              <img v-else-if="currency==='VNDK'" class="img_1" :src="VNDK2" alt="" />
-              <img v-else class="img_1" src="@/assets/images/user/num2.png" alt="" />
+            <span v-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail == 'LL'">
+              <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
+              <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
+              <SvgIcon v-else name="user-usdt" class="img_1" />
             </span>
 
             <span v-if="item.creditState == 0" class="num color-1">
               {{ formatMoney(getProfit(item)) }}
             </span>
-            <span v-else-if="item.state !==3&& item.state !==5 ||item1.betResultDetail == 'LL'" class="color-1">
+            <span v-else-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail == 'LL'" class="color-1">
               {{ formatMoney(item.winGold) }}
             </span>
           </div>
@@ -153,11 +142,6 @@
 import { formatToDateTime } from '@/utils/date'
 import { formatMoney } from '@/utils/index'
 
-import CNY1 from '@/assets/images/user/CNY1.svg'
-import VNDK1 from '@/assets/images/user/VNDK1.svg'
-import CNY2 from '@/assets/images/user/CNY2.svg'
-import VNDK2 from '@/assets/images/user/VNDK2.svg'
-
 import { computed } from 'vue'
 import store from '@/store'
 const currency = computed(() => store.state.user.currency)
@@ -167,7 +151,7 @@ const championLangList = computed(() => store.state.user.championLangList || [])
 const props = defineProps({
   item: {
     type: Object,
-    default: () => {}
+    default: () => { }
   }
 })
 
@@ -215,144 +199,150 @@ const getLangBet = (item: any) => {
 
 <style lang="scss" scoped>
 .color-1 {
-    color: var(--color-bg-1);
+  color: var(--color-bg-1);
+}
+
+.top {
+  display: flex;
+
+  .top-img {
+    height: 80px;
+    width: 80px;
+    position: relative;
+
+    .img_1 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 50px;
+      width: 50px;
+    }
+
+    .img_2 {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      height: 50px;
+      width: 50px;
+    }
   }
- .top {
+
+  .right {
+    margin-left: 18px;
+
+    .font_1 {
+      font-family: PingFangSC-Semibold;
+      font-size: 28px;
+      color: var(--color-search-box-text-1);
+      letter-spacing: 0;
+      font-weight: 600;
+    }
+
+    .font_2 {
+      font-family: PingFangSC-Semibold;
+      font-size: 24px;
+      color: var(--color-text-1);
+      letter-spacing: 0;
+      font-weight: 600;
+    }
+  }
+}
+
+.top2 {
+  margin-top: 20px;
+  background: #E2E6E8;
+  border-radius: 20px;
+  padding: 20px 10px;
+  display: flex;
+  align-items: center;
+
+  .left {
+    margin-right: 15px;
+
+    .img_1 {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  .right {
+    .one {
       display: flex;
-
-      .top-img {
-        height: 80px;
-        width: 80px;
-        position: relative;
-
-        .img_1 {
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 50px;
-          width: 50px;
-        }
-
-        .img_2 {
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          height: 50px;
-          width: 50px;
-        }
-      }
-
-      .right {
-        margin-left: 18px;
-
-        .font_1 {
-          font-family: PingFangSC-Semibold;
-          font-size: 28px;
-          color: var(--color-search-box-text-1);
-          letter-spacing: 0;
-          font-weight: 600;
-        }
-
-        .font_2 {
-          font-family: PingFangSC-Semibold;
-          font-size: 24px;
-          color: var(--color-text-1);
-          letter-spacing: 0;
-          font-weight: 600;
-        }
-      }
+      width: 550px;
+      justify-content: space-between;
+      font-family: PingFangSC-Semibold;
+      font-size: 28px;
+      color: var(--color-search-box-text-1);
+      letter-spacing: 0;
+      font-weight: 600;
     }
 
-    .top2 {
-      margin-top: 20px;
-      background: #E2E6E8;
-      border-radius: 20px;
-      padding: 20px 10px;
-      display: flex;
-      align-items: center;
+    .two {
+      font-family: PingFangSC-Semibold;
+      font-size: 24px;
+      color: var(--color-text-1);
+      letter-spacing: 0;
+      font-weight: 600;
 
-      .left {
-        margin-right: 15px;
-
-        .img_1 {
-          width: 60px;
-          height: 60px;
-        }
-      }
-
-      .right {
-        .one {
-          display: flex;
-          width: 550px;
-          justify-content: space-between;
-          font-family: PingFangSC-Semibold;
-          font-size: 28px;
-          color: var(--color-search-box-text-1);
-          letter-spacing: 0;
-          font-weight: 600;
-        }
-
-        .two {
-          font-family: PingFangSC-Semibold;
-          font-size: 24px;
-          color: var(--color-text-1);
-          letter-spacing: 0;
-          font-weight: 600;
-
-          .img_1 {
-            width: 40px;
-            height: 30px;
-          }
-        }
+      .img_1 {
+        width: 40px;
+        height: 30px;
       }
     }
+  }
+}
 
-    .top3 {
-      margin-top: 9px;
+.top3 {
+  margin-top: 9px;
 
-      .one {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-family: PingFangSC-Semibold;
-        font-size: 24px;
-        color: var( --color-text-1);
-        letter-spacing: 0;
-        font-weight: 600;
+  .one {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: PingFangSC-Semibold;
+    font-size: 24px;
+    color: var(--color-text-1);
+    letter-spacing: 0;
+    font-weight: 600;
 
-        .img_1 {
-          width: 20px;
-          height: 19px;
-        }
-      }
-
-      .two {
-        font-family: PingFangSC-Semibold;
-        font-size: 28px;
-        color: var( --color-text-1);
-        letter-spacing: 0;
-        font-weight: 600;
-      }
+    .img_1 {
+      width: 17px;
+      height: 21px;
+      color: var(--color-text-1);
     }
+  }
 
-    .line {
-      background: #E0E3E7;
-      height: 2px;
+  .two {
+    font-family: PingFangSC-Semibold;
+    font-size: 28px;
+    color: var(--color-text-1);
+    letter-spacing: 0;
+    font-weight: 600;
+    .img_1 {
+      width: 20px;
+      height: 25px;
+      color: var(--color-bg-1);
     }
+  }
+}
 
-    .top4 {
-      margin-top: 10px;
+.line {
+  background: #E0E3E7;
+  height: 2px;
+}
 
-      .one {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-family: PingFangSC-Regular;
-        font-size: 22px;
-        color: var(--color-search-box-text-2);
-        letter-spacing: 0;
-        font-weight: 400;
-      }
-    }
+.top4 {
+  margin-top: 10px;
 
+  .one {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: PingFangSC-Regular;
+    font-size: 22px;
+    color: var(--color-search-box-text-2);
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+}
 </style>
