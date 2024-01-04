@@ -310,7 +310,8 @@ const showRBTime = (raceinfo:any = {}) => {
           return gameInfo.re_time
         }
         // 比赛时间容错
-        return '-' + ':' + '-'
+        // return '-' + ':' + '-'
+        return t('live.pause') // 暂停
       // 网球
       //
       case 'TN':
