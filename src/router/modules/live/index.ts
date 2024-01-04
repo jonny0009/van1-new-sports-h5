@@ -6,12 +6,18 @@ export default {
     {
       name: 'Broadcast',
       path: '',
-      component: () => import('@/views/live/index.vue')
+      component: () => import('@/views/live/index.vue'),
+      meta: {
+        showheadGoBack: true
+      }
     },
     {
       name: 'BroadcastDetail',
       path: ':id',
-      component: () => import('@/views/live/id.vue')
+      component: () => import('@/views/live/id.vue'),
+      meta: {
+        showheadGoBack: true
+      }
     },
     {
       name: 'BroadcastBetting',
