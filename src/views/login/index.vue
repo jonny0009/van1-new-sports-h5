@@ -5,12 +5,13 @@
         <van-icon name="arrow-left" class="img_1" @click="goBack()" />
       </template>
       <template #title>
-        <img class="img_2" src="@/assets/images/login/ai-logo@2x.png" alt="" />
-        <!-- <SvgIcon name="user-logo" class="img_2" /> -->
+        <img v-if="ifBLue" class="img_2" src="@/assets/images/user/blue/logo1.png" alt="" />
+        <img v-else class="img_2" src="@/assets/images/login/ai-logo@2x.png" alt="" />
+
       </template>
       <template #right>
-        <img class="img_3" src="@/assets/images/login/service@2x.png" alt="" />
-        <!-- <SvgIcon name="user-service" class="img_3" /> -->
+        <img v-if="ifBLue" class="img_3" src="@/assets/images/user/blue/sever.png" alt="" />
+        <img v-else class="img_3" src="@/assets/images/login/service@2x.png" alt="" />
       </template>
     </van-nav-bar>
     <div class="content">
@@ -21,7 +22,8 @@
         <span @click="login">{{ $t('user.logOn') }}</span>
       </div>
       <div class="ban">
-        <img class="ban_1" src="@/assets/images/login/login.png" alt="" />
+        <img v-if="ifBLue" class="ban_1" src="@/assets/images/user/blue/login_bg.png" alt="" />
+        <img v-else class="ban_1" src="@/assets/images/login/login.png" alt="" />
       </div>
 
       <div class="list-set">
@@ -62,12 +64,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 // import store from '@/store'
 import localStore from '@/utils/localStore'
 // import { getPlateMask } from '@/api/user'
 // import { getToken } from '@/utils/auth'
+import store from '@/store'
 
 const $router = useRouter()
 const popupTitle = ref('')
@@ -75,11 +78,19 @@ const changeImg = ref(true)
 const commonKey = reactive({ key: '' })
 const popupIndex = ref(0)
 const popupList = reactive<{ arr: any[] }>({ arr: [] })
+const theme = computed(() => store.state.app.theme)
 
 const showBottom = ref(false)
 
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
+
+const ifBLue = computed(() => {
+  if (theme.value === 'blue') {
+    return true
+  }
+  return false
+})
 
 const plateMaskKey: any = localStore.getItem('plateMaskKey') || ''
 const plateMask = ref<any>({})
@@ -151,22 +162,21 @@ const login = () => {
   .bg-title {
     width: 100%;
     height: 150px;
-    // background-color: var(--title-background-color-2);
-    background: url('@/assets/images/login/bg-tit@2x.png');
+    background-color: var(--title-background-color-2);
+    // background: url('@/assets/images/login/bg-tit@2x.png');
     background-size: 100% 100%;
 
     .img_1 {
       margin-top: -15px;
       width: 36px;
       height: 36px;
-      // color: var(--title-text-font-color);
-      color: #ffffff;
+      color: var(--title-text-font-color);
     }
 
     .img_2 {
       width: 77px;
       height: 63px;
-      // color: var(--title-text-font-color);
+      color: var(--title-text-font-color);
     }
 
     .img_3 {

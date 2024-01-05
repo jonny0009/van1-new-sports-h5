@@ -23,8 +23,11 @@
             <span v-if="item1.resultScore" class="color-1"> [{{ item1.resultScore }}]</span>
           </div>
 
-          <div v-if="item1.championType" class="font_2">{{ getChampionName(item1.systemId) }}</div>
-          <div v-else class="font_2">{{ getTeam(item1).leagueShortName }}</div>
+          <div class="league-name">
+            <SportsIcon :icon-src="item1.gameType" class="ball-img" />
+            <div v-if="item1.championType" class="font_2">{{ getChampionName(item1.systemId) }}</div>
+            <div v-else class="font_2">{{ getTeam(item1).leagueShortName }}</div>
+          </div>
 
         </div>
       </div>
@@ -38,7 +41,7 @@
             <span>
               {{ getLangBet(item1.betItemLang) }}
             </span>
-            <span class="color-2" :class="[item1.betResultDetail === 'L' ? 'color-3' : '']">
+            <span :class="[getRatioColor(item1.betResultDetail)]">
               @{{ item1.ioRatio }}
             </span>
           </div>
@@ -159,6 +162,19 @@ const props = defineProps({
 const getProfit = (item: any) => {
   return item.gold * item.sioRatio
 }
+// 汇率颜色
+const getRatioColor = (val: any) => {
+  if (val === 'W' || val === 'LW') {
+    return 'color-2'
+  }
+  if (val === 'L' || val === 'LL') {
+    return 'color-3'
+  }
+  if (val === 'P') {
+    return 'color-4'
+  }
+  return ''
+}
 // 获取多语言队伍名称
 const getTeam = (item: any) => {
   if (teamNameList.value.length) {
@@ -203,6 +219,23 @@ const getLangBet = (item: any) => {
   color: var(--color-bg-1);
 }
 
+.color-2 {
+  color: #1EBB52;
+}
+
+.color-3 {
+  color: red;
+}
+.color-4 {
+  color: #FF9A00;
+}
+.ball-img {
+  font-size: 24px;
+  color: var(--color-text-3);
+  margin-right: 3px;
+  font-weight: 500;
+}
+
 .top {
   display: flex;
 
@@ -245,6 +278,13 @@ const getLangBet = (item: any) => {
       color: var(--color-text-1);
       letter-spacing: 0;
       font-weight: 600;
+    }
+  }
+
+  .league-name {
+    display: flex;
+    .font_2{
+      color: var(--color-text-3);
     }
   }
 }

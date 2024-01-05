@@ -1,8 +1,6 @@
 <template>
   <div class="panel-bet">
-    <div v-if="playBetList.length === 0" class="no-data">
-      <EmptyIcon />
-    </div>
+    <EmptyData v-if="playBetList.length === 0" />
     <BettingCollapse v-else :data-list="playBetList" :match-info="props.matchInfo" />
   </div>
 </template>
@@ -39,11 +37,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.no-data {
-  display: flex;
-  justify-content: center;
-  padding: 100px 0 0 0;
-}
 .panel-bet {
   padding: 20px 36px;
 }

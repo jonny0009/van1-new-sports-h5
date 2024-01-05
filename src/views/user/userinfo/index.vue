@@ -11,7 +11,7 @@
     <div class="user">
       <div class="user-info">
         <div class="user-img" @click="goUrl('/editImg')">
-          <img class="img_1" :src="getImg(peopleInfo.headImg)" alt="" />
+          <img v-img="peopleInfo.headImg" class="img_1" :type="3" style="object-fit: cover;" />
         </div>
         <div class="user-right">
           <div class="user-1">
@@ -74,10 +74,8 @@ import { ref, reactive, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 const $router = useRouter()
 
-import { playerInfo, standings } from '@/api/user'
+import { standings } from '@/api/user'
 import { showToast } from 'vant'
-import { ImageSource } from '@/config'
-import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
 import { formatToDateTime } from '@/utils/date'
 import { formatMoney } from '@/utils/index'
 
@@ -85,10 +83,18 @@ import BetList from './components/betList.vue'
 
 import store from '@/store'
 const userInfo = computed(() => store.state.user.userInfo)
+const peopleInfo = computed(() => store.state.user.peopleInfo)
+const theme = computed(() => store.state.app.theme)
 
-const peopleInfo = ref<any>({})
 const userStandInfo = ref<any>({})
 const currentNumber = ref<any>('')
+
+const ifBLue = computed(() => {
+  if (theme.value === 'blue') {
+    return true
+  }
+  return false
+})
 
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
@@ -128,27 +134,11 @@ const dataList = reactive<{ arr: any }>({
   ]
 })
 onMounted(() => {
-  getAccountInfo()
+  store.dispatch('user/getAccountInfo')
   // 获取战力
   getStandings()
 })
 
-const getImg = (imgUrl: string) => {
-  if (imgUrl) {
-    return `${ImageSource}${imgUrl}`
-  }
-  return avatarImg
-}
-const getAccountInfo = async () => {
-  const params = {
-    fPlayerId: userInfo.value.playerId
-  }
-  const res: any = await playerInfo(params)
-  if (res.code !== 200) {
-    return showToast(res.msg)
-  }
-  peopleInfo.value = res.data
-}
 const getStandings = async () => {
   const params = {
     type: 2

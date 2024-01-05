@@ -147,6 +147,7 @@ const emit = defineEmits(['close'])
 watch(() => isOne.value, () => {
   if (isOne.value) {
     open.value = true
+    bodyOverflow()
   }
 })
 watch(() => markets.value.length, () => {
@@ -175,7 +176,6 @@ const bodyOverflow = () => {
   }
 }
 bodyOverflow()
-
 const changeType = (mode: any) => {
   type.value = mode
   store.dispatch('betting/setMode', mode)

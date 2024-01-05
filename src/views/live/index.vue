@@ -18,10 +18,13 @@
         </template>
 
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-          <van-list v-model:loading="loading" :finished="finished" :finished-text="t('live.noMore')" @load="onLoad">
-            <div class="no-data" v-if="finished && list.length === 0">
-              <EmptyIcon />
-            </div>
+          <EmptyData v-if="finished && list.length === 0" />
+          <van-list
+            v-model:loading="loading"
+            :finished="finished"
+            :finished-text="list.length == 0 ? '' : $t('live.noMore')"
+            @load="onLoad"
+          >
             <div class="grid-wrapper">
               <div class="flex-item" v-for="item in list" :key="item.gidm">
                 <LiveItem :item="item" @click="onItemClick(item)" />
@@ -112,21 +115,27 @@ const onItemClick = (item: any) => {
   &.has-bet {
     padding-bottom: calc(88px + 96px);
   }
+  .van-pull-refresh {
+    min-height: 600px;
+  }
 
   .van-tabs {
     :deep(.van-tabs__wrap) {
       height: 110px;
+      .van-tabs__nav {
+        background: var(--color-background-color);
+      }
     }
 
     .tab-title {
       height: 64px;
       padding: 0 20px;
-      background: #eff1f2;
+      background: var(--color-global-buttonBg);
       border-radius: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #0e3d66;
+      color: var(--color-text-2);
       font-size: 24px;
       font-family: PingFangSC-Semibold, SF-Pro-Bold, system-ui;
       font-weight: 800;
@@ -134,7 +143,7 @@ const onItemClick = (item: any) => {
       .svg-icon {
         font-size: 38px;
         margin-right: 14px;
-        color: #88a6bb;
+        color: var(--color-global-minButtonicoCl);
       }
     }
     .van-tab--active .tab-title {
@@ -151,6 +160,7 @@ const onItemClick = (item: any) => {
     grid-gap: 0;
     grid-template-columns: 1fr 1fr;
     padding: 0 28px;
+    margin-bottom: -20px;
     .flex-item {
       display: flex;
       justify-content: center;
@@ -158,78 +168,8 @@ const onItemClick = (item: any) => {
     }
   }
 
-  .no-data {
-    display: flex;
-    justify-content: center;
-    padding: 50px 0 0 0;
+  .van-list :deep(.van-list__finished-text) {
+    min-height: var(--van-list-text-line-height);
   }
 }
-
-// .navbar {
-//   width: 100%;
-//   overflow-x: auto;
-//   overflow-y: hidden;
-//   white-space: nowrap;
-//   display: flex;
-//   padding: 0 32px;
-//   margin: 0 0 10px 0;
-//   &::-webkit-scrollbar {
-//     display: none;
-//   }
-//   &-item {
-//     height: 64px;
-//     padding: 0 20px;
-//     background: #eff1f2;
-//     border-radius: 32px;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     color: #0e3d66;
-//     font-size: 24px;
-//     font-family: PingFangSC-Semibold, SF-Pro-Bold, system-ui;
-//     font-weight: 800;
-//     transition: all 0.3s;
-//     &:not(:last-child) {
-//       margin-right: 8px;
-//     }
-//     .svg-icon {
-//       font-size: 38px;
-//       margin-right: 14px;
-//       color: #88a6bb;
-//     }
-//     > img {
-//       width: auto;
-//       height: 38px;
-//       margin-right: 14px;
-//     }
-//     &.active {
-//       background-image: linear-gradient(180deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-2) 100%);
-//       color: #fff;
-//       .svg-icon {
-//         color: #fff;
-//       }
-//     }
-//   }
-// }
-
-// .wrapper {
-//   padding: 0 0 0 25px;
-//   .no-data {
-//     display: flex;
-//     justify-content: center;
-//     padding: 50px 0 0 0;
-//   }
-//   .van-list {
-//     display: flex;
-//     flex-wrap: wrap;
-//     :deep(.van-list__loading),
-//     :deep(.van-list__finished-text) {
-//       width: 100%;
-//     }
-//   }
-//   .live-item {
-//     margin: 0 10px;
-//     margin-top: 30px;
-//   }
-// }
 </style>

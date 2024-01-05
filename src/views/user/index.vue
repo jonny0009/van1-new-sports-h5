@@ -1,7 +1,7 @@
 <template>
   <router-view />
 </template>
-<style>
+<style scoped>
 :root {
   --van-toast-text-padding: 20px 30px;
   --van-toast-font-size: 28px;

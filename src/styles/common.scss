@@ -4,12 +4,12 @@
 ::before {
   padding: 0;
   margin: 0;
-  box-sizing: inherit
+  box-sizing: inherit;
 }
 
 html {
   height: 100%;
-  box-sizing: border-box
+  box-sizing: border-box;
 }
 
 body {
@@ -17,16 +17,17 @@ body {
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility
+  text-rendering: optimizeLegibility;
+  background: var(--color-background-color);
 }
 
 label {
-  font-weight: 700
+  font-weight: 700;
 }
 
 a:active,
 a:focus {
-  outline: 0
+  outline: 0;
 }
 
 a,
@@ -34,11 +35,11 @@ a:focus,
 a:hover {
   color: inherit;
   text-decoration: none;
-  cursor: pointer
+  cursor: pointer;
 }
 
 div:focus {
-  outline: 0
+  outline: 0;
 }
 
 img[src=''],
@@ -52,7 +53,7 @@ img:not([src]) {
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
-  display: flex
+  display: flex;
 }
 
 //垂直排列
@@ -65,7 +66,7 @@ img:not([src]) {
   -webkit-box-orient: vertical;
   -moz-box-orient: vertical;
   -webkit-box-direction: normal;
-  -moz-box-direction: normal
+  -moz-box-direction: normal;
 }
 
 .flex-1 {
@@ -74,91 +75,91 @@ img:not([src]) {
   flex: 1;
   overflow: hidden;
   -webkit-box-flex: 1;
-  -moz-box-flex: 1
+  -moz-box-flex: 1;
 }
 
 .ml5 {
-  margin-left: 10px !important
+  margin-left: 10px !important;
 }
 
 .mr5 {
-  margin-right: 10px !important
+  margin-right: 10px !important;
 }
 
 .mt5 {
-  margin-top: 10px !important
+  margin-top: 10px !important;
 }
 
 .mb5 {
-  margin-bottom: 10px !important
+  margin-bottom: 10px !important;
 }
 
 .ml10 {
-  margin-left: 20px !important
+  margin-left: 20px !important;
 }
 
 .mr10 {
-  margin-right: 20px !important
+  margin-right: 20px !important;
 }
 
 .mt10 {
-  margin-top: 20px !important
+  margin-top: 20px !important;
 }
 
 .mb10 {
-  margin-bottom: 20px !important
+  margin-bottom: 20px !important;
 }
 
 .pt10 {
-  padding-top: 20px !important
+  padding-top: 20px !important;
 }
 
 .pb10 {
-  padding-bottom: 20px !important
+  padding-bottom: 20px !important;
 }
 
 .mb20 {
-  margin-bottom: 40px !important
+  margin-bottom: 40px !important;
 }
 
 .mt20 {
-  margin-top: 40px !important
+  margin-top: 40px !important;
 }
 
 .pt20 {
-  padding-top: 40px !important
+  padding-top: 40px !important;
 }
 
 .pb20 {
-  padding-bottom: 40px !important
+  padding-bottom: 40px !important;
 }
 
 .mr20 {
-  margin-right: 40px !important
+  margin-right: 40px !important;
 }
 
 .ml20 {
-  margin-left: 40px !important
+  margin-left: 40px !important;
 }
 
 .mt40 {
-  margin-top: 80px !important
+  margin-top: 80px !important;
 }
 
 .ml40 {
-  margin-left: 80px !important
+  margin-left: 80px !important;
 }
 
 .overAuto {
-  overflow: auto
+  overflow: auto;
 }
 
 .cursor {
-  cursor: pointer
+  cursor: pointer;
 }
 
 .tc {
-  text-align: center
+  text-align: center;
 }
 
 .footerHeight {
@@ -170,7 +171,7 @@ img:not([src]) {
 }
 
 .marginAuto {
-  margin: auto
+  margin: auto;
 }
 
 .text-overflow {
@@ -183,23 +184,22 @@ img:not([src]) {
 
 .animate__animated {
   animation-duration: 1s;
-  animation-fill-mode: both
+  animation-fill-mode: both;
 }
 
-
 .animate__fadeOutLeft {
-  animation-name: fadeOutLeft
+  animation-name: fadeOutLeft;
 }
 
 @keyframes fadeOutLeft {
   0% {
-    opacity: 1
+    opacity: 1;
   }
 
   to {
     opacity: 0;
     -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0)
+    transform: translate3d(-100%, 0, 0);
   }
 }
 

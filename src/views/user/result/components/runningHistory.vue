@@ -1,5 +1,5 @@
 <template>
-  <van-divider />
+  <van-divider class="color-line" />
   <!-- 列表 -->
   <div v-if="!list.arr.length && finished" class="noData">
     <img class="img_1" src="@/assets/images/user/noData.png" />
@@ -169,6 +169,9 @@ const getTitle = (type: any) => {
 
   .color-2 {
     color: #1EBB52;
+  }
+  .color-line {
+    background: var(--color-search-box-sidebar);
   }
 
   .date-title {

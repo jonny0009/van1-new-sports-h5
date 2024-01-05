@@ -5,7 +5,7 @@
       <div class="title-left">
         <div>{{ item.parlayNum }}{{ $t('user.session') }}</div>
         <div>
-          <img v-for="i in Number(item.parlayNum)" :key="i" class="img_1" src="@/assets/images/user/num5.png" alt="" />
+          <SportsIcon v-for="(item2, index1) in item.betDTOList" :key="index1" :icon-src="item2.gameType" class="ball-img" />
         </div>
       </div>
       <!-- <img class="img_1" src="@/assets/images/user/down1.png" alt="" /> -->
@@ -46,7 +46,7 @@
             <span>
               {{ getLangBet(item1.betItemLang) }}
             </span>
-            <span class="color-2" :class="[item1.betResultDetail === 'L' ? 'color-3' : '']">
+            <span :class="[getRatioColor(item1.betResultDetail)]">
               @{{ item1.ioRatio }}
             </span>
           </div>
@@ -74,7 +74,7 @@
             </span>
           </div>
           <div class="team">
-            <img class="img_1" src="@/assets/images/user/num5.png" alt="" />
+            <SportsIcon :icon-src="item1.gameType" class="ball-img" />
             <span>
               {{ getTeam(item1).leagueShortName }}
             </span>
@@ -165,6 +165,19 @@ const props = defineProps({
 const getProfit = (item: any) => {
   return item.gold * item.sioRatio
 }
+// 汇率颜色
+const getRatioColor = (val: any) => {
+  if (val === 'W' || val === 'LW') {
+    return 'color-2'
+  }
+  if (val === 'L' || val === 'LL') {
+    return 'color-3'
+  }
+  if (val === 'P') {
+    return 'color-4'
+  }
+  return ''
+}
 // 获取多语言队伍名称
 const getTeam = (item: any) => {
   if (teamNameList.value.length) {
@@ -194,6 +207,27 @@ const getLangBet = (item: any) => {
 </script>
 
 <style lang="scss" scoped>
+.color-1 {
+  color: var(--color-bg-1);
+}
+
+.color-2 {
+  color: #1EBB52;
+}
+
+.color-3 {
+  color: red;
+}
+.color-4 {
+  color: #FF9A00;
+}
+
+.ball-img{
+  font-size: 24px;
+  color: var(--color-text-3);
+  margin-right:3px;
+  font-weight: 500;
+}
 .match-title {
   display: flex;
   align-items: center;

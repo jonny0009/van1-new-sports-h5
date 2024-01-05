@@ -269,7 +269,7 @@ const bettingModule: Module<Betting, any> = {
       const autoRatio = userConfig.acceptAll === 1
       const autoOdd = state.oddChangesState || false
       // 获取新的点水参数
-      const { ratioKey, errorCode, eoIor, ior, score, showType, ratio, strong, gameDate } = newBet
+      const { ratioKey, errorCode, eoIor, ior, score, showType, ratio, strong, gameDate, playType } = newBet
       const newBetsMap: any = {}
       newBetsMap[ratioKey] = newBet
       let replaceBet = newBet
@@ -304,7 +304,7 @@ const bettingModule: Module<Betting, any> = {
               iorChange = 'down'
             }
           }
-          if (oldRatio * 1 !== ratio * 1 && !autoOdd) {
+          if (letBallMap.includes(playType) && oldRatio * 1 !== ratio * 1 && !autoOdd) {
             if (oldRatio * 1 > ratio) {
               ratioChange = 'up'
             } else {

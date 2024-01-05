@@ -2,9 +2,20 @@ import { ImageSource } from '@/config'
 import league from '@/assets/images/empty/league.png?url'
 import team from '@/assets/images/empty/team.png?url'
 import head from '@/assets/images/empty/head.png?url'
+import blueHead from '@/assets/images/user/blue/head.png?url'
 import homeTeam from '@/assets/images/empty/match/team-home.svg?url'
 import awayTeam from '@/assets/images/empty/match/team-away.svg?url'
 import matchlLeague from '@/assets/images/empty/match/league.svg?url'
+import { computed } from 'vue'
+import store from '@/store'
+const theme = computed(() => store.state.app.theme)
+const ifBLue = computed(() => {
+  if (theme.value === 'blue') {
+    return true
+  }
+  return false
+})
+
 export default {
   mounted(el: any, binding: any) {
     _handleError(el)
@@ -23,7 +34,7 @@ function _handleError(el: any) {
   } else if (type === 2) {
     el.src = team
   } else if (type === 3) {
-    el.src = head
+    ifBLue.value ? el.src = blueHead : el.src = head
   } else if (type === 4) {
     el.src = homeTeam
   } else if (type === 5) {
