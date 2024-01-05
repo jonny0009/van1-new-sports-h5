@@ -42,8 +42,8 @@
             <span>
               {{ getLangBet(item1.betItemLang) }}
             </span>
-            <!-- <span class="color-2" :class="[item1.betResultDetail === 'L' ? 'color-3' : '']"> -->
-            <span class="color-2" :class="[item1.betResultDetail === 'L' ? 'color-3' : '']">
+
+            <span :class="[getRatioColor(item1.betResultDetail)]">
               @{{ item1.ioRatio }}
             </span>
           </div>
@@ -160,6 +160,19 @@ const props = defineProps({
 const getProfit = (item: any) => {
   return item.gold * item.sioRatio
 }
+// 汇率颜色
+const getRatioColor = (val: any) => {
+  if (val === 'W' || val === 'LW') {
+    return 'color-2'
+  }
+  if (val === 'L' || val === 'LL') {
+    return 'color-3'
+  }
+  if (val === 'P') {
+    return 'color-4'
+  }
+  return ''
+}
 // 获取多语言队伍名称
 const getTeam = (item: any) => {
   if (teamNameList.value.length) {
@@ -211,6 +224,9 @@ const getLangBet = (item: any) => {
 
 .color-3 {
   color: red;
+}
+.color-4 {
+  color: #FF9A00;
 }
 
 .ball-img {
