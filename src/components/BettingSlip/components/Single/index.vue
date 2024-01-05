@@ -24,18 +24,10 @@
           <div class="tips-arrow"></div>
         </div>
         <div v-if="accountState" class="action">
-          <div
-            v-if="marketInfo.ratioChange"
-            class="betting-slip-accept-button"
-            @click="clearOddChange"
-          >
+          <div v-if="marketInfo.ratioChange" class="betting-slip-accept-button" @click="clearOddChange">
             {{ $t('betting.acceptRatios') }}
           </div>
-          <div
-            v-else-if="marketInfo.iorChange"
-            class="betting-slip-accept-button"
-            @click="clearIorChange"
-          >
+          <div v-else-if="marketInfo.iorChange" class="betting-slip-accept-button" @click="clearIorChange">
             {{ $t('betting.acceptOdds') }}
           </div>
           <div v-else ref="inputBtn" class="betting-slip-input" :class="{ error: goldRule }" @click="inputTouch">
@@ -47,10 +39,7 @@
         </div>
       </div>
       <div v-if="isCombo" class="combo-enable"></div>
-      <div
-        v-if="error"
-        class="error-popup"
-      >
+      <div v-if="error" class="error-popup">
         <div class="lock"></div>
         <div class="tips"> {{ $t('betting.eventClosure') }}</div>
       </div>
@@ -342,6 +331,12 @@ const inputTouch = () => {
         background-color: var(--color-bet-iorchangebg);
         color: #fff;
         border-radius: 12px;
+        font-family: PingFangSC-Medium;
+        font-size: 24px;
+        color: #FFFFFF;
+        letter-spacing: 0.8px;
+        text-align: justify;
+        font-weight: 500;
       }
 
       .amount {
