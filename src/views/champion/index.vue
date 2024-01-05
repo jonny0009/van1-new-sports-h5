@@ -207,7 +207,7 @@ const clickSportPage = (item: any) => {
         .name{
           font-family: PingFangSC-Semibold;
           font-size: 24px;
-          color: #000000;
+          color: var(--color-champion-item-text);
           letter-spacing: 0;
           font-weight: 600;
         }
