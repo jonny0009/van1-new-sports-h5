@@ -11,7 +11,12 @@
             <div class="betting-name">{{ $t('betting.combos', { num: result.count }) }}</div>
           </div>
           <div class="details">
-            <SportsIcon v-for="(item, index1) in result.list" :key="index1" :icon-src="item.gameType" />
+            <SportsIcon
+              v-for="(item, index1) in result.list"
+              :key="index1"
+              class="sport-icon"
+              :icon-src="item.gameType"
+            />
           </div>
         </div>
         <div class="betting-odds">@<span v-points="result.ior"></span></div>
@@ -102,6 +107,10 @@ const results = computed(() => store.state.betting.results)
         }
 
         .details {
+          .sport-icon {
+            color: var(--color-bet-sportstext);
+          }
+
           .play-name {
             font-family: PingFangSC-Medium;
             font-size: 24px;
@@ -124,7 +133,7 @@ const results = computed(() => store.state.betting.results)
         width: 220px;
         font-family: PingFangSC-Semibold;
         font-size: 30px;
-        color: #7642FD;
+        color: var(--color-bet-iortext);
         letter-spacing: 1px;
         text-align: center;
         font-weight: 600;
