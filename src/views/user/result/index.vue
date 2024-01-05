@@ -23,7 +23,7 @@
           <RunningHistory></RunningHistory>
         </van-tab>
         <van-tab :title="$t('user.matchResult')">
-          <MatchResult ref="childRefB" @valueChange="setStatus"></MatchResult>
+          <MatchResult ref="childRefB" @valueChange="setStatus" @timeChange="setDate"></MatchResult>
         </van-tab>
       </van-tabs>
 
@@ -66,7 +66,7 @@
       <!-- 时间弹窗 -->
       <van-calendar
         v-model:show="show"
-        type="range"
+        :type="dataType"
         :min-date="minDate"
         :max-date="maxDate"
         :default-date="defaultDate"
@@ -96,16 +96,18 @@ const popupList = reactive<{ arr: any[] }>({ arr: [] })
 
 const $router = useRouter()
 const way = ref(1)
+const dateWay = ref(1)
 const index = ref(0)
 const childRefA = ref()
 const childRefB = ref()
 const showBottom = ref(false)
 const show = ref(false)
+const dataType = ref('range')
 
 const currentDate = moment().valueOf()
 const oneDayDate = 24 * 60 * 60 * 1000
-const maxDate = ref(new Date())
-const minDate = ref(new Date(currentDate - oneDayDate * 7))
+const maxDate = ref<any>(new Date())
+const minDate = ref<any>(new Date(currentDate - oneDayDate * 7))
 const defaultDate = ref<any>([
   new Date(currentDate - oneDayDate * 7),
   new Date()
@@ -136,15 +138,39 @@ async function setPk(val: any) {
     childRefB.value.setPk(val)
   }
 }
-const setDate = (val: any) => {
+const setDate = (val: any, num: any, start:any, end:any) => {
+  console.log(num)
+  dateWay.value = num
+  if (num === 1) {
+    maxDate.value = new Date()
+    minDate.value = new Date(currentDate - oneDayDate * 7)
+    defaultDate.value = [new Date(start), new Date(end)]
+    dataType.value = 'range'
+  }
+  if (num === 3) {
+    maxDate.value = new Date()
+    minDate.value = new Date(currentDate - oneDayDate * 15)
+    defaultDate.value = new Date(start)
+    dataType.value = 'single'
+  }
   show.value = val
 }
 const onConfirm = (val: any) => {
-  childRefA.value.setDateTime(val)
+  if (dateWay.value === 1) {
+    childRefA.value.setDateTime(val)
+  }
+  if (dateWay.value === 3) {
+    childRefB.value.setDateTime(val)
+  }
   show.value = false
 }
 const setDateBottom = () => {
-  childRefA.value.showBottom2 = false
+  if (dateWay.value === 1) {
+    childRefA.value.showBottom2 = false
+  }
+  if (dateWay.value === 3) {
+    childRefB.value.showBottom = false
+  }
 }
 
 const handleClose = (item: any) => {
@@ -242,5 +268,8 @@ const handleClose = (item: any) => {
 
 :deep(.van-calendar__day--middle) {
   color: var(--color-primary);
+}
+:deep(.van-calendar__selected-day) {
+  background: var(--color-primary);
 }
 </style>

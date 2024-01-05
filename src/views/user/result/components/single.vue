@@ -24,8 +24,11 @@
             <span v-if="item1.resultScore" class="color-1"> [{{ item1.resultScore }}]</span>
           </div>
 
-          <div v-if="item1.championType" class="font_2">{{ getChampionName(item1.systemId) }}</div>
-          <div v-else class="font_2">{{ getTeam(item1).leagueShortName }}</div>
+          <div class="league-name">
+            <SportsIcon :icon-src="item1.gameType" class="ball-img" />
+            <div v-if="item1.championType" class="font_2">{{ getChampionName(item1.systemId) }}</div>
+            <div v-else class="font_2">{{ getTeam(item1).leagueShortName }}</div>
+          </div>
 
         </div>
       </div>
@@ -201,6 +204,13 @@ const getLangBet = (item: any) => {
   color: var(--color-bg-1);
 }
 
+.ball-img {
+  font-size: 24px;
+  color: var(--color-text-3);
+  margin-right: 3px;
+  font-weight: 500;
+}
+
 .top {
   display: flex;
 
@@ -243,6 +253,13 @@ const getLangBet = (item: any) => {
       color: var(--color-text-1);
       letter-spacing: 0;
       font-weight: 600;
+    }
+  }
+
+  .league-name {
+    display: flex;
+    .font_2{
+      color: var(--color-text-3);
     }
   }
 }
@@ -317,6 +334,7 @@ const getLangBet = (item: any) => {
     color: var(--color-text-1);
     letter-spacing: 0;
     font-weight: 600;
+
     .img_1 {
       width: 20px;
       height: 25px;
@@ -343,5 +361,4 @@ const getLangBet = (item: any) => {
     letter-spacing: 0;
     font-weight: 400;
   }
-}
-</style>
+}</style>

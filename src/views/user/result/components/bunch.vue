@@ -5,7 +5,7 @@
       <div class="title-left">
         <div>{{ item.parlayNum }}{{ $t('user.session') }}</div>
         <div>
-          <img v-for="i in Number(item.parlayNum)" :key="i" class="img_1" src="@/assets/images/user/num5.png" alt="" />
+          <SportsIcon v-for="(item2, index1) in item.betDTOList" :key="index1" :icon-src="item2.gameType" class="ball-img" />
         </div>
       </div>
       <!-- <img class="img_1" src="@/assets/images/user/down1.png" alt="" /> -->
@@ -74,7 +74,7 @@
             </span>
           </div>
           <div class="team">
-            <img class="img_1" src="@/assets/images/user/num5.png" alt="" />
+            <SportsIcon :icon-src="item1.gameType" class="ball-img" />
             <span>
               {{ getTeam(item1).leagueShortName }}
             </span>
@@ -190,6 +190,12 @@ const getLangBet = (item: any) => {
 </script>
 
 <style lang="scss" scoped>
+.ball-img{
+  font-size: 24px;
+  color: var(--color-text-3);
+  margin-right:3px;
+  font-weight: 500;
+}
 .match-title {
   display: flex;
   align-items: center;
@@ -202,9 +208,8 @@ const getLangBet = (item: any) => {
     font-weight: 600;
 
     .img_1 {
-      height: 24px;
-      width: 24px;
-      margin-right: 5px;
+      font-size: 24px;
+      color: var(--color-text-3);
     }
   }
 

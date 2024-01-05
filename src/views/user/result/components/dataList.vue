@@ -48,7 +48,7 @@
 
 <script lang="ts" setup>
 // nextTick
-import { ref, reactive, onMounted, defineExpose } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import moment from 'moment'
 
 import Bunch from './bunch.vue'
@@ -113,7 +113,7 @@ const seStatus = () => {
 // 日期弹窗
 const setDate = () => {
   showBottom2.value = true
-  emit('timeChange', true)
+  emit('timeChange', true, 1, beginTime.value, endTime.value)
 }
 const setDateTime = (values: any) => {
   const [start, end] = values
