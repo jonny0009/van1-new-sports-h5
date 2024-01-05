@@ -18,7 +18,7 @@
       <div class="main-team">
         <div class="cell">
           <div class="head">
-            <img v-img="item.homeLogo" :type="2" alt="" />
+            <img v-img="item.homeLogo" :type="4" alt="" />
             <span>{{ item.homeTeam }}</span>
           </div>
           <div class="score">
@@ -27,7 +27,7 @@
         </div>
         <div class="cell">
           <div class="head">
-            <img v-img="item.awayLogo" :type="2" alt="" />
+            <img v-img="item.awayLogo" :type="5" alt="" />
             <span>{{ item.awayTeam }}</span>
           </div>
           <div class="score">
@@ -39,7 +39,7 @@
       <div class="main-desc">
         <div class="name">{{ item.leagueShortName }}</div>
         <div class="hots">
-          <img src="@/assets/images/live/s_hot.png" alt="" />
+          <img :src="hotIcon" alt="" />
           <span>{{ watchNumText }}</span>
         </div>
       </div>
@@ -51,7 +51,9 @@
 import { computed, ref } from 'vue'
 import { ImageSource } from '@/config'
 import { useI18n } from 'vue-i18n'
-const { t } = useI18n()
+import store from '@/store'
+import sHot1 from '@/assets/images/live/s_hot.png'
+import sHot2 from '@/assets/images/live/s_hot2.png'
 
 const props = defineProps({
   item: {
@@ -59,7 +61,14 @@ const props = defineProps({
     default: () => {}
   }
 })
-
+const { t } = useI18n()
+const theme = computed(() => store.state.app.theme)
+const hotIcon = computed(() => {
+  if (theme.value == 'blue') {
+    return sHot2
+  }
+  return sHot1
+})
 const imageSource = ref(ImageSource)
 const gameInfo = computed(() => props.item?.gameInfo)
 const imgCover = computed(() => {
@@ -96,8 +105,8 @@ const leagueIcon = computed(() => {
 .item {
   display: flex;
   overflow: hidden;
-  background: #eff1f2;
-  color: #0e3d66;
+  color: var(--color-live-base-font);
+  background: var(--color-live-card-bg);
   border-radius: 10px;
   height: 220px;
   .photo {
@@ -120,7 +129,6 @@ const leagueIcon = computed(() => {
       padding: 0 10px;
       color: #fff;
       font-size: 24px;
-      // background-image: linear-gradient(-68deg, #d700ff 0%, #af00ff 100%);
       background-image: linear-gradient(
         -68deg,
         var(--color-linear-gradient-tag-1) 0%,
@@ -151,13 +159,13 @@ const leagueIcon = computed(() => {
         zoom: 0.95;
       }
       .svg-icon {
-        color: #999;
+        opacity: 0.5;
         margin-right: 8px;
       }
     }
 
     &-team {
-      color: #1f2630;
+      color: var(--color-live-team-font);
       font-size: 24px;
       font-weight: 800;
       .cell {
@@ -169,9 +177,9 @@ const leagueIcon = computed(() => {
       .head {
         display: flex;
         align-items: center;
+        height: 40px;
         > img {
           width: 40px;
-          height: 40px;
           margin-right: 10px;
         }
         > span {
@@ -182,8 +190,8 @@ const leagueIcon = computed(() => {
         }
       }
       .score {
-        color: #546371;
-        font-size: 30px;
+        // color: #546371;
+        font-size: 28px;
         font-weight: 600;
       }
     }
