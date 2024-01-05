@@ -4,7 +4,7 @@
     {{ betInfo.ior }}
   </div>
 </template>
-<script>
+<script lang="ts" setup>
 
 import { ref, watch, onBeforeMount, onBeforeUnmount, nextTick } from 'vue'
 //

@@ -26,14 +26,11 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts" setup>
 import Video from 'video.js'
-import 'videojs-contrib-hls'
 import 'video.js/dist/video-js.css'
 
 import { ref, watch, onBeforeMount, onBeforeUnmount, nextTick } from 'vue'
-
-//
 const props = defineProps({
   liveUrl: {
     type: String,

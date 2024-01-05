@@ -33,7 +33,7 @@
   </div>
 </template>
 
-<script>
+<script  lang="ts" setup>
 
 import date from './date'
 import { ref, computed, watch, onBeforeMount, onBeforeUnmount, nextTick } from 'vue'

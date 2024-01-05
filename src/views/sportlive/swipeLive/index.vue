@@ -2,7 +2,7 @@
   <div class="swipeLive">
 
     <!--  -->
-    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" :loop="false">
+    <van-swipe class="my-swipe" indicator-color="white">
       <van-swipe-item v-for="(match,idx) in swipeList" :key="idx">
         <div class="wrap">
           <MatchItem
