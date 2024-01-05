@@ -27,7 +27,8 @@
       <!-- 账户 -->
       <div class="account-1">
         <div class="top-1">
-          <img v-if="privacy === 0" class="img_1" src="@/assets/images/user/pitch.png" alt="" />
+          <img v-if="privacy === 0&&ifBLue" class="img_1" src="@/assets/images/user/blue/pitch.png" alt="" />
+          <img v-else-if="privacy === 0&&!ifBLue" class="img_1" src="@/assets/images/user/pitch.png" alt="" />
           <div v-else class="round" @click="handlePrivacy(0)"></div>
           {{ $t('user.PublicAccount') }}
         </div>
@@ -37,7 +38,8 @@
       </div>
       <div class="account-1">
         <div class="top-1">
-          <img v-if="privacy === 1" class="img_1" src="@/assets/images/user/pitch.png" alt="" />
+          <img v-if="privacy === 1&&ifBLue" class="img_1" src="@/assets/images/user/blue/pitch.png" alt="" />
+          <img v-else-if="privacy === 1&&!ifBLue" class="img_1" src="@/assets/images/user/pitch.png" alt="" />
           <div v-else class="round" @click="handlePrivacy(1)"></div>
           {{ $t('user.PrivateAccount') }}
         </div>
@@ -59,10 +61,19 @@ import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
 import store from '@/store'
 import { ImageSource } from '@/config'
 const userInfo = computed(() => store.state.user.userInfo)
+const theme = computed(() => store.state.app.theme)
+
 const $router = useRouter()
 const remark = ref('')
 const privacy = ref(0)
 const peopleInfo = ref<any>({})
+
+const ifBLue = computed(() => {
+  if (theme.value === 'blue') {
+    return true
+  }
+  return false
+})
 
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
@@ -213,7 +224,7 @@ const getAccountInfo = async () => {
 
     .account-1 {
       margin-top: 11px;
-      border: 2px solid rgba(239, 241, 242, 1);
+      border: 2px solid var( --color-user-edit-info-color) ;
       border-radius: 20px;
       padding: 20px 40px;
       margin-bottom: 20px;

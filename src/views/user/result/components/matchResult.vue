@@ -243,7 +243,7 @@ defineExpose({
   }
 
   .color-line {
-    background: #E5ECF3;
+    background: var(--color-search-box-sidebar);
   }
 
   .item {

@@ -171,7 +171,7 @@ const getTitle = (type: any) => {
     color: #1EBB52;
   }
   .color-line {
-    background: #E5ECF3;
+    background: var(--color-search-box-sidebar);
   }
 
   .date-title {
