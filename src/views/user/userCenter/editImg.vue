@@ -178,7 +178,7 @@ const goBack = () => {
    > .editName-content {
     margin-top: -16px;
     padding: 40px 55px 0;
-    height: calc(100vh - 535px);
+    height: calc(100vh - 512px);
     overflow-y: auto;
     // padding: 56px 50px;
     background: var(--van-result-box);

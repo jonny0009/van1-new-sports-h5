@@ -316,8 +316,7 @@ const getAccountInfo = async () => {
 :deep(.van-field__control) {
   background: var(--color-search-box-frame);
   border-radius: 20px;
-  /* width: 666px; */
-  height: 150px !important;
+  height: 270px !important;
   padding: 30px;
 }
 </style>
