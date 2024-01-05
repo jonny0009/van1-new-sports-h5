@@ -1,13 +1,14 @@
 <template>
   <div class="panel-more">
     <div class="no-data" v-if="finished && list.length === 0">
-      <EmptyIcon />
+      <SvgIcon name="empty" />
+      <span class="empty-text">{{ $t('live.emptyText') }}</span>
     </div>
     <van-list
       v-model:loading="loading"
       :finished="finished"
       :immediate-check="false"
-      :finished-text="$t('live.noMore')"
+      :finished-text="list.length == 0 ? '' : $t('live.noMore')"
       @load="getRbLiveList"
     >
       <div class="more-item" v-for="item in list" :key="item.gidm">
@@ -58,9 +59,21 @@ onMounted(() => {
 <style lang="scss" scoped>
 .no-data {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding: 50px 0 0 0;
+  align-items: center;
+  height: 300px;
+  .svg-icon {
+    font-size: 168px;
+  }
+  .empty-text {
+    margin-top: 20px;
+    font-size: 24px;
+    line-height: 24px;
+    color: #96a5aa;
+  }
 }
+
 .panel-more {
   padding: 0 36px;
   padding-top: 20px;

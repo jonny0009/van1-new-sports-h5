@@ -5,95 +5,99 @@
       <span :class="{ active: navActive == 2 }" @click="onNavClick(2)">{{ $t('live.allBetWith') }}</span>
     </div>
 
-    <div class="no-data" v-if="list.length === 0">
-      <EmptyIcon />
+    <Loading v-if="loading" />
+    <div class="no-data" v-else-if="list.length === 0">
+      <SvgIcon name="empty" />
+      <span class="empty-text">{{ $t('live.emptyText') }}</span>
     </div>
-    <div v-for="(item, index) in list" v-else :key="index" class="item">
-      <div class="header">
-        <img v-img="item.headImg" class="avatar" :type="3" alt="" />
-        <div class="title">
-          <strong>{{ item.nikeName }}</strong>
-          <span>@{{ item.nikeName }}</span>
-        </div>
-        <div class="right">
-          <span v-if="props.matchInfo.showtype == 'RB'" class="state">{{ $t('live.inprogress') }}</span>
-        </div>
-      </div>
-
-      <div class="wrapper">
-        <div class="summary">{{ item.leagueName }}</div>
-        <div class="label">
-          <div class="label-flex">
-            <SvgIcon v-if="item.gameType == 'FT'" name="live-football" />
-            <SvgIcon v-if="item.gameType == 'BK'" name="live-basketball" />
-            <span>{{ item.leagueShortName }}</span>
+    <template v-else>
+      <div v-for="(item, index) in list" :key="index" class="item">
+        <div class="header">
+          <img v-img="item.headImg" class="avatar" :type="3" alt="" />
+          <div class="title">
+            <strong>{{ item.nikeName }}</strong>
+            <span>@{{ item.nikeName }}</span>
           </div>
-          <div class="label-flex">
-            <i class="iconfont icon-dianshi" />
-            <span v-html="setMatch.showRBTime(props.matchInfo)"></span>
-          </div>
-        </div>
-        <div class="team">
-          <div class="team-cell">
-            <div class="palyer">
-              <img v-img="item.homeLogo" src="@/assets/images/empty/team.png" :type="2" alt="" />
-              <span>{{ item.homeTeam }}</span>
-            </div>
-            <div class="score">
-              <span>{{ setMatch.getScore(props.matchInfo, 'H') || '-' }}</span>
-            </div>
-          </div>
-          <div class="team-cell">
-            <div class="palyer">
-              <img v-img="item.awayLogo" src="@/assets/images/empty/team.png" :type="2" alt="" />
-              <span>{{ item.awayTeam }}</span>
-            </div>
-            <div class="score">
-              <span>{{ setMatch.getScore(props.matchInfo, 'C') || '-' }}</span>
-            </div>
-          </div>
-        </div>
-        <div class="ticket">
-          <div class="ticket-txt">
-            <div class="icon">
-              <img src="@/assets/images/live/plate.png" alt="" />
-            </div>
-            <div class="info">
-              <strong>{{ item.betItem }}</strong>
-              <span v-play="item.playInfo"></span>
-            </div>
-          </div>
-          <div class="ticket-bet">
-            <span>@{{ item.ior }}</span>
-          </div>
-        </div>
-        <div class="betting">
-          <div class="betting-cell bt1">
-            <strong>{{ $t('live.betAmout') }}：</strong>
-            <span>
-              <SvgIcon name="usdt" />
-              {{ item.golds }}
-            </span>
-          </div>
-          <div class="betting-cell bt2">
-            <strong>{{ $t('live.betProfit') }}：</strong>
-            <span>
-              <SvgIcon name="usdt" />
-              {{ (item.golds * item.ior).toFixed(2) }}
-            </span>
+          <div class="right">
+            <span v-if="props.matchInfo.showtype == 'RB'" class="state">{{ $t('live.inprogress') }}</span>
           </div>
         </div>
 
-        <div class="footer">
-          <BettingOption :market-info="item.marketInfo">
-            <div class="button">
-              <span>{{ $t('live.betWith') }}</span>
-              <img src="@/assets/images/live/live_white_r.png" alt="" />
+        <div class="wrapper">
+          <div class="summary">{{ item.leagueName }}</div>
+          <div class="label">
+            <div class="label-flex">
+              <SvgIcon v-if="item.gameType == 'FT'" name="live-football" />
+              <SvgIcon v-if="item.gameType == 'BK'" name="live-basketball" />
+              <span>{{ item.leagueShortName }}</span>
             </div>
-          </BettingOption>
+            <div class="label-flex">
+              <i class="iconfont icon-dianshi" />
+              <span v-html="setMatch.showRBTime(props.matchInfo)"></span>
+            </div>
+          </div>
+          <div class="team">
+            <div class="team-cell">
+              <div class="palyer">
+                <img v-img="item.homeLogo" src="@/assets/images/empty/team.png" :type="4" alt="" />
+                <span>{{ item.homeTeam }}</span>
+              </div>
+              <div class="score">
+                <span>{{ setMatch.getScore(props.matchInfo, 'H') || '-' }}</span>
+              </div>
+            </div>
+            <div class="team-cell">
+              <div class="palyer">
+                <img v-img="item.awayLogo" src="@/assets/images/empty/team.png" :type="5" alt="" />
+                <span>{{ item.awayTeam }}</span>
+              </div>
+              <div class="score">
+                <span>{{ setMatch.getScore(props.matchInfo, 'C') || '-' }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="ticket">
+            <div class="ticket-txt">
+              <div class="icon">
+                <img src="@/assets/images/live/plate.png" alt="" />
+              </div>
+              <div class="info">
+                <strong>{{ item.betItem }}</strong>
+                <span v-play="item.playInfo"></span>
+              </div>
+            </div>
+            <div class="ticket-bet">
+              <span>@{{ item.ior }}</span>
+            </div>
+          </div>
+          <div class="betting">
+            <div class="betting-cell bt1">
+              <strong>{{ $t('live.betAmout') }}：</strong>
+              <span>
+                <SvgIcon name="usdt" />
+                {{ item.golds }}
+              </span>
+            </div>
+            <div class="betting-cell bt2">
+              <strong>{{ $t('live.betProfit') }}：</strong>
+              <span>
+                <SvgIcon name="usdt" />
+                {{ (item.golds * item.ior).toFixed(2) }}
+              </span>
+            </div>
+          </div>
+
+          <div class="footer">
+            <BettingOption :market-info="item.marketInfo">
+              <div class="button">
+                <span>{{ $t('live.betWith') }}</span>
+                <img src="@/assets/images/live/live_white_r.png" alt="" />
+              </div>
+            </BettingOption>
+          </div>
         </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -114,13 +118,13 @@ const navActive = ref(1)
 const onNavClick = (num: number) => {
   navActive.value = num
   list.value = []
+  loading.value = true
   getWithData()
 }
 
 const list: Ref<any[]> = ref([])
 const loading = ref(false)
 const getWithData = async () => {
-  loading.value = true
   const apiFun = navActive.value == 1 ? betRecord : betRecordAll
   const params = {
     page: 1,
@@ -160,9 +164,21 @@ onMounted(() => {
 <style lang="scss" scoped>
 .no-data {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding: 50px 0 0 0;
+  align-items: center;
+  height: 300px;
+  .svg-icon {
+    font-size: 168px;
+  }
+  .empty-text {
+    margin-top: 20px;
+    font-size: 24px;
+    line-height: 24px;
+    color: #96a5aa;
+  }
 }
+
 .panel-with {
   padding: 20px 36px;
   .top-nav {
@@ -173,7 +189,7 @@ onMounted(() => {
       height: 64px;
       line-height: 64px;
       padding: 0 15px;
-      background: #eff1f2;
+      background: var(--color-global-buttonBg);
       text-align: center;
       border-radius: 32px;
       margin-right: 16px;
