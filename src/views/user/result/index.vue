@@ -188,7 +188,6 @@ const handleClose = (item: any) => {
 </script>
 
 <style lang="scss" scoped>
-@import './index.scss';
 
 :deep(.van-field__control) {
   height: 50px;
@@ -198,7 +197,24 @@ const handleClose = (item: any) => {
 :deep(.van-icon) {
   font-size: 40px;
 }
+.result {
+  .bg-title {
+    background-color: var(--title-background-color-2);
+    .img_1 {
+      margin-top: -15px;
+      width: 36px;
+      height: 36px;
+      color: var(--title-text-font-color);
+    }
+  }
 
+  > .content {
+    background-color: var(--color-background-color);
+    padding: 20px 36px;
+    height: 92.8vh;
+  }
+
+}
 .popup-title {
   font-family: PingFangSC-Semibold;
   font-size: 32px;

@@ -317,7 +317,7 @@ const getAccountInfo = async () => {
   background: var(--color-search-box-frame);
   border-radius: 20px;
   /* width: 666px; */
-  height: 276px;
+  height: 150px;
   padding: 30px;
 }
 </style>
