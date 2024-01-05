@@ -11,9 +11,8 @@
           </div>
           <img :src="homeLogo" alt="" @error="homeLogoError = true" />
         </div>
-        <div class="match-date">
-          {{ date(matchInfo.gameDate, 'MM-dd HH:mm') }}
-        </div>
+        <div class="match-date" v-html="setMatch.showRBTime(matchInfo)"></div>
+        <!-- {{ date(matchInfo.gameDate, 'MM-dd HH:mm') }} -->
         <div class="team-info left">
           <img :src="awayLogo" alt="" @error="awayLogoError = true" />
           <div class="team-name text-overflow">
@@ -41,11 +40,14 @@
 
 import date from './date'
 import { ref, computed, watch, onBeforeMount, onBeforeUnmount, nextTick } from 'vue'
+import { useMatch } from '@/utils/useMatch'
 
 import { imgUrlFormat } from '@/utils/index'
 import homeIcon from './icon_team_home.png'
 import awayIcon from './icon_team_away.png'
 import head from './default-head.jpg'
+
+const setMatch: any = useMatch()
 
 const props = defineProps({
   matchInfo: {
