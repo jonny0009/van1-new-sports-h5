@@ -86,9 +86,17 @@ import BetList from './components/betList.vue'
 import store from '@/store'
 const userInfo = computed(() => store.state.user.userInfo)
 const peopleInfo = computed(() => store.state.user.peopleInfo)
+const theme = computed(() => store.state.app.theme)
 
 const userStandInfo = ref<any>({})
 const currentNumber = ref<any>('')
+
+const ifBLue = computed(() => {
+  if (theme.value === 'blue') {
+    return true
+  }
+  return false
+})
 
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()

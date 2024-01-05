@@ -42,6 +42,7 @@
             <span>
               {{ getLangBet(item1.betItemLang) }}
             </span>
+            <!-- <span class="color-2" :class="[item1.betResultDetail === 'L' ? 'color-3' : '']"> -->
             <span class="color-2" :class="[item1.betResultDetail === 'L' ? 'color-3' : '']">
               @{{ item1.ioRatio }}
             </span>
@@ -204,6 +205,14 @@ const getLangBet = (item: any) => {
   color: var(--color-bg-1);
 }
 
+.color-2 {
+  color: #1EBB52;
+}
+
+.color-3 {
+  color: red;
+}
+
 .ball-img {
   font-size: 24px;
   color: var(--color-text-3);
@@ -258,7 +267,8 @@ const getLangBet = (item: any) => {
 
   .league-name {
     display: flex;
-    .font_2{
+
+    .font_2 {
       color: var(--color-text-3);
     }
   }

@@ -16,7 +16,8 @@
             <div class="right">
               <div class="head">
                 <div class="head_1" @click.self="toUser('/userInfo')"> {{ $t('user.ViewProfile') }} </div>
-                <img class="headImg_1" fit="contain" src="@/assets/images/user/notice.svg" @click="toUser('/notice')" />
+                <img v-if="ifBLue" class="headImg_1" fit="contain" src="@/assets/images/user/blue/bell.png" @click="toUser('/notice')" />
+                <img v-else class="headImg_1" fit="contain" src="@/assets/images/user/notice.svg" @click="toUser('/notice')" />
               </div>
               <div class="money">
                 <img v-if="currency === 'CNY'" class="headImg_2" :src="CNY" style="object-fit: contain;" />
@@ -42,15 +43,17 @@
           </div>
 
         </div>
-        <div class="line" />
+        <van-divider class="line" />
         <!-- 导航 -->
         <div class="nav">
           <div class="menu" @click="toUser('/result')">
-            <img class="menu_1" fit="contain" src="@/assets/images/user/result.svg" />
+            <img v-if="ifBLue" class="menu_1" fit="contain" src="@/assets/images/user/blue/result.png" />
+            <img v-else class="menu_1" fit="contain" src="@/assets/images/user/result.svg" />
             <div class="menu_2">{{ $t('user.result') }}</div>
           </div>
           <div class="menu" @click="toUser('/edit')">
-            <img class="menu_1" fit="contain" src="@/assets/images/user/edit1.svg" />
+            <img v-if="ifBLue" class="menu_1" fit="contain" src="@/assets/images/user/blue/edit.png" />
+            <img v-else class="menu_1" fit="contain" src="@/assets/images/user/edit1.svg" />
             <div class="menu_2">{{ $t('user.edit') }}</div>
           </div>
           <!-- <div class="menu" @click="toUser('/customer')">
@@ -60,7 +63,8 @@
         </div>
         <!-- logo -->
         <div class="logoImg">
-          <van-image class="logo" fit="contain" :src="logoImg" />
+          <van-image v-if="ifBLue" class="logo" fit="contain" :src="aiLogo" />
+          <van-image v-else class="logo" fit="contain" :src="logoImg" />
         </div>
       </div>
     </van-popup>
@@ -72,6 +76,7 @@ import { ref, computed } from 'vue'
 import { ImageSource } from '@/config'
 
 import logoImg from '@/assets/images/user/logo.png'
+import aiLogo from '@/assets/images/user/blue/ai_logo.png'
 import USDTImg from '@/assets/images/globalLayout/header/USDT.png'
 import { formatMoney } from '@/utils/index'
 import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
@@ -132,7 +137,7 @@ defineExpose({
   height: 100vh;
   font-family: PingFangSC-Medium;
   font-size: 28px;
-  color: #000000;
+  color: var(--color-bet-tabtext-2);
   letter-spacing: 0;
   font-weight: 500;
 
@@ -213,7 +218,9 @@ defineExpose({
     }
 
     .font_4 {
-      color: var(--color-bet-tabtext-2);
+      color: var(--color-text-2);
+      font-family: PingFangSC-Medium;
+      font-size: 24px;
       font-weight: 500;
     }
 
@@ -222,7 +229,7 @@ defineExpose({
       margin-top: 10px;
       font-family: PingFangSC-Regular;
       font-size: 24px;
-      color: #96A5AA;
+      color: var(--color-global-minButtonicoCl);
       letter-spacing: 0;
       font-weight: 400;
       display: flex;
@@ -232,7 +239,7 @@ defineExpose({
         span:first-child {
           font-family: PingFangSC-Semibold;
           font-size: 24px;
-          color: #000000;
+          color: var(--color-bet-tabtext-2);
           letter-spacing: 0;
           font-weight: 400;
           margin-right: 8px;
@@ -255,9 +262,8 @@ defineExpose({
   }
 
   .line {
-    margin-top: -50px;
-    background: #E5ECF3;
-    height: 2px;
+    margin-top: -45px;
+    background: var(--color-search-box-sidebar);
     width: 100%;
   }
 
