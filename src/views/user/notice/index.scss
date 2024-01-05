@@ -67,6 +67,7 @@
           margin-top: 15px;
           font-family: PingFangSC-Medium;
           font-size: 24px;
+          height: 106px;
           color: var(--color-text-1);
           letter-spacing: 0;
           font-weight: 400;
@@ -75,7 +76,6 @@
           display: -webkit-box;//
           -webkit-box-orient: vertical;//设置弹性盒子的子元素的排列方式
           -webkit-line-clamp: 3;//设置显示文本的行数
-          max-height: 4em;
         }
 
         .font_3 {

@@ -10,9 +10,9 @@
       <van-tabs
         v-model:active="index"
         line-height="3px"
-        color="#1F2630 "
-        title-inactive-color="#96A5AA"
-        title-active-color="#1F2630"
+        :color="ifBLue?'#0E3D66': '#1F2630'"
+        :title-inactive-color="ifBLue?'#88A6BB': '#96A5AA'"
+        :title-active-color="ifBLue?'#0E3D66': '#1F2630'"
         line-width="40px"
         :duration="0.3"
       >
@@ -82,10 +82,12 @@
 import dataList from './components/dataList.vue'
 import moment from 'moment'
 
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import RunningHistory from './components/runningHistory.vue'
 import MatchResult from './components/matchResult.vue'
+import store from '@/store'
+const theme = computed(() => store.state.app.theme)
 
 // import { useI18n } from 'vue-i18n'
 // const { t } = useI18n()
@@ -112,6 +114,13 @@ const defaultDate = ref<any>([
   new Date(currentDate - oneDayDate * 7),
   new Date()
 ])
+
+const ifBLue = computed(() => {
+  if (theme.value === 'blue') {
+    return true
+  }
+  return false
+})
 
 onMounted(() => { })
 const goBack = () => {
@@ -229,11 +238,10 @@ const handleClose = (item: any) => {
 
   .item {
     font-size: 26px;
-    color: var(--color-search-box-text-1);
+    color: var(--color-user-pop-up-text-color);
     letter-spacing: 1px;
     padding: 40px;
     border-bottom: 2px solid #eaeaea;
-
     p {
       display: flex;
       align-items: center;
@@ -242,7 +250,7 @@ const handleClose = (item: any) => {
   }
 
   .item-color {
-    color: var(--color-bg-1);
+    color: var(--color-user-pop-up-text-color-2);
   }
 }
 </style>
@@ -287,5 +295,9 @@ const handleClose = (item: any) => {
 }
 :deep(.van-calendar__selected-day) {
   background: var(--color-primary);
+}
+/* //弹窗关闭图标 */
+:deep(.van-popup__close-icon){
+  color: var(--color-text-4);
 }
 </style>
