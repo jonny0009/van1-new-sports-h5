@@ -108,6 +108,7 @@ const refHomeTimePage = ref()
     min-width: 150px;
     white-space: nowrap;
     flex-shrink: 0;
+    color: black;
     &:last-child{
       margin-right: 0;
     }

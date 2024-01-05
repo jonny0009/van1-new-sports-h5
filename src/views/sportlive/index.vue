@@ -5,7 +5,7 @@
       <SportsButton v-for="(item,idx) in gameTypeList" :key="idx" :text="item.gameType" :active="gameType===item.gameType" @click="clickGameType(item)" />
     </div>
 
-    <swipeLive />
+    <!-- <swipeLive /> -->
 
     <Loading v-if="!isLoading" />
     <template v-else>
@@ -23,7 +23,7 @@
 <script lang="ts" setup>
 import TextButton from '@/components/Button/TextButton/index.vue'
 import MatchLive from '@/components/HomeMatch/MatchLive/index.vue'
-import swipeLive from './swipeLive/index.vue'
+// import swipeLive from './swipeLive/index.vue'
 import store from '@/store'
 import { ref, onBeforeMount, onActivated, onDeactivated, onBeforeUnmount, computed, watch } from 'vue'
 import { apiRBCondition, apiCommonMatches } from '@/api/home'
@@ -78,7 +78,7 @@ const clickGameType = (item:any) => {
   gameType.value = item.gameType
   getApiCommonMatches()
 }
-onBeforeMount(async () => {
+onBeforeMount(() => {
   startInterval()
   isLoading.value = false
   init()

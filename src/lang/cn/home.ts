@@ -22,6 +22,7 @@ export default {
   M: '独赢',
   MInfo: '全场 1X2',
   searchNoData: '未查询到相关数据',
+  searchBlueNoData: '没有赛事，看看其他分类吧',
   stayTuned: '敬请期待',
 
   // 新

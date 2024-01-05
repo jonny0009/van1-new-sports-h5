@@ -50,6 +50,12 @@
 .van-calendar__day--multiple-selected{
   background: var(--color-primary) !important;
 }
+.van-pull-refresh__head{
+    color: var(--color-refreshcl) !important;
+}
+
+
+
 // icon 2023/12/19
 @font-face {
   font-family: "iconfont"; /* Project id  */
@@ -203,7 +209,7 @@
     align-items: center;
     .time{
       font-size: 24px;
-      color: #000;
+      color: var(--color-text-5);
       font-weight: 500;
       flex-shrink: 1;
       padding-right: 20px;
@@ -320,7 +326,7 @@
         align-items: center;
         font-size: 24px;
         border-right: 1px solid #eff1f2;
-        color: var(--color-text-3);
+        color: var(--color-text-4);
         &:last-child{
           border-right: 0;
         }

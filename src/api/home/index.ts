@@ -27,3 +27,10 @@ export const apiCommonMatches = (params:any) => {
     params
   })
 }
+export const pushAnchor = (params:any) => {
+  return request({
+    url: '/ai/mobile/anchor/pushAnchor',
+    method: 'get',
+    params
+  })
+}

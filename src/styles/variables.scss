@@ -7,6 +7,11 @@
   --color-text-1: #080808;
   --color-text-2: #1F2630;
   --color-text-3: #546371;
+  --color-text-4: #546371;
+  --color-text-5: #000;
+
+  --color-loadingcl: #96a5aa;
+  --color-refreshcl: #969799;
 
   --color-linear-gradient-background-title-1: #181f2a;
   --color-linear-gradient-background-title-2: #2a0572;
@@ -30,6 +35,7 @@
   --color-global-maskBg: linear-gradient(270deg,#fff,hsla(0,0%,100%,0));
   --color-global-imgBg: #eff2f2;
   --color-global-moreCl: #7642fe;
+  --color-global-headBrBg:  0 0 0 0 rgba(227,231,240,1);
 
   
   //赛事列表
@@ -38,6 +44,8 @@
   --color-match-IorCl:#000;
   --color-match-brBg:#eff2f2;
   --color-match-brWidth: 1px;
+  --color-match-btnCl: #2C333C;
+  --color-match-emptyCl: #96a5aa;
 
   // 搜索页面
   --color-search-box: #EFF1F2;
@@ -94,6 +102,11 @@
   --color-text-1: #56809F;
   --color-text-2: #0E3D66;
   --color-text-3: #56809F;
+  --color-text-4: #88A6BB;
+  --color-text-5: #0E3D66;
+
+  --color-loadingcl: #88A6BB;
+  --color-refreshcl: #88A6BB;
 
   --color-linear-gradient-background-title-1: #FFFFFF;
   --color-linear-gradient-background-title-2: #FFFFFF;
@@ -117,6 +130,7 @@
   --color-global-maskBg:  linear-gradient(270deg,#f4f5fa,hsla(0,0%,100%,0));
   --color-global-imgBg: #fff;
   --color-global-moreCl:#56809F ;
+  --color-global-headBrBg:  0px 1px 0px 0px rgba(227,231,240,1);
 
   //赛事列表
   --color-match-Bg:#fefffe;
@@ -124,6 +138,8 @@
   --color-match-IorCl:#0E3D66;
   --color-match-brBg:  #f4f5fa;
   --color-match-brWidth:  0;
+  --color-match-btnCl: #0E3D66;
+  --color-match-emptyCl: #88A6BB;
 
   // 搜索页面
   --color-search-box: #DDEFFC;

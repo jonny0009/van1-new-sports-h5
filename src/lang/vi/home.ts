@@ -21,6 +21,8 @@ export default {
   OUInfo: 'Trên/Dưới toàn bộ trận đấu',
   M: 'Thắng',
   MInfo: 'Toàn trận 1X2',
+  searchNoData: 'Không tìm thấy dữ liệu liên quan',
+  searchBlueNoData: 'Không có sự kiện nào, vui lòng xem các danh mục khác',
 
   // 机翻译
   stayTuned: 'Giữ nguyên',

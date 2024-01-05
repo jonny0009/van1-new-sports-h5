@@ -1,0 +1,177 @@
+<template>
+  <div class="ft-match-wrap">
+    <div class="match-info">
+      <div class="match-league">
+        {{ matchInfo.leagueShortName || matchInfo.leagueName }}
+      </div>
+      <div class="match-name-wrap">
+        <div class="team-info right">
+          <div class="team-name text-overflow">
+            {{ matchInfo.homeTeam }}
+          </div>
+          <img :src="homeLogo" alt="" @error="homeLogoError = true" />
+        </div>
+        <div class="match-date">
+          {{ date(matchInfo.gameDate, 'MM-dd HH:mm') }}
+        </div>
+        <div class="team-info left">
+          <img :src="awayLogo" alt="" @error="awayLogoError = true" />
+          <div class="team-name text-overflow">
+            {{ matchInfo.awayTeam }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-if="type !== 3" class="anchor-info-wrap">
+      <div class="anchor-info">
+        <div class="anchor-avatar">
+          <img :src="headPortrait" alt="" @error="avatarError = true" />
+        </div>
+        <div class="anchor-name text-overflow">{{ liveInfo.name }}</div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+
+import date from './date'
+import { ref, computed, watch, onBeforeMount, onBeforeUnmount, nextTick } from 'vue'
+
+import { imgUrlFormat } from '@/utils/index'
+import homeIcon from './icon_team_home.png'
+import awayIcon from './icon_team_away.png'
+import head from './default-head.jpg'
+
+const props = defineProps({
+  matchInfo: {
+    type: Object,
+    default: () => {}
+  },
+  liveInfo: {
+    type: Object,
+    default: () => {}
+  }
+})
+
+const avatarError = ref(false)
+const homeLogoError = ref(false)
+const awayLogoError = ref(false)
+
+const homeLogo = computed(() => {
+  if (props.matchInfo?.homeLogo && !homeLogoError.value) {
+    return imgUrlFormat(props.matchInfo.homeLogo)
+  }
+  return homeIcon
+})
+
+const awayLogo = computed(() => {
+  if (props.matchInfo?.homeLogo && !awayLogoError.value) {
+    return imgUrlFormat(props.matchInfo.awayLogo)
+  }
+  return awayIcon
+})
+
+const headPortrait = computed(() => {
+  if (props.liveInfo?.headPortrait && !avatarError.value) {
+    return imgUrlFormat(props.liveInfo.headPortrait)
+  }
+  return head
+})
+
+const type = computed(() => {
+  return props.liveInfo.recommendType
+})
+
+</script>
+<style lang="scss" scoped>
+.ft-match-wrap {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  .match-league {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    font-weight: 400;
+  }
+  .match-info {
+    width: 100%;
+  }
+  .match-name-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 12px;
+    .match-date {
+      font-size: 12px;
+      color: #bbbbbb;
+      text-align: center;
+      line-height: 16px;
+      font-weight: 400;
+    }
+    .team-info {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 200px;
+      padding: 0 6px;
+      overflow: hidden;
+      &.right {
+        justify-content: flex-end;
+      }
+      &.left {
+        justify-content: flex-start;
+      }
+      img {
+        width: 22px;
+        height: 22px;
+        margin: 0 12px;
+      }
+      .team-name {
+        font-size: 14px;
+        color: #ffffff;
+        text-align: right;
+        font-weight: 400;
+        max-width: 120px;
+      }
+    }
+  }
+  .anchor-info-wrap {
+    margin-top: 10px;
+    .anchor-info {
+      display: inline-block;
+      position: relative;
+      height: 24px;
+      line-height: 24px;
+      padding-left: 25px;
+      padding-right: 8px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 18px;
+      .anchor-avatar {
+        position: absolute;
+        left: 1px;
+        top: 1px;
+        width: 22px;
+        height: 22px;
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
+      }
+      .anchor-name {
+        min-width: 60px;
+        max-width: 120px;
+        font-size: 12px;
+        color: #ffffff;
+        font-weight: 400;
+      }
+    }
+  }
+}
+</style>

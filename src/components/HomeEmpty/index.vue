@@ -1,13 +1,23 @@
 <template>
   <div class="my-empty">
-    <img class="my-empty__img" :src="emptyDefault">
+
+    <img v-if="ifBlueTheme" v-img="blueEmptyDefault" class="my-empty__img">
+    <img v-else class="my-empty__img" :src="emptyDefault">
+
     <div class="my-empty__text">
+      <!-- <template v-if="ifBlueTheme">{{ $t('home.searchBlueNoData') }}</template> -->
       {{ $t('home.searchNoData') }}
     </div>
+
   </div>
 </template>
 <script lang="ts" setup>
 import emptyDefault from '@/assets/images/home/empty/default.svg'
+import blueEmptyDefault from '@/assets/images/home/empty/blue-default.svg'
+import { computed } from 'vue'
+import store from '@/store'
+const ifBlueTheme = computed(() => store.state.app.theme === 'blue')
+
 </script>
 <style lang="scss" scoped>
   .my-empty {
@@ -24,7 +34,7 @@ import emptyDefault from '@/assets/images/home/empty/default.svg'
       margin-top: 20px;
       font-size: 24px;
       line-height: 24px;
-      color:#96a5aa;
+      color:var(--color-match-emptyCl);
     }
   }
 </style>
