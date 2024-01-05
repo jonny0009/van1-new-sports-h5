@@ -1,13 +1,16 @@
 <template>
   <div class="timeSelect">
-    <div v-for="(item, index) in timeList" :key="index">
-      <div v-if="item.timeName" class="time" :class="timeIndex == index ? 'timeActive' : ''" @click.stop="selectTime(index)">
-        {{ item.timeName }}
+    <!-- 时间 -->
+    <div class="status status-2">
+      <div class="status_1">
+        <span>{{ $t('user.time') }}</span>
+        <div class="round" @click.stop="setDate()">
+          <span>{{ dateTimeVal.beginName }} </span> ~ <span>{{ dateTimeVal.endName }}</span>
+          <img class="img_1 " :class="[showBottom2 ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
+        </div>
       </div>
-      <p v-else class="imgStyle" @click.stop="setDate()">
-        <img class="img_1" src="@/assets/images/user/selectTime.png" alt="" />
-      </p>
     </div>
+
     <!-- 状态 -->
     <div class="status">
       <div class="status_1">
@@ -21,15 +24,14 @@
   </div>
 
   <!-- 列表 -->
-  <!-- <div v-if="list.arr.length" class="dataList"> -->
-  <div v-if="!list.arr.length &&finished" class="noData">
+  <div v-if="!list.arr.length && finished" class="noData">
     <img class="img_1" src="@/assets/images/user/noData.png" />
     <p>
       {{ $t('user.noData') }}
     </p>
   </div>
   <van-list
-    v-if="list.arr.length ||!finished"
+    v-if="list.arr.length || !finished"
     v-model:loading="loading"
     :finished="finished"
     :finished-text="$t('live.noMore')"
@@ -38,15 +40,15 @@
     @load="onLoad"
   >
     <div v-for="(item, index) in list.arr" :key="index">
-      <Single v-if="item.parlayNum ==1" :item="item" class="item"></Single>
-      <Bunch v-if="item.parlayNum !=1" :item="item" class="item"></Bunch>
+      <Single v-if="item.parlayNum == 1" :item="item" class="item"></Single>
+      <Bunch v-if="item.parlayNum != 1" :item="item" class="item"></Bunch>
     </div>
   </van-list>
-
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted, defineExpose } from 'vue'
+// nextTick
+import { ref, reactive, onMounted } from 'vue'
 import moment from 'moment'
 
 import Bunch from './bunch.vue'
@@ -62,18 +64,17 @@ import { showToast } from 'vant'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
-const timeIndex = ref(2)
 const beginTime = ref<any>('')
 const endTime = ref<any>('')
 const popupTitle = ref(t('user.state'))
 const commonKey = ref({ key: '', value: t('user.whole') })
 const showBottom = ref(false)
+const showBottom2 = ref(false)
 const loading = ref(false)
 const finished = ref(false)
 
 const emit = defineEmits(['valueChange', 'timeChange'])
 
-// const showTime = ref(false)
 const popupList = reactive<{ arr: any[] }>({
   arr: [
     {
@@ -90,26 +91,17 @@ const popupList = reactive<{ arr: any[] }>({
     }
   ]
 })
-const timeList = reactive([
-  {
-    timeName: ''
-  },
-  {
-    timeName: t('user.today')
-  },
-  // {
-  //   timeName: t('user.fortyEight')
-  // },
-  {
-    timeName: t('user.sevenDay')
-  }
+const dateTimeVal = ref<any>({
+  // beginName: moment().subtract(7, 'days').format('YYYY/MM/DD'),
+  // endName: moment().format('YYYY/MM/DD')
+  beginName: moment().subtract(7, 'days').format('MM/DD'),
+  endName: moment().format('MM/DD')
+})
 
-])
 onMounted(() => {
   endTime.value = moment().valueOf()
   const oneDayDate = 24 * 60 * 60 * 1000
   beginTime.value = endTime.value - oneDayDate * 7
-  // getNoAccount()
 })
 const onLoad = () => {
   getNoAccount()
@@ -120,14 +112,21 @@ const seStatus = () => {
 }
 // 日期弹窗
 const setDate = () => {
-  // emit('timeChange', true)
+  showBottom2.value = true
+  emit('timeChange', true, 1, beginTime.value, endTime.value)
 }
-const setDateTime = (values:any) => {
+const setDateTime = (values: any) => {
   const [start, end] = values
-  endTime.value = moment(end).valueOf()
+  // dateTimeVal.value.beginName = moment(start).format('YYYY/MM/DD')
+  // dateTimeVal.value.endName = moment(end).format('YYYY/MM/DD')
+  dateTimeVal.value.beginName = moment(start).format('MM/DD')
+  dateTimeVal.value.endName = moment(end).format('MM/DD')
+
   beginTime.value = moment(start).valueOf()
+  endTime.value = moment(end).valueOf()
   loading.value = true
   finished.value = false
+  showBottom2.value = false
   page = 0
   list.arr = []
   getNoAccount()
@@ -142,34 +141,6 @@ async function setPk(val: any) {
   list.arr = []
   getNoAccount()
   console.log(val)
-}
-const selectTime = (index: number) => {
-  timeIndex.value = index
-  const nowDate = moment().valueOf()
-  let startDate = ref<any>('')
-  const endDate = nowDate
-  const oneDayDate = 24 * 60 * 60 * 1000
-  // 近24小时
-  if (index === 1) {
-    startDate = nowDate - oneDayDate
-  }
-  // 近48小时
-  // if (index === 1) {
-  //   startDate = nowDate - oneDayDate * 2
-  // }
-  // 近7天
-  if (index === 2) {
-    startDate = nowDate - oneDayDate * 7
-  }
-  // console.log();
-
-  beginTime.value = startDate
-  endTime.value = endDate
-  loading.value = true
-  finished.value = false
-  page = 0
-  list.arr = []
-  getNoAccount()
 }
 
 let page: number = 0
@@ -197,9 +168,9 @@ const getNoAccount = async () => {
     // 获取多语言
     const gidmsArr: any = []
     // 冠军国际化
-    const championGidms:any = []
-    list.arr.map((m:any) => {
-      m.betDTOList.map((n:any) => {
+    const championGidms: any = []
+    list.arr.map((m: any) => {
+      m.betDTOList.map((n: any) => {
         const { championType, systemId, gidm } = n
         if (championType) {
           championGidms.push(gidm)
@@ -214,7 +185,7 @@ const getNoAccount = async () => {
   }
 }
 defineExpose({
-  setPk, setDateTime, showBottom
+  setPk, setDateTime, showBottom, showBottom2
 })
 
 </script>
@@ -225,63 +196,18 @@ defineExpose({
   margin-top: 23px;
   display: flex;
   align-items: center;
+  padding-left: 30px;
   justify-content: space-around;
-  // overflow: auto;
-
-  .time {
-    width: 130px;
-    height: 64px;
-    // padding: 16px 40px;
-    background: var(--van-result-box);
-    border-radius: 32px;
-    font-family: PingFangSC-Medium;
-    font-size: 24px;
-    color: var(--color-search-box-text-1);
-    letter-spacing: 0;
-    text-align: center;
-    font-weight: 500;
-    line-height: 64px;
-    margin-right: 15px;
-  }
-
-  .timeActive {
-    background: var(--color-bg-1);
-    color: #FFFFFF;
-  }
-
-  .imgStyle {
-    // margin-left: 180px;
-    margin-right: 10px;
-    width: 64px;
-    height: 64px;
-    padding: 15px;
-    background: var(--color-search-box-frame);
-
-    // background: #7642FD;
-    border-radius: 50%;
-    text-align: center;
-
-    .img_1 {
-      margin-left: 2px;
-      height: 34px;
-      width: 34px;
-      color: #000;
-    }
-  }
-
 }
 
 // 状态
 .status {
-  margin-left: 30px;
-  // margin-top: 20px;
   display: flex;
   align-items: center;
-
   justify-content: flex-end;
   font-family: PingFangSC-Semibold;
   font-size: 24px;
-  color: var( --color-search-box-text-1);
+  color: var(--color-search-box-text-1);
   letter-spacing: 0;
   font-weight: 600;
 
@@ -289,11 +215,11 @@ defineExpose({
     display: flex;
     align-items: center;
     margin-right: 30px;
+    white-space:nowrap;
     .round {
-      // width: 165px;
-      // width: 170px;
       white-space: nowrap;
       padding: 0 25px;
+      padding-right: 35px;
       height: 52px;
       text-align: center;
       line-height: 52px;
@@ -302,10 +228,14 @@ defineExpose({
       margin-left: 10px;
       position: relative;
       font-size: 23px;
+      color: #546371;
+      &-text{
+        white-space:nowrap;
+      }
 
       .img_1 {
         position: absolute;
-        right: 10px;
+        right: 15px;
         top: 20px;
         height: 10px;
         width: 10px;
@@ -320,7 +250,7 @@ defineExpose({
 
 // 列表
 .dataList {
-  height: calc(100vh - 350px);
+  height: calc(100vh - 340px);
   overflow-y: auto;
   margin-top: 20px;
   // padding: 0 36px;
@@ -376,6 +306,7 @@ defineExpose({
     color: var(--color-bg-1);
   }
 }
+
 .noData {
   width: 100%;
   text-align: center;
@@ -386,7 +317,7 @@ defineExpose({
   font-weight: 500;
   height: 850px;
 
-   >.img_1 {
+  >.img_1 {
     margin-top: 331px;
     width: 102px;
     height: 121px;

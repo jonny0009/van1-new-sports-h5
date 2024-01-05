@@ -74,7 +74,7 @@ import { ref, reactive, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 const $router = useRouter()
 
-import { playerInfo, standings } from '@/api/user'
+import { standings } from '@/api/user'
 import { showToast } from 'vant'
 import { ImageSource } from '@/config'
 import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
@@ -85,8 +85,8 @@ import BetList from './components/betList.vue'
 
 import store from '@/store'
 const userInfo = computed(() => store.state.user.userInfo)
+const peopleInfo = computed(() => store.state.user.peopleInfo)
 
-const peopleInfo = ref<any>({})
 const userStandInfo = ref<any>({})
 const currentNumber = ref<any>('')
 
@@ -128,7 +128,7 @@ const dataList = reactive<{ arr: any }>({
   ]
 })
 onMounted(() => {
-  getAccountInfo()
+  store.dispatch('user/getAccountInfo')
   // 获取战力
   getStandings()
 })
@@ -139,16 +139,7 @@ const getImg = (imgUrl: string) => {
   }
   return avatarImg
 }
-const getAccountInfo = async () => {
-  const params = {
-    fPlayerId: userInfo.value.playerId
-  }
-  const res: any = await playerInfo(params)
-  if (res.code !== 200) {
-    return showToast(res.msg)
-  }
-  peopleInfo.value = res.data
-}
+
 const getStandings = async () => {
   const params = {
     type: 2

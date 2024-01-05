@@ -1,14 +1,10 @@
 <template>
-  <!-- 状态 -->
+  <!-- 球类型 -->
+  <div class="ball-type">
+    <sports-tabs @returnSportsSuccess="setBallSelect"></sports-tabs>
+  </div>
+  <!-- 时间 -->
   <div class="status">
-    <div class="status_1">
-      <span>{{ $t('user.Balls') }}</span>
-      <div class="round" @click="setBall()">
-        <!-- <span>{{ ballKey.gameType }}</span> -->
-        <span>{{ $t(`user.sports.${ballKey.gameType}`) }}</span>
-        <img class="img_1 " :class="[showBottom1 ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
-      </div>
-    </div>
     <div class="status_1">
       <span>{{ $t('user.time') }}</span>
       <div class="round" @click="seStatus()">
@@ -17,7 +13,7 @@
       </div>
     </div>
   </div>
-  <van-divider />
+  <van-divider class="color-line" />
   <div v-if="!list.arr.length && finished" class="noData">
     <img class="img_1" src="@/assets/images/user/noData.png" />
     <p>
@@ -37,8 +33,10 @@
     <div v-for="(item, index) in list.arr" :key="index" class="item">
       <div class="title">
         <div class="left  title-left">
-          <img class="img_1" src="@/assets/images/login/ball1.svg" />
-          {{ item.leagueName }}
+          <SportsIcon :icon-src="item.gameType" class="ball-img" />
+          <span class="ball-name">
+            {{ item.leagueName }}
+          </span>
         </div>
         <div class="right">
           {{ getMatchTime(item) }}
@@ -46,10 +44,11 @@
       </div>
       <div class="match-content">
         <div class="left">
+
           <div class="left-1">
             {{ item.homeTeamName }}
           </div>
-          <img class="img_1" :src="getImg(item.homeTeamLogo)" alt="" />
+          <img v-img="item.homeTeamLogo" class="img_1" alt="" :type="4" style="object-fit: contain;" />
         </div>
         <div class="center">
           {{ item.result.GM_h || 0 }}
@@ -57,7 +56,8 @@
           {{ item.result.GM_c || 0 }}
         </div>
         <div class="right">
-          <img class="img_2" :src="getImg(item.awayTeamLogo)" alt="" />
+
+          <img v-img="item.awayTeamLogo" class="img_2" alt="" :type="5" style="object-fit: contain;" />
           <div class="right-1">
             {{ item.awayTeamName }}
           </div>
@@ -68,22 +68,23 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+
+import SportsTabs from '@/components/tabs/SportsTabs/index.vue'
+
 import moment from 'moment'
-import { ImageSource } from '@/config'
 import store from '@/store'
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n()
+// import { useI18n } from 'vue-i18n'
+// const { t } = useI18n()
 import { matchResult } from '@/api/user'
+
 const list = reactive<{ arr: any }>({ arr: [] })
 // import { showToast } from 'vant'
 const loading = ref(false)
 const finished = ref(false)
-const popupTitle1 = ref(t('user.Balls'))
-const popupTitle = ref(t('user.time'))
 const commonKey = ref(
   {
-    name: moment().format('MM/DD'),
+    name: moment().format('YYYY/MM/DD'),
     value: moment().valueOf(),
     key: 0
   }
@@ -94,114 +95,13 @@ const ballKey = ref(
     key: 'FT'
   }
 )
-const showBottom1 = ref(false)
 const showBottom = ref(false)
 
-const emit = defineEmits(['valueChange'])
+const emit = defineEmits(['valueChange', 'timeChange'])
 onMounted(() => {
   store.dispatch('app/getAllSports')
 })
-const sportsList = computed(() => {
-  const sports = store.state.app.sports || []
-  const newSportsA = sports.filter((e:any) => {
-    return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.gameCount
-  })
-  let newSportsB:any = [
 
-  ]
-  if (newSportsA.length) {
-    const newSportsC = newSportsA.map((e:any) => {
-      return {
-        gameType: e.gameType,
-        key: e.gameType
-      }
-    })
-    newSportsB = [...newSportsC]
-  }
-
-  return newSportsB
-})
-const timeArrList = computed(() => {
-  const timeArr = [
-    {
-      name: moment().format('MM/DD'),
-      value: moment().valueOf(),
-      key: 0
-    },
-    {
-      name: moment().subtract(1, 'days').format('MM/DD'),
-      value: moment().subtract(1, 'days').valueOf(),
-      key: 1
-    },
-
-    {
-      name: moment().subtract(2, 'days').format('MM/DD'),
-      value: moment().subtract(2, 'days').valueOf(),
-      key: 2
-    },
-    {
-      name: moment().subtract(3, 'days').format('MM/DD'),
-      value: moment().subtract(3, 'days').valueOf(),
-      key: 3
-    },
-    {
-      name: moment().subtract(4, 'days').format('MM/DD'),
-      value: moment().subtract(4, 'days').valueOf(),
-      key: 4
-    },
-    {
-      name: moment().subtract(5, 'days').format('MM/DD'),
-      value: moment().subtract(5, 'days').valueOf(),
-      key: 5
-    },
-    {
-      name: moment().subtract(6, 'days').format('MM/DD'),
-      value: moment().subtract(6, 'days').valueOf(),
-      key: 6
-    },
-    {
-      name: moment().subtract(7, 'days').format('MM/DD'),
-      value: moment().subtract(7, 'days').valueOf(),
-      key: 7
-    },
-    {
-      name: moment().subtract(8, 'days').format('MM/DD'),
-      value: moment().subtract(8, 'days').valueOf(),
-      key: 8
-    },
-    {
-      name: moment().subtract(9, 'days').format('MM/DD'),
-      value: moment().subtract(9, 'days').valueOf(),
-      key: 9
-    },
-    {
-      name: moment().subtract(10, 'days').format('MM/DD'),
-      value: moment().subtract(10, 'days').valueOf(),
-      key: 10
-    },
-    {
-      name: moment().subtract(11, 'days').format('MM/DD'),
-      value: moment().subtract(11, 'days').valueOf(),
-      key: 11
-    },
-    {
-      name: moment().subtract(12, 'days').format('MM/DD'),
-      value: moment().subtract(12, 'days').valueOf(),
-      key: 12
-    },
-    {
-      name: moment().subtract(13, 'days').format('MM/DD'),
-      value: moment().subtract(13, 'days').valueOf(),
-      key: 13
-    },
-    {
-      name: moment().subtract(14, 'days').format('MM/DD'),
-      value: moment().subtract(14, 'days').valueOf(),
-      key: 14
-    }
-  ]
-  return timeArr
-})
 let page: number = 0
 const onLoad = async () => {
   page++
@@ -229,12 +129,7 @@ const onLoad = async () => {
     // showToast(res.msg)
   }
 }
-const getImg = (item: any) => {
-  if (item) {
-    return `${ImageSource}${item}`
-  }
-  return ''
-}
+
 // 获取游戏时间
 const getMatchTime = (item: any) => {
   if (item.gameDate) {
@@ -246,15 +141,17 @@ const getMatchTime = (item: any) => {
 }
 const seStatus = () => {
   showBottom.value = true
-  emit('valueChange', true, popupTitle.value, timeArrList.value, commonKey.value, 3)
+  // emit('valueChange', true, popupTitle.value, timeArrList.value, commonKey.value, 3)
+  emit('timeChange', true, 3, commonKey.value.value)
 }
-const setBall = () => {
-  showBottom1.value = true
-  emit('valueChange', true, popupTitle1.value, sportsList.value, ballKey.value, 2)
-}
-async function setPk(val: any) {
+
+async function setDateTime(val: any) {
+  commonKey.value = {
+    name: moment(val).format('YYYY/MM/DD'),
+    value: moment(val).valueOf(),
+    key: 0
+  }
   page = 0
-  commonKey.value = val
   showBottom.value = false
   loading.value = true
   finished.value = false
@@ -262,26 +159,30 @@ async function setPk(val: any) {
   onLoad()
   console.log(val)
 }
-
+// 设置球类型
 const setBallSelect = (val: any) => {
+  ballKey.value = { gameType: val, key: val }
   page = 0
-  ballKey.value = val
-  showBottom1.value = false
   loading.value = true
   finished.value = false
   list.arr = []
   onLoad()
 }
 defineExpose({
-  setBallSelect, setPk, showBottom1, showBottom
+  setDateTime, showBottom
 })
 
 </script>
 
 <style lang="scss" scoped>
+//球类型
+.ball-type {
+  margin-top: 20px;
+}
+
 // 状态
 .status {
-  margin-top: 23px;
+  margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -297,7 +198,8 @@ defineExpose({
     margin-right: 30px;
 
     .round {
-      width: 165px;
+      padding: 0 45px 0 32px;
+      // width: 165px;
       height: 52px;
       text-align: center;
       line-height: 52px;
@@ -305,6 +207,7 @@ defineExpose({
       border-radius: 32px;
       margin-left: 10px;
       position: relative;
+      color: #546371;
 
       .img_1 {
         position: absolute;
@@ -324,7 +227,7 @@ defineExpose({
 // 列表
 .dataList {
   margin-top: 20px;
-  height: calc(100vh - 360px);
+  height: calc(100vh - 435px);
   overflow-y: auto;
 
   .color-1 {
@@ -337,6 +240,10 @@ defineExpose({
 
   .color-3 {
     color: red;
+  }
+
+  .color-line {
+    background: #E5ECF3;
   }
 
   .item {
@@ -356,11 +263,27 @@ defineExpose({
       justify-content: space-between;
 
       .title-left {
-        font-size: 20px;
-        font-weight: 600;
+        font-size: 23px;
+        font-weight: 500;
+        display: flex;
+      }
+
+      .ball-name {
+        margin-left: 3px;
+        width: 400px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .ball-img {
+        font-size: 24px;
+        color: var(--color-text-3);
+        font-weight: 500;
       }
 
       .img_1 {
+        margin-right: 4px;
         height: 24px;
         width: 24px;
       }
@@ -368,7 +291,7 @@ defineExpose({
       .right {
         font-family: PingFangSC-Regular;
         font-size: 22px;
-        color: var( --color-search-box-text-2);
+        color: var(--color-search-box-text-2);
         letter-spacing: 0;
         text-align: right;
         font-weight: 400;
@@ -438,7 +361,7 @@ defineExpose({
   }
 }
 
- .noData {
+.noData {
   width: 100%;
   text-align: center;
   font-family: PingFangSC-Medium;

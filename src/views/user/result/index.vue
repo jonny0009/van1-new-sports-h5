@@ -6,10 +6,9 @@
       </template>
     </van-nav-bar>
     <div class="content">
-      <!-- tab切换栏 -->
+      <!-- tab切换栏   swipeable"-->
       <van-tabs
         v-model:active="index"
-        :swipeable="true"
         line-height="3px"
         color="#1F2630 "
         title-inactive-color="#96A5AA"
@@ -24,7 +23,7 @@
           <RunningHistory></RunningHistory>
         </van-tab>
         <van-tab :title="$t('user.matchResult')">
-          <MatchResult ref="childRefB" @valueChange="setStatus"></MatchResult>
+          <MatchResult ref="childRefB" @valueChange="setStatus" @timeChange="setDate"></MatchResult>
         </van-tab>
       </van-tabs>
 
@@ -65,7 +64,15 @@
         </div>
       </van-popup>
       <!-- 时间弹窗 -->
-      <van-calendar v-model:show="show" first-day-of-week="1" type="range" :min-date="minDate" :max-date="maxDate" @confirm="onConfirm" />
+      <van-calendar
+        v-model:show="show"
+        :type="dataType"
+        :min-date="minDate"
+        :max-date="maxDate"
+        :default-date="defaultDate"
+        @confirm="onConfirm"
+        @close="setDateBottom()"
+      />
 
     </div>
   </div>
@@ -73,7 +80,7 @@
 
 <script lang="ts" setup>
 import dataList from './components/dataList.vue'
-// import moment from 'moment'
+import moment from 'moment'
 
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
@@ -89,22 +96,24 @@ const popupList = reactive<{ arr: any[] }>({ arr: [] })
 
 const $router = useRouter()
 const way = ref(1)
+const dateWay = ref(1)
 const index = ref(0)
 const childRefA = ref()
 const childRefB = ref()
 const showBottom = ref(false)
 const show = ref(false)
+const dataType = ref('range')
 
-const maxDate = ref()
-const minDate = ref()
+const currentDate = moment().valueOf()
+const oneDayDate = 24 * 60 * 60 * 1000
+const maxDate = ref<any>(new Date())
+const minDate = ref<any>(new Date(currentDate - oneDayDate * 7))
+const defaultDate = ref<any>([
+  new Date(currentDate - oneDayDate * 7),
+  new Date()
+])
 
-onMounted(() => {
-  // console.log(new Date(2010, 0, 31), '=====')
-
-  // maxDate.value = moment().toDate()
-  // minDate.value = moment().toDate()
-  // getNoAccount()
-})
+onMounted(() => { })
 const goBack = () => {
   $router.back()
 }
@@ -129,13 +138,41 @@ async function setPk(val: any) {
     childRefB.value.setPk(val)
   }
 }
-const setDate = (val: any) => {
+const setDate = (val: any, num: any, start:any, end:any) => {
+  console.log(num)
+  dateWay.value = num
+  if (num === 1) {
+    maxDate.value = new Date()
+    minDate.value = new Date(currentDate - oneDayDate * 7)
+    defaultDate.value = [new Date(start), new Date(end)]
+    dataType.value = 'range'
+  }
+  if (num === 3) {
+    maxDate.value = new Date()
+    minDate.value = new Date(currentDate - oneDayDate * 15)
+    defaultDate.value = new Date(start)
+    dataType.value = 'single'
+  }
   show.value = val
 }
 const onConfirm = (val: any) => {
-  childRefA.value.setDateTime(val)
+  if (dateWay.value === 1) {
+    childRefA.value.setDateTime(val)
+  }
+  if (dateWay.value === 3) {
+    childRefB.value.setDateTime(val)
+  }
   show.value = false
 }
+const setDateBottom = () => {
+  if (dateWay.value === 1) {
+    childRefA.value.showBottom2 = false
+  }
+  if (dateWay.value === 3) {
+    childRefB.value.showBottom = false
+  }
+}
+
 const handleClose = (item: any) => {
   console.log(item)
   if (way.value === 1) {
@@ -217,12 +254,22 @@ const handleClose = (item: any) => {
 :deep(.van-tabs--line .van-tabs__wrap) {
   height: 65px;
 }
-:deep(.van-tab__text--ellipsis){
-  font-size: 28px;;
+
+:deep(.van-tab__text--ellipsis) {
+  font-size: 28px;
+  ;
   overflow: visible !important;
-  white-space:nowrap;
+  white-space: nowrap;
 }
-:deep(.van-tabs__nav--line){
+
+:deep(.van-tabs__nav--line) {
   background-color: var(--color-background-color);
+}
+
+:deep(.van-calendar__day--middle) {
+  color: var(--color-primary);
+}
+:deep(.van-calendar__selected-day) {
+  background: var(--color-primary);
 }
 </style>
