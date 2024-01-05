@@ -1,1 +1,0 @@
-import{k as a}from"./index.4caa340c.js";const e=e=>a({url:"/ai/mobile/matches/firstLeagues",method:"get",params:e}),m=e=>a({url:"/ai/mobile/recommend/events",method:"get",params:e}),t=e=>a({url:"/ai/mobile/matches/getRBCondition",method:"get",params:e}),s=e=>a({url:"/ai/mobile/matches/commonMatches",method:"get",params:e});export{t as a,s as b,e as f,m as r};
