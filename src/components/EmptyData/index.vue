@@ -39,6 +39,7 @@ const emptyText = computed(() => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: var(--color-no-data-font);
   .svg-icon {
     font-size: 168px;
   }
@@ -46,7 +47,6 @@ const emptyText = computed(() => {
     margin-top: 20px;
     font-size: 24px;
     line-height: 24px;
-    color: #96a5aa;
   }
 }
 </style>

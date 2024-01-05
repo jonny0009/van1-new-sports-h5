@@ -160,12 +160,16 @@ const onItemClick = (item: any) => {
     grid-gap: 0;
     grid-template-columns: 1fr 1fr;
     padding: 0 28px;
-    margin-top: -30px;
+    margin-bottom: -20px;
     .flex-item {
       display: flex;
       justify-content: center;
-      margin: 30px 0 0 0;
+      margin: 0 0 30px 0;
     }
+  }
+
+  .van-list :deep(.van-list__finished-text) {
+    min-height: var(--van-list-text-line-height);
   }
 }
 </style>
