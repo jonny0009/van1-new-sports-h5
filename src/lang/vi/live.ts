@@ -45,4 +45,5 @@ export default {
   clickSub: 'Bấm để đặt chỗ',
   playNow: 'Bắt đầu chơi',
   emptyText: 'Không truy vấn dữ liệu liên quan',
+  platCloseAll: 'Điểm chấp đã đóng'
 }

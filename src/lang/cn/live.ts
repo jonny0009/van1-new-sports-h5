@@ -44,5 +44,6 @@ export default {
   xHas: '已有{num}',
   clickSub: '点击预约',
   playNow: '即将播放',
-  emptyText: '未查询到相关数据'
+  emptyText: '未查询到相关数据',
+  platCloseAll: '全部盘口已关闭',
 }

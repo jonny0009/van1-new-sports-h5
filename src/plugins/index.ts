@@ -1,4 +1,3 @@
-
 import './socket'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 import BettingOption from '@/components/BettingOption/index.vue'
@@ -12,8 +11,9 @@ import ImageButton from '@/components/Button/ImageButton/index.vue'
 import HomeMatchHandicap from '@/components/HomeMatch/MatchHandicap/index.vue'
 import HomeEmpty from '@/components/HomeEmpty/index.vue'
 import FooterHeight from '@/components/FooterHeight/index.vue'
+import EmptyData from '@/components/EmptyData/index.vue'
 export default {
-  install(app:any) {
+  install(app: any) {
     app.component('SvgIcon', SvgIcon)
     app.component('BettingOption', BettingOption)
     app.component('SportsIcon', SportsIcon)
@@ -26,5 +26,6 @@ export default {
     app.component('HomeMatchHandicap', HomeMatchHandicap)
     app.component('HomeEmpty', HomeEmpty)
     app.component('FooterHeight', FooterHeight)
+    app.component('EmptyData', EmptyData)
   }
 }

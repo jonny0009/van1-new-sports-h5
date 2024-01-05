@@ -1,9 +1,6 @@
 <template>
   <div class="panel-bet">
-    <div v-if="playBetList.length === 0" class="no-data">
-      <SvgIcon name="empty" />
-      <span class="empty-text">{{ $t('live.emptyText') }}</span>
-    </div>
+    <EmptyData v-if="playBetList.length === 0" />
     <BettingCollapse v-else :data-list="playBetList" :match-info="props.matchInfo" />
   </div>
 </template>
@@ -40,23 +37,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.no-data {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 300px;
-  .svg-icon {
-    font-size: 168px;
-  }
-  .empty-text {
-    margin-top: 20px;
-    font-size: 24px;
-    line-height: 24px;
-    color: #96a5aa;
-  }
-}
-
 .panel-bet {
   padding: 20px 36px;
 }

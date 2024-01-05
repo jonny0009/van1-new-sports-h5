@@ -34,9 +34,7 @@
 
     <div class="bettings">
       <Loading v-if="isLoading" />
-      <div v-else-if="playBetList.length === 0" class="no-data">
-        <EmptyIcon />
-      </div>
+      <EmptyData :text="$t('live.platCloseAll')" v-else-if="playBetList.length === 0" />
       <BettingCollapse v-else :data-list="playBetList" :match-info="matchInfo" />
     </div>
   </div>
@@ -102,11 +100,6 @@ const gotoLive = () => {
 </script>
 
 <style lang="scss" scoped>
-.no-data {
-  display: flex;
-  justify-content: center;
-  padding: 50px 0 0 0;
-}
 .bet-container {
   padding: 0 36px;
   padding-bottom: 88px;

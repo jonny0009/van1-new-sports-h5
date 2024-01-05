@@ -18,10 +18,7 @@
         </template>
 
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-          <div class="no-data" v-if="finished && list.length === 0">
-            <SvgIcon name="empty" />
-            <span class="empty-text">{{ $t('live.emptyText') }}</span>
-          </div>
+          <EmptyData v-if="finished && list.length === 0" />
           <van-list
             v-model:loading="loading"
             :finished="finished"
@@ -112,23 +109,6 @@ const onItemClick = (item: any) => {
 </script>
 
 <style lang="scss" scoped>
-.no-data {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 300px;
-  .svg-icon {
-    font-size: 168px;
-  }
-  .empty-text {
-    margin-top: 20px;
-    font-size: 24px;
-    line-height: 24px;
-    color: #96a5aa;
-  }
-}
-
 .live-page {
   height: 100%;
   padding-bottom: 88px;

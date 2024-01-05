@@ -6,10 +6,7 @@
     </div>
 
     <Loading v-if="loading" />
-    <div class="no-data" v-else-if="list.length === 0">
-      <SvgIcon name="empty" />
-      <span class="empty-text">{{ $t('live.emptyText') }}</span>
-    </div>
+    <EmptyData v-else-if="list.length === 0" />
     <template v-else>
       <div v-for="(item, index) in list" :key="index" class="item">
         <div class="header">
@@ -162,23 +159,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.no-data {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 300px;
-  .svg-icon {
-    font-size: 168px;
-  }
-  .empty-text {
-    margin-top: 20px;
-    font-size: 24px;
-    line-height: 24px;
-    color: #96a5aa;
-  }
-}
-
 .panel-with {
   padding: 20px 36px;
   .top-nav {
