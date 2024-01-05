@@ -261,6 +261,7 @@ const inputTouch = () => {
       margin: auto;
       left: 37px;
       height: auto;
+      color: var(--color-bet-deletetext);
     }
 
     .confirm-button {
