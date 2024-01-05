@@ -29,7 +29,7 @@
 <script lang="ts" setup>
 import gameDefault from '@/assets/images/globalLayout/footer/game-default.png'
 import game from '@/assets/images/globalLayout/footer/game.png'
-import { ref, reactive, computed } from 'vue'
+import { reactive, computed } from 'vue'
 import router from '@/router'
 import { showToast } from 'vant'
 import lang from '@/lang'
@@ -41,12 +41,6 @@ const ifThemeBlue = computed(() => {
   return store.state.app.theme === 'blue'
 })
 
-const getRouteName = () => {
-  const routerName: any = router?.currentRoute?.value?.name || ''
-  const routerNameToLowerCase = routerName.toLowerCase()
-  const isrouterNameToLowerCase = ['broadcast', 'game'].includes(routerNameToLowerCase)
-  return isrouterNameToLowerCase ? routerNameToLowerCase : 'home'
-}
 const barFooterArrayChange = (): Array<any> => {
   const barFooterArray = [
     {
@@ -65,13 +59,19 @@ const barFooterArrayChange = (): Array<any> => {
   return barFooterArray
 }
 const barFooterArr: any = reactive(barFooterArrayChange())
-const active = ref(getRouteName())
+
+const active = computed(() => {
+  const routerName: any = router?.currentRoute?.value?.name || ''
+  const routerNameToLowerCase = routerName.toLowerCase()
+  const isrouterNameToLowerCase = ['broadcast', 'game'].includes(routerNameToLowerCase)
+  return isrouterNameToLowerCase ? routerNameToLowerCase : 'home'
+})
+
 const clickChangeActive = (item: any) => {
   if (item.value === 'game') {
     showToast(lang.global.t('home.stayTuned'))
     return
   }
-  active.value = item.value
   barFooterArr.length = 0
   barFooterArr.push(...barFooterArrayChange())
   store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })

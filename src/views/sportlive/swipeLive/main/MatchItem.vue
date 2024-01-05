@@ -362,7 +362,7 @@ const goDetails = () => {
   background: url(~@/assets/images/sportlive/cover.jpg) no-repeat;
   background-size: cover;
   background-position: center;
-  border-radius: 8px;
+  border-radius: 8px 8px 0 0;
   overflow: hidden;
 
   .live-info-wrap {
@@ -420,8 +420,8 @@ const goDetails = () => {
       align-items: center;
       overflow: hidden;
       .team-name {
-        max-width: 48px;
-        font-size: 12px;
+        max-width: 96px;
+        font-size: 24px;
         color: #ffffff;
         font-weight: 500;
         &.right {
@@ -445,28 +445,28 @@ const goDetails = () => {
     display: flex;
     align-items: center;
     flex: 1;
-    max-width: 180px;
+    max-width: 360px;
     .bet-item {
       flex: 1;
       display: flex;
       align-items: center;
-      width: 58px;
+      width: 116px;
       height: 24px;
-      padding: 4px 2px;
+      padding: 8px 4px;
       background: rgba(0, 0, 0, 0.6);
-      border-radius: 4px;
+      border-radius: 8px;
       overflow: hidden;
       &:not(:first-child) {
-        margin-left: 4px;
+        margin-left: 8px;
       }
       .bet-name {
         flex: 1;
-        font-size: 12px;
+        font-size: 24px;
         color: #ffffff;
         font-weight: 400;
       }
       .bet-ior {
-        font-size: 11px;
+        font-size: 22px;
         color: #ffffff;
         text-align: center;
         font-weight: 800;

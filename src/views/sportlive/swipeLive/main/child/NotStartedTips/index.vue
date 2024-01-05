@@ -22,12 +22,16 @@
         </div>
       </div>
     </div>
-    <div v-if="type !== 3" class="anchor-info-wrap">
+    <div v-if="type !== 3 && liveInfo.name" class="anchor-info-wrap">
       <div class="anchor-info">
         <div class="anchor-avatar">
           <img :src="headPortrait" alt="" @error="avatarError = true" />
         </div>
-        <div class="anchor-name text-overflow">{{ liveInfo.name }}</div>
+        <div class="anchor-name text-overflow">
+          {{
+            liveInfo.name
+          }}
+        </div>
       </div>
     </div>
   </div>
@@ -91,10 +95,10 @@ const type = computed(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 20px;
+  border-radius: 20px 20px 0 0;
   .match-league {
-    font-size: 10px;
-    color: rgba(255, 255, 255, 0.7);
+    font-size: 24px;
+    color: #fff;
     text-align: center;
     font-weight: 400;
   }
@@ -105,12 +109,12 @@ const type = computed(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 12px;
+    margin-top: 24px;
     .match-date {
-      font-size: 12px;
-      color: #bbbbbb;
+      font-size: 24px;
+      color: #fff;
       text-align: center;
-      line-height: 16px;
+      line-height: 32px;
       font-weight: 400;
     }
     .team-info {
@@ -118,8 +122,7 @@ const type = computed(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      max-width: 200px;
-      padding: 0 6px;
+      // max-width: 200px;
       overflow: hidden;
       &.right {
         justify-content: flex-end;
@@ -128,16 +131,16 @@ const type = computed(() => {
         justify-content: flex-start;
       }
       img {
-        width: 22px;
-        height: 22px;
-        margin: 0 12px;
+        width: 44px;
+        height: 44px;
+        margin: 0 10px;
       }
       .team-name {
-        font-size: 14px;
+        font-size: 28px;
         color: #ffffff;
         text-align: right;
         font-weight: 400;
-        max-width: 120px;
+        max-width: 240px;
       }
     }
   }

@@ -6,10 +6,7 @@ export default {
     {
       name: 'Broadcast',
       path: '',
-      component: () => import('@/views/live/index.vue'),
-      meta: {
-        showheadGoBack: true
-      }
+      component: () => import('@/views/live/index.vue')
     },
     {
       name: 'BroadcastDetail',

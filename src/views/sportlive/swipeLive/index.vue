@@ -15,16 +15,28 @@
 </template>
 <script lang="ts" setup>
 import MatchItem from './main/MatchItem.vue'
-import { pushAnchor } from '@/api/home'
+// import { pushAnchor } from '@/api/home'
+import { anchorLiveList } from '@/api/live'
 import { ref, reactive, onBeforeMount } from 'vue'
 const activeIndex = ref(0)
 const swipeList = reactive([])
 const init = async () => {
-  const res:any = await pushAnchor()
+  const params = {
+    page: 1,
+    pageSize: 8,
+    rbType: 1
+  }
+
+  const res:any = await anchorLiveList(params)
+  console.log(res, 'res res')
   if (res.code === 200) {
-    const dataArray = res.data || []
+    const dataArray = res?.data?.list || []
+    const newGameBasic = dataArray.map((e:any) => {
+      e.gameBasic = e
+      return e
+    })
     swipeList.length = 0
-    swipeList.push(...dataArray)
+    swipeList.push(...newGameBasic)
   }
 }
 onBeforeMount(() => {
@@ -33,7 +45,7 @@ onBeforeMount(() => {
 </script>
 <style lang="scss" >
 .swipeLive{
-  
+
 }
 .my-swipe{
   .van-swipe-item {

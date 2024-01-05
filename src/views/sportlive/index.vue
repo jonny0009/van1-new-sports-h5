@@ -4,7 +4,9 @@
       <TextButton :text="$t('sport.all')" :active="!gameType" @click="clickGameType({})" />
       <SportsButton v-for="(item,idx) in gameTypeList" :key="idx" :text="item.gameType" :active="gameType===item.gameType" @click="clickGameType(item)" />
     </div>
-    <!-- <swipeLive /> -->
+  </div>
+  <swipeLive />
+  <div class="sportlive">
     <Loading v-if="!isLoading" />
     <template v-else>
       <MatchLive v-for="(item,idx) in commonMatchesList" :key="idx" :send-params="item" />
@@ -21,7 +23,7 @@
 <script lang="ts" setup>
 import TextButton from '@/components/Button/TextButton/index.vue'
 import MatchLive from '@/components/HomeMatch/MatchLive/index.vue'
-// import swipeLive from './swipeLive/index.vue'
+import swipeLive from './swipeLive/index.vue'
 import store from '@/store'
 import { ref, onBeforeMount, onActivated, onDeactivated, onBeforeUnmount, computed, watch } from 'vue'
 import { apiRBCondition, apiCommonMatches } from '@/api/home'
@@ -113,7 +115,7 @@ const startInterval = () => {
     setIntervalSendData()
   }, 100)
 }
-const setIntervalDate:any = ref((0 + 5) * 1000)
+const setIntervalDate:any = ref((10 + 5) * 1000)
 const setIntervalSendData = () => {
   if (+pushSwitch.value === 1) {
     setIntervalDate.value = 2 * 60 * 1000
