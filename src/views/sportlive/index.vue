@@ -4,9 +4,7 @@
       <TextButton :text="$t('sport.all')" :active="!gameType" @click="clickGameType({})" />
       <SportsButton v-for="(item,idx) in gameTypeList" :key="idx" :text="item.gameType" :active="gameType===item.gameType" @click="clickGameType(item)" />
     </div>
-
     <swipeLive />
-
     <Loading v-if="!isLoading" />
     <template v-else>
       <MatchLive v-for="(item,idx) in commonMatchesList" :key="idx" :send-params="item" />

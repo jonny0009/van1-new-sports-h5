@@ -6,6 +6,7 @@
       :match-info="matchInfo || {}"
       :live-info="liveInfo"
     />
+
     <video-box
       v-else-if="refreshState && (liveInfo.m3u8 || liveInfo.url)"
       :live-url="liveInfo.m3u8 || liveInfo.url"
@@ -14,6 +15,7 @@
       @refresh="refresh"
       @touchVideo="goDetails"
     />
+
     <div v-if="!notStarted" class="live-info-wrap" @click="goDetails">
       <div v-if="type !== 3" class="anchor-info-wrap">
         <div class="anchor-info">
@@ -49,7 +51,6 @@
 
   </div>
 </template>
-
 <script  lang="ts" setup>
 
 import VideoBox from './child/VideoBox'
@@ -353,8 +354,11 @@ const goDetails = () => {
 </script>
 <style lang="scss" scoped>
 .match-item-wrap {
-  position: relative;
-  height: 188px;
+  position: absolute;
+  top:0;
+  left:0;
+  height: 100%;
+  width: 100%;
   background: url(~@/assets/images/sportlive/cover.jpg) no-repeat;
   background-size: cover;
   background-position: center;
@@ -363,9 +367,9 @@ const goDetails = () => {
 
   .live-info-wrap {
     position: absolute;
-    left: 12px;
-    right: 12px;
-    bottom: 10px;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 99;
   }
 
