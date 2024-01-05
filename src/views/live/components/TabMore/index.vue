@@ -1,13 +1,11 @@
 <template>
   <div class="panel-more">
-    <div class="no-data" v-if="finished && list.length === 0">
-      <EmptyIcon />
-    </div>
+    <EmptyData v-if="finished && list.length === 0" />
     <van-list
       v-model:loading="loading"
       :finished="finished"
       :immediate-check="false"
-      :finished-text="$t('live.noMore')"
+      :finished-text="list.length == 0 ? '' : $t('live.noMore')"
       @load="getRbLiveList"
     >
       <div class="more-item" v-for="item in list" :key="item.gidm">
@@ -56,11 +54,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.no-data {
-  display: flex;
-  justify-content: center;
-  padding: 50px 0 0 0;
-}
 .panel-more {
   padding: 0 36px;
   padding-top: 20px;

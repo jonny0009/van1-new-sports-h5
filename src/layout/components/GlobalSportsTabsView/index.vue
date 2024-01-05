@@ -140,6 +140,13 @@ const clickChangeActive = (item:any) => {
         font-size:52px;
       }
     }
+    &.OP_BO{
+      .iconfont{
+        &.icon-blue-OP_BO{
+          font-size:52px;
+        }
+      }
+    }
   }
 }
 </style>

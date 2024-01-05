@@ -11,8 +11,15 @@
       <MatchGame v-if="videoError" :matchInfo="matchData" />
     </div>
 
-    <van-tabs v-model:active="navActive" swipeable @change="onTabChange">
-      <van-tab v-for="(item, index) in navList" :title="item.name">
+    <van-tabs v-model:active="navActive" swipeable shrink line-height="0" @change="onTabChange">
+      <van-tab v-for="(nav, index) in navList">
+        <template #title>
+          <div class="tab-title">
+            <SvgIcon :name="nav.iconName" />
+            <span>{{ nav.title }}</span>
+          </div>
+        </template>
+
         <component
           v-if="navActive == index"
           :is="compsList[navActive]"
@@ -30,7 +37,6 @@ import videojs from 'video.js'
 import { reactive, Ref, ref, onMounted, onUnmounted, nextTick, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { matcheInfo, extendInfo } from '@/api/live'
-import { getAssetsImage } from '@/utils/tools'
 import TabChat from './components/TabChat/index.vue'
 import TabBets from './components/TabBets/index.vue'
 import TabWith from './components/TabWith/index.vue'
@@ -42,12 +48,11 @@ import store from '@/store'
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
-const getIcon = (name: string) => getAssetsImage(name, 'live')
 const navList = reactive([
-  { name: t('live.chatroom'), unIcon: getIcon('nav_chat_un.png'), onIcon: getIcon('nav_chat_on.png') },
-  { name: t('live.bet'), unIcon: getIcon('nav_bet_un.png'), onIcon: getIcon('nav_bet_on.png') },
-  { name: t('live.betWith'), unIcon: getIcon('nav_add_un.png'), onIcon: getIcon('nav_add_on.png') },
-  { name: t('live.more'), unIcon: getIcon('nav_more_un.png'), onIcon: getIcon('nav_more_on.png') }
+  { title: t('live.chatroom'), iconName: 'live-chat' },
+  { title: t('live.bet'), iconName: 'live-bet' },
+  { title: t('live.betWith'), iconName: 'live-bet_add' },
+  { title: t('live.more'), iconName: 'live-grid' }
 ])
 const navActive = ref(0)
 const compsList = [TabChat, TabBets, TabWith, TabMore]
@@ -221,9 +226,10 @@ onUnmounted(() => {
     flex-direction: column;
     overflow: hidden;
     :deep(.van-tabs__wrap) {
-      min-height: var(--van-tabs-line-height);
-      .van-tabs__line {
-        background: var(--color-primary);
+      height: 110px;
+      min-height: 110px;
+      .van-tabs__nav {
+        background: var(--color-background-color);
       }
     }
     :deep(.van-tabs__content) {
@@ -231,6 +237,35 @@ onUnmounted(() => {
       .van-tab__panel {
         height: 100%;
         overflow-y: auto;
+      }
+    }
+
+    .tab-title {
+      min-width: 152px;
+      height: 64px;
+      padding: 0 20px;
+      margin: 0 -10px;
+      background: var(--color-global-buttonBg);
+      border-radius: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-2);
+      font-size: 24px;
+      font-family: PingFangSC-Semibold, SF-Pro-Bold, system-ui;
+      font-weight: 800;
+      transition: all 0.3s;
+      .svg-icon {
+        font-size: 38px;
+        margin-right: 14px;
+        color: var(--color-global-minButtonicoCl);
+      }
+    }
+    .van-tab--active .tab-title {
+      background-image: linear-gradient(180deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-2) 100%);
+      color: #fff;
+      .svg-icon {
+        color: #fff;
       }
     }
   }

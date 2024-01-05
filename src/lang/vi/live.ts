@@ -43,5 +43,7 @@ export default {
   xround: '{num} vòng',
   xHas: 'Đã {num}',
   clickSub: 'Bấm để đặt chỗ',
-  playNow: 'Bắt đầu chơi'
+  playNow: 'Bắt đầu chơi',
+  emptyText: 'Không truy vấn dữ liệu liên quan',
+  platCloseAll: 'Điểm chấp đã đóng'
 }

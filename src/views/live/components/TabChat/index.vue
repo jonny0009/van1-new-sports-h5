@@ -199,9 +199,10 @@ const onMsgFocus = () => {
     .van-form {
       flex: 1;
       margin-right: 10px;
+      background: var(--color-live-chat-field-bg);
+      border-radius: 32px;
     }
     .van-field {
-      background: #f5f5f5;
       color: #333;
       height: 64px;
       line-height: 64px;
@@ -212,8 +213,12 @@ const onMsgFocus = () => {
     .action {
       .van-button {
         color: #fff;
-        background: var(--color-primary);
-        border-color: var(--color-primary);
+        border: none;
+        background-image: linear-gradient(
+          180deg,
+          var(--color-linear-gradient-1) 0%,
+          var(--color-linear-gradient-2) 100%
+        );
         border-radius: 32px;
         width: 120px;
         height: 64px;

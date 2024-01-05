@@ -79,15 +79,15 @@ const activeNames = ref(['1'])
     border: none;
   }
   .van-collapse-item {
-    background: #eff1f2;
+    background: var(--color-live-collapse-item-bg);
     border-radius: 10px;
     margin-bottom: 20px;
     :deep(.van-collapse-item__title) {
       background: none;
-      color: #1f2630;
+      color: var(--color-live-collapse-item-title);
       font-weight: 700;
       .van-icon-arrow {
-        color: #1f2630;
+        color: var(--color-live-collapse-item-title);
         font-weight: 700;
       }
     }
@@ -109,28 +109,14 @@ const activeNames = ref(['1'])
     &.col-3 {
       grid-template-columns: 1fr 1fr 1fr;
     }
-    &-item {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      background: #ffffff;
-      color: #546371;
-      border-radius: 20px;
-      height: 94px;
-      overflow: hidden;
-      &.selected {
-        background-color: var(--color-primary) !important;
-        color: #fff;
-      }
-    }
     &-top {
       display: flex;
       justify-content: center;
       font-size: 24px;
       letter-spacing: 0;
-      font-weight: 500;
+      font-weight: 700;
       padding: 0 20px;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       .name {
         overflow: hidden;
         white-space: nowrap;
@@ -145,6 +131,7 @@ const activeNames = ref(['1'])
       align-items: center;
       justify-content: center;
       font-size: 28px;
+      color: var(--color-live-collapse-play-nums);
       .odds {
         display: flex;
         align-items: center;
@@ -155,6 +142,23 @@ const activeNames = ref(['1'])
       }
       .lock {
         width: 22px;
+      }
+    }
+    &-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--color-live-collapse-card-bg);
+      color: var(--color-live-collapse-base-font);
+      border-radius: 20px;
+      height: 94px;
+      overflow: hidden;
+    }
+    &-item.selected {
+      background-color: var(--color-primary) !important;
+      color: #fff;
+      .bet-bot {
+        color: #fff;
       }
     }
   }
