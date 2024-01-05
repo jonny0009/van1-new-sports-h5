@@ -325,7 +325,7 @@ const login = () => {
 
     .item {
       font-size: 26px;
-      color: var(--color-search-box-text-1);
+      color: var(--color-user-pop-up-text-color);
       letter-spacing: 1px;
       padding: 40px;
       border-bottom: 2px solid #eaeaea;
@@ -338,9 +338,10 @@ const login = () => {
     }
 
     .item-color {
-      color: var(--color-bg-1);
+      color: var(--color-user-pop-up-text-color-2);
     }
   }
+
 }
 </style>
 
@@ -351,5 +352,10 @@ const login = () => {
 
 :deep(.van-icon) {
   font-size: 48px;
+}
+
+/* //弹窗关闭图标 */
+:deep(.van-popup__close-icon) {
+  color: var(--color-text-4);
 }
 </style>

@@ -425,7 +425,8 @@ const getLangBet = (item: any) => {
     justify-content: space-between;
     font-family: PingFangSC-Regular;
     font-size: 22px;
-    color: var(--color-no-data-font);
+    // color: var(--color-no-data-font);
+    color: var(--color-result-box-2);
     letter-spacing: 0;
     font-weight: 400;
   }

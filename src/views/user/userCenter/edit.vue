@@ -234,7 +234,7 @@ async function setPk(val: any) {
 
     .item {
       font-size: 26px;
-      color: #1F2630;
+      color: var(--color-user-pop-up-text-color);
       letter-spacing: 1px;
       padding: 40px;
       border-bottom: 2px solid #eaeaea;
@@ -247,7 +247,7 @@ async function setPk(val: any) {
     }
 
     .item-color {
-      color: var(--color-bg-1);
+      color: var(--color-user-pop-up-text-color-2);
     }
   }
 
@@ -260,6 +260,10 @@ async function setPk(val: any) {
 
 :deep(.van-icon) {
   font-size: 40px;
+}
+//弹窗关闭图标
+:deep(.van-popup__close-icon){
+  color: var(--color-text-4);
 }
 </style>
 
