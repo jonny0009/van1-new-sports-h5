@@ -6,7 +6,7 @@
       </div>
       <div class="content">
         <div class="title">
-          <SportsIcon :icon-src="marketInfo.gameType" />
+          <SportsIcon class="sport-icon" :icon-src="marketInfo.gameType" />
           <div class="betting-name text-overflow">{{ marketInfo.ratioName }}</div>
         </div>
         <div class="details">
@@ -191,6 +191,10 @@ const inputTouch = () => {
       align-items: center;
       overflow: hidden;
 
+      .sport-icon{
+        color: var(--color-bet-sportstext);
+      }
+
       .betting-name {
         margin-left: 8px;
         font-family: PingFangSC-Medium;
@@ -335,7 +339,7 @@ const inputTouch = () => {
         font-size: 24px;
         color: #FFFFFF;
         letter-spacing: 0.8px;
-        text-align: justify;
+        text-align: center;
         font-weight: 500;
       }
 

@@ -64,7 +64,12 @@
           <div class="up-betting-combo">
             <div class="text">{{ $t('betting.combos', { num: comboMarkets.length }) }}</div>
             <div class="icons">
-              <SportsIcon v-for="(item, index) in comboMarkets" :key="index" :icon-src="item.gameType" />
+              <SportsIcon
+                v-for="(item, index) in comboMarkets"
+                :key="index"
+                class="sport-icon"
+                :icon-src="item.gameType"
+              />
             </div>
           </div>
           <div class="cur-odds">
@@ -168,11 +173,16 @@ const toogle = () => {
   emit('close', open.value)
   bodyOverflow()
 }
+
 const bodyOverflow = () => {
   if (open.value) {
-    document.documentElement.classList.add('popup-overflow-hidden')
+    document.body.classList.add('popup-overflow-hidden')
+    document.body.ontouchmove = function (e) {
+      e.preventDefault()
+    }
   } else {
-    document.documentElement.classList.remove('popup-overflow-hidden')
+    document.body.classList.remove('popup-overflow-hidden')
+    document.body.ontouchmove = function () { }
   }
 }
 bodyOverflow()
@@ -459,6 +469,10 @@ defineExpose({
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
+        .sport-icon {
+          color: var(--color-bet-sportstext);
+        }
       }
 
       .cur-odds {
