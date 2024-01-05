@@ -27,7 +27,8 @@
       <div v-for="(item, index) in list.arr" :key="index">
         <div class="top-3">
           <div class="left" @click="goUrl('/elseInfo')">
-            <img class="img_1" :src="getImg(props.peopleInfo.headImg)" alt="" />
+            <img v-img="props.peopleInfo.headImg" class="img_1" :type="3" style="object-fit: cover;" />
+
             <div class="name">
               <div>{{ userInfo.nickName }}</div>
               <div class="name-2">{{ userInfo.loginName }}</div>
@@ -61,8 +62,6 @@ import moment from 'moment'
 import store from '@/store'
 const userInfo = computed(() => store.state.user.userInfo)
 
-import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
-
 const beginTime = ref<any>('')
 const endTime = ref<any>('')
 
@@ -70,7 +69,6 @@ const loading = ref(false)
 const finished = ref(false)
 
 const list = reactive<{ arr: any }>({ arr: [] })
-import { ImageSource } from '@/config'
 
 const props = defineProps({
   peopleInfo: {
@@ -78,12 +76,6 @@ const props = defineProps({
     default: () => { }
   }
 })
-const getImg = (imgUrl: string) => {
-  if (imgUrl) {
-    return `${ImageSource}${imgUrl}`
-  }
-  return avatarImg
-}
 
 onMounted(() => {
   endTime.value = moment().valueOf()

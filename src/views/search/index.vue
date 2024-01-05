@@ -4,7 +4,8 @@
       <van-cell-group inset>
         <van-field v-model="keyWords" center clearable :placeholder="$t('user.search')" @update:model-value="getList">
           <template #left-icon>
-            <van-image class="searchImg" fit="contain" :src="searchImg" />
+            <img v-if="ifBLue" class="searchImg" fit="contain" src="@/assets/images/user/blue/search.png" />
+            <van-image v-else class="searchImg" fit="contain" :src="searchImg" />
           </template>
         </van-field>
       </van-cell-group>
@@ -15,9 +16,10 @@
       <div v-if="searchHistory.arr.length">
         <p class="font_1 font-2">
           <span>{{ $t('user.SearchHistory') }}</span>
-          <img class="img_3" src="@/assets/images/user/del.svg" alt="" @click="hanDleClear" />
+          <img v-if="ifBLue" class="img_3" src="@/assets/images/user/blue/delete.png" alt="" @click="hanDleClear" />
+          <img v-else class="img_3" src="@/assets/images/user/del.svg" alt="" @click="hanDleClear" />
         </p>
-        <van-divider />
+        <van-divider class="line-color" />
         <div class="historyList">
           <div v-for="(item) in searchHistory.arr" :key="item" class="item">
             <van-image class="itemImg" fit="contain" :src="time" />
@@ -28,7 +30,7 @@
       <!-- 热门搜索 -->
       <div v-if="hotList.arr.length" class="hot-recommend">
         <p class="font_1">{{ $t('user.hotSearch') }}</p>
-        <van-divider />
+        <van-divider class="line-color" />
         <div class="hot-list">
           <span v-for="(item) in hotList.arr" :key="item" class="item" @click="keyWordsSearch(item.hotSearchName)">
             {{ item.hotSearchName }}
@@ -37,7 +39,7 @@
       </div>
       <!-- 推荐 -->
       <p class="font_1">{{ $t('user.recommend') }}</p>
-      <van-divider />
+      <van-divider class="line-color" />
       <div class="content-list">
         <div v-for="(item, index) in sportsList" :key="index" class="detail" @click="toUrlGame(item)">
           <div class="left">
@@ -81,8 +83,16 @@ const $router = useRouter()
 
 import { showToast } from 'vant'
 import localStore from '@/utils/localStore'
+const theme = computed(() => store.state.app.theme)
 
 import store from '@/store'
+
+const ifBLue = computed(() => {
+  if (theme.value === 'blue') {
+    return true
+  }
+  return false
+})
 
 const searchHistory = reactive<{ arr: any }>({ arr: localStore.getItem('searchHistory') || [] })
 const keyWords = ref('')
@@ -184,6 +194,7 @@ const toUrlGame = (item: any) => {
   padding: 30px 0;
   background-color: var(--color-background-color);
   height: 100vh;
+
   .search_box {
     display: flex;
     align-items: center;
@@ -218,6 +229,11 @@ const toUrlGame = (item: any) => {
     padding: 0 36px;
     background-color: var(--color-background-color);
 
+    .line-color {
+      background: #E5ECF3;
+      height: 2px;
+    }
+
     .font_1 {
       font-family: PingFangSC-Semibold;
       font-size: 24px;
@@ -251,6 +267,7 @@ const toUrlGame = (item: any) => {
         margin-bottom: 20px;
         margin-left: 40px;
         color: var(--color-search-box-text-1);
+
         .itemImg {
           height: 34px;
           width: 34px;
@@ -300,7 +317,7 @@ const toUrlGame = (item: any) => {
 
     .detail {
       margin-top: 20px;
-      background: var( --color-search-box-frame);
+      background: var(--color-search-box-frame);
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -383,7 +400,14 @@ const toUrlGame = (item: any) => {
 :deep(.van-icon) {
   font-size: 45px;
 }
-:deep(.van-cell-group--inset){
+
+:deep(.van-cell-group--inset) {
   background-color: var(--color-background-color);
+}
+</style>
+
+<style >
+:root {
+  --van-field-placeholder-text-color: var(--color-text-4);
 }
 </style>

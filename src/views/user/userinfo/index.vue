@@ -11,7 +11,7 @@
     <div class="user">
       <div class="user-info">
         <div class="user-img" @click="goUrl('/editImg')">
-          <img class="img_1" :src="getImg(peopleInfo.headImg)" alt="" />
+          <img v-img="peopleInfo.headImg" class="img_1" :type="3" style="object-fit: cover;" />
         </div>
         <div class="user-right">
           <div class="user-1">
@@ -76,8 +76,6 @@ const $router = useRouter()
 
 import { standings } from '@/api/user'
 import { showToast } from 'vant'
-import { ImageSource } from '@/config'
-import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
 import { formatToDateTime } from '@/utils/date'
 import { formatMoney } from '@/utils/index'
 
@@ -140,13 +138,6 @@ onMounted(() => {
   // 获取战力
   getStandings()
 })
-
-const getImg = (imgUrl: string) => {
-  if (imgUrl) {
-    return `${ImageSource}${imgUrl}`
-  }
-  return avatarImg
-}
 
 const getStandings = async () => {
   const params = {

@@ -6,12 +6,7 @@
         <div class="top">
           <div class="top_1">
             <div class="left">
-              <van-image
-                class="headImg"
-                fit="contain"
-                :src="getImg(userInfo.headImg)"
-                @click.stop="toUser('/userInfo')"
-              />
+              <img v-img="userInfo.headImg" class="headImg" :type="3" style="object-fit: cover;" @click.stop="toUser('/userInfo')" />
             </div>
             <div class="right">
               <div class="head">
@@ -73,13 +68,11 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
-import { ImageSource } from '@/config'
 
 import logoImg from '@/assets/images/user/logo.png'
 import aiLogo from '@/assets/images/user/blue/ai_logo.png'
 import USDTImg from '@/assets/images/globalLayout/header/USDT.png'
 import { formatMoney } from '@/utils/index'
-import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
 
 import store from '@/store'
 
@@ -118,12 +111,6 @@ const openNav = () => {
   showLeft.value = true
 }
 
-const getImg = (imgUrl: string) => {
-  if (imgUrl) {
-    return `${ImageSource}${imgUrl}`
-  }
-  return avatarImg
-}
 defineExpose({
   openNav
 })
@@ -151,7 +138,8 @@ defineExpose({
 
     .headImg {
       width: 100px;
-      height: 120px;
+      height: 110px;
+      border-radius: 50%;
     }
 
     .right {

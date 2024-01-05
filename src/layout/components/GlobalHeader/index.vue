@@ -25,7 +25,8 @@
           {{ $t('user.logOn') }}  / {{ $t('user.register') }}
         </div>
         <div class="right-area" @click="toUrl('/search')">
-          <img class="search" :src="searchImg" style="object-fit: contain;" />
+          <img v-if="ifBLue" class="search" fit="contain" src="@/assets/images/user/blue/search.png" />
+          <img v-else class="search" :src="searchImg" style="object-fit: contain;" />
         </div>
       </div>
     </div>
@@ -55,8 +56,16 @@ import store from '@/store'
 const userInfo = computed(() => store.state.user.userInfo)
 const balance = computed(() => store.state.user.balance)
 const currency = computed(() => store.state.user.currency)
+const theme = computed(() => store.state.app.theme)
 
 const childNav = ref()
+
+const ifBLue = computed(() => {
+  if (theme.value === 'blue') {
+    return true
+  }
+  return false
+})
 
 const loginToken = ref(getToken())
 const $router = useRouter()

@@ -9,7 +9,7 @@
       </template>
     </van-nav-bar>
     <div class="title">
-      <van-image class="img_1" fit="contain" :src="userImg" />
+      <img v-img="postImg" class="img_1" :type="3" style="object-fit: cover;" />
     </div>
     <!-- 切换栏 -->
     <div class="area-btn_1">
@@ -40,7 +40,6 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted } from 'vue'
-import headImg from '@/assets/images/user/head-img.png'
 
 import { useRouter } from 'vue-router'
 const $router = useRouter()
@@ -56,14 +55,12 @@ import store from '@/store'
 const userInfo = computed(() => store.state.user.userInfo)
 
 const index = ref(1)
-const userImg = ref<any>(headImg)
 const postImg = ref<any>('')
 
 const title = ref(t('user.EditAvatar'))
 
 const handleSave = async () => {
   const params = {
-    // headImg: postImg.value,
     headImg: postImg.value,
     nickName: userInfo.value.nickName,
     lang: localStorage.getItem('locale')
@@ -81,11 +78,9 @@ const handleSave = async () => {
 const getSelectImg = (num: any, index: any) => {
   if (index === 1) {
     postImg.value = `/FE/common/head/newsport/star/${num}.png`
-    getImg(postImg.value)
   }
   if (index === 2) {
     postImg.value = `/FE/common/head/newsport/else/${num}.png`
-    getImg(postImg.value)
   }
 }
 const getImgUrl = (num: any, index: any) => {
@@ -111,13 +106,6 @@ const getAccountInfo = async () => {
     return showToast(res.msg)
   }
   postImg.value = res.data.headImg || ''
-  getImg(postImg.value)
-}
-const getImg = (imgUrl: string) => {
-  if (imgUrl) {
-    userImg.value = `${ImageSource}${imgUrl}`
-    return
-  }
 }
 
 const goBack = () => {
@@ -144,11 +132,10 @@ const goBack = () => {
 
   .title {
     width: 210px;
-    height: 252px;
+    height: 232px;
     margin: 0 auto;
     background: var(--color-background-color);
     border-radius: 60%;
-    overflow: hidden;
 
     .img_1 {
       width: 100%;
