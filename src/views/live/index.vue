@@ -160,10 +160,11 @@ const onItemClick = (item: any) => {
     grid-gap: 0;
     grid-template-columns: 1fr 1fr;
     padding: 0 28px;
+    margin-top: -30px;
     .flex-item {
       display: flex;
       justify-content: center;
-      margin: 0 0 30px 0;
+      margin: 30px 0 0 0;
     }
   }
 }

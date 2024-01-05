@@ -11,7 +11,7 @@
       <div class="team-box">
         <div class="team-player host">
           <div class="img-num">
-            <img v-img="matchInfo.homeLogo" :type="2" alt="" />
+            <img v-img="matchInfo.homeLogo" :type="4" alt="" />
             <span>{{ setMatch.getScore(matchInfo, 'H') }}</span>
           </div>
           <strong>{{ matchInfo.homeTeam }}</strong>
@@ -25,7 +25,7 @@
         <div class="team-player away">
           <div class="img-num">
             <span>{{ setMatch.getScore(matchInfo, 'C') }}</span>
-            <img v-img="matchInfo.awayLogo" :type="2" alt="" />
+            <img v-img="matchInfo.awayLogo" :type="5" alt="" />
           </div>
           <strong>{{ matchInfo.awayTeam }}</strong>
         </div>
