@@ -13,7 +13,7 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts" setup>
 
 import { config } from 'xcsport-lib'
 const { letBallMap } = config

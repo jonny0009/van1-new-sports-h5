@@ -1,7 +1,7 @@
 <template>
   <div class="my-empty">
 
-    <img v-if="ifBlueTheme" v-img="blueEmptyDefault" class="my-empty__img">
+    <img v-if="ifBlueTheme" :src="blueEmptyDefault" class="my-empty__img">
     <img v-else class="my-empty__img" :src="emptyDefault">
 
     <div class="my-empty__text">
