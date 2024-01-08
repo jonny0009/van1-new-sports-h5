@@ -486,13 +486,20 @@ const bettingModule: Module<Betting, any> = {
       }
     },
     // 单注下单
-    async marketBetting({ state, dispatch }) {
+    async marketBetting({ state, rootState, dispatch }) {
       if (state.markets.length === 0) {
         return false
       }
       dispatch('setHitState', 0)
       await dispatch('marketHit', true)
       const params: any = buyParams(state.markets, state.s, state.t)
+
+      const count = params.betSubList.reduce((gold:number, item:any) => { return gold + item.gold * 1 }, 0)
+      if (rootState.user.balance?.balance * 1 < count) {
+        dispatch('setHitState', 1)
+        return Promise.reject(lang.global.t('betting.insufficientBalance'))
+      }
+
       if (params.betSubList.length === 0) {
         dispatch('setHitState', 0)
         return false
@@ -532,7 +539,7 @@ const bettingModule: Module<Betting, any> = {
       }
     },
     // 串关下单
-    async comboMarketBetting({ state, getters, dispatch }) {
+    async comboMarketBetting({ state, getters, rootState, dispatch }) {
       if (state.comboMarkets.length === 0 || state.combos.length === 0) {
         return false
       }
@@ -541,6 +548,10 @@ const bettingModule: Module<Betting, any> = {
         s: state.comboS,
         t: state.comboT
       })
+      if (rootState.user.balance?.balance * 1 < state.comboAmount * 1) {
+        return Promise.reject(lang.global.t('betting.insufficientBalance'))
+      }
+
       dispatch('setHitState', 0)
       const res: any = await comboBetting(params)
         .finally(() => {

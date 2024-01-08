@@ -1,17 +1,20 @@
 <template>
   <div class="betting-slip-balls">
-    <transition
+    <div
       v-for="(item, index) in balls"
-      v-show="item.show"
       :key="index"
-      @before-enter="beforeEnter"
-      @enter="enter"
-      @after-enter="afterEnter"
     >
-      <div class="ball" style="transform: translate3d(0px, 0px, 0px);">
-        <div class="inner inner-hook" style="transform: translate3d(0px, 0px, 0px);"></div>
-      </div>
-    </transition>
+      <transition
+        @before-enter="beforeEnter"
+        @enter="enter"
+        @after-enter="afterEnter"
+      >
+        <div v-show="item.show" class="ball">
+          <div class="inner inner-hook"></div>
+        </div>
+      </transition>
+    </div>
+
   </div>
 </template>
 <script setup lang="ts">
@@ -28,6 +31,7 @@ const balls = ref([
   {
     show: !1
   }
+
 ])
 Subscriber.on('EVENT_BET_BALL', (target: any) => {
   for (let e = 0; e < balls.value.length; e++) {
@@ -35,7 +39,7 @@ Subscriber.on('EVENT_BET_BALL', (target: any) => {
     if (!i.show) {
       i.show = true
       i.el = target
-      list.push(i)
+      return list.push(i)
     }
   }
 })
@@ -44,16 +48,16 @@ const beforeEnter = (ball:any) => {
   const rect = target.el.getBoundingClientRect()
   const left = rect.left - 32
   const top = -(window.innerHeight - rect.top - 100)
-  ball.style.display = ''
-  ball.style.transform = `translate3d(0,${top}px,0)`
+  ball.style.display = 'black'
+  ball.style.transform = `translate3d(0px,${top}px,0px)`
   const o = ball.getElementsByClassName('inner-hook')[0]
-  o.style.transform = `translate3d(${left}px,0,0)`
+  o.style.transform = `translate3d(${left}px,0px,0px)`
 }
 const enter = (t:any) => {
   document.body.offsetHeight
-  t.style.transform = 'translate3d(0,0,0)'
+  t.style.transform = 'translate3d(0px,0px,0px)'
   const s = t.getElementsByClassName('inner-hook')[0]
-  s.style.transform = 'translate3d(0,0,0)'
+  s.style.transform = 'translate3d(0px,0px,0px)'
 }
 const afterEnter = (t:any) => {
   const e = list.shift()
@@ -70,7 +74,7 @@ const afterEnter = (t:any) => {
 
     position: fixed;
     left: 180px;
-    bottom: 100px;
+    bottom: 132px;
     z-index: 10000;
     transition: all .3s cubic-bezier(.49, -.29, .75, .41);
 
@@ -78,7 +82,7 @@ const afterEnter = (t:any) => {
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      background: #7642fe;
+      background: var(--color-primary);
       transition: all .3s linear;
       opacity: .75;
     }
