@@ -105,7 +105,7 @@
             </span>
 
             <!-- 币种 -->
-            <span v-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail == 'LL'">
+            <span v-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL'">
               <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
               <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
               <SvgIcon v-else name="user-usdt" class="img_1" />

@@ -132,7 +132,7 @@
           <span>投注时间：</span>
           <span>{{ item.createDate }}</span>
         </div>
-        <div v-if="item.creditState == 1" class="one">
+        <div v-if="item.creditState === 1" class="one">
           <span>结算时间：</span>
           <span>{{ formatToDateTime(item.resultDate) }}</span>
         </div>
