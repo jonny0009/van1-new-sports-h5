@@ -512,6 +512,7 @@ const bettingModule: Module<Betting, any> = {
         })
         dispatch('clearMarkets')
         store.dispatch('user/pendingOrder')
+        store.dispatch('user/getCurrency')
       } else {
         let errorStr: string = ''
         if (errorCodes.netErrorCodes.indexOf(code) > -1) {
@@ -558,6 +559,7 @@ const bettingModule: Module<Betting, any> = {
         ]
         dispatch('clearMarkets')
         store.dispatch('user/pendingOrder')
+        store.dispatch('user/getCurrency')
       } else {
         return Promise.reject(lang.global.t('betting.errorTips'))
       }
