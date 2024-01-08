@@ -38,7 +38,7 @@
           </div>
           <div class="right">
             <div>
-              <div v-if="item.payWay == 4"> {{ $t('user.compensate') }}</div>
+              <div v-if="item.payWay === 4"> {{ $t('user.compensate') }}</div>
               <div v-else> {{ $t('user.betNum') }}</div>
               <div class="right-1">
                 <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
