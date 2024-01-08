@@ -13,8 +13,8 @@
     </div>
     <!-- 切换栏 -->
     <div class="area-btn_1">
-      <span :class="index == 1 ? 'active' : ''" @click="index = 1">{{ $t('user.football') }}</span>
-      <span :class="index == 2 ? 'active' : ''" @click="index = 2">{{ $t('user.otherCharacters') }}</span>
+      <span :class="index === 1 ? 'active' : ''" @click="index = 1">{{ $t('user.football') }}</span>
+      <span :class="index === 2 ? 'active' : ''" @click="index = 2">{{ $t('user.otherCharacters') }}</span>
       <!-- <span :class="index == 3 ? 'active' : ''" @click="index = 3">背景颜色</span> -->
     </div>
     <div class="editName-content">

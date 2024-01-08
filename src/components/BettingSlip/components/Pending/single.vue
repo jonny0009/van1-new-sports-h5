@@ -56,13 +56,13 @@
             <span>
 
               <!-- 平局图标找到了 -->
-              <img v-if="item.state == 1" class="img_1" src="@/assets/images/user/postpone.svg" alt="" />
-              <img v-else-if="item1.betResultDetail == 'W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
-              <img v-else-if="item1.betResultDetail == 'L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
-              <img v-else-if="item1.betResultDetail == 'LW'" class="img_1" src="@/assets/images/user/LW.png" alt="" />
-              <img v-else-if="item1.betResultDetail == 'LL'" class="img_1" src="@/assets/images/user/LL.svg" alt="" />
-              <img v-else-if="item1.betResultDetail == 'P'" class="img_1" src="@/assets/images/user/P.svg" alt="" />
-              <img v-else-if="item1.betResultDetail == 'D'" class="img_1" src="@/assets/images/user/D1.png" alt="" />
+              <img v-if="item.state === 1" class="img_1" src="@/assets/images/user/postpone.svg" alt="" />
+              <img v-else-if="item1.betResultDetail === 'W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
+              <img v-else-if="item1.betResultDetail === 'L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+              <img v-else-if="item1.betResultDetail === 'LW'" class="img_1" src="@/assets/images/user/LW.png" alt="" />
+              <img v-else-if="item1.betResultDetail === 'LL'" class="img_1" src="@/assets/images/user/LL.svg" alt="" />
+              <img v-else-if="item1.betResultDetail === 'P'" class="img_1" src="@/assets/images/user/P.svg" alt="" />
+              <img v-else-if="item1.betResultDetail === 'D'" class="img_1" src="@/assets/images/user/D1.png" alt="" />
               <img v-else class="img_1" src="@/assets/images/user/D1.png" alt="" />
 
             </span>
@@ -88,18 +88,18 @@
           <!-- state 1下单成功 2 赢 3输 4和 5取消  0 确认中-->
           <!-- 未结算的注单显示：可赔付额；取消/延期，输的注单不显示赔付额这一栏 -->
           <!-- creditState 0 未结算 1 已结算-->
-          <span v-if="item.state == 0 || item.state == -1 || item.state == 1">{{ $t('user.CompensableAmount') }}:</span>
-          <span v-else-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail == 'LL'">{{ $t('user.practical')
+          <span v-if="item.state === 0 || item.state === -1 || item.state === 1">{{ $t('user.CompensableAmount') }}:</span>
+          <span v-else-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL'">{{ $t('user.practical')
           }}:</span>
 
           <div>
 
             <!-- 受理状态 -->
             <span v-if="item.state !== 3 && item.state !== 5">
-              <span v-if="item.state == -1" style="color:#FF9A00 ;">
+              <span v-if="item.state === -1" style="color:#FF9A00 ;">
                 {{ $t('user.editPend') }}
               </span>
-              <span v-if="item.state == 0" style="color:#FF9A00 ;">
+              <span v-if="item.state === 0" style="color:#FF9A00 ;">
                 {{ $t('user.affirmPend') }}
               </span>
             </span>
@@ -111,10 +111,10 @@
               <SvgIcon v-else name="user-usdt" class="img_1" />
             </span>
 
-            <span v-if="item.creditState == 0" class="num color-1">
+            <span v-if="item.creditState === 0" class="num color-1">
               {{ formatMoney(getProfit(item)) }}
             </span>
-            <span v-else-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail == 'LL'" class="color-1">
+            <span v-else-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL'" class="color-1">
               {{ formatMoney(item.winGold) }}
             </span>
           </div>
@@ -132,7 +132,7 @@
           <span>{{ $t('user.BettingTime') }}：</span>
           <span>{{ item.createDate }}</span>
         </div>
-        <div v-if="item.creditState == 1" class="one">
+        <div v-if="item.creditState === 1" class="one">
           <span>{{ $t('user.SettlementTime') }}：</span>
           <span>{{ formatToDateTime(item.resultDate) }}</span>
         </div>
