@@ -11,7 +11,10 @@
           </div>
           <img :src="homeLogo" alt="" @error="homeLogoError = true" />
         </div>
-        <div class="match-date" v-html="setMatch.showRBTime(matchInfo)"></div>
+
+        <div v-if=" setMatch.showtype==='RB'" class="match-date" v-html="setMatch.showRBTime(matchInfo)"></div>
+        <div v-else class="match-date"> VS </div>
+
         <!-- {{ date(matchInfo.gameDate, 'MM-dd HH:mm') }} -->
         <div class="team-info left">
           <img :src="awayLogo" alt="" @error="awayLogoError = true" />
@@ -138,7 +141,7 @@ const type = computed(() => {
         margin: 0 10px;
       }
       .team-name {
-        font-size: 28px;
+        font-size: 24px;
         color: #ffffff;
         text-align: right;
         font-weight: 400;
