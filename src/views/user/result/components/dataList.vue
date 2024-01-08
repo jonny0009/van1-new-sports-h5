@@ -40,8 +40,8 @@
     @load="onLoad"
   >
     <div v-for="(item, index) in list.arr" :key="index">
-      <Single v-if="item.parlayNum === 1" :item="item" class="item"></Single>
-      <Bunch v-if="item.parlayNum !== 1" :item="item" class="item"></Bunch>
+      <Single v-if="Number(item.parlayNum) === 1" :item="item" class="item"></Single>
+      <Bunch v-if="Number(item.parlayNum) !== 1" :item="item" class="item"></Bunch>
     </div>
   </van-list>
 </template>
