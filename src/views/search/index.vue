@@ -57,8 +57,8 @@
 
     <div v-else class="matchList">
       <div class="area-btn_1">
-        <span :class="index == 1 ? 'active' : ''" @click="index = 1">{{ $t('user.league') }}</span>
-        <span :class="index == 2 ? 'active' : ''" @click="index = 2">{{ $t('user.competition') }}</span>
+        <span :class="index === 1 ? 'active' : ''" @click="index = 1">{{ $t('user.league') }}</span>
+        <span :class="index === 2 ? 'active' : ''" @click="index = 2">{{ $t('user.competition') }}</span>
       </div>
       <van-loading v-if="listLoading" size="24" type="spinner" vertical />
       <League v-if="index === 1" :league-list="leagueList.arr" :key-words="keyWords"></League>
