@@ -118,7 +118,6 @@ const type = computed(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      // max-width: 200px;
       overflow: hidden;
       &.right {
         justify-content: flex-end;

@@ -1,7 +1,7 @@
 <template>
   <div class="match-item-wrap" :style="{ backgroundImage: `url(${cover})` }">
 
-    <not-started-tips
+    <NotStartedTips
       v-if="notStarted"
       :match-info="matchInfo || {}"
       :live-info="liveInfo"
@@ -64,14 +64,11 @@ import coverBk from './child/assets/bk.jpg'
 
 import NotStartedTips from './child/NotStartedTips/index.vue'
 
-// import homeIcon from './child/assets/icon_team_home.png'
-// import awayIcon from './child/assets/icon_team_away.png'
-
 import { imgUrlFormat } from '@/utils/index'
 
 import { ratioDataSort } from './child/gameSort'
 
-import { ref, computed, watch, onBeforeMount, onBeforeUnmount, nextTick } from 'vue'
+import { ref, computed, watch, onBeforeMount, nextTick } from 'vue'
 
 const props = defineProps({
   liveInfo: {
@@ -88,9 +85,6 @@ const props = defineProps({
   }
 })
 
-const MPlayTypes = ref(['M', 'RM'])
-const RPlayTypes = ref(['R', 'RE'])
-const OUPlayTypes = ref(['OU', 'ROU'])
 const MPlays = ref([])
 const RPlays = ref([])
 const OUPlay = ref([])
@@ -112,7 +106,7 @@ const cover = computed(() => {
   if (props.liveInfo.recommendType * 1 === 2 && props.liveInfo?.cover) {
     return imgUrlFormat(props.liveInfo.cover)
   }
-  const { gameType } = matchInfo
+  const { gameType }:any = matchInfo
   if (gameType === 'FT') {
     return coverFt
   }
@@ -134,31 +128,17 @@ const away = computed(() => {
   return matchInfo.value?.awayTeamAbbr || matchInfo.value?.awayTeam
 })
 
-// const homeLogo = computed(() => {
-//   if (matchInfo.value?.homeLogo) {
-//     return imgUrlFormat(matchInfo.value.homeLogo)
-//   }
-//   return homeIcon
-// })
-
-// const awayLogo = computed(() => {
-//   if (matchInfo.value?.homeLogo) {
-//     return imgUrlFormat(matchInfo.value.awayLogo)
-//   }
-//   return awayIcon
-// })
-
 const getOneBets = computed(() => {
   const play1 = MPlays.value.slice(0, 1)
   const play2 = RPlays.value.slice(0, 1)
   const play3 = OUPlay.value.slice(0, 1)
   const bets = [...play1, ...play2, ...play3]
-  const onePlay = bets[0]
+  const onePlay:any = bets[0]
   if (!onePlay) {
     return false
   }
   const ratios = onePlay?.ratioData || []
-  ratios.map(i => {
+  ratios.map((i:any) => {
     if (i.ratioType === 'MH' || i.ratioType === 'RMH') {
       i.ratioName = '1'
     }
@@ -169,7 +149,7 @@ const getOneBets = computed(() => {
       i.ratioName = '2'
     }
   })
-  let sortArray = []
+  let sortArray:any = []
   if (onePlay.playType === 'M' || onePlay.playType === 'RM') {
     sortArray = ['MH', 'RMH', 'MN', 'RMN', 'MC', 'RMC']
   }
@@ -179,7 +159,7 @@ const getOneBets = computed(() => {
   if (onePlay.playType === 'OU' || onePlay.playType === 'ROU') {
     sortArray = ['OUC', 'OUH', 'ROUC', 'ROUH']
   }
-  return ratios.sort((a, b) => {
+  return ratios.sort((a:any, b:any) => {
     return sortArray.indexOf(a.ratioType) - sortArray.indexOf(b.ratioType)
   })
 })
@@ -192,10 +172,6 @@ const score = computed(() => {
   }
   return `${scoreH.value || 0}:${scoreA.value || 0}`
 })
-
-// const needPlays = computed(() => {
-//   return [...MPlayTypes.value, ...RPlayTypes.value, ...OUPlayTypes.value]
-// })
 
 const notStarted = computed(() => {
   if (props.liveInfo.recommendType * 1 === 2) {
@@ -217,7 +193,7 @@ const gameInfo = computed(() => {
 })
 
 const scoreH = computed(() => {
-  const { gameType } = matchInfo
+  const { gameType }:any = matchInfo
   if (gameType === 'FT') {
     return gameInfo.value['sc_FT_H']
   }
@@ -228,7 +204,7 @@ const scoreH = computed(() => {
 })
 
 const scoreA = computed(() => {
-  const { gameType } = matchInfo
+  const { gameType }:any = matchInfo
   if (gameType === 'FT') {
     return gameInfo.value['sc_FT_C']
   }
@@ -246,9 +222,7 @@ watch(() => props.activeIndex, () => {
   }
 })
 
-watch(() => props.liveInfo, () => {
-  init()
-})
+watch(() => props.liveInfo, () => { init() })
 
 onBeforeMount(() => {
   if (props.activeIndex === props.matchIndex) {
@@ -263,7 +237,7 @@ const init = () => {
   MPlays.value = []
   RPlays.value = []
   OUPlay.value = []
-  const { M, RM, R, RE, OU, ROU } = matchInfo
+  const { M, RM, R, RE, OU, ROU }:any = matchInfo
   M && MPlays.value.push(ratiosFilter(M))
   RM && MPlays.value.push(ratiosFilter(RM))
   R && RPlays.value.push(ratiosFilter(R))
@@ -272,7 +246,7 @@ const init = () => {
   ROU && OUPlay.value.push(ratiosFilter(ROU))
 }
 
-const ratiosFilter = (playInfo) => {
+const ratiosFilter:any = (playInfo:any) => {
   const {
     gidm,
     homeTeam,
@@ -285,7 +259,7 @@ const ratiosFilter = (playInfo) => {
     gameDate,
     sourceCompany,
     systemId
-  } = matchInfo
+  }:any = matchInfo
   const game = playInfo.game
   const { playType } = playInfo
   const { session, strong, hstrong, hgid, gameId } = game

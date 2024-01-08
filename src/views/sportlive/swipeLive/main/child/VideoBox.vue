@@ -29,9 +29,8 @@
 <script lang="ts" setup>
 import Video from 'video.js'
 import 'video.js/dist/video-js.css'
-
 import { ref, watch, onBeforeMount, onBeforeUnmount, nextTick } from 'vue'
-const props = defineProps({
+const props:any = defineProps({
   liveUrl: {
     type: String,
     default: ''
@@ -46,9 +45,9 @@ const props = defineProps({
   }
 })
 
-const videoExample = ref(null)
+const videoExample:any = ref(null)
 
-const videoErrorState = ref(false)
+const videoErrorState:any = ref(false)
 
 const muted = ref(true)
 
@@ -58,7 +57,7 @@ watch(props.liveUrl, () => {
 
 const initVideo = () => {
   videoErrorState.value = false
-  const videoRef = document.querySelector('#VideoRef')
+  const videoRef:any = document.querySelector('#VideoRef')
   if (!(videoRef && props.liveUrl)) {
     return
   }

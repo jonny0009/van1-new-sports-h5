@@ -14,13 +14,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-
 import { config } from 'xcsport-lib'
 const { letBallMap } = config
+import { ref, watch, onBeforeMount, nextTick } from 'vue'
 
-import { ref, watch, onBeforeMount, onBeforeUnmount, nextTick } from 'vue'
-
-const props = defineProps({
+const props:any = defineProps({
   playType: {
     default: '',
     type: String
@@ -32,8 +30,8 @@ const props = defineProps({
 })
 
 const isOverflow = ref(false)
-const matchName = ref('')
-const ratioText = ref(null)
+const matchName:any = ref('')
+const ratioText:any = ref(null)
 
 watch(props.ratioName, () => {
   isOverflow.value = false

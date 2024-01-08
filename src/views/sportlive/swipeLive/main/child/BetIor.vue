@@ -6,8 +6,8 @@
 </template>
 <script lang="ts" setup>
 
-import { ref, watch, onBeforeMount, onBeforeUnmount, nextTick } from 'vue'
-//
+import { ref, watch, nextTick } from 'vue'
+
 const props = defineProps({
   betInfo: {
     type: Object,
@@ -15,7 +15,7 @@ const props = defineProps({
   }
 })
 const ratioChange = ref('')
-const timer = ref(null)
+const timer:any = ref(null)
 
 watch(props.betInfo, (newBet, oldBet) => {
   iorChange(newBet, oldBet)
@@ -23,7 +23,7 @@ watch(props.betInfo, (newBet, oldBet) => {
   deep: true
 })
 
-const iorChange = (newBet, oldBet) => {
+const iorChange = (newBet:any, oldBet:any) => {
   let newIor = (newBet && newBet.ior) || 0
   let oldIor = (oldBet && oldBet.ior) || 0
   if (newIor === oldIor || newBet.ratioKey !== oldBet.ratioKey) {
