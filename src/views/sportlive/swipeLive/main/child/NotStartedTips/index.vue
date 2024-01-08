@@ -11,10 +11,10 @@
           </div>
           <img :src="homeLogo" alt="" @error="homeLogoError = true" />
         </div>
-
-        <div v-if=" setMatch.showtype==='RB'" class="match-date" v-html="setMatch.showRBTime(matchInfo)"></div>
-        <div v-else class="match-date"> VS </div>
-
+        <div v-if="liveInfo.showType === 'RB'" class="match-date" v-html="setMatch.showRBTime(matchInfo)"></div>
+        <div v-else class="match-date">
+          VS
+        </div>
         <!-- {{ date(matchInfo.gameDate, 'MM-dd HH:mm') }} -->
         <div class="team-info left">
           <img :src="awayLogo" alt="" @error="awayLogoError = true" />
