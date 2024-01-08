@@ -1,7 +1,7 @@
 <template>
   <div v-if="swipeList.length" class="swipeLive">
     <van-swipe class="my-swipe" indicator-color="white">
-      <van-swipe-item v-for="(match,idx) in swipeList" :key="idx">
+      <van-swipe-item v-for="(match,idx) in swipeList" :key="idx" @click="goDetails(match)">
         <div class="wrap">
           <MatchItem
             :live-info="match"
@@ -17,6 +17,7 @@
 import MatchItem from './main/MatchItem.vue'
 import { anchorLiveList } from '@/api/live'
 import { ref, reactive, onBeforeMount } from 'vue'
+import router from '@/router'
 const activeIndex = ref(0)
 const swipeList = reactive([])
 const init = async () => {
@@ -39,6 +40,17 @@ const init = async () => {
 onBeforeMount(() => {
   init()
 })
+
+const goDetails = (item:any) => {
+  const { gidm } = item
+  const params = {
+    name: 'BroadcastDetail',
+    params: {
+      id: gidm
+    }
+  }
+  router.push(params)
+}
 </script>
 <style lang="scss" >
 .my-swipe{
