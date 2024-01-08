@@ -103,6 +103,7 @@ const highlightText = (field: any, text: any) => {
     font-size: 38px;
     margin-right: 15px;
     color: var(--color-search-box-text-2);
+    font-weight: 400;
   }
 }
 </style>

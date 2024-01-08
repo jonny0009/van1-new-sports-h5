@@ -56,13 +56,13 @@
             <span>
 
               <!-- 平局图标找到了 -->
-              <img v-if="item.state == 1" class="img_1" src="@/assets/images/user/postpone.svg" alt="" />
-              <img v-else-if="item1.betResultDetail == 'W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
-              <img v-else-if="item1.betResultDetail == 'L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
-              <img v-else-if="item1.betResultDetail == 'LW'" class="img_1" src="@/assets/images/user/LW.png" alt="" />
-              <img v-else-if="item1.betResultDetail == 'LL'" class="img_1" src="@/assets/images/user/LL.svg" alt="" />
-              <img v-else-if="item1.betResultDetail == 'P'" class="img_1" src="@/assets/images/user/P.svg" alt="" />
-              <img v-else-if="item1.betResultDetail == 'D'" class="img_1" src="@/assets/images/user/D1.png" alt="" />
+              <img v-if="item.state === 1" class="img_1" src="@/assets/images/user/postpone.svg" alt="" />
+              <img v-else-if="item1.betResultDetail === 'W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
+              <img v-else-if="item1.betResultDetail === 'L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+              <img v-else-if="item1.betResultDetail === 'LW'" class="img_1" src="@/assets/images/user/LW.png" alt="" />
+              <img v-else-if="item1.betResultDetail === 'LL'" class="img_1" src="@/assets/images/user/LL.svg" alt="" />
+              <img v-else-if="item1.betResultDetail === 'P'" class="img_1" src="@/assets/images/user/P.svg" alt="" />
+              <img v-else-if="item1.betResultDetail === 'D'" class="img_1" src="@/assets/images/user/D1.png" alt="" />
               <img v-else class="img_1" src="@/assets/images/user/D1.png" alt="" />
 
             </span>
@@ -96,16 +96,16 @@
       </div>
       <div class="money-num-2">
 
-        <span v-if="item.state == 0|| item.state==-1||item.state== 1">{{ $t('user.CompensableAmount') }}:</span>
+        <span v-if="item.state === 0|| item.state===-1||item.state=== 1">{{ $t('user.CompensableAmount') }}:</span>
         <span v-else-if="item.state !==3&& item.state !==5 &&item.state !==0">{{ $t('user.practical') }}:</span>
 
         <span>
           <!-- 受理状态 -->
           <span v-if="item.state !== 3 &&item.state !== 5 ">
-            <span v-if="item.state == -1" style="color:#FF9A00 ;">
+            <span v-if="item.state === -1" style="color:#FF9A00 ;">
               {{ $t('user.editPend') }}
             </span>
-            <span v-if="item.state == 0" style="color:#FF9A00 ;">
+            <span v-if="item.state === 0" style="color:#FF9A00 ;">
               {{ $t('user.affirmPend') }}
             </span>
           </span>
@@ -116,7 +116,7 @@
             <SvgIcon v-else name="user-usdt" class="img_1" />
           </span>
 
-          <span v-if="item.state == 0|| item.state==-1||item.state== 1" class="num">
+          <span v-if="item.state === 0|| item.state===-1||item.state=== 1" class="num">
             {{ formatMoney(getProfit(item)) }}
           </span>
           <span v-else-if="item.state !==3&& item.state !==5 " class="num">
@@ -135,7 +135,7 @@
         <span>{{ $t('user.BettingTime') }}：</span>
         <span>{{ item.createDate }}</span>
       </div>
-      <div v-if="item.creditState == 1" class="one">
+      <div v-if="item.creditState === 1" class="one">
         <span>{{ $t('user.SettlementTime') }}:</span>
         <span>{{ formatToDateTime(item.resultDate) }}</span>
       </div>

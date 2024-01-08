@@ -199,6 +199,7 @@ const highlightText = (field: any, text: any) => {
         // height: 24px;
         // width: 24px;
         font-size: 24px;
+        font-weight: 400;
       }
     }
   }
