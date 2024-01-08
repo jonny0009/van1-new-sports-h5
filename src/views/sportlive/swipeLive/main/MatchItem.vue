@@ -1,67 +1,32 @@
 <template>
   <div class="match-item-wrap" :style="{ backgroundImage: `url(${cover})` }">
-
-    <NotStartedTips
-      v-if="notStarted"
-      :match-info="matchInfo || {}"
-      :live-info="liveInfo"
-    />
-
     <video-box
-      v-else-if="liveInfo.m3u8 || liveInfo.url"
+      v-if="(liveInfo.m3u8 || liveInfo.url) && !refreshToggle"
       :live-url="liveInfo.m3u8 || liveInfo.url"
       :controls="false"
       :type="2"
       @refresh="refresh"
     />
-
-    <div v-if="!notStarted" class="live-info-wrap">
-      <div v-if="type !== 3" class="anchor-info-wrap">
-        <div class="anchor-info">
-          <div class="anchor-avatar">
-            <img :src="headPortrait" alt="" @error="avatarError = true" />
-          </div>
-          <div class="anchor-name text-overflow">{{ liveInfo.name }}</div>
-        </div>
+    <div class="video-footer">
+      <SportsIcon class="SportsIcon" :icon-src="liveInfo.gameType" />
+      <div class="leagueName">
+        {{ liveInfo.leagueShortName || liveInfo.leagueName }}
       </div>
-      <div v-if="type === 2" class="free-live-content text-overflow">
-        {{ liveInfo.liveTitle }}
-      </div>
-      <div v-else class="match-bets-wrap">
-        <div class="match-info">
-          <div class="team-name text-overflow right">{{ home }}</div>
-          <div class="team-score">{{ score }}</div>
-          <div class="team-name text-overflow left">{{ away }}</div>
-        </div>
-        <div v-if="getOneBets && getOneBets.length" class="bets-info">
-          <div v-for="(bet, index) in getOneBets" :key="index" class="bet-item">
-            <bet-item-cut
-              :ratio-name="bet.ratioName"
-              :play-type="bet.playType"
-              class="bet-name"
-            >
-              {{ bet.ratioName }}
-            </bet-item-cut>
-            <bet-ior class="bet-ior" :bet-info="bet" />
-          </div>
-        </div>
-      </div>
+      <div class="flex-1"></div>
+      <div class="time" v-html="setMatch.showRBTime(matchInfo)"></div>
     </div>
-
   </div>
 </template>
 <script  lang="ts" setup>
+import { useMatch } from '@/utils/useMatch'
+const setMatch: any = useMatch()
 
 import VideoBox from './child/VideoBox'
-import BetIor from './child/BetIor'
-import BetItemCut from './child/BetItemCut'
-import head from './child/assets/default-head.jpg'
+
 import coverDj from './child/assets/dj.jpg'
 import coverFt from './child/assets/ft.jpg'
 import coverBk from './child/assets/bk.jpg'
-import NotStartedTips from './child/NotStartedTips/index.vue'
 import { imgUrlFormat } from '@/utils/index'
-import { ratioDataSort } from './child/gameSort'
 import { ref, computed, watch, onBeforeMount, nextTick } from 'vue'
 
 const props = defineProps({
@@ -77,23 +42,6 @@ const props = defineProps({
     type: Number,
     default: 0
   }
-})
-
-const MPlays = ref([])
-const RPlays = ref([])
-const OUPlay = ref([])
-const refreshState = ref(false)
-const avatarError = ref(false)
-
-const headPortrait = computed(() => {
-  if (props.liveInfo?.headPortrait && !avatarError.value) {
-    return imgUrlFormat(props.liveInfo.headPortrait)
-  }
-  return head
-})
-
-const type = computed(() => {
-  return props.liveInfo.recommendType
 })
 
 const cover = computed(() => {
@@ -114,181 +62,22 @@ const matchInfo = computed(() => {
   return props.liveInfo.gameBasic || {}
 })
 
-const home = computed(() => {
-  return matchInfo.value?.homeTeamAbbr || matchInfo.value?.homeTeam
-})
-
-const away = computed(() => {
-  return matchInfo.value?.awayTeamAbbr || matchInfo.value?.awayTeam
-})
-
-const getOneBets = computed(() => {
-  const play1 = MPlays.value.slice(0, 1)
-  const play2 = RPlays.value.slice(0, 1)
-  const play3 = OUPlay.value.slice(0, 1)
-  const bets = [...play1, ...play2, ...play3]
-  const onePlay:any = bets[0]
-  if (!onePlay) {
-    return false
-  }
-  const ratios = onePlay?.ratioData || []
-  ratios.map((i:any) => {
-    if (i.ratioType === 'MH' || i.ratioType === 'RMH') {
-      i.ratioName = '1'
-    }
-    if (i.ratioType === 'MN' || i.ratioType === 'RMN') {
-      i.ratioName = 'x'
-    }
-    if (i.ratioType === 'MC' || i.ratioType === 'RMC') {
-      i.ratioName = '2'
-    }
-  })
-  let sortArray:any = []
-  if (onePlay.playType === 'M' || onePlay.playType === 'RM') {
-    sortArray = ['MH', 'RMH', 'MN', 'RMN', 'MC', 'RMC']
-  }
-  if (onePlay.playType === 'R' || onePlay.playType === 'RE') {
-    sortArray = ['RH', 'RC', 'REH', 'REC']
-  }
-  if (onePlay.playType === 'OU' || onePlay.playType === 'ROU') {
-    sortArray = ['OUC', 'OUH', 'ROUC', 'ROUH']
-  }
-  return ratios.sort((a:any, b:any) => {
-    return sortArray.indexOf(a.ratioType) - sortArray.indexOf(b.ratioType)
-  })
-})
-const score = computed(() => {
-  if (
-    matchInfo.value?.showType === 'FT' ||
-        matchInfo.value?.showType === 'FU'
-  ) {
-    return 'vs'
-  }
-  return `${scoreH.value || 0}:${scoreA.value || 0}`
-})
-
-const notStarted = computed(() => {
-  if (props.liveInfo.recommendType * 1 === 2) {
-    return false
-  }
-  if (props.liveInfo.recommendType * 1 === 1) {
-    return !props.liveInfo.status
-  }
-  if (props.liveInfo.recommendType * 1 === 3) {
-    return (
-      matchInfo.value?.showType === 'FT' || matchInfo.value?.showType === 'FU'
-    )
-  }
-  return !props.liveInfo.m3u8 && !props.liveInfo.url
-})
-
-const gameInfo = computed(() => {
-  return matchInfo.value.gameInfo
-})
-
-const scoreH = computed(() => {
-  const { gameType }:any = matchInfo
-  if (gameType === 'FT') {
-    return gameInfo.value['sc_FT_H']
-  }
-  if (gameType === 'BK') {
-    return gameInfo.value['sc_FT_H']
-  }
-  return gameInfo.value['sc_FT_H'] || gameInfo.value['sc_game_H'] || 0
-})
-
-const scoreA = computed(() => {
-  const { gameType }:any = matchInfo
-  if (gameType === 'FT') {
-    return gameInfo.value['sc_FT_C']
-  }
-  if (gameType === 'BK') {
-    return gameInfo.value['sc_FT_A']
-  }
-  return gameInfo.value['sc_FT_A'] || gameInfo.value['sc_FT_C'] || 0
-})
-
-watch(() => props.activeIndex, () => {
-  if (props.activeIndex === props.matchIndex) {
-    refreshState.value = true
-  } else {
-    refreshState.value = false
-  }
-})
-
 watch(() => props.liveInfo, () => { init() })
 
+//
+const refreshToggle = ref(false)
+
 onBeforeMount(() => {
-  if (props.activeIndex === props.matchIndex) {
-    refreshState.value = true
-  } else {
-    refreshState.value = false
-  }
   init()
 })
 
 const init = () => {
-  MPlays.value = []
-  RPlays.value = []
-  OUPlay.value = []
-  const { M, RM, R, RE, OU, ROU }:any = matchInfo
-  M && MPlays.value.push(ratiosFilter(M))
-  RM && MPlays.value.push(ratiosFilter(RM))
-  R && RPlays.value.push(ratiosFilter(R))
-  RE && RPlays.value.push(ratiosFilter(RE))
-  OU && OUPlay.value.push(ratiosFilter(OU))
-  ROU && OUPlay.value.push(ratiosFilter(ROU))
-}
-
-const ratiosFilter:any = (playInfo:any) => {
-  const {
-    gidm,
-    homeTeam,
-    awayTeam,
-    leagueId,
-    leagueName,
-    gameType,
-    gameTypeSon,
-    showtype,
-    gameDate,
-    sourceCompany,
-    systemId
-  }:any = matchInfo
-  const game = playInfo.game
-  const { playType } = playInfo
-  const { session, strong, hstrong, hgid, gameId } = game
-  let suffix
-  if (game?.suffix) {
-    suffix = game.suffix
-  }
-  ratioDataSort(playInfo, {
-    gameDate,
-    homeTeam,
-    awayTeam,
-    leagueId,
-    leagueName,
-    playType,
-    strong,
-    hstrong,
-    gidm,
-    hgid,
-    gameId,
-    gameType,
-    gameTypeSon,
-    showtype,
-    session,
-    suffix,
-    sourceCompany,
-    systemId
-  })
-
-  return playInfo
 }
 
 const refresh = () => {
-  refreshState.value = false
+  refreshToggle.value = true
   nextTick(() => {
-    refreshState.value = true
+
   })
 }
 
@@ -306,6 +95,30 @@ const refresh = () => {
   border-radius: 8px 8px 0 0;
   overflow: hidden;
 
+  .video-footer{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 9;
+    width: 100%;
+    display: flex;
+    height: 36px;
+    line-height: 36px;
+    background: #000;
+    padding: 0 72px 0 14px;
+    .SportsIcon{
+      height: 20px;
+      font-size: 20px;
+      margin-top: 8px;
+      margin-right: 10px;
+    }
+    .leagueName{
+      font-size: 20px;
+    }
+    .time{
+      font-size: 20px;
+    }
+  }
   .live-info-wrap {
     position: absolute;
     left: 0;
@@ -313,7 +126,6 @@ const refresh = () => {
     bottom: 0;
     z-index: 99;
   }
-
   .anchor-info-wrap {
     .anchor-info {
       display: inline-block;
