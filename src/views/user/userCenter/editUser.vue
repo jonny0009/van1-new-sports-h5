@@ -10,7 +10,7 @@
     </van-nav-bar>
     <div class="content">
       <div class="head">
-        <img class="img_1" :src="getImg(peopleInfo.headImg)" alt="" />
+        <img v-img="peopleInfo.headImg" class="img_1" :type="3" style="object-fit: cover;" />
         <div class="edit" @click="goUrl('/editImg')">{{ $t('user.editText') }}</div>
       </div>
       <div class="edit-name">
@@ -57,9 +57,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { playerInfo, updatePlayerInfo, setPrivacy } from '@/api/user'
 import { showToast } from 'vant'
-import avatarImg from '@/assets/images/globalLayout/header/avatar.png'
 import store from '@/store'
-import { ImageSource } from '@/config'
 const userInfo = computed(() => store.state.user.userInfo)
 const theme = computed(() => store.state.app.theme)
 
@@ -114,12 +112,7 @@ const handlePrivacy = async (num :any) => {
   }
   showToast(t('user.EditSuccessfully'))
 }
-const getImg = (imgUrl: string) => {
-  if (imgUrl) {
-    return `${ImageSource}${imgUrl}`
-  }
-  return avatarImg
-}
+
 onMounted(() => {
   getAccountInfo()
 })
