@@ -15,7 +15,8 @@
 </template>
 <script lang="ts" setup>
 import MatchItem from './main/MatchItem.vue'
-import { anchorLiveList } from '@/api/live'
+import { anchorLiveList, extendInfo } from '@/api/live'
+
 import { ref, reactive, onBeforeMount } from 'vue'
 import router from '@/router'
 const activeIndex = ref(0)
@@ -23,16 +24,45 @@ const swipeList = reactive([])
 const init = async () => {
   const params = {
     page: 1,
-    pageSize: 8,
+    pageSize: 5,
     rbType: 1
   }
   const res:any = await anchorLiveList(params)
   if (res.code === 200) {
     const dataArray = res?.data?.list || []
-    const newGameBasic = dataArray.map((e:any) => {
+
+    let gidm = ''
+    let newGameBasic = dataArray.map((e:any, idx:any) => {
+      if (idx === 0) {
+        gidm = e.gidm
+      }
       e.gameBasic = e
       return e
     })
+
+    if (gidm) {
+      const extendInfoParams = {
+        gidm
+      }
+      const extendInfoRes:any = await extendInfo(extendInfoParams)
+      if (extendInfoRes.code === 200) {
+        const { streamNa }:any = extendInfoRes.data
+        newGameBasic = newGameBasic.map((e:any, idx:any) => {
+          if (idx === 0) {
+            e.streamNa = streamNa
+            const { liveali } = streamNa || {}
+
+            console.log(streamNa)
+            console.log(liveali)
+            const { m3u8 } = liveali || {}
+            e.m3u8 = e.m3u8 || m3u8
+          }
+          return e
+        })
+        console.log(extendInfoRes, 'extendInfoRes')
+      }
+    }
+    console.log(newGameBasic, 'newGameBasic newGameBasic')
     swipeList.length = 0
     swipeList.push(...newGameBasic)
   }
@@ -71,7 +101,7 @@ const goDetails = (item:any) => {
     }
   }
   .van-swipe__indicators{
-    bottom: 18px;
+    bottom: 12px;
     .van-swipe__indicator{
       width: 14px;
       height: 14px;

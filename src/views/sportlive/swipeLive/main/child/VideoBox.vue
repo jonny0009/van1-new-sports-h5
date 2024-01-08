@@ -16,14 +16,14 @@
       <div class="error-tips">视频加载失败，请刷新重试</div>
       <div class="error-btn" @click="refresh">重新加载</div>
     </div>
-    <div v-else-if="type === 2" class="pop" @click="touchVideo">
-      <div
-        v-if="type === 2"
-        class="sound-icon"
-        :class="{ muted: muted }"
-        @click.stop="soundHandle"
-      ></div>
-    </div>
+    <!-- <div v-else-if="type === 2" class="pop" @click="touchVideo">
+    </div> -->
+    <div
+      v-if="type === 2"
+      class="sound-icon"
+      :class="{ muted: muted }"
+      @click.stop="soundHandle"
+    ></div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -161,26 +161,25 @@ onBeforeUnmount(() => [
   .video-js {
     background: none;
   }
-  .pop {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
+  // .pop {
+  //   position: absolute;
+  //   left: 0;
+  //   top: 0;
+  //   width: 100%;
+  //   height: 100%;
+  //   z-index: 10;
     .sound-icon {
       position: absolute;
-      right: 10px;
-      top: 10px;
-      width: 28px;
-      height: 28px;
+      right: 14px;
+      bottom: 0;
+      z-index: 10;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.4);
       background-position: center;
-
       &.muted {
         &::after {
-          background-image: url(~@/assets/images/sportlive/muted.svg);
+          background-image: url('@/assets/images/sportlive/muted.svg');
         }
       }
       &::after {
@@ -191,14 +190,14 @@ onBeforeUnmount(() => [
         top: 0;
         bottom: 0;
         margin: auto;
-        width: 12px;
-        height: 12px;
-        background-image: url(~@/assets/images/sportlive/no-muted.svg);
+        width: 30px;
+        height: 30px;
+        background-image: url('@/assets/images/sportlive/no-muted.svg');
         background-repeat: no-repeat;
         background-size: contain;
       }
     }
-  }
+  // }
   .video-error {
     display: flex;
     flex-direction: column;
@@ -211,25 +210,24 @@ onBeforeUnmount(() => [
       width: 120px;
       height: 80px;
       margin: 122px auto 22px;
-      background: url(~@/assets/images/sportlive/video.svg) no-repeat;
+      background: url('@/assets/images/sportlive/video.svg') no-repeat;
       background-size: contain;
     }
     .error-tips {
-      font-size: 14px;
+      font-size: 28px;
       color: #ffffff;
       text-align: center;
       font-weight: 400;
     }
     .error-btn {
-      width: 123px;
-      height: 40px;
-      line-height: 40px;
+      width: 240px;
+      height: 80px;
+      line-height: 80px;
       margin-top: 28px;
       text-align: center;
-      background-image: linear-gradient(90deg, #1b91ff 0%, #25e1fe 100%);
-      border-radius: 2px;
-      font-family: PingFangSC-Medium;
-      font-size: 18px;
+      background-image: #7642fe;
+      border-radius: 4px;
+      font-size: 32px;
       color: #ffffff;
       font-weight: 500;
       cursor: pointer;
@@ -242,23 +240,21 @@ onBeforeUnmount(() => [
     align-items: center;
     justify-content: center;
     background: #2e3439;
-    border-radius: 8px;
     .error-tips {
-      font-size: 12px;
+      font-size: 24px;
       color: #ffffff;
       text-align: center;
       font-weight: 400;
     }
     .error-btn {
-      width: 80px;
-      height: 26px;
-      line-height: 26px;
-      margin-top: 10px;
-      background-image: linear-gradient(90deg, #1b91ff 0%, #25e1fe 100%);
+      width: 160px;
+      height: 60px;
+      line-height: 60px;
+      margin-top: 20px;
+      background: #7642fe;
       border-radius: 13px;
       text-align: center;
-
-      font-size: 12px;
+      font-size: 24px;
       color: #ffffff;
       text-align: center;
       font-weight: 400;
