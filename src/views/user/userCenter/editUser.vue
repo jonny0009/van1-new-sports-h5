@@ -318,5 +318,9 @@ const getAccountInfo = async () => {
   border-radius: 20px;
   height: 270px !important;
   padding: 30px;
+  font-size: 27px;
+  color: var(--color-text-5);
+  letter-spacing: 0;
+  line-height: 35px;
 }
 </style>

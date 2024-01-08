@@ -1,14 +1,27 @@
 <template>
   <div class="userInfo">
-    <van-nav-bar class="bg-title" :title="title" :border="false">
+    <!-- <van-nav-bar class="bg-title" :title="title" :border="false">
       <template #left>
         <img class="img_1" src="@/assets/images/login/return@2x.png" alt="" @click="goBack()" />
       </template>
       <template #right>
         <img class="img_1" src="@/assets/images/user/edit.png" alt="" @click="goUrl('/editUser')" />
       </template>
-    </van-nav-bar>
-    <div class="user">
+    </van-nav-bar> -->
+    <!-- 头部= -->
+
+    <div class="user" :class="{'user-blue':ifBLue}">
+      <div class="nav-bar">
+        <span class="left">
+          <img class="img_1" src="@/assets/images/login/return@2x.png" alt="" @click="goBack()" />
+        </span>
+        <span class="center">
+          {{ title }}
+        </span>
+        <span class="left">
+          <img class="img_1" src="@/assets/images/user/edit.png" alt="" @click="goUrl('/editUser')" />
+        </span>
+      </div>
       <div class="user-info">
         <div class="user-img" @click="goUrl('/editImg')">
           <img v-img="peopleInfo.headImg" class="img_1" :type="3" style="object-fit: cover;" />
@@ -38,7 +51,7 @@
           </div>
         </div>
       </div>
-      <span class="note" @click.stop="goUrl('/editUser')">{{ peopleInfo.profiles }}</span>
+      <div class="note" @click.stop="goUrl('/editUser')">{{ peopleInfo.profiles }}</div>
 
     </div>
     <div class="content">
