@@ -20,6 +20,7 @@ if (lang === 'ko-kr') {
 const i18n: any = createI18n({
   legacy: false,
   globalInjection: true,
+  warnHtmlMessage: false,
   locale: lang,
   messages: {
     'zh-cn': cn,
