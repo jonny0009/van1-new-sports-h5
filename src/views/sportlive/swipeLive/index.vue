@@ -42,6 +42,9 @@ onBeforeMount(() => {
 })
 
 const goDetails = (item:any) => {
+  if (!item) {
+    return
+  }
   const { gidm } = item
   const params = {
     name: 'BroadcastDetail',

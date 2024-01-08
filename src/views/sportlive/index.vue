@@ -129,7 +129,16 @@ const setIntervalTimer:any = ref()
 const setClearInterval = () => {
   clearInterval(setIntervalTimer.value)
 }
-
+const timeout:any = ref('')
+const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
+watch(refreshChangeTime, (val) => {
+  if (val) {
+    clearTimeout(timeout.value)
+    timeout.value = setTimeout(() => {
+      console.log('console console')
+    }, 100)
+  }
+})
 </script>
 <style lang="scss" scoped>
 .sportlive{
