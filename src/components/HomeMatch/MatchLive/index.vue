@@ -311,9 +311,9 @@ const showRBTime = (raceinfo:any = {}) => {
           }
           // 上半场and下半场
           return secssion === '1H'
-            ? t('home.1HNumber', { number: newRaceTimeVal })
+            ? t('home.HNumber1', { number: newRaceTimeVal })
             //  `上半场<span class='time-h-Up'>${newRaceTimeVal}</span>`
-            : t('home.2HNumber', { number: newRaceTimeVal })
+            : t('home.HNumber2', { number: newRaceTimeVal })
           // `下半场<span class='time-h-d'>${newRaceTimeVal}</span>`
         } else if (gameInfo?.re_time) {
           // 比赛时间容错

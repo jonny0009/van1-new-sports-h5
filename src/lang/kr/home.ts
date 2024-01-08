@@ -24,6 +24,8 @@ export default {
   searchNoData: '관련 데이터를 찾을 수 없습니다',
   searchBlueNoData: '경기가 없습니다. 다른 분류를 확인하세요.',
   stayTuned: '기대하세요',
+
+  // 新
   HNumber1: '전반전<span class="time-h-Up">{number}</span>',
   HNumber2: '후반전<span class="time-h-d">{number}</span>',
   bout: '제{number}세트',
@@ -32,6 +34,7 @@ export default {
   up: '상향',
   img: '진행 중',
   PenaltyKickWar: '페널티 킥 대결',
+  addTimeNumber: `시간 외에<span>{number}</span>`,
   live: '라이브',
   Sunday: '일요일',
   Monday: '월요일',

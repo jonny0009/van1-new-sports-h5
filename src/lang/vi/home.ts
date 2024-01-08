@@ -26,8 +26,8 @@ export default {
 
   // 机翻译
   stayTuned: 'Giữ nguyên',
-  '1HNumber': `nửa đầu<span class='time-h-Up'>{number}</span>`,
-  '2HNumber': `một nửa thứ hai<span class='time-h-d'>{number}</span>`,
+  'HNumber1': `nửa đầu<span class='time-h-Up'>{number}</span>`,
+  'HNumber2': `một nửa thứ hai<span class='time-h-d'>{number}</span>`,
   'bout': 'Đĩa {number}',
   'set': 'Trò chơi {number}',
   'down': 'Xuống',
