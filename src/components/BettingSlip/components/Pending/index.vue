@@ -5,7 +5,7 @@
   <div v-if="pendingData.length" class="dataList">
     <div v-for="(item, index) in pendingData" :key="index">
       <Single v-if="Number(item.parlayNum) ===1" :item="item" class="item"></Single>
-      <Bunch v-if="Number(item.parlayNum) !==1 && item.state !==2" :item="item" class="item"></Bunch>
+      <Bunch v-if="Number(item.parlayNum) !==1" :item="item" class="item"></Bunch>
     </div>
   </div>
 </template>
