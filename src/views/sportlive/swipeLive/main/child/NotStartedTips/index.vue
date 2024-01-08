@@ -15,7 +15,6 @@
         <div v-else class="match-date">
           VS
         </div>
-        <!-- {{ date(matchInfo.gameDate, 'MM-dd HH:mm') }} -->
         <div class="team-info left">
           <img :src="awayLogo" alt="" @error="awayLogoError = true" />
           <div class="team-name text-overflow">
@@ -38,20 +37,14 @@
     </div>
   </div>
 </template>
-
 <script  lang="ts" setup>
-
-import date from './date'
-import { ref, computed, watch, onBeforeMount, onBeforeUnmount, nextTick } from 'vue'
+import { ref, computed } from 'vue'
 import { useMatch } from '@/utils/useMatch'
-
 import { imgUrlFormat } from '@/utils/index'
-import homeIcon from './icon_team_home.png'
-import awayIcon from './icon_team_away.png'
+import homeIcon from '@/assets/images/empty/match/team-home.svg'
+import awayIcon from '@/assets/images/empty/match/team-away.svg'
 import head from './default-head.jpg'
-
 const setMatch: any = useMatch()
-
 const props = defineProps({
   matchInfo: {
     type: Object,
@@ -62,11 +55,9 @@ const props = defineProps({
     default: () => {}
   }
 })
-
 const avatarError = ref(false)
 const homeLogoError = ref(false)
 const awayLogoError = ref(false)
-
 const homeLogo = computed(() => {
   if (props.matchInfo?.homeLogo && !homeLogoError.value) {
     return imgUrlFormat(props.matchInfo.homeLogo)

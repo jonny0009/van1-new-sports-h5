@@ -1,5 +1,5 @@
 <template>
-  <div class="swipeLive">
+  <div v-if="swipeList.length" class="swipeLive">
     <van-swipe class="my-swipe" indicator-color="white">
       <van-swipe-item v-for="(match,idx) in swipeList" :key="idx">
         <div class="wrap">
@@ -15,7 +15,6 @@
 </template>
 <script lang="ts" setup>
 import MatchItem from './main/MatchItem.vue'
-// import { pushAnchor } from '@/api/home'
 import { anchorLiveList } from '@/api/live'
 import { ref, reactive, onBeforeMount } from 'vue'
 const activeIndex = ref(0)
@@ -26,9 +25,7 @@ const init = async () => {
     pageSize: 8,
     rbType: 1
   }
-
   const res:any = await anchorLiveList(params)
-  console.log(res, 'res res')
   if (res.code === 200) {
     const dataArray = res?.data?.list || []
     const newGameBasic = dataArray.map((e:any) => {
@@ -44,9 +41,6 @@ onBeforeMount(() => {
 })
 </script>
 <style lang="scss" >
-.swipeLive{
-
-}
 .my-swipe{
   .van-swipe-item {
     color: #fff;
