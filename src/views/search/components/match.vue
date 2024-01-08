@@ -24,7 +24,9 @@
             <span v-html="highlightText(props.keyWords, item.awayTeam)"></span>
           </div>
           <div class="center_1">
-            <img class="ball4" fit="contain" src="@/assets/images/login/ball1.svg" />
+            <!-- <img class="ball4" fit="contain" src="@/assets/images/login/ball1.svg" /> -->
+            <SportsIcon :icon-src="item.gameType" class="ball4" />
+
             <!-- <span>哥伦比亚- 地区联赛</span> -->
             <!-- <span>{{ item.gameDate ? formatToDateTime(item.gameDate) : '' }}</span> -->
             <span>{{ getMatchTime(item.gameDate) }}</span>
@@ -193,8 +195,10 @@ const highlightText = (field: any, text: any) => {
 
       .ball4 {
         margin-right: 10px;
-        height: 24px;
-        width: 24px;
+        color: var(--color-search-box-text-2);
+        // height: 24px;
+        // width: 24px;
+        font-size: 24px;
       }
     }
   }

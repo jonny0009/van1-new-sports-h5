@@ -1,7 +1,8 @@
 <template>
   <div class="matchList-1">
     <div v-for="(item, index) in props.leagueList" :key="index" class="left1" @click="toLeague(item)">
-      <van-image class="itemImg" fit="contain" :src="ball3" />
+      <!-- <van-image class="itemImg" fit="contain" :src="ball3" /> -->
+      <SportsIcon :icon-src="item.gameType" class="itemImg" />
       <div class="font_2" v-html="highlightText(props.keyWords, item.name)"></div>
     </div>
     <div v-if="!props.leagueList.length" class="noData">
@@ -14,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import ball3 from '@/assets/images/login/ball3.svg'
+// import ball3 from '@/assets/images/login/ball3.svg'
 
 import { useRouter } from 'vue-router'
 const $router = useRouter()
@@ -97,9 +98,11 @@ const highlightText = (field: any, text: any) => {
   font-weight: 600;
 
   .itemImg {
-    height: 64px;
-    width: 64px;
+    // height: 64px;
+    // width: 64px;
+    font-size: 38px;
     margin-right: 15px;
+    color: var(--color-search-box-text-2);
   }
 }
 </style>
