@@ -795,10 +795,10 @@
   transition: opacity 0.5s ease;
 }
 
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-}
+// .v-enter-from,
+// .v-leave-to {
+//   opacity: 0;
+// }
 
 .animate__animated {
   animation-duration: .3s

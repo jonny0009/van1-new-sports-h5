@@ -23,6 +23,7 @@ export default {
   eventClosure: '赛事封单',
   noComboTips: '已选内容无法进行组合',
   goldTips: '金额范围:{min} ~ {max}',
+  insufficientBalance: '余额不足！',
   errors1: {
     error1: '网络超时',
     error2: '投注失败',
