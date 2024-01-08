@@ -2,7 +2,7 @@ import { createI18n } from 'vue-i18n'
 import en from './en/index'
 import cn from './cn/index'
 import vi from './vi/index'
-import ko from './ko/index'
+import kr from './kr/index'
 const lang = localStorage.getItem('locale') || 'zh-cn'
 import { Locale } from 'vant'
 import enUS from 'vant/es/locale/lang/en-US'
@@ -25,7 +25,7 @@ const i18n: any = createI18n({
     'zh-cn': cn,
     'en-us': en,
     'vi-vn': vi,
-    'ko-kr': ko
+    'ko-kr': kr
   }
 })
 
