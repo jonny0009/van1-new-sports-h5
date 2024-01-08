@@ -8,15 +8,14 @@
     />
 
     <video-box
-      v-else-if="refreshState && (liveInfo.m3u8 || liveInfo.url)"
+      v-else-if="liveInfo.m3u8 || liveInfo.url"
       :live-url="liveInfo.m3u8 || liveInfo.url"
       :controls="false"
       :type="2"
       @refresh="refresh"
-      @touchVideo="goDetails"
     />
 
-    <div v-if="!notStarted" class="live-info-wrap" @click="goDetails">
+    <div v-if="!notStarted" class="live-info-wrap">
       <div v-if="type !== 3" class="anchor-info-wrap">
         <div class="anchor-info">
           <div class="anchor-avatar">
@@ -57,17 +56,12 @@ import VideoBox from './child/VideoBox'
 import BetIor from './child/BetIor'
 import BetItemCut from './child/BetItemCut'
 import head from './child/assets/default-head.jpg'
-
 import coverDj from './child/assets/dj.jpg'
 import coverFt from './child/assets/ft.jpg'
 import coverBk from './child/assets/bk.jpg'
-
 import NotStartedTips from './child/NotStartedTips/index.vue'
-
 import { imgUrlFormat } from '@/utils/index'
-
 import { ratioDataSort } from './child/gameSort'
-
 import { ref, computed, watch, onBeforeMount, nextTick } from 'vue'
 
 const props = defineProps({
@@ -296,33 +290,6 @@ const refresh = () => {
   nextTick(() => {
     refreshState.value = true
   })
-}
-
-const goDetails = () => {
-  // if (props.liveInfo.recommendType * 1 === 2) {
-  //   window.parent.postMessage(
-  //     {
-  //       event: 'AISPORT_H5_LIVING_FREE_DETAILS',
-  //       data: {
-  //         liveId: props.liveInfo.liveId,
-  //         liveGame: props.liveInfo.liveGame || 'sports',
-  //         anchorId: props.liveInfo.anchorId
-  //       }
-  //     },
-  //     '*'
-  //   )
-  // } else {
-  //   window.parent.postMessage(
-  //     {
-  //       event: 'AISPORT_H5_GAME_DETAILS',
-  //       data: {
-  //         gidm: props.liveInfo.gidm,
-  //         anchorId: props.liveInfo.anchorId
-  //       }
-  //     },
-  //     '*'
-  //   )
-  // }
 }
 
 </script>
