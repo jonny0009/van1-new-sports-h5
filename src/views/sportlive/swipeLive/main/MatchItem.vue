@@ -42,9 +42,7 @@ const cover = computed(() => {
   return coverFt
 })
 
-const matchInfo = computed(() => {
-  return props.liveInfo.gameBasic || {}
-})
+
 
 watch(() => props.activeIndex, () => {
   if (props.activeIndex === props.matchIndex) {
