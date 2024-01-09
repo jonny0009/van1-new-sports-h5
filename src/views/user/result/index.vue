@@ -63,13 +63,23 @@
           </div>
         </div>
       </van-popup>
-      <!-- 时间弹窗 -->
+      <!-- 时间弹窗 日期范围 -->
       <van-calendar
         v-model:show="show"
-        :type="dataType"
+        type="range"
         :min-date="minDate"
         :max-date="maxDate"
         :default-date="defaultDate"
+        @confirm="onConfirm"
+        @close="setDateBottom()"
+      />
+      <!-- 单个日历 -->
+      <van-calendar
+        v-model:show="showTime"
+        type="single"
+        :min-date="minDateSingle"
+        :max-date="maxDateSingle"
+        :default-date="defaultDateSingle"
         @confirm="onConfirm"
         @close="setDateBottom()"
       />
@@ -103,17 +113,23 @@ const index = ref(0)
 const childRefA = ref()
 const childRefB = ref()
 const showBottom = ref(false)
+
 const show = ref(false)
-const dataType = ref('range')
+const showTime = ref(false)
 
 const currentDate = moment().valueOf()
 const oneDayDate = 24 * 60 * 60 * 1000
+
 const maxDate = ref<any>(new Date())
 const minDate = ref<any>(new Date(currentDate - oneDayDate * 7))
+const maxDateSingle = ref<any>(new Date())
+const minDateSingle = ref<any>(new Date(currentDate - oneDayDate * 15))
+
 const defaultDate = ref<any>([
   new Date(currentDate - oneDayDate * 7),
   new Date()
 ])
+const defaultDateSingle = ref<any>(new Date())
 
 const ifBLue = computed(() => {
   if (theme.value === 'blue') {
@@ -151,27 +167,23 @@ const setDate = (val: any, num: any, start:any, end:any) => {
   console.log(num)
   dateWay.value = num
   if (num === 1) {
-    maxDate.value = new Date()
-    minDate.value = new Date(currentDate - oneDayDate * 7)
     defaultDate.value = [new Date(start), new Date(end)]
-    dataType.value = 'range'
+    show.value = val
   }
   if (num === 3) {
-    maxDate.value = new Date()
-    minDate.value = new Date(currentDate - oneDayDate * 15)
-    defaultDate.value = new Date(start)
-    dataType.value = 'single'
+    defaultDateSingle.value = new Date(start)
+    showTime.value = val
   }
-  show.value = val
 }
 const onConfirm = (val: any) => {
   if (dateWay.value === 1) {
     childRefA.value.setDateTime(val)
+    show.value = false
   }
   if (dateWay.value === 3) {
     childRefB.value.setDateTime(val)
+    showTime.value = false
   }
-  show.value = false
 }
 const setDateBottom = () => {
   if (dateWay.value === 1) {
