@@ -1,7 +1,7 @@
 <template>
   <div class="match-item-wrap" :style="{ backgroundImage: `url(${cover})` }">
     <video-box
-      v-if="m3u8 && refreshState"
+      v-if="showVideoBox"
       :live-url="liveInfo.m3u8 || liveInfo.url"
       :controls="false"
       @refresh="refresh"
@@ -20,10 +20,7 @@
 import { useMatch } from '@/utils/useMatch'
 const setMatch: any = useMatch()
 import VideoBox from './child/VideoBox'
-import coverDj from './child/assets/dj.jpg'
 import coverFt from './child/assets/ft.jpg'
-import coverBk from './child/assets/bk.jpg'
-import { imgUrlFormat } from '@/utils/index'
 import { ref, computed, watch, onBeforeMount, nextTick } from 'vue'
 
 const props = defineProps({
@@ -42,46 +39,39 @@ const props = defineProps({
 })
 
 const cover = computed(() => {
-  if (props.liveInfo.recommendType * 1 === 2 && props.liveInfo?.cover) {
-    return imgUrlFormat(props.liveInfo.cover)
-  }
-  const { gameType }:any = matchInfo
-  if (gameType === 'FT') {
-    return coverFt
-  }
-  if (gameType === 'BK') {
-    return coverBk
-  }
-  return coverDj
+  return coverFt
 })
 
 const matchInfo = computed(() => {
   return props.liveInfo.gameBasic || {}
 })
 
-const m3u8 = computed(() => {
-  return props.liveInfo.m3u8
+watch(() => props.activeIndex, () => {
+  if (props.activeIndex === props.matchIndex) {
+    refresh()
+  } else {
+    showVideoBox.value = false
+  }
 })
-
-watch(() => props.liveInfo, () => { init() })
-
-onBeforeMount(() => {
-  init()
-})
-
-const init = () => {
-  refresh()
+const showVideoBox = ref(false)
+const refresh = () => {
+  showVideoBox.value = false
+  nextTick(() => {
+    showVideoBox.value = true
+  })
 }
 
-const refreshState = ref(false)
-const refresh = () => {
-  if (m3u8.value) {
-    refreshState.value = false
-    nextTick(() => {
-      refreshState.value = true
-    })
+const showVideo = () => {
+  if (props.activeIndex === props.matchIndex) {
+    refresh()
+  } else {
+    showVideoBox.value = false
   }
 }
+
+onBeforeMount(() => {
+  showVideo()
+})
 
 </script>
 <style lang="scss" scoped>
@@ -91,7 +81,7 @@ const refresh = () => {
   left:0;
   height: 100%;
   width: 100%;
-  background: url(~@/assets/images/sportlive/cover.jpg) no-repeat;
+  background: url('@/assets/images/sportlive/cover.jpg') no-repeat;
   background-size: cover;
   background-position: center;
   border-radius: 8px 8px 0 0;

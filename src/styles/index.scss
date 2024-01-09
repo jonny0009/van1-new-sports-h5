@@ -2,6 +2,11 @@
 #app {
   height: 100%;
 }
+.video-box-wrap{
+  .video-js .vjs-tech {
+    object-fit: fill;
+  }
+}
 // van
 .van-image__error, .van-image__loading{
   background: transparent !important;

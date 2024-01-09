@@ -1,21 +1,28 @@
 <template>
   <div class="video-box-wrap">
-
     <video
       id="VideoRef"
+      :style="{ 'object-fit': 'fill' }"
       class="video-js vjs-default-skin"
       playsinline="true"
       controls
       preload="metadata"
+      :poster="poster"
     ></video>
-
     <div v-if="videoErrorState" class="video-error">
       <span class="video-icon"></span>
       <div class="error-tips">视频加载失败，请刷新重试</div>
       <div class="error-btn" @click="refresh">刷新视频</div>
     </div>
 
-    <div class="pop"></div>
+    <div
+      class="pop"
+      :class="{
+        'popBg':popBgToggle
+      }"
+    >
+      <van-loading class="popBg-loading" />
+    </div>
 
     <div
       class="sound-icon"
@@ -26,10 +33,10 @@
   </div>
 </template>
 <script lang="ts" setup>
+import poster from './assets/ft.jpg'
 import Video from 'video.js'
 import 'video.js/dist/video-js.css'
-import { ref, computed, onBeforeMount, onBeforeUnmount, nextTick } from 'vue'
-import store from '@/store'
+import { ref, onBeforeMount, onBeforeUnmount, nextTick } from 'vue'
 const props:any = defineProps({
   liveUrl: {
     type: String,
@@ -43,9 +50,7 @@ const props:any = defineProps({
 const videoExample:any = ref(null)
 const videoErrorState:any = ref(false)
 const muted = ref(true)
-// watch(props.liveUrl, () => {
-//   initVideo()
-// })
+
 const setTimeoutTime = ref()
 const initVideo = () => {
   clearTimeout(setTimeoutTime.value)
@@ -120,13 +125,19 @@ const refresh = () => {
 const touchVideo = () => {
   emit('touchVideo')
 }
+
 defineExpose({
   refresh,
   touchVideo
 })
+
+const popBgToggle = ref(true)
 onBeforeMount(() => {
   nextTick(() => {
     initVideo()
+    setTimeout(() => {
+      popBgToggle.value = false
+    }, 2000)
   })
 })
 onBeforeUnmount(() => {
@@ -150,14 +161,6 @@ onBeforeUnmount(() => {
   }
   .video-js {
     background: none;
-  }
-  .pop {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
   }
 
   .video-error {
@@ -229,5 +232,27 @@ onBeforeUnmount(() => {
   font-weight: 500;
   cursor: pointer;
   user-select: none;
+}
+.pop {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  .popBg-loading{
+    display: none;
+  }
+}
+.popBg{
+  background: url('@/assets/images/sportlive/ft.jpg') no-repeat;
+  background-size: cover;
+  .popBg-loading{
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%,-50%,0);
+  }
 }
 </style>

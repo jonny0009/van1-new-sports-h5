@@ -3,11 +3,10 @@
     <van-swipe class="my-swipe" indicator-color="white" @change="swipeChange">
       <van-swipe-item v-for="(match,idx) in swipeList" :key="idx" @click="goDetails(match)">
         <div class="wrap">
-          <!-- <van-loading v-if="matchIndex !== idx && getExtendInfoLoading" class="loading" size="30px" /> -->
           <MatchItem
             :key="idx"
             :live-info="match"
-            :match-index="matchIndex"
+            :match-index="idx"
             :active-index="activeIndex"
           />
         </div>
@@ -33,40 +32,22 @@ const init = async () => {
   const res:any = await anchorLiveList(params)
   if (res.code === 200) {
     const dataArray = res?.data?.list || []
-
-    let gidm = ''
-    let newGameBasic = dataArray.map((e:any, idx:any) => {
-      if (idx === 0) {
-        gidm = e.gidm
-      }
-      e.gameBasic = e
-      return e
-    })
-    if (gidm) {
+    swipeList.value.length = 0
+    await dataArray.map(async (e:any) => {
+      const gidm = e.gidm
       const extendInfoParams = {
         gidm
       }
       const extendInfoRes:any = await extendInfo(extendInfoParams)
       if (extendInfoRes.code === 200) {
         const { streamNa }:any = extendInfoRes.data
-        newGameBasic = newGameBasic.map((e:any, idx:any) => {
-          if (idx === 0) {
-            e.streamNa = streamNa
-            const { liveali } = streamNa || {}
-
-            console.log(streamNa)
-            console.log(liveali)
-            const { m3u8 } = liveali || {}
-            e.m3u8 = e.m3u8 || m3u8
-          }
-          return e
-        })
-        console.log(extendInfoRes, 'extendInfoRes')
+        const { liveali } = streamNa || {}
+        const { m3u8 } = liveali || {}
+        e.m3u8 = e.m3u8 || m3u8
+        e.streamNa = streamNa
       }
-    }
-    console.log(newGameBasic, 'newGameBasic newGameBasic')
-    swipeList.value.length = 0
-    swipeList.value.push(...newGameBasic)
+      swipeList.value.push(e)
+    })
   }
 }
 
@@ -84,13 +65,8 @@ const goDetails = (item:any) => {
   router.push(params)
 }
 
-const matchIndex = ref(0)
-const setTimeoutTimer = ref()
 const swipeChange = (index:any) => {
-  clearTimeout(setTimeoutTimer.value)
-  setTimeoutTimer.value = setTimeout(() => {
-    matchIndex.value = index
-  }, 1000)
+  activeIndex.value = index
 }
 
 onBeforeMount(() => {
