@@ -795,13 +795,13 @@
     transition: all 0s ease
   }
 }
-.v-enter-active,
-.v-leave-active {
+.newv-enter-active,
+.newv-leave-active {
   transition: opacity 0.5s ease;
 }
 
-.v-enter-from,
-.v-leave-to {
+.newv-enter-from,
+.newv-leave-to {
   opacity: 0;
 }
 
