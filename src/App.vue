@@ -10,9 +10,7 @@
   --van-dialog-round-button-height:72px;
   --van-dialog-confirm-button-text-color: #7642FD
 }
-.van-dialog {
-  padding: 50px;
-}
+
 .van-dialog__confirm, .van-dialog__confirm:active{
   background-image: linear-gradient(to right, var(--color-login-button-color-1), var(--color-login-button-color-2));
 }
