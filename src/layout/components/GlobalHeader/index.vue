@@ -38,6 +38,7 @@
 <script lang="ts" setup>
 import { getToken } from '@/utils/auth'
 import router from '@/router'
+import store from '@/store'
 import searchImg from '@/assets/images/globalLayout/header/search.png'
 import USDTImg from '@/assets/images/globalLayout/header/USDT.png'
 import CNY from '@/assets/images/user/CNY.svg'
@@ -48,11 +49,10 @@ import transactionImg from '@/assets/images/globalLayout/header/transaction.png'
 import { formatMoney } from '@/utils/index'
 
 import { useRouter } from 'vue-router'
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 
 import SidebarNav from './sidebarNav.vue'
 
-import store from '@/store'
 const userInfo = computed(() => store.state.user.userInfo)
 const balance = computed(() => store.state.user.balance)
 const currency = computed(() => store.state.user.currency)

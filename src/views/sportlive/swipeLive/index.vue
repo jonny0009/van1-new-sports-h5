@@ -1,11 +1,13 @@
 <template>
   <div v-if="swipeList.length" class="swipeLive">
-    <van-swipe class="my-swipe" indicator-color="white">
+    <van-swipe class="my-swipe" indicator-color="white" @change="swipeChange">
       <van-swipe-item v-for="(match,idx) in swipeList" :key="idx" @click="goDetails(match)">
         <div class="wrap">
+          <!-- <van-loading v-if="matchIndex !== idx && getExtendInfoLoading" class="loading" size="30px" /> -->
           <MatchItem
+            :key="idx"
             :live-info="match"
-            :match-index="idx"
+            :match-index="matchIndex"
             :active-index="activeIndex"
           />
         </div>
@@ -16,11 +18,12 @@
 <script lang="ts" setup>
 import MatchItem from './main/MatchItem.vue'
 import { anchorLiveList, extendInfo } from '@/api/live'
-
-import { ref, reactive, onBeforeMount } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import router from '@/router'
+
 const activeIndex = ref(0)
-const swipeList = reactive([])
+const swipeList:any = ref([])
+
 const init = async () => {
   const params = {
     page: 1,
@@ -39,7 +42,6 @@ const init = async () => {
       e.gameBasic = e
       return e
     })
-
     if (gidm) {
       const extendInfoParams = {
         gidm
@@ -63,13 +65,10 @@ const init = async () => {
       }
     }
     console.log(newGameBasic, 'newGameBasic newGameBasic')
-    swipeList.length = 0
-    swipeList.push(...newGameBasic)
+    swipeList.value.length = 0
+    swipeList.value.push(...newGameBasic)
   }
 }
-onBeforeMount(() => {
-  init()
-})
 
 const goDetails = (item:any) => {
   if (!item) {
@@ -84,6 +83,20 @@ const goDetails = (item:any) => {
   }
   router.push(params)
 }
+
+const matchIndex = ref(0)
+const setTimeoutTimer = ref()
+const swipeChange = (index:any) => {
+  clearTimeout(setTimeoutTimer.value)
+  setTimeoutTimer.value = setTimeout(() => {
+    matchIndex.value = index
+  }, 1000)
+}
+
+onBeforeMount(() => {
+  swipeList.value.length = 0
+  init()
+})
 </script>
 <style lang="scss" >
 .my-swipe{
@@ -98,6 +111,14 @@ const goDetails = (item:any) => {
       flex: 1;
       overflow: auto;
       position: relative;
+      background: #000;
+      .loading{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 99;
+        transform: translate3d(-50%, -50%, 0);
+      }
     }
   }
   .van-swipe__indicators{

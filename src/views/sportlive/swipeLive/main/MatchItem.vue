@@ -1,10 +1,9 @@
 <template>
   <div class="match-item-wrap" :style="{ backgroundImage: `url(${cover})` }">
     <video-box
-      v-if="(liveInfo.m3u8 || liveInfo.url) && !refreshToggle"
+      v-if="m3u8 && refreshState"
       :live-url="liveInfo.m3u8 || liveInfo.url"
       :controls="false"
-      :type="2"
       @refresh="refresh"
     />
     <div class="video-footer">
@@ -20,9 +19,7 @@
 <script  lang="ts" setup>
 import { useMatch } from '@/utils/useMatch'
 const setMatch: any = useMatch()
-
 import VideoBox from './child/VideoBox'
-
 import coverDj from './child/assets/dj.jpg'
 import coverFt from './child/assets/ft.jpg'
 import coverBk from './child/assets/bk.jpg'
@@ -62,23 +59,28 @@ const matchInfo = computed(() => {
   return props.liveInfo.gameBasic || {}
 })
 
-watch(() => props.liveInfo, () => { init() })
+const m3u8 = computed(() => {
+  return props.liveInfo.m3u8
+})
 
-//
-const refreshToggle = ref(false)
+watch(() => props.liveInfo, () => { init() })
 
 onBeforeMount(() => {
   init()
 })
 
 const init = () => {
+  refresh()
 }
 
+const refreshState = ref(false)
 const refresh = () => {
-  refreshToggle.value = true
-  nextTick(() => {
-
-  })
+  if (m3u8.value) {
+    refreshState.value = false
+    nextTick(() => {
+      refreshState.value = true
+    })
+  }
 }
 
 </script>
