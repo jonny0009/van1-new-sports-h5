@@ -173,7 +173,7 @@ onMounted(() => {
   }
   .avatar {
     position: absolute;
-    left: 30px;
+    left: 40px;
     top: 6px;
     bottom: 6px;
     width: 84px;
