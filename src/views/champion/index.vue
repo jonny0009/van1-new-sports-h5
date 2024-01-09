@@ -101,7 +101,8 @@ const clickSportPage = (item: any) => {
   router.push({
     name: 'Sport',
     query: {
-      leagueId: item.leagueId
+      leagueId: item.leagueId,
+      ischampion: 'yes'
     },
     params: {
       type: item.gameType

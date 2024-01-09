@@ -1,6 +1,6 @@
 <template>
   <div class="login-page">
-    <van-nav-bar class="bg-title" :class="[changeImg ? 'theme' : '']">
+    <van-nav-bar class="bg-title" :class="[changeImg ? 'theme' : '']" :border="false">
       <template #left>
         <van-icon name="arrow-left" class="img_1" @click="goBack()" />
       </template>
@@ -14,6 +14,8 @@
         <img v-else class="img_3" src="@/assets/images/login/service@2x.png" alt="" />
       </template>
     </van-nav-bar>
+    <!-- 头部=== -->
+    <div class="head-height" />
     <div class="content">
       <p class="title">{{ $t('user.WelcomeToAI') }}</p>
       <span class="desc">{{ $t('user.text1') }}</span>
@@ -161,25 +163,27 @@ const login = () => {
 .login-page {
   .bg-title {
     width: 100%;
-    height: 150px;
+    height: 96px;
     background-color: var(--title-background-color-2);
-    // background: url('@/assets/images/login/bg-tit@2x.png');
     background-size: 100% 100%;
 
     .img_1 {
-      margin-top: -15px;
+      // margin-top: -15px;
+      margin-top: 50px;
       width: 36px;
       height: 36px;
       color: var(--title-text-font-color);
     }
 
     .img_2 {
+      margin-top: 55px;
       width: 77px;
       height: 63px;
       color: var(--title-text-font-color);
     }
 
     .img_3 {
+      margin-top: 55px;
       width: 34px;
       height: 37px;
       color: var(--title-text-font-color);
@@ -189,8 +193,13 @@ const login = () => {
   // .theme{
   //   background: url('@/assets/images/globalLayout/header/avatar.png');
   // }
+  .head-height {
+    height: 56px;
+    background-color: var(--title-background-color-2);
+  }
 
   .content {
+    margin-top:-26px ;
     height: calc(100vh - 150px);
     background: var(--color-background-color);
     border-radius: 16px 16px 0px 0px;
@@ -347,7 +356,7 @@ const login = () => {
 
 <style scoped>
 :deep(.van-nav-bar__content) {
-  height: 150px;
+  height: 96px;
 }
 
 :deep(.van-icon) {

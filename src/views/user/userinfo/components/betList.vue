@@ -39,7 +39,7 @@
           </div>
         </div>
         <Single v-if="Number(item.parlayNum) === 1" :item="item" class="item"></Single>
-        <Bunch v-if="Number(item.parlayNum) !== 1 && item.state !== 2" :item="item" class="item"></Bunch>
+        <Bunch v-if="Number(item.parlayNum) !== 1" :item="item" class="item"></Bunch>
       </div>
     </van-list>
   </div>
