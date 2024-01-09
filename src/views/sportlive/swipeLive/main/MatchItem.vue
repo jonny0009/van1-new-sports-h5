@@ -12,7 +12,7 @@
         {{ liveInfo.leagueShortName || liveInfo.leagueName }}
       </div>
       <div class="flex-1"></div>
-      <div class="time" v-html="setMatch.showRBTime(matchInfo)"></div>
+      <div class="time" v-html="setMatch.showRBTime(liveInfo)"></div>
     </div>
   </div>
 </template>
