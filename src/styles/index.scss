@@ -612,19 +612,19 @@
     display: none;
   }
   img{
-    width: 176px;
+    width: 200px;
     height: 176px;
     min-width: 176px;
     display: block;
     flex-shrink: 1;
-    border-radius: 46px;
+    border-radius: 20px;
     background: var(--color-global-imgBg);
   }
   & > .van-image{
     width: 200px;
     height: 176px;
     flex-shrink: 1;
-    margin-right: 36px;
+    margin-right: 16px;
     .van-image__error{
       width: 200px;
       height: 176px;
