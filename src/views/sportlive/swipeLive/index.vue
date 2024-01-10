@@ -75,6 +75,9 @@ onBeforeMount(() => {
 })
 </script>
 <style lang="scss" >
+.swipeLive{
+  padding-bottom: 20px;
+}
 .my-swipe{
   .van-swipe-item {
     color: #fff;
