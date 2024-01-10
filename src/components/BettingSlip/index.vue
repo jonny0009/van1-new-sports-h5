@@ -444,7 +444,7 @@ defineExpose({
       bottom: 0;
       height: 6px;
       left: 0;
-      background-color: #000;
+      background-color: var(--color-text-5);
       width: 27vw;
       transition: all .3s;
       border-radius: 3px;
