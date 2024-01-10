@@ -1,1 +1,0 @@
-import{o as e,R as t}from"./vue.bfc6c13a.js";const n={},o={style:{padding:"50px","text-align":"center",color:"#666","font-size":"14px"}};n.render=function(n,r){return e(),t("div",o,"数据页面开发中！")};export{n as default};
