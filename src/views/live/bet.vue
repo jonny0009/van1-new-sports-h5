@@ -94,7 +94,7 @@ const getMatcheInfo = async (toggle: boolean = true) => {
 const gotoLive = () => {
   const { showtype, gidm } = matchInfo.value
   if (showtype == 'RB') {
-    router.push(`/broadcast/${gidm}`)
+    router.push(`/match/${gidm}`)
   }
 }
 </script>

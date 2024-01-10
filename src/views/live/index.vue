@@ -104,7 +104,7 @@ const onChangeTabs = () => {
 }
 
 const onItemClick = (item: any) => {
-  router.push(`/broadcast/${item.gidm}`)
+  router.push(`/match/${item.gidm}`)
 }
 </script>
 

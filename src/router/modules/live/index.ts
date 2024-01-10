@@ -1,15 +1,15 @@
 import Layout from '@/layout/index.vue'
 export default {
-  path: '/broadcast',
+  path: '/live',
   component: Layout,
   children: [
     {
-      name: 'Broadcast',
+      name: 'Live',
       path: '',
       component: () => import('@/views/live/index.vue')
     },
     {
-      name: 'BroadcastDetail',
+      name: 'LiveDetail',
       path: ':id',
       component: () => import('@/views/live/id.vue'),
       meta: {
@@ -17,7 +17,7 @@ export default {
       }
     },
     {
-      name: 'BroadcastBetting',
+      name: 'LiveBetting',
       path: '/bet/:id',
       component: () => import('@/views/live/bet.vue'),
       meta: {
