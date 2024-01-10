@@ -3,7 +3,7 @@
     <van-collapse-item name="1">
       <template #title>
         <ArrowTitle
-          class="mt10"
+          class="mt10 goodArrowTitle"
           :src="titleRecommend"
           :text="$t('home.goofMatch')"
         />
@@ -93,3 +93,11 @@ const goToSport = () => {
   })
 }
 </script>
+<style lang="scss">
+.goodArrowTitle{
+  .img{
+    width: 34px !important;
+    height: 30px !important;
+  }
+}
+</style>

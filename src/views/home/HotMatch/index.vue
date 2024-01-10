@@ -3,7 +3,7 @@
     <van-collapse-item name="1">
       <template #title>
         <ArrowTitle
-          class="mt10 mb10"
+          class="mt10 mb10 hotArrowTitle"
           :src="titleHot"
           :text="$t('home.hotMatch')"
         />
@@ -125,4 +125,13 @@ onBeforeMount(() => {
       background: var(--color-global-maskBg);
     }
   }
+</style>
+
+<style lang="scss">
+.hotArrowTitle{
+  .img{
+    width: 24px !important;
+    height: 30px !important;
+  }
+}
 </style>

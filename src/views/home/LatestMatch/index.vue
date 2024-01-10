@@ -5,7 +5,7 @@
         <ArrowTitle
           :src="titleTime"
           :text="$t('home.latestMatch')"
-          class="mt10"
+          class="mt10 latestArrowTitle"
         />
       </template>
       <div class="LatestMatch">
@@ -80,3 +80,12 @@ onBeforeMount(() => {
 })
 
 </script>
+
+<style lang="scss">
+.latestArrowTitle{
+  .img{
+    width: 30px !important;
+    height: 30px !important;
+  }
+}
+</style>
