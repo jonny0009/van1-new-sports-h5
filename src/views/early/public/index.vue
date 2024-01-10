@@ -3,7 +3,7 @@
     <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
       <van-collapse-item name="1">
         <template #title>
-          <ArrowTitle class="mt10 mb10" :src="titleTime" :text="$t('home.latestMatch')" />
+          <ArrowTitle class="mb10 earlyArrowTitle latestArrowTitle" :src="titleTime" :text="$t('home.latestMatch')" />
         </template>
         <SportsTabs ref="refSportsTabs" class="pb10" @returnSportsSuccess="returnSportsSuccess" />
         <tabsTime @returnTimeSuccess="returnTimeSuccess" />
@@ -48,6 +48,7 @@ const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout:any = ref('')
 const refSportsTabs = ref()
 watch(refreshChangeTime, (val) => {
+  console.log('watch refreshChangeTime refreshChangeTime refreshChangeTime')
   if (val) {
     refSportsTabs.value?.resetParams()
     activeNames.value = '1'
@@ -98,16 +99,22 @@ const getRecommendEvents = async (nextToggle:any = '') => {
 const loading = ref(false)
 const finished = ref(false)
 const timer:any = ref('')
+const onLoadToggle = ref(false)
 const onLoad = () => {
-  if (!finished.value) {
-    if (!loading.value) {
-      loading.value = true
-      clearTimeout(timer.value)
-      timer.value = setTimeout(() => {
-        params.page++
-        getRecommendEvents(true)
-      }, 100)
+  if (onLoadToggle.value) {
+    console.log('onLoad onLoad onLoad')
+    if (!finished.value) {
+      if (!loading.value) {
+        loading.value = true
+        clearTimeout(timer.value)
+        timer.value = setTimeout(() => {
+          params.page++
+          getRecommendEvents(true)
+        }, 100)
+      }
     }
+  } else {
+    onLoadToggle.value = true
   }
 }
 const returnTimeSuccess = (val:any) => {
@@ -154,9 +161,11 @@ onBeforeMount(() => {
   padding: 0 40px;
 
 }
-
+.earlyArrowTitle{
+  position: relative;
+  top: -4px;
+}
 </style>
-
 <style lang="scss">
 .new_loading{
   height: auto !important;

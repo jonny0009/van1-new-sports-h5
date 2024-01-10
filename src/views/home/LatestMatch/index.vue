@@ -80,12 +80,3 @@ onBeforeMount(() => {
 })
 
 </script>
-
-<style lang="scss">
-.latestArrowTitle{
-  .img{
-    width: 30px !important;
-    height: 30px !important;
-  }
-}
-</style>
