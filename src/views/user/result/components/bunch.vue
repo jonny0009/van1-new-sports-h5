@@ -8,6 +8,9 @@
           <SportsIcon v-for="(item2, index1) in item.betDTOList" :key="index1" :icon-src="item2.gameType" class="ball-img" />
         </div>
       </div>
+      <div class="cur-odds">
+        @<span v-points="item.sioRatio"></span>
+      </div>
       <!-- <img class="img_1" src="@/assets/images/user/down1.png" alt="" /> -->
       <!-- <div class="title-right">
         <div class="title-right-1">
@@ -85,7 +88,7 @@
     <div class="money-num">
       <div class="money-num-1">
         <span>{{ $t('user.BettingAmount') }}:</span>
-        <span>
+        <span class="money-num-money">
           <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
           <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
           <SvgIcon v-else name="user-usdt" class="img_1" />
@@ -205,7 +208,7 @@ const getLangBet = (item: any) => {
 
 <style lang="scss" scoped>
 .color-1 {
-  color: var(--color-bg-1);
+  color: var(--color-bet-iortext);
 }
 
 .color-2 {
@@ -235,10 +238,13 @@ const getLangBet = (item: any) => {
     color: var(--color-search-box-text-1);
     font-weight: 600;
 
-    .img_1 {
-      font-size: 24px;
-      color: var(--color-text-3);
-    }
+  }
+  .cur-odds {
+    font-family: PingFangSC-Semibold;
+    font-size: 30px;
+    color: var(--color-bet-iortext);
+    letter-spacing: 0;
+    font-weight: 600;
   }
 
   .title-right {
@@ -351,7 +357,8 @@ const getLangBet = (item: any) => {
         margin-left: 8px;
         font-family: PingFangSC-Semibold;
         font-size: 24px;
-        color: var( --color-bg-1);
+        // color: var( --color-bg-1);
+        color: var(--color-bet-iortext);
         letter-spacing: 0;
         font-weight: 600;
       }
@@ -377,12 +384,16 @@ const getLangBet = (item: any) => {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    .money-num-money{
+      color: var(--color-search-box-text-1);
+
+    }
 
     .img_1 {
       margin-right: 5px;
       width: 17px;
       height: 21px;
-      color: var(--color-text-1);
+      color: var(--color-search-box-text-1);
     }
   }
 
@@ -400,12 +411,14 @@ const getLangBet = (item: any) => {
       margin-right: 5px;
       width: 20px;
       height: 25px;
-      color: var(--color-bg-1);
+      // color: var(--color-bg-1);
+      color: var(--color-bet-iortext);
     }
 
     .num {
       font-size: 30px;
-      color: var(--color-bg-1);
+      // color: var(--color-bg-1);
+      color: var(--color-bet-iortext);
     }
   }
 }

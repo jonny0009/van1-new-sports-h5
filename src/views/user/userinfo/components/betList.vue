@@ -80,7 +80,8 @@ const props = defineProps({
 onMounted(() => {
   endTime.value = moment().valueOf()
   const oneDayDate = 24 * 60 * 60 * 1000
-  beginTime.value = endTime.value - oneDayDate * 7
+  // beginTime.value = endTime.value - oneDayDate * 7
+  beginTime.value = endTime.value - oneDayDate * 90
   // 获取结算已结算注单
   // getBetList()
 })

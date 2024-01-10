@@ -121,7 +121,7 @@ const currentDate = moment().valueOf()
 const oneDayDate = 24 * 60 * 60 * 1000
 
 const maxDate = ref<any>(new Date())
-const minDate = ref<any>(new Date(currentDate - oneDayDate * 7))
+const minDate = ref<any>(new Date(currentDate - oneDayDate * 90))
 const maxDateSingle = ref<any>(new Date())
 const minDateSingle = ref<any>(new Date(currentDate - oneDayDate * 15))
 

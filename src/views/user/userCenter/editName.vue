@@ -22,7 +22,7 @@
       />
 
       <!--用户名规则  -->
-      <p class=" edit-name">{{ $t('user.font7') }}</p>
+      <p class=" edit-name">{{ $t('user.fontNickName') }}</p>
       <p class="userName">{{ $t('user.text3') }}:</p>
       <p class="explain">
         <img v-if="!ifStandard" class="noPitch" src="@/assets/images/login/noPitch.png" />

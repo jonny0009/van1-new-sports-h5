@@ -73,7 +73,7 @@
       <div class="top3">
         <div class="one">
           <span>{{ $t('user.BettingAmount') }}</span>
-          <div>
+          <div class="money-num-money">
 
             <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
             <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
@@ -215,7 +215,7 @@ const getLangBet = (item: any) => {
 
 <style lang="scss" scoped>
 .color-1 {
-  color: var(--color-bg-1);
+  color: var(--color-bet-iortext);
 }
 
 .color-2 {
@@ -344,10 +344,13 @@ const getLangBet = (item: any) => {
     letter-spacing: 0;
     font-weight: 600;
 
+    .money-num-money{
+      color: var(--color-search-box-text-1);
+    }
     .img_1 {
       width: 17px;
       height: 21px;
-      color: var(--color-text-1);
+      color: var(--color-search-box-text-1);
     }
   }
 
@@ -360,7 +363,7 @@ const getLangBet = (item: any) => {
     .img_1 {
       width: 20px;
       height: 25px;
-      color: var(--color-bg-1);
+      color: var(--color-bet-iortext);
     }
   }
 }
