@@ -2,7 +2,7 @@
   <GlobalHeader />
   <GlobalRefresh>
     <GlobalSportsTabsView v-if="$route.meta.showSportsTabsView" />
-    <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pt10 pb10" />
+    <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pb10" />
     <AppMain />
   </GlobalRefresh>
   <!-- <GlobalFooter /> -->

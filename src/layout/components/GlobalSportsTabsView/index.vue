@@ -16,7 +16,9 @@
     >
       <SportsIcon :icon-src="item.icon" />
       <div class="name">
-        {{ item.text }}
+        <span>
+          {{ item.text }}
+        </span>
       </div>
     </div>
   </div>
@@ -77,8 +79,8 @@ const active:any = computed(() => {
 </script>
 <style lang="scss" scoped>
 .sportsTabsView{
-  display:flex;
-  height:88px;
+  display: flex;
+  height: 136px;
   overflow: auto;
   &::-webkit-scrollbar {
     height: 0;
@@ -93,19 +95,41 @@ const active:any = computed(() => {
     color: var(--color-text-3);
     min-width: 124px;
     .name{
+      height: 20px;
       line-height: 20px;
       font-size: 20px;
       margin-top: 7px;
-      // color: #2D89E6;
+      font-weight: 600;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      width: 100%;
+      text-align: center;
+      span{
+        display: none;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        width: 100%;
+        text-align: center;
+        height: 20px;
+        line-height: 20px;
+        font-size: 20px;
+      }
     }
     .iconfont{
       position: relative;
-      font-size:44px;
+      font-size:48px;
       font-weight: 100;
       height: auto;
     }
     &.active{
       color:var(--color-primary);
+      .name{
+        span{
+          display: inline-block;
+        }
+       }
     }
 
     &.BK_AFT{

@@ -9,9 +9,12 @@
 <style lang="scss" scoped>
 .casino-page{
   overflow: hidden;
-  min-height: calc( 100vh - 220px);
+  min-height: calc( 100vh - 400px);
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--color-primary);
 }
 </style>
