@@ -1,0 +1,218 @@
+<template>
+  <div class="detail">
+    <div class="match" :class="{ 'no-video': videoError }">
+      <MatchVideo v-show="!videoError" :url="videoUrl" @on-error="onVideoError" />
+      <MatchGame v-if="videoError" />
+    </div>
+
+    <div class="main">
+      <div class="main-menu">
+        <div
+          class="nav"
+          v-for="(nav, i) in navList"
+          :key="i"
+          :class="{ selected: route.path.endsWith(nav.path) }"
+          @click="onNavClick(nav.path)"
+        >
+          <SvgIcon :name="nav.iconName" />
+          <span class="label">{{ nav.title }}</span>
+        </div>
+      </div>
+      <div class="main-view">
+        <router-view v-slot="{ Component, route }">
+          <component :is="getComponent(Component, route)" :key="route.key" />
+        </router-view>
+      </div>
+      <div class="main-chat">
+        <div class="holder">点击开启聊天室</div>
+      </div>
+    </div>
+
+    <!-- 聊天室 -->
+  </div>
+</template>
+
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+import { Ref, ref, reactive, computed, onBeforeMount, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { matcheInfo, extendInfo } from '@/api/live'
+import store from '@/store'
+import MatchVideo from '@/components/Match/MatchVideo.vue'
+import MatchGame from '@/components/Match/MatchGame.vue'
+
+const getComponent = (Component: any, route: any) => {
+  if (!Component.type.name) {
+    Component.type.name = route.name
+  }
+  return Component
+}
+
+const { t } = useI18n()
+const route = useRoute()
+const router = useRouter()
+const paramsId = computed(() => route.params['id'] + '')
+const navList = reactive([
+  { title: t('live.bet'), iconName: 'live-bet', path: 'bets' },
+  { title: t('live.betWith'), iconName: 'live-bet_add', path: 'with' },
+  { title: '串关', iconName: 'live-grid', path: 'mixs' },
+  { title: '数据', iconName: 'live-data', path: 'data' },
+  { title: t('live.more'), iconName: 'live-grid', path: 'more' }
+])
+const onNavClick = (path: string) => {
+  router.replace(`/match/${paramsId.value}/${path}`)
+}
+
+const matchData: Ref<any> = ref({})
+const getMatcheInfo = async () => {
+  const gidm = paramsId.value
+  const res = await matcheInfo({ gidm })
+  const data = res.data || {}
+  matchData.value = { ...data }
+  if (data.detail && data.detail.length > 0) {
+    const { game } = data.detail[0]
+    const gameInfo = game.gameInfo || {}
+    matchData.value.gameInfo = gameInfo
+  }
+  store.commit('match/SET_MATCH_INFO', matchData.value)
+}
+
+const videoUrl = ref('')
+const videoError = ref(false)
+const getExtendInfo = async () => {
+  const gidm = paramsId.value
+  const res: any = await extendInfo({ gidm })
+  if (res.code == 200) {
+    const { streamNa } = res.data || {}
+    const { liveali } = streamNa || {}
+    videoUrl.value = (liveali || {}).m3u8
+    videoError.value = false
+  } else {
+    videoUrl.value = ''
+    videoError.value = true
+  }
+}
+
+const onVideoError = () => {
+  videoError.value = true
+}
+
+// let intervalTimer: any = null
+// const startInterval = () => {
+//   closeInterval()
+//   intervalTimer = setInterval(() => {
+//     getMatcheInfo()
+//   }, 5000)
+// }
+// const closeInterval = () => {
+//   if (intervalTimer) {
+//     clearInterval(intervalTimer)
+//     intervalTimer = null
+//   }
+// }
+
+onBeforeMount(() => {
+  getMatcheInfo()
+  getExtendInfo()
+  // startInterval()
+})
+
+watch(
+  () => paramsId.value,
+  () => {
+    getMatcheInfo()
+    getExtendInfo()
+  }
+)
+</script>
+
+<style lang="scss" scoped>
+.detail {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 96px 0 0 0;
+  display: flex;
+  flex-direction: column;
+
+  .match {
+    height: 420px;
+    min-height: 420px;
+    background: #000;
+    position: relative;
+    overflow: hidden;
+    &.no-video {
+      height: 280px;
+      min-height: 280px;
+    }
+  }
+
+  .main {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    &-menu {
+      background: #fff;
+      width: 90px;
+      min-width: 90px;
+      padding: 28px 0 0 0;
+      .nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 18px 0;
+        .svg-icon {
+          color: var(--color-global-minButtonicoCl);
+          font-size: 38px;
+          margin-bottom: 6px;
+        }
+        .label {
+          visibility: hidden;
+          font-size: 20px;
+        }
+        &.selected {
+          .svg-icon {
+            color: var(--color-primary);
+          }
+          .label {
+            color: var(--color-primary);
+            visibility: visible;
+          }
+        }
+      }
+    }
+
+    &-view {
+      flex: 1;
+      overflow-y: auto;
+      padding-bottom: 84px;
+    }
+
+    &-chat {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin-left: 90px;
+      display: flex;
+      align-items: center;
+      height: 84px;
+      padding: 0 16px;
+      background: var(--color-background-color);
+      .holder {
+        flex: 1;
+        height: 64px;
+        line-height: 64px;
+        border-radius: 32px;
+        padding: 0 28px;
+        font-size: 24px;
+        color: var(--van-text-color-3);
+        background: var(--color-live-chat-field-bg);
+      }
+    }
+  }
+}
+</style>
