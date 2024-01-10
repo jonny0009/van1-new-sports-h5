@@ -254,12 +254,12 @@ defineExpose({
   z-index: 290;
   display: flex;
   flex-direction: column;
-  transform: translateY(100%) translateY(-185px);
+  transform: translateY(100%) translateY(-96px);
   transition: transform .3s;
   border-radius: 10px 10px 0px 0px;
 
   &.open {
-    transform: translateY(-88px);
+    transform: translateY(0px);
   }
 }
 
