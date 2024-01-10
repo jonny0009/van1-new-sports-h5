@@ -82,7 +82,34 @@
 //重构=>对照表
 .icon-blue-home:before,
 .icon-default-home:before,
-.icon-Home:before{content:"\e615"}
+.icon-Home:before{content:"\e622"}
+.icon-default-live:before,
+.icon-live:before,
+.icon-blue-live:before{
+  content:"\e61d"
+}
+.icon-blue-today:before,
+.icon-default-today:before,
+.icon-today:before{
+  content:"\e625"
+}
+.icon-blue-sportlive:before,
+.icon-default-sportlive:before,
+.icon-sportlive:before{
+  content:"\e60a"
+}
+.icon-blue-homeTime:before,
+.icon-default-homeTime:before,
+.icon-homeTime:before{
+  content:"\e624"
+}
+.icon-blue-casino:before,
+.icon-default-casino:before,
+.icon-casino:before{
+  content:"\e623"
+}
+
+
 .icon-blue-FT:before,
 .icon-default-FT:before,
 .icon-FT:before{content:"\e60f"}
@@ -98,17 +125,6 @@
 .icon-blue-sports:before,
 .icon-default-sports:before,
 .icon-sports:before{content:"\e616"}
-.icon-blue-live:before,
-.icon-default-live:before,
-.icon-live:before{content:"\e614"}
-.icon-blue-live:before,
-.icon-blue-sportlive:before,
-.icon-default-sportlive:before,
-.icon-default-live:before,
-.icon-sportlive:before,
-.icon-live:before{
-  content:"\e60a"
-}
 .icon-blue-OP_DJ:before,
 .icon-default-OP_DJ:before,
 .icon-OP_DJ:before{content:"\e608"}
@@ -201,10 +217,11 @@
 .icon-group:before{content:"\e61f"}
 .icon-cup:before{content:"\e620"}
 .icon-wrestling:before{content:"\e621"}
-.icon-a-66:before{content:"\e622"}
-.icon-a-zao-icon2x:before{content:"\e623"}
-.icon-a-hot-icon2x:before{content:"\e624"}
+.icon-a-hot-icon2x:before{content:"\e622"}
+.icon-a-66:before{content:"\e623"}
+.icon-a-zao-icon2x:before{content:"\e624"}
 .icon-a-jinriicon2x:before{content:"\e625"}
+
 
 
 

@@ -1,106 +1,79 @@
 <template>
   <div class="sportsTabsView">
     <div
-      v-for="(item, idx) in sportsList"
+      v-for="(item, idx) in homeBarList"
       :key="idx"
       class="item"
       :class="
         [
           {
-            'active':item.value === active
+            'active':item.routerName === active
           },
-          item.value
+          item.routerName
         ]
       "
-      @click="clickChangeActive(item)"
+      @click="goClick(item)"
     >
-      <SportsIcon :icon-src="item.value" />
+      <SportsIcon :icon-src="item.icon" />
+      <div class="name">
+        {{ item.text }}
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 import { ref, computed } from 'vue'
 import router from '@/router'
-import { useRoute } from 'vue-router'
-import store from '@/store'
 
-const homeBarArray = ref(
-  [
-    {
-      value: 'home',
-      name: 'Home'
-    },
-    {
-      value: 'sportlive',
-      name: 'Sportlive'
+// 热门 Live 直播  今日  早盘 赌场
+const homeBarList = ref([
+  {
+    icon: 'home',
+    text: '热门',
+    routerName: 'Home'
+  },
+  {
+    icon: 'sportlive',
+    text: '滚球',
+    routerName: 'Sportlive'
+  },
+  {
+    icon: 'live',
+    text: '直播',
+    routerName: 'Broadcast',
+    meta: {
+      showSportsTabsView: true
     }
-  ]
-)
-
-const sportsList = computed(() => {
-  const sports = store.state.app.sports || []
-  const newSportsA = sports.filter((e:any) => {
-    return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.gameCount
-  })
-  let newSportsB:any = [
-
-  ]
-  if (newSportsA.length) {
-    const newSportsC = newSportsA.map((e:any) => {
-      return {
-        value: e.gameType,
-        name: 'Sport'
-      }
-    })
-    newSportsB = [...homeBarArray.value, ...newSportsC]
+  },
+  {
+    icon: 'today',
+    text: '今天早盘',
+    routerName: 'HomeTime'
+  },
+  {
+    icon: 'homeTime',
+    text: '早盘',
+    routerName: 'HomeTime'
+  },
+  {
+    icon: 'casino',
+    text: '赌场',
+    routerName: 'Casino'
   }
+])
 
-  return newSportsB
-})
-
-const getRouteName = () => {
-  const routerName: any = router?.currentRoute?.value?.name || ''
-  return routerName.toLowerCase()
-}
-
-const active:any = computed(() => {
-  const route = useRoute()
-  let active = route.query.type || route.params.type || ''
-  if (!active) {
-    active = getRouteName() || ''
-  }
-  //
-  const sports = [
-    'FT', 'BK', 'TN', 'BS', 'JC',
-    'BF', 'BK_AFT', 'OP_DJ', 'OP_IH',
-    'OP_RU', 'OP_HB', 'OP', 'RB',
-    'OP_MMA', 'OP_BO', 'OP_SN', 'OP_DR',
-    'OP_TN', 'OP_FH', 'OP_FB', 'OP_BV',
-    'OP_CK', 'OP_VB', 'OP_MS', 'OP_BA', 'OP_GF',
-    'DR', 'OP_BM', 'OP_JR', 'OP_LO', 'OP_CY',
-    'OP_OF', 'OP_SB', 'OP_FU', 'OP_TT',
-    'OP_GY', 'OP_TAF', 'OP_SS', 'OP_SW',
-    'OP_BS', 'OP_WS', 'OP_BD', 'sportlive'
-  ]
-  return sports.includes(active) ? active : 'home'
-})
-
-const clickChangeActive = (item:any) => {
-  const { value, name } = item
-  let params:any = {}
-  params.name = name
-
-  if (name === 'Sport') {
-    params = {
-      name,
-      params: {
-        type: value
-      }
-    }
+const goClick = ({ routerName }:any) => {
+  const params = {
+    name: routerName
   }
   router.push(params)
 }
+
+const active:any = computed(() => {
+  const active = router?.currentRoute?.value?.name || ''
+  return active
+})
+
 </script>
 <style lang="scss" scoped>
 .sportsTabsView{
@@ -114,10 +87,17 @@ const clickChangeActive = (item:any) => {
   .item{
     flex:1;
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
     color: var(--color-text-3);
     min-width: 124px;
+    .name{
+      line-height: 20px;
+      font-size: 20px;
+      margin-top: 7px;
+      // color: #2D89E6;
+    }
     .iconfont{
       position: relative;
       font-size:44px;
