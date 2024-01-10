@@ -145,7 +145,7 @@ watch(refreshChangeTime, (val) => {
   padding: 0 40px;
 }
 .sportlive-Match-Tabs{
-  padding: 0 0 20px;
+  padding: 40px 0 20px;
   display: flex;
   overflow: auto;
   &::-webkit-scrollbar {

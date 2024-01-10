@@ -80,7 +80,7 @@ const active:any = computed(() => {
 <style lang="scss" scoped>
 .sportsTabsView{
   display: flex;
-  height: 136px;
+  // height: 136px;
   overflow: auto;
   &::-webkit-scrollbar {
     height: 0;
@@ -94,6 +94,7 @@ const active:any = computed(() => {
     align-items:center;
     color: var(--color-global-text);
     min-width: 124px;
+    padding-top: 40px;
     .name{
       height: 20px;
       line-height: 20px;
