@@ -10,7 +10,6 @@ export default {
       name: 'HomeToday',
       meta: {
         showSportsTabsView: true,
-        showBarTabsView: true,
         showRefresh: true
       }
     }

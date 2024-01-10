@@ -47,7 +47,7 @@ const homeBarList = ref([
   {
     icon: 'homeTime',
     text: '早盘',
-    routerName: 'HomeTime'
+    routerName: 'HomeToday'
   },
   {
     icon: 'live',
