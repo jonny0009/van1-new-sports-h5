@@ -266,7 +266,7 @@
         align-items: center;
         flex-shrink: 0;
         &.active{
-          background: var(--color-primary);
+          background: var(--color-global-buttonActiveBg);
           color: #FFFFFF;
         }
         &:last-child{

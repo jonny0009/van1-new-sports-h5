@@ -92,7 +92,7 @@ const active:any = computed(() => {
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    color: var(--color-text-3);
+    color: var(--color-global-text);
     min-width: 124px;
     .name{
       height: 20px;

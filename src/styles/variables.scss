@@ -24,14 +24,16 @@
   --color-linear-gradient-tag-2: #af00ff;
 
   // global
+  --color-global-text: #546371;
+  --color-global-textCl: #fff;
   --color-global-wrapBg: #fff;
+  --color-global-buttonPrimaryBg: #7642fe;
   --color-global-buttonBg: #eff2f2;
   --color-global-buttonActiveBg: #7642fe;
   --color-global-buttonShadow: 0 0 0 0px rgba(0, 0, 0, 0.1);
   --color-global-buttonCl: #1f2630;
   --color-global-minButtonCl: #96a5aa;
   --color-global-minButtonicoCl: #96a5aa;
-  --color-global-textCl: #fff;
   --color-global-showWalletbg: linear-gradient(90deg, #7642fe, #491cab);
   --color-global-transactionbg: #7642fe;
   --color-global-bg: linear-gradient(to bottom, #181f2a 0, #2a0572 100%);
@@ -142,15 +144,17 @@
   --color-linear-gradient-tag-1: #00c8ff;
   --color-linear-gradient-tag-2: #006bff;
 
-  // global
+  // global 
+  --color-global-text: #88a6bb;
+  --color-global-textCl: #0e3d66;
   --color-global-wrapBg: #f4f5fa;
+  --color-global-buttonPrimaryBg: linear-gradient(180deg, #48A3FF 0%, #2C88E5 100%);
   --color-global-buttonBg: #fff;
   --color-global-buttonActiveBg: #488DD2;
   --color-global-buttonShadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.1);
   --color-global-buttonCl: #56809f;
   --color-global-minButtonCl: #0e3d66;
   --color-global-minButtonicoCl: #88a6bb;
-  --color-global-textCl: #0e3d66;
   --color-global-showWalletbg: #f4f5fa;
   --color-global-transactionbg: #4ab868;
   --color-global-bg: #fff;
