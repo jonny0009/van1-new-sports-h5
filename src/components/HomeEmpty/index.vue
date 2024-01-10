@@ -35,6 +35,7 @@ const ifBlueTheme = computed(() => store.state.app.theme === 'blue')
       font-size: 24px;
       line-height: 24px;
       color:var(--color-match-emptyCl);
+      font-weight: 600;
     }
   }
 </style>
