@@ -237,28 +237,28 @@
       "unicode_decimal": 58913
     },
     {
-      "icon_id": "38884636",
-      "name": "66",
-      "font_class": "a-66",
+      "icon_id": "38893905",
+      "name": "hot-icon@2x",
+      "font_class": "a-hot-icon2x",
       "unicode": "e622",
       "unicode_decimal": 58914
     },
     {
-      "icon_id": "38884795",
-      "name": "早-icon@2x",
-      "font_class": "a-zao-icon2x",
+      "icon_id": "38893906",
+      "name": "66",
+      "font_class": "a-66",
       "unicode": "e623",
       "unicode_decimal": 58915
     },
     {
-      "icon_id": "38884796",
-      "name": "hot-icon@2x",
-      "font_class": "a-hot-icon2x",
+      "icon_id": "38893907",
+      "name": "早-icon@2x",
+      "font_class": "a-zao-icon2x",
       "unicode": "e624",
       "unicode_decimal": 58916
     },
     {
-      "icon_id": "38884797",
+      "icon_id": "38893908",
       "name": "今日icon@2x",
       "font_class": "a-jinriicon2x",
       "unicode": "e625",
