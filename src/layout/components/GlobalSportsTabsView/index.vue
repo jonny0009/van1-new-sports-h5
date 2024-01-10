@@ -40,14 +40,6 @@ const homeBarList = ref([
     routerName: 'Sportlive'
   },
   {
-    icon: 'live',
-    text: '直播',
-    routerName: 'Broadcast',
-    meta: {
-      showSportsTabsView: true
-    }
-  },
-  {
     icon: 'today',
     text: '今天早盘',
     routerName: 'HomeTime'
@@ -56,6 +48,14 @@ const homeBarList = ref([
     icon: 'homeTime',
     text: '早盘',
     routerName: 'HomeTime'
+  },
+  {
+    icon: 'live',
+    text: '直播',
+    routerName: 'Broadcast',
+    meta: {
+      showSportsTabsView: true
+    }
   },
   {
     icon: 'casino',
