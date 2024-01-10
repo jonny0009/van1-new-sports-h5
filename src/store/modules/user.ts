@@ -1,6 +1,6 @@
 import { Module } from 'vuex'
 import { login, playAccount, getBalance } from '@/api/login'
-import { getCMerAccessWallet, betRecordTab, getGameManyInfo, selectChampionManyName, playerInfo } from '@/api/user'
+import { getCMerAccessWallet, betRecordTab, getGameManyInfo, selectChampionManyName, playerInfo, getCashoutInfo, confirmCashout } from '@/api/user'
 import { User } from '#/store'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { configSettingNew } from '@/api/auth'
@@ -18,7 +18,8 @@ const userModule: Module<User, any> = {
     currencyData: [],
     teamNameList: [],
     championLangList: [],
-    peopleInfo: {}
+    peopleInfo: {},
+    aheadOrderList: []
   },
   mutations: {
     SET_TOKEN: (state, token: string) => {
@@ -103,6 +104,21 @@ const userModule: Module<User, any> = {
       const res:any = await selectChampionManyName({ gidm: params }) || []
       if (res.code === 200) {
         state.championLangList = [...state.championLangList, ...res.data || []]
+      }
+    },
+    // 提前结算信息
+    async getOrderList({ state }, params) {
+      const res:any = await getCashoutInfo({ cashoutInfoReq: JSON.parse(params) }) || []
+      if (res.code === 200) {
+        state.aheadOrderList = [...state.aheadOrderList, ...res.data || []]
+      }
+    },
+    // 提前结算信息
+    async handleConfirmCashout({ state, dispatch }, params) {
+      const res:any = await confirmCashout(params) || []
+      if (res.code === 200) {
+        dispatch('getBalance')
+        dispatch('pendingOrder')
       }
     },
     // 获取账户信息

@@ -124,6 +124,7 @@ export default {
   noDataRelated: '관련 데이터가 없습니다',
   // 新增6
   fontNickName: '닉네임은 한 번만 편집할 수 있으며 다른 사람과 중복되거나 불법 문자를 포함할 수 없습니다.',
+  aheadFinal: '조기 결제',
 
   sports: {
     officeNumber: '국 번호',

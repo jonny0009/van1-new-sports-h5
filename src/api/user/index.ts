@@ -109,6 +109,42 @@ export const betRecordTab = (data:any) => {
     data
   })
 }
+// 提前结算 订单信息
+/*
+{"cashoutInfoReq":[{"orderId":"AIS24011016164423846"},]}
+*/
+
+export const getCashoutInfo = (data:any) => {
+  return request({
+    url: '/ai/mobile/bet/order/getCashoutInfo',
+    method: 'post',
+    data
+  })
+}
+// 提前结算 单个信息
+/*
+{"orderId":"AIS24010316244316314"}
+*/
+
+export const refressCashoutOrder = (data:any) => {
+  return request({
+    url: '/ai/mobile/bet/order/refressCashoutOrder',
+    method: 'post',
+    data
+  })
+}
+// 提前结算 操作
+/*
+{"orderId":"AIS24010316244316314","amount":90}
+*/
+
+export const confirmCashout = (data:any) => {
+  return request({
+    url: '/ai/mobile/bet/order/confirmCashout',
+    method: 'post',
+    data
+  })
+}
 // 游戏详情
 // gidms=48935924,6525841347224326144,6525841345152335872
 
