@@ -26,7 +26,7 @@ const props = defineProps({
   type: {
     type: String,
     default: function () {
-      return '1'
+      return '6'
     }
   },
   text: {

@@ -2,10 +2,10 @@
   <GlobalHeader />
   <GlobalRefresh>
     <GlobalSportsTabsView v-if="$route.meta.showSportsTabsView" />
-    <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pt10 pb10" />
+    <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pb10 pt20" />
     <AppMain />
   </GlobalRefresh>
-  <GlobalFooter />
+  <!-- <GlobalFooter /> -->
   <BettingSlip v-if="betShow && isOpen" ref="bettingSlip" @close="betClose" />
   <van-back-top
     v-if="backTopShow"
@@ -25,7 +25,7 @@ import GlobalHeader from './components/GlobalHeader/index.vue'
 import GlobalSportsTabsView from './components/GlobalSportsTabsView/index.vue'
 import GlobalBarTabsView from './components/GlobalBarTabsView/index.vue'
 import AppMain from './components/AppMain.vue'
-import GlobalFooter from './components/GlobalFooter/index.vue'
+// import GlobalFooter from './components/GlobalFooter/index.vue'
 import BettingSlip from '@/components/BettingSlip/index.vue'
 import { useRouter } from 'vue-router'
 import { computed, ref, watch } from 'vue'

@@ -5,8 +5,16 @@
       <div class="title-left">
         <div>{{ item.parlayNum }}{{ $t('user.session') }}</div>
         <div>
-          <SportsIcon v-for="(item2, index1) in item.betDTOList" :key="index1" :icon-src="item2.gameType" class="ball-img" />
+          <SportsIcon
+            v-for="(item2, index1) in item.betDTOList"
+            :key="index1"
+            :icon-src="item2.gameType"
+            class="ball-img"
+          />
         </div>
+      </div>
+      <div class="cur-odds">
+        @<span v-points="item.sioRatio"></span>
       </div>
       <!-- <img class="img_1" src="@/assets/images/user/down1.png" alt="" /> -->
       <!-- <div class="title-right">
@@ -24,20 +32,8 @@
         <div class="left">
           <div class="top-img">
 
-            <img
-              v-img="item1.homeLogo"
-              class="img_1"
-              alt=""
-              :type="4"
-              style="object-fit: contain;"
-            >
-            <img
-              v-img="item1.awayLogo"
-              class="img_2"
-              alt=""
-              :type="5"
-              style="object-fit: contain;"
-            >
+            <img v-img="item1.homeLogo" class="img_1" alt="" :type="4" style="object-fit: contain;">
+            <img v-img="item1.awayLogo" class="img_2" alt="" :type="5" style="object-fit: contain;">
 
           </div>
         </div>
@@ -85,7 +81,7 @@
     <div class="money-num">
       <div class="money-num-1">
         <span>{{ $t('user.BettingAmount') }}:</span>
-        <span>
+        <span class="money-num-money">
 
           <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
           <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
@@ -98,13 +94,13 @@
       </div>
       <div class="money-num-2">
 
-        <span v-if="item.state === 0|| item.state ===-1||item.state === 1">{{ $t('user.CompensableAmount') }}:</span>
-        <span v-else-if="item.state !==3&& item.state !==5 &&item.state !==0">{{ $t('user.practical') }}:</span>
+        <span v-if="item.state === 0 || item.state === -1 || item.state === 1">{{ $t('user.CompensableAmount') }}:</span>
+        <span v-else-if="item.state !== 3 && item.state !== 5 && item.state !== 0">{{ $t('user.practical') }}:</span>
 
         <span>
 
           <!-- 受理状态 -->
-          <span v-if="item.state !== 3 &&item.state !== 5 ">
+          <span v-if="item.state !== 3 && item.state !== 5">
             <span v-if="item.state == -1" style="color:#FF9A00 ;">
               {{ $t('user.editPend') }}
             </span>
@@ -119,10 +115,10 @@
             <SvgIcon v-else name="user-usdt" class="img_1" />
           </span>
 
-          <span v-if="item.state === 0|| item.state===-1||item.state=== 1" class="num">
+          <span v-if="item.state === 0 || item.state === -1 || item.state === 1" class="num">
             {{ formatMoney(getProfit(item)) }}
           </span>
-          <span v-else-if="item.state !==3&& item.state !==5 " class="num">
+          <span v-else-if="item.state !== 3 && item.state !== 5" class="num">
             {{ formatMoney(item.winGold) }}
           </span>
         </span>
@@ -208,7 +204,7 @@ const getLangBet = (item: any) => {
 
 <style lang="scss" scoped>
 .color-1 {
-  color: var(--color-bg-1);
+  color: var(--color-bet-iortext);
 }
 
 .color-2 {
@@ -218,16 +214,18 @@ const getLangBet = (item: any) => {
 .color-3 {
   color: red;
 }
+
 .color-4 {
   color: #FF9A00;
 }
 
-.ball-img{
+.ball-img {
   font-size: 24px;
   color: var(--color-text-3);
-  margin-right:3px;
+  margin-right: 3px;
   font-weight: 500;
 }
+
 .match-title {
   display: flex;
   align-items: center;
@@ -239,11 +237,14 @@ const getLangBet = (item: any) => {
     color: var(--color-search-box-text-1);
     font-weight: 600;
 
-    .img_1 {
-      height: 24px;
-      width: 24px;
-      margin-right: 5px;
-    }
+  }
+
+  .cur-odds {
+    font-family: PingFangSC-Semibold;
+    font-size: 30px;
+    color: var(--color-bet-iortext);
+    letter-spacing: 0;
+    font-weight: 600;
   }
 
   .title-right {
@@ -346,7 +347,7 @@ const getLangBet = (item: any) => {
       padding: 0px 15px;
       font-family: PingFangSC-Regular;
       font-size: 24px;
-      color:  var(--color-text-1);
+      color: var(--color-text-1);
       letter-spacing: 0;
       font-weight: 400;
       display: flex;
@@ -356,7 +357,8 @@ const getLangBet = (item: any) => {
         margin-left: 8px;
         font-family: PingFangSC-Semibold;
         font-size: 24px;
-        color: var(--color-bg-1);
+        // color: var(--color-bg-1);
+        color: var(--color-bet-iortext);
         letter-spacing: 0;
         font-weight: 600;
       }
@@ -377,24 +379,28 @@ const getLangBet = (item: any) => {
     font-family: PingFangSC-Semibold;
     font-size: 24px;
     color: var(--color-text-1);
+
     letter-spacing: 0;
     font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    .money-num-money{
+      color: var(--color-search-box-text-1);
 
+    }
     .img_1 {
       margin-right: 5px;
       width: 17px;
       height: 21px;
-      color: var(--color-text-1);
+      color: var(--color-search-box-text-1);
     }
   }
 
   &-2 {
     font-family: PingFangSC-Semibold;
     font-size: 28px;
-    color:  var(--color-text-1);
+    color: var(--color-text-1);
     letter-spacing: 0;
     font-weight: 600;
     display: flex;
@@ -405,12 +411,13 @@ const getLangBet = (item: any) => {
       margin-right: 5px;
       width: 20px;
       height: 25px;
-      color: var(--color-bg-1);
+      // color: var(--color-bg-1);
+      color: var(--color-bet-iortext);
     }
 
     .num {
       font-size: 30px;
-      color: var(--color-bg-1);
+      color: var(--color-bet-iortext);
     }
   }
 }
@@ -430,7 +437,6 @@ const getLangBet = (item: any) => {
     justify-content: space-between;
     font-family: PingFangSC-Regular;
     font-size: 22px;
-    // color: var(--color-result-box-2);
     color: var(--color-search-box-text-2);
     letter-spacing: 0;
     font-weight: 400;

@@ -6,7 +6,10 @@ export default {
     {
       name: 'Broadcast',
       path: '',
-      component: () => import('@/views/live/index.vue')
+      component: () => import('@/views/live/index.vue'),
+      meta: {
+        showSportsTabsView: true
+      }
     },
     {
       name: 'BroadcastDetail',

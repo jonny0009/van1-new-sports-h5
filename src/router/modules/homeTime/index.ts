@@ -6,11 +6,10 @@ export default {
   children: [
     {
       path: '/homeTime',
-      component: () => import('@/views/homeTime/index.vue'),
+      component: () => import('@/views/early/homeTime/index.vue'),
       name: 'HomeTime',
       meta: {
         showSportsTabsView: true,
-        showBarTabsView: true,
         showRefresh: true
       }
     }

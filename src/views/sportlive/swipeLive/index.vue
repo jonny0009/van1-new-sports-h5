@@ -1,9 +1,10 @@
 <template>
   <div v-if="swipeList.length" class="swipeLive">
-    <van-swipe class="my-swipe" indicator-color="white">
+    <van-swipe class="my-swipe" indicator-color="white" @change="swipeChange">
       <van-swipe-item v-for="(match,idx) in swipeList" :key="idx" @click="goDetails(match)">
         <div class="wrap">
           <MatchItem
+            :key="idx"
             :live-info="match"
             :match-index="idx"
             :active-index="activeIndex"
@@ -16,11 +17,12 @@
 <script lang="ts" setup>
 import MatchItem from './main/MatchItem.vue'
 import { anchorLiveList, extendInfo } from '@/api/live'
-
-import { ref, reactive, onBeforeMount } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import router from '@/router'
+
 const activeIndex = ref(0)
-const swipeList = reactive([])
+const swipeList:any = ref([])
+
 const init = async () => {
   const params = {
     page: 1,
@@ -30,46 +32,24 @@ const init = async () => {
   const res:any = await anchorLiveList(params)
   if (res.code === 200) {
     const dataArray = res?.data?.list || []
-
-    let gidm = ''
-    let newGameBasic = dataArray.map((e:any, idx:any) => {
-      if (idx === 0) {
-        gidm = e.gidm
-      }
-      e.gameBasic = e
-      return e
-    })
-
-    if (gidm) {
+    swipeList.value.length = 0
+    await dataArray.map(async (e:any) => {
+      const gidm = e.gidm
       const extendInfoParams = {
         gidm
       }
       const extendInfoRes:any = await extendInfo(extendInfoParams)
       if (extendInfoRes.code === 200) {
         const { streamNa }:any = extendInfoRes.data
-        newGameBasic = newGameBasic.map((e:any, idx:any) => {
-          if (idx === 0) {
-            e.streamNa = streamNa
-            const { liveali } = streamNa || {}
-
-            console.log(streamNa)
-            console.log(liveali)
-            const { m3u8 } = liveali || {}
-            e.m3u8 = e.m3u8 || m3u8
-          }
-          return e
-        })
-        console.log(extendInfoRes, 'extendInfoRes')
+        const { liveali } = streamNa || {}
+        const { m3u8 } = liveali || {}
+        e.m3u8 = e.m3u8 || m3u8
+        e.streamNa = streamNa
       }
-    }
-    console.log(newGameBasic, 'newGameBasic newGameBasic')
-    swipeList.length = 0
-    swipeList.push(...newGameBasic)
+      swipeList.value.push(e)
+    })
   }
 }
-onBeforeMount(() => {
-  init()
-})
 
 const goDetails = (item:any) => {
   if (!item) {
@@ -84,8 +64,20 @@ const goDetails = (item:any) => {
   }
   router.push(params)
 }
+
+const swipeChange = (index:any) => {
+  activeIndex.value = index
+}
+
+onBeforeMount(() => {
+  swipeList.value.length = 0
+  init()
+})
 </script>
 <style lang="scss" >
+.swipeLive{
+  padding-bottom: 20px;
+}
 .my-swipe{
   .van-swipe-item {
     color: #fff;
@@ -98,6 +90,14 @@ const goDetails = (item:any) => {
       flex: 1;
       overflow: auto;
       position: relative;
+      background: #000;
+      .loading{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 99;
+        transform: translate3d(-50%, -50%, 0);
+      }
     }
   }
   .van-swipe__indicators{

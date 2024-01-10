@@ -1,10 +1,9 @@
 <template>
   <div class="match-item-wrap" :style="{ backgroundImage: `url(${cover})` }">
     <video-box
-      v-if="(liveInfo.m3u8 || liveInfo.url) && !refreshToggle"
+      v-if="showVideoBox"
       :live-url="liveInfo.m3u8 || liveInfo.url"
       :controls="false"
-      :type="2"
       @refresh="refresh"
     />
     <div class="video-footer">
@@ -13,20 +12,15 @@
         {{ liveInfo.leagueShortName || liveInfo.leagueName }}
       </div>
       <div class="flex-1"></div>
-      <div class="time" v-html="setMatch.showRBTime(matchInfo)"></div>
+      <div class="time" v-html="setMatch.showRBTime(liveInfo)"></div>
     </div>
   </div>
 </template>
 <script  lang="ts" setup>
 import { useMatch } from '@/utils/useMatch'
 const setMatch: any = useMatch()
-
 import VideoBox from './child/VideoBox'
-
-import coverDj from './child/assets/dj.jpg'
 import coverFt from './child/assets/ft.jpg'
-import coverBk from './child/assets/bk.jpg'
-import { imgUrlFormat } from '@/utils/index'
 import { ref, computed, watch, onBeforeMount, nextTick } from 'vue'
 
 const props = defineProps({
@@ -45,41 +39,37 @@ const props = defineProps({
 })
 
 const cover = computed(() => {
-  if (props.liveInfo.recommendType * 1 === 2 && props.liveInfo?.cover) {
-    return imgUrlFormat(props.liveInfo.cover)
-  }
-  const { gameType }:any = matchInfo
-  if (gameType === 'FT') {
-    return coverFt
-  }
-  if (gameType === 'BK') {
-    return coverBk
-  }
-  return coverDj
+  return coverFt
 })
 
-const matchInfo = computed(() => {
-  return props.liveInfo.gameBasic || {}
+
+
+watch(() => props.activeIndex, () => {
+  if (props.activeIndex === props.matchIndex) {
+    refresh()
+  } else {
+    showVideoBox.value = false
+  }
 })
-
-watch(() => props.liveInfo, () => { init() })
-
-//
-const refreshToggle = ref(false)
-
-onBeforeMount(() => {
-  init()
-})
-
-const init = () => {
-}
-
+const showVideoBox = ref(false)
 const refresh = () => {
-  refreshToggle.value = true
+  showVideoBox.value = false
   nextTick(() => {
-
+    showVideoBox.value = true
   })
 }
+
+const showVideo = () => {
+  if (props.activeIndex === props.matchIndex) {
+    refresh()
+  } else {
+    showVideoBox.value = false
+  }
+}
+
+onBeforeMount(() => {
+  showVideo()
+})
 
 </script>
 <style lang="scss" scoped>
@@ -89,7 +79,7 @@ const refresh = () => {
   left:0;
   height: 100%;
   width: 100%;
-  background: url(~@/assets/images/sportlive/cover.jpg) no-repeat;
+  background: url('@/assets/images/sportlive/cover.jpg') no-repeat;
   background-size: cover;
   background-position: center;
   border-radius: 8px 8px 0 0;

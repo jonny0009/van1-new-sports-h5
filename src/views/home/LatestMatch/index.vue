@@ -5,7 +5,7 @@
         <ArrowTitle
           :src="titleTime"
           :text="$t('home.latestMatch')"
-          class="mt10"
+          class="mt10 latestArrowTitle"
         />
       </template>
       <div class="LatestMatch">
