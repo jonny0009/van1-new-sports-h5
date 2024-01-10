@@ -1,7 +1,7 @@
 <template>
   <div class="homeTime-page">
     <SportsTabs ref="refSportsTabs" class="pb10" @returnSportsSuccess="returnSportsSuccess" />
-    <tabsTime @returnTimeSuccess="returnTimeSuccess" />
+    <tabsTime v-if="routerName === 'HomeTime'" @returnTimeSuccess="returnTimeSuccess" />
     <van-list
       v-model="loading"
       :finished="finished"
@@ -30,12 +30,16 @@
   </div>
 </template>
 <script lang="ts" setup>
-import Dayjs from 'dayjs' // YYYY-MM-DD HH:mm:ss
+import Dayjs from 'dayjs'
 import tabsTime from './tabsTime/index.vue'
 import titleTime from '@/assets/images/home/title-time.png'
 import { recommendEvents } from '@/api/home'
 import store from '@/store'
 import { onBeforeMount, ref, reactive, computed, watch } from 'vue'
+import router from '@/router'
+const routerName:any = computed(() => {
+  return router?.currentRoute?.value?.name || ''
+})
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout:any = ref('')
 const refSportsTabs = ref()
@@ -57,6 +61,10 @@ const params:any = reactive({
   gradeType: 2,
   gameType: 'FT'
 })
+if (routerName.value === 'HomeToday') {
+  params.startDate = Dayjs().format('YYYY-MM-DD') + ' 00:00:00'
+  params.endDate = Dayjs().format('YYYY-MM-DD') + ' 23:59:59'
+}
 const recommendEventsList = reactive([])
 const totalVal = ref(0)
 const getLoading = (val:any = false, nextToggle:any = '') => {
