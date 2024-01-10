@@ -7,7 +7,6 @@
       playsinline="true"
       controls
       preload="metadata"
-      :poster="poster"
     ></video>
     <div v-if="videoErrorState" class="video-error">
       <span class="video-icon"></span>
