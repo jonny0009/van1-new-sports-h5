@@ -157,7 +157,7 @@ onBeforeMount(() => {
 </script>
 <style lang="scss" scoped>
 .homeTime-page{
-  padding: 0 40px;
+  padding: 40px 40px 0;
 
 }
 .earlyArrowTitle{
