@@ -93,7 +93,6 @@ onBeforeMount(() => {
   init()
 })
 </script>
-
 <style lang="scss" scoped>
   .onImgError{
     width: 200px;
@@ -103,7 +102,6 @@ onBeforeMount(() => {
     background-size: cover;
     border-radius: 20px;
   }
-
   .Hot-Match-Group-Warp{
     position: relative;
     .mask-left{
@@ -126,7 +124,6 @@ onBeforeMount(() => {
     }
   }
 </style>
-
 <style lang="scss">
 .hotArrowTitle{
   .img{
