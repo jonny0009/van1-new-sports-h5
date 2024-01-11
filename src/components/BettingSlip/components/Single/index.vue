@@ -23,7 +23,7 @@
           {{ $t('betting.goldTips', { min: marketInfo.goldMin, max: marketInfo.goldMax }) }}
           <div class="tips-arrow"></div>
         </div>
-        <div v-if="accountState" class="action">
+        <div v-if="accountState&&!error" class="action">
           <div v-if="marketInfo.ratioChange" class="betting-slip-accept-button" @click="clearOddChange">
             {{ $t('betting.acceptRatios') }}
           </div>
