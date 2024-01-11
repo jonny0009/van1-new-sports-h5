@@ -450,6 +450,6 @@ const showSportsIcon = (item:any) => {
 }
 
 const goToDetail = (item:any) => {
-  router.push(`/broadcast/${item.gidm}`)
+  router.push(`/live/${item.gidm}`)
 }
 </script>

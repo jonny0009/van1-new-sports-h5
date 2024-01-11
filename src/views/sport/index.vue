@@ -96,20 +96,24 @@ import recommendIcon from '@/assets/images/home/title-recommend.png'
 import ChampionList from './champion/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
 import { useRoute, useRouter } from 'vue-router'
-import { ref, onBeforeMount, watch } from 'vue'
+import { ref, onBeforeMount, watch, computed } from 'vue'
 import { apiChampionpPlayTypes } from '@/api/champion'
 import { firstLeagues, recommendEvents } from '@/api/home'
 
 import { MarketInfo } from '@/entitys/MarketInfo'
 const { currentRoute } = useRouter()
-const route = useRoute()
+const route:any = useRoute()
 
 const activeNames = ref('1')
 const activeNamesB = ref('b1')
 const activeNamesC = ref('c1')
 
 const leagueId: any = ref(route.query.leagueId)
-const gameType: any = ref(route.params.type)
+
+const gameType = computed(() => {
+  return route.params?.type || 'FT'
+})
+
 const leagueLogo: any = ref()
 const leagueName: any = ref()
 const recommendPage: any = ref(1)
@@ -124,17 +128,14 @@ onBeforeMount(async () => {
   initData()
 })
 
-watch(
-  () => currentRoute.value,
-  (route: any) => {
-    gameType.value = route.params.type
-    leagueId.value = ''
-    recommendPage.value = 1
-    earlyPage.value = 1
-    console.log(gameType.value)
-    getFirstLeagues()
-    initData()
-  }
+watch(() => currentRoute.value, () => {
+  leagueId.value = ''
+  recommendPage.value = 1
+  earlyPage.value = 1
+  console.log(gameType.value)
+  getFirstLeagues()
+  initData()
+}
 )
 
 const initData = async () => {
