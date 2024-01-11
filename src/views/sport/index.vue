@@ -42,7 +42,7 @@
       <van-collapse v-model="activeNamesB" accordion :border="false" class="GlobalCollapse">
         <van-collapse-item name="b1">
           <template #title>
-            <ArrowTitle class="mt10 mb10" :src="recommendIcon" :text="$t('sport.recommend')" />
+            <ArrowTitle class="mt10 mb10 goodArrowTitle" :src="recommendIcon" :text="$t('sport.recommend')" />
           </template>
           <Loading v-if="!getRecommendEventsIsLoading" />
           <template v-else>
@@ -51,7 +51,7 @@
             </div>
             <HomeEmpty v-else></HomeEmpty>
           </template>
-          <div v-if="!isLoadingRecommend && recommendList.length" class="Button-MatchMore mt20" :class="recommendLoadAll?'no-more':''" @click="moreRecommend">
+          <div v-if="!isLoadingRecommend && recommendList.length" class="Button-MatchMore mt20 mb20" :class="recommendLoadAll?'no-more':''" @click="moreRecommend">
             <span>
               {{ recommendLoadAll?$t('live.noMore'):$t('home.lookMoreMatch') }}
             </span>
@@ -65,7 +65,7 @@
       <van-collapse v-model="activeNamesC" accordion :border="false" class="GlobalCollapse">
         <van-collapse-item name="c1">
           <template #title>
-            <ArrowTitle class="mt10 mb10" :src="earlyIcon" :text="$t('sport.early')" />
+            <ArrowTitle class="mt10 mb10 latestArrowTitle" :src="earlyIcon" :text="$t('sport.early')" />
           </template>
           <Loading v-if="!getRecommendEventsIsLoading" />
           <template v-else>
@@ -74,7 +74,7 @@
             </div>
             <HomeEmpty v-else></HomeEmpty>
           </template>
-          <div v-if="!isLoadingEarly && earlyList.length" class="Button-MatchMore mt20" :class="earlyLoadAll?'no-more':''" @click="moreEarly">
+          <div v-if="!isLoadingEarly && earlyList.length" class="Button-MatchMore mt20 mb20" :class="earlyLoadAll?'no-more':''" @click="moreEarly">
             <span>
               {{ earlyLoadAll?$t('live.noMore'):$t('home.lookMoreMatch') }}
             </span>
