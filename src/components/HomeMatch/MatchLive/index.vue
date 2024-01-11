@@ -164,7 +164,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, computed, onBeforeUnmount } from 'vue'
+import { ref, computed } from 'vue'
 import { tnStObj, bsStObj, opScoreObj } from '@/utils/home/gameInfo'
 import { dateFormat } from '@/utils/date'
 import { getScore } from '@/utils/home/getScore'
