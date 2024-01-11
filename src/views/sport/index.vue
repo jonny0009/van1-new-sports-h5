@@ -7,7 +7,7 @@
     <!--
       联赛
     -->
-    <div class="my-scroll__content">
+    <div v-if="firstLeaguesList.length" class="my-scroll__content">
       <div class="betting-sport-nav">
         <TextButton :text="$t('sport.all')" :active="!leagueId" @click="clickLeague({})" />
         <ImageButton
@@ -94,12 +94,19 @@ import recommendIcon from '@/assets/images/home/title-recommend.png'
 import ChampionList from './champion/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
 import { useRoute, useRouter } from 'vue-router'
-import { ref, onBeforeMount, watch, computed } from 'vue'
+import { ref, onBeforeMount, watch, computed, nextTick } from 'vue'
+import router from '@/router'
 import { apiChampionpPlayTypes } from '@/api/champion'
 import { firstLeagues, recommendEvents } from '@/api/home'
 import { MarketInfo } from '@/entitys/MarketInfo'
+const refSportsTabs = ref('')
 const returnSportsSuccess = (item:any) => {
-  console.log(item)
+  router.push({
+    name: 'Sport',
+    params: {
+      type: item
+    }
+  })
 }
 const { currentRoute } = useRouter()
 const route:any = useRoute()
@@ -118,10 +125,6 @@ const earlyPage: any = ref(1)
 const earlyPageSize: any = ref(10)
 const earlyLoadAll: any = ref(false)
 const recommendLoadAll: any = ref(false)
-onBeforeMount(async () => {
-  getFirstLeagues()
-  initData()
-})
 watch(() => currentRoute.value, () => {
   leagueId.value = ''
   recommendPage.value = 1
@@ -263,6 +266,13 @@ const clickLeague = (item: any) => {
   leagueId.value = item.leagueId
   initData()
 }
+onBeforeMount(async () => {
+  getFirstLeagues()
+  initData()
+  nextTick(() => {
+    refSportsTabs.value?.setSports(gameType.value)
+  })
+})
 </script>
 <style lang="scss" scoped>
 .sport-page{

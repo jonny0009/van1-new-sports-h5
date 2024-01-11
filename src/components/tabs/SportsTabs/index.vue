@@ -13,6 +13,10 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 import store from '@/store'
+const setSports = (val:any) => {
+  console.log('setSports setSports', val)
+  active.value = val
+}
 const resetParams = () => {
   active.value = 'FT'
 }
@@ -42,7 +46,8 @@ const sportsList = computed(() => {
 })
 defineExpose({
   active,
-  resetParams
+  resetParams,
+  setSports
 })
 </script>
 <style lang="scss" scoped>
