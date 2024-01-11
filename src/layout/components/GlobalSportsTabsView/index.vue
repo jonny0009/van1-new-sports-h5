@@ -47,7 +47,7 @@ const homeBarList = ref([
   {
     icon: 'homeTime',
     text: '早盘',
-    routerName: 'HomeTime'
+    routerName: 'Sport'
   },
   {
     icon: 'live',
@@ -80,7 +80,6 @@ const active:any = computed(() => {
 <style lang="scss" scoped>
 .sportsTabsView{
   display: flex;
-  // height: 136px;
   overflow: auto;
   &::-webkit-scrollbar {
     height: 0;
