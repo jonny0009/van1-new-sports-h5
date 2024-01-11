@@ -130,6 +130,7 @@ export default {
   noDataRelated: '未查询到相关数据',
   // 新增6
   fontNickName: '昵称只允许编辑一次，且不可与他人重复或含有非法字元',
+  aheadFinal: '提前结算',
 
   sports: {
     'officeNumber': '局号',

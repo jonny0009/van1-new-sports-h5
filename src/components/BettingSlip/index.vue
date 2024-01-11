@@ -254,12 +254,12 @@ defineExpose({
   z-index: 290;
   display: flex;
   flex-direction: column;
-  transform: translateY(100%) translateY(-185px);
+  transform: translateY(100%) translateY(-96px);
   transition: transform .3s;
   border-radius: 10px 10px 0px 0px;
 
   &.open {
-    transform: translateY(-88px);
+    transform: translateY(0px);
   }
 }
 
@@ -444,7 +444,7 @@ defineExpose({
       bottom: 0;
       height: 6px;
       left: 0;
-      background-color: #000;
+      background-color: var(--color-text-5);
       width: 27vw;
       transition: all .3s;
       border-radius: 3px;

@@ -18,11 +18,11 @@ export default async () => {
   // 商户语言
   // await store.dispatch('app/queryCMerLanguage')
   // 商户配置
-  await store.dispatch('app/businessConfig')
+  store.dispatch('app/businessConfig')
   // 商户配置2
-  await store.dispatch('app/merchantConfig')
+  store.dispatch('app/merchantConfig')
   // 模块控制
-  await store.dispatch('app/moduleConfig')
+  store.dispatch('app/moduleConfig')
   modifyRatioTypeListMapping()
   // 获取全部体育项
   store.dispatch('app/getAllSports')
@@ -30,7 +30,7 @@ export default async () => {
   store.dispatch('app/getDoubleLineInfo')
   if (getToken()) {
     // 商户语言
-    await store.dispatch('app/queryCMerLanguage')
+    store.dispatch('app/queryCMerLanguage')
     // 获取账号信息
     store.dispatch('user/userInfo')
     // 获取钱包币种
@@ -38,7 +38,7 @@ export default async () => {
     // 获取注单数据
     store.dispatch('user/pendingOrder')
     // 获取盘口或者默认盘口
-    store.dispatch('user/configSettingNew', { handicapType: plateMaskKey || 'H' })
+    await store.dispatch('user/configSettingNew', { handicapType: plateMaskKey || 'H' })
     // 账户余额
     // store.dispatch('user/getBalance')
   }

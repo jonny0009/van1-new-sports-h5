@@ -132,6 +132,7 @@ export default {
   editPend: 'Đang thụ lý ',
   affirmPend: 'Trong xác nhận ',
   noDataRelated: 'Không truy vấn dữ liệu liên quan',
+  aheadFinal: 'Thanh toán sớm',
 
   sports: {
     'officeNumber': 'số trò chơi',

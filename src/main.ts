@@ -29,7 +29,7 @@ app.use(i18n)
 const start = async () => {
   await createScript(playtypeScript, false)
   await createScript(ratiotypeScript, false)
-  bootstrap()
+  await bootstrap()
   app.mount('#app')
 }
 

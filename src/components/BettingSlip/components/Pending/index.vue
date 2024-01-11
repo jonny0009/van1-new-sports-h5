@@ -27,6 +27,9 @@ const getTeamLang = () => {
   const gidmsArr: any = []
   // 冠军国际化
   const championGidms: any = []
+  // 提前结算信息
+  const aheadOrderList: any = []
+
   pendingData.value.map((m:any) => {
     m.betDTOList.map((n:any) => {
       const { championType, systemId, gidm } = n
@@ -35,9 +38,19 @@ const getTeamLang = () => {
       }
       gidmsArr.push(systemId)
     })
+    if (m.creditState === 0) {
+      const orderObj = {
+        orderId: m.orderId
+      }
+      aheadOrderList.push(orderObj)
+    }
   })
   store.dispatch('user/getMoreTeamList', gidmsArr.join())
   store.dispatch('user/getChampionLang', championGidms.join())
+
+  if (aheadOrderList.length) {
+    store.dispatch('user/getOrderList', JSON.stringify(aheadOrderList))
+  }
 }
 </script>
 

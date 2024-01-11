@@ -78,7 +78,7 @@ const betClose = (state: boolean) => {
 
 const backTopShow = computed(() => {
   const route: any = currentRoute.value
-  const routeNames = ['BroadcastDetail']
+  const routeNames = ['MatchDetail']
   return !routeNames.includes(route.name)
 })
 </script>
