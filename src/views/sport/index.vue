@@ -132,7 +132,6 @@ watch(() => currentRoute.value, () => {
   leagueId.value = ''
   recommendPage.value = 1
   earlyPage.value = 1
-  console.log(gameType.value)
   getFirstLeagues()
   initData()
 }
@@ -182,7 +181,6 @@ const moreEarly = async () => {
   const res:any = await recommendEvents(earlyParames.value) || {}
   if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
     earlyList.value.push(...res.data.baseData)
-    console.log(earlyList.value.length)
   }
   if (earlyList.value.length < earlyPage.value * earlyPageSize.value) {
     earlyLoadAll.value = true

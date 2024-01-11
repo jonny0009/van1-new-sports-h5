@@ -78,5 +78,4 @@ const init = () => {
 onBeforeMount(() => {
   init()
 })
-
 </script>

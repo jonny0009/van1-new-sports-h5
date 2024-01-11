@@ -43,7 +43,6 @@ const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout:any = ref('')
 const refSportsTabs = ref()
 watch(refreshChangeTime, (val) => {
-  console.log('watch refreshChangeTime refreshChangeTime refreshChangeTime')
   if (val) {
     refSportsTabs.value?.resetParams()
     clearTimeout(timeout.value)
@@ -100,7 +99,6 @@ const timer:any = ref('')
 const onLoadToggle = ref(false)
 const onLoad = () => {
   if (onLoadToggle.value) {
-    console.log('onLoad onLoad onLoad')
     if (!finished.value) {
       if (!loading.value) {
         loading.value = true

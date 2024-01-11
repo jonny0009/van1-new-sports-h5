@@ -135,7 +135,6 @@ watch(refreshChangeTime, (val) => {
   if (val) {
     clearTimeout(timeout.value)
     timeout.value = setTimeout(() => {
-      console.log('console console')
     }, 100)
   }
 })
