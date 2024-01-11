@@ -52,7 +52,7 @@ const homeBarList = ref([
   {
     icon: 'live',
     text: '直播',
-    routerName: 'Broadcast',
+    routerName: 'Live',
     meta: {
       showSportsTabsView: true
     }
