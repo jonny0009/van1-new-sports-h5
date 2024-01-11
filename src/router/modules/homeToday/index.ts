@@ -6,7 +6,7 @@ export default {
   children: [
     {
       path: '/homeToday',
-      component: () => import('@/views/early/homeToday/index.vue'),
+      component: () => import('@/views/homeToday/index.vue'),
       name: 'HomeToday',
       meta: {
         showSportsTabsView: true,
