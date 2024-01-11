@@ -87,11 +87,3 @@ const goToSport = () => {
   })
 }
 </script>
-<style lang="scss">
-.goodArrowTitle{
-  .img{
-    width: 34px !important;
-    height: 30px !important;
-  }
-}
-</style>
