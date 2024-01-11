@@ -1,5 +1,5 @@
 <template>
-  <GlobalHeader />
+  <GlobalHeader  v-if="!$route.meta.hideGlobalHeaderView" />
   <GlobalRefresh>
     <GlobalSportsTabsView v-if="$route.meta.showSportsTabsView" />
     <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pb10 pt20" />
