@@ -1,11 +1,11 @@
 <template>
   <div class="sport-page">
     <!--
-      体育项
+      公共 体育项
     -->
     <SportsTabs ref="refSportsTabs" class="pt10" @returnSportsSuccess="returnSportsSuccess" />
     <!--
-      联赛
+      公共 联赛
     -->
     <div v-if="firstLeaguesList.length" class="my-scroll__content">
       <div class="betting-sport-nav">
@@ -20,25 +20,10 @@
         />
       </div>
     </div>
-    <!-- 联赛 -->
-    <template v-if="recommendList.length && leagueId">
-      <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
-        <van-collapse-item name="1">
-          <template #title>
-            <ArrowTitle class="mt10 mb10" :src="leagueLogo" type="6" :text="leagueName" />
-          </template>
-          <Loading v-if="!getRecommendEventsIsLoading" />
-          <template v-else>
-            <div v-if="recommendList.length" class="recommend-list">
-              <HomeMatchHandicap v-for="(item,idx) in recommendList" :key="idx" :send-params="item" />
-            </div>
-            <HomeEmpty v-else></HomeEmpty>
-          </template>
-        </van-collapse-item>
-      </van-collapse>
-    </template>
-    <!-- 推荐 -->
+
     <template v-if="!leagueId">
+
+      <!-- 推荐 -->
       <van-collapse v-model="activeNamesB" accordion :border="false" class="GlobalCollapse">
         <van-collapse-item name="b1">
           <template #title>
@@ -60,15 +45,13 @@
           </template>
         </van-collapse-item>
       </van-collapse>
-    </template>
-    <!-- 早盘 -->
-    <template v-if="!leagueId">
+
+      <!-- 早盘 -->
       <van-collapse v-model="activeNamesC" accordion :border="false" class="GlobalCollapse">
         <van-collapse-item name="c1">
           <template #title>
             <ArrowTitle class="mt10 mb10 latestArrowTitle" :src="earlyIcon" :text="$t('sport.early')" />
           </template>
-
           <Loading v-if="!getRecommendEventsIsLoading || isLoadingEarly" />
           <template v-else>
             <template v-if="earlyList.length">
@@ -83,13 +66,35 @@
             </template>
             <HomeEmpty v-else></HomeEmpty>
           </template>
-
         </van-collapse-item>
       </van-collapse>
+
     </template>
-    <!-- 冠军 -->
-    <ChampionList v-if="championList.length && leagueId" :champion-list="championList" />
+    <template v-else>
+
+      <!-- 联赛 -->
+      <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
+        <van-collapse-item name="1">
+          <template #title>
+            <ArrowTitle class="mt10 mb10" :src="leagueLogo" type="6" :text="leagueName" />
+          </template>
+          <Loading v-if="!getRecommendEventsIsLoading" />
+          <template v-else>
+            <div v-if="recommendList.length" class="recommend-list">
+              <HomeMatchHandicap v-for="(item,idx) in recommendList" :key="idx" :send-params="item" />
+            </div>
+            <HomeEmpty v-else></HomeEmpty>
+          </template>
+        </van-collapse-item>
+      </van-collapse>
+
+      <!-- 冠军 -->
+      <ChampionList :champion-list="championList" :champion-list-loading="championListLoading" />
+
+    </template>
+
     <FooterHeight />
+
   </div>
 </template>
 <script lang="ts" setup>
@@ -242,10 +247,13 @@ const getRecommendEvents = async (params:any) => {
   }
 }
 const championList: any = ref([])
+const championListLoading: any = ref(false)
 // 获取冠军
 const getChampionpPlayTypes = async () => {
   if (leagueId.value) {
+    championListLoading.value = true
     const res:any = await apiChampionpPlayTypes({ page: 1, pageSize: 10, leagueIds: leagueId.value }) || {}
+    championListLoading.value = false
     if (res.code === 200 && res.data) {
       const gameDetail:any = res?.data?.gameDetail || []
       const champions = gameDetail.map((details:any) => {
