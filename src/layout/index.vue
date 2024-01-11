@@ -1,5 +1,5 @@
 <template>
-  <GlobalHeader  v-if="!$route.meta.hideGlobalHeaderView" />
+  <GlobalHeader v-if="!$route.meta.hideGlobalHeaderView" />
   <GlobalRefresh>
     <GlobalSportsTabsView v-if="$route.meta.showSportsTabsView" />
     <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pb10 pt20" />
@@ -94,7 +94,7 @@ const backTopShow = computed(() => {
   }
 
   &.showBettingSlip {
-    bottom: 200px !important;
+    bottom: 120px !important;
   }
 }
 </style>
