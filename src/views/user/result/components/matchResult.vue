@@ -70,8 +70,6 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from 'vue'
 
-import SportsTabs from '@/components/tabs/SportsTabs/index.vue'
-
 import moment from 'moment'
 import store from '@/store'
 // import { useI18n } from 'vue-i18n'
