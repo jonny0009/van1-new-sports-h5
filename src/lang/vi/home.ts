@@ -44,5 +44,7 @@ export default {
   'Friday': 'Thứ sáu',
   'Saturday': 'Thứ bảy',
   'numberHour': '{number}tiếng',
-  'numberDay': '{number}ngày'
+  'numberDay': '{number}ngày',
+  'hot': 'nóng',
+  'todayUpcoming': 'hôm naySắp tới'
 }

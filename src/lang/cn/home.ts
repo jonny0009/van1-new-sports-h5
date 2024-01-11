@@ -44,5 +44,7 @@ export default {
   'Friday': '周五',
   'Saturday': '周六',
   'numberHour': '{number}小时',
-  'numberDay': '{number}天'
+  'numberDay': '{number}天',
+  'hot': '热门',
+  'todayUpcoming': '今天早盘'
 }

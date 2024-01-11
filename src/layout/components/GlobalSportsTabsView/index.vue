@@ -26,32 +26,34 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 import router from '@/router'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 // 热门 Live 直播  今日  早盘 赌场
 const homeBarList = ref([
   {
     icon: 'home',
-    text: '热门',
+    text: t('home.hot'),
     routerName: 'Home'
   },
   {
     icon: 'sportlive',
-    text: '滚球',
+    text: t('sport.RB'),
     routerName: 'Sportlive'
   },
   {
     icon: 'today',
-    text: '今天早盘',
+    text: t('home.todayUpcoming'),
     routerName: 'HomeToday'
   },
   {
     icon: 'homeTime',
-    text: '早盘',
+    text: t('home.latestMatch'),
     routerName: 'Sport'
   },
   {
     icon: 'live',
-    text: '直播',
+    text: t('home.live'),
     routerName: 'Live',
     meta: {
       showSportsTabsView: true
@@ -59,7 +61,7 @@ const homeBarList = ref([
   },
   {
     icon: 'casino',
-    text: '赌场',
+    text: t('home.casino'),
     routerName: 'Casino'
   }
 ])
