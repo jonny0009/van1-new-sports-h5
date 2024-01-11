@@ -17,6 +17,7 @@ declare interface App {
 }
 
 declare interface User {
+  isAnonymity: any
   userConfig: any
   userInfo: any
   balance: any
