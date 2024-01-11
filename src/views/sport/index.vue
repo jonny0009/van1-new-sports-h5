@@ -44,19 +44,20 @@
           <template #title>
             <ArrowTitle class="mt10 mb10 goodArrowTitle" :src="recommendIcon" :text="$t('sport.recommend')" />
           </template>
-          <Loading v-if="!getRecommendEventsIsLoading" />
+          <Loading v-if="!getRecommendEventsIsLoading || isLoadingRecommend" />
           <template v-else>
-            <div v-if="recommendList.length" class="recommend-list">
-              <HomeMatchHandicap v-for="(item,idx) in recommendList" :key="idx" :send-params="item" />
-            </div>
+            <template v-if="recommendList.length">
+              <div class="recommend-list">
+                <HomeMatchHandicap v-for="(item,idx) in recommendList" :key="idx" :send-params="item" />
+              </div>
+              <div class="Button-MatchMore mt20 mb20" :class="recommendLoadAll?'no-more':''" @click="moreRecommend">
+                <span>
+                  {{ recommendLoadAll ? $t('live.noMore') : $t('home.lookMoreMatch') }}
+                </span>
+              </div>
+            </template>
             <HomeEmpty v-else></HomeEmpty>
           </template>
-          <div v-if="!isLoadingRecommend && recommendList.length" class="Button-MatchMore mt20 mb20" :class="recommendLoadAll?'no-more':''" @click="moreRecommend">
-            <span>
-              {{ recommendLoadAll?$t('live.noMore'):$t('home.lookMoreMatch') }}
-            </span>
-          </div>
-          <Loading v-if="isLoadingRecommend" />
         </van-collapse-item>
       </van-collapse>
     </template>
@@ -67,19 +68,22 @@
           <template #title>
             <ArrowTitle class="mt10 mb10 latestArrowTitle" :src="earlyIcon" :text="$t('sport.early')" />
           </template>
-          <Loading v-if="!getRecommendEventsIsLoading" />
+
+          <Loading v-if="!getRecommendEventsIsLoading || isLoadingEarly" />
           <template v-else>
-            <div v-if="earlyList.length" class="early-list">
-              <HomeMatchHandicap v-for="(item,idx) in earlyList" :key="idx" :send-params="item" />
-            </div>
+            <template v-if="earlyList.length">
+              <div class="early-list">
+                <HomeMatchHandicap v-for="(item,idx) in earlyList" :key="idx" :send-params="item" />
+              </div>
+              <div class="Button-MatchMore mt20 mb20" :class="earlyLoadAll?'no-more':''" @click="moreEarly">
+                <span>
+                  {{ earlyLoadAll?$t('live.noMore'):$t('home.lookMoreMatch') }}
+                </span>
+              </div>
+            </template>
             <HomeEmpty v-else></HomeEmpty>
           </template>
-          <div v-if="!isLoadingEarly && earlyList.length" class="Button-MatchMore mt20 mb20" :class="earlyLoadAll?'no-more':''" @click="moreEarly">
-            <span>
-              {{ earlyLoadAll?$t('live.noMore'):$t('home.lookMoreMatch') }}
-            </span>
-          </div>
-          <Loading v-if="isLoadingEarly" />
+
         </van-collapse-item>
       </van-collapse>
     </template>
