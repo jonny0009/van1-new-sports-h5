@@ -3,7 +3,7 @@
     <!--
       公共 体育项
     -->
-    <SportsTabs ref="refSportsTabs" class="pt10" @returnSportsSuccess="returnSportsSuccess" />
+    <SportsTabs ref="refSportsTabs" class="pt20" @returnSportsSuccess="returnSportsSuccess" />
     <!--
       公共 联赛
     -->
