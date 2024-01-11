@@ -6,7 +6,10 @@ export default {
     {
       name: 'Match',
       path: '',
-      component: () => import('@/views/match/list.vue')
+      component: () => import('@/views/match/list.vue'),
+      meta: {
+        showSportsTabsView: true
+      }
     },
 
     // 详情

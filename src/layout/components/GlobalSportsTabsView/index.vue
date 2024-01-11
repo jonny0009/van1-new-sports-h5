@@ -4,14 +4,12 @@
       v-for="(item, idx) in homeBarList"
       :key="idx"
       class="item"
-      :class="
-        [
-          {
-            'active':item.routerName === active
-          },
-          item.routerName
-        ]
-      "
+      :class="[
+        {
+          active: item.routerName === active
+        },
+        item.routerName
+      ]"
       @click="goClick(item)"
     >
       <SportsIcon :icon-src="item.icon" />
@@ -52,7 +50,7 @@ const homeBarList = ref([
   {
     icon: 'live',
     text: '直播',
-    routerName: 'Live',
+    routerName: 'Match',
     meta: {
       showSportsTabsView: true
     }
@@ -64,52 +62,51 @@ const homeBarList = ref([
   }
 ])
 
-const goClick = ({ routerName }:any) => {
+const goClick = ({ routerName }: any) => {
   const params = {
     name: routerName
   }
   router.push(params)
 }
 
-const active:any = computed(() => {
+const active: any = computed(() => {
   const active = router?.currentRoute?.value?.name || 'Home'
   return active
 })
-
 </script>
 <style lang="scss" scoped>
-.sportsTabsView{
+.sportsTabsView {
   display: flex;
   overflow: auto;
   &::-webkit-scrollbar {
     height: 0;
     display: none;
   }
-  .item{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
+  .item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     color: var(--color-global-text);
     min-width: 124px;
     padding-top: 40px;
-    .name{
+    .name {
       height: 20px;
       line-height: 20px;
       font-size: 20px;
       margin-top: 7px;
       font-weight: 600;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       width: 100%;
       text-align: center;
-      span{
+      span {
         display: none;
-        overflow:hidden;
-        text-overflow:ellipsis;
-        white-space:nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         width: 100%;
         text-align: center;
         height: 20px;
@@ -117,37 +114,37 @@ const active:any = computed(() => {
         font-size: 20px;
       }
     }
-    .iconfont{
+    .iconfont {
       position: relative;
-      font-size:48px;
+      font-size: 48px;
       font-weight: 100;
       height: auto;
     }
-    &.active{
-      color:var(--color-primary);
-      .name{
-        span{
+    &.active {
+      color: var(--color-primary);
+      .name {
+        span {
           display: inline-block;
         }
-       }
+      }
     }
 
-    &.BK_AFT{
-      .iconfont{
+    &.BK_AFT {
+      .iconfont {
         top: 2px;
-        font-size:52px;
+        font-size: 52px;
       }
     }
-    &.OP_SN{
-      .iconfont{
+    &.OP_SN {
+      .iconfont {
         top: 2px;
-        font-size:52px;
+        font-size: 52px;
       }
     }
-    &.OP_BO{
-      .iconfont{
-        &.icon-blue-OP_BO{
-          font-size:52px;
+    &.OP_BO {
+      .iconfont {
+        &.icon-blue-OP_BO {
+          font-size: 52px;
         }
       }
     }
