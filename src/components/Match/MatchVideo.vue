@@ -48,8 +48,8 @@ const initVideo = (url: string) => {
     preload: 'auto',
     width: '100%',
     height: '100%',
-    autoplay: true,
-    muted: false, // 自动播放bug
+    autoplay: false,
+    muted: false,
     controls: true,
     fluid: true,
     // bigPlayButton: false,
@@ -57,10 +57,10 @@ const initVideo = (url: string) => {
     errorDisplay: false,
     sources: [
       {
-        src: url,
-        type: 'application/x-mpegURL'
-        // src: 'https://vjs.zencdn.net/v/oceans.mp4',
-        // type: 'video/mp4'
+        // src: url,
+        // type: 'application/x-mpegURL'
+        src: 'https://vjs.zencdn.net/v/oceans.mp4',
+        type: 'video/mp4'
       }
     ]
   }
@@ -126,9 +126,6 @@ onUnmounted(() => {
     font-size: 20px;
     height: 100%;
     padding-top: 0 !important;
-    video {
-      object-fit: cover;
-    }
   }
 
   .mask-loading {
