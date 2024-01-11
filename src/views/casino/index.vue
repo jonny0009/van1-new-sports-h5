@@ -1,6 +1,6 @@
 <template>
   <div class="casino-page">
-    赌场即将推出
+    {{ $t('home.stayTuned') }}
   </div>
 </template>
 
