@@ -1,29 +1,54 @@
-import { Ref, ref } from 'vue'
-import { playGroup } from '@/api/live'
+import { Ref, ref, computed, watch, onMounted } from 'vue'
 import { lib } from 'xcsport-lib'
 import { MarketInfo } from '@/entitys/MarketInfo'
+import { playGroup } from '@/api/live'
+import store from '@/store'
 
+// configSettingNew接口 -> formatType
+const FORMAT_TYPE: any = {
+  1: 'veteran',
+  2: 'novice',
+  3: 'veteran'
+}
 export function useBetting() {
-  const matchInfo = ref()
+  const matchInfo = computed(() => store.state.match.matchInfo)
+  const userConfig = computed(() => store.state.user.userConfig)
 
-  const playGroupAll: Ref<any> = ref([])
-  const playGroupBet: Ref<any> = ref([])
-  const getPlayGroupType = async (matchParams: any) => {
-    const { gameType } = (matchInfo.value = matchParams)
-    return new Promise(async (resolve) => {
+  watch(
+    () => matchInfo.value,
+    () => {
+      fetchGroup()
+    }
+  )
+
+  onMounted(() => {
+    fetchGroup()
+  })
+
+  // 1
+  const playGroupList: Ref<any[]> = ref([])
+  const fetchGroup = async () => {
+    const { formatType } = userConfig.value
+    const { gameType } = matchInfo.value
+    if (gameType) {
       const res: any = await playGroup({ gameType })
       const data = res.data || {}
       if (res.code == 200) {
-        const veteranList = data['veteran']
-        playGroupAll.value = veteranList.find((m: any) => m.id == 0)
-        playGroupBet.value = getBetData()
-
-        resolve(playGroupBet.value)
+        const patternList = data[FORMAT_TYPE[formatType]]
+        playGroupList.value = patternList
       }
-    })
+    }
   }
 
-  const getBetData = () => {
+  const currentGroupPlay = ref([])
+  const findGroupById = (id: string) => {
+    const currentGroup = playGroupList.value.find((m: any) => m.id?.toString() === id)
+    currentGroupPlay.value = currentGroup.playData
+    getBettingData()
+  }
+
+  const playBettingList: Ref<any[]> = ref([])
+  const getBettingData = () => {
     const { detail, gameType, systemId, homeTeamAbbr, awayTeamAbbr } = matchInfo.value
     if (detail && detail.length > 0) {
       const playDataList: any[] = []
@@ -69,11 +94,11 @@ export function useBetting() {
 
       const noExist = ['HDNB2', 'HDNB', 'HTS2', 'HW3', 'W3', 'W3_conner', 'PD_conner', 'HT_conner', 'T_conner']
       const playDataListNew = playDataList.filter((item) => !noExist.includes(item.playType))
-      const betPlayTypeSort = playTypeSort(playDataListNew, playGroupAll.value.playData)
+      const betPlayTypeSort = playTypeSort(playDataListNew, currentGroupPlay.value)
       const betPlayRatioSort = playRatioSort(betPlayTypeSort)
       const betPlayMergeList = playTypeMerge(betPlayRatioSort, 'typeTemp')
 
-      return betPlayMergeList
+      playBettingList.value = betPlayMergeList
     }
   }
 
@@ -90,7 +115,7 @@ export function useBetting() {
         }
         sortMap[collectIndex].push(item)
       } else {
-        otherArray.push(item)
+        // otherArray.push(item)
       }
     })
     const sortMapKeys = Object.keys(sortMap)
@@ -98,9 +123,7 @@ export function useBetting() {
       const plays = sortMap[key]
       sortArray.push(...plays)
     })
-    return sortArray.concat(otherArray).filter((item) => {
-      return item
-    })
+    return sortArray.concat(otherArray)
   }
 
   const playTypeMerge = (target: any[], key: string = 'playType') => {
@@ -151,5 +174,5 @@ export function useBetting() {
     return resultSort
   }
 
-  return { getPlayGroupType }
+  return { findGroupById, playGroupList, playBettingList }
 }

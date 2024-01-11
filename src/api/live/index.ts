@@ -87,3 +87,28 @@ export const lastMessageByPage = (params: any) => {
     params
   })
 }
+
+// 串关-赛事类型
+export const matchConditionApi = (params: any) => {
+  return request({
+    url: '/ai/mobile/game/multiNote/matchCondition',
+    method: 'get',
+    params
+  })
+}
+
+export const comBoByGameTypeApi = (params: any) => {
+  return request({
+    url: '/ai/mobile/matches/comBoByGameType',
+    method: 'get',
+    params
+  })
+}
+
+export const matchListApi = (params: any) => {
+  return request({
+    url: '/ai/mobile/game/multiNote/matchList',
+    method: 'get',
+    params
+  })
+}
