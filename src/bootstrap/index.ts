@@ -10,6 +10,7 @@ export default async () => {
 
   if (searchParams.token) {
     store.commit('user/SET_TOKEN', searchParams.token)
+    store.commit('user/SET_ANONYMITY', false)
   }
   if (searchParams.theme) {
     store.commit('app/SET_THEME', searchParams.theme)
@@ -18,17 +19,21 @@ export default async () => {
   // 商户语言
   // await store.dispatch('app/queryCMerLanguage')
   // 商户配置
-  store.dispatch('app/businessConfig')
+  await store.dispatch('app/businessConfig')
   // 商户配置2
   store.dispatch('app/merchantConfig')
   // 模块控制
   store.dispatch('app/moduleConfig')
   modifyRatioTypeListMapping()
-  // 获取全部体育项
-  store.dispatch('app/getAllSports')
   // 查询单双线玩法
   store.dispatch('app/getDoubleLineInfo')
+  // 匿名登录
+  if (store.state.app.businessConfig.anonyTokenFlag === 1 && !getToken()) {
+    await store.dispatch('user/anonyToken')
+  }
   if (getToken()) {
+    // 获取全部体育项
+    store.dispatch('app/getAllSports')
     // 商户语言
     store.dispatch('app/queryCMerLanguage')
     // 获取账号信息

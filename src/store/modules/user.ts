@@ -2,10 +2,11 @@ import { Module } from 'vuex'
 import { login, playAccount, getBalance } from '@/api/login'
 import { getCMerAccessWallet, betRecordTab, getGameManyInfo, selectChampionManyName, playerInfo, getCashoutInfo, confirmCashout } from '@/api/user'
 import { User } from '#/store'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, getAnonymity, setAnonymity } from '@/utils/auth'
 import { configSettingNew } from '@/api/auth'
 import localStore from '@/utils/localStore'
-
+import { anonyToken } from '@/api/common'
+const isAnonymity = getAnonymity()
 const userModule: Module<User, any> = {
   namespaced: true,
   state: {
@@ -19,12 +20,17 @@ const userModule: Module<User, any> = {
     teamNameList: [],
     championLangList: [],
     peopleInfo: {},
-    aheadOrderList: []
+    aheadOrderList: [],
+    isAnonymity
   },
   mutations: {
     SET_TOKEN: (state, token: string) => {
       state.token = token
       setToken(token)
+    },
+    SET_ANONYMITY: (state, status) => {
+      state.isAnonymity = status
+      setAnonymity(status)
     }
 
   },
@@ -37,16 +43,10 @@ const userModule: Module<User, any> = {
             const { code, data } = res || {}
             if (code === 200) {
               // eslint-disable-next-line camelcase
-              const { access_token, downloadFlag } = data || {}
+              const { access_token } = data || {}
 
-              // token
               commit('SET_TOKEN', access_token)
-
-              // 用户名
-              commit('SET_NAME', userInfo.account)
-
-              // 用户下载标识
-              commit('SET_DOWNLOADFLAG', downloadFlag)
+              commit('SET_ANONYMITY', false)
             }
             resolve(res)
           })
@@ -56,7 +56,7 @@ const userModule: Module<User, any> = {
       })
     },
     // user logout
-    logout({ state, dispatch }) {
+    logout({ dispatch }) {
       return new Promise((resolve) => {
         dispatch('clearUserInfo')
         resolve({})
@@ -67,6 +67,14 @@ const userModule: Module<User, any> = {
       localStore.setItem('plateMaskKey', params.handicapType)
       const res = await configSettingNew(params)
       state.userConfig = res.data || {}
+    },
+    // 用户配置
+    async anonyToken({ commit }) {
+      const res = await anonyToken()
+      const token = res.data
+      setToken(token)
+      commit('SET_TOKEN', token)
+      commit('SET_ANONYMITY', true)
     },
     // 用户信息
     async userInfo({ state }, params = {}) {
