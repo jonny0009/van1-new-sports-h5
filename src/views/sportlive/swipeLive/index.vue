@@ -95,12 +95,17 @@ onBeforeMount(() => {
       }
     }
   }
-  .van-swipe__indicators {
-    bottom: 12px;
-    .van-swipe__indicator {
-      width: 14px;
-      height: 14px;
+
+}
+</style>
+<style lang="scss" >
+  .swipeLive{
+    .van-swipe__indicators {
+      bottom: 12px;
+      .van-swipe__indicator {
+        width: 14px;
+        height: 14px;
+      }
     }
   }
-}
 </style>
