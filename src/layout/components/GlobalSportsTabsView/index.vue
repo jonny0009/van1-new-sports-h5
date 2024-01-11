@@ -51,7 +51,7 @@ const homeBarList = ref([
   },
   {
     icon: 'live',
-    text: '直播',
+    text: t('home.live'),
     routerName: 'Match',
     meta: {
       showSportsTabsView: true
