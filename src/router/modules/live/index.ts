@@ -1,3 +1,5 @@
+/** 该文件废弃 */
+
 import Layout from '@/layout/index.vue'
 export default {
   path: '/live',
@@ -6,10 +8,7 @@ export default {
     {
       name: 'Live',
       path: '',
-      component: () => import('@/views/live/index.vue'),
-      meta: {
-        showSportsTabsView: true
-      }
+      component: () => import('@/views/live/index.vue')
     },
     {
       name: 'LiveDetail',
