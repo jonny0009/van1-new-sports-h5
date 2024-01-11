@@ -81,7 +81,8 @@
           </Singles>
         </template>
         <Parlay v-else :markets="markets"></Parlay>
-        <ActionBar v-if="open" />
+        <Anonymity v-if="isAnonymity"></Anonymity>
+        <ActionBar v-else-if="open" />
       </div>
       <Result v-if="type !== 3 && results.length"></Result>
       <div v-if="type === 3" class="bet-content bet-pending">
@@ -99,6 +100,7 @@ import Parlay from './components/Parlay/index.vue'
 import Singles from './components/Single/index.vue'
 import Result from './components/Result/index.vue'
 import ActionBar from './components/ActionBar/index.vue'
+import Anonymity from './components/Anonymity/index.vue'
 import Keyboard from './components/Keyboard/index.vue'
 import Pending from './components/Pending/index.vue'
 import { useI18n } from 'vue-i18n'
@@ -147,6 +149,7 @@ const betsProfit = computed(() => store.getters['betting/betsProfit'])
 const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
 const combosIor = computed(() => store.getters['betting/combosIor'])
 const userConfig = computed(() => store.state.user.userConfig)
+const isAnonymity = computed(() => store.state.user.isAnonymity)
 store.dispatch('betting/setMode', 1)
 const emit = defineEmits(['close'])
 watch(() => isOne.value, () => {
