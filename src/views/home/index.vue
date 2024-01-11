@@ -1,15 +1,11 @@
 <template>
   <div class="home-page">
-    <!-- 热门赛事 -->
     <HotMatch ref="refHotMatch" />
-    <!-- 推荐比赛 -->
     <GoodMatch ref="refGoodMatch" />
-    <!-- 早盘 -->
     <LatestMatch ref="refLatestMatch" />
     <FooterHeight />
   </div>
 </template>
-
 <script lang="ts" setup>
 import HotMatch from './HotMatch/index.vue'
 import GoodMatch from './GoodMatch/index.vue'
@@ -18,7 +14,6 @@ import store from '@/store'
 import { onMounted, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
-
 onMounted(() => {
   if (route.query.gidm) {
     const params = JSON.parse(route.query.obj as string)
