@@ -71,7 +71,7 @@
                   <div class="flex-1"></div>
                   <div v-if="showFUTime" class="up-match-time" v-html="showFUTime"></div>
                 </div>
-                <div class="up-match-league">
+                <div class="up-match-league hasSportsIcon">
                   <SportsIcon :icon-src="props.sendParams.gameType" />
                   <div class="text">{{ getLeagueShortName(props.sendParams) }}</div>
                 </div>
