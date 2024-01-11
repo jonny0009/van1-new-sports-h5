@@ -72,7 +72,7 @@ const goClick = ({ routerName }:any) => {
 }
 
 const active:any = computed(() => {
-  const active = router?.currentRoute?.value?.name || ''
+  const active = router?.currentRoute?.value?.name || 'Home'
   return active
 })
 
