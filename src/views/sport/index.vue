@@ -1,5 +1,12 @@
 <template>
   <div class="sport-page">
+    <!--
+      体育项
+    -->
+    <SportsTabs ref="refSportsTabs" class="pt10" @returnSportsSuccess="returnSportsSuccess" />
+    <!--
+      联赛
+    -->
     <div class="my-scroll__content">
       <div class="betting-sport-nav">
         <TextButton :text="$t('sport.all')" :active="!leagueId" @click="clickLeague({})" />
@@ -13,7 +20,6 @@
         />
       </div>
     </div>
-
     <!-- 联赛 -->
     <template v-if="recommendList.length && leagueId">
       <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
@@ -31,7 +37,6 @@
         </van-collapse-item>
       </van-collapse>
     </template>
-
     <!-- 推荐 -->
     <template v-if="!leagueId">
       <van-collapse v-model="activeNamesB" accordion :border="false" class="GlobalCollapse">
@@ -55,7 +60,6 @@
         </van-collapse-item>
       </van-collapse>
     </template>
-
     <!-- 早盘 -->
     <template v-if="!leagueId">
       <van-collapse v-model="activeNamesC" accordion :border="false" class="GlobalCollapse">
@@ -79,19 +83,13 @@
         </van-collapse-item>
       </van-collapse>
     </template>
-
     <!-- 冠军 -->
     <ChampionList v-if="championList.length && leagueId" :champion-list="championList" />
-
     <FooterHeight />
-
   </div>
 </template>
-
 <script lang="ts" setup>
-
 import earlyIcon from '@/assets/images/home/title-time.png'
-
 import recommendIcon from '@/assets/images/home/title-recommend.png'
 import ChampionList from './champion/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
@@ -99,21 +97,19 @@ import { useRoute, useRouter } from 'vue-router'
 import { ref, onBeforeMount, watch, computed } from 'vue'
 import { apiChampionpPlayTypes } from '@/api/champion'
 import { firstLeagues, recommendEvents } from '@/api/home'
-
 import { MarketInfo } from '@/entitys/MarketInfo'
+const returnSportsSuccess = (item:any) => {
+  console.log(item)
+}
 const { currentRoute } = useRouter()
 const route:any = useRoute()
-
 const activeNames = ref('1')
 const activeNamesB = ref('b1')
 const activeNamesC = ref('c1')
-
 const leagueId: any = ref(route.query.leagueId)
-
 const gameType = computed(() => {
   return route.params?.type || 'FT'
 })
-
 const leagueLogo: any = ref()
 const leagueName: any = ref()
 const recommendPage: any = ref(1)
@@ -122,12 +118,10 @@ const earlyPage: any = ref(1)
 const earlyPageSize: any = ref(10)
 const earlyLoadAll: any = ref(false)
 const recommendLoadAll: any = ref(false)
-
 onBeforeMount(async () => {
   getFirstLeagues()
   initData()
 })
-
 watch(() => currentRoute.value, () => {
   leagueId.value = ''
   recommendPage.value = 1
@@ -136,7 +130,6 @@ watch(() => currentRoute.value, () => {
   initData()
 }
 )
-
 const initData = async () => {
   if (leagueId.value) {
     // 按联赛查询
@@ -154,7 +147,6 @@ const initData = async () => {
     getRecommendEvents(earlyParames.value)
   }
 }
-
 const firstLeaguesList: any = ref([])
 // 获取一级联赛
 const getFirstLeagues = async () => {
@@ -167,7 +159,6 @@ const getFirstLeagues = async () => {
     }
   }
 }
-
 // 早盘更多
 const isLoadingEarly: any = ref(false)
 const moreEarly = async () => {
@@ -189,7 +180,6 @@ const moreEarly = async () => {
   }
   isLoadingEarly.value = false
 }
-
 // 推荐更多
 const isLoadingRecommend: any = ref(false)
 const moreRecommend = async () => {
@@ -211,7 +201,6 @@ const moreRecommend = async () => {
   }
   isLoadingRecommend.value = false
 }
-
 const recommendList: any = ref([])
 const earlyList: any = ref([])
 const getRecommendEventsIsLoading = ref(false)
@@ -225,7 +214,6 @@ const getRecommendEvents = async (params:any) => {
     if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
       listFlag = res.data.baseData
     }
-
     // 推荐 - 选择联赛
     if (params.gradeType === 1 || leagueId.value) {
       if (listFlag.length) {
@@ -246,7 +234,6 @@ const getRecommendEvents = async (params:any) => {
     }
   }
 }
-
 const championList: any = ref([])
 // 获取冠军
 const getChampionpPlayTypes = async () => {
@@ -272,14 +259,11 @@ const getChampionpPlayTypes = async () => {
     championList.value = []
   }
 }
-
 const clickLeague = (item: any) => {
   leagueId.value = item.leagueId
   initData()
 }
-
 </script>
-
 <style lang="scss" scoped>
 .sport-page{
   padding: 0 36px;
@@ -295,7 +279,6 @@ const clickLeague = (item: any) => {
     .betting-sport-nav{
       margin-top: 26px;
       margin-bottom: 5px;
-      // width: 1600px;
       width: 100%;
       max-height: 140px;
       white-space: normal;
@@ -306,7 +289,6 @@ const clickLeague = (item: any) => {
         margin-bottom: 10px;
       }
     }
-
   }
 }
 </style>

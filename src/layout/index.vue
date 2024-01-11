@@ -86,7 +86,7 @@ const backTopShow = computed(() => {
 .GlobalTop {
   background: var(--color-primary);
   right: 40px !important;
-  bottom: 100px !important;
+  bottom: 40px !important;
 
   .van-icon {
     transform: rotate(180deg);

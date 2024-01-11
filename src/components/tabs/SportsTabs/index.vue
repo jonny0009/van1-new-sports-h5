@@ -44,7 +44,6 @@ defineExpose({
   active,
   resetParams
 })
-
 </script>
 <style lang="scss" scoped>
 </style>
