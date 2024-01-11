@@ -96,12 +96,12 @@ onBeforeMount(() => {
 
 <style lang="scss" scoped>
   .onImgError{
-    width: 176px;
+    width: 200px;
     height: 176px;
     display: inline-block;
     background: url('@/assets/images/home/other/league.png') no-repeat center;
     background-size: cover;
-    border-radius: 46px;
+    border-radius: 20px;
   }
 
   .Hot-Match-Group-Warp{
