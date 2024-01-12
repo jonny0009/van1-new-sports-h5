@@ -6,7 +6,7 @@
       </template>
       <template #title>
         <img v-if="ifBLue" class="img_2" src="@/assets/images/user/blue/logo1.png" alt="" />
-        <img v-else class="img_2" src="@/assets/images/login/ai-logo@2x.png" alt="" />
+        <img v-else class="img_2" src="@/assets/images/user/logo1.png" alt="" />
 
       </template>
       <template #right>
