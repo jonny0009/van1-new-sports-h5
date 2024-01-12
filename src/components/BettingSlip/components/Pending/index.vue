@@ -1,7 +1,6 @@
 <template>
   <!-- 列表 -->
   <Nothing v-if="!pendingData.length"></Nothing>
-  <div v-if="!pendingData.length" class="no-data-height" />
   <div v-if="pendingData.length" class="dataList">
     <div v-for="(item, index) in pendingData" :key="index">
       <Single v-if="Number(item.parlayNum) ===1" :item="item" class="item"></Single>
@@ -28,6 +27,9 @@ const getTeamLang = () => {
   const gidmsArr: any = []
   // 冠军国际化
   const championGidms: any = []
+  // 提前结算信息
+  // const aheadOrderList: any = []
+
   pendingData.value.map((m:any) => {
     m.betDTOList.map((n:any) => {
       const { championType, systemId, gidm } = n
@@ -36,18 +38,25 @@ const getTeamLang = () => {
       }
       gidmsArr.push(systemId)
     })
+    // if (m.creditState === 0) {
+    //   const orderObj = {
+    //     orderId: m.orderId
+    //   }
+    //   aheadOrderList.push(orderObj)
+    // }
   })
   store.dispatch('user/getMoreTeamList', gidmsArr.join())
   store.dispatch('user/getChampionLang', championGidms.join())
+
+  // if (aheadOrderList.length) {
+  //   store.dispatch('user/getOrderList', JSON.stringify(aheadOrderList))
+  // }
 }
 </script>
 
 <style lang="scss" scoped>
-.no-data-height{
-  height: 100px;
-}
 .dataList {
-  // margin-bottom: 5px;
+  padding: 20px 0;
   .item {
     margin: 0 auto;
     width: 695px;

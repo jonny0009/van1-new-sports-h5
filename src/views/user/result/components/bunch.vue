@@ -8,6 +8,9 @@
           <SportsIcon v-for="(item2, index1) in item.betDTOList" :key="index1" :icon-src="item2.gameType" class="ball-img" />
         </div>
       </div>
+      <div class="cur-odds">
+        @<span v-points="item.sioRatio"></span>
+      </div>
       <!-- <img class="img_1" src="@/assets/images/user/down1.png" alt="" /> -->
       <!-- <div class="title-right">
         <div class="title-right-1">
@@ -56,13 +59,13 @@
             <span>
 
               <!-- 平局图标找到了 -->
-              <img v-if="item.state === 1" class="img_1" src="@/assets/images/user/postpone.svg" alt="" />
-              <img v-else-if="item1.betResultDetail === 'W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
-              <img v-else-if="item1.betResultDetail === 'L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
-              <img v-else-if="item1.betResultDetail === 'LW'" class="img_1" src="@/assets/images/user/LW.png" alt="" />
-              <img v-else-if="item1.betResultDetail === 'LL'" class="img_1" src="@/assets/images/user/LL.svg" alt="" />
-              <img v-else-if="item1.betResultDetail === 'P'" class="img_1" src="@/assets/images/user/P.svg" alt="" />
-              <img v-else-if="item1.betResultDetail === 'D'" class="img_1" src="@/assets/images/user/D1.png" alt="" />
+              <SvgIcon v-if="Number(item.cashoutType) === 2" name="user-ahead" class="icon-svg-1" />
+              <SvgIcon v-if="item.state === 1" name="user-postpone" class="icon-svg-1" />
+              <SvgIcon
+                v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
+                :name="`user-${item1.betResultDetail}`"
+                class="icon-svg-1"
+              />
               <img v-else class="img_1" src="@/assets/images/user/D1.png" alt="" />
 
             </span>
@@ -85,7 +88,7 @@
     <div class="money-num">
       <div class="money-num-1">
         <span>{{ $t('user.BettingAmount') }}:</span>
-        <span>
+        <span class="money-num-money">
           <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
           <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
           <SvgIcon v-else name="user-usdt" class="img_1" />
@@ -161,6 +164,13 @@ const props = defineProps({
 const getProfit = (item: any) => {
   return item.gold * item.sioRatio
 }
+// 图标状态
+const battleStatus = (val: any) => {
+  if (val === 'W' || val === 'LW' || val === 'L' || val === 'LL' || val === 'P') {
+    return true
+  }
+  return false
+}
 
 // 汇率颜色
 const getRatioColor = (val: any) => {
@@ -205,7 +215,7 @@ const getLangBet = (item: any) => {
 
 <style lang="scss" scoped>
 .color-1 {
-  color: var(--color-bg-1);
+  color: var(--color-bet-iortext);
 }
 
 .color-2 {
@@ -235,10 +245,13 @@ const getLangBet = (item: any) => {
     color: var(--color-search-box-text-1);
     font-weight: 600;
 
-    .img_1 {
-      font-size: 24px;
-      color: var(--color-text-3);
-    }
+  }
+  .cur-odds {
+    font-family: PingFangSC-Semibold;
+    font-size: 30px;
+    color: var(--color-bet-iortext);
+    letter-spacing: 0;
+    font-weight: 600;
   }
 
   .title-right {
@@ -327,10 +340,13 @@ const getLangBet = (item: any) => {
     .two {
       font-family: PingFangSC-Regular;
       font-size: 24px;
-      color: #546371;
       letter-spacing: 0;
       font-weight: 400;
-
+      color: var(--color-text-1);
+      .icon-svg-1 {
+        font-size: 32px;
+        margin-right: 5px;
+      }
       .img_1 {
         width: 40px;
         height: 30px;
@@ -351,7 +367,8 @@ const getLangBet = (item: any) => {
         margin-left: 8px;
         font-family: PingFangSC-Semibold;
         font-size: 24px;
-        color: var( --color-bg-1);
+        // color: var( --color-bg-1);
+        color: var(--color-bet-iortext);
         letter-spacing: 0;
         font-weight: 600;
       }
@@ -377,12 +394,16 @@ const getLangBet = (item: any) => {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    .money-num-money{
+      color: var(--color-search-box-text-1);
+
+    }
 
     .img_1 {
       margin-right: 5px;
       width: 17px;
       height: 21px;
-      color: var(--color-text-1);
+      color: var(--color-search-box-text-1);
     }
   }
 
@@ -400,12 +421,14 @@ const getLangBet = (item: any) => {
       margin-right: 5px;
       width: 20px;
       height: 25px;
-      color: var(--color-bg-1);
+      // color: var(--color-bg-1);
+      color: var(--color-bet-iortext);
     }
 
     .num {
       font-size: 30px;
-      color: var(--color-bg-1);
+      // color: var(--color-bg-1);
+      color: var(--color-bet-iortext);
     }
   }
 }

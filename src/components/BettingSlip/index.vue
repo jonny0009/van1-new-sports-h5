@@ -84,7 +84,7 @@
         <ActionBar v-if="open" />
       </div>
       <Result v-if="type !== 3 && results.length"></Result>
-      <div v-if="type == 3" class="bet-content">
+      <div v-if="type == 3" class="bet-content bet-pending">
         <Pending></Pending>
       </div>
     </div>
@@ -420,7 +420,7 @@ defineExpose({
         font-family: PingFangSC-Medium;
         font-size: 23px;
         color: #FFFFFF;
-        background-color: var(--color-bg-1);
+        background-color: var(--color-bet-iortext);
         letter-spacing: 0;
         text-align: center;
         font-weight: 500;
@@ -444,7 +444,7 @@ defineExpose({
       bottom: 0;
       height: 6px;
       left: 0;
-      background-color: #000;
+      background-color: var(--color-text-5);
       width: 27vw;
       transition: all .3s;
       border-radius: 3px;
@@ -483,6 +483,9 @@ defineExpose({
         font-weight: 600;
       }
     }
+  }
+  .bet-pending{
+    padding: 0 0;
   }
 
 }

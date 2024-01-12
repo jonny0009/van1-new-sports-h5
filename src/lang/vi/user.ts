@@ -22,7 +22,7 @@ export default {
   SettlementTime: 'Thời gian thanh toán',
   userName: 'Tên tài khoản',
   Handicap: 'Chấp',
-  WelcomeToAI: 'Chào mừng bạn đến với AI!',
+  WelcomeToAI: 'Chào mừng bạn đến với 7 Lucky!',
   text1: 'Nền tảng xã hội thể thao hàng đầu thế giới',
   register: 'Đăng ký',
   logOn: 'Đăng nhập',

@@ -55,13 +55,13 @@
             <span>
 
               <!-- 平局图标找到了 -->
-              <img v-if="item.state === 1" class="img_1" src="@/assets/images/user/postpone.svg" alt="" />
-              <img v-else-if="item1.betResultDetail === 'W'" class="img_1" src="@/assets/images/user/win.svg" alt="" />
-              <img v-else-if="item1.betResultDetail === 'L'" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
-              <img v-else-if="item1.betResultDetail === 'LW'" class="img_1" src="@/assets/images/user/LW.png" alt="" />
-              <img v-else-if="item1.betResultDetail === 'LL'" class="img_1" src="@/assets/images/user/LL.svg" alt="" />
-              <img v-else-if="item1.betResultDetail === 'P'" class="img_1" src="@/assets/images/user/P.svg" alt="" />
-              <img v-else-if="item1.betResultDetail === 'D'" class="img_1" src="@/assets/images/user/D1.png" alt="" />
+              <SvgIcon v-if="Number(item.cashoutType) === 2" name="user-ahead" class="icon-svg-1" />
+              <SvgIcon v-if="item.state === 1" name="user-postpone" class="icon-svg-1" />
+              <SvgIcon
+                v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
+                :name="`user-${item1.betResultDetail}`"
+                class="icon-svg-1"
+              />
               <img v-else class="img_1" src="@/assets/images/user/D1.png" alt="" />
 
             </span>
@@ -72,7 +72,7 @@
       <div class="top3">
         <div class="one">
           <span>{{ $t('user.BettingAmount') }}</span>
-          <div>
+          <div class="money-num-money">
 
             <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
             <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
@@ -162,6 +162,14 @@ const props = defineProps({
 const getProfit = (item: any) => {
   return item.gold * item.sioRatio
 }
+
+// 图标状态
+const battleStatus = (val: any) => {
+  if (val === 'W' || val === 'LW' || val === 'L' || val === 'LL' || val === 'P') {
+    return true
+  }
+  return false
+}
 // 汇率颜色
 const getRatioColor = (val: any) => {
   if (val === 'W' || val === 'LW') {
@@ -216,7 +224,7 @@ const getLangBet = (item: any) => {
 
 <style lang="scss" scoped>
 .color-1 {
-  color: var(--color-bg-1);
+  color: var(--color-bet-iortext);
 }
 
 .color-2 {
@@ -324,6 +332,10 @@ const getLangBet = (item: any) => {
       color: var(--color-text-1);
       letter-spacing: 0;
       font-weight: 600;
+      .icon-svg-1 {
+        font-size: 32px;
+        margin-right: 5px;
+      }
 
       .img_1 {
         width: 40px;
@@ -345,11 +357,15 @@ const getLangBet = (item: any) => {
     color: var(--color-text-1);
     letter-spacing: 0;
     font-weight: 600;
+    .money-num-money{
+      color: var(--color-search-box-text-1);
+    }
 
     .img_1 {
       width: 17px;
       height: 21px;
-      color: var(--color-text-1);
+      color: var(--color-search-box-text-1);
+
     }
   }
 
@@ -362,7 +378,7 @@ const getLangBet = (item: any) => {
     .img_1 {
       width: 20px;
       height: 25px;
-      color: var(--color-bg-1);
+      color: var(--color-bet-iortext);
     }
   }
 }

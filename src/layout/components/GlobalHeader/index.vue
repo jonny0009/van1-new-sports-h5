@@ -173,7 +173,7 @@ onMounted(() => {
   }
   .avatar {
     position: absolute;
-    left: 30px;
+    left: 40px;
     top: 6px;
     bottom: 6px;
     width: 84px;
@@ -190,7 +190,7 @@ onMounted(() => {
     position: absolute;
     top: 0;
     bottom: 0;
-    right: 30px;
+    right: 40px;
     display: flex;
     align-items: center;
     .search {
