@@ -36,7 +36,7 @@ const homeBarList = ref([
   },
   {
     icon: 'sportlive',
-    text: t('sport.RB'),
+    text: t('sport.sports.RB'),
     routerName: 'Sportlive'
   },
   {
