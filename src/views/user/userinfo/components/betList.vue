@@ -2,15 +2,19 @@
   <div>
     <!-- 战力 -->
     <div class="top-1 top-2">
-      <img class="img_1" src="@/assets/images/user/bottom.png" alt="" />
-      <span>{{ $t('user.betForm') }}</span>
+      <div class="left-text">
+        <img class="img_1" src="@/assets/images/user/bottom.png" alt="" />
+        <span>{{ $t('user.betForm') }}</span>
+      </div>
       <div class="right">
         <!-- 显示5个,问号是进行中的 -->
         <span>{{ $t('user.RecentAchievements') }}:</span>
         <!-- <img class="img_1" src="@/assets/images/user/ask.svg" alt="" /> -->
         <span v-for="(item, index) in list.arr.slice(0,5)" :key="index" class="img_1">
-          <img v-if="item.winAndLossGold <0" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
-          <img v-else class="img_1" src="@/assets/images/user/win.svg" alt="" />
+          <img v-if="item.state === 2" class="img_1" src="@/assets/images/user/win.svg" alt="" />
+          <img v-else-if="item.state === 3" class="img_1" src="@/assets/images/user/fail.svg" alt="" />
+          <img v-else-if="item.state === 4" class="img_1" src="@/assets/images/user/P.svg" alt="" />
+          <img v-else class="img_1" src="@/assets/images/user/D1.png" alt="" />
         </span>
       </div>
     </div>
@@ -81,6 +85,7 @@ onMounted(() => {
   endTime.value = moment().valueOf()
   const oneDayDate = 24 * 60 * 60 * 1000
   beginTime.value = endTime.value - oneDayDate * 7
+  // beginTime.value = endTime.value - oneDayDate * 90
   // 获取结算已结算注单
   // getBetList()
 })
