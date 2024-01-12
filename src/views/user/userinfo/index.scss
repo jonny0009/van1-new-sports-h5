@@ -236,6 +236,13 @@
 
     .top-2 {
       margin-top: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .left-text{
+        display: flex;
+        align-items: center;
+      }
 
       .right {
         border: 2px solid var(--color-search-box-text-2);
@@ -243,7 +250,7 @@
         padding: 5px 20px;
         display: flex;
         align-items: center;
-        margin-left: 160px;
+        // margin-left: 160px;
 
         span {
           margin-right: 15px;
