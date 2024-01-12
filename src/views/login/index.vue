@@ -177,7 +177,7 @@ const login = () => {
 
     .img_2 {
       margin-top: 55px;
-      width: 77px;
+      // width: 77px;
       height: 63px;
       color: var(--title-text-font-color);
     }

@@ -261,8 +261,9 @@ defineExpose({
   }
 
   .logo {
-    width: 197px;
-    height: 175px;
+    // width: 197px;
+    width: 333px;
+    height: 100px;
   }
 
   // 导航
