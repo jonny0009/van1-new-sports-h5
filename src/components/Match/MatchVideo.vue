@@ -48,7 +48,7 @@ const initVideo = (url: string) => {
     preload: 'auto',
     width: '100%',
     height: '100%',
-    autoplay: false,
+    autoplay: true,
     muted: false,
     controls: true,
     fluid: true,
@@ -57,10 +57,10 @@ const initVideo = (url: string) => {
     errorDisplay: false,
     sources: [
       {
-        // src: url,
-        // type: 'application/x-mpegURL'
-        src: 'https://vjs.zencdn.net/v/oceans.mp4',
-        type: 'video/mp4'
+        src: url,
+        type: 'application/x-mpegURL'
+        // src: 'https://vjs.zencdn.net/v/oceans.mp4',
+        // type: 'video/mp4'
       }
     ]
   }

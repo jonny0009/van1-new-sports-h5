@@ -1,5 +1,5 @@
 <template>
-  <div class="detail">
+  <div class="detail" :class="{ 'has-bet': showFixedBet }">
     <div class="match" :class="{ 'no-video': videoError }">
       <MatchVideo v-show="!videoError" :url="videoUrl" @on-error="onVideoError" />
       <MatchGame v-if="videoError" />
@@ -24,22 +24,23 @@
         </router-view>
       </div>
       <div class="main-chat">
-        <div class="holder">点击开启聊天室</div>
+        <div class="holder" @click="showChat = true">点击开启聊天室</div>
       </div>
     </div>
 
-    <!-- 聊天室 -->
+    <ChatRoom v-model:show="showChat" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { Ref, ref, reactive, computed, onBeforeMount, watch } from 'vue'
+import { Ref, ref, reactive, computed, onBeforeMount, watch, defineAsyncComponent } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { matcheInfo, extendInfo } from '@/api/live'
 import store from '@/store'
 import MatchVideo from '@/components/Match/MatchVideo.vue'
 import MatchGame from '@/components/Match/MatchGame.vue'
+const ChatRoom = defineAsyncComponent(() => import('./ChatRoom.vue'))
 
 const getComponent = (Component: any, route: any) => {
   if (!Component.type.name) {
@@ -51,6 +52,7 @@ const getComponent = (Component: any, route: any) => {
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
+const showFixedBet = computed(() => store.state.app.showFixedBet)
 const paramsId = computed(() => route.params['id'] + '')
 const navList = reactive([
   { title: t('live.bet'), iconName: 'live-bet', path: 'bets' },
@@ -92,10 +94,11 @@ const getExtendInfo = async () => {
     videoError.value = true
   }
 }
-
 const onVideoError = () => {
   videoError.value = true
 }
+
+const showChat = ref(false)
 
 // let intervalTimer: any = null
 // const startInterval = () => {
@@ -128,14 +131,17 @@ watch(
 
 <style lang="scss" scoped>
 .detail {
+  display: flex;
+  flex-direction: column;
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
   padding: 96px 0 0 0;
-  display: flex;
-  flex-direction: column;
+  &.has-bet {
+    padding-bottom: 96px;
+  }
 
   .match {
     height: 420px;
