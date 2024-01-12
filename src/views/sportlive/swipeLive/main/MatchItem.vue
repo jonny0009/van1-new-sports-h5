@@ -42,8 +42,6 @@ const cover = computed(() => {
   return coverFt
 })
 
-
-
 watch(() => props.activeIndex, () => {
   if (props.activeIndex === props.matchIndex) {
     refresh()
@@ -92,14 +90,16 @@ onBeforeMount(() => {
     z-index: 9;
     width: 100%;
     display: flex;
-    height: 36px;
-    line-height: 36px;
+    height: 50px;
+    line-height: 50px;
     background: #000;
     padding: 0 72px 0 14px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
     .SportsIcon{
       height: 20px;
       font-size: 20px;
-      margin-top: 8px;
+      margin-top: 14px;
       margin-right: 10px;
     }
     .leagueName{

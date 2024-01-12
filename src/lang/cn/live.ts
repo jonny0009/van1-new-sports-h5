@@ -22,7 +22,7 @@ export default {
   betAmout: '投注额',
   betProfit: '可赔付额',
   noData: '无数据',
-  aiBot: 'AI助手',
+  aiBot: '小助手',
   send: '发送',
   sending: '发送中',
   needLogin: '请先登录',
@@ -45,5 +45,5 @@ export default {
   clickSub: '点击预约',
   playNow: '即将播放',
   emptyText: '未查询到相关数据',
-  platCloseAll: '全部盘口已关闭',
+  platCloseAll: '全部盘口已关闭'
 }

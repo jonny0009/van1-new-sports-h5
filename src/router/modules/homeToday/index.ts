@@ -1,13 +1,13 @@
 import Layout from '@/layout/index.vue'
 export default {
-  path: '/homeToday',
+  path: '/sportToday',
   component: Layout,
-  redirect: '/homeToday',
+  redirect: '/sportToday',
   children: [
     {
-      path: '/homeToday',
-      component: () => import('@/views/homeToday/index.vue'),
-      name: 'HomeToday',
+      path: '/sportToday',
+      component: () => import('@/views/sportToday/index.vue'),
+      name: 'sportToday',
       meta: {
         showSportsTabsView: true,
         showRefresh: true

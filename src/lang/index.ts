@@ -3,11 +3,13 @@ import en from './en/index'
 import cn from './cn/index'
 import vi from './vi/index'
 import kr from './kr/index'
+import pt from './pt/index'
 const lang = localStorage.getItem('locale') || 'zh-cn'
 import { Locale } from 'vant'
 import enUS from 'vant/es/locale/lang/en-US'
 import viVN from 'vant/es/locale/lang/vi-VN'
 import koKR from 'vant/es/locale/lang/ko-KR'
+import ptBR from 'vant/es/locale/lang/pt-BR'
 if (lang === 'en-us') {
   Locale.use('en-US', enUS)
 }
@@ -16,6 +18,9 @@ if (lang === 'vi-vn') {
 }
 if (lang === 'ko-kr') {
   Locale.use('ko-KR', koKR)
+}
+if (lang === 'pt-pt') {
+  Locale.use('pt-BR', ptBR)
 }
 const i18n: any = createI18n({
   legacy: false,
@@ -26,7 +31,8 @@ const i18n: any = createI18n({
     'zh-cn': cn,
     'en-us': en,
     'vi-vn': vi,
-    'ko-kr': kr
+    'ko-kr': kr,
+    'pt-pt': pt
   }
 })
 
