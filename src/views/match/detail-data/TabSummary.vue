@@ -11,13 +11,15 @@
 
       <van-collapse-item name="2" title="比分" :border="false">
         <div class="panel-main">
-          <div class="panel-main__wrapper">2</div>
+          <div class="panel-main__wrapper"></div>
         </div>
       </van-collapse-item>
 
       <van-collapse-item name="3" title="统计信息" :border="false">
         <div class="panel-main">
-          <div class="panel-main__wrapper">3</div>
+          <div class="panel-main__wrapper">
+            <PanelStatistic />
+          </div>
         </div>
       </van-collapse-item>
     </van-collapse>
@@ -27,6 +29,7 @@
 <script setup lang="ts">
 import { defineAsyncComponent, ref } from 'vue'
 const PanelAnalyze = defineAsyncComponent(() => import('@/components/Match/PanelAnalyze.vue'))
+const PanelStatistic = defineAsyncComponent(() => import('@/components/Match/PanelStatistic.vue'))
 
 const activeNames = ref(['1'])
 </script>

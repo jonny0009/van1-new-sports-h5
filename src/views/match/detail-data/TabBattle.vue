@@ -3,7 +3,20 @@
     <van-collapse v-model="activeNames">
       <van-collapse-item name="1" title="阵容图" :border="false">
         <div class="panel-main">
-          <div class="panel-main__wrapper">1</div>
+          <div class="panel-main__wrapper">
+            <PanelBattle />
+
+            <!-- 替补阵容 -->
+            <div class="battle-wating">
+              <h3 class="title">替补阵容</h3>
+              <div class="team-name">
+                <span class="host">陶森大学老虎</span>
+                <span class="away">石溪</span>
+              </div>
+              <div class="team-table"></div>
+            </div>
+            <!-- end -->
+          </div>
         </div>
       </van-collapse-item>
     </van-collapse>
@@ -11,7 +24,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { defineAsyncComponent, ref } from 'vue'
+const PanelBattle = defineAsyncComponent(() => import('@/components/Match/PanelBattle.vue'))
 
 const activeNames = ref(['1'])
 </script>
@@ -52,6 +66,40 @@ const activeNames = ref(['1'])
     background: #f4f5fa;
     min-height: 300px;
     border-radius: 16px;
+  }
+}
+
+.battle-wating {
+  padding: 8px;
+  .title {
+    color: var(--color-live-collapse-item-title);
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .team-name {
+    display: flex;
+    > span {
+      flex: 1;
+      height: 52px;
+      color: #fff;
+      border-style: solid;
+      border-width: 2px;
+      border-radius: 26px;
+      font-size: 24px;
+      text-align: center;
+      line-height: 52px;
+    }
+    > span.host {
+      background: #48a3ff;
+      border-color: #48a3ff;
+      margin-right: 10px;
+    }
+    > span.away {
+      background: #db7f91;
+      border-color: #db7f91;
+      margin-left: 10px;
+    }
   }
 }
 </style>

@@ -32,7 +32,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import poster from './assets/ft.jpg'
 import Video from 'video.js'
 import 'video.js/dist/video-js.css'
 import { ref, onBeforeMount, onBeforeUnmount, nextTick } from 'vue'

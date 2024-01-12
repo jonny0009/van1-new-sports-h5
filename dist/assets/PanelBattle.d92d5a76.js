@@ -1,0 +1,1 @@
+import{s as a,o as s,R as t,P as l,u as e}from"./vue.ffab6494.js";const o={class:"battle-matrix"},f=["src"];var r=a({setup:a=>(a,r)=>(s(),t("div",o,[l("img",{class:"bg",src:e("/assets/football_bg.aaf9a8e2.svg"),alt:""},null,8,f)]))});r.__scopeId="data-v-74f34146";export{r as default};
