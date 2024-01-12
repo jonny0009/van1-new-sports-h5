@@ -22,7 +22,7 @@ export default {
   SettlementTime: '결제 시간',
   userName: '사용자 이름',
   Handicap: '핸디캡',
-  WelcomeToAI: 'AI에 오신 것을 환영합니다!',
+  WelcomeToAI: '7 Lucky 에 오신 것을 환영합니다!',
   text1: '세계 최고의 스포츠 소셜 플랫폼',
   register: '등록하다',
   logOn: '로그인',

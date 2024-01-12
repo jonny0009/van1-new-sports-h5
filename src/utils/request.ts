@@ -56,15 +56,17 @@ service.interceptors.response.use(
   (response: any) => {
     if (authCode.includes(response.data.code)) {
       removeToken()
-      const locale = localStorage.getItem('locale')
-      const loginText:any = {
-        message: locale === 'vi-vn' ? 'Thông tin đăng nhập đã hết hạn, vui lòng đăng nhập lại' : '登录信息已失效',
-        affirm: locale === 'vi-vn' ? 'Xác nhận' : '确认'
+      const locale:any = localStorage.getItem('locale') || 'zh-cn'
+      const inform: any = {
+        'zh-cn': '登录信息已失效,请重新登录',
+        'vi-vn': 'Thông tin đăng nhập đã hết hạn, vui lòng đăng nhập lại',
+        'ko-kr': '로그인 정보가 만료되었습니다. 다시 로그인해 주세요.',
+        'pt-pt': 'As informações de login expiraram, faça login novamente.',
+        'en-us': 'Login Information Has Expired, Please Log In Again.'
       }
       showDialog({
-        message: loginText.message,
-        theme: 'round-button',
-        confirmButtonText: loginText.affirm
+        message: inform[locale],
+        theme: 'round-button'
       }).then(() => {
         router.push('/login')
       })

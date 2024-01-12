@@ -6,7 +6,7 @@
       </template>
       <template #title>
         <img v-if="ifBLue" class="img_2" src="@/assets/images/user/blue/logo1.png" alt="" />
-        <img v-else class="img_2" src="@/assets/images/login/ai-logo@2x.png" alt="" />
+        <img v-else class="img_2" src="@/assets/images/user/logo1.png" alt="" />
 
       </template>
       <template #right>
@@ -177,7 +177,7 @@ const login = () => {
 
     .img_2 {
       margin-top: 55px;
-      width: 77px;
+      // width: 77px;
       height: 63px;
       color: var(--title-text-font-color);
     }
