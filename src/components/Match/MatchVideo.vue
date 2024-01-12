@@ -124,7 +124,7 @@ onUnmounted(() => {
   align-items: center;
   .video-js {
     font-size: 20px;
-    height: 100%;
+    height: 100% !important;
     padding-top: 0 !important;
   }
 
@@ -139,9 +139,12 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
     .icon {
-      width: 120px;
-      height: 120px;
-      background: url('@/assets/images/live/ai_loading.gif') no-repeat;
+      // width: 120px;
+      // height: 120px;
+      // background: url('@/assets/images/live/ai_loading.gif') no-repeat;
+      width: 300px;
+      height: 100px;
+      background: url('@/assets/images/live/v_loading.png') no-repeat;
       background-size: 100% auto;
     }
     .text {
