@@ -42,7 +42,7 @@ const homeBarList = ref([
   {
     icon: 'today',
     text: t('home.todayUpcoming'),
-    routerName: 'HomeToday'
+    routerName: 'sportToday'
   },
   {
     icon: 'homeTime',

@@ -59,7 +59,7 @@ const params:any = reactive({
   gradeType: 2,
   gameType: 'FT'
 })
-if (routerName.value === 'HomeToday') {
+if (routerName.value === 'sportToday') {
   params.startDate = Dayjs().format('YYYY-MM-DD') + ' 00:00:00'
   params.endDate = Dayjs().format('YYYY-MM-DD') + ' 23:59:59'
 }
