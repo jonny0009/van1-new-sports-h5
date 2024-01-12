@@ -22,7 +22,7 @@ export default {
   SettlementTime: 'Settlement Time',
   userName: 'Username',
   Handicap: 'Handicap',
-  WelcomeToAI: 'Welcome To Ai!',
+  WelcomeToAI: 'Welcome To 7 Lucky!',
   text1: "The World'S Leading Sports Social Platform",
   register: 'Register',
   logOn: 'Log In',

@@ -22,7 +22,7 @@ export default {
   SettlementTime: 'hora de liquidação',
   userName: 'nome de usuário',
   Handicap: 'Deficiente',
-  WelcomeToAI: 'Bem-vindo à IA!',
+  WelcomeToAI: 'Bem-vindo à 7 Lucky!',
   text1: 'A principal plataforma social esportiva do mundo',
   register: 'registro',
   logOn: 'Conecte-se',
