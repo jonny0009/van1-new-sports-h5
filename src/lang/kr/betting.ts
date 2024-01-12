@@ -24,6 +24,8 @@ export default {
   noComboTips: '선택한 항목은 조합할 수 없습니다',
   goldTips: '금액 범위: {min} ~ {max}',
   insufficientBalance: '잔액 불충분!',
+  login: '로그인',
+  loginTips: '아직 로그인하지 않았습니다. 로그인하여 베팅하세요.',
   errors1: {
     error1: '네트워크 타임아웃',
     error2: '베팅 실패',

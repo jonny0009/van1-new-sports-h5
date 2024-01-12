@@ -11,10 +11,10 @@
 
     <div class="confirm-button-wrap">
       <div class="login-tips">
-        您还未登录 , 请登录后投注
+        {{ $t('betting.loginTips') }}
       </div>
       <button v-debounce="login" type="button" class="confirm-button">
-        登录
+        {{ $t('betting.login') }}
       </button>
     </div>
   </div>
