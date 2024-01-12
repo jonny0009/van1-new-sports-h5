@@ -2,6 +2,7 @@
   <div class="homeTime-page">
     <SportsTabs ref="refSportsTabs" class="pb10" @returnSportsSuccess="returnSportsSuccess" />
     <tabsTime v-if="routerName === 'HomeTime'" @returnTimeSuccess="returnTimeSuccess" />
+
     <van-list
       v-model="loading"
       :finished="finished"
@@ -10,12 +11,18 @@
     >
       <template v-if="!isShow">
         <template v-if="isLoading">
-          <HomeMatchHandicap
-            v-for="(item,idx) in recommendEventsList"
-            :key="idx"
-            :send-params="item"
-            :class="{'mt20':idx !== 0}"
-          />
+          <div ref="newContainer">
+            <template v-for="(item,idx) in recommendEventsList" :key="idx">
+              <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="52222">
+                <playTitle :class="{'mt20':idx !== 0}" :send-params="item" />
+              </van-sticky>
+              <HomeMatchHandicap
+                :play-title-toggle="false"
+                :send-params="item"
+                :class="{'mt20':idx !== 0}"
+              />
+            </template>
+          </div>
           <HomeEmpty v-if="!recommendEventsList.length"></HomeEmpty>
         </template>
         <Loading
@@ -32,10 +39,22 @@
 <script lang="ts" setup>
 import Dayjs from 'dayjs'
 import tabsTime from './tabsTime/index.vue'
+import playTitle from '@/components/Title/playTitle/index.vue'
 import { recommendEvents } from '@/api/home'
 import store from '@/store'
 import { onBeforeMount, ref, reactive, computed, watch } from 'vue'
 import router from '@/router'
+const offsetTop = computed(() => {
+  const offsetTop = store.state.app.globalBarHeaderHeight || 48
+  var offsetTopval = 48
+  if (offsetTop > 60) {
+    offsetTopval = 48
+  } else {
+    offsetTopval = offsetTop
+  }
+  return offsetTopval
+})
+const newContainer = ref(null)
 const routerName:any = computed(() => {
   return router?.currentRoute?.value?.name || ''
 })
