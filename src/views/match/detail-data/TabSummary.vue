@@ -3,7 +3,9 @@
     <van-collapse v-model="activeNames">
       <van-collapse-item name="1" title="竞猜分析" :border="false">
         <div class="panel-main">
-          <div class="panel-main__wrapper">1</div>
+          <div class="panel-main__wrapper">
+            <PanelAnalyze />
+          </div>
         </div>
       </van-collapse-item>
 
@@ -23,7 +25,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { defineAsyncComponent, ref } from 'vue'
+const PanelAnalyze = defineAsyncComponent(() => import('@/components/Match/PanelAnalyze.vue'))
 
 const activeNames = ref(['1'])
 </script>

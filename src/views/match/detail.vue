@@ -56,8 +56,8 @@ const showFixedBet = computed(() => store.state.app.showFixedBet)
 const paramsId = computed(() => route.params['id'] + '')
 const navList = reactive([
   { title: t('live.bet'), iconName: 'live-bet', path: 'bets' },
-  { title: t('live.betWith'), iconName: 'live-bet_add', path: 'with' },
-  { title: '串关', iconName: 'live-grid', path: 'mixs' },
+  { title: t('live.betWith'), iconName: 'live-combined', path: 'with' },
+  { title: '串关', iconName: 'live-stack', path: 'mixs' },
   { title: '数据', iconName: 'live-data', path: 'data' },
   { title: t('live.more'), iconName: 'live-grid', path: 'more' }
 ])
