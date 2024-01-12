@@ -71,7 +71,9 @@ onBeforeMount(() => {
 </script>
 <style lang="scss" scoped>
 .swipeLive {
-  padding-bottom: 20px;
+  margin: 0 40px;
+  padding: 0 0 20px;
+  position: relative;
 }
 .my-swipe {
   .van-swipe-item {
@@ -86,6 +88,8 @@ onBeforeMount(() => {
       overflow: auto;
       position: relative;
       background: #000;
+      border-bottom-right-radius: 15px;
+      border-bottom-left-radius: 15px;
       .loading {
         position: absolute;
         left: 50%;
@@ -101,7 +105,7 @@ onBeforeMount(() => {
 <style lang="scss" >
   .swipeLive{
     .van-swipe__indicators {
-      bottom: 12px;
+      bottom: 18px;
       .van-swipe__indicator {
         width: 14px;
         height: 14px;

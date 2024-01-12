@@ -147,7 +147,7 @@ onBeforeUnmount(() => {
   position: absolute;
   left: 0;
   top: 0;
-  bottom: 36px;
+  bottom: 50px;
   width: 100%;
   .video-js,
   .video-error,
@@ -174,7 +174,7 @@ onBeforeUnmount(() => {
 .sound-icon {
   position: absolute;
   right: 14px;
-  bottom: -38px;
+  bottom: -44px;
   z-index: 10;
   width: 40px;
   height: 40px;
