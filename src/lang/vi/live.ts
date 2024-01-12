@@ -22,7 +22,7 @@ export default {
   betAmout: 'Số tiền đặt cược',
   betProfit: 'Số tiền có thể nhận được',
   noData: 'không có dữ liệu',
-  aiBot: 'AI Trợ giúp',
+  aiBot: 'Trợ giúp',
   send: 'Gửi',
   sending: 'Đang gửi',
   needLogin: 'Đăng nhập đầu tiên',

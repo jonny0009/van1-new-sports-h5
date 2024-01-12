@@ -22,7 +22,7 @@ export default {
   betAmout: '베팅 금액',
   betProfit: '지불 가능 금액',
   noData: '데이터 없음',
-  aiBot: 'AI 어시스턴트',
+  aiBot: '어시스턴트',
   send: '전송',
   sending: '전송 중',
   needLogin: '로그인 필요',
