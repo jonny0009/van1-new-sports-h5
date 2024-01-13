@@ -262,7 +262,8 @@ defineExpose({
 
   .logo {
     // width: 197px;
-    width: 333px;
+    // width: 333px;
+    width: 343px;
     height: 100px;
   }
 
