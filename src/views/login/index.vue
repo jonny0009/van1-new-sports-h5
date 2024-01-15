@@ -163,13 +163,13 @@ const login = () => {
 .login-page {
   .bg-title {
     width: 100%;
-    height: 96px;
+    height: 80px;
     background-color: var(--title-background-color-2);
     background-size: 100% 100%;
 
     .img_1 {
-      // margin-top: -15px;
-      margin-top: 50px;
+      margin-top: -10px;
+      // margin-top: 50px;
       width: 36px;
       height: 36px;
       color: var(--title-text-font-color);
@@ -177,13 +177,14 @@ const login = () => {
 
     .img_2 {
       margin-top: 55px;
+      margin-top: 15px;
       // width: 77px;
       height: 63px;
       color: var(--title-text-font-color);
     }
 
     .img_3 {
-      margin-top: 55px;
+      // margin-top: 55px;
       width: 34px;
       height: 37px;
       color: var(--title-text-font-color);
@@ -194,12 +195,14 @@ const login = () => {
   //   background: url('@/assets/images/globalLayout/header/avatar.png');
   // }
   .head-height {
-    height: 56px;
+    height: 16px;
     background-color: var(--title-background-color-2);
+    border-bottom:1px solid var(--color-global-headBrBg) ;
   }
 
   .content {
-    margin-top:-26px ;
+    // margin-top:-26px ;
+    margin-top:0px ;
     height: calc(100vh - 150px);
     background: var(--color-background-color);
     border-radius: 16px 16px 0px 0px;
