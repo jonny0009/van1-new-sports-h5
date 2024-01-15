@@ -52,7 +52,8 @@
             <div class="menu_2">{{ $t('user.edit') }}</div>
           </div>
           <!-- <div class="menu" @click="toUser('/customer')">
-            <img class="menu_1" fit="contain" src="@/assets/images/user/icon2.svg" />
+            <img v-if="ifBLue" class="menu_1" fit="contain" src="@/assets/images/user/blue/sever.png" />
+            <img v-else class="menu_1" fit="contain" src="@/assets/images/user/icon2.svg" />
             <div class="menu_2">{{ $t('user.customer') }}</div>
           </div> -->
         </div>
