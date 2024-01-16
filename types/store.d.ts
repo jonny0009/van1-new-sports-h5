@@ -61,8 +61,9 @@ declare interface Betting {
 }
 
 declare interface Match {
-  matchInfo: any
   pictureinpictureGidm: any
+  matchInfo: any
+  matchData: any
 }
 
 declare module '@vue/runtime-core' {

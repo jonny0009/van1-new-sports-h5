@@ -12,7 +12,7 @@ export default {
       }
     },
 
-    // 详情
+    // 直播详情
     {
       name: 'MatchDetail',
       path: '/match/:id',
@@ -45,20 +45,21 @@ export default {
           component: () => import('@/views/match/detail-data/index.vue')
         },
         {
-          name: 'MatchMore',
-          path: 'more',
-          component: () => import('@/views/match/detail-more/index.vue')
+          name: 'MatchOther',
+          path: 'other',
+          component: () => import('@/views/match/detail-other/index.vue')
         }
       ]
-    }
+    },
 
-    // {
-    //   name: 'MatchBetting',
-    //   path: '/bet/:id',
-    //   component: () => import('@/views/live/bet.vue'),
-    //   meta: {
-    //     showheadGoBack: true
-    //   }
-    // }
+    // 赛事详情
+    {
+      name: 'MatchMore',
+      path: 'more/:id',
+      component: () => import('@/views/match/more.vue'),
+      meta: {
+        showheadGoBack: true
+      }
+    }
   ]
 }

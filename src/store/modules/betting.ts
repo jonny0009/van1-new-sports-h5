@@ -213,7 +213,8 @@ const bettingModule: Module<Betting, any> = {
     setMoreShow({ state }, { status, moreParams }) {
       state.moreShow = status
       state.moreParams = moreParams
-      router.push(`/bet/${moreParams.gidm}`)
+      // router.push(`/bet/${moreParams.gidm}`)
+      router.push(`/match/more/${moreParams.gidm}`)
     },
 
     // 添加投注项
@@ -495,7 +496,9 @@ const bettingModule: Module<Betting, any> = {
       await dispatch('marketHit', true)
       const params: any = buyParams(state.markets, state.s, state.t)
 
-      const count = params.betSubList.reduce((gold:number, item:any) => { return gold + item.gold * 1 }, 0)
+      const count = params.betSubList.reduce((gold: number, item: any) => {
+        return gold + item.gold * 1
+      }, 0)
       if (rootState.user.balance?.balance * 1 < count) {
         dispatch('setHitState', 1)
         return Promise.reject(lang.global.t('betting.insufficientBalance'))
