@@ -112,3 +112,57 @@ export const matchListApi = (params: any) => {
     params
   })
 }
+
+// 数据-赛事
+export const matchStatusApi = (params: any) => {
+  return request({
+    url: '/ai/match/status',
+    method: 'get',
+    params
+  })
+}
+
+// 数据-赛况
+export const scoresstaticseventsApi = (params: any) => {
+  return request({
+    url: '/ai/match/scoresstaticsevents',
+    method: 'get',
+    params
+  })
+}
+
+// 数据-历史交锋 ?homeTeamId=42329&awayTeamId=41293&limit=5
+export const teamHistoryApi = (params: any) => {
+  return request({
+    url: '/ai/game/homeTeamVsAwayTeamHistory',
+    method: 'get',
+    params
+  })
+}
+
+// 数据-近期比赛
+export const teamRecentApi = (params: any) => {
+  return request({
+    url: '/ai/game/homeTeamVsAwayTeamRecent',
+    method: 'get',
+    params
+  })
+}
+
+// 数据-积分榜
+export const homeAwayIntegralApi = (params: any) => {
+  return request({
+    url: '/ai/match/homeAwayIntegral',
+    method: 'get',
+    params
+  })
+}
+
+// 数据-阵容图
+export const lineupApi = (params: any) => {
+  return request({
+    url: '/ai/match/lineup',
+    method: 'get',
+    params
+  })
+}

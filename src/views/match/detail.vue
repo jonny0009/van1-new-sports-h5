@@ -53,30 +53,30 @@ const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const showFixedBet = computed(() => store.state.app.showFixedBet)
-const paramsId = computed(() => route.params['id'] + '')
+const paramsId = computed(() => route.params['id'])
 const navList = reactive([
   { title: t('live.bet'), iconName: 'live-bet', path: 'bets' },
   { title: t('live.betWith'), iconName: 'live-combined', path: 'with' },
   { title: '串关', iconName: 'live-stack', path: 'mixs' },
   { title: '数据', iconName: 'live-data', path: 'data' },
-  { title: t('live.more'), iconName: 'live-grid', path: 'more' }
+  { title: t('live.more'), iconName: 'live-grid', path: 'other' }
 ])
 const onNavClick = (path: string) => {
   router.replace(`/match/${paramsId.value}/${path}`)
 }
 
-const matchData: Ref<any> = ref({})
+const matchInfo: Ref<any> = ref({})
 const getMatcheInfo = async () => {
   const gidm = paramsId.value
   const res = await matcheInfo({ gidm })
   const data = res.data || {}
-  matchData.value = { ...data }
+  matchInfo.value = { ...data }
   if (data.detail && data.detail.length > 0) {
     const { game } = data.detail[0]
     const gameInfo = game.gameInfo || {}
-    matchData.value.gameInfo = gameInfo
+    matchInfo.value.gameInfo = gameInfo
   }
-  store.commit('match/SET_MATCH_INFO', matchData.value)
+  store.commit('match/SET_MATCH_INFO', matchInfo.value)
 }
 
 const videoUrl = ref('')
@@ -100,24 +100,24 @@ const onVideoError = () => {
 
 const showChat = ref(false)
 
-// let intervalTimer: any = null
-// const startInterval = () => {
-//   closeInterval()
-//   intervalTimer = setInterval(() => {
-//     getMatcheInfo()
-//   }, 5000)
-// }
-// const closeInterval = () => {
-//   if (intervalTimer) {
-//     clearInterval(intervalTimer)
-//     intervalTimer = null
-//   }
-// }
+let intervalTimer: any = null
+const startInterval = () => {
+  closeInterval()
+  intervalTimer = setInterval(() => {
+    getMatcheInfo()
+  }, 5000)
+}
+const closeInterval = () => {
+  if (intervalTimer) {
+    clearInterval(intervalTimer)
+    intervalTimer = null
+  }
+}
 
 onBeforeMount(() => {
   getMatcheInfo()
   getExtendInfo()
-  // startInterval()
+  startInterval()
 })
 
 watch(
