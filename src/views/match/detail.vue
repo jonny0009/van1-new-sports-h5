@@ -24,7 +24,7 @@
         </router-view>
       </div>
       <div class="main-chat">
-        <div class="holder" @click="showChat = true">点击开启聊天室</div>
+        <div class="holder" @click="showChat = true">{{ $t('live.clickOpenChat') }}</div>
       </div>
     </div>
 
@@ -57,8 +57,8 @@ const paramsId = computed(() => route.params['id'])
 const navList = reactive([
   { title: t('live.bet'), iconName: 'live-bet', path: 'bets' },
   { title: t('live.betWith'), iconName: 'live-combined', path: 'with' },
-  { title: '串关', iconName: 'live-stack', path: 'mixs' },
-  { title: '数据', iconName: 'live-data', path: 'data' },
+  { title: t('live.stackBet'), iconName: 'live-stack', path: 'mixs' },
+  { title: t('live.dataBase'), iconName: 'live-data', path: 'data' },
   { title: t('live.more'), iconName: 'live-grid', path: 'other' }
 ])
 const onNavClick = (path: string) => {

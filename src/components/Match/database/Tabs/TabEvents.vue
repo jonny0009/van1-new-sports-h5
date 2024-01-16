@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <van-collapse v-model="activeNames">
-      <van-collapse-item name="1" title="文字实况" :border="false">
+      <van-collapse-item name="1" :title="$t('live.navEvents')" :border="false">
         <div class="panel-main">
           <div class="panel-main__wrapper">
             <!-- start -->

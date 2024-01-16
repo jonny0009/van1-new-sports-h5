@@ -1,21 +1,21 @@
 <template>
   <div class="panel">
     <van-collapse v-model="activeNames">
-      <van-collapse-item name="1" title="阵容图" :border="false">
+      <van-collapse-item name="1" :title="$t('live.navBattle')" :border="false">
         <div class="panel-main">
           <div class="panel-main__wrapper">
             <PanelBattle :home-list="firstHomeList" :away-list="firstAwayList" />
 
             <!-- 替补阵容 -->
             <div class="battle-wating">
-              <h3 class="title">替补阵容</h3>
+              <h3 class="title">{{ $t('live.battleWait') }}</h3>
               <div class="team-name">
                 <span class="host">{{ matchData.homeTeamShort }}</span>
                 <span class="away">{{ matchData.awayTeamShort }}</span>
               </div>
               <div class="team-grid">
                 <section v-if="backupHomeList.length === 0" class="team-grid__wrap">
-                  <EmptyData text="暂无主队替补阵容" />
+                  <EmptyData :text="$t('live.noDataHost')" />
                 </section>
                 <section v-else class="team-grid__wrap">
                   <div class="team-grid__item" v-for="home in backupHomeList" :key="home.playerId">
@@ -24,7 +24,7 @@
                 </section>
 
                 <section v-if="backupAwayList.length === 0" class="team-grid__wrap">
-                  <EmptyData text="暂无客队替补阵容" />
+                  <EmptyData :text="$t('live.noDataAway')" />
                 </section>
                 <section v-else class="team-grid__wrap">
                   <div class="team-grid__item" v-for="away in backupAwayList" :key="away.playerId">

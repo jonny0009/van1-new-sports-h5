@@ -22,6 +22,7 @@ import TabBattle from './Tabs/TabBattle.vue'
 import TabRecord from './Tabs/TabRecord.vue'
 import TabEvents from './Tabs/TabEvents.vue'
 import store from '@/store'
+import { useI18n } from 'vue-i18n'
 
 const matchInfo = computed(() => store.state.match.matchInfo)
 watch(
@@ -33,6 +34,8 @@ watch(
 onMounted(() => {
   fetchData()
 })
+
+const { t } = useI18n()
 
 const matchData = ref()
 const fetchData = async () => {
@@ -47,10 +50,10 @@ const fetchData = async () => {
 }
 
 const tabList = ref([
-  { name: 0, title: '统计数据' },
-  { name: 1, title: '阵容图' },
-  { name: 2, title: '近期战绩' },
-  { name: 3, title: '文字实况' }
+  { name: 0, title: t('live.navSummary') },
+  { name: 1, title: t('live.navBattle') },
+  { name: 2, title: t('live.navRecent') },
+  { name: 3, title: t('live.navEvents') }
 ])
 const tabActive = ref(0)
 const components = [TabSummary, TabBattle, TabRecord, TabEvents]

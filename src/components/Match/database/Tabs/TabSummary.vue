@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <van-collapse v-model="activeNames">
-      <van-collapse-item name="1" title="竞猜分析" :border="false">
+      <van-collapse-item name="1" :title="$t('live.solveAnalyse')" :border="false">
         <div class="panel-main">
           <div class="panel-main__wrapper">
             <!-- <PanelAnalyze /> -->
@@ -10,7 +10,7 @@
         </div>
       </van-collapse-item>
 
-      <van-collapse-item name="2" title="比分" :border="false">
+      <van-collapse-item name="2" :title="$t('live.score')" :border="false">
         <div class="panel-main">
           <div class="panel-main__wrapper">
             <EmptyData v-if="scoreList.length === 0" />
@@ -19,7 +19,7 @@
         </div>
       </van-collapse-item>
 
-      <van-collapse-item name="3" title="统计信息" :border="false">
+      <van-collapse-item name="3" :title="$t('live.summaryInfo')" :border="false">
         <div class="panel-main">
           <div class="panel-main__wrapper">
             <EmptyData v-if="staticsList.length === 0" />

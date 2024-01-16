@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <van-collapse v-model="activeNames">
-      <van-collapse-item name="1" title="近期比赛" :border="false">
+      <van-collapse-item name="1" :title="$t('live.navRecent')" :border="false">
         <div class="panel-main">
           <div class="panel-main__wrapper">
             <EmptyData v-if="recentList.length === 0" />
@@ -35,19 +35,19 @@
         </div>
       </van-collapse-item>
 
-      <van-collapse-item name="2" title="联赛积分榜" :border="false">
+      <van-collapse-item name="2" :title="$t('live.leaguePoints')" :border="false">
         <div class="panel-main">
           <div class="panel-main__wrapper">
             <EmptyData v-if="integralList.length === 0" />
             <!-- start -->
             <ul v-else class="panel-integral">
               <li class="list-title list-box">
-                <div>排名</div>
-                <div class="team">球队</div>
-                <div>胜</div>
-                <div>平</div>
-                <div>负</div>
-                <div>积分</div>
+                <div>{{ $t('live.rank') }}</div>
+                <div class="team">{{ $t('live.balls') }}</div>
+                <div>{{ $t('live.win') }}</div>
+                <div>{{ $t('live.tie') }}</div>
+                <div>{{ $t('live.lose') }}</div>
+                <div>{{ $t('live.point') }}</div>
               </li>
               <li v-for="(item, index) in integralList" :key="index" class="list-item list-box">
                 <div>
