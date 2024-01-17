@@ -34,8 +34,10 @@
 </template>
 
 <script setup lang="ts">
-import FtBg from '@/assets/images/live/ft_bg.svg'
-import BkBg from '@/assets/images/live/bk_bg.svg'
+// import FtBg from '@/assets/images/live/ft_bg.svg'
+// import BkBg from '@/assets/images/live/bk_bg.svg'
+import FtBg from '@/assets/images/live/ft_bg.png';
+import BkBg from '@/assets/images/live/bk_bg.png';
 import { computed } from 'vue'
 import store from '@/store'
 
