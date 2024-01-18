@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import NotFoundPage from '@/views/error-page/404.vue';
+import NotFoundPage from '@/views/error-page/404.vue'
 import Layout from '@/layout/index.vue'
 const modulesFiles = import.meta.globEager('./modules/*/*.ts')
 const pathList: string[] = []
@@ -92,8 +92,14 @@ export const constantRoutes: Array<any> = [
       },
       {
         path: '/user/edit',
-        component: () => import('@/views/user/userCenter/edit.vue'),
+        component: () => import('@/views/user/edit.vue'),
         name: 'Edit',
+        hidden: true
+      },
+      {
+        path: '/user/contactUs',
+        component: () => import('@/views/user/contactUs.vue'),
+        name: 'ContactUs',
         hidden: true
       },
       {
@@ -146,7 +152,7 @@ export const constantRoutes: Array<any> = [
       }
     ]
   },
- 
+
   ...modules,
   {
     path: '/:pathMatch(.*)*',
@@ -158,11 +164,11 @@ export const constantRoutes: Array<any> = [
         component: () => import('@/views/error-page/404.vue'),
         name: '404',
         meta: {
-          hideGlobalHeaderView:true
+          hideGlobalHeaderView: true
         }
       }
-  ]
-  },
+    ]
+  }
 ]
 
 export const router = createRouter({
