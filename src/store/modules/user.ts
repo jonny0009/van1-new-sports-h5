@@ -21,6 +21,7 @@ const userModule: Module<User, any> = {
     championLangList: [],
     peopleInfo: {},
     aheadOrderList: [],
+    resultTab: 0,
     isAnonymity
   },
   mutations: {
@@ -135,6 +136,10 @@ const userModule: Module<User, any> = {
       if (res.code === 200) {
         state.peopleInfo = res.data || {}
       }
+    },
+    // 结果tabIndex
+    async getResultTab({ state }, params) {
+      state.resultTab = params
     },
     // 进行中的注单
     async pendingOrder({ state }, params = { }) {

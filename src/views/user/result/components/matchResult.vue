@@ -30,7 +30,7 @@
     class="dataList"
     @load="onLoad"
   >
-    <div v-for="(item, index) in list.arr" :key="index" class="item">
+    <div v-for="(item, index) in list.arr" :key="index" class="item" @click="toMatch(item)">
       <div class="title">
         <div class="left  title-left">
           <SportsIcon :icon-src="item.gameType" class="ball-img" />
@@ -127,7 +127,11 @@ const onLoad = async () => {
     // showToast(res.msg)
   }
 }
-
+//  比赛详情
+const toMatch = async (item: any) => {
+  store.dispatch('user/getResultTab', 2)
+  store.dispatch('betting/setMoreShow', { status: true, moreParams: { gidm: item.matchId } })
+}
 // 获取游戏时间
 const getMatchTime = (item: any) => {
   if (item.gameDate) {

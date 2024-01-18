@@ -104,6 +104,9 @@ const toUser = (url?: string) => {
     console.log('客服===')
     return
   }
+  if (url === '/result') {
+    store.dispatch('user/getResultTab', 0)
+  }
   showLeft.value = false
   $router.push({ path: '/user' + url })
 }

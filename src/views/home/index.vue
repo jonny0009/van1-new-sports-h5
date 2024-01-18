@@ -12,14 +12,7 @@ import GoodMatch from './GoodMatch/index.vue'
 import LatestMatch from './LatestMatch/index.vue'
 import store from '@/store'
 import { onMounted, onBeforeUnmount } from 'vue'
-import { useRoute } from 'vue-router'
-const route = useRoute()
-onMounted(() => {
-  if (route.query.gidm) {
-    const params = JSON.parse(route.query.obj as string)
-    store.dispatch('betting/setMoreShow', { status: true, moreParams: params })
-  }
-})
+onMounted(() => {})
 onBeforeUnmount(() => {
   store.dispatch('home/setKeyValue', {
     key: 'RrefShow',

@@ -28,6 +28,7 @@ declare interface User {
   championLangList: any
   peopleInfo: any
   aheadOrderList: any
+  resultTab:any
   token: string | undefined | null
 }
 declare interface Betting {

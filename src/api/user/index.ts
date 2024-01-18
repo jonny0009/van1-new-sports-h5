@@ -190,6 +190,14 @@ export const matchResult = (params:any) => {
     params
   })
 }
+// 赛果查询详情====   systemId=15539370&groupId=3
+export const resultDetail = (params:any) => {
+  return request({
+    url: 'ai/mobile/match/resultDetail',
+    method: 'get',
+    params
+  })
+}
 // 关注列表
 export const starPage = (params:any) => {
   return request({
