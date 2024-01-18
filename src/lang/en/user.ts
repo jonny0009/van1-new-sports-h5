@@ -125,6 +125,9 @@ export default {
   // 新增6
   fontNickName: 'Nicknames can only be edited once and cannot be duplicated or contain illegal characters with others',
   aheadFinal: 'Advance settlement',
+  // 新增7
+  contactUs: 'Contact Us',
+
   sports: {
     officeNumber: 'Bureau Number',
     FT: 'Football',

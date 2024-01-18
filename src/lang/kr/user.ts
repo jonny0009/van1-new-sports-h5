@@ -125,6 +125,8 @@ export default {
   // 新增6
   fontNickName: '닉네임은 한 번만 편집할 수 있으며 다른 사람과 중복되거나 불법 문자를 포함할 수 없습니다.',
   aheadFinal: '조기 결제',
+  // 新增7
+  contactUs: '연락처',
 
   sports: {
     officeNumber: '국 번호',

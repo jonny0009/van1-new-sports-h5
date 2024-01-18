@@ -132,6 +132,9 @@ export default {
   fontNickName: '昵称只允许编辑一次，且不可与他人重复或含有非法字元',
   aheadFinal: '提前结算',
 
+  // 新增7
+  contactUs: '联系我们',
+
   sports: {
     'officeNumber': '局号',
     FT: '足球',

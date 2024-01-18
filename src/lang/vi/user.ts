@@ -133,6 +133,8 @@ export default {
   affirmPend: 'Trong xác nhận ',
   noDataRelated: 'Không truy vấn dữ liệu liên quan',
   aheadFinal: 'Thanh toán sớm',
+  // 新增7
+  contactUs: 'Liên hệ',
 
   sports: {
     'officeNumber': 'số trò chơi',
