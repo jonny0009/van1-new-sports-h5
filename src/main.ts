@@ -12,6 +12,10 @@ import vant from 'vant'
 import { Lazyload } from 'vant'
 import { createScript } from './utils'
 import i18n from './lang'
+
+// 路由守卫
+import './router/permission'
+
 // 玩法名称，玩法球头表引入
 const lang = localStorage.getItem('locale') || 'zh-cn'
 const playtypeScript = `${window.AIConfig.static_url}files/base/playtype/js/${lang}.js`
