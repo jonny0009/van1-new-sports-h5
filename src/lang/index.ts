@@ -37,7 +37,7 @@ const getBrowserLanguage = () => {
       sysLanguage = window.navigator.language.toLowerCase()
     }
 
-    return obj[sysLanguage]
+    return obj[sysLanguage] ? obj[sysLanguage] : 'en-us'
   }
   return 'en-us'
 }
