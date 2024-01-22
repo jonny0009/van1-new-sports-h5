@@ -217,6 +217,19 @@ export class MarketInfo {
     if (this.isEuropePlay && handicapType === 'E') {
       // 当前属于欧洲盘，并且属于可欧洲玩法的 赔率+1
       return points(this.ior * 1 + 1)
+
+    // 印尼
+    } else if (this.isEuropePlay && handicapType === 'I') {
+      if (this.ior * 1 > 1) {
+        return points(this.ior) || ''
+      }
+      return points(this.ior * 1 + 1)
+      // 马来盘
+    } else if (this.isEuropePlay && handicapType === 'M') {
+      if (this.ior * 1 < 1) {
+        return points(this.ior) || ''
+      }
+      return points(this.ior * 1 + 1)
     }
     return points(this.ior) || ''
   }
