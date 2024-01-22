@@ -138,8 +138,8 @@ defineExpose({
     }
 
     .headImg {
-      width: 100px;
-      height: 110px;
+      width: 103px;
+      height: 108px;
       border-radius: 50%;
     }
 
