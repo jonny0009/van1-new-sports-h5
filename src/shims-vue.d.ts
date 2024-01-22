@@ -10,6 +10,11 @@ declare interface Window {
   wf: any
 }
 
+declare module 'fingerprintjs2' {
+  import Fingerprint2 from 'Fingerprint2'
+  export default Fingerprint2
+}
+
 declare module 'sockjs-client/dist/sockjs.min.js' {
   import Client from 'sockjs-client'
   export default Client

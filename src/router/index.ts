@@ -17,6 +17,10 @@ const modules = pathList.reduce((modules: any, modulePath: string) => {
 
 export const constantRoutes: Array<any> = [
   {
+    path: '/:pathMatch(.*)*',
+    redirect: '/'
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/login/index.vue'),

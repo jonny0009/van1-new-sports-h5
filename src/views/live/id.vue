@@ -1,6 +1,10 @@
 <template>
   <div class="live-page" :class="{ 'has-bet': showFixedBet }">
-    <div class="match" :class="{ 'no-vid': videoError }">
+    <div v-if="videoUrl?.endsWith('html')" class="match">
+      <iframe :src="videoUrl" width="100%" height="100%" frameborder="0"></iframe>
+    </div>
+
+    <div v-show="!videoUrl?.endsWith('html')" class="match" :class="{ 'no-vid': videoError }">
       <div v-show="!videoError" class="match-video">
         <video ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
         <div class="mask-loading" v-if="videoWaiting">
@@ -85,7 +89,7 @@ const getExtendInfo = async () => {
 
 let player: any = null
 const videoRef = ref<HTMLDivElement | string>('')
-const videoUrl = ref(null)
+const videoUrl: any = ref(null)
 const videoError = ref(false)
 const videoWaiting = ref(false)
 const videoIsInpicture = ref(false)
