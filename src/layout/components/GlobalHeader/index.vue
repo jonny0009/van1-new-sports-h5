@@ -177,14 +177,14 @@ onMounted(() => {
     // top: 6px;
     top: 9px;
     bottom: 6px;
-    width: 69px;
-    height: 74px;
+    width: 66px;
+    height: 72px;
     border-radius: 50%;
     overflow: hidden;
     img {
       display: block;
       width: 66px;
-      height: 74px;
+      height: 72px;
     }
   }
   .right-area {
