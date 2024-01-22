@@ -174,16 +174,17 @@ onMounted(() => {
   .avatar {
     position: absolute;
     left: 40px;
-    top: 6px;
+    // top: 6px;
+    top: 9px;
     bottom: 6px;
-    width: 66px;
-    height: 79px;
+    width: 69px;
+    height: 74px;
     border-radius: 50%;
     overflow: hidden;
     img {
       display: block;
       width: 66px;
-      height: 79px;
+      height: 74px;
     }
   }
   .right-area {
