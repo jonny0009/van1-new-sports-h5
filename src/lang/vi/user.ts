@@ -96,8 +96,10 @@ export default {
   // 新增2=====
   noFinal: 'Không tính',
   final: 'Giải quyết',
-  hk: 'Hồng Kông [HK]',
-  Europe: 'Đĩa châu Âu [DEC]',
+  hk: 'Hong Kong [HK]',
+  Europe: 'Decimal [DEC]',
+  IDOdd: 'Indonesia [ID]',
+  MYOdd: 'Malaysia [MY]',
   today: 'Hôm nay',
   fortyEight: 'Gần 48 giờ',
   sevenDay: '7 ngày',

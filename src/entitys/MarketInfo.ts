@@ -223,13 +223,13 @@ export class MarketInfo {
       if (this.ior * 1 > 1) {
         return points(this.ior) || ''
       }
-      return points(this.ior * 1 + 1)
+      return points(-1 / (this.ior * 1))
       // 马来盘
     } else if (this.isEuropePlay && handicapType === 'M') {
       if (this.ior * 1 < 1) {
         return points(this.ior) || ''
       }
-      return points(this.ior * 1 + 1)
+      return points(-1 / (this.ior * 1))
     }
     return points(this.ior) || ''
   }
