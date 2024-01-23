@@ -78,7 +78,7 @@
           <Singles v-for="market in markets" :key="market.playOnlyId" :account-state="true" :market-info="market">
           </Singles>
         </template>
-        <Parlay v-else :markets="markets"></Parlay>
+        <Parlay v-else :markets="parlayMarkets"></Parlay>
         <Anonymity v-if="isAnonymity"></Anonymity>
         <ActionBar v-else-if="open" />
       </div>
@@ -142,6 +142,7 @@ const isOne = computed(() => store.state.betting.isOne)
 const mode = computed(() => store.state.betting.mode)
 const boardShow = computed(() => store.state.betting.boardShow)
 const markets = computed(() => store.state.betting.markets)
+const parlayMarkets = computed(() => store.state.betting.comboMarkets)
 const results = computed(() => store.state.betting.results)
 const betsProfit = computed(() => store.getters['betting/betsProfit'])
 const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
@@ -175,6 +176,7 @@ watch(
     } else {
       store.dispatch('betting/setBoardShow', { status: false })
       store.dispatch('betting/clearResult')
+      store.dispatch('betting/clearComboMarkets')
     }
   }
 )
@@ -212,14 +214,16 @@ const hitTimer = () => {
     if (mode.value === 2) {
       store.dispatch('betting/comboMarketHit')
     }
-    if (mode.value < 3) {
+    if (mode.value === 1) {
       store.dispatch('betting/marketHit')
     }
   }
   clearInterval(timer.value)
   timer.value = setInterval(() => {
     if (open.value && mode.value < 3) {
-      store.dispatch('betting/marketHit')
+      if (mode.value === 1) {
+        store.dispatch('betting/marketHit')
+      }
       if (mode.value === 2) {
         store.dispatch('betting/comboMarketHit')
       }

@@ -53,6 +53,7 @@ declare interface Betting {
   comboT: any
   markets: any
   comboMarkets: any
+  parlayMarkets: any
   results: any
   isOne: boolean
   hitState: any
