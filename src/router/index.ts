@@ -38,8 +38,19 @@ export const constantRoutes: Array<any> = [
   },
   {
     path: '/search',
-    component: () => import('@/views/search/index.vue'),
-    hidden: true
+    component: () => import('@/layout/index.vue'),
+    redirect: '/search',
+    children: [
+      {
+        path: '/search',
+        component: () => import('@/views/search/index.vue'),
+        name: 'Search',
+        meta: {
+          hideGlobalHeaderView:true,
+          hideGlobalBottomBet:true
+        }
+      }
+    ]
   },
   {
     path: '/401',

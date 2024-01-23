@@ -6,7 +6,7 @@
     <AppMain />
   </GlobalRefresh>
   <!-- <GlobalFooter /> -->
-  <BettingSlip v-if="betShow && isOpen" ref="bettingSlip" @close="betClose" />
+  <BettingSlip v-if="betShow && isOpen &&!$route.meta.hideGlobalBottomBet" ref="bettingSlip" @close="betClose" />
   <van-back-top
     v-if="backTopShow"
     bottom="100"

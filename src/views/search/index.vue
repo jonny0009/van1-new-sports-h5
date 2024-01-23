@@ -225,6 +225,8 @@ const toUrlGame = (item: any) => {
   }
 
   >.content {
+    height: calc(100vh - 126px);
+    overflow-y: auto;
     margin-top: 31px;
     padding: 0 36px;
     background-color: var(--color-background-color);
