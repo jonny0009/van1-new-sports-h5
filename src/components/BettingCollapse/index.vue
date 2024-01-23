@@ -63,7 +63,7 @@
           </van-collapse-item>
         </van-collapse>
 
-        <EmptyData v-else :text="'盘口已关闭'" />
+        <EmptyData v-else :text="$t('live.platCloseAll')" />
         <!-- end -->
       </van-tab>
     </van-tabs>
@@ -110,6 +110,9 @@ const activeNames = ref(['1'])
       }
       .van-tab--shrink {
         padding: 0 8px;
+      }
+      .van-tabs__line {
+        display: none;
       }
     }
 

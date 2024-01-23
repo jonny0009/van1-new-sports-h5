@@ -6,7 +6,8 @@ const matchModule: Module<Match, any> = {
   state: {
     pictureinpictureGidm: null,
     matchInfo: {},
-    matchData: {}
+    matchData: {},
+    needTimer: false
   },
 
   mutations: {
@@ -15,6 +16,9 @@ const matchModule: Module<Match, any> = {
     },
     SET_MATCH_INFO: (state, data: any) => {
       state.matchInfo = data
+    },
+    SET_NEED_TIMER: (state, flag: boolean) => {
+      state.needTimer = flag
     }
   },
 

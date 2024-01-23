@@ -16,7 +16,7 @@
           :finished-text="matchList.length == 0 ? '' : $t('live.noMore')"
           @load="fetchMatchList"
         >
-          <HomeMatchHandicap v-for="item in matchList" :key="item.gidm" :send-params="item" class="mb10" />
+          <MatchHandicap v-for="item in matchList" :key="item.gidm" :send-params="item" class="mb10" />
         </van-list>
       </van-tab>
     </van-tabs>
@@ -27,6 +27,7 @@
 import { Ref, defineAsyncComponent, onMounted, ref } from 'vue'
 import { comBoByGameTypeApi, matchConditionApi, matchListApi } from '@/api/live'
 const DateTabs = defineAsyncComponent(() => import('./DateTabs.vue'))
+const MatchHandicap = defineAsyncComponent(() => import('@/components/Match/MatchHandicap.vue'))
 
 onMounted(() => {
   fetchMatchCondition()

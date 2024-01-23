@@ -65,6 +65,7 @@ declare interface Match {
   pictureinpictureGidm: any
   matchInfo: any
   matchData: any
+  needTimer: boolean
 }
 
 declare module '@vue/runtime-core' {

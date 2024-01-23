@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { Ref, ref, reactive, computed, onBeforeMount, watch, defineAsyncComponent } from 'vue'
+import { Ref, ref, reactive, computed, onBeforeMount, watch, defineAsyncComponent, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { matcheInfo, extendInfo } from '@/api/live'
 import store from '@/store'
@@ -105,12 +105,14 @@ const startInterval = () => {
   closeInterval()
   intervalTimer = setInterval(() => {
     getMatcheInfo()
+    store.commit('match/SET_NEED_TIMER', true)
   }, 5000)
 }
 const closeInterval = () => {
   if (intervalTimer) {
     clearInterval(intervalTimer)
     intervalTimer = null
+    store.commit('match/SET_NEED_TIMER', false)
   }
 }
 
@@ -118,6 +120,10 @@ onBeforeMount(() => {
   getMatcheInfo()
   getExtendInfo()
   startInterval()
+})
+
+onUnmounted(() => {
+  closeInterval()
 })
 
 watch(
