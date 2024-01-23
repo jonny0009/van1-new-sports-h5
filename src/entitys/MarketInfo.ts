@@ -59,6 +59,7 @@ export class MarketInfo {
   session: any
   ior: any
   oldIor: any
+  eoIor: any
   leagueName: any
   homeTeam: any
   awayTeam: any

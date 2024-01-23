@@ -34,6 +34,7 @@ const bettingModule: Module<Betting, any> = {
     oddChangesState,
     markets,
     comboMarkets: [],
+    parlayMarkets: [],
     combos: [],
     results: [],
     hitState: 1, // 0非点水状态 / 1非点水状态
@@ -76,6 +77,10 @@ const bettingModule: Module<Betting, any> = {
           let winCountGold = buyGold * ior - buyGold
           if (isEuropePlay && handicapType === 'H') {
             winCountGold = buyGold * ior
+          } else if (isEuropePlay && handicapType === 'I') {
+            winCountGold = buyGold * Math.abs(ior * 1)
+          } else if (isEuropePlay && handicapType === 'M') {
+            winCountGold = buyGold * Math.abs(ior * 1)
           }
           betsGolds += winCountGold
         }
@@ -159,6 +164,7 @@ const bettingModule: Module<Betting, any> = {
     },
     setMode({ state }, mode) {
       state.mode = mode
+      state.comboMarkets = []
     },
     setBoardShow({ state }, { status, playOnlyId }) {
       state.editId = playOnlyId
@@ -241,10 +247,19 @@ const bettingModule: Module<Betting, any> = {
         }
         return false
       })
+      const index1 = state.comboMarkets.findIndex((marketInfo: MarketInfo) => {
+        if (marketInfo.playOnlyId === playOnlyId) {
+          return true
+        }
+        return false
+      })
       if (index >= 0) {
         state.markets.splice(index, 1)
         state.markets = state.markets.slice()
         localStore.slice(MarketListKey, index)
+      }
+      if (index1 >= 0) {
+        state.comboMarkets.splice(index1, 1)
       }
     },
     clearIorChange({ state }, playOnlyId) {
@@ -294,7 +309,7 @@ const bettingModule: Module<Betting, any> = {
           const oldStrong = bet.strong
           const oldGameDate = bet.gameDate
           // 点水返回2个赔率，需要根据单双线来设置当前的点水值
-          if (!(isEuropePlay && handicapType === 'H') && eoIor) {
+          if (!isEuropePlay) {
             newBetData.ior = eoIor
           }
           const newIor = newBetData.ior * 1 || ior * 1
@@ -354,10 +369,10 @@ const bettingModule: Module<Betting, any> = {
             replaceBet.ior = oldIor
           }
 
-          // 防止负数
-          if (replaceBet.ior * 1 < 0) {
-            replaceBet.ior = 0
-          }
+          // 防止负数,印尼马来存在负数,去掉
+          // if (replaceBet.ior * 1 < 0) {
+          //   replaceBet.ior = 0
+          // }
 
           /**
            * 重新生成betitem
@@ -393,12 +408,17 @@ const bettingModule: Module<Betting, any> = {
     },
     // 串关批量点水,更新投注项
     async comboMarketHit({ state, getters }, betting: boolean = false) {
-      if (getters.comboMarkets.length < 2 || (!betting && state.hitState !== 1)) {
-        return false
+      if (state.comboMarkets.length === 0) {
+        const markets = JSON.parse(JSON.stringify(state.markets))
+        state.comboMarkets = markets.map((market:MarketInfo) => {
+          const { eoIor } = market
+          market.ior = eoIor * 1
+          return market
+        })
       }
 
-      if (state.comboMarkets.length === 0) {
-        state.comboMarkets = JSON.parse(JSON.stringify(getters.comboMarkets))
+      if (getters.comboMarkets.length < 2 || (!betting && state.hitState !== 1)) {
+        return false
       }
 
       const params: any = combosHitParams(state.comboMarkets)
@@ -589,6 +609,10 @@ const bettingModule: Module<Betting, any> = {
     // 清空
     clearResult({ state }) {
       state.results = []
+    },
+    // 清空
+    clearComboMarkets({ state }) {
+      state.comboMarkets = []
     }
   }
 }
