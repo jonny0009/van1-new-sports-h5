@@ -12,6 +12,7 @@ import GoodMatch from './GoodMatch/index.vue'
 import LatestMatch from './LatestMatch/index.vue'
 import store from '@/store'
 import { onMounted, onBeforeUnmount } from 'vue'
+
 onMounted(() => {})
 onBeforeUnmount(() => {
   store.dispatch('home/setKeyValue', {
@@ -29,13 +30,13 @@ onBeforeUnmount(() => {
 })
 </script>
 <style lang="scss" scoped>
-.home-page{
+.home-page {
   overflow: hidden;
   padding: 0 40px;
- .van-pull-refresh {
+  .van-pull-refresh {
     min-height: calc(100vh - 96px);
   }
-  .refresh-wrap{
+  .refresh-wrap {
     padding-bottom: 190px;
   }
 }

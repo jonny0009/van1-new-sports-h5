@@ -6,6 +6,7 @@ export default {
   champion: 'Apostas Campeãs',
   close: 'fechar',
   more: 'Mais',
+  sports: {
   officeNumber: 'Número da agência',
   FT: 'futebol',
   BK: 'basquetebol',
@@ -53,4 +54,5 @@ export default {
   OP_WS: 'Esportes de inverno',
   OP_BD: 'bola arqueada',
   AH: 'Âncora'
+ }
 }
