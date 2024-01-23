@@ -16,9 +16,24 @@ const modules = pathList.reduce((modules: any, modulePath: string) => {
 }, [])
 
 export const constantRoutes: Array<any> = [
+  // {
+  //   path: '/:pathMatch(.*)*',
+  //   redirect: '/'
+  // },
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/'
+    component: Layout,
+    redirect: '/404',
+    children: [
+      {
+        path: '/404',
+        component: () => import('@/views/error-page/404.vue'),
+        name: '404',
+        meta: {
+          hideGlobalHeaderView: true
+        }
+      }
+    ]
   },
   {
     path: '/login',
@@ -158,21 +173,7 @@ export const constantRoutes: Array<any> = [
   },
 
   ...modules,
-  {
-    path: '/:pathMatch(.*)*',
-    component: Layout,
-    redirect: '/404',
-    children: [
-      {
-        path: '/404',
-        component: () => import('@/views/error-page/404.vue'),
-        name: '404',
-        meta: {
-          hideGlobalHeaderView: true
-        }
-      }
-    ]
-  }
+  
 ]
 
 export const router = createRouter({
