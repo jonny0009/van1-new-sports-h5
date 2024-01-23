@@ -2,6 +2,7 @@ import axios from 'axios'
 import router from '@/router'
 import { showDialog } from 'vant'
 import { getToken, removeToken } from './auth'
+import { getBrowserLanguage } from './index'
 // import { useI18n } from 'vue-i18n'
 // const { t } = useI18n()
 // .env.development/.env.production配置
@@ -56,7 +57,7 @@ service.interceptors.response.use(
   (response: any) => {
     if (authCode.includes(response.data.code)) {
       // removeToken()
-      const locale: any = localStorage.getItem('locale') || 'zh-cn'
+      const locale: any = localStorage.getItem('locale') || getBrowserLanguage()
       const inform: any = {
         'zh-cn': '登录信息已失效,请重新登录',
         'vi-vn': 'Thông tin đăng nhập đã hết hạn, vui lòng đăng nhập lại',
