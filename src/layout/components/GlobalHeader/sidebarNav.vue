@@ -51,8 +51,10 @@
             <img v-else class="menu_1" fit="contain" src="@/assets/images/user/edit1.svg" />
             <div class="menu_2">{{ $t('user.edit') }}</div>
           </div>
-          <!-- <div class="menu" @click="toUser('/customer')">
-            <img class="menu_1" fit="contain" src="@/assets/images/user/icon2.svg" />
+          <!-- 联系我们 -->
+          <!-- <div class="menu" @click="toUser('/contactUs')">
+            <img v-if="ifBLue" class="menu_1" fit="contain" src="@/assets/images/user/blue/sever.png" />
+            <img v-else class="menu_1" fit="contain" src="@/assets/images/user/icon2.svg" />
             <div class="menu_2">{{ $t('user.customer') }}</div>
           </div> -->
         </div>
@@ -99,9 +101,8 @@ const ifBLue = computed(() => {
 
 // 用户导航
 const toUser = (url?: string) => {
-  if (url === '/customer') {
-    console.log('客服===')
-    return
+  if (url === '/result') {
+    store.dispatch('user/getResultTab', 0)
   }
   showLeft.value = false
   $router.push({ path: '/user' + url })
@@ -137,8 +138,8 @@ defineExpose({
     }
 
     .headImg {
-      width: 100px;
-      height: 110px;
+      width: 103px;
+      height: 108px;
       border-radius: 50%;
     }
 

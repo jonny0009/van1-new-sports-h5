@@ -52,8 +52,8 @@ import moment from 'moment'
 import goImg from '@/assets/images/login/go@2x.png'
 import store from '@/store'
 
-import { useRouter } from 'vue-router'
-const $router = useRouter()
+// import { useRouter } from 'vue-router'
+// const $router = useRouter()
 
 // import { ref, reactive } from 'vue'
 const props = defineProps({
@@ -80,16 +80,17 @@ const getMatchTime = (item: any) => {
 }
 
 const toMatch = async (item: any) => {
-  store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
+  store.dispatch('betting/setMoreShow', { status: true, moreParams: item })
+  // store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
 
-  const obj = JSON.stringify(item)
-  $router.push({
-    path: `/home`,
-    query: {
-      gidm: item.gidm,
-      obj: obj
-    }
-  })
+  // const obj = JSON.stringify(item)
+  // $router.push({
+  //   path: `/home`,
+  //   query: {
+  //     gidm: item.gidm,
+  //     obj: obj
+  //   }
+  // })
 }
 // 搜索字体颜色
 const highlightText = (field: any, text: any) => {
