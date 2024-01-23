@@ -27,6 +27,7 @@ import time from '@/assets/images/home/homeTabs/homeTabs-time.png'
 import important from '@/assets/images/home/homeTabs/homeTabs-important.png'
 import defaultImportant from '@/assets/images/home/homeTabs/homeTabs-default-important.png'
 import { ref, computed, watch } from 'vue'
+import store from '@/store'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 import router from '@/router'
@@ -48,7 +49,9 @@ watch(active, (val) => {
     homeBarArray.value.push(...homeBarArrayTable(active.value))
   }
 })
-const clickChangeActive = (item:any) => {
+const clickChangeActive = (item: any) => {
+  store.dispatch('user/getIfKeepCache', false)
+  store.dispatch('user/getLocationHeight', false)
   const { name } = item
   const params:any = { name }
   router.push(params)

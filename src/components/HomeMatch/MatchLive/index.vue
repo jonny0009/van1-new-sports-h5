@@ -148,7 +148,7 @@
       <!--  -->
       <div class="up-match__footer">
         <div class="match-footer">
-          <div class="match-footer__item" @click="store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })">
+          <div class="match-footer__item" @click="betMoreShow">
             <span>{{ $t('home.morePlay') }}</span>
             <!-- <span class="num">149</span> -->
             <van-icon class="arrow" name="arrow" />
@@ -451,5 +451,10 @@ const showSportsIcon = (item:any) => {
 
 const goToDetail = (item:any) => {
   router.push(`/live/${item.gidm}`)
+}
+const betMoreShow = () => {
+  store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })
+  store.dispatch('user/getIfKeepCache', true)
+  store.dispatch('user/getLocationHeight', false)
 }
 </script>
