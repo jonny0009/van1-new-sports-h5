@@ -9,10 +9,10 @@ export default async () => {
   const plateMaskKey = localStore.getItem('plateMaskKey')
 
   /** sharpsports演示需要，临时去掉url带入的token，走路由拦截试玩自动登录 */
-  // if (searchParams.token) {
-  //   store.commit('user/SET_TOKEN', searchParams.token)
-  //   store.commit('user/SET_ANONYMITY', false)
-  // }
+  if (searchParams.token) {
+    store.commit('user/SET_TOKEN', searchParams.token)
+    store.commit('user/SET_ANONYMITY', false)
+  }
   if (searchParams.theme) {
     store.commit('app/SET_THEME', searchParams.theme)
   }
@@ -20,7 +20,7 @@ export default async () => {
   // 商户语言
   // await store.dispatch('app/queryCMerLanguage')
   // 商户配置
-  // await store.dispatch('app/businessConfig')
+  await store.dispatch('app/businessConfig')
   // 商户配置2
   store.dispatch('app/merchantConfig')
   // 模块控制

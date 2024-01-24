@@ -1,14 +1,9 @@
 <template>
   <div class="match-item-wrap" :style="{ backgroundImage: `url(${cover})` }">
-    <video-box
-      v-if="showVideoBox"
-      :live-url="liveInfo.m3u8 || liveInfo.url"
-      :controls="false"
-      @refresh="refresh"
-    />
+    <video-box v-if="showVideoBox" :live-url="liveInfo.m3u8 || liveInfo.url" :controls="false" @refresh="refresh" />
     <div class="video-footer">
       <SportsIcon class="SportsIcon" :icon-src="liveInfo.gameType" />
-      <div class="leagueName">
+      <div class="leagueName text-overflow">
         {{ liveInfo.leagueShortName || liveInfo.leagueName }}
       </div>
       <div class="flex-1"></div>
@@ -16,7 +11,7 @@
     </div>
   </div>
 </template>
-<script  lang="ts" setup>
+<script lang="ts" setup>
 import { useMatch } from '@/utils/useMatch'
 const setMatch: any = useMatch()
 import VideoBox from './child/VideoBox'
@@ -42,13 +37,16 @@ const cover = computed(() => {
   return coverFt
 })
 
-watch(() => props.activeIndex, () => {
-  if (props.activeIndex === props.matchIndex) {
-    refresh()
-  } else {
-    showVideoBox.value = false
+watch(
+  () => props.activeIndex,
+  () => {
+    if (props.activeIndex === props.matchIndex) {
+      refresh()
+    } else {
+      showVideoBox.value = false
+    }
   }
-})
+)
 const showVideoBox = ref(false)
 const refresh = () => {
   showVideoBox.value = false
@@ -68,13 +66,12 @@ const showVideo = () => {
 onBeforeMount(() => {
   showVideo()
 })
-
 </script>
 <style lang="scss" scoped>
 .match-item-wrap {
   position: absolute;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   height: 100%;
   width: 100%;
   background: url('@/assets/images/sportlive/cover.jpg') no-repeat;
@@ -83,7 +80,7 @@ onBeforeMount(() => {
   border-radius: 8px 8px 0 0;
   overflow: hidden;
 
-  .video-footer{
+  .video-footer {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -96,16 +93,17 @@ onBeforeMount(() => {
     padding: 0 72px 0 14px;
     border-bottom-right-radius: 15px;
     border-bottom-left-radius: 15px;
-    .SportsIcon{
+    .SportsIcon {
       height: 20px;
       font-size: 20px;
       margin-top: 14px;
       margin-right: 10px;
     }
-    .leagueName{
+    .leagueName {
       font-size: 20px;
+      max-width: 120px;
     }
-    .time{
+    .time {
       font-size: 20px;
     }
   }

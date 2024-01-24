@@ -56,6 +56,7 @@ declare interface Betting {
   comboT: any
   markets: any
   comboMarkets: any
+  parlayMarkets: any
   results: any
   isOne: boolean
   hitState: any
@@ -68,6 +69,7 @@ declare interface Match {
   pictureinpictureGidm: any
   matchInfo: any
   matchData: any
+  needTimer: boolean
 }
 
 declare module '@vue/runtime-core' {

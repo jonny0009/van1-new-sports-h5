@@ -33,6 +33,7 @@
       </div>
     </div>
     <!-- end -->
+
     <div class="bet-menu">
       <div
         class="bet-menu__nav"
@@ -45,7 +46,6 @@
         <span class="title">{{ item.title }}</span>
       </div>
     </div>
-
     <div class="bet-main">
       <BettingCollapse
         v-show="menuType === 0"
@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, computed, onBeforeMount, ref } from 'vue'
+import { Ref, computed, onBeforeMount, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { matcheInfo } from '@/api/live'
 import { useMatch } from '@/utils/useMatch'
@@ -109,29 +109,32 @@ const gotoLive = () => {
   }
 }
 
-// let intervalTimer: any = null
+let intervalTimer: any = null
 // const startInterval = () => {
 //   closeInterval()
 //   intervalTimer = setInterval(() => {
 //     getMatcheInfo()
 //   }, 5000)
 // }
-// const closeInterval = () => {
-//   if (intervalTimer) {
-//     clearInterval(intervalTimer)
-//     intervalTimer = null
-//   }
-// }
+const closeInterval = () => {
+  if (intervalTimer) {
+    clearInterval(intervalTimer)
+    intervalTimer = null
+  }
+}
 
 onBeforeMount(() => {
   getMatcheInfo()
   // startInterval()
 })
+
+onUnmounted(() => {
+  closeInterval()
+})
 </script>
 
 <style lang="scss" scoped>
 .bet-container {
-  padding: 0 36px;
   &.has-bet {
     padding-bottom: 96px;
   }
@@ -139,7 +142,7 @@ onBeforeMount(() => {
     height: 252px;
     background: url('@/assets/images/live/game_mask.png') no-repeat;
     background-size: auto 100%;
-    margin: 40px 0 20px 0;
+    margin: 40px 36px 20px 36px;
     font-size: 24px;
     color: #ffffff;
     letter-spacing: 0;
@@ -242,6 +245,7 @@ onBeforeMount(() => {
   &-menu {
     display: flex;
     margin: 0 -12px;
+    padding: 0 36px;
   }
   &-menu__nav {
     flex: 1;
@@ -272,7 +276,7 @@ onBeforeMount(() => {
   }
 
   &-main {
-    padding: 30px 0 0 0;
+    padding: 30px 14px 0 14px;
   }
 }
 </style>

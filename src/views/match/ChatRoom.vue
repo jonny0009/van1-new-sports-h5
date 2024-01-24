@@ -71,12 +71,14 @@ const modelShow = computed({
 const showFixedBet = computed(() => store.state.app.showFixedBet)
 const userInfo = computed(() => store.state.user.userInfo)
 const matchInfo = computed(() => store.state.match.matchInfo)
+const needTimer = computed(() => store.state.match.needTimer)
+
 const disabledField = computed(() => {
   const { isSend } = chatRoomInfo.value
   if (!getToken()) {
     return true
   }
-  if (isSend == 0) {
+  if (isSend * 1 === 0) {
     return true
   }
   return false
@@ -112,6 +114,10 @@ onUnmounted(() => {
 
 const chatRoomInfo: Ref<any> = ref({})
 const getIntoRoom = async () => {
+  if (needTimer.value) {
+    return
+  }
+
   const params = {
     gidm: matchInfo.value.gidm,
     systemId: matchInfo.value.systemId,

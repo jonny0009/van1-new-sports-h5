@@ -123,7 +123,8 @@ const betClose = (state: boolean) => {
 
 const backTopShow = computed(() => {
   const route: any = currentRoute.value
-  return route.name.indexOf('Match') === -1
+  const notNeeds = ['MatchBets', 'MatchWith', 'MatchMixs', 'MatchData', 'MatchOther']
+  return !notNeeds.includes(route.name)
 })
 </script>
 <style lang="scss">
