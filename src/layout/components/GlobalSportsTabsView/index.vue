@@ -66,7 +66,6 @@ const homeBarList = ref([
 ])
 
 const goClick = ({ routerName }: any) => {
-  store.dispatch('user/getIfKeepCache', false)
   store.dispatch('user/getLocationHeight', false)
   const params = {
     name: routerName

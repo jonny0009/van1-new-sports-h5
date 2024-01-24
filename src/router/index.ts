@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import NotFoundPage from '@/views/error-page/404.vue'
 import Layout from '@/layout/index.vue'
-import { KeepAlive } from 'vue'
 const modulesFiles = import.meta.globEager('./modules/*/*.ts')
 const pathList: string[] = []
 for (const path in modulesFiles) {
@@ -98,7 +96,7 @@ export const constantRoutes: Array<any> = [
         meta: {
           showSportsTabsView: true,
           showBarTabsView: true,
-          showRefresh: true,
+          // showRefresh: true,
           KeepAlive:true
         }
       }

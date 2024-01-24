@@ -2,6 +2,7 @@
   <div class="homeTime-page">
     <SportsTabs ref="refSportsTabs" class="pb10" @returnSportsSuccess="returnSportsSuccess" />
     <tabsTime v-if="routerName === 'HomeTime'" @returnTimeSuccess="returnTimeSuccess" />
+  <van-pull-refresh  v-model="isRefreshLoading"  @refresh="onRefresh">
     <van-list
       v-model="loading"
       :finished="finished"
@@ -30,6 +31,7 @@
         }"
       />
     </van-list>
+  </van-pull-refresh>
     <FooterHeight />
   </div>
 </template>
@@ -69,6 +71,7 @@ watch(refreshChangeTime, (val) => {
   }
 })
 const isLoading = ref(false)
+const isRefreshLoading = ref(false)
 const params:any = reactive({
   page: 1,
   pageSize: 5,
@@ -87,6 +90,10 @@ const getLoading = (val:any = false, nextToggle:any = '') => {
   } else {
     isLoading.value = val
   }
+}
+const onRefresh = () => {
+  isRefreshLoading.value = false
+  store.dispatch('home/setRefreshChangeTime', new Date().getTime())
 }
 const getRecommendEvents = async (nextToggle:any = '') => {
   getLoading(false, nextToggle)

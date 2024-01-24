@@ -201,7 +201,6 @@ const Mclick = () => {
 }
 const betMoreShow = () => {
   store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })
-  store.dispatch('user/getIfKeepCache', true)
   store.dispatch('user/getLocationHeight', false)
 }
 // const goClick = () => {
