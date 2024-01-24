@@ -20,7 +20,7 @@
               v-for="(item,idx) in firstLeaguesList"
               v-else
               :key="idx"
-              :src="imgUrlFormat(item.icon)"
+              :src="imgUrlFormat(item.homeLeagueLogo)"
               fit="contain"
               lazy-load
               @click="goSportClick(item)"
@@ -47,7 +47,7 @@ import titleHot from '@/assets/images/home/title-hot.png'
 import { onBeforeMount, reactive, ref, computed, watch } from 'vue'
 import store from '@/store'
 import { imgUrlFormat } from '@/utils/index'
-import { firstLeagues } from '@/api/home'
+import { firstLeagues,recommendLeague } from '@/api/home'
 import router from '@/router'
 const activeNames = ref('1')
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
@@ -62,14 +62,17 @@ watch(refreshChangeTime, (val) => {
     }, 100)
   }
 })
-const firstLeaguesList = reactive([])
+const firstLeaguesList:any = reactive([])
 const isLoading = ref(false)
 const getFirstLeagues = async () => {
   isLoading.value = false
-  const res:any = await firstLeagues()
+  // const res:any = await firstLeagues()
+  const res: any = await recommendLeague({ gameType: 'home' })
+  
   isLoading.value = true
   if (res.code === 200) {
-    const list:any = res?.data || []
+    // const list:any = res?.data || []
+    const list:any = res?.data.list || []
     firstLeaguesList.length = 0
     firstLeaguesList.push(...list)
   }
