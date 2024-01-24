@@ -10,7 +10,7 @@ export default {
       name: 'sportToday',
       meta: {
         showSportsTabsView: true,
-        showRefresh: true,
+        // showRefresh: true,
         KeepAlive:true
       }
     }

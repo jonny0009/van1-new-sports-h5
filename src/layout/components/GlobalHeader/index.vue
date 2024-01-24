@@ -71,10 +71,8 @@ const loginToken = ref(getToken())
 const $router = useRouter()
 const toUrl = (url: string) => {
   if (url==='/search') {
-    store.dispatch('user/getIfKeepCache', true)
     store.dispatch('user/getLocationHeight', false)
   } else {
-    store.dispatch('user/getIfKeepCache', false)
     store.dispatch('user/getLocationHeight', false)
     
   }

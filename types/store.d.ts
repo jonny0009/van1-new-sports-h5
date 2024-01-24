@@ -29,10 +29,10 @@ declare interface User {
   peopleInfo: any
   aheadOrderList: any
   resultTab:any
-  keepCache:any
   scrollNumY:any
   locationHeight:any
   currentWallet:any
+  keepCache:any
   token: string | undefined | null
 }
 declare interface Betting {

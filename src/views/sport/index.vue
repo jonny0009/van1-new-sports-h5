@@ -14,6 +14,7 @@
           :active="leagueId === item.leagueId" @click="clickLeague(item)" />
       </div>
     </div>
+    <van-pull-refresh  v-model="isRefreshLoading"  @refresh="onRefresh">
 
     <template v-if="!leagueId">
 
@@ -86,6 +87,7 @@
       <ChampionList :champion-list="championList" :champion-list-loading="championListLoading" />
 
     </template>
+  </van-pull-refresh>
 
     <FooterHeight />
 
@@ -129,6 +131,8 @@ const earlyPage: any = ref(1)
 const earlyPageSize: any = ref(10)
 const earlyLoadAll: any = ref(false)
 const recommendLoadAll: any = ref(false)
+const isRefreshLoading = ref(false)
+
 // 页面缓存, 隐藏
 // watch(() => currentRoute.value, () => {
 //   leagueId.value = ''
@@ -141,6 +145,10 @@ const recommendLoadAll: any = ref(false)
 onMounted(() => {
   initList()
 })
+const onRefresh = () => {
+  isRefreshLoading.value = false
+  initList()
+}
 // 初始化方法
 const initList = () => {
   leagueId.value = ''

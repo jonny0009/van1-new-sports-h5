@@ -454,7 +454,6 @@ const goToDetail = (item:any) => {
 }
 const betMoreShow = () => {
   store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })
-  store.dispatch('user/getIfKeepCache', true)
   store.dispatch('user/getLocationHeight', false)
 }
 </script>

@@ -33,7 +33,6 @@ const heightNumY: any = ref(0)
 
 const markets = computed(() => store.state.betting.markets)
 const scrollNum = computed(() => store.state.user.scrollNumY)
-// const ifKeepCache = computed(() => store.state.user.keepCache)
 const locationHeight = computed(() => store.state.user.locationHeight)
 const KeepAlive = computed(() => currentRoute.value.meta.KeepAlive)
 
