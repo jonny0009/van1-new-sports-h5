@@ -62,12 +62,12 @@ export const constantRoutes: Array<any> = [
     component: () => import('@/views/error-page/401.vue'),
     hidden: true
   },
-  // {
-  //   path: '/404',
-  //   name: '404',
-  //   component: () => import('@/views/error-page/404.vue'),
-  //   hidden: true
-  // },
+  {
+    path: '/403',
+    name: '403',
+    component: () => import('@/views/error-page/403.vue'),
+    hidden: true
+  },
   {
     path: '/503',
     name: '503',

@@ -3,6 +3,7 @@ import router from '@/router'
 import { showDialog } from 'vant'
 import { getToken, removeToken } from './auth'
 import { getBrowserLanguage } from './index'
+import store from '@/store'
 // import { useI18n } from 'vue-i18n'
 // const { t } = useI18n()
 // .env.development/.env.production配置
@@ -73,9 +74,15 @@ service.interceptors.response.use(
         router.push('/login')
       })
       // router.push('/login')
-    } else if (+response.data.code !== 200) {
-      return response.data
-    } else {
+    } else if (+response.data.code == 403) {
+      router.push('/403')
+    }else if (+response.data.code == 503 ) {
+      store.commit('app/updateMantainInfo', response.data.msg)
+      if(location.href.indexOf('/503') === -1){
+        router.push('/503')
+      }
+    }
+     else {
       return response.data
     }
   },
