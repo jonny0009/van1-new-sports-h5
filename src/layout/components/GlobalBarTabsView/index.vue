@@ -50,7 +50,6 @@ watch(active, (val) => {
   }
 })
 const clickChangeActive = (item: any) => {
-  store.dispatch('user/getIfKeepCache', false)
   store.dispatch('user/getLocationHeight', false)
   const { name } = item
   const params:any = { name }

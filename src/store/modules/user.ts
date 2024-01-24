@@ -22,7 +22,6 @@ const userModule: Module<User, any> = {
     peopleInfo: {},
     aheadOrderList: [],
     resultTab: 0,
-    keepCache:false,
     locationHeight:false,
     scrollNumY:0,
     isAnonymity,
@@ -146,10 +145,7 @@ const userModule: Module<User, any> = {
     async getResultTab({ state }, params) {
       state.resultTab = params
     },
-    // 是否缓存页面
-    async getIfKeepCache({ state }, params) {
-      state.keepCache = params
-    },
+   
     // 页面高度
     async getScrollNumY({ state }, params) {
       state.scrollNumY = params

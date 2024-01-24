@@ -1,5 +1,4 @@
 import Layout from '@/layout/index.vue'
-import { KeepAlive } from 'vue'
 export default {
   path: '/match',
   component: Layout,

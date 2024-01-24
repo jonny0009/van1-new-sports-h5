@@ -29,7 +29,6 @@ declare interface User {
   peopleInfo: any
   aheadOrderList: any
   resultTab:any
-  keepCache:any
   scrollNumY:any
   locationHeight:any
   token: string | undefined | null
