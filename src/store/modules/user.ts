@@ -25,7 +25,8 @@ const userModule: Module<User, any> = {
     keepCache:false,
     locationHeight:false,
     scrollNumY:0,
-    isAnonymity
+    isAnonymity,
+    currentWallet:{}
   },
   mutations: {
     SET_TOKEN: (state, token: string) => {
@@ -93,6 +94,7 @@ const userModule: Module<User, any> = {
       if (res.code === 200) {
         state.currencyData = res.data || {}
         state.currency = res.data[0].currency || {}
+        state.currentWallet = res.data[0]
         this.dispatch('user/getBalance', { wid: res.data[0].walletId || '' })
       }
     },

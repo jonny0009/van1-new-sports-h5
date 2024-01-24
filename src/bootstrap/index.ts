@@ -19,6 +19,7 @@ export default async () => {
   setTheme()
   // 商户语言
   // await store.dispatch('app/queryCMerLanguage')
+   
   // 商户配置
   await store.dispatch('app/businessConfig')
   // 商户配置2
@@ -33,14 +34,15 @@ export default async () => {
     await store.dispatch('user/anonyToken')
   }
   if (getToken()) {
+    // 获取钱包币种
+    await store.dispatch('user/getCurrency')
     // 获取全部体育项
     store.dispatch('app/getAllSports')
     // 商户语言
     store.dispatch('app/queryCMerLanguage')
     // 获取账号信息
     store.dispatch('user/userInfo')
-    // 获取钱包币种
-    store.dispatch('user/getCurrency')
+    
     // 获取注单数据
     store.dispatch('user/pendingOrder')
     // 获取盘口或者默认盘口
