@@ -32,6 +32,7 @@ declare interface User {
   keepCache:any
   scrollNumY:any
   locationHeight:any
+  currentWallet:any
   token: string | undefined | null
 }
 declare interface Betting {

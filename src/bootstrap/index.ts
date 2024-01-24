@@ -19,7 +19,7 @@ export default async () => {
   setTheme()
   // 商户语言
   // await store.dispatch('app/queryCMerLanguage')
-   
+
   // 商户配置
   await store.dispatch('app/businessConfig')
   // 商户配置2
@@ -30,7 +30,7 @@ export default async () => {
   // 查询单双线玩法
   store.dispatch('app/getDoubleLineInfo')
   // 匿名登录
-  if (store.state.app.businessConfig.anonyTokenFlag === 1 && !getToken()) {
+  if (store.state.app.businessConfig.anonyTokenFlag === 1 && !searchParams.token && store.state.user.isAnonymity) {
     await store.dispatch('user/anonyToken')
   }
   if (getToken()) {
@@ -42,7 +42,7 @@ export default async () => {
     store.dispatch('app/queryCMerLanguage')
     // 获取账号信息
     store.dispatch('user/userInfo')
-    
+
     // 获取注单数据
     store.dispatch('user/pendingOrder')
     // 获取盘口或者默认盘口

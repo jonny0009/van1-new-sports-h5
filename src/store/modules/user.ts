@@ -22,11 +22,11 @@ const userModule: Module<User, any> = {
     peopleInfo: {},
     aheadOrderList: [],
     resultTab: 0,
-    keepCache:false,
-    locationHeight:false,
-    scrollNumY:0,
+    keepCache: false,
+    locationHeight: false,
+    scrollNumY: 0,
     isAnonymity,
-    currentWallet:{}
+    currentWallet: {}
   },
   mutations: {
     SET_TOKEN: (state, token: string) => {
