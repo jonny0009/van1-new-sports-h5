@@ -22,8 +22,6 @@ const getComponent = (Component:any, route: any) => {
   if (!Component.type.name) {
     Component.type.name = route.name
   }
-  console.log({...Component},'组件啊===');
-  
   return Component
 }
 // 缓存触发组件
