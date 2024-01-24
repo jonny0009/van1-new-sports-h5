@@ -1,1 +1,0 @@
-import{o as a,O as e,W as s}from"./vue.778d92ec.js";const o={},t={class:"casino-page"};o.render=function(o,d){return a(),e("div",t,s(o.$t("home.stayTuned")),1)},o.__scopeId="data-v-9f06aef2";export{o as default};
