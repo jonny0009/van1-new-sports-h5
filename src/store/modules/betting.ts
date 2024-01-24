@@ -281,7 +281,7 @@ const bettingModule: Module<Betting, any> = {
     // update投注项
     updateMarket({ state, rootState }, newBet) {
       const userConfig = rootState.user.userConfig
-      const { handicapType, acceptAll } = userConfig || {}
+      const { acceptAll } = userConfig || {}
       const autoRatio = acceptAll === 1
       const autoOdd = state.oddChangesState || false
       // 获取新的点水参数
@@ -444,12 +444,6 @@ const bettingModule: Module<Betting, any> = {
               // dispatch('bet/updateComboBets', errorIds, { root: true })
               // dispatch('setCombosStructure', [])
             }
-          } else {
-            // state.combosStructure = state.combosStructure.map(comboItem => {
-            //   comboItem.lock = true
-            //   // comboItem.gold = ''
-            //   return comboItem
-            // })
           }
         } else {
           const comboCount = state.comboMarkets.length
