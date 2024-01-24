@@ -21,7 +21,6 @@ const createFingerprint = () => {
 router.beforeEach(async (_to: any, _from: any, next) => {
   const hasToken = store.state.user.token
   if (hasToken) {
-    await store.dispatch('app/businessConfig')
     next()
   } else {
     createFingerprint()
