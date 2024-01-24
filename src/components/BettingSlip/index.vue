@@ -236,6 +236,7 @@ defineExpose({
 })
 </script>
 <style lang="scss" scoped>
+
 .betting-slip-bg {
   display: none;
   z-index: 288;
@@ -368,11 +369,14 @@ defineExpose({
     }
 
     .bet-ior-switch {
+      --van-switch-width: 80px;
+      --van-switch-height: 44px;
+      --van-switch-node-size: 40px;
+      --van-switch-ior-size: 30px;
+
       margin-left: 10px;
 
       :deep(.van-switch__node) {
-        width: calc(var(--van-switch-height) - 4px);
-        height: calc(var(--van-switch-height) - 4px);
         top: 0;
         bottom: 0;
         margin: auto;
@@ -389,8 +393,8 @@ defineExpose({
       justify-content: center;
 
       .accept-ior {
-        width: 0.7em;
-        height: 0.7em;
+        width: var(--van-switch-ior-size);
+        height: var(--van-switch-ior-size);
         color: #fff;
       }
     }

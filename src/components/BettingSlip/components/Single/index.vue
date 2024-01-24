@@ -19,7 +19,7 @@
           @<span v-points="marketInfo.ior"></span>
           <span class="ior-change" :class="marketInfo.iorChange"></span>
         </div>
-        <div v-if="accountState && !marketInfo.iorChange && goldRule" class="gold-tips">
+        <div v-if="accountState && !marketInfo.iorChange && goldRule&&!error" class="gold-tips">
           {{ $t('betting.goldTips', { min: marketInfo.goldMin, max: marketInfo.goldMax }) }}
           <div class="tips-arrow"></div>
         </div>
