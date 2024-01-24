@@ -22,6 +22,9 @@ const userModule: Module<User, any> = {
     peopleInfo: {},
     aheadOrderList: [],
     resultTab: 0,
+    keepCache:false,
+    locationHeight:false,
+    scrollNumY:0,
     isAnonymity
   },
   mutations: {
@@ -140,6 +143,18 @@ const userModule: Module<User, any> = {
     // 结果tabIndex
     async getResultTab({ state }, params) {
       state.resultTab = params
+    },
+    // 是否缓存页面
+    async getIfKeepCache({ state }, params) {
+      state.keepCache = params
+    },
+    // 页面高度
+    async getScrollNumY({ state }, params) {
+      state.scrollNumY = params
+    },
+    // 是否有坐标高度
+    async getLocationHeight({ state }, params) {
+      state.locationHeight = params
     },
     // 进行中的注单
     async pendingOrder({ state }, params = { }) {

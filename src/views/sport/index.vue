@@ -10,14 +10,8 @@
     <div v-if="firstLeaguesList.length" class="my-scroll__content">
       <div class="betting-sport-nav">
         <TextButton :text="$t('sport.all')" :active="!leagueId" @click="clickLeague({})" />
-        <ImageButton
-          v-for="(item,idx) in firstLeaguesList"
-          :key="idx"
-          :text="item.leagueNameAbbr"
-          :src="item.icon"
-          :active="leagueId===item.leagueId"
-          @click="clickLeague(item)"
-        />
+        <ImageButton v-for="(item, idx) in firstLeaguesList" :key="idx" :text="item.leagueNameAbbr" :src="item.icon"
+          :active="leagueId === item.leagueId" @click="clickLeague(item)" />
       </div>
     </div>
 
@@ -33,9 +27,9 @@
           <template v-else>
             <template v-if="recommendList.length">
               <div class="recommend-list">
-                <HomeMatchHandicap v-for="(item,idx) in recommendList" :key="idx" :send-params="item" />
+                <HomeMatchHandicap v-for="(item, idx) in recommendList" :key="idx" :send-params="item" />
               </div>
-              <div class="Button-MatchMore mt20 mb20" :class="recommendLoadAll?'no-more':''" @click="moreRecommend">
+              <div class="Button-MatchMore mt20 mb20" :class="recommendLoadAll ? 'no-more' : ''" @click="moreRecommend">
                 <span>
                   {{ recommendLoadAll ? $t('live.noMore') : $t('home.lookMoreMatch') }}
                 </span>
@@ -56,11 +50,11 @@
           <template v-else>
             <template v-if="earlyList.length">
               <div class="early-list">
-                <HomeMatchHandicap v-for="(item,idx) in earlyList" :key="idx" :send-params="item" />
+                <HomeMatchHandicap v-for="(item, idx) in earlyList" :key="idx" :send-params="item" />
               </div>
-              <div class="Button-MatchMore mt20 mb20" :class="earlyLoadAll?'no-more':''" @click="moreEarly">
+              <div class="Button-MatchMore mt20 mb20" :class="earlyLoadAll ? 'no-more' : ''" @click="moreEarly">
                 <span>
-                  {{ earlyLoadAll?$t('live.noMore'):$t('home.lookMoreMatch') }}
+                  {{ earlyLoadAll ? $t('live.noMore') : $t('home.lookMoreMatch') }}
                 </span>
               </div>
             </template>
@@ -81,7 +75,7 @@
           <Loading v-if="!getRecommendEventsIsLoading" />
           <template v-else>
             <div v-if="recommendList.length" class="recommend-list">
-              <HomeMatchHandicap v-for="(item,idx) in recommendList" :key="idx" :send-params="item" />
+              <HomeMatchHandicap v-for="(item, idx) in recommendList" :key="idx" :send-params="item" />
             </div>
             <HomeEmpty v-else></HomeEmpty>
           </template>
@@ -103,22 +97,23 @@ import recommendIcon from '@/assets/images/home/title-recommend.png'
 import ChampionList from './champion/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
 import { useRoute, useRouter } from 'vue-router'
-import { ref, onBeforeMount, watch, computed, nextTick } from 'vue'
+import { ref, onBeforeMount, watch, computed, nextTick, onMounted } from 'vue'
 import router from '@/router'
 import { apiChampionpPlayTypes } from '@/api/champion'
 import { firstLeagues, recommendEvents } from '@/api/home'
 import { MarketInfo } from '@/entitys/MarketInfo'
 const refSportsTabs = ref('')
-const returnSportsSuccess = (item:any) => {
+const returnSportsSuccess = (item: any) => {
   router.push({
     name: 'Sport',
     params: {
       type: item
     }
   })
+  initList()
 }
 const { currentRoute } = useRouter()
-const route:any = useRoute()
+const route: any = useRoute()
 const activeNames = ref('1')
 const activeNamesB = ref('b1')
 const activeNamesC = ref('c1')
@@ -134,28 +129,44 @@ const earlyPage: any = ref(1)
 const earlyPageSize: any = ref(10)
 const earlyLoadAll: any = ref(false)
 const recommendLoadAll: any = ref(false)
-watch(() => currentRoute.value, () => {
+// 页面缓存, 隐藏
+// watch(() => currentRoute.value, () => {
+//   leagueId.value = ''
+//   recommendPage.value = 1
+//   earlyPage.value = 1
+//   getFirstLeagues()
+//   initData()
+// }
+// )
+onMounted(() => {
+  initList()
+})
+// 初始化方法
+const initList = () => {
   leagueId.value = ''
   recommendPage.value = 1
   earlyPage.value = 1
   getFirstLeagues()
   initData()
 }
-)
 const initData = async () => {
   if (leagueId.value) {
     // 按联赛查询
-    const leagueParames:any = ref({ gameType: gameType.value, leagueId: leagueId.value, page: 1, pageSize: 20 })
+    const leagueParames: any = ref({ gameType: gameType.value, leagueId: leagueId.value, page: 1, pageSize: 20 })
     getRecommendEvents(leagueParames.value)
     getChampionpPlayTypes()
   } else {
     // 推荐
-    const recommendParames:any = ref({ gameType: gameType.value, gradeType: 1,
-      page: recommendPage.value, pageSize: recommendPageSize.value })
+    const recommendParames: any = ref({
+      gameType: gameType.value, gradeType: 1,
+      page: recommendPage.value, pageSize: recommendPageSize.value
+    })
     getRecommendEvents(recommendParames.value)
     // 早盘
-    const earlyParames:any = ref({ gameType: gameType.value, gradeType: 2,
-      page: earlyPage.value, pageSize: earlyPageSize.value })
+    const earlyParames: any = ref({
+      gameType: gameType.value, gradeType: 2,
+      page: earlyPage.value, pageSize: earlyPageSize.value
+    })
     getRecommendEvents(earlyParames.value)
   }
 }
@@ -163,7 +174,7 @@ const firstLeaguesList: any = ref([])
 // 获取一级联赛
 const getFirstLeagues = async () => {
   if (gameType.value) {
-    const res:any = await firstLeagues({ gameType: gameType.value }) || {}
+    const res: any = await firstLeagues({ gameType: gameType.value }) || {}
     if (res.code === 200 && res.data) {
       firstLeaguesList.value = res.data
     } else {
@@ -178,10 +189,12 @@ const moreEarly = async () => {
     return
   }
   earlyPage.value = earlyPage.value + 1
-  const earlyParames:any = ref({ gameType: gameType.value, gradeType: 2,
-    page: earlyPage.value, pageSize: earlyPageSize.value })
+  const earlyParames: any = ref({
+    gameType: gameType.value, gradeType: 2,
+    page: earlyPage.value, pageSize: earlyPageSize.value
+  })
   isLoadingEarly.value = true
-  const res:any = await recommendEvents(earlyParames.value) || {}
+  const res: any = await recommendEvents(earlyParames.value) || {}
   if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
     earlyList.value.push(...res.data.baseData)
   }
@@ -199,10 +212,12 @@ const moreRecommend = async () => {
     return
   }
   recommendPage.value = recommendPage.value + 1
-  const recommendParames:any = ref({ gameType: gameType.value, gradeType: 1,
-    page: recommendPage.value, pageSize: recommendPageSize.value })
+  const recommendParames: any = ref({
+    gameType: gameType.value, gradeType: 1,
+    page: recommendPage.value, pageSize: recommendPageSize.value
+  })
   isLoadingRecommend.value = true
-  const res:any = await recommendEvents(recommendParames.value) || {}
+  const res: any = await recommendEvents(recommendParames.value) || {}
   if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
     recommendList.value.push(...res.data.baseData)
   }
@@ -217,12 +232,12 @@ const recommendList: any = ref([])
 const earlyList: any = ref([])
 const getRecommendEventsIsLoading = ref(false)
 // 获取推荐，早盘赛事
-const getRecommendEvents = async (params:any) => {
+const getRecommendEvents = async (params: any) => {
   if (gameType.value) {
     getRecommendEventsIsLoading.value = false
-    const res:any = await recommendEvents(params) || {}
+    const res: any = await recommendEvents(params) || {}
     getRecommendEventsIsLoading.value = true
-    let listFlag:any = []
+    let listFlag: any = []
     if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
       listFlag = res.data.baseData
     }
@@ -252,20 +267,20 @@ const championListLoading: any = ref(false)
 const getChampionpPlayTypes = async () => {
   if (leagueId.value) {
     championListLoading.value = true
-    const res:any = await apiChampionpPlayTypes({ page: 1, pageSize: 10, leagueIds: leagueId.value }) || {}
+    const res: any = await apiChampionpPlayTypes({ page: 1, pageSize: 10, leagueIds: leagueId.value }) || {}
     championListLoading.value = false
     if (res.code === 200 && res.data) {
-      const gameDetail:any = res?.data?.gameDetail || []
-      const champions = gameDetail.map((details:any) => {
+      const gameDetail: any = res?.data?.gameDetail || []
+      const champions = gameDetail.map((details: any) => {
         const { systemId, gameId, gidm, gameType } = details
         const playType = details.champion.playType
         const championType = details.champion.championType
         const sw = details.champion.sw
-        details.champion.ratioData = details.champion.ratioData.map((ratioInfo:any) => {
+        details.champion.ratioData = details.champion.ratioData.map((ratioInfo: any) => {
           // 整理下单所需参数实体类
           ratioInfo.marketInfo = new MarketInfo({ ...ratioInfo, systemId, gameId, gidm, gameType, playType, sw, championType })
           return ratioInfo
-        }).sort((a:any, b:any) => a.ior - b.ior)
+        }).sort((a: any, b: any) => a.ior - b.ior)
         return details
       })
       championList.value = champions
@@ -287,30 +302,33 @@ onBeforeMount(async () => {
 })
 </script>
 <style lang="scss" scoped>
-.sport-page{
+.sport-page {
   padding: 0 36px;
-  .my-scroll__content{
+
+  .my-scroll__content {
     width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
+
     &::-webkit-scrollbar {
       height: 0;
       display: none;
     }
-    .betting-sport-nav{
+
+    .betting-sport-nav {
       margin-top: 26px;
       margin-bottom: 5px;
       width: 100%;
       max-height: 140px;
       white-space: normal;
       position: relative;
+
       .textButton,
-      .ImageButton{
+      .ImageButton {
         margin-left: 10px;
         margin-bottom: 10px;
       }
     }
   }
-}
-</style>
+}</style>
