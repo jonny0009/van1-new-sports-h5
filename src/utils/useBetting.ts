@@ -13,6 +13,8 @@ const FORMAT_TYPE: any = {
 export function useBetting() {
   const matchInfo = computed(() => store.state.match.matchInfo)
   const userConfig = computed(() => store.state.user.userConfig)
+  const needTimer = computed(() => store.state.match.needTimer)
+  const apiLoading = ref(true)
 
   watch(
     () => matchInfo.value,
@@ -20,14 +22,17 @@ export function useBetting() {
       fetchGroup()
     }
   )
-
   onMounted(() => {
     fetchGroup()
   })
 
   // 1
-  const playGroupList: Ref<any[]> = ref([])
+  const playGroupBetList: Ref<any[]> = ref([])
   const fetchGroup = async () => {
+    if (needTimer.value) {
+      return
+    }
+
     const { formatType } = userConfig.value
     const { gameType } = matchInfo.value
     if (gameType) {
@@ -35,14 +40,14 @@ export function useBetting() {
       const data = res.data || {}
       if (res.code == 200) {
         const patternList = data[FORMAT_TYPE[formatType]]
-        playGroupList.value = patternList
+        playGroupBetList.value = patternList
       }
     }
   }
 
   const currentGroupPlay = ref([])
   const findGroupById = (id: string) => {
-    const currentGroup = playGroupList.value.find((m: any) => m.id?.toString() === id)
+    const currentGroup = playGroupBetList.value.find((m: any) => m.id?.toString() === id)
     currentGroupPlay.value = currentGroup.playData
     getBettingData()
   }
@@ -97,23 +102,28 @@ export function useBetting() {
       const betPlayTypeSort = playTypeSort(playDataListNew, currentGroupPlay.value)
       const betPlayRatioSort = playRatioSort(betPlayTypeSort)
       const betPlayMergeList = playTypeMerge(betPlayRatioSort, 'typeTemp')
+
+      playGroupBetList.value = getGroupListCombo(playDataListNew)
       playBettingList.value = betPlayMergeList
-      getGroupListCombo(playDataListNew)
+      apiLoading.value = false
     }
   }
 
   const getGroupListCombo = (dataList: any[]) => {
-    const groupRow = toRaw(playGroupList.value)
-    const groupPlayList: any[] = []
+    const groupRow = toRaw(playGroupBetList.value)
+    let groupPlayList: any[] = []
     groupRow.forEach((row: any) => {
       const rowResult = {
         id: row.id,
         name: row.name,
         groupType: row.groupType,
-        playListCombo: playTypeSort(dataList, row.playData)
+        playData: row.playData,
+        playDataList: playTypeSort(dataList, row.playData)
       }
       groupPlayList.push(rowResult)
     })
+    groupPlayList = groupPlayList.filter((m: any) => m.playDataList.length > 0)
+    return groupPlayList
   }
 
   const playTypeSort = (targerArray: any[], ruleArray: any[]) => {
@@ -188,5 +198,5 @@ export function useBetting() {
     return resultSort
   }
 
-  return { findGroupById, playGroupList, playBettingList }
+  return { findGroupById, playGroupBetList, playBettingList, apiLoading }
 }
