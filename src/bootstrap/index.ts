@@ -30,7 +30,11 @@ export default async () => {
   // 查询单双线玩法
   store.dispatch('app/getDoubleLineInfo')
   // 匿名登录
-  if (store.state.app.businessConfig.anonyTokenFlag === 1 && !searchParams.token && store.state.user.isAnonymity) {
+  if (
+    store.state.app.businessConfig.anonyTokenFlag === 1 &&
+    !searchParams.token &&
+    (store.state.user.isAnonymity === null || store.state.user.isAnonymity)
+  ) {
     await store.dispatch('user/anonyToken')
   }
   if (getToken()) {
