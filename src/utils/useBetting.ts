@@ -1,4 +1,4 @@
-import { Ref, ref, computed, watch, onMounted } from 'vue'
+import { Ref, ref, computed, watch, onMounted, toRaw } from 'vue'
 import { lib } from 'xcsport-lib'
 import { MarketInfo } from '@/entitys/MarketInfo'
 import { playGroup } from '@/api/live'
@@ -97,9 +97,15 @@ export function useBetting() {
       const betPlayTypeSort = playTypeSort(playDataListNew, currentGroupPlay.value)
       const betPlayRatioSort = playRatioSort(betPlayTypeSort)
       const betPlayMergeList = playTypeMerge(betPlayRatioSort, 'typeTemp')
-
       playBettingList.value = betPlayMergeList
+      getGroupListCombo(playDataListNew)
     }
+  }
+
+  const getGroupListCombo = (dataList: any[]) => {
+    const groupRow = toRaw(playGroupList.value)
+    console.log(111, dataList)
+    console.log(222, groupRow)
   }
 
   const playTypeSort = (targerArray: any[], ruleArray: any[]) => {
