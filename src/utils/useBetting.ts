@@ -23,7 +23,7 @@ export function useBetting() {
     }
   )
   onMounted(() => {
-    fetchGroup()
+    // fetchGroup()
   })
 
   // 1
