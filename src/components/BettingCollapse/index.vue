@@ -3,7 +3,7 @@
     <Loading v-if="loading" />
     <EmptyData v-else-if="betList.length === 0" :text="$t('live.platCloseAll')" />
 
-    <van-tabs v-model:active="tabActive" shrink line-height="0" @change="onChangeTabs">
+    <van-tabs v-show="betList.length > 0" v-model:active="tabActive" shrink line-height="0" @change="onChangeTabs">
       <van-tab v-for="(tab, index) in tabList" :key="index" :name="tab.id + ''">
         <template #title>
           <div class="tab-title">

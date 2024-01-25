@@ -208,6 +208,7 @@ watch(
       left: 0;
       right: 0;
       bottom: 0;
+      z-index: 99;
       margin-left: 90px;
       display: flex;
       align-items: center;
