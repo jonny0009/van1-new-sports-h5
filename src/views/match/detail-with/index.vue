@@ -400,6 +400,9 @@ const getWithData = async () => {
           margin-left: 10px;
         }
       }
+      .betting-option-wrap {
+        display: block;
+      }
       .betting-option-wrap.selected {
         background-color: transparent !important;
       }

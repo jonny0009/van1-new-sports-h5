@@ -50,8 +50,9 @@
       <BettingCollapse
         v-show="menuType === 0"
         :match-info="matchInfo"
-        :group-list="playGroupList"
+        :group-list="playGroupBetList"
         :betting-list="playBettingList"
+        :loading="apiLoading"
         @tab-change="findGroupById"
       />
 
@@ -63,6 +64,7 @@
 <script setup lang="ts">
 import { Ref, computed, onBeforeMount, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { matcheInfo } from '@/api/live'
 import { useMatch } from '@/utils/useMatch'
 import { useBetting } from '@/utils/useBetting'
@@ -71,17 +73,18 @@ import BettingCollapse from '@/components/BettingCollapse/index.vue'
 import MatchDatabase from '@/components/Match/database/index.vue'
 import store from '@/store'
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const setMatch = useMatch()
-const { playGroupList, playBettingList, findGroupById } = useBetting()
+const { findGroupById, playGroupBetList, playBettingList, apiLoading } = useBetting()
 
 const paramsId = computed(() => route.params['id'])
 const showFixedBet = computed(() => store.state.app.showFixedBet)
 
 const menuList = ref([
-  { type: 0, title: '投注', iconName: 'live-bet' },
-  { type: 1, title: '数据', iconName: 'live-data' }
+  { type: 0, title: t('live.bet'), iconName: 'live-bet' },
+  { type: 1, title: t('live.dataBase'), iconName: 'live-data' }
 ])
 const menuType = ref(0)
 const onMenuClick = (item: any) => {
@@ -110,22 +113,24 @@ const gotoLive = () => {
 }
 
 let intervalTimer: any = null
-// const startInterval = () => {
-//   closeInterval()
-//   intervalTimer = setInterval(() => {
-//     getMatcheInfo()
-//   }, 5000)
-// }
+const startInterval = () => {
+  closeInterval()
+  intervalTimer = setInterval(() => {
+    getMatcheInfo()
+    store.commit('match/SET_NEED_TIMER', true)
+  }, 5000)
+}
 const closeInterval = () => {
   if (intervalTimer) {
     clearInterval(intervalTimer)
     intervalTimer = null
+    store.commit('match/SET_NEED_TIMER', false)
   }
 }
 
 onBeforeMount(() => {
   getMatcheInfo()
-  // startInterval()
+  startInterval()
 })
 
 onUnmounted(() => {
