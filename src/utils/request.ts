@@ -28,7 +28,7 @@ service.interceptors.request.use(
     const groupId = 3
     config.headers['Content-Type'] = 'application/json'
     config.headers.token = token
-    config.headers.terType = '2'
+    config.headers.terType = '16'
     config.headers.wid = 1
     // config.headers.lang = 'zh-cn'
     config.headers.lang = localStorage.getItem('locale') || 'zh-cn'
