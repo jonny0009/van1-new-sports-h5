@@ -29,8 +29,8 @@ service.interceptors.request.use(
     const groupId = 3
     config.headers['Content-Type'] = 'application/json'
     config.headers.token = token
-    config.headers.terType = '2'
-    config.headers.wid = store.state.user.currentWallet?.walletId || 1
+    config.headers.terType = '16'
+    config.headers.wid = 1
     // config.headers.lang = 'zh-cn'
     config.headers.lang = localStorage.getItem('locale') || 'zh-cn'
     config.headers.apiVer = '4.06'
@@ -76,13 +76,12 @@ service.interceptors.response.use(
       // router.push('/login')
     } else if (+response.data.code == 403) {
       router.push('/403')
-    }else if (+response.data.code == 503 ) {
+    } else if (+response.data.code == 503) {
       store.commit('app/updateMantainInfo', response.data.msg)
-      if(location.href.indexOf('/503') === -1){
+      if (location.href.indexOf('/503') === -1) {
         router.push('/503')
       }
-    }
-     else {
+    } else {
       return response.data
     }
   },
