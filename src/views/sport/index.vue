@@ -7,6 +7,7 @@
     <!--
       公共 联赛
     -->
+    <van-pull-refresh  v-model="isRefreshLoading"  @refresh="onRefresh">
     <div v-if="firstLeaguesList.length" class="my-scroll__content">
       <div class="betting-sport-nav">
         <TextButton :text="$t('sport.all')" :active="!leagueId" @click="clickLeague({})" />
@@ -14,7 +15,7 @@
           :active="leagueId === item.leagueId" @click="clickLeague(item)" />
       </div>
     </div>
-    <van-pull-refresh  v-model="isRefreshLoading"  @refresh="onRefresh">
+    
 
     <template v-if="!leagueId">
 
@@ -99,12 +100,12 @@ import recommendIcon from '@/assets/images/home/title-recommend.png'
 import ChampionList from './champion/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
 import { useRoute, useRouter } from 'vue-router'
-import { ref, onBeforeMount, watch, computed, nextTick, onMounted } from 'vue'
+import { ref, onBeforeMount, watch, computed, nextTick, onMounted,onActivated } from 'vue'
 import router from '@/router'
 import { apiChampionpPlayTypes } from '@/api/champion'
 import { firstLeagues, recommendEvents } from '@/api/home'
 import { MarketInfo } from '@/entitys/MarketInfo'
-const refSportsTabs = ref('')
+const refSportsTabs = ref()
 const returnSportsSuccess = (item: any) => {
   router.push({
     name: 'Sport',
@@ -112,7 +113,9 @@ const returnSportsSuccess = (item: any) => {
       type: item
     }
   })
-  initList()
+  store.dispatch('user/getLocationHeight', false)
+  refSportsTabs.value?.setSports(item)
+  // initList()
 }
 const { currentRoute } = useRouter()
 const route: any = useRoute()
@@ -120,7 +123,7 @@ const activeNames = ref('1')
 const activeNamesB = ref('b1')
 const activeNamesC = ref('c1')
 const leagueId: any = ref(route.query.leagueId)
-const gameType = computed(() => {
+let gameType:any = computed(() => {
   return route.params?.type || 'FT'
 })
 const leagueLogo: any = ref()
@@ -132,6 +135,8 @@ const earlyPageSize: any = ref(10)
 const earlyLoadAll: any = ref(false)
 const recommendLoadAll: any = ref(false)
 const isRefreshLoading = ref(false)
+import store from '@/store'
+const locationHeight = computed(() => store.state.user.locationHeight)
 
 // 页面缓存, 隐藏
 // watch(() => currentRoute.value, () => {
@@ -142,9 +147,10 @@ const isRefreshLoading = ref(false)
 //   initData()
 // }
 // )
-onMounted(() => {
-  initList()
-})
+
+// onMounted(() => {
+//   initList()
+// })
 const onRefresh = () => {
   isRefreshLoading.value = false
   initList()
@@ -301,7 +307,19 @@ const clickLeague = (item: any) => {
   leagueId.value = item.leagueId
   initData()
 }
-onBeforeMount(async () => {
+// onBeforeMount(async () => {
+//   getFirstLeagues()
+//   initData()
+//   nextTick(() => {
+//     refSportsTabs.value?.setSports(gameType.value)
+//   })
+// })
+onActivated(async () => {
+  if (locationHeight.value) {
+    return
+  }
+  console.log("aaaa===");
+  leagueId.value = route.query?.leagueId || ''
   getFirstLeagues()
   initData()
   nextTick(() => {
