@@ -104,8 +104,16 @@ export function useBetting() {
 
   const getGroupListCombo = (dataList: any[]) => {
     const groupRow = toRaw(playGroupList.value)
-    console.log(111, dataList)
-    console.log(222, groupRow)
+    const groupPlayList: any[] = []
+    groupRow.forEach((row: any) => {
+      const rowResult = {
+        id: row.id,
+        name: row.name,
+        groupType: row.groupType,
+        playListCombo: playTypeSort(dataList, row.playData)
+      }
+      groupPlayList.push(rowResult)
+    })
   }
 
   const playTypeSort = (targerArray: any[], ruleArray: any[]) => {
