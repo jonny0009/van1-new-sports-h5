@@ -23,7 +23,7 @@
       <li v-for="(value, key) in groupedArrays" :key="key" :class="chooseLeagueId === value[0].countryFlag? 'active' : ''"
         @click="clickLeague(value)">
         <div class="img-wrap">
-          <img v-img="value[0].countryFlag" type="1" width="23" height="23" fit="contain" class="item-img" />
+          <img v-img="value[0].countryFlag" type="1" fit="contain" class="item-img" />
         </div>
       </li>
     </ul>
@@ -217,7 +217,8 @@ const clickSportPage = (item: any) => {
 
     .img-wrap,
     li {
-      border-radius: 50px;
+      // border-radius: 50px;
+      border-radius: 50%;
       height: 64px;
       width: 64px;
       display: flex;
@@ -226,11 +227,14 @@ const clickSportPage = (item: any) => {
 
       .van-image {
         background: white;
-        border-radius: 25px;
-        padding: 5px;
+        // border-radius: 25px;
+        border-radius: 50%;
+        // padding: 5px;
       }
 
       .item-img {
+        height: 44px;
+        width: 44px;
         border-radius: 50%;
       }
     }
