@@ -236,7 +236,6 @@ defineExpose({
 })
 </script>
 <style lang="scss" scoped>
-
 .betting-slip-bg {
   display: none;
   z-index: 288;
@@ -360,6 +359,7 @@ defineExpose({
     overflow: hidden;
 
     .label {
+      flex: 1;
       font-family: PingFangSC-Medium;
       font-size: 24px;
       color: #ffffff;
