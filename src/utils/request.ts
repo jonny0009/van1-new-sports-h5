@@ -31,8 +31,7 @@ service.interceptors.request.use(
     config.headers.token = token
     config.headers.terType = '16'
     config.headers.wid = store.state.user.currentWallet?.walletId || 1
-    // config.headers.lang = 'zh-cn'
-    config.headers.lang = localStorage.getItem('locale') || 'zh-cn'
+    config.headers.lang = localStorage.getItem('locale') || getBrowserLanguage()
     config.headers.apiVer = '4.06'
     config.headers.groupId = groupId
     if (config.method === 'post') {
