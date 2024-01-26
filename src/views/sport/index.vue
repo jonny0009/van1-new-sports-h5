@@ -72,7 +72,7 @@
       <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
         <van-collapse-item name="1">
           <template #title>
-            <ArrowTitle class="mt10 mb10" :src="leagueLogo" type="6" :text="leagueName" />
+            <ArrowTitle class="mt10 mb10" :src="leagueLogo" type="6" :text="leagueName" ref="leagueArrowTitle" />
           </template>
           <Loading v-if="!getRecommendEventsIsLoading" />
           <template v-else>
@@ -85,7 +85,7 @@
       </van-collapse>
 
       <!-- 冠军 -->
-      <ChampionList :champion-list="championList" :champion-list-loading="championListLoading" />
+      <ChampionList ref="championGuessing" :champion-list="championList" :champion-list-loading="championListLoading" />
 
     </template>
   </van-pull-refresh>
@@ -122,6 +122,10 @@ const route: any = useRoute()
 const activeNames = ref('1')
 const activeNamesB = ref('b1')
 const activeNamesC = ref('c1')
+
+const championGuessing = ref<any>()
+const leagueArrowTitle = ref<any>()
+
 const leagueId: any = ref(route.query.leagueId)
 let gameType:any = computed(() => {
   return route.params?.type || 'FT'
@@ -304,6 +308,9 @@ const getChampionpPlayTypes = async () => {
   }
 }
 const clickLeague = (item: any) => {
+  activeNames.value = '1'
+  leagueArrowTitle ?.value ?.changeClick(false)
+  championGuessing ?.value ?.CloseClick(false)
   leagueId.value = item.leagueId
   initData()
 }
@@ -318,8 +325,18 @@ onActivated(async () => {
   if (locationHeight.value) {
     return
   }
-  console.log("aaaa===");
+  const isChampion = route.query?.ischampion ||''
+  if (isChampion==='yes') {
+    activeNames.value = '2'
+    leagueArrowTitle ?.value ?.changeClick(true)
+    championGuessing ?.value ?.CloseClick(false)
+  } else {
+    activeNames.value = '1'
+    leagueArrowTitle ?.value ?.changeClick(false)
+    championGuessing ?.value ?.CloseClick(false)
+  }
   leagueId.value = route.query?.leagueId || ''
+  
   getFirstLeagues()
   initData()
   nextTick(() => {

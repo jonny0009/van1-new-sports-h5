@@ -42,8 +42,11 @@ const clickChangActive = () => {
   activeVal.value = !activeVal.value
   emit('returnSuccess', activeVal.value)
 }
+const changeClick = (val: any) => {
+  activeVal.value = val
+}
 defineExpose({
-  activeVal
+  activeVal,changeClick
 })
 
 </script>

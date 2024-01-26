@@ -1,8 +1,8 @@
 <template>
   <div class="homeTime-page">
+  <van-pull-refresh  v-model="isRefreshLoading"  @refresh="onRefresh">
     <SportsTabs ref="refSportsTabs" class="pb10" @returnSportsSuccess="returnSportsSuccess" />
     <tabsTime v-if="routerName === 'HomeTime'" @returnTimeSuccess="returnTimeSuccess" />
-  <van-pull-refresh  v-model="isRefreshLoading"  @refresh="onRefresh">
     <van-list
       v-model="loading"
       :finished="finished"
