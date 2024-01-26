@@ -1,59 +1,29 @@
-import { Ref, ref, computed, watch, onMounted, toRaw } from 'vue'
+import { Ref, ref } from 'vue'
+import { playGroup } from '@/api/live'
 import { lib } from 'xcsport-lib'
 import { MarketInfo } from '@/entitys/MarketInfo'
-import { playGroup } from '@/api/live'
-import store from '@/store'
 
-// configSettingNew接口 -> formatType
-const FORMAT_TYPE: any = {
-  1: 'veteran',
-  2: 'novice',
-  3: 'veteran'
-}
 export function useBetting() {
-  const matchInfo = computed(() => store.state.match.matchInfo)
-  const userConfig = computed(() => store.state.user.userConfig)
-  const needTimer = computed(() => store.state.match.needTimer)
-  const apiLoading = ref(true)
+  const matchInfo = ref()
 
-  watch(
-    () => matchInfo.value,
-    () => {
-      fetchGroup()
-    }
-  )
-  onMounted(() => {
-    // fetchGroup()
-  })
-
-  // 1
-  const playGroupBetList: Ref<any[]> = ref([])
-  const fetchGroup = async () => {
-    if (needTimer.value) {
-      return
-    }
-
-    const { formatType } = userConfig.value
-    const { gameType } = matchInfo.value
-    if (gameType) {
+  const playGroupAll: Ref<any> = ref([])
+  const playGroupBet: Ref<any> = ref([])
+  const getPlayGroupType = async (matchParams: any) => {
+    const { gameType } = (matchInfo.value = matchParams)
+    return new Promise(async (resolve) => {
       const res: any = await playGroup({ gameType })
       const data = res.data || {}
       if (res.code == 200) {
-        const patternList = data[FORMAT_TYPE[formatType]]
-        playGroupBetList.value = patternList
+        const veteranList = data['veteran']
+        playGroupAll.value = veteranList.find((m: any) => m.id == 0)
+        playGroupBet.value = getBetData()
+
+        resolve(playGroupBet.value)
       }
-    }
+    })
   }
 
-  const currentGroupPlay = ref([])
-  const findGroupById = (id: string) => {
-    const currentGroup = playGroupBetList.value.find((m: any) => m.id?.toString() === id)
-    currentGroupPlay.value = currentGroup.playData
-    getBettingData()
-  }
-
-  const playBettingList: Ref<any[]> = ref([])
-  const getBettingData = () => {
+  const getBetData = () => {
     const { detail, gameType, systemId, homeTeamAbbr, awayTeamAbbr } = matchInfo.value
     if (detail && detail.length > 0) {
       const playDataList: any[] = []
@@ -99,31 +69,12 @@ export function useBetting() {
 
       const noExist = ['HDNB2', 'HDNB', 'HTS2', 'HW3', 'W3', 'W3_conner', 'PD_conner', 'HT_conner', 'T_conner']
       const playDataListNew = playDataList.filter((item) => !noExist.includes(item.playType))
-      const betPlayTypeSort = playTypeSort(playDataListNew, currentGroupPlay.value)
+      const betPlayTypeSort = playTypeSort(playDataListNew, playGroupAll.value.playData)
       const betPlayRatioSort = playRatioSort(betPlayTypeSort)
       const betPlayMergeList = playTypeMerge(betPlayRatioSort, 'typeTemp')
 
-      playGroupBetList.value = getGroupListCombo(playDataListNew)
-      playBettingList.value = betPlayMergeList
-      apiLoading.value = false
+      return betPlayMergeList
     }
-  }
-
-  const getGroupListCombo = (dataList: any[]) => {
-    const groupRow = toRaw(playGroupBetList.value)
-    let groupPlayList: any[] = []
-    groupRow.forEach((row: any) => {
-      const rowResult = {
-        id: row.id,
-        name: row.name,
-        groupType: row.groupType,
-        playData: row.playData,
-        playDataList: playTypeSort(dataList, row.playData)
-      }
-      groupPlayList.push(rowResult)
-    })
-    groupPlayList = groupPlayList.filter((m: any) => m.playDataList.length > 0)
-    return groupPlayList
   }
 
   const playTypeSort = (targerArray: any[], ruleArray: any[]) => {
@@ -139,7 +90,7 @@ export function useBetting() {
         }
         sortMap[collectIndex].push(item)
       } else {
-        // otherArray.push(item)
+        otherArray.push(item)
       }
     })
     const sortMapKeys = Object.keys(sortMap)
@@ -147,7 +98,9 @@ export function useBetting() {
       const plays = sortMap[key]
       sortArray.push(...plays)
     })
-    return sortArray.concat(otherArray)
+    return sortArray.concat(otherArray).filter((item) => {
+      return item
+    })
   }
 
   const playTypeMerge = (target: any[], key: string = 'playType') => {
@@ -198,5 +151,5 @@ export function useBetting() {
     return resultSort
   }
 
-  return { findGroupById, playGroupBetList, playBettingList, apiLoading }
+  return { getPlayGroupType }
 }

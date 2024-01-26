@@ -148,7 +148,7 @@
       <!--  -->
       <div class="up-match__footer">
         <div class="match-footer">
-          <div class="match-footer__item" @click="betMoreShow">
+          <div class="match-footer__item" @click="store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })">
             <span>{{ $t('home.morePlay') }}</span>
             <!-- <span class="num">149</span> -->
             <van-icon class="arrow" name="arrow" />
@@ -164,7 +164,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onBeforeUnmount } from 'vue'
 import { tnStObj, bsStObj, opScoreObj } from '@/utils/home/gameInfo'
 import { dateFormat } from '@/utils/date'
 import { getScore } from '@/utils/home/getScore'
@@ -450,10 +450,6 @@ const showSportsIcon = (item:any) => {
 }
 
 const goToDetail = (item:any) => {
-  router.push(`/live/${item.gidm}`)
-}
-const betMoreShow = () => {
-  store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })
-  store.dispatch('user/getLocationHeight', false)
+  router.push(`/broadcast/${item.gidm}`)
 }
 </script>

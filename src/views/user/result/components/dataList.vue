@@ -94,14 +94,14 @@ const popupList = reactive<{ arr: any[] }>({
 const dateTimeVal = ref<any>({
   // beginName: moment().subtract(7, 'days').format('YYYY/MM/DD'),
   // endName: moment().format('YYYY/MM/DD')
-  beginName: moment().subtract(90, 'days').format('MM/DD'),
+  beginName: moment().subtract(7, 'days').format('MM/DD'),
   endName: moment().format('MM/DD')
 })
 
 onMounted(() => {
   endTime.value = moment().valueOf()
   const oneDayDate = 24 * 60 * 60 * 1000
-  beginTime.value = endTime.value - oneDayDate * 90
+  beginTime.value = endTime.value - oneDayDate * 7
 })
 const onLoad = () => {
   getNoAccount()

@@ -1,6 +1,5 @@
 import { ImageSource } from '@/config'
 import league from '@/assets/images/empty/league.png?url'
-import blueLeague from '@/assets/images/user/blue/league.png?url'
 import team from '@/assets/images/empty/team.png?url'
 import head from '@/assets/images/empty/head.png?url'
 import blueHead from '@/assets/images/user/blue/head.png?url'
@@ -32,19 +31,10 @@ function _handleError(el: any) {
   const type = el.getAttribute('type') * 1 || ''
   if (type === 1) {
     el.src = league
-    if (ifBLue.value) {
-      el.src = blueLeague
-    } else {
-      el.src = league
-    }
   } else if (type === 2) {
     el.src = team
   } else if (type === 3) {
-    if (ifBLue.value) {
-      el.src = blueHead
-    } else {
-      el.src = head
-    }
+    ifBLue.value ? el.src = blueHead : el.src = head
   } else if (type === 4) {
     el.src = homeTeam
   } else if (type === 5) {

@@ -204,7 +204,7 @@ export const ratioFormat = ratioDetail => {
     ratioName = createBetItem({ ...ratioDetail, type }, 2)
     sleep(10)
   } catch (error) {
-    console.error(error)
+    console.log(error)
   }
   // 雷达特殊变量
   specifiers = specifiers || {}
@@ -326,9 +326,13 @@ export const getPlayTypeStr = playTypeData => {
   if (/{(.*?)}/gi.test(playTypeName)) {
     playTypeName = playTypeName.replace(/{(.*?)}/g, (match, key) => {
       const specialKey = key.trim()
+      // console.log(specialKey)
       specifiersMap[specialKey] = playTypeData[specialKey]
     })
   }
+  // if (gameType === 'TN' && playType === 'SGWC') {
+  //   console.log(specifiersMap, 312)
+  // }
   return specifiersMap
 }
 /**
@@ -396,7 +400,7 @@ export const getPlayTypeSpecialKey = ratioDetail => {
   // 新增体育项兼容
   const ratioTypeData = getGamePlayData({ gameType, gameTypeSon, playType })
   if (!ratioTypeData) {
-    console.error('找不到该玩法:', gameType, gameTypeSon, playType)
+    console.log('找不到该玩法:', gameType, gameTypeSon, playType)
     return false
   }
   let ratioName = ratioTypeData.text[ratioType]
@@ -408,6 +412,7 @@ export const getPlayTypeSpecialKey = ratioDetail => {
   if (/{(.*?)}/gi.test(ratioName)) {
     ratioName = ratioName.replace(/{(.*?)}/g, (match, key) => {
       const specialKey = key.trim()
+      // console.log(specialKey)
       specifiersMap.push(specialKey)
     })
   }

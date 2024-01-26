@@ -3,7 +3,7 @@
     class="textButton"
     :class="[
       {
-        active: activeVal
+        'active':activeVal
       }
     ]"
   >
@@ -40,35 +40,31 @@ watch(props, (val) => {
 
 const textval = ref('')
 textval.value = props.text
+
 </script>
 
 <style lang="scss" scoped>
-.textButton {
+.textButton{
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
   height: 64px;
-  border-radius: 30px;
-  padding-left: 30px;
-  padding-right: 30px;
+  line-height: 66px;
+  border-radius:30px;
+  padding:0 20px;
   background: var(--color-global-buttonBg);
-  box-shadow: var(--color-global-buttonShadow);
-  color: var(--color-global-minButtonCl);
-  transition: all 0.3s;
+  color: var(--color-global-buttonCl);
+  transition: all .3s;
   font-size: 24px;
-  font-weight: 600;
-  span {
-    font-size: 24px;
+  span{
     line-height: 24px;
+    font-size: 24px;
   }
-  span + span {
-    margin-left: 8px;
-  }
-  &.active {
+  &.active{
     background: var(--color-primary);
-    color: #fff;
+    color:#fff;
   }
-  &::before {
+  &::before{
     content: '';
     display: inline-block;
     height: 44px;

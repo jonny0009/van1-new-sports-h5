@@ -96,15 +96,11 @@ export default {
   // 新增2=====
   noFinal: 'Không tính',
   final: 'Giải quyết',
-  hk: 'Hong Kong [HK]',
-  Europe: 'Decimal [DEC]',
-  IDOdd: 'Indonesia [ID]',
-  MYOdd: 'Malaysia [MY]',
+  hk: 'Hồng Kông [HK]',
+  Europe: 'Đĩa châu Âu [DEC]',
   today: 'Hôm nay',
   fortyEight: 'Gần 48 giờ',
   sevenDay: '7 ngày',
-  // 新增6
-  fontNickName: 'Biệt danh chỉ được phép chỉnh sửa một lần và không được lặp lại với người khác hoặc chứa ký tự bất hợp pháp.',
 
   // 新增3
   compensate: 'Thanh toán',
@@ -134,9 +130,6 @@ export default {
   editPend: 'Đang thụ lý ',
   affirmPend: 'Trong xác nhận ',
   noDataRelated: 'Không truy vấn dữ liệu liên quan',
-  aheadFinal: 'Thanh toán sớm',
-  // 新增7
-  contactUs: 'Liên hệ',
 
   sports: {
     'officeNumber': 'số trò chơi',

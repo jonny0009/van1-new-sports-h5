@@ -24,8 +24,6 @@ export default {
   noComboTips: 'Nội dung đã chọn không thể kết hợp',
   goldTips: 'Amount range:{min} ~ {max}',
   insufficientBalance: 'Thiếu cân bằng!',
-  login: 'Đăng nhập',
-  loginTips: 'Bạn chưa đăng nhập, vui lòng đăng nhập và đặt cược',
   errors1: {
     error1: 'Hết giờ kết nối',
     error2: 'Đặt cược thất bại',

@@ -18,9 +18,7 @@ const appModule: Module<App, any> = {
     doubleLineInfo: {},
     sports: [],
     globalBarHeaderHeight: 48,
-    pictureinpictureGidm: null, // 画中画赛事id
-    mantainMsg: null,
-    systemTime: null,
+    pictureinpictureGidm: null // 画中画赛事id
   },
   mutations: {
     SET_THEME: (state, theme: string) => {
@@ -29,11 +27,7 @@ const appModule: Module<App, any> = {
     },
     SET_PIP_GIDM: (state, value: string) => {
       state.pictureinpictureGidm = value
-    },
-    updateMantainInfo(state, msg) {
-      state.mantainMsg = msg
-      // saveToStorage('mantainInfo', { msg })
-    },
+    }
   },
   actions: {
     setKeyValue(state: any, { key, value }) {
@@ -59,7 +53,6 @@ const appModule: Module<App, any> = {
         }
       }
       state.businessConfig = res.data || {}
-      state.systemTime = res.systemTime
     },
     async merchantConfig({ state }) {
       const res: any = (await merchantConfig()) || {}

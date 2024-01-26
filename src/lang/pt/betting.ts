@@ -23,16 +23,11 @@ export default {
   eventClosure: 'Encerramento de Evento',
   noComboTips: 'As Seleções Feitas Não Podem Ser Combinadas',
   goldTips: 'Intervalo de Valor: {min} ~ {max}',
-  insufficientBalance: 'Saldo insuficiente!',
-  login: 'Conecte-se',
-  loginTips: 'Você ainda não está logado, faça login e faça suas apostas',
-  errors1: {
-    error1: 'Tempo Limite Excedido',
-    error2: 'Aposta Falhada',
-    error3:
+  error1: 'Tempo Limite Excedido',
+  error2: 'Aposta Falhada',
+  error3:
     'A Sua Conta Apresenta Informações Anormais, Foi Congelada. Para Desbloquear, Por Favor, Contacte o Atendimento ao Cliente',
-    error4: 'Apenas 5 Inícios de Sessão Permitidos por Minuto',
-    error5: 'A Linha Selecionada por Si Foi Encerrada',
-    error6: 'Erro de Rede, Por Favor, Verifique a Sua Conexão!'
-  }
+  error4: 'Apenas 5 Inícios de Sessão Permitidos por Minuto',
+  error5: 'A Linha Selecionada por Si Foi Encerrada',
+  error6: 'Erro de Rede, Por Favor, Verifique a Sua Conexão!'
 }

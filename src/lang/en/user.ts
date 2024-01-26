@@ -93,10 +93,8 @@ export default {
   end: 'Over',
   noFinal: 'Unsettlement',
   final: 'Settled',
-  hk: 'Hong Kong [HK]',
-  Europe: 'Decimal [DEC]',
-  IDOdd: 'Indonesia [ID]',
-  MYOdd: 'Malaysia [MY]',
+  hk: 'Hong Kong Handicap[Hk]',
+  Europe: 'European Handicap[Dec]',
   today: 'Today',
   fortyEight: 'Last 48 Hours',
   sevenDay: 'Last 7 Days',
@@ -127,9 +125,6 @@ export default {
   // 新增6
   fontNickName: 'Nicknames can only be edited once and cannot be duplicated or contain illegal characters with others',
   aheadFinal: 'Advance settlement',
-  // 新增7
-  contactUs: 'Contact Us',
-
   sports: {
     officeNumber: 'Bureau Number',
     FT: 'Football',

@@ -93,10 +93,8 @@ export default {
   end: '~ 위에',
   noFinal: '불안',
   final: '안정된',
-  hk: 'Hong Kong [HK]',
-  Europe: 'Decimal [DEC]',
-  IDOdd: 'Indonesia [ID]',
-  MYOdd: 'Malaysia [MY]',
+  hk: '홍콩 디스크[HK]',
+  Europe: '유럽 ​​핸디캡[DEC]',
   today: '오늘',
   fortyEight: '지난 48시간',
   sevenDay: '지난 7일',
@@ -124,11 +122,6 @@ export default {
   editPend: '수락',
   affirmPend: '확인',
   noDataRelated: '관련 데이터가 없습니다',
-  // 新增6
-  fontNickName: '닉네임은 한 번만 편집할 수 있으며 다른 사람과 중복되거나 불법 문자를 포함할 수 없습니다.',
-  aheadFinal: '조기 결제',
-  // 新增7
-  contactUs: '연락처',
 
   sports: {
     officeNumber: '국 번호',

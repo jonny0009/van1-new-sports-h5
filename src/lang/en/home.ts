@@ -41,7 +41,5 @@ export default {
   Friday: 'Friday',
   Saturday: 'Saturday',
   numberHour: '{number} hours',
-  numberDay: '{number} days',
-  hot: 'Hot',
-  todayUpcoming: 'TodayUpComing'
+  numberDay: '{number} days'
 }

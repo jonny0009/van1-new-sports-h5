@@ -6,14 +6,6 @@ export const firstLeagues = (params:any) => {
     params
   })
 }
-// 后台配置推荐联赛
-export const recommendLeague = (params:any) => {
-  return request({
-    url: '/ai/mobile/matches/recommendLeague',
-    method: 'get',
-    params
-  })
-}
 export const recommendEvents = (params:any) => {
   return request({
     url: '/ai/mobile/recommend/events',

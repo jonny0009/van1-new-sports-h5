@@ -1,12 +1,11 @@
 import { Module } from 'vuex'
 import { login, playAccount, getBalance } from '@/api/login'
-import { getCMerAccessWallet, betRecordTab, getGameManyInfo, selectChampionManyName, playerInfo, getCashoutInfo, confirmCashout } from '@/api/user'
+import { getCMerAccessWallet, betRecordTab, getGameManyInfo, selectChampionManyName, playerInfo } from '@/api/user'
 import { User } from '#/store'
-import { getToken, setToken, removeToken, getAnonymity, setAnonymity } from '@/utils/auth'
+import { getToken, setToken, removeToken } from '@/utils/auth'
 import { configSettingNew } from '@/api/auth'
 import localStore from '@/utils/localStore'
-import { anonyToken } from '@/api/common'
-const isAnonymity = getAnonymity()
+
 const userModule: Module<User, any> = {
   namespaced: true,
   state: {
@@ -19,23 +18,12 @@ const userModule: Module<User, any> = {
     currencyData: [],
     teamNameList: [],
     championLangList: [],
-    peopleInfo: {},
-    aheadOrderList: [],
-    resultTab: 0,
-    keepCache: false,
-    locationHeight: false,
-    scrollNumY: 0,
-    isAnonymity,
-    currentWallet: {}
+    peopleInfo: {}
   },
   mutations: {
     SET_TOKEN: (state, token: string) => {
       state.token = token
       setToken(token)
-    },
-    SET_ANONYMITY: (state, status) => {
-      state.isAnonymity = status
-      setAnonymity(status)
     }
 
   },
@@ -48,10 +36,16 @@ const userModule: Module<User, any> = {
             const { code, data } = res || {}
             if (code === 200) {
               // eslint-disable-next-line camelcase
-              const { access_token } = data || {}
+              const { access_token, downloadFlag } = data || {}
 
+              // token
               commit('SET_TOKEN', access_token)
-              commit('SET_ANONYMITY', false)
+
+              // 用户名
+              commit('SET_NAME', userInfo.account)
+
+              // 用户下载标识
+              commit('SET_DOWNLOADFLAG', downloadFlag)
             }
             resolve(res)
           })
@@ -61,7 +55,7 @@ const userModule: Module<User, any> = {
       })
     },
     // user logout
-    logout({ dispatch }) {
+    logout({ state, dispatch }) {
       return new Promise((resolve) => {
         dispatch('clearUserInfo')
         resolve({})
@@ -72,14 +66,6 @@ const userModule: Module<User, any> = {
       localStore.setItem('plateMaskKey', params.handicapType)
       const res = await configSettingNew(params)
       state.userConfig = res.data || {}
-    },
-    // 用户配置
-    async anonyToken({ commit }) {
-      const res = await anonyToken()
-      const token = res.data
-      setToken(token)
-      commit('SET_TOKEN', token)
-      commit('SET_ANONYMITY', true)
     },
     // 用户信息
     async userInfo({ state }, params = {}) {
@@ -94,7 +80,6 @@ const userModule: Module<User, any> = {
       if (res.code === 200) {
         state.currencyData = res.data || {}
         state.currency = res.data[0].currency || {}
-        state.currentWallet = res.data[0]
         this.dispatch('user/getBalance', { wid: res.data[0].walletId || '' })
       }
     },
@@ -120,40 +105,12 @@ const userModule: Module<User, any> = {
         state.championLangList = [...state.championLangList, ...res.data || []]
       }
     },
-    // 提前结算信息
-    async getOrderList({ state }, params) {
-      const res:any = await getCashoutInfo({ cashoutInfoReq: JSON.parse(params) }) || []
-      if (res.code === 200) {
-        state.aheadOrderList = [...state.aheadOrderList, ...res.data || []]
-      }
-    },
-    // 提前结算信息
-    async handleConfirmCashout({ state, dispatch }, params) {
-      const res:any = await confirmCashout(params) || []
-      if (res.code === 200) {
-        dispatch('getBalance')
-        dispatch('pendingOrder')
-      }
-    },
     // 获取账户信息
     async getAccountInfo({ state }, params) {
       const res:any = await playerInfo({ fPlayerId: state.userInfo.playerId }) || []
       if (res.code === 200) {
         state.peopleInfo = res.data || {}
       }
-    },
-    // 结果tabIndex
-    async getResultTab({ state }, params) {
-      state.resultTab = params
-    },
-
-    // 页面高度
-    async getScrollNumY({ state }, params) {
-      state.scrollNumY = params
-    },
-    // 是否有坐标高度
-    async getLocationHeight({ state }, params) {
-      state.locationHeight = params
     },
     // 进行中的注单
     async pendingOrder({ state }, params = { }) {

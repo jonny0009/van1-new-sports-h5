@@ -17,7 +17,7 @@
         </template>
       </template>
       <template v-else>
-        <i v-if="item.value === 'match'" class="iconfont icon-footer-live" :class="item.value"></i>
+        <i v-if="item.value === 'broadcast'" class="iconfont icon-footer-live" :class="item.value"></i>
         <i v-else class="iconfont icon-sports" :class="item.value"></i>
       </template>
       <span>
@@ -45,7 +45,7 @@ const barFooterArrayChange = (): Array<any> => {
   const barFooterArray = [
     {
       text: t('home.live'),
-      value: 'match'
+      value: 'broadcast'
     },
     {
       text: t('home.sport'),
@@ -63,7 +63,7 @@ const barFooterArr: any = reactive(barFooterArrayChange())
 const active = computed(() => {
   const routerName: any = router?.currentRoute?.value?.name || ''
   const routerNameToLowerCase = routerName.toLowerCase()
-  const isrouterNameToLowerCase = ['match', 'game'].includes(routerNameToLowerCase)
+  const isrouterNameToLowerCase = ['broadcast', 'game'].includes(routerNameToLowerCase)
   return isrouterNameToLowerCase ? routerNameToLowerCase : 'home'
 })
 

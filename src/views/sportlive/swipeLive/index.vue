@@ -1,9 +1,14 @@
 <template>
   <div v-if="swipeList.length" class="swipeLive">
     <van-swipe class="my-swipe" indicator-color="white" @change="swipeChange">
-      <van-swipe-item v-for="(match, idx) in swipeList" :key="idx" @click="goDetails(match)">
+      <van-swipe-item v-for="(match,idx) in swipeList" :key="idx" @click="goDetails(match)">
         <div class="wrap">
-          <MatchItem :key="idx" :live-info="match" :match-index="idx" :active-index="activeIndex" />
+          <MatchItem
+            :key="idx"
+            :live-info="match"
+            :match-index="idx"
+            :active-index="activeIndex"
+          />
         </div>
       </van-swipe-item>
     </van-swipe>
@@ -16,7 +21,7 @@ import { ref, onBeforeMount } from 'vue'
 import router from '@/router'
 
 const activeIndex = ref(0)
-const swipeList: any = ref([])
+const swipeList:any = ref([])
 
 const init = async () => {
   const params = {
@@ -24,18 +29,18 @@ const init = async () => {
     pageSize: 5,
     rbType: 1
   }
-  const res: any = await anchorLiveList(params)
+  const res:any = await anchorLiveList(params)
   if (res.code === 200) {
     const dataArray = res?.data?.list || []
     swipeList.value.length = 0
-    await dataArray.map(async (e: any) => {
+    await dataArray.map(async (e:any) => {
       const gidm = e.gidm
       const extendInfoParams = {
         gidm
       }
-      const extendInfoRes: any = await extendInfo(extendInfoParams)
+      const extendInfoRes:any = await extendInfo(extendInfoParams)
       if (extendInfoRes.code === 200) {
-        const { streamNa }: any = extendInfoRes.data
+        const { streamNa }:any = extendInfoRes.data
         const { liveali } = streamNa || {}
         const { m3u8 } = liveali || {}
         e.m3u8 = e.m3u8 || m3u8
@@ -46,13 +51,13 @@ const init = async () => {
   }
 }
 
-const goDetails = (item: any) => {
+const goDetails = (item:any) => {
   if (!item) {
     return
   }
   const { gidm } = item
   const params = {
-    name: 'MatchDetail',
+    name: 'BroadcastDetail',
     params: {
       id: gidm
     }
@@ -60,7 +65,7 @@ const goDetails = (item: any) => {
   router.push(params)
 }
 
-const swipeChange = (index: any) => {
+const swipeChange = (index:any) => {
   activeIndex.value = index
 }
 
@@ -69,28 +74,21 @@ onBeforeMount(() => {
   init()
 })
 </script>
-<style lang="scss" scoped>
-.swipeLive {
-  margin: 0 40px;
-  padding: 0 0 20px;
-  position: relative;
-}
-.my-swipe {
+<style lang="scss" >
+.my-swipe{
   .van-swipe-item {
     color: #fff;
     font-size: 20px;
     height: 384px;
     text-align: center;
     display: flex;
-    flex-direction: column;
-    .wrap {
+    flex-direction:column;
+    .wrap{
       flex: 1;
       overflow: auto;
       position: relative;
       background: #000;
-      border-bottom-right-radius: 15px;
-      border-bottom-left-radius: 15px;
-      .loading {
+      .loading{
         position: absolute;
         left: 50%;
         top: 50%;
@@ -99,17 +97,12 @@ onBeforeMount(() => {
       }
     }
   }
-
-}
-</style>
-<style lang="scss" >
-  .swipeLive{
-    .van-swipe__indicators {
-      bottom: 18px;
-      .van-swipe__indicator {
-        width: 14px;
-        height: 14px;
-      }
+  .van-swipe__indicators{
+    bottom: 12px;
+    .van-swipe__indicator{
+      width: 14px;
+      height: 14px;
     }
   }
+}
 </style>

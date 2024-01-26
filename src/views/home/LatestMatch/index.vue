@@ -5,7 +5,7 @@
         <ArrowTitle
           :src="titleTime"
           :text="$t('home.latestMatch')"
-          class="mt10 latestArrowTitle"
+          class="mt10"
         />
       </template>
       <div class="LatestMatch">
@@ -15,7 +15,7 @@
           <HomeEmpty v-if="!recommendEventsList.length" class="marginAuto"></HomeEmpty>
           <HomeMatchHandicap v-for="(item,idx) in recommendEventsList" v-else :key="idx" :send-params="item" class="mb10" />
         </template>
-        <div v-if="recommendEventsList.length" class="Button-MatchMore mt10 mb10" @click="goHomeTime">
+        <div v-if="recommendEventsList.length" class="Button-MatchMore mt10" @click="goHomeTime">
           <span>
             {{ $t('home.lookMoreMatch') }}
           </span>
@@ -78,4 +78,5 @@ const init = () => {
 onBeforeMount(() => {
   init()
 })
+
 </script>

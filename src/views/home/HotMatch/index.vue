@@ -3,7 +3,7 @@
     <van-collapse-item name="1">
       <template #title>
         <ArrowTitle
-          class="mt10 mb10 hotArrowTitle"
+          class="mt10 mb10"
           :src="titleHot"
           :text="$t('home.hotMatch')"
         />
@@ -20,7 +20,7 @@
               v-for="(item,idx) in firstLeaguesList"
               v-else
               :key="idx"
-              :src="imgUrlFormat(item.homeLeagueLogo)"
+              :src="imgUrlFormat(item.icon)"
               fit="contain"
               lazy-load
               @click="goSportClick(item)"
@@ -47,7 +47,7 @@ import titleHot from '@/assets/images/home/title-hot.png'
 import { onBeforeMount, reactive, ref, computed, watch } from 'vue'
 import store from '@/store'
 import { imgUrlFormat } from '@/utils/index'
-import { firstLeagues,recommendLeague } from '@/api/home'
+import { firstLeagues } from '@/api/home'
 import router from '@/router'
 const activeNames = ref('1')
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
@@ -62,17 +62,14 @@ watch(refreshChangeTime, (val) => {
     }, 100)
   }
 })
-const firstLeaguesList:any = reactive([])
+const firstLeaguesList = reactive([])
 const isLoading = ref(false)
 const getFirstLeagues = async () => {
   isLoading.value = false
-  // const res:any = await firstLeagues()
-  const res: any = await recommendLeague({ gameType: 'home' })
-  
+  const res:any = await firstLeagues()
   isLoading.value = true
   if (res.code === 200) {
-    // const list:any = res?.data || []
-    const list:any = res?.data.list || []
+    const list:any = res?.data || []
     firstLeaguesList.length = 0
     firstLeaguesList.push(...list)
   }
@@ -96,15 +93,17 @@ onBeforeMount(() => {
   init()
 })
 </script>
+
 <style lang="scss" scoped>
   .onImgError{
-    width: 200px;
+    width: 176px;
     height: 176px;
     display: inline-block;
     background: url('@/assets/images/home/other/league.png') no-repeat center;
     background-size: cover;
-    border-radius: 20px;
+    border-radius: 46px;
   }
+
   .Hot-Match-Group-Warp{
     position: relative;
     .mask-left{
@@ -126,12 +125,4 @@ onBeforeMount(() => {
       background: var(--color-global-maskBg);
     }
   }
-</style>
-<style lang="scss">
-.hotArrowTitle{
-  .img{
-    width: 24px !important;
-    height: 30px !important;
-  }
-}
 </style>

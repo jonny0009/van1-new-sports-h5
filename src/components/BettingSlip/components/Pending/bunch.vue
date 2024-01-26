@@ -140,7 +140,7 @@
       </div>
     </div>
     <!-- 提前结算 -->
-    <div v-if="item.creditState===0 && earlyMoney(item)">
+    <!-- <div v-if="item.creditState===0 && earlyMoney(item)">
       <div v-if="!item.btnLogin" class="ahead-btn" @click="handleFinal(item)">
         <span>{{ $t('user.aheadFinal') }}</span>
         <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
@@ -160,7 +160,7 @@
         </span>
         <span class="loading-icon"></span>
       </div>
-    </div>
+    </div> -->
 
   </div>
 </template>
@@ -173,7 +173,7 @@ import { computed } from 'vue'
 import store from '@/store'
 const currency = computed(() => store.state.user.currency)
 const teamNameList = computed(() => store.state.user.teamNameList || [])
-const aheadOrderList = computed(() => store.state.user.aheadOrderList || [])
+// const aheadOrderList = computed(() => store.state.user.aheadOrderList || [])
 
 const props = defineProps({
   item: {
@@ -187,27 +187,27 @@ const getProfit = (item: any) => {
 }
 
 // 提前结算
-const handleFinal = (item: any) => {
-  item.btnLogin = true
-  const params: any = {
-    amount: earlyMoney(item),
-    orderId: item.orderId
-  }
-  store.dispatch('user/handleConfirmCashout', params)
+// const handleFinal = (item: any) => {
+//   item.btnLogin = true
+//   const params: any = {
+//     amount: earlyMoney(item),
+//     orderId: item.orderId
+//   }
+//   store.dispatch('user/handleConfirmCashout', params)
 
-  return
-}
+//   return
+// }
 
-const earlyMoney = (item: any) => {
-  if (aheadOrderList.value.length) {
-    const item1 = aheadOrderList.value.find((e: any) => e.orderId === item.orderId)
-    if (item1) {
-      return item1.realCashoutMax
-    }
-    return 0
-  }
-  return 0
-}
+// const earlyMoney = (item: any) => {
+//   if (aheadOrderList.value.length) {
+//     const item1 = aheadOrderList.value.find((e: any) => e.orderId === item.orderId)
+//     if (item1) {
+//       return item1.realCashoutMax
+//     }
+//     return 0
+//   }
+//   return 0
+// }
 
 // 图标状态
 const battleStatus = (val: any) => {

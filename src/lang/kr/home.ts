@@ -44,7 +44,5 @@ export default {
   Friday: '금요일',
   Saturday: '토요일',
   numberHour: '{number}시간',
-  numberDay: '{number}일',
-  'hot': '더운',
-  'todayUpcoming': '오늘예정'
+  numberDay: '{number}일'
 }

@@ -1,29 +1,41 @@
 <template>
   <div ref="container" class="homeMatchHandicap">
-    <van-sticky v-if="playTitleToggle" :offset-top="offsetTop" :container="container" z-index="5">
+    <van-sticky :offset-top="offsetTop" :container="container" z-index="5">
       <div class="home-tabs-play">
         <TimeView :time-send-params="sendParams" />
         <div class="play">
           <div class="flex-1"></div>
-          <span class="btn R" :class="[
-            {
-              active: RrefShow
-            }
-          ]" @click="Rclick">
+          <span
+            class="btn R"
+            :class="[
+              {
+                active: RrefShow
+              }
+            ]"
+            @click="Rclick"
+          >
             {{ $t('home.R') }}
           </span>
-          <span class="btn OU" :class="[
-            {
-              active: OUrefShow
-            }
-          ]" @click="OUclick">
+          <span
+            class="btn OU"
+            :class="[
+              {
+                active: OUrefShow
+              }
+            ]"
+            @click="OUclick"
+          >
             {{ $t('home.OU') }}
           </span>
-          <span class="btn M" :class="[
-            {
-              active: MrefShow
-            }
-          ]" @click="Mclick">
+          <span
+            class="btn M"
+            :class="[
+              {
+                active: MrefShow
+              }
+            ]"
+            @click="Mclick"
+          >
             {{ $t('home.M') }}
           </span>
         </div>
@@ -36,10 +48,20 @@
           <div class="up-match__header border-bottom">
             <div class="match-info">
               <div class="match-team-logo">
-                <img v-img="props.sendParams.homeLogo" class="my-image home" alt="" :type="4"
-                  style="object-fit: contain;">
-                <img v-img="props.sendParams.awayLogo" class="my-image away" alt="" :type="5"
-                  style="object-fit: contain;">
+                <img
+                  v-img="props.sendParams.homeLogo"
+                  class="my-image home"
+                  alt=""
+                  :type="4"
+                  style="object-fit: contain;"
+                >
+                <img
+                  v-img="props.sendParams.awayLogo"
+                  class="my-image away"
+                  alt=""
+                  :type="5"
+                  style="object-fit: contain;"
+                >
               </div>
               <div class="match-info__content">
                 <div class="team">
@@ -49,7 +71,7 @@
                   <div class="flex-1"></div>
                   <div v-if="showFUTime" class="up-match-time" v-html="showFUTime"></div>
                 </div>
-                <div class="up-match-league hasSportsIcon">
+                <div class="up-match-league">
                   <SportsIcon :icon-src="props.sendParams.gameType" />
                   <div class="text">{{ getLeagueShortName(props.sendParams) }}</div>
                 </div>
@@ -73,7 +95,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('R', sendParams)" />
+                    <Handicap :send-params="getHandicap('R',sendParams)" />
                   </div>
                 </div>
               </div>
@@ -85,7 +107,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('OU', sendParams)" />
+                    <Handicap :send-params="getHandicap('OU',sendParams)" />
                   </div>
                 </div>
               </div>
@@ -97,7 +119,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('M', sendParams)" />
+                    <Handicap :send-params="getHandicap('M',sendParams)" />
                   </div>
                 </div>
               </div>
@@ -107,12 +129,13 @@
           </div>
         </div>
       </div>
-     
-      <!--  @click="store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })"> -->
+      <!--  -->
       <div class="up-match__footer">
         <div class="match-footer">
-          <div class="match-footer__item"
-            @click="betMoreShow">
+          <div
+            class="match-footer__item"
+            @click="store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })"
+          >
             <span>{{ $t('home.morePlay') }}</span>
             <!-- <span class="num">149</span> -->
             <van-icon class="arrow" name="arrow" />
@@ -141,12 +164,6 @@ const props = defineProps({
     type: Object,
     default: function () {
       return {}
-    }
-  },
-  playTitleToggle: {
-    type: Boolean,
-    default: function () {
-      return true
     }
   }
 })
@@ -198,10 +215,6 @@ const Mclick = () => {
     key: 'MrefShow',
     value: !MrefShow.value
   })
-}
-const betMoreShow = () => {
-  store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })
-  store.dispatch('user/getLocationHeight', false)
 }
 // const goClick = () => {
 //   showDialog({

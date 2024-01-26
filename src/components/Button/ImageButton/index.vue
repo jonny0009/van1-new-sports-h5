@@ -74,7 +74,7 @@ defineProps({
     line-height:24px;
   }
   &.active{
-    background: var(--color-global-buttonActiveBg);
+    background: var(--color-primary);
     color:#fff;
   }
   .img{

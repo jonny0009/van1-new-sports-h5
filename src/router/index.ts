@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Layout from '@/layout/index.vue'
 const modulesFiles = import.meta.globEager('./modules/*/*.ts')
 const pathList: string[] = []
 for (const path in modulesFiles) {
@@ -15,28 +14,12 @@ const modules = pathList.reduce((modules: any, modulePath: string) => {
 }, [])
 
 export const constantRoutes: Array<any> = [
-  // {
-  //   path: '/:pathMatch(.*)*',
-  //   redirect: '/'
-  // },
   {
     path: '/:pathMatch(.*)*',
-    component: Layout,
-    redirect: '/404',
-    children: [
-      {
-        path: '/404',
-        component: () => import('@/views/error-page/404.vue'),
-        name: '404',
-        meta: {
-          hideGlobalHeaderView: true
-        }
-      }
-    ]
+    redirect: '/'
   },
   {
     path: '/login',
-    name: 'Login',
     component: () => import('@/views/login/index.vue'),
     hidden: true
   },
@@ -52,19 +35,8 @@ export const constantRoutes: Array<any> = [
   },
   {
     path: '/search',
-    component: () => import('@/layout/index.vue'),
-    redirect: '/search',
-    children: [
-      {
-        path: '/search',
-        component: () => import('@/views/search/index.vue'),
-        name: 'Search',
-        meta: {
-          hideGlobalHeaderView:true,
-          hideGlobalBottomBet:true
-        }
-      }
-    ]
+    component: () => import('@/views/search/index.vue'),
+    hidden: true
   },
   {
     path: '/401',
@@ -73,9 +45,9 @@ export const constantRoutes: Array<any> = [
     hidden: true
   },
   {
-    path: '/403',
-    name: '403',
-    component: () => import('@/views/error-page/403.vue'),
+    path: '/404',
+    name: '404',
+    component: () => import('@/views/error-page/404.vue'),
     hidden: true
   },
   {
@@ -96,8 +68,7 @@ export const constantRoutes: Array<any> = [
         meta: {
           showSportsTabsView: true,
           showBarTabsView: true,
-          // showRefresh: true,
-          KeepAlive:true
+          showRefresh: true
         }
       }
     ]
@@ -122,14 +93,8 @@ export const constantRoutes: Array<any> = [
       },
       {
         path: '/user/edit',
-        component: () => import('@/views/user/edit.vue'),
+        component: () => import('@/views/user/userCenter/edit.vue'),
         name: 'Edit',
-        hidden: true
-      },
-      {
-        path: '/user/contactUs',
-        component: () => import('@/views/user/contactUs.vue'),
-        name: 'ContactUs',
         hidden: true
       },
       {
@@ -182,9 +147,7 @@ export const constantRoutes: Array<any> = [
       }
     ]
   },
-
-  ...modules,
-  
+  ...modules
 ]
 
 export const router = createRouter({
