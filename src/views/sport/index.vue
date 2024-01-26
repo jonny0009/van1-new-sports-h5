@@ -23,7 +23,7 @@
       <van-collapse v-model="activeNamesB" accordion :border="false" class="GlobalCollapse">
         <van-collapse-item name="b1">
           <template #title>
-            <ArrowTitle class="mt10 mb10 goodArrowTitle" :src="recommendIcon" :text="$t('sport.recommend')" />
+            <ArrowTitle class="mt10 mb10 goodArrowTitle" :src="recommendIcon" :text="$t('sport.recommend')"  ref="leagueArrowTitle" />
           </template>
           <Loading v-if="!getRecommendEventsIsLoading || isLoadingRecommend" />
           <template v-else>
@@ -46,7 +46,7 @@
       <van-collapse v-model="activeNamesC" accordion :border="false" class="GlobalCollapse">
         <van-collapse-item name="c1">
           <template #title>
-            <ArrowTitle class="mt10 mb10 latestArrowTitle" :src="earlyIcon" :text="$t('sport.early')" />
+            <ArrowTitle class="mt10 mb10 latestArrowTitle" :src="earlyIcon" :text="$t('sport.early')"  ref="leagueArrowTitle" />
           </template>
           <Loading v-if="!getRecommendEventsIsLoading || isLoadingEarly" />
           <template v-else>
@@ -105,20 +105,29 @@ import router from '@/router'
 import { apiChampionpPlayTypes } from '@/api/champion'
 import { firstLeagues, recommendEvents } from '@/api/home'
 import { MarketInfo } from '@/entitys/MarketInfo'
-const refSportsTabs = ref()
-const returnSportsSuccess = (item: any) => {
-  router.push({
-    name: 'Sport',
-    params: {
-      type: item
-    }
-  })
-  store.dispatch('user/getLocationHeight', false)
-  refSportsTabs.value?.setSports(item)
-  // initList()
-}
 const { currentRoute } = useRouter()
 const route: any = useRoute()
+const gameType1 = computed(() => {
+  return route.params?.type || 'FT'
+})
+const gameType = ref<any>(gameType1.value)
+const refSportsTabs = ref()
+const returnSportsSuccess = (item: any) => {
+  // router.push({
+  //   name: 'Sport',
+  //   params: {
+  //     type: item
+  //   }
+  // })
+  // 新增
+  activeNamesB.value = 'b1'
+  activeNamesC.value = 'c1'
+  leagueArrowTitle ?.value ?.changeClick(false)
+  // end=====
+  gameType.value = item
+  store.dispatch('user/getLocationHeight', false)
+  initList()
+}
 const activeNames = ref('1')
 const activeNamesB = ref('b1')
 const activeNamesC = ref('c1')
@@ -127,9 +136,6 @@ const championGuessing = ref<any>()
 const leagueArrowTitle = ref<any>()
 
 const leagueId: any = ref(route.query.leagueId)
-let gameType:any = computed(() => {
-  return route.params?.type || 'FT'
-})
 const leagueLogo: any = ref()
 const leagueName: any = ref()
 const recommendPage: any = ref(1)
@@ -152,9 +158,10 @@ const locationHeight = computed(() => store.state.user.locationHeight)
 // }
 // )
 
-// onMounted(() => {
-//   initList()
-// })
+onMounted(() => {
+  // 初始化
+  // initList()
+})
 const onRefresh = () => {
   isRefreshLoading.value = false
   initList()
@@ -336,7 +343,7 @@ onActivated(async () => {
     championGuessing ?.value ?.CloseClick(false)
   }
   leagueId.value = route.query?.leagueId || ''
-  
+
   getFirstLeagues()
   initData()
   nextTick(() => {
