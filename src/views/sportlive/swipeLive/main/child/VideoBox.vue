@@ -53,7 +53,6 @@ const setTimeoutTime = ref()
 const initVideo = () => {
   clearTimeout(setTimeoutTime.value)
   setTimeoutTime.value = setTimeout(() => {
-    console.log(props.liveUrl, 'initVideo initVideo initVideo')
     videoErrorState.value = false
     const videoRef:any = document.querySelector('#VideoRef')
     if (!(videoRef && props.liveUrl)) {
@@ -96,7 +95,6 @@ const initVideo = () => {
   }, 500)
 }
 const destroyVideo = () => {
-  console.log('destroyVideo 销毁视频')
   try {
     videoExample.value.dispose && videoExample.value.dispose()
   } catch (e) {
@@ -139,7 +137,6 @@ onBeforeMount(() => {
   })
 })
 onBeforeUnmount(() => {
-  console.log('onBeforeUnmount onBeforeUnmount')
   destroyVideo()
 })
 </script>
@@ -149,7 +146,7 @@ onBeforeUnmount(() => {
   position: absolute;
   left: 0;
   top: 0;
-  bottom: 36px;
+  bottom: 50px;
   width: 100%;
   .video-js,
   .video-error,
@@ -176,7 +173,7 @@ onBeforeUnmount(() => {
 .sound-icon {
   position: absolute;
   right: 14px;
-  bottom: -38px;
+  bottom: -44px;
   z-index: 10;
   width: 40px;
   height: 40px;

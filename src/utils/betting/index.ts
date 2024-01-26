@@ -132,7 +132,7 @@ export const buyParams = (markets: any, s: any, t: any) => {
     if (sGidm && gidm.indexOf('ic') === -1) {
       gidm = sGidm
     }
-    if (gold && !errorCode && ior * 1 > 0 && goldMax * 1 > 0 && goldMin * 1 > 0) {
+    if (gold && !errorCode && goldMax * 1 > 0 && goldMin * 1 > 0) {
       betSubList.push({
         gidm,
         gameId,

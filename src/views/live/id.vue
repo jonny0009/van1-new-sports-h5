@@ -149,9 +149,9 @@ const initVideo = () => {
     player.on('leavepictureinpicture', () => {
       videoIsInpicture.value = false
 
-      if (route.name !== 'BroadcastDetail') {
+      if (route.name !== 'MatchDetail') {
         const gidm = store.state.app.pictureinpictureGidm
-        router.push(`/broadcast/${gidm}`)
+        router.push(`/match/${gidm}`)
       }
     })
   })
@@ -170,7 +170,7 @@ const onMoreVideo = (item: any) => {
   player?.src(item.m3u8)
   player?.load()
   player?.play()
-  router.replace(`/broadcast/${item.gidm}`)
+  router.replace(`/match/${item.gidm}`)
   getMatcheInfo(item.gidm)
 }
 

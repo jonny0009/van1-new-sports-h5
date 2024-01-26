@@ -19,7 +19,7 @@
 
 import { useRouter } from 'vue-router'
 const $router = useRouter()
-import store from '@/store'
+// import store from '@/store'
 
 // import { ref, reactive } from 'vue'
 const props = defineProps({
@@ -38,7 +38,7 @@ const props = defineProps({
 
 })
 const toLeague = async (item: any) => {
-  store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
+  // store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
 
   $router.push({
     path: `/sport/${item.gameType}`,
