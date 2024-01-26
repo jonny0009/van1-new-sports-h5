@@ -107,7 +107,7 @@ const getAccountInfo = async () => {
   updateName(res.data.nickName)
 }
 const handleSave = async () => {
-  if (!ifStandard.value || !ifStandard.value || !ifStandard.value) {
+  if (!ifStandard.value || !ifSpecial.value || !ifSpace.value) {
     return showToast(t('user.text11'))
   }
   const params = {
