@@ -78,6 +78,7 @@
   font-size: 24px;
   .van-swipe {
     height: 100%;
+    background: #ffffff;
     border-radius: 10px;
     .van-swipe-item {
       padding: 0 8px;
