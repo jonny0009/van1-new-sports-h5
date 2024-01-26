@@ -23,13 +23,13 @@
       <li v-for="(value, key) in groupedArrays" :key="key" :class="chooseLeagueId === value[0].countryFlag? 'active' : ''"
         @click="clickLeague(value)">
         <div class="img-wrap">
-          <img v-img="value[0].countryFlag" type="6" width="23" height="23" fit="contain" class="item-img" />
+          <img v-img="value[0].countryFlag" type="1" width="23" height="23" fit="contain" class="item-img" />
         </div>
       </li>
     </ul>
     <div class="league-list">
       <div v-for="(item, idx) in leagueList" :key="idx" class="up-league-item" @click="clickSportPage(item)">
-        <img v-img="item.countryFlag" type="6" fit="contain" class="my-image icon" />
+        <img v-img="item.countryFlag" type="1" fit="contain" class="my-image icon" />
         <div class="content">
           <!-- <div class="top"><span v-game="item.gameType" class="sport">
           </span></div> -->
