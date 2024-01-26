@@ -41,5 +41,7 @@ export default {
   Friday: 'Sexta-feira',
   Saturday: 'Sábado',
   numberHour: '{number} Horas',
-  numberDay: '{number} Dias'
+  numberDay: '{number} Dias',
+  hot: 'Popular',
+  todayUpcoming: 'Sessão Matinal'
 }

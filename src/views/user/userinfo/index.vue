@@ -57,7 +57,7 @@
     <div class="content">
       <div class="top-1">
         <img class="img_1" src="@/assets/images/user/data.png" alt="" />
-        <span>{{ $t('user.text8',{num:7}) }}</span>
+        <span>{{ $t('user.text8',{num:90}) }}</span>
       </div>
       <div class="circle">
         <div v-for="(item, index) in dataList.arr" :key="index" class="num-1">

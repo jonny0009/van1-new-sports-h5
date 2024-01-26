@@ -24,6 +24,8 @@ export default {
   noComboTips: '已选内容无法进行组合',
   goldTips: '金额范围:{min} ~ {max}',
   insufficientBalance: '余额不足！',
+  login: '登录',
+  loginTips: '您还未登录 , 请登录后投注',
   errors1: {
     error1: '网络超时',
     error2: '投注失败',

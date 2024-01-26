@@ -3,7 +3,7 @@
     <van-collapse-item name="1">
       <template #title>
         <ArrowTitle
-          class="mt10"
+          class="mt10 goodArrowTitle"
           :src="titleRecommend"
           :text="$t('home.goofMatch')"
         />
@@ -25,7 +25,6 @@
   </van-collapse>
 </template>
 <script lang="ts" setup>
-
 import Dayjs from 'dayjs'
 import { arrayGetKey } from '@/utils/home/arrayGetKey'
 const dateUtil = Dayjs
@@ -49,7 +48,6 @@ watch(refreshChangeTime, (val) => {
   }
 })
 const recommendEventsList = reactive([])
-
 const isLoading = ref(false)
 const getRecommendEvents = async (gameType:any = 'FT') => {
   const params = {
@@ -66,10 +64,6 @@ const getRecommendEvents = async (gameType:any = 'FT') => {
     const { baseData } = data
     recommendEventsList.length = 0
     recommendEventsList.push(...baseData)
-
-    console.log(recommendEventsList)
-
-    console.log(arrayGetKey(recommendEventsList, 'gameDate'))
   }
 }
 const returnSportsSuccess = (val:any) => {

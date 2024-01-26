@@ -109,7 +109,7 @@ const popupList = reactive<{ arr: any[] }>({ arr: [] })
 const $router = useRouter()
 const way = ref(1)
 const dateWay = ref(1)
-const index = ref(0)
+const index = computed(() => store.state.user.resultTab || 0)
 const childRefA = ref()
 const childRefB = ref()
 const showBottom = ref(false)
@@ -121,7 +121,7 @@ const currentDate = moment().valueOf()
 const oneDayDate = 24 * 60 * 60 * 1000
 
 const maxDate = ref<any>(new Date())
-const minDate = ref<any>(new Date(currentDate - oneDayDate * 7))
+const minDate = ref<any>(new Date(currentDate - oneDayDate * 90))
 const maxDateSingle = ref<any>(new Date())
 const minDateSingle = ref<any>(new Date(currentDate - oneDayDate * 15))
 

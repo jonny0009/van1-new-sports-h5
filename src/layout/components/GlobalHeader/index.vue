@@ -70,6 +70,13 @@ const ifBLue = computed(() => {
 const loginToken = ref(getToken())
 const $router = useRouter()
 const toUrl = (url: string) => {
+  if (url==='/search') {
+    store.dispatch('user/getLocationHeight', false)
+  } else {
+    store.dispatch('user/getLocationHeight', false)
+    
+  }
+
   $router.push({ path: url })
 }
 
@@ -78,6 +85,7 @@ const showInfo = () => {
 }
 
 const goBackClick = () => {
+  store.dispatch('user/getLocationHeight', true)
   router.go(-1)
 }
 
