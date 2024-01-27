@@ -14,6 +14,14 @@ export const recommendLeague = (params:any) => {
     params
   })
 }
+// 全部联赛
+export const fuByGameType = (params:any) => {
+  return request({
+    url: '/ai/mobile/matches/fuByGameType',
+    method: 'get',
+    params
+  })
+}
 export const recommendEvents = (params:any) => {
   return request({
     url: '/ai/mobile/recommend/events',

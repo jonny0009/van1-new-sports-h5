@@ -10,11 +10,17 @@
     <van-pull-refresh  v-model="isRefreshLoading"  @refresh="onRefresh">
     <div v-if="firstLeaguesList.length" class="my-scroll__content">
       <div class="betting-sport-nav">
-        <TextButton :text="$t('sport.all')" :active="!leagueId" @click="clickLeague({})" />
-        <ImageButton v-for="(item, idx) in firstLeaguesList" :key="idx" :text="item.leagueNameAbbr" :src="item.icon"
-          :active="leagueId === item.leagueId" @click="clickLeague(item)" />
+        <div class="league-num" @click="clickLeagueNum()"  :class="ifLeagueNum ? 'league-num-1' : ''" >
+            <span> {{ $t(`user.sports.${gameType}`) }}</span>
+            <span class="league-match-num">{{ 77 }}</span>
+            <SvgIcon  name="user-down" class="icon-svg-1" />
+        </div>
+        <TextButton :text="$t('sport.recommend')" :active="!leagueId" @click="clickLeague({})" />
+        <ImageButton v-for="(item, idx) in firstLeaguesList" :key="idx" :text="item.leagueName" :src="item.icon"
+          :active="leagueId === item.leagueId" @click="clickLeague(item)" type='1' :count="item.count"/>
       </div>
     </div>
+    <Loading v-if="!firstLeaguesList.length"/>
     
 
     <template v-if="!leagueId">
@@ -103,7 +109,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { ref, onBeforeMount, watch, computed, nextTick, onMounted,onActivated } from 'vue'
 import router from '@/router'
 import { apiChampionpPlayTypes } from '@/api/champion'
-import { firstLeagues, recommendEvents } from '@/api/home'
+import { firstLeagues, recommendEvents,fuByGameType } from '@/api/home'
 import { MarketInfo } from '@/entitys/MarketInfo'
 const { currentRoute } = useRouter()
 const route: any = useRoute()
@@ -131,6 +137,7 @@ const returnSportsSuccess = (item: any) => {
 const activeNames = ref('1')
 const activeNamesB = ref('b1')
 const activeNamesC = ref('c1')
+
 
 const championGuessing = ref<any>()
 const leagueArrowTitle = ref<any>()
@@ -196,12 +203,13 @@ const initData = async () => {
   }
 }
 const firstLeaguesList: any = ref([])
-// 获取一级联赛
+// 获取一级联赛 / 更换fuByGameType 接口
 const getFirstLeagues = async () => {
+  firstLeaguesList.value = []
   if (gameType.value) {
-    const res: any = await firstLeagues({ gameType: gameType.value }) || {}
+    const res: any = await fuByGameType({ gameType: gameType.value }) || {}
     if (res.code === 200 && res.data) {
-      firstLeaguesList.value = res.data
+      firstLeaguesList.value = res.data.dateLeagueList[0].leagueList
     } else {
       firstLeaguesList.value = []
     }
@@ -315,11 +323,18 @@ const getChampionpPlayTypes = async () => {
   }
 }
 const clickLeague = (item: any) => {
+  ifLeagueNum.value = false
   activeNames.value = '1'
   leagueArrowTitle ?.value ?.changeClick(false)
   championGuessing ?.value ?.CloseClick(false)
   leagueId.value = item.leagueId
   initData()
+}
+//获取联赛数量
+const ifLeagueNum: any = ref(false)
+const clickLeagueNum = () => {
+  leagueId.value = '-100'
+  ifLeagueNum.value = !ifLeagueNum.value
 }
 // onBeforeMount(async () => {
 //   getFirstLeagues()
@@ -373,11 +388,52 @@ onActivated(async () => {
       max-height: 140px;
       white-space: normal;
       position: relative;
+      display: flex;
+      align-items: center;
+      // flex-wrap: wrap;
 
       .textButton,
       .ImageButton {
         margin-left: 10px;
         margin-bottom: 10px;
+      }
+      .league-num{
+        white-space: nowrap;
+        display: inline-block;
+        padding: 15px 24px;
+        border-radius: 30px;
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--color-global-minButtonCl);
+        background: var(--color-global-buttonBg);
+        box-shadow: var(--color-global-buttonShadow);
+        transition: all 0.3s;
+        margin-top: -10px;
+
+      .league-match-num{
+        color: var(--color-text-3);
+        margin: 0 12px;
+        }
+        .icon-svg-1{
+          font-size: 20px;
+          color: var(--color-text-1);
+        }
+
+
+      }
+      .league-num-1{
+        background: var(--color-global-buttonPrimaryBg);
+        color: #fff;
+        transition: all 0.3s;
+        margin-top: -10px;
+        .league-match-num{
+          color:#FFF;
+          margin: 0 12px;
+        }
+        .icon-svg-1{
+          font-size: 20px;
+          color:#FFF;
+        }
       }
     }
   }
