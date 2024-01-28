@@ -7,94 +7,112 @@
     <!--
       公共 联赛
     -->
-    <van-pull-refresh  v-model="isRefreshLoading"  @refresh="onRefresh">
-    <div v-if="firstLeaguesList.length" class="my-scroll__content">
-      <div class="betting-sport-nav">
-        <div class="league-num" @click="clickLeagueNum()"  :class="ifLeagueNum ? 'league-num-1' : ''" >
+    <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
+      <div v-if="firstLeaguesList.length" class="my-scroll__content">
+        <div class="betting-sport-nav">
+          <div class="league-num" @click="clickLeagueNum()" :class="ifLeagueNum ? 'league-num-1' : ''">
             <span> {{ $t(`user.sports.${gameType}`) }}</span>
-            <span class="league-match-num">{{ 77 }}</span>
-            <SvgIcon  name="user-down" class="icon-svg-1" />
+            <span class="league-match-num">{{ LeaguesInfo.leagueList?.length||0 }}</span>
+            <SvgIcon name="user-down" class="icon-svg-1" />
+          </div>
+          <TextButton :text="$t('sport.recommend')" :active="!leagueId" @click="clickLeague({})" />
+          <ImageButton v-for="(item, idx) in firstLeaguesList" :key="idx" :text="item.leagueName" :src="item.icon"
+            :active="leagueId === item.leagueId" @click="clickLeague(item)" type='1' :count="item.count" />
         </div>
-        <TextButton :text="$t('sport.recommend')" :active="!leagueId" @click="clickLeague({})" />
-        <ImageButton v-for="(item, idx) in firstLeaguesList" :key="idx" :text="item.leagueName" :src="item.icon"
-          :active="leagueId === item.leagueId" @click="clickLeague(item)" type='1' :count="item.count"/>
       </div>
-    </div>
-    <Loading v-if="!firstLeaguesList.length"/>
-    
-
-    <template v-if="!leagueId">
-
-      <!-- 推荐 -->
-      <van-collapse v-model="activeNamesB" accordion :border="false" class="GlobalCollapse">
-        <van-collapse-item name="b1">
+      <Loading v-if="!firstLeaguesList.length" />
+      <!-- 地区联赛折叠 -->
+      <van-collapse v-model="activeCollapseNames" :border="false" v-if="ifLeagueNum" >
+        <van-collapse-item :name="value[0].countryId" :border="false" v-for="(value, key) in groupedArrays" :key="key">
           <template #title>
-            <ArrowTitle class="mt10 mb10 goodArrowTitle" :src="recommendIcon" :text="$t('sport.recommend')"  ref="leagueArrowTitle" />
+            <div class="collapseAll">
+              <img v-img="value[0].countryFlag" type="1" fit="contain" class="collapse-name" />
+               <span class="collapse-title">{{ value[0].countryCn ||'International'  }}</span>
+               <span class="collapse-num">{{ value.length }}</span>
+            </div>
           </template>
-          <Loading v-if="!getRecommendEventsIsLoading || isLoadingRecommend" />
-          <template v-else>
-            <template v-if="recommendList.length">
-              <div class="recommend-list">
+          <div class="collapse-concent" v-for="(item,index) in value" :key="index"  @click="clickLeague(item)">
+            {{ item.leagueNameCn }}
+          </div>
+         
+        </van-collapse-item>
+      </van-collapse>
+
+      <!-- end==== -->
+      <template v-if="!leagueId&&!ifLeagueNum">
+
+        <!-- 推荐 -->
+        <van-collapse v-model="activeNamesB" accordion :border="false" class="GlobalCollapse">
+          <van-collapse-item name="b1">
+            <template #title>
+              <ArrowTitle class="mt10 mb10 goodArrowTitle" :src="recommendIcon" :text="$t('sport.recommend')"
+                ref="leagueArrowTitle" />
+            </template>
+            <Loading v-if="!getRecommendEventsIsLoading || isLoadingRecommend" />
+            <template v-else>
+              <template v-if="recommendList.length">
+                <div class="recommend-list">
+                  <HomeMatchHandicap v-for="(item, idx) in recommendList" :key="idx" :send-params="item" />
+                </div>
+                <div class="Button-MatchMore mt20 mb20" :class="recommendLoadAll ? 'no-more' : ''" @click="moreRecommend">
+                  <span>
+                    {{ recommendLoadAll ? $t('live.noMore') : $t('home.lookMoreMatch') }}
+                  </span>
+                </div>
+              </template>
+              <HomeEmpty v-else></HomeEmpty>
+            </template>
+          </van-collapse-item>
+        </van-collapse>
+
+        <!-- 早盘 -->
+        <van-collapse v-model="activeNamesC" accordion :border="false" class="GlobalCollapse">
+          <van-collapse-item name="c1">
+            <template #title>
+              <ArrowTitle class="mt10 mb10 latestArrowTitle" :src="earlyIcon" :text="$t('sport.early')"
+                ref="leagueArrowTitle" />
+            </template>
+            <Loading v-if="!getRecommendEventsIsLoading || isLoadingEarly" />
+            <template v-else>
+              <template v-if="earlyList.length">
+                <div class="early-list">
+                  <HomeMatchHandicap v-for="(item, idx) in earlyList" :key="idx" :send-params="item" />
+                </div>
+                <div class="Button-MatchMore mt20 mb20" :class="earlyLoadAll ? 'no-more' : ''" @click="moreEarly">
+                  <span>
+                    {{ earlyLoadAll ? $t('live.noMore') : $t('home.lookMoreMatch') }}
+                  </span>
+                </div>
+              </template>
+              <HomeEmpty v-else></HomeEmpty>
+            </template>
+          </van-collapse-item>
+        </van-collapse>
+
+      </template>
+      <template v-if="leagueId&&!ifLeagueNum">
+
+        <!-- 联赛 -->
+        <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
+          <van-collapse-item name="1">
+            <template #title>
+              <ArrowTitle class="mt10 mb10" :src="leagueLogo" type="6" :text="leagueName" ref="leagueArrowTitle" />
+            </template>
+            <Loading v-if="!getRecommendEventsIsLoading" />
+            <template v-else>
+              <div v-if="recommendList.length" class="recommend-list">
                 <HomeMatchHandicap v-for="(item, idx) in recommendList" :key="idx" :send-params="item" />
               </div>
-              <div class="Button-MatchMore mt20 mb20" :class="recommendLoadAll ? 'no-more' : ''" @click="moreRecommend">
-                <span>
-                  {{ recommendLoadAll ? $t('live.noMore') : $t('home.lookMoreMatch') }}
-                </span>
-              </div>
+              <HomeEmpty v-else></HomeEmpty>
             </template>
-            <HomeEmpty v-else></HomeEmpty>
-          </template>
-        </van-collapse-item>
-      </van-collapse>
+          </van-collapse-item>
+        </van-collapse>
 
-      <!-- 早盘 -->
-      <van-collapse v-model="activeNamesC" accordion :border="false" class="GlobalCollapse">
-        <van-collapse-item name="c1">
-          <template #title>
-            <ArrowTitle class="mt10 mb10 latestArrowTitle" :src="earlyIcon" :text="$t('sport.early')"  ref="leagueArrowTitle" />
-          </template>
-          <Loading v-if="!getRecommendEventsIsLoading || isLoadingEarly" />
-          <template v-else>
-            <template v-if="earlyList.length">
-              <div class="early-list">
-                <HomeMatchHandicap v-for="(item, idx) in earlyList" :key="idx" :send-params="item" />
-              </div>
-              <div class="Button-MatchMore mt20 mb20" :class="earlyLoadAll ? 'no-more' : ''" @click="moreEarly">
-                <span>
-                  {{ earlyLoadAll ? $t('live.noMore') : $t('home.lookMoreMatch') }}
-                </span>
-              </div>
-            </template>
-            <HomeEmpty v-else></HomeEmpty>
-          </template>
-        </van-collapse-item>
-      </van-collapse>
+        <!-- 冠军 -->
+        <ChampionList ref="championGuessing" :champion-list="championList" :champion-list-loading="championListLoading" />
 
-    </template>
-    <template v-else>
-
-      <!-- 联赛 -->
-      <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
-        <van-collapse-item name="1">
-          <template #title>
-            <ArrowTitle class="mt10 mb10" :src="leagueLogo" type="6" :text="leagueName" ref="leagueArrowTitle" />
-          </template>
-          <Loading v-if="!getRecommendEventsIsLoading" />
-          <template v-else>
-            <div v-if="recommendList.length" class="recommend-list">
-              <HomeMatchHandicap v-for="(item, idx) in recommendList" :key="idx" :send-params="item" />
-            </div>
-            <HomeEmpty v-else></HomeEmpty>
-          </template>
-        </van-collapse-item>
-      </van-collapse>
-
-      <!-- 冠军 -->
-      <ChampionList ref="championGuessing" :champion-list="championList" :champion-list-loading="championListLoading" />
-
-    </template>
-  </van-pull-refresh>
+      </template>
+    </van-pull-refresh>
 
     <FooterHeight />
 
@@ -106,10 +124,10 @@ import recommendIcon from '@/assets/images/home/title-recommend.png'
 import ChampionList from './champion/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
 import { useRoute, useRouter } from 'vue-router'
-import { ref, onBeforeMount, watch, computed, nextTick, onMounted,onActivated } from 'vue'
+import { ref, onBeforeMount, watch, computed, nextTick, onMounted, onActivated } from 'vue'
 import router from '@/router'
 import { apiChampionpPlayTypes } from '@/api/champion'
-import { firstLeagues, recommendEvents,fuByGameType } from '@/api/home'
+import { firstLeagues, recommendEvents, fuByGameType } from '@/api/home'
 import { MarketInfo } from '@/entitys/MarketInfo'
 const { currentRoute } = useRouter()
 const route: any = useRoute()
@@ -128,7 +146,9 @@ const returnSportsSuccess = (item: any) => {
   // 新增
   activeNamesB.value = 'b1'
   activeNamesC.value = 'c1'
-  leagueArrowTitle ?.value ?.changeClick(false)
+  leagueArrowTitle?.value?.changeClick(false)
+  ifLeagueNum.value = false
+  activeCollapseNames.value = []
   // end=====
   gameType.value = item
   store.dispatch('user/getLocationHeight', false)
@@ -137,6 +157,7 @@ const returnSportsSuccess = (item: any) => {
 const activeNames = ref('1')
 const activeNamesB = ref('b1')
 const activeNamesC = ref('c1')
+const activeCollapseNames = ref(['']);
 
 
 const championGuessing = ref<any>()
@@ -203,13 +224,25 @@ const initData = async () => {
   }
 }
 const firstLeaguesList: any = ref([])
+const LeaguesInfo: any = ref({})
+const groupedArrays: any = ref([])
 // 获取一级联赛 / 更换fuByGameType 接口
 const getFirstLeagues = async () => {
   firstLeaguesList.value = []
+  activeCollapseNames.value = []
   if (gameType.value) {
     const res: any = await fuByGameType({ gameType: gameType.value }) || {}
     if (res.code === 200 && res.data) {
       firstLeaguesList.value = res.data.dateLeagueList[0].leagueList
+      LeaguesInfo.value = res.data
+      groupedArrays.value = res.data.leagueList.reduce((acc: any, obj: any) => {
+      let key = obj.countryId;
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push(obj);
+      return acc;
+    }, {});
     } else {
       firstLeaguesList.value = []
     }
@@ -323,10 +356,11 @@ const getChampionpPlayTypes = async () => {
   }
 }
 const clickLeague = (item: any) => {
+  activeCollapseNames.value = []
   ifLeagueNum.value = false
   activeNames.value = '1'
-  leagueArrowTitle ?.value ?.changeClick(false)
-  championGuessing ?.value ?.CloseClick(false)
+  leagueArrowTitle?.value?.changeClick(false)
+  championGuessing?.value?.CloseClick(false)
   leagueId.value = item.leagueId
   initData()
 }
@@ -347,15 +381,15 @@ onActivated(async () => {
   if (locationHeight.value) {
     return
   }
-  const isChampion = route.query?.ischampion ||''
-  if (isChampion==='yes') {
+  const isChampion = route.query?.ischampion || ''
+  if (isChampion === 'yes') {
     activeNames.value = '2'
-    leagueArrowTitle ?.value ?.changeClick(true)
-    championGuessing ?.value ?.CloseClick(false)
+    leagueArrowTitle?.value?.changeClick(true)
+    championGuessing?.value?.CloseClick(false)
   } else {
     activeNames.value = '1'
-    leagueArrowTitle ?.value ?.changeClick(false)
-    championGuessing ?.value ?.CloseClick(false)
+    leagueArrowTitle?.value?.changeClick(false)
+    championGuessing?.value?.CloseClick(false)
   }
   leagueId.value = route.query?.leagueId || ''
 
@@ -397,7 +431,8 @@ onActivated(async () => {
         margin-left: 10px;
         margin-bottom: 10px;
       }
-      .league-num{
+
+      .league-num {
         white-space: nowrap;
         display: inline-block;
         padding: 15px 24px;
@@ -410,31 +445,88 @@ onActivated(async () => {
         transition: all 0.3s;
         margin-top: -10px;
 
-      .league-match-num{
-        color: var(--color-text-3);
-        margin: 0 12px;
+        .league-match-num {
+          color: var(--color-text-3);
+          margin: 0 12px;
         }
-        .icon-svg-1{
+
+        .icon-svg-1 {
           font-size: 20px;
           color: var(--color-text-1);
         }
 
 
       }
-      .league-num-1{
+
+      .league-num-1 {
         background: var(--color-global-buttonPrimaryBg);
         color: #fff;
         transition: all 0.3s;
         margin-top: -10px;
-        .league-match-num{
-          color:#FFF;
+
+        .league-match-num {
+          color: #FFF;
           margin: 0 12px;
         }
-        .icon-svg-1{
+
+        .icon-svg-1 {
           font-size: 20px;
-          color:#FFF;
+          color: #FFF;
+          transform: rotate(180deg);
+          transition: all .2s;
         }
+
+
       }
     }
   }
-}</style>
+  // 地区联赛折叠
+  .van-collapse-item {
+    :deep(.van-collapse-item__title) {
+      background: none;
+      .van-icon-arrow {
+        color: var(--color-text-3);
+        font-weight: 800;
+        // display: none;
+      }
+     
+    }
+    :deep(.van-collapse-item__content){
+       padding: 0;
+      }
+  }
+  .collapseAll{
+    display: flex;
+    align-items: center;
+    .collapse-name{
+    height: 58px;
+    width: 58px;
+    border-radius: 50%;
+  }
+  .collapse-title{
+    font-size: 24px;
+    color: var(--color-text-5);
+    font-weight: 600;
+    margin-left: 10px;
+
+  }
+  .collapse-num{
+    font-size: 24px;
+    color: var(--color-text-3);
+    font-weight: 600;
+    margin-left: 10px;
+
+  }
+  
+  }
+  .collapse-concent{
+    margin-left: 100px;
+    color: var(--color-text-5);
+    font-weight: 600;
+    white-space: nowrap;   //规定段落中的文本不进行换行
+    text-overflow:ellipsis;
+    margin-bottom: 17px;
+  }
+  
+}
+</style>
