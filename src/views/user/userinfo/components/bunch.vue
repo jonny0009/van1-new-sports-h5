@@ -91,7 +91,9 @@
         <span class="money-num-money">
 
           <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
-          <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
+          <!-- <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" /> -->
+          <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" >K₫ </span>
+
           <SvgIcon v-else name="user-usdt" class="img_1" />
 
           <span>
@@ -116,7 +118,8 @@
 
           <span v-if="item.state !== 3 && item.state !== 5 ">
             <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
-            <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
+            <!-- <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" /> -->
+            <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" >K₫ </span>
             <SvgIcon v-else name="user-usdt" class="img_1" />
           </span>
 

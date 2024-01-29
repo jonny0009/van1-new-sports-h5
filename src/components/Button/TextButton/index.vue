@@ -65,7 +65,8 @@ textval.value = props.text
     margin-left: 8px;
   }
   &.active {
-    background: var(--color-primary);
+    // background: var(--color-primary);
+    background: var(--color-global-buttonPrimaryBg);
     color: #fff;
   }
   &::before {

@@ -42,7 +42,7 @@
               <div v-else> {{ $t('user.betNum') }}</div>
               <div class="right-1">
                 <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
-                <img v-else-if="item.currency === 'VNDK'" :src="VNDK1" style="object-fit: contain;" />
+                <span v-else-if="item.currency === 'VNDK'" name="user-vndk" class="money-symbol" >K₫ </span>
                 <img v-else :src="USDT1" style="object-fit: contain;" />
                 {{ formatMoney(item.tradeGold) }}
               </div>
@@ -52,7 +52,8 @@
               <div> {{ $t('user.balance') }}</div>
               <div class="right-1">
                 <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
-                <img v-else-if="item.currency === 'VNDK'" :src="VNDK1" style="object-fit: contain;" />
+                <!-- <img v-else-if="item.currency === 'VNDK'" :src="VNDK1" style="object-fit: contain;" /> -->
+                <span v-else-if="item.currency === 'VNDK'" name="user-vndk" class="money-symbol" >K₫ </span>
                 <img v-else :src="USDT1" style="object-fit: contain;" />
                 {{ formatMoney(item.gold) }}
               </div>
@@ -259,6 +260,10 @@ const getTitle = (type: any) => {
           img {
             width: 20px;
             height: 20px;
+          }
+          .money-symbol{
+            font-size: 22px;
+            color: var(--color-search-box-text-1);
           }
         }
       }
