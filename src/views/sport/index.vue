@@ -20,7 +20,7 @@
             :active="leagueId === item.leagueId" @click="clickLeague(item)" type='1' :count="item.count" />
         </div>
       </div>
-      <Loading v-if="!firstLeaguesList.length" />
+      <!-- <Loading v-if="!firstLeaguesList.length" /> -->
       <!-- 地区联赛折叠 -->
       <van-collapse v-model="activeCollapseNames" :border="false" v-if="ifLeagueNum" >
         <van-collapse-item :name="value[0].countryId" :border="false" v-for="(value, key) in groupedArrays" :key="key">
