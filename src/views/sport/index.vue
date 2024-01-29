@@ -16,7 +16,7 @@
             <SvgIcon name="user-down" class="icon-svg-1" />
           </div>
           <TextButton :text="$t('sport.recommend')" :active="!leagueId" @click="clickLeague({})" />
-          <ImageButton v-for="(item, idx) in firstLeaguesList" :key="idx" :text="item.leagueName" :src="item.icon"
+          <ImageButton v-for="(item, idx) in firstLeaguesList" :key="idx" :text="item.leagueNameAbbrCn" :src="item.icon"
             :active="leagueId === item.leagueId" @click="clickLeague(item)" type='1' :count="item.count" />
         </div>
       </div>
@@ -32,7 +32,7 @@
             </div>
           </template>
           <div class="collapse-concent" v-for="(item,index) in value" :key="index"  @click="clickLeague(item)">
-            {{ item.leagueNameCn }}
+            {{ item.leagueNameAbbrCn }}
           </div>
          
         </van-collapse-item>
@@ -378,6 +378,7 @@ const clickLeagueNum = () => {
 //   })
 // })
 onActivated(async () => {
+  ifLeagueNum.value =false
   if (locationHeight.value) {
     return
   }
