@@ -4,7 +4,7 @@
       'active': active
     }
   ]">
-    <img v-img="src" class="img" :type="type" style="object-fit: contain;" />
+    <img v-img="src" class="img" :class="ifCircle?'img-1':''" :type="type" />
     <span>
       {{ text }}
     </span>
@@ -19,6 +19,12 @@ defineProps({
     type: String,
     default: function () {
       return ''
+    }
+  },
+  ifCircle: {
+    type: Boolean,
+    default: function () {
+      return false
     }
   },
   type: {
@@ -76,8 +82,15 @@ defineProps({
 
   .img {
     width: 44px;
-    height: 44px;
+    height: 32px;
     margin-right: 10px;
+  }
+  .img-1{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: orange;
+    overflow: hidden;
   }
 
   .count {

@@ -12,34 +12,41 @@
         <div class="betting-sport-nav">
           <div class="league-num" @click="clickLeagueNum()" :class="ifLeagueNum ? 'league-num-1' : ''">
             <span> {{ $t(`user.sports.${gameType}`) }}</span>
-            <span class="league-match-num">{{ LeaguesInfo.leagueList?.length||0 }}</span>
+            <span class="league-match-num">{{ LeaguesInfo.total || 0 }}</span>
             <SvgIcon name="user-down" class="icon-svg-1" />
           </div>
           <TextButton :text="$t('sport.recommend')" :active="!leagueId" @click="clickLeague({})" />
-          <ImageButton v-for="(item, idx) in firstLeaguesList" :key="idx" :text="item.leagueNameAbbrCn" :src="item.icon"
-            :active="leagueId === item.leagueId" @click="clickLeague(item)" type='1' :count="item.count" />
+          <ImageButton v-for="(item, idx) in firstLeaguesList" :key="idx" :text="item.leagueName" :src="item.countryFlag"
+            :active="leagueId === item.leagueId" @click="clickLeague(item)" type='1' :count="item.gameTypeCount || '0'"
+            :ifCircle="true" />
         </div>
       </div>
       <!-- <Loading v-if="!firstLeaguesList.length" /> -->
       <!-- 地区联赛折叠 -->
-      <van-collapse v-model="activeCollapseNames" :border="false" v-if="ifLeagueNum" >
+      <van-collapse v-model="activeCollapseNames" :border="false" v-if="ifLeagueNum">
         <van-collapse-item :name="value[0].countryId" :border="false" v-for="(value, key) in groupedArrays" :key="key">
           <template #title>
             <div class="collapseAll">
               <img v-img="value[0].countryFlag" type="1" fit="contain" class="collapse-name" />
-               <span class="collapse-title">{{ value[0].countryCn ||'International'  }}</span>
-               <span class="collapse-num">{{ value.length }}</span>
+              <span class="collapse-title">{{ value[0].countryName || 'International' }}</span>
+              <span class="collapse-num">{{ value.length }}</span>
             </div>
           </template>
-          <div class="collapse-concent" v-for="(item,index) in value" :key="index"  @click="clickLeague(item)">
-            {{ item.leagueNameAbbrCn }}
+          <div class="collapse-concent" v-for="(item, index) in value" :key="index">
+            <div v-if="item.gameTypeCount" @click="clickLeague(item)">
+              {{ item.leagueName }}
+            </div>
+            <div v-else class="collapse-concent-1">
+              {{ item.leagueName }}
+            </div>
           </div>
-         
+
+
         </van-collapse-item>
       </van-collapse>
 
       <!-- end==== -->
-      <template v-if="!leagueId&&!ifLeagueNum">
+      <template v-if="!leagueId && !ifLeagueNum">
 
         <!-- 推荐 -->
         <van-collapse v-model="activeNamesB" accordion :border="false" class="GlobalCollapse">
@@ -90,7 +97,7 @@
         </van-collapse>
 
       </template>
-      <template v-if="leagueId&&!ifLeagueNum">
+      <template v-if="leagueId && !ifLeagueNum">
 
         <!-- 联赛 -->
         <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
@@ -125,11 +132,11 @@ import ChampionList from './champion/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ref, onBeforeMount, watch, computed, nextTick, onMounted, onActivated } from 'vue'
-import router from '@/router'
+// import router from '@/router'
 import { apiChampionpPlayTypes } from '@/api/champion'
-import { firstLeagues, recommendEvents, fuByGameType } from '@/api/home'
+import { firstLeagues, recommendEvents, fuByGameType, recommendLeague, commonMatches } from '@/api/home'
 import { MarketInfo } from '@/entitys/MarketInfo'
-const { currentRoute } = useRouter()
+// const { currentRoute } = useRouter()
 const route: any = useRoute()
 const gameType1 = computed(() => {
   return route.params?.type || 'FT'
@@ -205,20 +212,54 @@ const initList = () => {
 const initData = async () => {
   if (leagueId.value) {
     // 按联赛查询
-    const leagueParames: any = ref({ gameType: gameType.value, leagueId: leagueId.value, page: 1, pageSize: 20 })
+    const leagueParames: any = ref({
+      gradeType: 1,
+      gameTypeSon: '',
+      showtype: 'FU',
+      timeStage: 0,
+      gameSort: 1,
+      dateStage: 0,
+      isNovice: 'Y',
+      onlyFavorite: 0,
+      gameType: gameType.value, leagueIds: leagueId.value, page: 1, pageSize: 20
+    })
     getRecommendEvents(leagueParames.value)
     getChampionpPlayTypes()
   } else {
     // 推荐
     const recommendParames: any = ref({
-      gameType: gameType.value, gradeType: 1,
-      page: recommendPage.value, pageSize: recommendPageSize.value
+      // gameType: gameType.value, gradeType: 1,
+      // page: recommendPage.value, pageSize: recommendPageSize.value
+      gradeType: 1,
+      gameTypeSon: '',
+      gameType: gameType.value,
+      showtype: 'FU',
+      timeStage: 0,
+      gameSort: 1,
+      dateStage: 0,
+      isNovice: 'Y',
+      leagueIds:'',
+      onlyFavorite: 0,
+      page: 1,
+      pageSize: 10
     })
     getRecommendEvents(recommendParames.value)
     // 早盘
     const earlyParames: any = ref({
-      gameType: gameType.value, gradeType: 2,
-      page: earlyPage.value, pageSize: earlyPageSize.value
+      // gameType: gameType.value, gradeType: 2,
+      // page: earlyPage.value, pageSize: earlyPageSize.value
+      gradeType: 2,
+      gameTypeSon: '',
+      gameType: gameType.value,
+      showtype: 'FT',
+      timeStage: 0,
+      gameSort: 1,
+      dateStage: 0,
+      isNovice: 'Y',
+      leagueIds:'',
+      onlyFavorite: 0,
+      page: 1,
+      pageSize: 10
     })
     getRecommendEvents(earlyParames.value)
   }
@@ -231,18 +272,19 @@ const getFirstLeagues = async () => {
   firstLeaguesList.value = []
   activeCollapseNames.value = []
   if (gameType.value) {
-    const res: any = await fuByGameType({ gameType: gameType.value }) || {}
+    // showType：FT-今日 FU-早盘 RB-滚球
+    const res: any = await recommendLeague({ gameType: gameType.value, showType: 'FU' }) || {}
     if (res.code === 200 && res.data) {
-      firstLeaguesList.value = res.data.dateLeagueList[0].leagueList
+      firstLeaguesList.value = res.data.list || []
       LeaguesInfo.value = res.data
-      groupedArrays.value = res.data.leagueList.reduce((acc: any, obj: any) => {
-      let key = obj.countryId;
-      if (!acc[key]) {
-        acc[key] = [];
-      }
-      acc[key].push(obj);
-      return acc;
-    }, {});
+      groupedArrays.value = res.data.list.reduce((acc: any, obj: any) => {
+        let key = obj.countryId;
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push(obj);
+        return acc;
+      }, {});
     } else {
       firstLeaguesList.value = []
     }
@@ -256,13 +298,25 @@ const moreEarly = async () => {
   }
   earlyPage.value = earlyPage.value + 1
   const earlyParames: any = ref({
+      gameTypeSon: '',
+      showtype: 'FT',
+      timeStage: 0,
+      gameSort: 1,
+      dateStage: 0,
+      isNovice: 'Y',
+      leagueIds:'',
+      onlyFavorite: 0,
     gameType: gameType.value, gradeType: 2,
     page: earlyPage.value, pageSize: earlyPageSize.value
   })
   isLoadingEarly.value = true
-  const res: any = await recommendEvents(earlyParames.value) || {}
-  if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
-    earlyList.value.push(...res.data.baseData)
+  // const res: any = await recommendEvents(earlyParames.value) || {}
+  const res: any = await commonMatches(earlyParames.value) || {}
+  // if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
+  if (res.code === 200 && res.data?.matchList?.baseData && res.data?.matchList?.baseData.length) {
+
+    // earlyList.value.push(...res.data.baseData)
+    earlyList.value.push(...res.data.matchList.baseData)
   }
   if (earlyList.value.length < earlyPage.value * earlyPageSize.value) {
     earlyLoadAll.value = true
@@ -279,13 +333,26 @@ const moreRecommend = async () => {
   }
   recommendPage.value = recommendPage.value + 1
   const recommendParames: any = ref({
+      gameTypeSon: '',
+      showtype: 'FU',
+      timeStage: 0,
+      gameSort: 1,
+      dateStage: 0,
+      isNovice: 'Y',
+      leagueIds:'',
+      onlyFavorite: 0,
     gameType: gameType.value, gradeType: 1,
     page: recommendPage.value, pageSize: recommendPageSize.value
   })
   isLoadingRecommend.value = true
-  const res: any = await recommendEvents(recommendParames.value) || {}
-  if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
-    recommendList.value.push(...res.data.baseData)
+  // const res: any = await recommendEvents(recommendParames.value) || {}
+  const res: any = await commonMatches(recommendParames.value) || {}
+  // if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
+  if (res.code === 200 && res.data?.matchList?.baseData && res.data?.matchList?.baseData.length) {
+
+    // recommendList.value.push(...res.data.baseData)
+    recommendList.value.push(...res.data.matchList.baseData)
+
   }
   if (recommendList.value.length < recommendPage.value * recommendPageSize.value) {
     recommendLoadAll.value = true
@@ -301,14 +368,18 @@ const getRecommendEventsIsLoading = ref(false)
 const getRecommendEvents = async (params: any) => {
   if (gameType.value) {
     getRecommendEventsIsLoading.value = false
-    const res: any = await recommendEvents(params) || {}
+    // const res: any = await recommendEvents(params) || {}
+    const res: any = await commonMatches(params) || {}
     getRecommendEventsIsLoading.value = true
     let listFlag: any = []
-    if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
-      listFlag = res.data.baseData
+    // if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
+    if (res.code === 200 && res.data?.matchList?.baseData && res.data?.matchList?.baseData.length) {
+      // listFlag = res.data.baseData
+      listFlag = res.data.matchList.baseData
     }
     // 推荐 - 选择联赛
     if (params.gradeType === 1 || leagueId.value) {
+    // if (params.showtype === 'FU' || leagueId.value) {
       if (listFlag.length) {
         leagueLogo.value = listFlag[0].leagueLogo
         leagueName.value = listFlag[0].leagueShortName
@@ -319,6 +390,7 @@ const getRecommendEvents = async (params: any) => {
         recommendList.value = []
       }
     } else if (params.gradeType === 2) {
+    // } else if (params.showtype === 'FT') {
       if (listFlag.length) {
         earlyList.value = listFlag
       } else {
@@ -378,7 +450,7 @@ const clickLeagueNum = () => {
 //   })
 // })
 onActivated(async () => {
-  ifLeagueNum.value =false
+  ifLeagueNum.value = false
   if (locationHeight.value) {
     return
   }
@@ -481,53 +553,66 @@ onActivated(async () => {
       }
     }
   }
+
   // 地区联赛折叠
   .van-collapse-item {
     :deep(.van-collapse-item__title) {
       background: none;
+
       .van-icon-arrow {
         color: var(--color-text-3);
         font-weight: 800;
         // display: none;
       }
-     
+
     }
-    :deep(.van-collapse-item__content){
-       padding: 0;
-      }
+
+    :deep(.van-collapse-item__content) {
+      padding: 0;
+    }
   }
-  .collapseAll{
+
+  .collapseAll {
     display: flex;
     align-items: center;
-    .collapse-name{
-    height: 58px;
-    width: 58px;
-    border-radius: 50%;
-  }
-  .collapse-title{
-    font-size: 24px;
-    color: var(--color-text-5);
-    font-weight: 600;
-    margin-left: 10px;
+
+    .collapse-name {
+      height: 58px;
+      width: 58px;
+      border-radius: 50%;
+
+
+    }
+
+    .collapse-title {
+      font-size: 24px;
+      color: var(--color-text-5);
+      font-weight: 600;
+      margin-left: 10px;
+
+    }
+
+    .collapse-num {
+      font-size: 24px;
+      color: var(--color-text-3);
+      font-weight: 600;
+      margin-left: 10px;
+
+    }
 
   }
-  .collapse-num{
-    font-size: 24px;
-    color: var(--color-text-3);
-    font-weight: 600;
-    margin-left: 10px;
 
-  }
-  
-  }
-  .collapse-concent{
+  .collapse-concent {
     margin-left: 100px;
     color: var(--color-text-5);
     font-weight: 600;
-    white-space: nowrap;   //规定段落中的文本不进行换行
-    text-overflow:ellipsis;
+    white-space: nowrap; //规定段落中的文本不进行换行
+    text-overflow: ellipsis;
     margin-bottom: 17px;
+
+    &-1 {
+      color: var(--color-loadingcl);
+    }
   }
-  
-}
-</style>
+
+}</style>

@@ -22,6 +22,15 @@ export const fuByGameType = (params:any) => {
     params
   })
 }
+// 查询比赛====
+// gameTypeSon=&gameType=FT&showtype=FU&leagueIds=449&timeStage=0&page=1&gameSort=1&dateStage=2024-01-30&pageSize=10&isNovice=Y&onlyFavorite=0&groupId=3
+export const commonMatches = (params:any) => {
+  return request({
+    url: '/ai/mobile/matches/commonMatches',
+    method: 'get',
+    params
+  })
+}
 export const recommendEvents = (params:any) => {
   return request({
     url: '/ai/mobile/recommend/events',
