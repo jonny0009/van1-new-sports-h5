@@ -129,6 +129,7 @@ export default {
   aheadFinal: 'Advance settlement',
   // 新增7
   contactUs: 'Contact Us',
+  type: 'Type',
 
   sports: {
     officeNumber: 'Bureau Number',

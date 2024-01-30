@@ -52,11 +52,11 @@
             <div class="menu_2">{{ $t('user.edit') }}</div>
           </div>
           <!-- 联系我们 -->
-          <!-- <div class="menu" @click="toUser('/contactUs')">
+          <div class="menu" @click="toUser('/contactUs')">
             <img v-if="ifBLue" class="menu_1" fit="contain" src="@/assets/images/user/blue/sever.png" />
             <img v-else class="menu_1" fit="contain" src="@/assets/images/user/icon2.svg" />
             <div class="menu_2">{{ $t('user.customer') }}</div>
-          </div> -->
+          </div>
         </div>
         <!-- logo -->
         <div class="logoImg">

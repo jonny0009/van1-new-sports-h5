@@ -16,7 +16,7 @@
             <SvgIcon name="user-down" class="icon-svg-1" />
           </div>
           <TextButton :text="$t('sport.recommend')" :active="!leagueId" @click="clickLeague({})" />
-          <ImageButton v-for="(item, idx) in firstLeaguesList" :key="idx" :text="item.leagueName" :src="item.leagueLogo"
+          <ImageButton v-for="(item, idx) in firstLeaguesList" :key="idx" :text="item.leagueName" :src="item.homeLeagueLogo"
             :active="leagueId === item.leagueId" @click="clickLeague(item)" type='6' :count="item.gameTypeCount || '0'"
             :ifCircle="true" />
         </div>

@@ -1,4 +1,28 @@
 <template>
+  <div class="timeSelect">
+    <!-- 时间选择 -->
+    <div class="status status-2">
+      <div class="status_1">
+        <span>{{ $t('user.time') }}</span>
+        <div class="round" @click.stop="setDate()">
+          <span>{{ dateTimeVal.beginName }} </span> ~ <span>{{ dateTimeVal.endName }}</span>
+          <img class="img_1 " :class="[showBottom2 ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 状态 -->
+    <div class="status">
+      <div class="status_1">
+        <span>{{ $t('user.type') }}</span>
+        <div class="round" @click.stop="seStatus()">
+          <span>{{ commonKey.value }}</span>
+          <img class="img_1 " :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 时间状态 -->
   <van-divider class="color-line" />
   <!-- 列表 -->
   <div v-if="!list.arr.length && finished" class="noData">
@@ -7,15 +31,8 @@
       {{ $t('user.noData') }}
     </p>
   </div>
-  <van-list
-    v-if="list.arr.length || !finished"
-    v-model:loading="loading"
-    :finished="finished"
-    :finished-text="$t('live.noMore')"
-    :loading-text="$t('user.loadingText')"
-    class="dataList"
-    @load="onLoad"
-  >
+  <van-list v-if="list.arr.length || !finished" v-model:loading="loading" :finished="finished"
+    :finished-text="$t('live.noMore')" :loading-text="$t('user.loadingText')" class="dataList" @load="onLoad">
     <div v-for="(outItem, outIndex) in dataList.arr" :key="outIndex" class="dataList-item">
       <div class="date-title">{{ outItem.date }}</div>
       <div v-for="(item, index) in outItem.list" :key="index" class="item">
@@ -42,7 +59,7 @@
               <div v-else> {{ $t('user.betNum') }}</div>
               <div class="right-1">
                 <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
-                <span v-else-if="item.currency === 'VNDK'" name="user-vndk" class="money-symbol" >K₫ </span>
+                <span v-else-if="item.currency === 'VNDK'" name="user-vndk" class="money-symbol">K₫ </span>
                 <img v-else :src="USDT1" style="object-fit: contain;" />
                 {{ formatMoney(item.tradeGold) }}
               </div>
@@ -53,7 +70,7 @@
               <div class="right-1">
                 <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
                 <!-- <img v-else-if="item.currency === 'VNDK'" :src="VNDK1" style="object-fit: contain;" /> -->
-                <span v-else-if="item.currency === 'VNDK'" name="user-vndk" class="money-symbol" >K₫ </span>
+                <span v-else-if="item.currency === 'VNDK'" name="user-vndk" class="money-symbol">K₫ </span>
                 <img v-else :src="USDT1" style="object-fit: contain;" />
                 {{ formatMoney(item.gold) }}
               </div>
@@ -76,19 +93,90 @@ import CNY1 from '@/assets/images/user/CNY1.svg'
 import VNDK1 from '@/assets/images/user/VNDK1.svg'
 import USDT1 from '@/assets/images/user/USDT1.png'
 
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
 const loading = ref(false)
 const finished = ref(false)
+const showBottom = ref(false)
+const showBottom2 = ref(false)
+const commonKey = ref({ key: '', value: t('user.whole') })
+const popupTitle = ref(t('user.type'))
+
+
+
+const beginTime = ref<any>('')
+const endTime = ref<any>('')
 
 // getTradeTypeEnums
 import { capitalRecords, getTradeTypeEnums } from '@/api/user'
 const list = reactive<{ arr: any }>({ arr: [] })
 const dataList = reactive<{ arr: any }>({ arr: [] })
 const typeList = reactive<{ arr: any }>({ arr: [] })
+
+const emit = defineEmits(['valueChange', 'timeChange'])
+
+
+const popupList = reactive<{ arr: any[] }>({
+  arr: [
+    {
+      value: t('user.whole'),
+      key: ''
+    },
+    {
+      value: t('user.noFinal'),
+      key: '0'
+    },
+    {
+      value: t('user.final'),
+      key: '1'
+    }
+  ]
+})
+
 import { showToast } from 'vant'
 
+const dateTimeVal = ref<any>({
+  // beginName: moment().subtract(7, 'days').format('YYYY/MM/DD'),
+  // endName: moment().format('YYYY/MM/DD')
+  beginName: moment().subtract(90, 'days').format('MM/DD'),
+  endName: moment().format('MM/DD')
+})
+
 onMounted(() => {
+  endTime.value = moment().valueOf()
+  const oneDayDate = 24 * 60 * 60 * 1000
+  beginTime.value = endTime.value - oneDayDate * 90
   TradeTyp()
 })
+
+const setDateTime = (values: any) => {
+  const [start, end] = values
+  // dateTimeVal.value.beginName = moment(start).format('YYYY/MM/DD')
+  // dateTimeVal.value.endName = moment(end).format('YYYY/MM/DD')
+  dateTimeVal.value.beginName = moment(start).format('MM/DD')
+  dateTimeVal.value.endName = moment(end).format('MM/DD')
+
+  beginTime.value = moment(start).valueOf()
+  endTime.value = moment(end).valueOf()
+  loading.value = true
+  finished.value = false
+  showBottom2.value = false
+  page = 0
+  list.arr = []
+  onLoad()
+  // emit('timeChange', true)
+}
+
+async function setPk(val: any) {
+  commonKey.value = val
+  loading.value = true
+  finished.value = false
+  page = 0
+  list.arr = []
+  onLoad()
+  console.log(val)
+}
 
 let page: number = 0
 const onLoad = async () => {
@@ -96,10 +184,10 @@ const onLoad = async () => {
   const params: any = {
     page: page,
     pageSize: 20,
-    beginDate: '',
-    endDate: '',
+    beginDate: beginTime.value,
+    endDate: endTime.value,
     needCount: 1,
-    tradeType: ''
+    tradeType: commonKey.value.key
   }
   const res: any = await capitalRecords(params)
   const data = res.data
@@ -134,12 +222,34 @@ const onLoad = async () => {
     showToast(res.msg)
   }
 }
+const seStatus = () => {
+  showBottom.value = true
+  emit('valueChange', true, popupTitle.value, popupList.arr, commonKey.value, 2)
+}
+// 日期弹窗
+const setDate = () => {
+  showBottom2.value = true
+  emit('timeChange', true, 2, beginTime.value, endTime.value)
+}
 const TradeTyp = async () => {
   const res: any = await getTradeTypeEnums({})
   if (res.code !== 200) {
     return showToast(res.msg)
   }
   typeList.arr = res.data
+  popupList.arr = [{
+    value: t('user.whole'),
+    key: ''
+  },
+  ...res.data
+  ]
+  popupList.arr.map((item) => {
+    if (item.tradeType) {
+      item.value = getTitle(item.tradeType)
+      item.key = item.tradeType
+    }
+  })
+  
 }
 // 获取标题
 const getTitle = (type: any) => {
@@ -151,13 +261,77 @@ const getTitle = (type: any) => {
   }
 }
 
+defineExpose({
+  setPk, setDateTime, showBottom, showBottom2
+})
+
 </script>
 
 <style lang="scss" scoped>
+// 时间选择
+.timeSelect {
+  margin-top: 23px;
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+  justify-content: space-around;
+}
+
+// 状态
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-family: PingFangSC-Semibold;
+  font-size: 24px;
+  color: var(--color-search-box-text-1);
+  letter-spacing: 0;
+  font-weight: 600;
+
+  .status_1 {
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+    white-space: nowrap;
+
+    .round {
+      white-space: nowrap;
+      padding: 0 25px;
+      padding-right: 35px;
+      height: 52px;
+      text-align: center;
+      line-height: 52px;
+      background: var(--color-search-box-frame);
+      border-radius: 32px;
+      margin-left: 10px;
+      position: relative;
+      font-size: 23px;
+      color: #546371;
+
+      &-text {
+        white-space: nowrap;
+      }
+
+      .img_1 {
+        position: absolute;
+        right: 15px;
+        top: 20px;
+        height: 10px;
+        width: 10px;
+      }
+
+      .img_3 {
+        transform: rotateZ(180deg);
+      }
+    }
+  }
+}
+
 // 列表
 .dataList {
   margin-top: 20px;
-  height: calc(100vh - 280px);
+  // height: calc(100vh - 280px);
+  height: calc(100vh - 320px);
   overflow-y: auto;
 
   >&-item {
@@ -171,6 +345,7 @@ const getTitle = (type: any) => {
   .color-2 {
     color: #1EBB52;
   }
+
   .color-line {
     background: var(--color-search-box-sidebar);
   }
@@ -261,7 +436,8 @@ const getTitle = (type: any) => {
             width: 20px;
             height: 20px;
           }
-          .money-symbol{
+
+          .money-symbol {
             font-size: 22px;
             color: var(--color-search-box-text-1);
           }

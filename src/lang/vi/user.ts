@@ -137,6 +137,8 @@ export default {
   aheadFinal: 'Thanh toán sớm',
   // 新增7
   contactUs: 'Liên hệ',
+  type: 'Loại',
+
 
   sports: {
     'officeNumber': 'số trò chơi',
