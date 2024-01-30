@@ -1,6 +1,6 @@
 <template>
   <div class="champion-page">
-    <van-pull-refresh  v-model="isRefreshLoading"  @refresh="onRefresh">
+    <!-- <van-pull-refresh  v-model="isRefreshLoading"  @refresh="onRefresh"> -->
     <div class="title">
       <img fit="contain" class="item-img" :src="leagueIcon" />
       <span class="st">
@@ -46,7 +46,7 @@
     </div>
   </template>
   <Loading v-if="isLoading"/>
-</van-pull-refresh>
+<!-- </van-pull-refresh> -->
 
   </div>
 </template>
