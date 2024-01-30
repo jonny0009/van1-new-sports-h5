@@ -8,18 +8,31 @@
       公共 联赛
     -->
     <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
-      <div v-if="firstLeaguesList.length" class="my-scroll__content">
-        <div class="betting-sport-nav">
-          <div class="league-num" @click="clickLeagueNum()" :class="ifLeagueNum ? 'league-num-1' : ''">
-            <span> {{ $t(`user.sports.${gameType}`) }}</span>
-            <span class="league-match-num">{{ LeaguesInfo.total || 0 }}</span>
-            <SvgIcon name="user-down" class="icon-svg-1" />
-          </div>
-          <TextButton :text="$t('sport.recommend')" :active="!leagueId" @click="clickLeague({})" />
-          <ImageButton v-for="(item, idx) in firstLeaguesList" :key="idx" :text="item.leagueName" :src="item.homeLeagueLogo"
-            :active="leagueId === item.leagueId" @click="clickLeague(item)" type='6' :count="item.gameTypeCount || '0'"
-            :ifCircle="true" />
-        </div>
+      <!-- 使用切换栏组件 -->
+      <div class="tabs-cut" v-if="firstLeaguesList.length">
+        <van-tabs :duration="0.2" v-model:active="leagueId" shrink line-height="0" @change="onChangeTabs"
+          :swipe-threshold="3">
+          <van-tab name="all">
+            <template #title>
+              <div class="league-num tabs-cut-1" :class="ifLeagueNum ? 'league-num-1' : ''" @click="clickLeagueNum">
+                <span> {{ $t(`user.sports.${gameType}`) }}</span>
+                <span class="league-match-num">{{ LeaguesInfo.total || 0 }}</span>
+                <SvgIcon name="user-down" class="icon-svg-1" />
+              </div>
+            </template>
+          </van-tab>
+          <van-tab name="">
+            <template #title>
+              <TextButton class="tabs-cut-1" :text="$t('sport.recommend')" :active="!leagueId"/>
+            </template>
+          </van-tab>
+          <van-tab v-for="(item, index) in firstLeaguesList" :key="index" :name="item.leagueId">
+            <template #title>
+              <ImageButton class="tabs-cut-1" :text="item.leagueName" :src="item.homeLeagueLogo" :active="leagueId === item.leagueId"
+                 type='6' :count="item.gameTypeCount || '0'" :ifCircle="true" />
+            </template>
+          </van-tab>
+        </van-tabs>
       </div>
       <!-- <Loading v-if="!firstLeaguesList.length" /> -->
       <!-- 地区联赛折叠 -->
@@ -27,7 +40,7 @@
         <van-collapse-item :name="value[0].countryId" :border="false" v-for="(value, key) in groupedArrays" :key="key">
           <template #title>
             <div class="collapseAll">
-              <img v-img="value[0].countryFlag" type="1"  class="collapse-name" />
+              <img v-img="value[0].countryFlag" type="1" class="collapse-name" />
               <span class="collapse-title">{{ value[0].countryName || 'International' }}</span>
               <span class="collapse-num">{{ value.length }}</span>
             </div>
@@ -46,7 +59,7 @@
       </van-collapse>
 
       <!-- end==== -->
-      <template v-if="!leagueId && !ifLeagueNum">
+      <template v-if="!leagueId">
 
         <!-- 推荐 -->
         <van-collapse v-model="activeNamesB" accordion :border="false" class="GlobalCollapse">
@@ -97,7 +110,7 @@
         </van-collapse>
 
       </template>
-      <template v-if="leagueId && !ifLeagueNum">
+      <template v-if="leagueId">
 
         <!-- 联赛 -->
         <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
@@ -134,7 +147,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { ref, onBeforeMount, watch, computed, nextTick, onMounted, onActivated } from 'vue'
 // import router from '@/router'
 import { apiChampionpPlayTypes } from '@/api/champion'
-import { firstLeagues, recommendEvents, fuByGameType, recommendLeague, commonMatches } from '@/api/home'
+import {  recommendLeague, commonMatches } from '@/api/home'
 import { MarketInfo } from '@/entitys/MarketInfo'
 // const { currentRoute } = useRouter()
 const route: any = useRoute()
@@ -228,8 +241,6 @@ const initData = async () => {
   } else {
     // 推荐
     const recommendParames: any = ref({
-      // gameType: gameType.value, gradeType: 1,
-      // page: recommendPage.value, pageSize: recommendPageSize.value
       gradeType: 1,
       gameTypeSon: '',
       gameType: gameType.value,
@@ -238,7 +249,7 @@ const initData = async () => {
       gameSort: 1,
       dateStage: 0,
       isNovice: 'Y',
-      leagueIds:'',
+      leagueIds: '',
       onlyFavorite: 0,
       page: 1,
       pageSize: 10
@@ -246,8 +257,6 @@ const initData = async () => {
     getRecommendEvents(recommendParames.value)
     // 早盘
     const earlyParames: any = ref({
-      // gameType: gameType.value, gradeType: 2,
-      // page: earlyPage.value, pageSize: earlyPageSize.value
       gradeType: 2,
       gameTypeSon: '',
       gameType: gameType.value,
@@ -256,7 +265,7 @@ const initData = async () => {
       gameSort: 1,
       dateStage: 0,
       isNovice: 'Y',
-      leagueIds:'',
+      leagueIds: '',
       onlyFavorite: 0,
       page: 1,
       pageSize: 10
@@ -277,7 +286,7 @@ const getFirstLeagues = async () => {
     if (res.code === 200 && res.data) {
       firstLeaguesList.value = res.data.list || []
       LeaguesInfo.value = res.data
-      groupedArrays.value = res.data.list.reduce((acc: any, obj: any) => {
+      groupedArrays.value = res.data.list?.reduce((acc: any, obj: any) => {
         let key = obj.countryId;
         if (!acc[key]) {
           acc[key] = [];
@@ -298,24 +307,20 @@ const moreEarly = async () => {
   }
   earlyPage.value = earlyPage.value + 1
   const earlyParames: any = ref({
-      gameTypeSon: '',
-      showtype: 'FT',
-      timeStage: 0,
-      gameSort: 1,
-      dateStage: 0,
-      isNovice: 'Y',
-      leagueIds:'',
-      onlyFavorite: 0,
+    gameTypeSon: '',
+    showtype: 'FT',
+    timeStage: 0,
+    gameSort: 1,
+    dateStage: 0,
+    isNovice: 'Y',
+    leagueIds: '',
+    onlyFavorite: 0,
     gameType: gameType.value, gradeType: 2,
     page: earlyPage.value, pageSize: earlyPageSize.value
   })
   isLoadingEarly.value = true
-  // const res: any = await recommendEvents(earlyParames.value) || {}
   const res: any = await commonMatches(earlyParames.value) || {}
-  // if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
   if (res.code === 200 && res.data?.matchList?.baseData && res.data?.matchList?.baseData.length) {
-
-    // earlyList.value.push(...res.data.baseData)
     earlyList.value.push(...res.data.matchList.baseData)
   }
   if (earlyList.value.length < earlyPage.value * earlyPageSize.value) {
@@ -333,26 +338,21 @@ const moreRecommend = async () => {
   }
   recommendPage.value = recommendPage.value + 1
   const recommendParames: any = ref({
-      gameTypeSon: '',
-      showtype: 'FU',
-      timeStage: 0,
-      gameSort: 1,
-      dateStage: 0,
-      isNovice: 'Y',
-      leagueIds:'',
-      onlyFavorite: 0,
+    gameTypeSon: '',
+    showtype: 'FU',
+    timeStage: 0,
+    gameSort: 1,
+    dateStage: 0,
+    isNovice: 'Y',
+    leagueIds: '',
+    onlyFavorite: 0,
     gameType: gameType.value, gradeType: 1,
     page: recommendPage.value, pageSize: recommendPageSize.value
   })
   isLoadingRecommend.value = true
-  // const res: any = await recommendEvents(recommendParames.value) || {}
   const res: any = await commonMatches(recommendParames.value) || {}
-  // if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
   if (res.code === 200 && res.data?.matchList?.baseData && res.data?.matchList?.baseData.length) {
-
-    // recommendList.value.push(...res.data.baseData)
     recommendList.value.push(...res.data.matchList.baseData)
-
   }
   if (recommendList.value.length < recommendPage.value * recommendPageSize.value) {
     recommendLoadAll.value = true
@@ -368,18 +368,14 @@ const getRecommendEventsIsLoading = ref(false)
 const getRecommendEvents = async (params: any) => {
   if (gameType.value) {
     getRecommendEventsIsLoading.value = false
-    // const res: any = await recommendEvents(params) || {}
     const res: any = await commonMatches(params) || {}
     getRecommendEventsIsLoading.value = true
     let listFlag: any = []
-    // if (res.code === 200 && res.data?.baseData && res.data?.baseData.length) {
     if (res.code === 200 && res.data?.matchList?.baseData && res.data?.matchList?.baseData.length) {
-      // listFlag = res.data.baseData
       listFlag = res.data.matchList.baseData
     }
     // 推荐 - 选择联赛
     if (params.gradeType === 1 || leagueId.value) {
-    // if (params.showtype === 'FU' || leagueId.value) {
       if (listFlag.length) {
         leagueLogo.value = listFlag[0].leagueLogo
         leagueName.value = listFlag[0].leagueShortName
@@ -390,7 +386,6 @@ const getRecommendEvents = async (params: any) => {
         recommendList.value = []
       }
     } else if (params.gradeType === 2) {
-    // } else if (params.showtype === 'FT') {
       if (listFlag.length) {
         earlyList.value = listFlag
       } else {
@@ -436,10 +431,22 @@ const clickLeague = (item: any) => {
   leagueId.value = item.leagueId
   initData()
 }
+const onChangeTabs = () => {
+  activeCollapseNames.value = []
+  activeNames.value = '1'
+  leagueArrowTitle?.value?.changeClick(false)
+  championGuessing?.value?.CloseClick(false)
+  if (leagueId.value === 'all') {
+    leagueId.value = ''
+  }
+  if (leagueId.value) {
+   ifLeagueNum.value = false
+  }
+  initData()
+}
 //获取联赛数量
 const ifLeagueNum: any = ref(false)
 const clickLeagueNum = () => {
-  leagueId.value = '-100'
   ifLeagueNum.value = !ifLeagueNum.value
 }
 // onBeforeMount(async () => {
@@ -465,7 +472,6 @@ onActivated(async () => {
     championGuessing?.value?.CloseClick(false)
   }
   leagueId.value = route.query?.leagueId || ''
-
   getFirstLeagues()
   initData()
   nextTick(() => {
@@ -478,6 +484,7 @@ onActivated(async () => {
   padding: 0 36px;
 
   .my-scroll__content {
+    margin-top: -10px;
     width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
@@ -554,6 +561,60 @@ onActivated(async () => {
     }
   }
 
+  // 联赛切换栏
+  .tabs-cut {
+    .league-num {
+      white-space: nowrap;
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--color-global-minButtonCl);
+      background: var(--color-global-buttonBg);
+      box-shadow: var(--color-global-buttonShadow);
+      transition: all 0.3s;
+
+      .league-match-num {
+        color: var(--color-text-3);
+        margin: 0 12px;
+      }
+
+      .icon-svg-1 {
+        font-size: 20px;
+        color: var(--color-text-1);
+      }
+
+
+    }
+
+    .league-num-1 {
+      background: var(--color-global-buttonPrimaryBg);
+      color: #fff;
+      transition: all 0.3s;
+      margin-top: -10px;
+
+      .league-match-num {
+        color: #FFF;
+        margin: 0 12px;
+      }
+
+      .icon-svg-1 {
+        font-size: 20px;
+        color: #FFF;
+        transform: rotate(180deg);
+        transition: all .2s;
+      }
+
+
+    }
+
+    .tabs-cut-1 {
+      margin-left: -30px;
+      margin-right: 10px;
+    }
+  }
+
   // 地区联赛折叠
   .van-collapse-item {
     :deep(.van-collapse-item__title) {
@@ -616,4 +677,5 @@ onActivated(async () => {
     }
   }
 
-}</style>
+}
+</style>
