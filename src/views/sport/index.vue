@@ -16,8 +16,8 @@
             <SvgIcon name="user-down" class="icon-svg-1" />
           </div>
           <TextButton :text="$t('sport.recommend')" :active="!leagueId" @click="clickLeague({})" />
-          <ImageButton v-for="(item, idx) in firstLeaguesList" :key="idx" :text="item.leagueName" :src="item.countryFlag"
-            :active="leagueId === item.leagueId" @click="clickLeague(item)" type='1' :count="item.gameTypeCount || '0'"
+          <ImageButton v-for="(item, idx) in firstLeaguesList" :key="idx" :text="item.leagueName" :src="item.leagueLogo"
+            :active="leagueId === item.leagueId" @click="clickLeague(item)" type='6' :count="item.gameTypeCount || '0'"
             :ifCircle="true" />
         </div>
       </div>
@@ -27,7 +27,7 @@
         <van-collapse-item :name="value[0].countryId" :border="false" v-for="(value, key) in groupedArrays" :key="key">
           <template #title>
             <div class="collapseAll">
-              <img v-img="value[0].countryFlag" type="1" fit="contain" class="collapse-name" />
+              <img v-img="value[0].countryFlag" type="1"  class="collapse-name" />
               <span class="collapse-title">{{ value[0].countryName || 'International' }}</span>
               <span class="collapse-num">{{ value.length }}</span>
             </div>
@@ -36,7 +36,7 @@
             <div v-if="item.gameTypeCount" @click="clickLeague(item)">
               {{ item.leagueName }}
             </div>
-            <div v-else class="collapse-concent-1">
+            <div v-else class="collapse-concent-1" @click="clickLeague(item)">
               {{ item.leagueName }}
             </div>
           </div>
@@ -580,6 +580,7 @@ onActivated(async () => {
       height: 58px;
       width: 58px;
       border-radius: 50%;
+      overflow: hidden;
 
 
     }

@@ -4,7 +4,7 @@
       'active': active
     }
   ]">
-    <img v-img="src" class="img" :class="ifCircle?'img-1':''" :type="type" />
+    <img v-img="src" class="img" :class="ifCircle?'img-1':''" :type="type" style="object-fit: contain;"/>
     <span>
       {{ text }}
     </span>
@@ -89,7 +89,6 @@ defineProps({
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: orange;
     overflow: hidden;
   }
 
