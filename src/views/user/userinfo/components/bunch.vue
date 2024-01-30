@@ -103,7 +103,7 @@
       </div>
       <div class="money-num-2">
         <span v-if="item.state === 0|| item.state===-1||item.state=== 1">{{ $t('user.CompensableAmount') }}:</span>
-        <span v-else-if="item.state !==3&& item.state !==5 ">{{ $t('user.practical') }}:</span>
+        <span v-else-if="ifPracticalMoneyNum(item)">{{ $t('user.practical') }}:</span>
         <span>
 
           <!-- 受理状态 -->
@@ -116,7 +116,7 @@
             </span>
           </span>
 
-          <span v-if="item.state !== 3 && item.state !== 5 ">
+          <span v-else-if="ifPracticalMoneyNum(item)">
             <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
             <!-- <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" /> -->
             <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" >K₫ </span>
@@ -126,7 +126,7 @@
           <span v-if="item.state === 0|| item.state===-1||item.state=== 1" class="num">
             {{ formatMoney(getProfit(item)) }}
           </span>
-          <span v-else-if="item.state !==3&& item.state !==5 " class="num">
+          <span v-else-if="ifPracticalMoneyNum(item)" class="num">
             {{ formatMoney(item.winGold) }}
           </span>
         </span>
@@ -172,6 +172,13 @@ const props = defineProps({
 
 const getProfit = (item: any) => {
   return item.gold * item.sioRatio
+}
+// 是否显示实际金额
+const ifPracticalMoneyNum = (item: any) => {
+  if (item.state !== 3 && item.state !== 5 ||Number(item.cashoutType) === 2) {
+    return true
+  }
+  return false
 }
 // 图标状态
 const battleStatus = (val: any) => {
