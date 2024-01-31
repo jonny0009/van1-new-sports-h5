@@ -31,7 +31,6 @@ const betsProfit = computed(() => store.getters['betting/betsProfit'])
 const combosBetGolds = computed(() => store.getters['betting/combosBetGolds'])
 const combosProfit = computed(() => store.getters['betting/combosProfit'])
 const golds = computed(() => (mode.value === 1 ? betsGolds.value : combosBetGolds.value))
-debugger
 const profit = computed(() =>
   mode.value === 1 ? betsProfit.value * 1 + golds.value * 1 : combosProfit.value * 1 + golds.value * 1
 )

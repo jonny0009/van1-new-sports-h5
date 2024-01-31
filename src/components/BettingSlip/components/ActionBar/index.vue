@@ -52,7 +52,6 @@ const effectiveMarkets = computed(() => store.getters['betting/effectiveMarkets'
 const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
 const golds = computed(() => (mode.value === 1 ? betsGolds.value : combosBetGolds.value))
 const profit = computed(() => {
-  debugger
   return mode.value === 1 ? betsProfit.value * 1 + golds.value * 1 : combosProfit.value * 1 + golds.value * 1
 })
 const goldRule = computed(() => {
