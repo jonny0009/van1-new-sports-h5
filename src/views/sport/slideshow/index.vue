@@ -163,6 +163,12 @@ const props = defineProps({
   }
   .bannerBg-blue{
     background: url('@/assets/images/user/blue/leagueBg.png');
+    width: 678px;
+    height: 284px;
+    border-radius: 16px;
+    background-size: 100% 100%;
+    padding: 12px;
+    font-size: 24px;
   }
 
 }</style>

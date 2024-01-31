@@ -674,6 +674,8 @@ onActivated(async () => {
       color: var(--color-loadingcl);
     }
   }
-
+  :deep(.van-tabs__nav--complete) {
+    background-color: var(--color-background-color);
+  }
 }
 </style>
