@@ -102,7 +102,7 @@
                 {{ $t('user.affirmPend') }}
               </span>
             </span>
-            <span v-else-if="ifPracticalMoneyNum(item,item1)">
+            <span v-if="ifPracticalMoneyNum(item,item1)">
               <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
               <!-- <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" /> -->
               <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" >K₫ </span>
