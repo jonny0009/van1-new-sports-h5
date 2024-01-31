@@ -9,11 +9,11 @@ import store from '@/store'
 import Subscriber from '@/utils/subscriber'
 import { showToast } from 'vant'
 import { computed, watch } from 'vue'
-import { points } from '@/utils'
+import { moneyFormat } from '@/utils/math'
 const props = defineProps({
   marketInfo: {
     type: Object,
-    default: () => { }
+    default: () => {}
   }
 })
 const markets = computed(() => store.state.betting.markets)
@@ -25,34 +25,39 @@ const lock = computed(() => {
   }
   return false
 })
-const selected = computed(() => !!markets.value.find((marketInfo: MarketInfo) => marketInfo.playOnlyId === props.marketInfo.playOnlyId))
+const selected = computed(
+  () => !!markets.value.find((marketInfo: MarketInfo) => marketInfo.playOnlyId === props.marketInfo.playOnlyId)
+)
 
 // 监听赔率变化
-watch(() => props.marketInfo, (newVal:any, oldVal:any) => {
-  if (newVal.ior === void 0 || oldVal.ior === void 0) {
-    return false
-  }
-  const newIor = newVal.ior * 1 || 0
-  const oldIor = oldVal.ior * 1 || 0
-  props.marketInfo.oldIor = points(oldIor) || ''
+watch(
+  () => props.marketInfo,
+  (newVal: any, oldVal: any) => {
+    if (newVal.ior === void 0 || oldVal.ior === void 0) {
+      return false
+    }
+    const newIor = newVal.ior * 1 || 0
+    const oldIor = oldVal.ior * 1 || 0
+    props.marketInfo.oldIor = moneyFormat(oldIor) || ''
 
-  if (+newIor > +oldIor) {
-    props.marketInfo.iorChange = 'up-ior'
-    props.marketInfo.iorChangeTransition = 'up-ior'
-  } else if (+newIor < +oldIor) {
-    props.marketInfo.iorChange = 'down-ior'
-    props.marketInfo.iorChangeTransition = 'down-ior'
-  } else {
-    props.marketInfo.iorChange = ''
-    props.marketInfo.iorChangeTransition = ''
-  }
-
-  if (props.marketInfo.iorChange) {
-    setTimeout(() => {
+    if (+newIor > +oldIor) {
+      props.marketInfo.iorChange = 'up-ior'
+      props.marketInfo.iorChangeTransition = 'up-ior'
+    } else if (+newIor < +oldIor) {
+      props.marketInfo.iorChange = 'down-ior'
+      props.marketInfo.iorChangeTransition = 'down-ior'
+    } else {
       props.marketInfo.iorChange = ''
-    }, 5000)
+      props.marketInfo.iorChangeTransition = ''
+    }
+
+    if (props.marketInfo.iorChange) {
+      setTimeout(() => {
+        props.marketInfo.iorChange = ''
+      }, 5000)
+    }
   }
-})
+)
 
 const touchMarket = (event: any) => {
   if (lock.value) {
@@ -62,9 +67,7 @@ const touchMarket = (event: any) => {
   // 唯一值
   const { playOnlyId } = props.marketInfo
   // 判断是否存在
-  const find = markets.value.find(
-    (marketInfo: MarketInfo) => marketInfo.playOnlyId === playOnlyId
-  )
+  const find = markets.value.find((marketInfo: MarketInfo) => marketInfo.playOnlyId === playOnlyId)
   if (find) {
     store.dispatch('betting/deleteMarket', props.marketInfo.playOnlyId)
   } else {
@@ -78,6 +81,4 @@ const touchMarket = (event: any) => {
     store.dispatch('betting/addMarket', props.marketInfo)
   }
 }
-
 </script>
-

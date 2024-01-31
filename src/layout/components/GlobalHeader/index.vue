@@ -2,37 +2,36 @@
   <div ref="refGlobalBarHeader" class="global-bar-header">
     <div class="headerView">
       <div class="headerView-fixed">
-
         <div v-if="$route.meta.showheadGoBack" class="arrowLeft" @click="goBackClick">
           <van-icon name="arrow-left" />
         </div>
+        <div v-else-if="isAnonymity" class="avatar" @click="showInfo">
+          <img v-img="''" :type="3" style="object-fit: cover" />
+        </div>
         <div v-else class="avatar" @click="showInfo">
-          <img v-img="userInfo.headImg" :type="3" style="object-fit: cover;" />
+          <img v-img="userInfo.headImg" :type="3" style="object-fit: cover" />
         </div>
 
-        <div v-if="loginToken" class="wallet">
+        <div v-if="loginToken && !isAnonymity" class="wallet">
           <div class="cur">
-            <img v-if="currency==='CNY'" :src="CNY" style="object-fit: contain;" />
-            <img v-else-if="currency==='VNDK'" :src="VNDK" style="object-fit: contain;" />
-            <img v-else :src="USDTImg" style="object-fit: contain;" />
+            <img v-if="currency === 'CNY'" :src="CNY" style="object-fit: contain" />
+            <img v-else-if="currency === 'VNDK'" :src="VNDK" style="object-fit: contain" />
+            <img v-else :src="USDTImg" style="object-fit: contain" />
           </div>
           <span>{{ formatMoney(balance.balance) }}</span>
           <div class="transaction">
             <img :src="transactionImg" />
           </div>
         </div>
-        <div v-else class="wallet" @click="toUrl('/login')">
-          {{ $t('user.logOn') }}  / {{ $t('user.register') }}
-        </div>
+        <div v-else class="wallet" @click="toUrl('/login')">{{ $t('user.logOn') }} / {{ $t('user.register') }}</div>
         <div class="right-area" @click="toUrl('/search')">
           <img v-if="ifBLue" class="search" fit="contain" src="@/assets/images/user/blue/search.png" />
-          <img v-else class="search" :src="searchImg" style="object-fit: contain;" />
+          <img v-else class="search" :src="searchImg" style="object-fit: contain" />
         </div>
       </div>
     </div>
 
     <sidebar-nav ref="childNav"></sidebar-nav>
-
   </div>
 </template>
 <script lang="ts" setup>
@@ -47,9 +46,9 @@ import VNDK from '@/assets/images/user/VNDK.svg'
 import transactionImg from '@/assets/images/globalLayout/header/transaction.png'
 
 import { formatMoney } from '@/utils/index'
-
+const isAnonymity = computed(() => store.state.user.isAnonymity)
 import { useRouter } from 'vue-router'
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
 import SidebarNav from './sidebarNav.vue'
 
@@ -70,11 +69,10 @@ const ifBLue = computed(() => {
 const loginToken = ref(getToken())
 const $router = useRouter()
 const toUrl = (url: string) => {
-  if (url==='/search') {
+  if (url === '/search') {
     store.dispatch('user/getLocationHeight', false)
   } else {
     store.dispatch('user/getLocationHeight', false)
-    
   }
 
   $router.push({ path: url })
@@ -96,7 +94,6 @@ onMounted(() => {
     value: refGlobalBarHeader?.value?.offsetHeight || 48
   })
 })
-
 </script>
 
 <style lang="scss" scoped>
@@ -113,8 +110,8 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    background:  var(--color-global-bg);
-    .arrowLeft{
+    background: var(--color-global-bg);
+    .arrowLeft {
       width: 96px;
       height: 96px;
       position: absolute;
@@ -123,11 +120,11 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      .van-icon{
+      .van-icon {
         font-size: 44px;
       }
     }
-    &::before{
+    &::before {
       content: '';
       position: absolute;
       left: 0;
@@ -209,5 +206,4 @@ onMounted(() => {
     }
   }
 }
-
 </style>

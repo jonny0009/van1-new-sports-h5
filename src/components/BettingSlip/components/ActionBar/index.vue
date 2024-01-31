@@ -1,7 +1,7 @@
 <template>
   <div v-if="mode === 2" ref="inputBtn" class="combo-input betting-slip-input" @click="inputTouch">
     <span class="currency"><van-icon name="balance-o" /></span>
-    <div style="flex: 1 1 0%;"></div>
+    <div style="flex: 1 1 0%"></div>
     <span class="amount" :class="{ selected: boardShow }">{{ comboAmount }}</span>
     <span v-show="boardShow" class="cursor">|</span>
     <div v-if="goldRule" class="gold-tips">
@@ -50,13 +50,19 @@ const combosBetGolds = computed(() => store.getters['betting/combosBetGolds'])
 const combosProfit = computed(() => store.getters['betting/combosProfit'])
 const effectiveMarkets = computed(() => store.getters['betting/effectiveMarkets'])
 const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
-const golds = computed(() => mode.value === 1 ? betsGolds.value : combosBetGolds.value)
-const profit = computed(() => mode.value === 1 ? betsProfit.value * 1 + golds.value * 1 : combosProfit.value * 1 + golds.value * 1)
+const golds = computed(() => (mode.value === 1 ? betsGolds.value : combosBetGolds.value))
+const profit = computed(() => {
+  debugger
+  return mode.value === 1 ? betsProfit.value * 1 + golds.value * 1 : combosProfit.value * 1 + golds.value * 1
+})
 const goldRule = computed(() => {
   if (comboAmount.value * 1 <= 0 || mode.value !== 2) {
     return false
   }
-  if (combos.value && (combos.value.goldMin * 1 > comboAmount.value * 1 || combos.value.goldMax * 1 < comboAmount.value * 1)) {
+  if (
+    combos.value &&
+    (combos.value.goldMin * 1 > comboAmount.value * 1 || combos.value.goldMax * 1 < comboAmount.value * 1)
+  ) {
     return true
   }
   return false
@@ -98,29 +104,28 @@ const inputTouch = () => {
     })
   })
 }
-
 </script>
 <style lang="scss" scoped>
 @keyframes auto-opacity {
   0% {
-    opacity: 1
+    opacity: 1;
   }
 
   to {
-    opacity: 0
+    opacity: 0;
   }
 }
 
 .gold-tips {
   position: absolute;
-  background: #FB0738;
+  background: #fb0738;
   border-radius: 22px;
   padding: 5px 12px;
   right: 12px;
   bottom: 60px;
   font-family: PingFangSC-Semibold;
   font-size: 20px;
-  color: #FFFFFF;
+  color: #ffffff;
   letter-spacing: 0.67px;
   text-align: justify;
   font-weight: 600;
@@ -137,7 +142,7 @@ const inputTouch = () => {
     left: 0;
     right: 0;
     margin: auto;
-    border-top-color: #FB0738;
+    border-top-color: #fb0738;
     border-bottom-width: 0;
   }
 }
@@ -171,14 +176,13 @@ const inputTouch = () => {
     letter-spacing: 0.8px;
     text-align: justify;
     font-weight: 600;
-
   }
 
   .cursor {
     position: relative;
     right: -4px;
     top: -3px;
-    animation: auto-opacity .5s linear infinite alternate;
+    animation: auto-opacity 0.5s linear infinite alternate;
   }
 }
 
@@ -196,10 +200,10 @@ const inputTouch = () => {
     height: 64px;
     line-height: 64px;
     text-align: center;
-    background: rgba(0, 0, 0, 0.40);
+    background: rgba(0, 0, 0, 0.4);
     font-family: PingFangSC-Regular;
     font-size: 28px;
-    color: #FFFFFF;
+    color: #ffffff;
     letter-spacing: 0;
     text-align: center;
     font-weight: 400;
@@ -298,27 +302,27 @@ const inputTouch = () => {
 @keyframes bet-loading {
   0% {
     -webkit-transform: rotate(0deg);
-    transform: rotate(0deg)
+    transform: rotate(0deg);
   }
 
   25% {
     -webkit-transform: rotate(90deg);
-    transform: rotate(90deg)
+    transform: rotate(90deg);
   }
 
   50% {
     -webkit-transform: rotate(180deg);
-    transform: rotate(180deg)
+    transform: rotate(180deg);
   }
 
   75% {
     -webkit-transform: rotate(270deg);
-    transform: rotate(270deg)
+    transform: rotate(270deg);
   }
 
   to {
     -webkit-transform: rotate(1turn);
-    transform: rotate(1turn)
+    transform: rotate(1turn);
   }
 }
 </style>
