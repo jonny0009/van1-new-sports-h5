@@ -24,13 +24,13 @@
           </van-tab>
           <van-tab name="">
             <template #title>
-              <TextButton class="tabs-cut-1" :text="$t('sport.recommend')" :active="!leagueId"/>
+              <TextButton class="tabs-cut-1" :text="$t('sport.recommend')" :active="!leagueId" />
             </template>
           </van-tab>
           <van-tab v-for="(item, index) in firstLeaguesList" :key="index" :name="item.leagueId">
             <template #title>
-              <ImageButton class="tabs-cut-1" :text="item.leagueName" :src="item.homeLeagueLogo" :active="leagueId === item.leagueId"
-                 type='6' :count="item.gameTypeCount || '0'" :ifCircle="true" />
+              <ImageButton class="tabs-cut-1" :text="item.leagueName" :src="item.homeLeagueLogo"
+                :active="leagueId === item.leagueId" type='6' :count="item.gameTypeCount || '0'" :ifCircle="true" />
             </template>
           </van-tab>
         </van-tabs>
@@ -58,10 +58,11 @@
 
         </van-collapse-item>
       </van-collapse>
-
       <!-- end==== -->
+      <!-- 联赛轮播图 -->
+      <Slideshow ref="slideshow" v-if="commonMatchesList.length && closeSlideshow" :commonMatchesList="commonMatchesList">
+      </Slideshow>
       <template v-if="!leagueId">
-
         <!-- 推荐 -->
         <van-collapse v-model="activeNamesB" accordion :border="false" class="GlobalCollapse">
           <van-collapse-item name="b1">
@@ -143,12 +144,13 @@
 import earlyIcon from '@/assets/images/home/title-time.png'
 import recommendIcon from '@/assets/images/home/title-recommend.png'
 import ChampionList from './champion/index.vue'
+import Slideshow from './slideshow/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ref, onBeforeMount, watch, computed, nextTick, onMounted, onActivated } from 'vue'
 // import router from '@/router'
 import { apiChampionpPlayTypes } from '@/api/champion'
-import {  recommendLeague, commonMatches } from '@/api/home'
+import { recommendLeague, commonMatches, homeCommonMatches } from '@/api/home'
 import { MarketInfo } from '@/entitys/MarketInfo'
 // const { currentRoute } = useRouter()
 const route: any = useRoute()
@@ -169,7 +171,9 @@ const returnSportsSuccess = (item: any) => {
   activeNamesC.value = 'c1'
   leagueArrowTitle?.value?.changeClick(false)
   ifLeagueNum.value = false
+  closeSlideshow.value = true
   activeCollapseNames.value = []
+  commonMatchesList.value = []
   // end=====
   gameType.value = item
   store.dispatch('user/getLocationHeight', false)
@@ -222,7 +226,31 @@ const initList = () => {
   earlyPage.value = 1
   getFirstLeagues()
   initData()
+  getCommonMatches()
 }
+
+// 获取联赛轮播
+const commonMatchesList: any = ref([])
+const getCommonMatches = async () => {
+  const commonMatchesParams: any = ref({
+    gradeType: 1,
+    gameTypeSon: '',
+    showtype: 'FU',
+    // timeStage: 0,
+    gameSort: 3,
+    // dateStage: 0,
+    // isNovice: 'Y',
+    // onlyFavorite: 0,
+    gameType: gameType.value, page: 1, pageSize: 5
+  })
+  const res: any = await homeCommonMatches(commonMatchesParams.value) || {}
+  if (res.code === 200 && res.data) {
+    commonMatchesList.value = res.data.games || []
+  } else {
+    commonMatchesList.value = []
+  }
+}
+
 const initData = async () => {
   if (leagueId.value) {
     // 按联赛查询
@@ -297,6 +325,12 @@ const getFirstLeagues = async () => {
       }, {});
     } else {
       firstLeaguesList.value = []
+    }
+    const leagueIdObj = firstLeaguesList.value.find((item: any) => {
+      return item.leagueId === leagueId.value
+    })
+    if (!leagueIdObj) {
+      closeSlideshow.value = true
     }
   }
 }
@@ -432,16 +466,22 @@ const clickLeague = (item: any) => {
   leagueId.value = item.leagueId
   initData()
 }
+const closeSlideshow: any = ref(true)
 const onChangeTabs = () => {
   activeCollapseNames.value = []
   activeNames.value = '1'
   leagueArrowTitle?.value?.changeClick(false)
   championGuessing?.value?.CloseClick(false)
+
+  if (!leagueId.value) {
+    closeSlideshow.value = true
+  }
   if (leagueId.value === 'all') {
     leagueId.value = ''
   }
   if (leagueId.value) {
-   ifLeagueNum.value = false
+    ifLeagueNum.value = false
+    closeSlideshow.value = false
   }
   initData()
 }
@@ -449,6 +489,7 @@ const onChangeTabs = () => {
 const ifLeagueNum: any = ref(false)
 const clickLeagueNum = () => {
   ifLeagueNum.value = !ifLeagueNum.value
+  closeSlideshow.value = !closeSlideshow.value
 }
 // onBeforeMount(async () => {
 //   getFirstLeagues()
@@ -473,8 +514,10 @@ onActivated(async () => {
     championGuessing?.value?.CloseClick(false)
   }
   leagueId.value = route.query?.leagueId || ''
+  closeSlideshow.value = false
   getFirstLeagues()
   initData()
+  getCommonMatches()
   nextTick(() => {
     refSportsTabs.value?.setSports(gameType.value)
   })
@@ -512,7 +555,7 @@ onActivated(async () => {
         margin-left: 10px;
         margin-bottom: 10px;
       }
-     
+
     }
   }
 
