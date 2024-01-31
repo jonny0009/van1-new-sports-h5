@@ -15,7 +15,8 @@
           <van-tab name="all">
             <template #title>
               <div class="league-num tabs-cut-1" :class="ifLeagueNum ? 'league-num-1' : ''" @click="clickLeagueNum">
-                <span> {{ $t(`user.sports.${gameType}`) }}</span>
+                <!-- <span> {{ $t(`user.sports.${gameType}`) }}</span> -->
+                <span> {{ $t(`user.whole`) }}</span>
                 <span class="league-match-num">{{ LeaguesInfo.total || 0 }}</span>
                 <SvgIcon name="user-down" class="icon-svg-1" />
               </div>
@@ -230,7 +231,7 @@ const initData = async () => {
       gameTypeSon: '',
       showtype: 'FU',
       timeStage: 0,
-      gameSort: 1,
+      gameSort: 3,
       dateStage: 0,
       isNovice: 'Y',
       onlyFavorite: 0,
@@ -246,7 +247,7 @@ const initData = async () => {
       gameType: gameType.value,
       showtype: 'FU',
       timeStage: 0,
-      gameSort: 1,
+      gameSort: 3,
       dateStage: 0,
       isNovice: 'Y',
       leagueIds: '',
@@ -262,7 +263,7 @@ const initData = async () => {
       gameType: gameType.value,
       showtype: 'FT',
       timeStage: 0,
-      gameSort: 1,
+      gameSort: 3,
       dateStage: 0,
       isNovice: 'Y',
       leagueIds: '',
@@ -310,7 +311,7 @@ const moreEarly = async () => {
     gameTypeSon: '',
     showtype: 'FT',
     timeStage: 0,
-    gameSort: 1,
+    gameSort: 3,
     dateStage: 0,
     isNovice: 'Y',
     leagueIds: '',
@@ -341,7 +342,7 @@ const moreRecommend = async () => {
     gameTypeSon: '',
     showtype: 'FU',
     timeStage: 0,
-    gameSort: 1,
+    gameSort: 3,
     dateStage: 0,
     isNovice: 'Y',
     leagueIds: '',
@@ -511,53 +512,7 @@ onActivated(async () => {
         margin-left: 10px;
         margin-bottom: 10px;
       }
-
-      .league-num {
-        white-space: nowrap;
-        display: inline-block;
-        padding: 15px 24px;
-        border-radius: 30px;
-        font-size: 24px;
-        font-weight: 600;
-        color: var(--color-global-minButtonCl);
-        background: var(--color-global-buttonBg);
-        box-shadow: var(--color-global-buttonShadow);
-        transition: all 0.3s;
-        margin-top: -10px;
-
-        .league-match-num {
-          color: var(--color-text-3);
-          margin: 0 12px;
-        }
-
-        .icon-svg-1 {
-          font-size: 20px;
-          color: var(--color-text-1);
-        }
-
-
-      }
-
-      .league-num-1 {
-        background: var(--color-global-buttonPrimaryBg);
-        color: #fff;
-        transition: all 0.3s;
-        margin-top: -10px;
-
-        .league-match-num {
-          color: #FFF;
-          margin: 0 12px;
-        }
-
-        .icon-svg-1 {
-          font-size: 20px;
-          color: #FFF;
-          transform: rotate(180deg);
-          transition: all .2s;
-        }
-
-
-      }
+     
     }
   }
 
@@ -592,7 +547,7 @@ onActivated(async () => {
       background: var(--color-global-buttonPrimaryBg);
       color: #fff;
       transition: all 0.3s;
-      margin-top: -10px;
+      // margin-top: -10px;
 
       .league-match-num {
         color: #FFF;

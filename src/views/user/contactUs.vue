@@ -5,12 +5,13 @@
         <van-icon name="arrow-left" class="img_1" @click="goBack()" />
       </template>
     </van-nav-bar>
-    <div class="content">
-      <div class="box" v-if="contactType1.length">
-        <SvgIcon name="user-telegram" class="icon-svg-1" />
+    <div class="content" v-if="contactInfoArr.length">
+      <div v-for="(item, index) in contactInfoArr" :key="index">
+      <div class="box" >
+        <img v-img="item.icon" class="img_2" alt="" :type="1" >
         <div class="right">
-          <p>Telegram</p>
-          <p v-for="(item, index) in contactType1" :key="index">
+          <p>{{ item.type }}</p>
+          <p >
             <span v-if="item.url" @click="toUrl(item.url, 1)">
               {{ item.contactInfo }}
             </span>
@@ -21,38 +22,7 @@
         </div>
       </div>
       <div class="line-color" v-if="contactType1.length" />
-
-      <div class="box" v-if="contactType2.length">
-        <SvgIcon name="user-email" class="icon-svg-1" />
-        <div class="right">
-          <p>Email</p>
-          <p v-for="(item, index) in contactType2" :key="index">
-            <span v-if="item.url" @click="toUrl(item.url, 2)">
-              {{ item.contactInfo }}
-            </span>
-            <span v-else v-copy="item.contactInfo" class="noUrl">
-              {{ item.contactInfo }}
-            </span>
-          </p>
-        </div>
-      </div>
-      <div class="line-color" v-if="contactType2.length" />
-      <div class="box" v-if="contactType3.length">
-        <SvgIcon name="user-skype" class="icon-svg-1" />
-        <div class="right">
-          <p>Skype</p>
-          <p v-for="(item, index) in contactType3" :key="index">
-            <span v-if="item.url" @click="toUrl(item.url, 2)">
-              {{ item.contactInfo }}
-            </span>
-            <span v-else v-copy="item.contactInfo" class="noUrl">
-              {{ item.contactInfo }}
-            </span>
-          </p>
-
-        </div>
-      </div>
-      <div class="line-color" v-if="contactType3.length"/>
+    </div>
 
     </div>
 
@@ -75,7 +45,7 @@ const title = ref(t('user.contactUs'))
 onMounted(() => { getInfo() })
 
 
-const contactInfo = ref<any>([])
+const contactInfoArr = ref<any>([])
 const contactType1 = ref<any>([])
 const contactType2 = ref<any>([])
 const contactType3 = ref<any>([])
@@ -94,8 +64,9 @@ const getInfo = async () => {
   contactType3.value = res.data.filter((item: any) => {
     return item.type === '3'
   })
-  contactInfo.value = res.data
-  console.log([...contactType1.value], "=====");
+  contactInfoArr.value = res.data
+
+  // console.log([...contactInfoArr.value], "=====");
 
 }
 const goBack = () => {
@@ -137,10 +108,15 @@ const toUrl = (url: any, num: any) => {
       padding: 50px 20px 30px 20px;
       display: flex;
 
-      .icon-svg-1 {
-        font-size: 48px;
-        color: var(--color-bet-tabtext-2);
+      // .icon-svg-1 {
+      //   font-size: 48px;
+      //   color: var(--color-bet-tabtext-2);
 
+      // }
+      .img_2{
+        height: 48px;
+        width: 48px;
+        border-radius: 50%;
       }
 
       .right {
