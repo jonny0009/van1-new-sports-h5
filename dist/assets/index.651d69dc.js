@@ -1,1 +1,0 @@
-import"./index.fccad27d.js";import{s as a,d as s,M as e,o as d,S as c}from"./vue.66060cab.js";const o={class:"game-page"};var t=a({setup:a=>(s(""),e((async()=>{})),(a,s)=>(d(),c("div",o)))});t.__scopeId="data-v-8e32e3ee";export{t as default};
