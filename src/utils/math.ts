@@ -17,7 +17,7 @@ export const accAdd = (arg1: any, arg2: any) => {
 }
 
 // 减法函数(防丢精度)
-export const subtr = (arg1: any, arg2: any) => {
+export const accSubtr = (arg1: any, arg2: any) => {
   let r1
   let r2
   try {

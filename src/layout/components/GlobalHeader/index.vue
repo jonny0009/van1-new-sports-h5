@@ -5,7 +5,7 @@
         <div v-if="$route.meta.showheadGoBack" class="arrowLeft" @click="goBackClick">
           <van-icon name="arrow-left" />
         </div>
-        <div v-else-if="isAnonymity" class="avatar" @click="showInfo">
+        <div v-else-if="isAnonymity" class="avatar" @click="toUrl('/login')">
           <img v-img="''" :type="3" style="object-fit: cover" />
         </div>
         <div v-else class="avatar" @click="showInfo">

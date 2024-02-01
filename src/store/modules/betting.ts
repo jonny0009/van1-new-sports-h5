@@ -17,7 +17,7 @@ import { MarketInfo } from '@/entitys/MarketInfo'
 import { betComboOrder, comboBetting, moreBetting, morePW } from '@/api/betting'
 import lang from '@/lang'
 import { createBetItem, config } from 'xcsport-lib'
-import { moneyFormat } from '@/utils/math'
+import { accMul, accSubtr, moneyFormat } from '@/utils/math'
 const { letBallMap } = config
 
 // 投注单store
@@ -75,14 +75,19 @@ const bettingModule: Module<Betting, any> = {
         const { gold = 0, errorCode, ior, isEuropePlay } = bet
         if (gold && !errorCode) {
           const buyGold = +gold || 0
-          let winCountGold = buyGold * ior - buyGold
+          let winCountGold: any = accSubtr(accMul(buyGold, ior), buyGold)
           if (isEuropePlay && handicapType === 'H') {
-            winCountGold = buyGold * ior
+            winCountGold = accMul(buyGold, ior)
           } else if (isEuropePlay && handicapType === 'I') {
             winCountGold = buyGold
           } else if (isEuropePlay && handicapType === 'M') {
-            winCountGold = buyGold
+            if (ior > 0) {
+              winCountGold = accMul(buyGold, ior)
+            } else {
+              winCountGold = buyGold
+            }
           }
+          // debugger
           betsGolds += winCountGold
         }
       })
@@ -286,7 +291,8 @@ const bettingModule: Module<Betting, any> = {
       const autoRatio = acceptAll === 1
       const autoOdd = state.oddChangesState || false
       // 获取新的点水参数
-      const { ratioKey, errorCode, eoIor, ior, score, showType, ratio, strong, gameDate, playType } = newBet
+      const { ratioKey, errorCode, ior, score, showType, ratio, strong, gameDate, playType } = newBet
+      let eoIor = (newBet.eoIor * 1).toFixed(2)
       const newBetsMap: any = {}
       newBetsMap[ratioKey] = newBet
       let replaceBet = newBet
