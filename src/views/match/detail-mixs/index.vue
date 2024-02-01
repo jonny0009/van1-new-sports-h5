@@ -1,6 +1,6 @@
 <template>
   <div class="panel-mixs">
-    <van-tabs class="global-nav-vant-tabs" v-model:active="tabActive" shrink line-height="0" @change="onChangeTabs">
+    <van-tabs v-model:active="tabActive" class="global-nav-vant-tabs" shrink line-height="0" @change="onChangeTabs">
       <van-tab v-for="tab in tabList" :key="tab.gameType" :name="tab.gameType">
         <template #title>
           <div class="tab-title">
@@ -95,7 +95,7 @@ const fetchMatchList = async () => {
       matchList.value.push(item)
     })
     loading.value = false
-    finished.value = matchList.value.length == total
+    finished.value = matchList.value.length === total
   } else {
     finished.value = true
   }

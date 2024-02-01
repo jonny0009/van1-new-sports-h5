@@ -8,9 +8,9 @@
     <div class="main">
       <div class="main-menu">
         <div
-          class="nav"
           v-for="(nav, i) in navList"
           :key="i"
+          class="nav"
           :class="{ selected: route.path.endsWith(nav.path) }"
           @click="onNavClick(nav.path)"
         >
@@ -56,7 +56,7 @@ const showFixedBet = computed(() => store.state.app.showFixedBet)
 const paramsId = computed(() => route.params['id'])
 const navList = reactive([
   { title: t('live.bet'), iconName: 'live-bet', path: 'bets' },
-  { title: t('live.betWith'), iconName: 'live-combined', path: 'with' },
+  // { title: t('live.betWith'), iconName: 'live-combined', path: 'with' },
   { title: t('live.stackBet'), iconName: 'live-stack', path: 'mixs' },
   { title: t('live.dataBase'), iconName: 'live-data', path: 'data' },
   { title: t('live.more'), iconName: 'live-grid', path: 'other' }
