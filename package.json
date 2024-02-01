@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "vite --host",
+    "serve": "vite --host",
     "build": "vite build",
     "preview": "vite preview --host",
     "prettier": "prettier \"{src}/**/*.{vue,ts}\" --write",
