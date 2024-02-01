@@ -1,8 +1,8 @@
 <template>
   <van-popup
+    v-model:show="modelShow"
     class="chat"
     :class="{ 'has-bet': showFixedBet }"
-    v-model:show="modelShow"
     position="bottom"
     :overlay="false"
     :close-on-click-overlay="true"
@@ -13,7 +13,7 @@
         <img src="@/assets/images/live/down_round.png" @click="modelShow = false" />
       </div>
 
-      <div class="chat-main__wrapper" ref="chatRef">
+      <div ref="chatRef" class="chat-main__wrapper">
         <div class="item">
           <div class="item-avatar">
             <SvgIcon name="bot" />
@@ -22,7 +22,7 @@
           <div class="item-cont">{{ $t('live.chatSys') }}</div>
         </div>
 
-        <div class="item" v-for="item in chatMessageList" :key="item.msgId">
+        <div v-for="item in chatMessageList" :key="item.msgId" class="item">
           <div class="item-avatar">
             <img v-img="item.headImg" :type="3" />
           </div>
@@ -32,7 +32,7 @@
       </div>
 
       <div class="chat-main__form">
-        <van-form @submit="onSend" submit-on-enter>
+        <van-form submit-on-enter @submit="onSend">
           <van-field
             v-model="msgInput"
             autocomplete="off"
@@ -43,7 +43,7 @@
           <button native-type="submit" hidden />
         </van-form>
         <div class="action">
-          <van-button @click="onSend" :disabled="disabledSend">{{ $t('live.send') }}</van-button>
+          <van-button :disabled="disabledSend" @click="onSend">{{ $t('live.send') }}</van-button>
         </div>
       </div>
     </div>
@@ -107,7 +107,9 @@ watch(
     getIntoRoom()
   }
 )
-onMounted(() => {})
+onMounted(() => {
+
+})
 onUnmounted(() => {
   websocket.disconnect()
 })
@@ -125,7 +127,7 @@ const getIntoRoom = async () => {
     version: '3.9.0'
   }
   const res: any = await intoRoom(params)
-  if (res.code == 200) {
+  if (res.code === 200) {
     chatRoomInfo.value = res.data || {}
     getLastMessage()
     getSubscribe()
@@ -163,6 +165,7 @@ const getSubscribe = async () => {
   const topic = `/topic/1/${roomNo}`
   websocket.subscribe(topic, (greeting: any) => {
     const body = JSON.parse(greeting.body)
+    console.log(body, '--')
     if (body && body.action === 1000) {
       const [item] = body.data
       handlerMessage(item)

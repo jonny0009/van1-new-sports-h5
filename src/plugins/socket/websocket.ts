@@ -43,6 +43,7 @@ class WebSocketItem {
 
   // 开始订阅
   async subscribe(address: string, callback: Function) {
+    console.log(this.stompClient)
     if (!this.stompClient) {
       await this.connect()
     }
@@ -69,7 +70,9 @@ class WebSocketItem {
 
   disconnect() {
     if (this.stompClient !== null) {
+      console.log('断开链接')
       this.stompClient.disconnect()
+      this.stompClient = null
     }
   }
 }
