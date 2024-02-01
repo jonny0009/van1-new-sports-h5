@@ -69,7 +69,19 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+import { ref } from 'vue'
+
+const props = defineProps({
+  data: {
+    type: Array as any,
+    default: () => []
+  }
+})
+const list = ref(props.data)
+
+</script>
 
 <style lang="scss" scoped>
 .analyze {

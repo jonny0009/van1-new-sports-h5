@@ -4,8 +4,8 @@
       <van-collapse-item name="1" :title="$t('live.solveAnalyse')" :border="false">
         <div class="panel-main">
           <div class="panel-main__wrapper">
-            <!-- <PanelAnalyze /> -->
-            <EmptyData />
+            <EmptyData v-if="anlyzeList.length === 0" />
+            <PanelAnalyze v-else :data="anlyzeList" />
           </div>
         </div>
       </van-collapse-item>
@@ -33,8 +33,8 @@
 
 <script setup lang="ts">
 import { defineAsyncComponent, onMounted, ref, watch } from 'vue'
-import { scoresstaticseventsApi } from '@/api/live'
-// const PanelAnalyze = defineAsyncComponent(() => import('../Panel/PanelAnalyze.vue'))
+import { scoresstaticseventsApi, betAnalyzeApi } from '@/api/live'
+const PanelAnalyze = defineAsyncComponent(() => import('../Panel/PanelAnalyze.vue'))
 const PanelScore = defineAsyncComponent(() => import('../Panel/PanelScore.vue'))
 const PanelStatistic = defineAsyncComponent(() => import('../Panel/PanelStatistic.vue'))
 
@@ -53,8 +53,10 @@ watch(
 )
 onMounted(() => {
   fetchStaticsEvents()
+  fetchBetAnlyze()
 })
 
+const anlyzeList = ref([])
 const staticsList = ref([])
 const scoreList = ref([])
 const fetchStaticsEvents = async () => {
@@ -74,6 +76,18 @@ const fetchStaticsEvents = async () => {
     const data = res.data || {}
     staticsList.value = data.statics || []
     scoreList.value = data.scores || []
+  }
+}
+
+const fetchBetAnlyze = async () => {
+  const { systemId } = props.matchData
+
+  const res: any = await betAnalyzeApi({
+    systemId
+  })
+  if (res.code === 200) {
+    const data = res.data || {}
+    anlyzeList.value = data
   }
 }
 
