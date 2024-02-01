@@ -1,6 +1,6 @@
 <template>
   <div class="database">
-    <van-tabs class="global-nav-vant-tabs" v-model:active="tabActive" shrink line-height="0" @change="onChangeTabs">
+    <van-tabs v-model:active="tabActive" class="global-nav-vant-tabs" shrink line-height="0" @change="onChangeTabs">
       <van-tab v-for="(tab, index) in tabList" :key="index" :name="tab.name">
         <template #title>
           <div class="tab-title">
@@ -10,7 +10,7 @@
       </van-tab>
     </van-tabs>
 
-    <component :key="tabActive" :is="components[tabActive]" :match-data="matchData" />
+    <component :is="components[tabActive]" :key="tabActive" :match-data="matchData" />
   </div>
 </template>
 
