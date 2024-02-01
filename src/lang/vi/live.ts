@@ -45,5 +45,27 @@ export default {
   clickSub: 'Bấm để đặt chỗ',
   playNow: 'Bắt đầu chơi',
   emptyText: 'Không truy vấn dữ liệu liên quan',
-  platCloseAll: 'Điểm chấp đã đóng'
+  platCloseAll: 'Điểm chấp đã đóng',
+
+  clickOpenChat: '点击开启聊天室',
+  stackBet: '串关',
+  dataBase: '数据',
+  navSummary: '统计数据',
+  navBattle: '阵容图',
+  navRecent: '近期战绩',
+  navEvents: '文字实况',
+  solveAnalyse: '竞猜分析',
+  score: '比分',
+  summaryInfo: '统计信息',
+  battleWait: '替补阵容',
+  noDataHost: '暂无主队替补阵容',
+  noDataAway: '暂无客队替补阵容',
+  leaguePoints: '联赛积分榜',
+  rank: '排名',
+  balls: '球队',
+  win: '胜',
+  tie: '平',
+  lose: '负',
+  point: '积分'
 }
+
