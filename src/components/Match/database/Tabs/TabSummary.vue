@@ -4,6 +4,7 @@
       <van-collapse-item name="1" :title="$t('live.solveAnalyse')" :border="false">
         <div class="panel-main">
           <div class="panel-main__wrapper">
+
             <EmptyData v-if="anlyzeList.length === 0" />
             <PanelAnalyze v-else :data="anlyzeList" />
           </div>
@@ -49,6 +50,7 @@ watch(
   () => props.matchData,
   () => {
     fetchStaticsEvents()
+    fetchBetAnlyze()
   }
 )
 onMounted(() => {
@@ -80,14 +82,21 @@ const fetchStaticsEvents = async () => {
 }
 
 const fetchBetAnlyze = async () => {
-  const { systemId } = props.matchData
+  try {
+    if (!(props.matchData && props.matchData.systemId)) {
+      return
+    }
+    const { systemId } = props.matchData
 
-  const res: any = await betAnalyzeApi({
-    systemId
-  })
-  if (res.code === 200) {
-    const data = res.data || {}
-    anlyzeList.value = data
+    const res: any = await betAnalyzeApi({
+      systemId
+    })
+    if (res.code === 200) {
+      const data = res.data || {}
+      anlyzeList.value = data
+    }
+  } catch (e) {
+    console.log(e)
   }
 }
 
