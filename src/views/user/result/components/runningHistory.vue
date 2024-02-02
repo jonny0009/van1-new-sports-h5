@@ -61,7 +61,7 @@
                 <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
                 <span v-else-if="item.currency === 'VNDK'" name="user-vndk" class="money-symbol">K₫ </span>
                 <img v-else :src="USDT1" style="object-fit: contain;" />
-                {{ formatMoney(item.tradeGold) }}
+                <span  v-points="item.tradeGold"></span>
               </div>
 
             </div>
@@ -72,7 +72,7 @@
                 <!-- <img v-else-if="item.currency === 'VNDK'" :src="VNDK1" style="object-fit: contain;" /> -->
                 <span v-else-if="item.currency === 'VNDK'" name="user-vndk" class="money-symbol">K₫ </span>
                 <img v-else :src="USDT1" style="object-fit: contain;" />
-                {{ formatMoney(item.gold) }}
+                <span  v-points="item.gold"></span>
               </div>
             </div>
           </div>
@@ -86,11 +86,11 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from 'vue'
 import { formatToDateTime } from '@/utils/date'
-import { formatMoney } from '@/utils/index'
+// import { formatMoney } from '@/utils/index'
 import moment from 'moment'
 
 import CNY1 from '@/assets/images/user/CNY1.svg'
-import VNDK1 from '@/assets/images/user/VNDK1.svg'
+// import VNDK1 from '@/assets/images/user/VNDK1.svg'
 import USDT1 from '@/assets/images/user/USDT1.png'
 
 import { useI18n } from 'vue-i18n'

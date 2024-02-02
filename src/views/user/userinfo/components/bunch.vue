@@ -50,7 +50,8 @@
               {{ getLangBet(item1.betItemLang) }}
             </span>
             <span :class="[getRatioColor(item1.betResultDetail)]">
-              @{{ item1.ioRatio }}
+              <!-- @{{ item1.ioRatio }} -->
+              @<span v-points="item1.ioRatio "></span>
             </span>
           </div>
           <div class="one two">
@@ -97,7 +98,8 @@
           <SvgIcon v-else name="user-usdt" class="img_1" />
 
           <span>
-            {{ formatMoney(item.gold) }}
+             <!-- 投注额 -->
+             <span  v-points="item.gold"></span>
           </span>
         </span>
       </div>
@@ -124,10 +126,10 @@
           </span>
 
           <span v-if="item.state === 0|| item.state===-1||item.state=== 1" class="num">
-            {{ formatMoney(getProfit(item)) }}
+            <span  v-points="getProfit(item)"></span>
           </span>
           <span v-else-if="ifPracticalMoneyNum(item)" class="num">
-            {{ formatMoney(item.winGold) }}
+            <span  v-points="item.winGold"></span>
           </span>
         </span>
       </div>
@@ -156,7 +158,7 @@
 
 <script lang="ts" setup>
 // import { formatToDateTime } from '@/utils/date'
-import { formatMoney } from '@/utils/index'
+// import { formatMoney } from '@/utils/index'
 
 import { computed } from 'vue'
 import store from '@/store'
