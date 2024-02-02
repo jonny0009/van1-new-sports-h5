@@ -18,7 +18,7 @@
             <img v-else-if="currency === 'VNDK'" :src="VNDK" style="object-fit: contain" />
             <img v-else :src="USDTImg" style="object-fit: contain" />
           </div>
-          <span>{{ formatMoney(balance.balance) }}</span>
+          <span v-points="balance.balance"></span>
           <div class="transaction">
             <img :src="transactionImg" />
           </div>
@@ -45,7 +45,7 @@ import VNDK from '@/assets/images/user/VNDK.svg'
 // import BAXI from '@/assets/images/user/BAXI.svg'
 import transactionImg from '@/assets/images/globalLayout/header/transaction.png'
 
-import { formatMoney } from '@/utils/index'
+// import { formatMoney } from '@/utils/index'
 const isAnonymity = computed(() => store.state.user.isAnonymity)
 import { useRouter } from 'vue-router'
 import { ref, computed, onMounted } from 'vue'
@@ -99,6 +99,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .headerView {
   height: 96px;
+
   .headerView-fixed {
     position: fixed;
     z-index: 99;
@@ -111,6 +112,7 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
     background: var(--color-global-bg);
+
     .arrowLeft {
       width: 96px;
       height: 96px;
@@ -120,10 +122,12 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
+
       .van-icon {
         font-size: 44px;
       }
     }
+
     &::before {
       content: '';
       position: absolute;
@@ -134,6 +138,7 @@ onMounted(() => {
       box-shadow: var(--color-global-headBrBg);
     }
   }
+
   .wallet {
     height: 56px;
     line-height: 56px;
@@ -147,6 +152,7 @@ onMounted(() => {
     font-size: 26px;
     font-family: PingFangSC-Semibold, SF-Pro-Bold, system-ui;
     padding: 0 66px;
+
     .transaction,
     .cur {
       position: absolute;
@@ -158,24 +164,29 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
+
       img {
         width: 24px;
         height: 24px;
         display: block;
       }
     }
+
     .cur {
       left: 6px;
+
       img {
         width: 40px;
         height: 40px;
       }
     }
+
     .transaction {
       background: var(--color-global-transactionbg);
       right: 6px;
     }
   }
+
   .avatar {
     position: absolute;
     left: 40px;
@@ -186,12 +197,14 @@ onMounted(() => {
     height: 72px;
     border-radius: 50%;
     overflow: hidden;
+
     img {
       display: block;
       width: 66px;
       height: 72px;
     }
   }
+
   .right-area {
     position: absolute;
     top: 0;
@@ -199,11 +212,11 @@ onMounted(() => {
     right: 40px;
     display: flex;
     align-items: center;
+
     .search {
       width: 40px;
       height: 40px;
       display: block;
     }
   }
-}
-</style>
+}</style>

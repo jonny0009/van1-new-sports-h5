@@ -42,7 +42,8 @@
               {{ getLangBet(item1.betItemLang) }}
             </span>
             <span :class="[getRatioColor(item1.betResultDetail)]">
-              @{{ item1.ioRatio }}
+              <!-- @{{ item1.ioRatio }} -->
+              @<span v-points="item1.ioRatio "></span>
             </span>
           </div>
           <div class="one two">
@@ -80,7 +81,10 @@
 
             <SvgIcon v-else name="user-usdt" class="img_1" />
 
-            <span> {{ formatMoney(item.gold) }}</span>
+             <!-- 投注额 -->
+             <span v-if="Number(item1.ioRatio)>0"  v-points="item.gold"></span>
+            <span v-if="Number(item1.ioRatio)<0"  v-points="ifBetNum(item,item1)"></span>
+            <span v-if="Number(item1.ioRatio)<0" >(<span  v-points="item.gold"/>)</span>
           </div>
         </div>
         <div class="one two">
@@ -110,10 +114,10 @@
             </span>
 
             <span v-if="item.state === 0 || item.state === -1 || item.state === 1" class="num color-1">
-              {{ formatMoney(getProfit(item)) }}
+              <span  v-points="getProfit(item,item1)"></span>
             </span>
             <span v-else-if="ifPracticalMoneyNum(item,item1)" class="color-1">
-              {{ formatMoney(item.winGold) }}
+              <span  v-points="item.winGold"></span>
             </span>
 
           </div>
@@ -147,7 +151,7 @@
 <script lang="ts" setup>
 
 // import { formatToDateTime } from '@/utils/date'
-import { formatMoney } from '@/utils/index'
+// import { formatMoney } from '@/utils/index'
 
 import { computed } from 'vue'
 import store from '@/store'
@@ -162,7 +166,29 @@ const props = defineProps({
   }
 })
 
-const getProfit = (item: any) => {
+// 是否显示马尼,印尼括号金额
+// 图标状态
+const ifBetNum = (item:any,item1:any) => {
+  if (Number(item1.ioRatio)<0) {
+     // 马来绝对值都小于1,  印尼绝对值都大于1
+    let absNum: any = Math.abs(Number(item1.ioRatio))
+    return item.gold/absNum
+   }
+}
+// 可赔付金额
+const getProfit = (item: any, item1: any) => {
+   if (Number(item1.ioRatio)<0) {
+     // 马来绝对值都小于1,  印尼绝对值都大于1
+     let sumNum:any = 0
+     let absNum:any = Math.abs(Number(item1.ioRatio))
+     if (absNum>1) {
+      sumNum = item.gold/absNum + item.gold
+     }
+     if (absNum<1) {
+      sumNum = item.gold/absNum + item.gold
+     }
+     return sumNum
+   }
   return item.gold * item.sioRatio
 }
 // 是否显示实际金额
