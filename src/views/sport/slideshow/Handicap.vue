@@ -11,7 +11,7 @@
       <span class="up-betting-name">
         <span class="text">
           <span class="team">
-            {{ item.ratioType==='RH'?'主 ':'客 ' }}
+            {{ item.ratioType==='RH'? $t('user.homeName') : $t('user.awayName' )}}
             <!-- {{ item.marketInfo.ratioMatch || item.marketInfo.ratioName }} -->
           </span>
           <span v-if="item.marketInfo.ratioTag" class="ratio">
