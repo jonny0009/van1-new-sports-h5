@@ -137,6 +137,9 @@ export default {
   // 新增7
   contactUs: '联系我们',
   type: '类型',
+  
+  homeName:'主',
+  awayName:'客',
 
   sports: {
     'officeNumber': '局号',
