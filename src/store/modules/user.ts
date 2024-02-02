@@ -71,7 +71,7 @@ const userModule: Module<User, any> = {
     async configSettingNew({ state }, params = {}) {
       localStore.setItem('plateMaskKey', params.handicapType)
       const res = await configSettingNew(params)
-      state.userConfig = res.data || {}
+      state.userConfig = res?.data || {}
     },
     // 用户配置
     async anonyToken({ commit }) {

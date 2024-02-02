@@ -78,11 +78,9 @@
           <Singles v-for="market in markets" :key="market.playOnlyId" :account-state="true" :market-info="market">
           </Singles>
         </template>
-        <!-- <Parlay v-else :markets="parlayMarkets"></Parlay>
+        <Parlay v-else :markets="parlayMarkets"></Parlay>
         <Anonymity v-if="isAnonymity"></Anonymity>
-        <ActionBar v-else-if="open" /> -->
-        <!-- 待会儿改回来== -->
-        <ActionBar /> 
+        <ActionBar v-else-if="open" />
       </div>
       <Result v-if="type !== 3 && results.length"></Result>
       <div v-if="type === 3" class="bet-content bet-pending">
