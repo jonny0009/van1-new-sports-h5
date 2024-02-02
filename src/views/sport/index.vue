@@ -472,8 +472,7 @@ const onChangeTabs = () => {
   activeNames.value = '1'
   leagueArrowTitle?.value?.changeClick(false)
   championGuessing?.value?.CloseClick(false)
-
-  if (!leagueId.value) {
+  if (!leagueId.value||!ifLeagueNum.value&&leagueId.value === 'all') {
     closeSlideshow.value = true
   }
   if (leagueId.value === 'all') {
@@ -489,7 +488,10 @@ const onChangeTabs = () => {
 const ifLeagueNum: any = ref(false)
 const clickLeagueNum = () => {
   ifLeagueNum.value = !ifLeagueNum.value
-  closeSlideshow.value = !closeSlideshow.value
+  if (ifLeagueNum.value) {
+    closeSlideshow.value = false
+  }
+  // closeSlideshow.value = !closeSlideshow.value
 }
 // onBeforeMount(async () => {
 //   getFirstLeagues()

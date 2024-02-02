@@ -130,6 +130,8 @@ export default {
   // 新增7
   contactUs: 'entre em contato conosco',
   type: 'tipo',
+  homeName:'Equipa da casa',
+  awayName:'Equipa visitante',
 
 
   sports: {
