@@ -72,7 +72,7 @@ export default {
   football: 'Ngôi sao bóng đá',
   otherCharacters: 'Nhân vật khác',
   Background: 'Màu nền',
-  Followed: 'Đã theo dõi',
+  Followed: 'Khách hàng',
 
   // 新增===
   area: 'Quận',
