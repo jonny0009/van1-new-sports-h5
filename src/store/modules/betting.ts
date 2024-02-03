@@ -226,7 +226,7 @@ const bettingModule: Module<Betting, any> = {
       state.moreShow = status
       state.moreParams = moreParams
       // router.push(`/bet/${moreParams.gidm}`)
-      router.push(`/match/more/${moreParams.gidm}`)
+      router.push(`/match/more/${moreParams.gidm}?gameType=${moreParams.gameType}`)
     },
 
     // 添加投注项
