@@ -19,7 +19,7 @@
         </div>
         <div class="team-score" @click="gotoLive">
           <span class="default" v-html="setMatch.showRBTime(matchInfo)"></span>
-          <span class="icons" v-if="matchInfo.showtype == 'RB'">
+          <span v-if="matchInfo.showtype == 'RB'" class="icons">
             <SvgIcon name="live-play" />
           </span>
         </div>
@@ -36,9 +36,9 @@
 
     <div class="bet-menu">
       <div
-        class="bet-menu__nav"
         v-for="(item, index) in menuList"
         :key="index"
+        class="bet-menu__nav"
         :class="{ selected: menuType === item.type }"
         @click="onMenuClick(item)"
       >

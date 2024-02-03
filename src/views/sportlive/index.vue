@@ -3,6 +3,7 @@
   <div class="sportlive">
     <div v-if="gameTypeList.length" class="sportlive-Match-Tabs">
       <TextButton :text="$t('sport.all')" :active="!gameType" @click="clickGameType({})" />
+
       <SportsButton
         v-for="(item, idx) in gameTypeList"
         :key="idx"
