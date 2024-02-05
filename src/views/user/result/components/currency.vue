@@ -1,31 +1,13 @@
 <template>
 
-  <img
-    v-if="currency==='CNY'"
-    :src="currentWallet.currencyLogo || CNY"
-    style="object-fit: contain;"
-    class="img_1"
-  />
-  <img
-    v-else-if="currency==='VNDK'"
-    :src="currentWallet.currencyLogo || VNDK"
-    style="object-fit: contain;"
-    class="img_1"
-  />
-  <img
-    v-else
-    :src="USDTImg"
-    style="object-fit: contain;"
-    class="img_1"
-  />
+  <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
+  <!-- <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" /> -->
+  <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1">{{ currentWallet.flatMoney }} </span>
+  <SvgIcon v-else name="user-usdt" class="img_1" />
 
 </template>
 <script lang="ts" setup>
 import store from '@/store'
-
-import USDTImg from '@/assets/images/globalLayout/header/USDT.png'
-import CNY from '@/assets/images/user/CNY.svg'
-import VNDK from '@/assets/images/user/VNDK.svg'
 import { ref, computed, onMounted, nextTick } from 'vue'
 
 const currency = computed(() => store.state.user.currency)
