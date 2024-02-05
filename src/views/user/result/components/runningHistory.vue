@@ -4,17 +4,9 @@
     <div class="status status-2">
       <div class="status_1">
         <span>{{ $t('user.time') }}</span>
-        <div
-          class="round"
-          @click.stop="setDate()"
-        >
+        <div class="round" @click.stop="setDate()">
           <span>{{ dateTimeVal.beginName }} </span> ~ <span>{{ dateTimeVal.endName }}</span>
-          <img
-            class="img_1 "
-            :class="[showBottom2 ? 'img_3' : '']"
-            src="@/assets/images/user/down.png"
-            alt=""
-          />
+          <img class="img_1 " :class="[showBottom2 ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
         </div>
       </div>
     </div>
@@ -23,17 +15,9 @@
     <div class="status">
       <div class="status_1">
         <span>{{ $t('user.type') }}</span>
-        <div
-          class="round"
-          @click.stop="seStatus()"
-        >
+        <div class="round" @click.stop="seStatus()">
           <span>{{ commonKey.value }}</span>
-          <img
-            class="img_1 "
-            :class="[showBottom ? 'img_3' : '']"
-            src="@/assets/images/user/down.png"
-            alt=""
-          />
+          <img class="img_1 " :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
         </div>
       </div>
     </div>
@@ -41,38 +25,17 @@
   <!-- 时间状态 -->
   <van-divider class="color-line" />
   <!-- 列表 -->
-  <div
-    v-if="!list.arr.length && finished"
-    class="noData"
-  >
-    <img
-      class="img_1"
-      src="@/assets/images/user/noData.png"
-    />
+  <div v-if="!list.arr.length && finished" class="noData">
+    <img class="img_1" src="@/assets/images/user/noData.png" />
     <p>
       {{ $t('user.noData') }}
     </p>
   </div>
-  <van-list
-    v-if="list.arr.length || !finished"
-    v-model:loading="loading"
-    :finished="finished"
-    :finished-text="$t('live.noMore')"
-    :loading-text="$t('user.loadingText')"
-    class="dataList"
-    @load="onLoad"
-  >
-    <div
-      v-for="(outItem, outIndex) in dataList.arr"
-      :key="outIndex"
-      class="dataList-item"
-    >
+  <van-list v-if="list.arr.length || !finished" v-model:loading="loading" :finished="finished"
+    :finished-text="$t('live.noMore')" :loading-text="$t('user.loadingText')" class="dataList" @load="onLoad">
+    <div v-for="(outItem, outIndex) in dataList.arr" :key="outIndex" class="dataList-item">
       <div class="date-title">{{ outItem.date }}</div>
-      <div
-        v-for="(item, index) in outItem.list"
-        :key="index"
-        class="item"
-      >
+      <div v-for="(item, index) in outItem.list" :key="index" class="item">
         <div class="title">
           {{ getTitle(item.tradeType) }}
         </div>
@@ -82,11 +45,7 @@
               <div class="font">{{ $t('user.betId') }}:</div>
               <span>
                 <span class="font-1">{{ item.payno }}</span>
-                <img
-                  v-copy="item.payno"
-                  class="img_1"
-                  src="@/assets/images/user/copy.svg"
-                />
+                <img v-copy="item.payno" class="img_1" src="@/assets/images/user/copy.svg" />
               </span>
             </div>
             <p class="left-2">
@@ -121,12 +80,8 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from 'vue'
 import { formatToDateTime } from '@/utils/date'
-// import { formatMoney } from '@/utils/index'
 import moment from 'moment'
 
-import CNY1 from '@/assets/images/user/CNY1.svg'
-// import VNDK1 from '@/assets/images/user/VNDK1.svg'
-import USDT1 from '@/assets/images/user/USDT1.png'
 import CurrencyComp from './currency.vue'
 
 import { useI18n } from 'vue-i18n'
@@ -150,28 +105,11 @@ const typeList = reactive<{ arr: any }>({ arr: [] })
 
 const emit = defineEmits(['valueChange', 'timeChange'])
 
-const popupList = reactive<{ arr: any[] }>({
-  arr: [
-    {
-      value: t('user.whole'),
-      key: ''
-    },
-    {
-      value: t('user.noFinal'),
-      key: '0'
-    },
-    {
-      value: t('user.final'),
-      key: '1'
-    }
-  ]
-})
+const popupList = reactive<{ arr: any[] }>({arr: []})
 
 import { showToast } from 'vant'
 
 const dateTimeVal = ref<any>({
-  // beginName: moment().subtract(7, 'days').format('YYYY/MM/DD'),
-  // endName: moment().format('YYYY/MM/DD')
   beginName: moment().subtract(90, 'days').format('MM/DD'),
   endName: moment().format('MM/DD')
 })
@@ -185,8 +123,6 @@ onMounted(() => {
 
 const setDateTime = (values: any) => {
   const [start, end] = values
-  // dateTimeVal.value.beginName = moment(start).format('YYYY/MM/DD')
-  // dateTimeVal.value.endName = moment(end).format('YYYY/MM/DD')
   dateTimeVal.value.beginName = moment(start).format('MM/DD')
   dateTimeVal.value.endName = moment(end).format('MM/DD')
 
@@ -198,7 +134,6 @@ const setDateTime = (values: any) => {
   page = 0
   list.arr = []
   onLoad()
-  // emit('timeChange', true)
 }
 
 async function setPk(val: any) {
@@ -366,7 +301,7 @@ defineExpose({
   height: calc(100vh - 320px);
   overflow-y: auto;
 
-  > &-item {
+  >&-item {
     margin-bottom: 10px;
   }
 
@@ -398,7 +333,7 @@ defineExpose({
     padding: 15px 20px;
     margin-bottom: 20px;
 
-    > .title {
+    >.title {
       font-family: PingFangSC-Medium;
       font-size: 24px;
       color: var(--color-search-box-text-1);
@@ -406,7 +341,7 @@ defineExpose({
       font-weight: 500;
     }
 
-    > .line {
+    >.line {
       // margin-top: 5px;
       display: flex;
       align-items: center;
@@ -463,6 +398,8 @@ defineExpose({
           color: var(--color-search-box-text-1);
           letter-spacing: 0;
           font-weight: 600;
+          display: flex;
+          align-items: center;
 
           img {
             width: 20px;
@@ -489,7 +426,7 @@ defineExpose({
   font-weight: 500;
   height: 850px;
 
-  > .img_1 {
+  >.img_1 {
     margin-top: 331px;
     width: 102px;
     height: 121px;

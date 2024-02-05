@@ -72,10 +72,7 @@
         <div class="one">
           <span>{{ $t('user.BettingAmount') }}</span>
           <div class="money-num-money">
-
-            <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
-            <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1">K₫ </span>
-            <SvgIcon v-else name="user-usdt" class="img_1" />
+            <CurrencyComp />
 
            <!-- 投注额 -->
            <span v-if="Number(item1.ioRatio)>0"  v-points="item.gold"></span>
@@ -106,12 +103,8 @@
 
             <!-- 币种 -->
             <span v-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL'">
-              <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
-              <!-- <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" /> -->
-              <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1">K₫ </span>
-              <SvgIcon v-else name="user-usdt" class="img_1" />
+              <CurrencyComp />
             </span>
-
             <span v-if="item.creditState === 0" class="num color-1">
               <span v-points="getProfit(item, item1)"></span>
             </span>
@@ -166,11 +159,9 @@
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
 import {  accDiv,accMul,accAdd } from '@/utils/math'
-
-// import { formatMoney } from '@/utils/index'
-
 import { computed } from 'vue'
 import store from '@/store'
+import CurrencyComp from './currency.vue'
 const currency = computed(() => store.state.user.currency)
 const teamNameList = computed(() => store.state.user.teamNameList || [])
 const championLangList = computed(() => store.state.user.championLangList || [])

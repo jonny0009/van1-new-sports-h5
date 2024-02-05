@@ -1,5 +1,4 @@
 <template>
-
   <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
   <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1">{{ currentWallet.flatMoney }} </span>
   <SvgIcon v-else name="user-usdt" class="img_1" />
