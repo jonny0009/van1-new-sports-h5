@@ -79,13 +79,9 @@ const bettingModule: Module<Betting, any> = {
           if (isEuropePlay && handicapType === 'H') {
             winCountGold = accMul(buyGold, ior)
           } else if (isEuropePlay && handicapType === 'I') {
-            winCountGold = buyGold
+            winCountGold = accMul(buyGold, Math.abs(ior))
           } else if (isEuropePlay && handicapType === 'M') {
-            if (ior > 0) {
-              winCountGold = accMul(buyGold, ior)
-            } else {
-              winCountGold = buyGold
-            }
+            winCountGold = accMul(buyGold, Math.abs(ior))
           }
           // debugger
           betsGolds += winCountGold
