@@ -75,8 +75,8 @@ const appModule: Module<App, any> = {
       const res = await getDoubleLineInfo()
       state.doubleLineInfo = res.data || {}
     },
-    async getConfig({ state }) {
-      const res: any = await getConfig()
+    async getConfig({ state }, params = { wid: 1 }) {
+      const res: any = await getConfig(params)
       state.customizeConfig = res.data || {}
 
       if (res.code === 200 && res.data) {
