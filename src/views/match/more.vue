@@ -53,7 +53,6 @@
         :group-list="playGroupBetList"
         :betting-list="playBettingList"
         :loading="apiLoading"
-        :matchLoading="matchLoading"
         @tab-change="findGroupById"
       />
 
@@ -93,22 +92,16 @@ const onMenuClick = (item: any) => {
 }
 
 const matchInfo: Ref<any> = ref({})
-let matchLoading = ref(true) 
 const getMatcheInfo = async () => {
   const gidm = paramsId.value
   const res = await matcheInfo({ gidm })
   const data = res.data || {}
-  if (!res.data) {
-    matchLoading.value = false
-  }
-  
   matchInfo.value = { ...data }
   if (data.detail && data.detail.length > 0) {
     const { game } = data.detail[0]
     const gameInfo = game.gameInfo || {}
     matchInfo.value.gameInfo = gameInfo
   }
-  matchLoading.value = false
   store.commit('match/SET_MATCH_INFO', matchInfo.value)
 }
 
