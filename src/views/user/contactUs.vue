@@ -7,23 +7,28 @@
     </van-nav-bar>
     <div class="content" v-if="contactInfoArr.length">
       <div v-for="(item, index) in contactInfoArr" :key="index">
-      <div class="box" >
-        <img v-img="item.icon" class="img_2" alt="" :type="1" >
-        <div class="right">
-          <p>{{ item.type }}</p>
-          <p >
-            <span v-if="item.url" @click="toUrl(item.url, 1)">
-              {{ item.contactInfo }}
-            </span>
-            <span v-else v-copy="item.contactInfo" class="noUrl">
-              {{ item.contactInfo }}
-            </span>
-          </p>
+        <div class="box">
+          <img v-img="item.icon" class="img_2" alt="" :type="1">
+          <div class="right">
+            <p>{{ item.type }}</p>
+            <p>
+              <span v-if="item.url" @click="toUrl(item.url, 1)">
+                {{ item.contactInfo }}
+              </span>
+              <span v-else v-copy="item.contactInfo" class="noUrl">
+                {{ item.contactInfo }}
+              </span>
+            </p>
+          </div>
         </div>
+        <div class="line-color" v-if="contactType1.length" />
       </div>
-      <div class="line-color" v-if="contactType1.length" />
     </div>
-
+    <div v-if="!contactInfoArr.length" class="noData">
+      <img class="img_1" src="@/assets/images/user/noData.png" />
+      <p>
+        {{ $t('user.noData') }}
+      </p>
     </div>
 
   </div>
@@ -64,7 +69,9 @@ const getInfo = async () => {
   contactType3.value = res.data.filter((item: any) => {
     return item.type === '3'
   })
-  contactInfoArr.value = res.data
+  contactInfoArr.value = res.data.filter((item: any) => {
+    return item.state === 1
+  })
 
   // console.log([...contactInfoArr.value], "=====");
 
@@ -113,7 +120,7 @@ const toUrl = (url: any, num: any) => {
       //   color: var(--color-bet-tabtext-2);
 
       // }
-      .img_2{
+      .img_2 {
         height: 48px;
         width: 48px;
         border-radius: 50%;
@@ -142,7 +149,7 @@ const toUrl = (url: any, num: any) => {
     }
 
     .line-color {
-      background: #E5ECF3;
+      background: var(--color-refreshcl);
       height: 2px;
     }
 
@@ -170,6 +177,25 @@ const toUrl = (url: any, num: any) => {
         text-align: right;
         font-weight: 500;
       }
+
+    }
+  }
+
+  .noData {
+    width: 100%;
+    text-align: center;
+    font-family: PingFangSC-Medium;
+    font-size: 24px;
+    color: var(--color-no-data-font);
+    letter-spacing: 0;
+    font-weight: 500;
+    height: 850px;
+
+    >.img_1 {
+      margin-top: 331px;
+      width: 102px;
+      height: 121px;
+      margin-bottom: 57px;
 
     }
   }
