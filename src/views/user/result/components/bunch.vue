@@ -89,10 +89,12 @@
       <div class="money-num-1">
         <span>{{ $t('user.BettingAmount') }}:</span>
         <span class="money-num-money">
-          <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
+
+          <CurrencyComp />
+          <!-- <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" /> -->
           <!-- <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" /> -->
-          <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" >K₫ </span>
-          <SvgIcon v-else name="user-usdt" class="img_1" />
+          <!-- <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1">K₫ </span>
+          <SvgIcon v-else name="user-usdt" class="img_1" /> -->
           <span>
             {{ formatMoney(item.gold) }}
           </span>
@@ -117,7 +119,7 @@
           <span v-if="item.state !== 3 && item.state !== 5">
             <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
             <!-- <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" /> -->
-            <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" >K₫ </span>
+            <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1">K₫ </span>
             <SvgIcon v-else name="user-usdt" class="img_1" />
           </span>
 
@@ -153,9 +155,11 @@ import { formatToDateTime } from '@/utils/date'
 import { formatMoney } from '@/utils/index'
 import { computed } from 'vue'
 import store from '@/store'
+
+import CurrencyComp from './currency.vue'
+
 const currency = computed(() => store.state.user.currency)
 const teamNameList = computed(() => store.state.user.teamNameList || [])
-
 const props = defineProps({
   item: {
     type: Object,

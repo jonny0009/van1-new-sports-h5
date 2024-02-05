@@ -41,9 +41,10 @@
               <div v-if="item.payWay === 4"> {{ $t('user.compensate') }}</div>
               <div v-else> {{ $t('user.betNum') }}</div>
               <div class="right-1">
-                <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
-                <span v-else-if="item.currency === 'VNDK'" name="user-vndk" class="money-symbol" >K₫ </span>
-                <img v-else :src="USDT1" style="object-fit: contain;" />
+                <!-- <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
+                <span v-else-if="item.currency === 'VNDK'" name="user-vndk" class="money-symbol">K₫ </span>
+                <img v-else :src="USDT1" style="object-fit: contain;" /> -->
+                <CurrencyComp />
                 {{ formatMoney(item.tradeGold) }}
               </div>
 
@@ -51,10 +52,11 @@
             <div>
               <div> {{ $t('user.balance') }}</div>
               <div class="right-1">
-                <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
+                <CurrencyComp />
+                <!-- <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" /> -->
                 <!-- <img v-else-if="item.currency === 'VNDK'" :src="VNDK1" style="object-fit: contain;" /> -->
-                <span v-else-if="item.currency === 'VNDK'" name="user-vndk" class="money-symbol" >K₫ </span>
-                <img v-else :src="USDT1" style="object-fit: contain;" />
+                <!-- <span v-else-if="item.currency === 'VNDK'" name="user-vndk" class="money-symbol" >K₫ </span>
+                <img v-else :src="USDT1" style="object-fit: contain;" /> -->
                 {{ formatMoney(item.gold) }}
               </div>
             </div>
@@ -75,7 +77,7 @@ import moment from 'moment'
 import CNY1 from '@/assets/images/user/CNY1.svg'
 import VNDK1 from '@/assets/images/user/VNDK1.svg'
 import USDT1 from '@/assets/images/user/USDT1.png'
-
+import CurrencyComp from './currency.vue'
 const loading = ref(false)
 const finished = ref(false)
 

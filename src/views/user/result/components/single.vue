@@ -76,12 +76,7 @@
         <div class="one">
           <span>{{ $t('user.BettingAmount') }}</span>
           <div class="money-num-money">
-
-            <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
-            <!-- <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" /> -->
-            <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" >K₫ </span>
-            <SvgIcon v-else name="user-usdt" class="img_1" />
-
+            <CurrencyComp />
             <span> {{ formatMoney(item.gold) }}</span>
           </div>
         </div>
@@ -107,10 +102,12 @@
 
             <!-- 币种 -->
             <span v-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL'">
-              <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
+              <!-- <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" /> -->
               <!-- <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" /> -->
-              <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" >K₫ </span>
-              <SvgIcon v-else name="user-usdt" class="img_1" />
+              <!-- <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1">K₫ </span> -->
+              <!-- <SvgIcon v-else name="user-usdt" class="img_1" /> -->
+              <CurrencyComp />
+
             </span>
 
             <span v-if="item.state === 0 || item.state === -1 || item.state === 1" class="num color-1">
@@ -147,9 +144,11 @@
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
 import { formatMoney } from '@/utils/index'
-
 import { computed } from 'vue'
 import store from '@/store'
+
+import CurrencyComp from './currency.vue'
+
 const currency = computed(() => store.state.user.currency)
 const teamNameList = computed(() => store.state.user.teamNameList || [])
 const championLangList = computed(() => store.state.user.championLangList || [])
