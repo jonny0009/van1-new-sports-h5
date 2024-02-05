@@ -21,7 +21,7 @@
             </p>
           </div>
         </div>
-        <div class="line-color" v-if="contactType1.length" />
+        <div class="line-color" />
       </div>
     </div>
     <div v-if="!contactInfoArr.length" class="noData">
@@ -149,7 +149,7 @@ const toUrl = (url: any, num: any) => {
     }
 
     .line-color {
-      background: var(--color-refreshcl);
+      background: #E5ECF3;;
       height: 2px;
     }
 

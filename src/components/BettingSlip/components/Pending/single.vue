@@ -165,6 +165,8 @@
 
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
+import {  accDiv,accMul,accAdd } from '@/utils/math'
+
 // import { formatMoney } from '@/utils/index'
 
 import { computed } from 'vue'
@@ -182,28 +184,29 @@ const props = defineProps({
 })
 
 // 是否显示马尼,印尼括号金额
-const ifBetNum = (item: any, item1: any) => {
-  if (Number(item1.ioRatio) < 0) {
-    // 马来绝对值都小于1,  印尼绝对值都大于1
+const ifBetNum = (item:any,item1:any) => {
+  if (Number(item1.ioRatio)<0) {
+     // 马来绝对值都小于1,  印尼绝对值都大于1
     let absNum: any = Math.abs(Number(item1.ioRatio))
-    return item.gold/absNum
-  }
+     return accDiv(item.gold,absNum)
+   }
 }
 // 可赔付金额
 const getProfit = (item: any, item1: any) => {
-  if (Number(item1.ioRatio) < 0) {
-    // 马来绝对值都小于1,  印尼绝对值都大于1
-    let sumNum: any = 0
-    let absNum: any = Math.abs(Number(item1.ioRatio))
-    if (absNum > 1) {
-      sumNum = item.gold/absNum + item.gold
-    }
-    if (absNum < 1) {
-      sumNum = item.gold/absNum + item.gold
-    }
-    return sumNum
-  }
-  return item.gold * item.sioRatio
+   if (Number(item1.ioRatio)<0) {
+     // 马来绝对值都小于1,  印尼绝对值都大于1
+     let sumNum:any = 0
+     let absNum:any = Math.abs(Number(item1.ioRatio))
+     if (absNum>1) {
+       sumNum = accAdd(accDiv(item.gold,absNum),item.gold)
+     }
+     if (absNum<1) {
+       sumNum = accAdd(accDiv(item.gold,absNum),item.gold)
+     }
+     return sumNum
+   }
+  // return item.gold * item.sioRatio
+  return accMul(item.gold,item.sioRatio)
 }
 // 提前结算
 const handleFinal = (item: any) => {

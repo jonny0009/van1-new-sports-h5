@@ -156,6 +156,7 @@
 
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
+import {  accMul } from '@/utils/math'
 // import { formatMoney } from '@/utils/index'
 
 import { computed } from 'vue'
@@ -172,7 +173,7 @@ const props = defineProps({
 })
 
 const getProfit = (item: any) => {
-  return item.gold * item.sioRatio
+  return accMul(item.gold,item.sioRatio)
 }
 
 // 提前结算

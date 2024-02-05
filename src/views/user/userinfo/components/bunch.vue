@@ -158,6 +158,7 @@
 
 <script lang="ts" setup>
 // import { formatToDateTime } from '@/utils/date'
+import {  accMul } from '@/utils/math'
 // import { formatMoney } from '@/utils/index'
 
 import { computed } from 'vue'
@@ -173,8 +174,9 @@ const props = defineProps({
 })
 
 const getProfit = (item: any) => {
-  return item.gold * item.sioRatio
+  return accMul(item.gold,item.sioRatio)
 }
+
 // 是否显示实际金额
 const ifPracticalMoneyNum = (item: any) => {
   if (item.state !== 3 && item.state !== 5 ||Number(item.cashoutType) === 2) {
