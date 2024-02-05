@@ -84,7 +84,7 @@ const videoError = ref(false)
 const getExtendInfo = async () => {
   const gidm = paramsId.value
   const res: any = await extendInfo({ gidm })
-  if (res.code == 200) {
+  if (res.code === 200) {
     const { streamNa } = res.data || {}
     const { liveali } = streamNa || {}
     videoUrl.value = (liveali || {}).m3u8

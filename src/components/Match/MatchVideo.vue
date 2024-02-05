@@ -1,6 +1,7 @@
 <template>
   <div class="match-video">
-    <video ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
+    <iframe v-if="urlHtml" :src="urlHtml" style="width:100%;height:100%"></iframe>
+    <video v-else ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
 
     <div v-if="videoWaiting" class="mask-loading">
       <div class="icon"></div>
@@ -20,6 +21,8 @@ const emits = defineEmits(['on-error'])
 const props = defineProps({
   url: String
 })
+
+const urlHtml = ref('')
 watch(
   () => props.url,
   (newUrl) => {
@@ -28,6 +31,13 @@ watch(
 )
 
 const getUrl = (url: string) => {
+  //  加载视频网页 不全是 m3u8
+  urlHtml.value = ''
+  if (url.indexOf('.html') > -1) {
+    urlHtml.value = url
+    return
+  }
+
   if (player) {
     player?.src(url)
     player?.load()
