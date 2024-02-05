@@ -14,9 +14,9 @@
 
         <div v-if="loginToken && !isAnonymity" class="wallet">
           <div class="cur">
-            <img v-if="currency === 'CNY'" :src="CNY" style="object-fit: contain" />
-            <img v-else-if="currency === 'VNDK'" :src="VNDK" style="object-fit: contain" />
-            <img v-else :src="USDTImg" style="object-fit: contain" />
+            <img v-if="currency==='CNY'" :src="currentWallet.currencyLogo || CNY" style="object-fit: contain;" />
+            <img v-else-if="currency==='VNDK'" :src="currentWallet.currencyLogo || VNDK" style="object-fit: contain;" />
+            <img v-else :src="USDTImg" style="object-fit: contain;" />
           </div>
           <span v-points="balance.balance"></span>
           <div class="transaction">
@@ -55,6 +55,7 @@ import SidebarNav from './sidebarNav.vue'
 const userInfo = computed(() => store.state.user.userInfo)
 const balance = computed(() => store.state.user.balance)
 const currency = computed(() => store.state.user.currency)
+const currentWallet = computed(() => store.state.user.currentWallet)
 const theme = computed(() => store.state.app.theme)
 
 const childNav = ref()
