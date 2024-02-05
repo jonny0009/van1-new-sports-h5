@@ -73,9 +73,9 @@ service.interceptors.response.use(
         router.push('/login')
       })
       // router.push('/login')
-    } else if (+response.data.code == 403) {
+    } else if (+response.data.code === 403) {
       router.push('/403')
-    } else if (+response.data.code == 503) {
+    } else if (+response.data.code === 503) {
       store.commit('app/updateMantainInfo', response.data.msg)
       if (location.href.indexOf('/503') === -1) {
         router.push('/503')
