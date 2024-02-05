@@ -1,46 +1,24 @@
 <template>
   <div>
     <div class="match-title">
-      <!-- {{ item.parlayNum }}场串关 -->
       <div class="title-left">
         <div>{{ item.parlayNum }}{{ $t('user.session') }}</div>
         <div>
-          <SportsIcon v-for="(item2, index1) in item.betDTOList" :key="index1" :icon-src="item2.gameType" class="ball-img" />
+          <SportsIcon v-for="(item2, index1) in item.betDTOList" :key="index1" :icon-src="item2.gameType"
+            class="ball-img" />
         </div>
       </div>
       <div class="cur-odds">
         @<span v-points="item.sioRatio"></span>
       </div>
-      <!-- <img class="img_1" src="@/assets/images/user/down1.png" alt="" /> -->
-      <!-- <div class="title-right">
-        <div class="title-right-1">
-          <span> @62.65 </span>
-          <img class="img_1" src="@/assets/images/user/up.png" alt="" />
-        </div>
-        <div class="title-down">
-          @59.65
-        </div>
-      </div> -->
     </div>
     <div v-for="(item1, index1) in props.item.betDTOList" :key="index1">
       <div class="top2">
         <div class="left">
           <div class="top-img">
 
-            <img
-              v-img="item1.homeLogo"
-              class="img_1"
-              alt=""
-              :type="4"
-              style="object-fit: contain;"
-            >
-            <img
-              v-img="item1.awayLogo"
-              class="img_2"
-              alt=""
-              :type="5"
-              style="object-fit: contain;"
-            >
+            <img v-img="item1.homeLogo" class="img_1" alt="" :type="4" style="object-fit: contain;">
+            <img v-img="item1.awayLogo" class="img_2" alt="" :type="5" style="object-fit: contain;">
 
           </div>
         </div>
@@ -51,7 +29,7 @@
             </span>
             <span :class="[getRatioColor(item1.betResultDetail)]">
               <!-- @{{ item1.ioRatio }} -->
-              @<span v-points="item1.ioRatio "></span>
+              @<span v-points="item1.ioRatio"></span>
             </span>
           </div>
           <div class="one two">
@@ -62,11 +40,8 @@
               <!-- 平局图标找到了 -->
               <SvgIcon v-if="Number(item.cashoutType) === 2" name="user-ahead" class="icon-svg-1" />
               <SvgIcon v-if="item.state === 1" name="user-postpone" class="icon-svg-1" />
-              <SvgIcon
-                v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
-                :name="`user-${item1.betResultDetail}`"
-                class="icon-svg-1"
-              />
+              <SvgIcon v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
+                :name="`user-${item1.betResultDetail}`" class="icon-svg-1" />
               <img v-else class="img_1" src="@/assets/images/user/D1.png" alt="" />
 
             </span>
@@ -90,26 +65,19 @@
       <div class="money-num-1">
         <span>{{ $t('user.BettingAmount') }}:</span>
         <span class="money-num-money">
-
           <CurrencyComp />
-          <!-- <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" /> -->
-          <!-- <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" /> -->
-          <!-- <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1">K₫ </span>
-          <SvgIcon v-else name="user-usdt" class="img_1" /> -->
-          <span>
-            <!-- 投注额 -->
-            <span  v-points="item.gold"></span>
-          </span>
+          <!-- 投注额 -->
+          <span v-points="item.gold"></span>
         </span>
       </div>
       <div class="money-num-2">
 
-        <span v-if="item.state === 0|| item.state===-1||item.state=== 1">{{ $t('user.CompensableAmount') }}:</span>
+        <span v-if="item.state === 0 || item.state === -1 || item.state === 1">{{ $t('user.CompensableAmount') }}:</span>
         <span v-else-if="ifPracticalMoneyNum(item)">{{ $t('user.practical') }}:</span>
 
         <span>
           <!-- 受理状态 -->
-          <span v-if="item.state !== 3 &&item.state !== 5 ">
+          <span v-if="item.state !== 3 && item.state !== 5">
             <span v-if="item.state === -1" style="color:#FF9A00 ;">
               {{ $t('user.editPend') }}
             </span>
@@ -118,18 +86,14 @@
             </span>
           </span>
           <!-- 币种 -->
-          <span  v-if="ifPracticalMoneyNum(item)">
-            <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
-            <!-- <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" /> -->
-            <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1">K₫ </span>
-            <SvgIcon v-else name="user-usdt" class="img_1" />
+          <span v-if="ifPracticalMoneyNum(item)">
+            <CurrencyComp />
           </span>
-
-          <span v-if="item.state === 0|| item.state===-1||item.state=== 1" class="num">
-            <span  v-points="getProfit(item)"></span>
+          <span v-if="item.state === 0 || item.state === -1 || item.state === 1" class="num">
+            <span v-points="getProfit(item)"></span>
           </span>
           <span v-else-if="ifPracticalMoneyNum(item)" class="num">
-            <span  v-points="item.winGold"></span>
+            <span v-points="item.winGold"></span>
           </span>
         </span>
       </div>
@@ -154,14 +118,12 @@
 
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
-import {  accMul } from '@/utils/math'
-// import { formatMoney } from '@/utils/index'
+import { accMul } from '@/utils/math'
 import { computed } from 'vue'
 import store from '@/store'
 
 import CurrencyComp from './currency.vue'
 
-const currency = computed(() => store.state.user.currency)
 const teamNameList = computed(() => store.state.user.teamNameList || [])
 const props = defineProps({
   item: {
@@ -171,12 +133,12 @@ const props = defineProps({
 })
 
 const getProfit = (item: any) => {
-  return accMul(item.gold,item.sioRatio)
+  return accMul(item.gold, item.sioRatio)
 }
 
 // 是否显示实际金额
 const ifPracticalMoneyNum = (item: any) => {
-  if (item.state !== 3 && item.state !== 5 ||Number(item.cashoutType) === 2) {
+  if (item.state !== 3 && item.state !== 5 || Number(item.cashoutType) === 2) {
     return true
   }
   return false
@@ -242,15 +204,18 @@ const getLangBet = (item: any) => {
 .color-3 {
   color: red;
 }
+
 .color-4 {
   color: #FF9A00;
 }
-.ball-img{
+
+.ball-img {
   font-size: 24px;
   color: var(--color-text-3);
-  margin-right:3px;
+  margin-right: 3px;
   font-weight: 500;
 }
+
 .match-title {
   display: flex;
   align-items: center;
@@ -263,6 +228,7 @@ const getLangBet = (item: any) => {
     font-weight: 600;
 
   }
+
   .cur-odds {
     font-family: PingFangSC-Semibold;
     font-size: 30px;
@@ -360,10 +326,12 @@ const getLangBet = (item: any) => {
       letter-spacing: 0;
       font-weight: 400;
       color: var(--color-text-1);
+
       .icon-svg-1 {
         font-size: 32px;
         margin-right: 5px;
       }
+
       .img_1 {
         width: 40px;
         height: 30px;
@@ -411,7 +379,8 @@ const getLangBet = (item: any) => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    .money-num-money{
+
+    .money-num-money {
       color: var(--color-search-box-text-1);
 
     }

@@ -1,27 +1,12 @@
 <template>
   <div>
-    <div
-      v-for="(item1, index1) in props.item.betDTOList"
-      :key="index1"
-    >
+    <div v-for="(item1, index1) in props.item.betDTOList" :key="index1">
       <div class="top">
         <div class="left">
           <div class="top-img">
 
-            <img
-              v-img="item1.homeLogo"
-              class="img_1"
-              alt=""
-              :type="4"
-              style="object-fit: contain;"
-            >
-            <img
-              v-img="item1.awayLogo"
-              class="img_2"
-              alt=""
-              :type="5"
-              style="object-fit: contain;"
-            >
+            <img v-img="item1.homeLogo" class="img_1" alt="" :type="4" style="object-fit: contain;">
+            <img v-img="item1.awayLogo" class="img_2" alt="" :type="5" style="object-fit: contain;">
 
           </div>
         </div>
@@ -36,25 +21,13 @@
               {{ getTeam(item1).homeTeam }} v {{ getTeam(item1).awayTeam }}
             </span>
 
-            <span
-              v-if="item1.resultScore"
-              class="color-1"
-            > [{{ item1.resultScore }}]</span>
+            <span v-if="item1.resultScore" class="color-1"> [{{ item1.resultScore }}]</span>
           </div>
 
           <div class="league-name">
-            <SportsIcon
-              :icon-src="item1.gameType"
-              class="ball-img"
-            />
-            <div
-              v-if="item1.championType"
-              class="font_2"
-            >{{ getChampionName(item1.systemId) }}</div>
-            <div
-              v-else
-              class="font_2"
-            >{{ getTeam(item1).leagueShortName }}</div>
+            <SportsIcon :icon-src="item1.gameType" class="ball-img" />
+            <div v-if="item1.championType" class="font_2">{{ getChampionName(item1.systemId) }}</div>
+            <div v-else class="font_2">{{ getTeam(item1).leagueShortName }}</div>
           </div>
 
         </div>
@@ -62,11 +35,7 @@
       <!-- 2 -->
       <div class="top2">
         <div class="left">
-          <img
-            class="img_1"
-            src="@/assets/images/user/plate.png"
-            alt=""
-          />
+          <img class="img_1" src="@/assets/images/user/plate.png" alt="" />
         </div>
         <div class="right">
           <div class="one">
@@ -76,7 +45,7 @@
 
             <span :class="[getRatioColor(item1.betResultDetail)]">
               <!-- @{{ item1.ioRatio }} -->
-              @<span v-points="item1.ioRatio "></span>
+              @<span v-points="item1.ioRatio"></span>
             </span>
           </div>
 
@@ -85,35 +54,16 @@
               {{ getChampionName(item1.gameId) }}
             </span>
 
-            <span
-              v-else-if="item1.homeTeam && item1.awayTeam"
-              v-play="item1"
-            />
+            <span v-else-if="item1.homeTeam && item1.awayTeam" v-play="item1" />
             <span v-else>?</span>
             <span>
 
               <!-- 平局图标找到了 -->
-              <SvgIcon
-                v-if="Number(item.cashoutType) === 2"
-                name="user-ahead"
-                class="icon-svg-1"
-              />
-              <SvgIcon
-                v-if="item.state === 1"
-                name="user-postpone"
-                class="icon-svg-1"
-              />
-              <SvgIcon
-                v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
-                :name="`user-${item1.betResultDetail}`"
-                class="icon-svg-1"
-              />
-              <img
-                v-else
-                class="img_1"
-                src="@/assets/images/user/D1.png"
-                alt=""
-              />
+              <SvgIcon v-if="Number(item.cashoutType) === 2" name="user-ahead" class="icon-svg-1" />
+              <SvgIcon v-if="item.state === 1" name="user-postpone" class="icon-svg-1" />
+              <SvgIcon v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
+                :name="`user-${item1.betResultDetail}`" class="icon-svg-1" />
+              <img v-else class="img_1" src="@/assets/images/user/D1.png" alt="" />
 
             </span>
           </div>
@@ -127,18 +77,10 @@
             <CurrencyComp />
 
             <!-- 投注额 -->
-            <span
-              v-if="Number(item1.ioRatio)>0"
-              v-points="item.gold"
-            ></span>
-            <span
-              v-if="Number(item1.ioRatio)<0"
-              v-points="ifBetNum(item,item1)"
-            ></span>
-            <span v-if="Number(item1.ioRatio)<0">
-
+            <span v-if="Number(item1.ioRatio) > 0" v-points="item.gold"></span>
+            <span v-if="Number(item1.ioRatio) < 0" v-points="ifBetNum(item, item1)"></span>
+            <span v-if="Number(item1.ioRatio) < 0">
               (<span v-points="item.gold" />)
-
             </span>
 
           </div>
@@ -149,47 +91,34 @@
           <!-- creditState 0 未结算 1 已结算-->
           <span v-if="item.state === 0 || item.state === -1 || item.state === 1">{{ $t('user.CompensableAmount')
           }}:</span>
-          <span v-else-if="ifPracticalMoneyNum(item,item1)">{{ $t('user.practical')
+          <span v-else-if="ifPracticalMoneyNum(item, item1)">{{ $t('user.practical')
           }}:</span>
 
           <div>
             <!-- 受理状态 -->
             <span v-if="item.state !== 3 && item.state !== 5">
-              <span
-                v-if="item.state === -1"
-                style="color:#FF9A00 ;"
-              >
+              <span v-if="item.state === -1" style="color:#FF9A00 ;">
                 {{ $t('user.editPend') }}
               </span>
-              <span
-                v-if="item.state === 0"
-                style="color:#FF9A00 ;"
-              >
+              <span v-if="item.state === 0" style="color:#FF9A00 ;">
                 {{ $t('user.affirmPend') }}
               </span>
             </span>
 
             <!-- 币种 -->
 
-            <span v-if="ifPracticalMoneyNum(item,item1)">
-
+            <span v-if="ifPracticalMoneyNum(item, item1)">
               <span v-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL'">
                 <CurrencyComp />
               </span>
-              <span
-                v-if="item.state === 0 || item.state === -1 || item.state === 1"
-                class="num color-1"
-              >
-                <span v-points="getProfit(item,item1)"></span>
+              <span v-if="item.state === 0 || item.state === -1 || item.state === 1" class="num color-1">
+                <span v-points="getProfit(item, item1)"></span>
               </span>
-              <span
-                v-else-if="ifPracticalMoneyNum(item,item1)"
-                class="color-1"
-              >
+              <span v-else-if="ifPracticalMoneyNum(item, item1)" class="color-1">
                 <span v-points="item.winGold"></span>
               </span>
-
-            </span></div>
+            </span>
+          </div>
         </div>
       </div>
       <!-- line -->
@@ -204,10 +133,7 @@
           <span>{{ $t('user.BettingTime') }}:</span>
           <span>{{ item.createDate }}</span>
         </div>
-        <div
-          v-if="item.creditState === 1"
-          class="one"
-        >
+        <div v-if="item.creditState === 1" class="one">
           <span>{{ $t('user.SettlementTime') }}:</span>
           <span>{{ formatToDateTime(item.resultDate) }}</span>
         </div>
@@ -219,15 +145,12 @@
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
 import { accDiv, accMul, accAdd } from '@/utils/math'
-// import { formatMoney } from '@/utils/index'
 
-import { formatMoney } from '@/utils/index'
 import { computed } from 'vue'
 import store from '@/store'
 
 import CurrencyComp from './currency.vue'
 
-const currency = computed(() => store.state.user.currency)
 const teamNameList = computed(() => store.state.user.teamNameList || [])
 const championLangList = computed(() => store.state.user.championLangList || [])
 
@@ -238,7 +161,7 @@ const props = defineProps({
   }
 })
 // 是否显示马尼,印尼括号金额
-const ifBetNum = (item:any, item1:any) => {
+const ifBetNum = (item: any, item1: any) => {
   if (Number(item1.ioRatio) < 0) {
     // 马来绝对值都小于1,  印尼绝对值都大于1
     const absNum: any = Math.abs(Number(item1.ioRatio))
@@ -249,8 +172,8 @@ const ifBetNum = (item:any, item1:any) => {
 const getProfit = (item: any, item1: any) => {
   if (Number(item1.ioRatio) < 0) {
     // 马来绝对值都小于1,  印尼绝对值都大于1
-    let sumNum:any = 0
-    const absNum:any = Math.abs(Number(item1.ioRatio))
+    let sumNum: any = 0
+    const absNum: any = Math.abs(Number(item1.ioRatio))
     if (absNum > 1) {
       sumNum = accAdd(accDiv(item.gold, absNum), item.gold)
     }
