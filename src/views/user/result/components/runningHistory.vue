@@ -4,9 +4,17 @@
     <div class="status status-2">
       <div class="status_1">
         <span>{{ $t('user.time') }}</span>
-        <div class="round" @click.stop="setDate()">
+        <div
+          class="round"
+          @click.stop="setDate()"
+        >
           <span>{{ dateTimeVal.beginName }} </span> ~ <span>{{ dateTimeVal.endName }}</span>
-          <img class="img_1 " :class="[showBottom2 ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
+          <img
+            class="img_1 "
+            :class="[showBottom2 ? 'img_3' : '']"
+            src="@/assets/images/user/down.png"
+            alt=""
+          />
         </div>
       </div>
     </div>
@@ -15,9 +23,17 @@
     <div class="status">
       <div class="status_1">
         <span>{{ $t('user.type') }}</span>
-        <div class="round" @click.stop="seStatus()">
+        <div
+          class="round"
+          @click.stop="seStatus()"
+        >
           <span>{{ commonKey.value }}</span>
-          <img class="img_1 " :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
+          <img
+            class="img_1 "
+            :class="[showBottom ? 'img_3' : '']"
+            src="@/assets/images/user/down.png"
+            alt=""
+          />
         </div>
       </div>
     </div>
@@ -25,17 +41,38 @@
   <!-- 时间状态 -->
   <van-divider class="color-line" />
   <!-- 列表 -->
-  <div v-if="!list.arr.length && finished" class="noData">
-    <img class="img_1" src="@/assets/images/user/noData.png" />
+  <div
+    v-if="!list.arr.length && finished"
+    class="noData"
+  >
+    <img
+      class="img_1"
+      src="@/assets/images/user/noData.png"
+    />
     <p>
       {{ $t('user.noData') }}
     </p>
   </div>
-  <van-list v-if="list.arr.length || !finished" v-model:loading="loading" :finished="finished"
-    :finished-text="$t('live.noMore')" :loading-text="$t('user.loadingText')" class="dataList" @load="onLoad">
-    <div v-for="(outItem, outIndex) in dataList.arr" :key="outIndex" class="dataList-item">
+  <van-list
+    v-if="list.arr.length || !finished"
+    v-model:loading="loading"
+    :finished="finished"
+    :finished-text="$t('live.noMore')"
+    :loading-text="$t('user.loadingText')"
+    class="dataList"
+    @load="onLoad"
+  >
+    <div
+      v-for="(outItem, outIndex) in dataList.arr"
+      :key="outIndex"
+      class="dataList-item"
+    >
       <div class="date-title">{{ outItem.date }}</div>
-      <div v-for="(item, index) in outItem.list" :key="index" class="item">
+      <div
+        v-for="(item, index) in outItem.list"
+        :key="index"
+        class="item"
+      >
         <div class="title">
           {{ getTitle(item.tradeType) }}
         </div>
@@ -45,7 +82,11 @@
               <div class="font">{{ $t('user.betId') }}:</div>
               <span>
                 <span class="font-1">{{ item.payno }}</span>
-                <img v-copy="item.payno" class="img_1" src="@/assets/images/user/copy.svg" />
+                <img
+                  v-copy="item.payno"
+                  class="img_1"
+                  src="@/assets/images/user/copy.svg"
+                />
               </span>
             </div>
             <p class="left-2">
@@ -58,21 +99,15 @@
               <div v-if="item.payWay === 4"> {{ $t('user.compensate') }}</div>
               <div v-else> {{ $t('user.betNum') }}</div>
               <div class="right-1">
-                <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
-                <span v-else-if="item.currency === 'VNDK'" name="user-vndk" class="money-symbol">K₫ </span>
-                <img v-else :src="USDT1" style="object-fit: contain;" />
-                <span  v-points="item.tradeGold"></span>
+                <CurrencyComp />
+                <span v-points="item.tradeGold"></span>
               </div>
-
             </div>
             <div>
               <div> {{ $t('user.balance') }}</div>
               <div class="right-1">
-                <img v-if="item.currency === 'CNY'" :src="CNY1" style="object-fit: contain;" />
-                <!-- <img v-else-if="item.currency === 'VNDK'" :src="VNDK1" style="object-fit: contain;" /> -->
-                <span v-else-if="item.currency === 'VNDK'" name="user-vndk" class="money-symbol">K₫ </span>
-                <img v-else :src="USDT1" style="object-fit: contain;" />
-                <span  v-points="item.gold"></span>
+                <CurrencyComp />
+                <span v-points="item.gold"></span>
               </div>
             </div>
           </div>
@@ -92,6 +127,7 @@ import moment from 'moment'
 import CNY1 from '@/assets/images/user/CNY1.svg'
 // import VNDK1 from '@/assets/images/user/VNDK1.svg'
 import USDT1 from '@/assets/images/user/USDT1.png'
+import CurrencyComp from './currency.vue'
 
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
@@ -103,8 +139,6 @@ const showBottom2 = ref(false)
 const commonKey = ref({ key: '', value: t('user.whole') })
 const popupTitle = ref(t('user.type'))
 
-
-
 const beginTime = ref<any>('')
 const endTime = ref<any>('')
 
@@ -115,7 +149,6 @@ const dataList = reactive<{ arr: any }>({ arr: [] })
 const typeList = reactive<{ arr: any }>({ arr: [] })
 
 const emit = defineEmits(['valueChange', 'timeChange'])
-
 
 const popupList = reactive<{ arr: any[] }>({
   arr: [
@@ -249,7 +282,6 @@ const TradeTyp = async () => {
       item.key = item.tradeType
     }
   })
-  
 }
 // 获取标题
 const getTitle = (type: any) => {
@@ -334,7 +366,7 @@ defineExpose({
   height: calc(100vh - 320px);
   overflow-y: auto;
 
-  >&-item {
+  > &-item {
     margin-bottom: 10px;
   }
 
@@ -343,7 +375,7 @@ defineExpose({
   }
 
   .color-2 {
-    color: #1EBB52;
+    color: #1ebb52;
   }
 
   .color-line {
@@ -366,7 +398,7 @@ defineExpose({
     padding: 15px 20px;
     margin-bottom: 20px;
 
-    >.title {
+    > .title {
       font-family: PingFangSC-Medium;
       font-size: 24px;
       color: var(--color-search-box-text-1);
@@ -374,7 +406,7 @@ defineExpose({
       font-weight: 500;
     }
 
-    >.line {
+    > .line {
       // margin-top: 5px;
       display: flex;
       align-items: center;
@@ -444,7 +476,6 @@ defineExpose({
         }
       }
     }
-
   }
 }
 
@@ -458,12 +489,11 @@ defineExpose({
   font-weight: 500;
   height: 850px;
 
-  >.img_1 {
+  > .img_1 {
     margin-top: 331px;
     width: 102px;
     height: 121px;
     margin-bottom: 57px;
-
   }
 }
 </style>
