@@ -48,17 +48,6 @@ const appModule: Module<App, any> = {
     },
     async businessConfig({ state }) {
       const res: any = (await businessConfig()) || {}
-      if (res.code === 200 && res.data) {
-        const title = res.data.title
-        document.title = title
-        const logo = res.data.logoIcon
-        if (logo) {
-          const list = document.querySelectorAll('link[rel="icon"]')
-          Array.prototype.slice.call(list).map((item) => {
-            item.setAttribute('href', window.AIConfig.static_url + logo)
-          })
-        }
-      }
       state.businessConfig = res.data || {}
       state.systemTime = res.systemTime
     },
@@ -87,8 +76,20 @@ const appModule: Module<App, any> = {
       state.doubleLineInfo = res.data || {}
     },
     async getConfig({ state }) {
-      const res = await getConfig()
+      const res: any = await getConfig()
       state.customizeConfig = res.data || {}
+
+      if (res.code === 200 && res.data) {
+        const title = res.data.iconSpan
+        document.title = title
+        const logo = res.data.webIcon
+        if (logo) {
+          const list = document.querySelectorAll('link[rel="icon"]')
+          Array.prototype.slice.call(list).map((item) => {
+            item.setAttribute('href', window.AIConfig.static_url + logo)
+          })
+        }
+      }
     }
 
   }
