@@ -1,38 +1,43 @@
 <template>
   <div class="page-404">
     <div class="title">
+      <img v-if="config.maintainLogo" src="" alt="">
       <img
-        
+        v-else
         src="@/assets/images/page404/bluelogo.png"
       />
     </div>
     <div class="content">
       <div class="img-warp">
         <img
-        
-        src="@/assets/images/page404/maintain.png"
-      />
+
+          src="@/assets/images/page404/maintain.png"
+        />
       </div>
       <div class="tips">网站维护中</div>
       <div class="tips2">重新开放倒数</div>
       <div class="time">{{ timeDate }}</div>
-      
+
     </div>
-    
-  </div></template>
+
+  </div>
+</template>
 
 <script lang="ts" setup>
 import store from '@/store'
 import { ref, computed } from 'vue'
+const config = computed(() => store.state.app.customizeConfig)
+
 // import router from '@/router'
 const timeDate = computed(() => {
   const msg = store.state.app.mantainMsg
-  const systemTime = store.state.app.systemTime
+
+  // const systemTime = store.state.app.systemTime
   // const msg = '3,2024-01-24 16:13:37,2024-01-24 23:59:59,true'
-  let time=null
-  if(msg){
-   let strFlag = msg.split(',')[2]
-   time = strFlag
+  let time = null
+  if (msg) {
+    const strFlag = msg.split(',')[2]
+    time = strFlag
   }
   return time
 })
