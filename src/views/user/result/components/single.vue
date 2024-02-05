@@ -137,7 +137,7 @@
             ></span>
             <span v-if="Number(item1.ioRatio)<0">
 
-              <span v-points="item.gold" />
+              (<span v-points="item.gold" />)
 
             </span>
 
