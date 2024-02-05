@@ -12,8 +12,8 @@
 
         <div v-if="loginToken" class="wallet">
           <div class="cur">
-            <img v-if="currency==='CNY'" :src="CNY" style="object-fit: contain;" />
-            <img v-else-if="currency==='VNDK'" :src="VNDK" style="object-fit: contain;" />
+            <img v-if="currency==='CNY'" :src="currentWallet.currencyLogo || CNY" style="object-fit: contain;" />
+            <img v-else-if="currency==='VNDK'" :src="currentWallet.currencyLogo || VNDK" style="object-fit: contain;" />
             <img v-else :src="USDTImg" style="object-fit: contain;" />
           </div>
           <span>{{ formatMoney(balance.balance) }}</span>
@@ -56,6 +56,7 @@ import SidebarNav from './sidebarNav.vue'
 const userInfo = computed(() => store.state.user.userInfo)
 const balance = computed(() => store.state.user.balance)
 const currency = computed(() => store.state.user.currency)
+const currentWallet = computed(() => store.state.user.currentWallet)
 const theme = computed(() => store.state.app.theme)
 
 const childNav = ref()
@@ -70,11 +71,10 @@ const ifBLue = computed(() => {
 const loginToken = ref(getToken())
 const $router = useRouter()
 const toUrl = (url: string) => {
-  if (url==='/search') {
+  if (url === '/search') {
     store.dispatch('user/getLocationHeight', false)
   } else {
     store.dispatch('user/getLocationHeight', false)
-    
   }
 
   $router.push({ path: url })

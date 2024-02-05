@@ -81,7 +81,7 @@ const appModule: Module<App, any> = {
 
       if (res.code === 200 && res.data) {
         const title = res.data.iconSpan
-        document.title = title
+        document.title = title || '新体育'
         const logo = res.data.webIcon
         if (logo) {
           const list = document.querySelectorAll('link[rel="icon"]')
