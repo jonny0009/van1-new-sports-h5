@@ -2,7 +2,7 @@ import { Module } from 'vuex'
 import { App } from '#/store'
 import localStore from '@/utils/localStore'
 import { businessConfig, merchantConfig, moduleConfig, queryCMerLanguage } from '@/api/auth'
-import { getAllSports, getDoubleLineInfo } from '@/api/common'
+import { getAllSports, getDoubleLineInfo, getConfig } from '@/api/common'
 import { getTheme, setTheme } from '@/utils/auth'
 
 const appModule: Module<App, any> = {
@@ -21,6 +21,7 @@ const appModule: Module<App, any> = {
     pictureinpictureGidm: null, // 画中画赛事id
     mantainMsg: null,
     systemTime: null,
+    customizeConfig: {}
   },
   mutations: {
     SET_THEME: (state, theme: string) => {
@@ -33,7 +34,7 @@ const appModule: Module<App, any> = {
     updateMantainInfo(state, msg) {
       state.mantainMsg = msg
       // saveToStorage('mantainInfo', { msg })
-    },
+    }
   },
   actions: {
     setKeyValue(state: any, { key, value }) {
@@ -84,7 +85,12 @@ const appModule: Module<App, any> = {
     async getDoubleLineInfo({ state }) {
       const res = await getDoubleLineInfo()
       state.doubleLineInfo = res.data || {}
+    },
+    async getConfig({ state }) {
+      const res = await getConfig()
+      state.customizeConfig = res.data || {}
     }
+
   }
 }
 

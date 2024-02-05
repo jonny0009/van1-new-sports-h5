@@ -14,6 +14,9 @@ declare interface App {
   queryCMerLanguage: any
   state: boolean
   pictureinpictureGidm: any
+  mantainMsg: any
+  systemTime: any
+  customizeConfig: any
 }
 
 declare interface User {

@@ -44,3 +44,9 @@ export const anonyToken = () => {
   })
 }
 
+export const getConfig = () => {
+  return request({
+    url: '/ai/mobile/merchant/merchantCustomize',
+    method: 'get'
+  })
+}
