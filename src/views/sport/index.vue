@@ -9,9 +9,15 @@
     -->
     <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
       <!-- 使用切换栏组件 -->
-      <div class="tabs-cut" v-if="firstLeaguesList.length">
-        <van-tabs :duration="0.2" v-model:active="leagueId" shrink line-height="0" @change="onChangeTabs"
-          :swipe-threshold="3">
+      <div v-if="firstLeaguesList.length" class="tabs-cut">
+        <van-tabs
+          v-model:active="leagueId"
+          :duration="0.2"
+          shrink
+          line-height="0"
+          :swipe-threshold="3"
+          @change="onChangeTabs"
+        >
           <van-tab name="all">
             <template #title>
               <div class="league-num tabs-cut-1" :class="ifLeagueNum ? 'league-num-1' : ''" @click="clickLeagueNum">
@@ -29,16 +35,23 @@
           </van-tab>
           <van-tab v-for="(item, index) in firstLeaguesList" :key="index" :name="item.leagueId">
             <template #title>
-              <ImageButton class="tabs-cut-1" :text="item.leagueName" :src="item.homeLeagueLogo"
-                :active="leagueId === item.leagueId" type='6' :count="item.gameTypeCount || '0'" :ifCircle="true" />
+              <ImageButton
+                class="tabs-cut-1"
+                :text="item.leagueName"
+                :src="item.homeLeagueLogo"
+                :active="leagueId === item.leagueId"
+                type="6"
+                :count="item.gameTypeCount || '0'"
+                :if-circle="true"
+              />
             </template>
           </van-tab>
         </van-tabs>
       </div>
       <!-- <Loading v-if="!firstLeaguesList.length" /> -->
       <!-- 地区联赛折叠 -->
-      <van-collapse v-model="activeCollapseNames" :border="false" v-if="ifLeagueNum">
-        <van-collapse-item :name="value[0].countryId" :border="false" v-for="(value, key) in groupedArrays" :key="key">
+      <van-collapse v-if="ifLeagueNum" v-model="activeCollapseNames" :border="false">
+        <van-collapse-item v-for="(value, key) in groupedArrays" :key="key" :name="value[0].countryId" :border="false">
           <template #title>
             <div class="collapseAll">
               <img v-img="value[0].countryFlag" type="1" class="collapse-name" />
@@ -46,7 +59,7 @@
               <span class="collapse-num">{{ value.length }}</span>
             </div>
           </template>
-          <div class="collapse-concent" v-for="(item, index) in value" :key="index">
+          <div v-for="(item, index) in value" :key="index" class="collapse-concent">
             <div v-if="item.gameTypeCount" @click="clickLeague(item)">
               {{ item.leagueName }}
             </div>
@@ -55,20 +68,24 @@
             </div>
           </div>
 
-
         </van-collapse-item>
       </van-collapse>
       <!-- end==== -->
       <!-- 联赛轮播图 -->
-      <Slideshow ref="slideshow" v-if="commonMatchesList.length && closeSlideshow" :commonMatchesList="commonMatchesList">
+      <Slideshow v-if="commonMatchesList.length && closeSlideshow" ref="slideshow" :common-matches-list="commonMatchesList">
       </Slideshow>
       <template v-if="!leagueId">
         <!-- 推荐 -->
         <van-collapse v-model="activeNamesB" accordion :border="false" class="GlobalCollapse">
           <van-collapse-item name="b1">
             <template #title>
-              <ArrowTitle class="mt10 mb10 goodArrowTitle" :src="recommendIcon" :text="$t('sport.recommend')"
-                ref="leagueArrowTitle" />
+              <ArrowTitle
+                v-if="recommendList.length || (!getRecommendEventsIsLoading || isLoadingRecommend)"
+                ref="leagueArrowTitle"
+                class="mt10 mb10 goodArrowTitle"
+                :src="recommendIcon"
+                :text="$t('sport.recommend')"
+              />
             </template>
             <Loading v-if="!getRecommendEventsIsLoading || isLoadingRecommend" />
             <template v-else>
@@ -82,7 +99,7 @@
                   </span>
                 </div>
               </template>
-              <HomeEmpty v-else></HomeEmpty>
+              <!-- <HomeEmpty v-else></HomeEmpty> -->
             </template>
           </van-collapse-item>
         </van-collapse>
@@ -91,8 +108,12 @@
         <van-collapse v-model="activeNamesC" accordion :border="false" class="GlobalCollapse">
           <van-collapse-item name="c1">
             <template #title>
-              <ArrowTitle class="mt10 mb10 latestArrowTitle" :src="earlyIcon" :text="$t('sport.early')"
-                ref="leagueArrowTitle" />
+              <ArrowTitle
+                ref="leagueArrowTitle"
+                class="mt10 mb10 latestArrowTitle"
+                :src="earlyIcon"
+                :text="$t('sport.early')"
+              />
             </template>
             <Loading v-if="!getRecommendEventsIsLoading || isLoadingEarly" />
             <template v-else>
@@ -118,7 +139,7 @@
         <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
           <van-collapse-item name="1">
             <template #title>
-              <ArrowTitle class="mt10 mb10" :src="leagueLogo" type="6" :text="leagueName" ref="leagueArrowTitle" />
+              <ArrowTitle ref="leagueArrowTitle" class="mt10 mb10" :src="leagueLogo" type="6" :text="leagueName" />
             </template>
             <Loading v-if="!getRecommendEventsIsLoading" />
             <template v-else>
@@ -182,8 +203,7 @@ const returnSportsSuccess = (item: any) => {
 const activeNames = ref('1')
 const activeNamesB = ref('b1')
 const activeNamesC = ref('c1')
-const activeCollapseNames = ref(['']);
-
+const activeCollapseNames = ref([''])
 
 const championGuessing = ref<any>()
 const leagueArrowTitle = ref<any>()
@@ -316,13 +336,13 @@ const getFirstLeagues = async () => {
       firstLeaguesList.value = res.data.list || []
       LeaguesInfo.value = res.data
       groupedArrays.value = res.data.list?.reduce((acc: any, obj: any) => {
-        let key = obj.countryId;
+        const key = obj.countryId
         if (!acc[key]) {
-          acc[key] = [];
+          acc[key] = []
         }
-        acc[key].push(obj);
-        return acc;
-      }, {});
+        acc[key].push(obj)
+        return acc
+      }, {})
     } else {
       firstLeaguesList.value = []
     }
@@ -472,7 +492,7 @@ const onChangeTabs = () => {
   activeNames.value = '1'
   leagueArrowTitle?.value?.changeClick(false)
   championGuessing?.value?.CloseClick(false)
-  if (!leagueId.value||!ifLeagueNum.value&&leagueId.value === 'all') {
+  if (!leagueId.value || !ifLeagueNum.value && leagueId.value === 'all') {
     closeSlideshow.value = true
   }
   if (leagueId.value === 'all') {
@@ -484,7 +504,7 @@ const onChangeTabs = () => {
   }
   initData()
 }
-//获取联赛数量
+// 获取联赛数量
 const ifLeagueNum: any = ref(false)
 const clickLeagueNum = () => {
   ifLeagueNum.value = !ifLeagueNum.value
@@ -585,7 +605,6 @@ onActivated(async () => {
         color: var(--color-text-1);
       }
 
-
     }
 
     .league-num-1 {
@@ -605,7 +624,6 @@ onActivated(async () => {
         transform: rotate(180deg);
         transition: all .2s;
       }
-
 
     }
 
@@ -642,7 +660,6 @@ onActivated(async () => {
       width: 58px;
       border-radius: 50%;
       overflow: hidden;
-
 
     }
 
