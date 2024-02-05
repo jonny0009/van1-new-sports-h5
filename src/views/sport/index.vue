@@ -3,7 +3,7 @@
     <!--
       公共 体育项
     -->
-    <SportsTabs ref="refSportsTabs" class="pt20" @returnSportsSuccess="returnSportsSuccess" />
+    <SportsTabs ref="refSportsTabs" class="tabs-top" @returnSportsSuccess="returnSportsSuccess" />
     <!--
       公共 联赛
     -->
@@ -548,7 +548,9 @@ onActivated(async () => {
 <style lang="scss" scoped>
 .sport-page {
   padding: 0 36px;
-
+  .tabs-top{
+    padding-top: 30px;
+  }
   .my-scroll__content {
     margin-top: -10px;
     width: 100%;

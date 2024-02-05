@@ -48,11 +48,12 @@
           <div class="match-info-live__header border-bottom">
             <div v-if="showSportsIcon(sendParams)" class="live-icon" @click="goToDetail(sendParams)"><i v class="iconfont icon-footer-live"></i></div>
             <div class="up-match-league">
+              <SportsIcon :icon-src="props.sendParams.gameType" class="ball-img" />
               <div class="text">{{ getLeagueShortName(sendParams) }}</div>
             </div>
             <div class="flex-cross-center">
               <div class="up-match-time">
-                <SportsIcon v-show="showSportsIcon(sendParams)" :icon-src="'live'" class="mr5" />
+                <SportsIcon v-show="showSportsIcon(sendParams)" :icon-src="'sportlive'" class="live-img" />
                 <div class="up-match-time-html" :class="sendParams.gameType" v-html="showRBTime(sendParams)"></div>
               </div>
             </div>
@@ -457,3 +458,15 @@ const betMoreShow = () => {
   store.dispatch('user/getLocationHeight', false)
 }
 </script>
+<style lang="scss" scoped>
+.ball-img {
+  font-size: 28px;
+  color: var(--color-text-3);
+  font-weight: 500;
+  margin-right: 5px;
+}
+.live-img{
+  font-size: 28px;
+  margin-right: 5px;
+}
+</style>
