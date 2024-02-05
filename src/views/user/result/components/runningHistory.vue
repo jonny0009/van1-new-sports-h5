@@ -22,7 +22,6 @@
       </div>
     </div>
   </div>
-  <!-- 时间状态 -->
   <van-divider class="color-line" />
   <!-- 列表 -->
   <div v-if="!list.arr.length && finished" class="noData">
