@@ -60,8 +60,13 @@
         </div>
         <!-- logo -->
         <div class="logoImg">
-          <van-image v-if="ifBLue" class="logo" fit="contain" :src="aiLogo" />
-          <van-image v-else class="logo" fit="contain" :src="logoImg" />
+          <template v-if="config.leftLogo">
+            <van-image class="logo" fit="contain" :src="config.leftLogo" />
+          </template>
+          <template v-else>
+            <van-image v-if="ifBLue" class="logo" fit="contain" :src="aiLogo" />
+            <van-image v-else class="logo" fit="contain" :src="logoImg" />
+          </template>
         </div>
       </div>
     </van-popup>
@@ -83,6 +88,7 @@ const peopleInfo = computed(() => store.state.user.peopleInfo)
 const balance = computed(() => store.state.user.balance)
 const currency = computed(() => store.state.user.currency)
 const theme = computed(() => store.state.app.theme)
+const config = computed(() => store.state.app.customizeConfig)
 
 import CNY from '@/assets/images/user/CNY.svg'
 import VNDK from '@/assets/images/user/VNDK.svg'
