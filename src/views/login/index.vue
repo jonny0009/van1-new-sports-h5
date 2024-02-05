@@ -1,10 +1,6 @@
 <template>
   <div class="login-page">
-    <van-nav-bar
-      class="bg-title"
-      :class="[changeImg ? 'theme' : '']"
-      :border="false"
-    >
+    <van-nav-bar class="bg-title" :class="[changeImg ? 'theme' : '']" :border="false" @click-right="onClickRight">
       <template #left>
         <van-icon
           name="arrow-left"
@@ -13,26 +9,8 @@
         />
       </template>
       <template #title>
-        <template v-if="config.loginBarLogo">
-          <img
-            :src="config.loginBarLogo "
-            alt=""
-          >
-        </template>
-        <template v-else>
-          <img
-            v-if="ifBLue"
-            class="img_2"
-            src="@/assets/images/user/blue/logo1.png"
-            alt=""
-          />
-          <img
-            v-else
-            class="img_2"
-            src="@/assets/images/user/logo1.png"
-            alt=""
-          />
-        </template>
+        <img v-if="ifBLue" class="img_2" src="@/assets/images/user/blue/logo1.png" alt="" />
+        <img v-else class="img_2" src="@/assets/images/user/logo1.png" alt="" />
       </template>
       <template #right>
 
@@ -189,6 +167,14 @@ const defaultPlate = {
   value: t('user.hk'),
   key: 'H'
 }
+
+const onClickRight = () => {
+  $router.push({
+    name: 'ContactUs'
+  })
+  console.log('onClickRight')
+}
+
 onMounted(() => {
   const obj = plateData.arr.find((item: any) => {
     if (item.key === plateMaskKey || '') {
