@@ -96,7 +96,9 @@ export default {
   noFinal: '未结算',
   final: '已结算',
   hk: '香港盘[HK]',
-  Europe: '欧洲盘[DEC]',
+  Europe: '欧洲盘 [DEC]',
+  IDOdd: '印尼盘 [ID]',
+  MYOdd: '马来盘 [MY]',
   today: '今日',
   fortyEight: '近48小时',
   sevenDay: '近7天',
@@ -134,6 +136,10 @@ export default {
 
   // 新增7
   contactUs: '联系我们',
+  type: '类型',
+  
+  homeName:'主 ',
+  awayName:'客 ',
 
   sports: {
     'officeNumber': '局号',

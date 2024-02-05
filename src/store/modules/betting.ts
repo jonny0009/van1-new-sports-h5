@@ -15,9 +15,9 @@ import {
 } from '@/utils/betting'
 import { MarketInfo } from '@/entitys/MarketInfo'
 import { betComboOrder, comboBetting, moreBetting, morePW } from '@/api/betting'
-import { points } from '@/utils'
 import lang from '@/lang'
 import { createBetItem, config } from 'xcsport-lib'
+import { accMul, accSubtr, moneyFormat } from '@/utils/math'
 const { letBallMap } = config
 
 // 投注单store
@@ -34,7 +34,9 @@ const bettingModule: Module<Betting, any> = {
     oddChangesState,
     markets,
     comboMarkets: [],
+    parlayMarkets: [],
     combos: [],
+    combosErrorIds: [],
     results: [],
     hitState: 1, // 0非点水状态 / 1非点水状态
     mode: 1, // 1单注， 2串关
@@ -61,7 +63,7 @@ const bettingModule: Module<Betting, any> = {
           betsGolds += +gold || 0
         }
       })
-      return points(betsGolds)
+      return moneyFormat(betsGolds)
     },
     // 投注前的可赢金额
     betsProfit(state, _state1, state2) {
@@ -73,14 +75,23 @@ const bettingModule: Module<Betting, any> = {
         const { gold = 0, errorCode, ior, isEuropePlay } = bet
         if (gold && !errorCode) {
           const buyGold = +gold || 0
-          let winCountGold = buyGold * ior - buyGold
+          let winCountGold: any = accSubtr(accMul(buyGold, ior), buyGold)
           if (isEuropePlay && handicapType === 'H') {
-            winCountGold = buyGold * ior
+            winCountGold = accMul(buyGold, ior)
+          } else if (isEuropePlay && handicapType === 'I') {
+            winCountGold = buyGold
+          } else if (isEuropePlay && handicapType === 'M') {
+            if (ior > 0) {
+              winCountGold = accMul(buyGold, ior)
+            } else {
+              winCountGold = buyGold
+            }
           }
+          // debugger
           betsGolds += winCountGold
         }
       })
-      return points(betsGolds)
+      return moneyFormat(betsGolds)
     },
     // 串关投注总额
     combosBetGolds(state) {
@@ -159,6 +170,7 @@ const bettingModule: Module<Betting, any> = {
     },
     setMode({ state }, mode) {
       state.mode = mode
+      state.comboMarkets = []
     },
     setBoardShow({ state }, { status, playOnlyId }) {
       state.editId = playOnlyId
@@ -214,7 +226,7 @@ const bettingModule: Module<Betting, any> = {
       state.moreShow = status
       state.moreParams = moreParams
       // router.push(`/bet/${moreParams.gidm}`)
-      router.push(`/match/more/${moreParams.gidm}`)
+      router.push(`/match/more/${moreParams.gidm}?gameType=${moreParams.gameType}`)
     },
 
     // 添加投注项
@@ -241,10 +253,19 @@ const bettingModule: Module<Betting, any> = {
         }
         return false
       })
+      const index1 = state.comboMarkets.findIndex((marketInfo: MarketInfo) => {
+        if (marketInfo.playOnlyId === playOnlyId) {
+          return true
+        }
+        return false
+      })
       if (index >= 0) {
         state.markets.splice(index, 1)
         state.markets = state.markets.slice()
         localStore.slice(MarketListKey, index)
+      }
+      if (index1 >= 0) {
+        state.comboMarkets.splice(index1, 1)
       }
     },
     clearIorChange({ state }, playOnlyId) {
@@ -270,7 +291,8 @@ const bettingModule: Module<Betting, any> = {
       const autoRatio = acceptAll === 1
       const autoOdd = state.oddChangesState || false
       // 获取新的点水参数
-      const { ratioKey, errorCode, eoIor, ior, score, showType, ratio, strong, gameDate, playType } = newBet
+      const { ratioKey, errorCode, ior, score, showType, ratio, strong, gameDate, playType } = newBet
+      let eoIor = (newBet.eoIor * 1).toFixed(2)
       const newBetsMap: any = {}
       newBetsMap[ratioKey] = newBet
       let replaceBet = newBet
@@ -294,7 +316,9 @@ const bettingModule: Module<Betting, any> = {
           const oldStrong = bet.strong
           const oldGameDate = bet.gameDate
           // 点水返回2个赔率，需要根据单双线来设置当前的点水值
-          if (!(isEuropePlay && handicapType === 'H') && eoIor) {
+          if (isEuropePlay && handicapType === 'E' && eoIor) {
+            newBetData.ior = eoIor
+          } else if (!isEuropePlay && eoIor) {
             newBetData.ior = eoIor
           }
           const newIor = newBetData.ior * 1 || ior * 1
@@ -354,10 +378,10 @@ const bettingModule: Module<Betting, any> = {
             replaceBet.ior = oldIor
           }
 
-          // 防止负数
-          if (replaceBet.ior * 1 < 0) {
-            replaceBet.ior = 0
-          }
+          // 防止负数,印尼马来存在负数,去掉
+          // if (replaceBet.ior * 1 < 0) {
+          //   replaceBet.ior = 0
+          // }
 
           /**
            * 重新生成betitem
@@ -393,12 +417,17 @@ const bettingModule: Module<Betting, any> = {
     },
     // 串关批量点水,更新投注项
     async comboMarketHit({ state, getters }, betting: boolean = false) {
-      if (getters.comboMarkets.length < 2 || (!betting && state.hitState !== 1)) {
-        return false
+      if (state.comboMarkets.length === 0) {
+        const markets = JSON.parse(JSON.stringify(state.markets))
+        state.comboMarkets = markets.map((market: MarketInfo) => {
+          const { eoIor } = market
+          market.ior = eoIor * 1
+          return market
+        })
       }
 
-      if (state.comboMarkets.length === 0) {
-        state.comboMarkets = JSON.parse(JSON.stringify(getters.comboMarkets))
+      if (getters.comboMarkets.length < 2 || (!betting && state.hitState !== 1)) {
+        return false
       }
 
       const params: any = combosHitParams(state.comboMarkets)
@@ -415,22 +444,16 @@ const bettingModule: Module<Betting, any> = {
         const t = data.t
         state.comboS = s
         state.comboT = t
-
+        state.combosErrorIds = errorIds || []
         // 有异常的情况,全部锁盘
         if (errorCode || (Array.isArray(errorIds) && errorIds.length)) {
-          if (['1X034'].includes(errorCode)) {
-            // 根据返回出异常的errorIds标出有异常的玩法
-            if (Array.isArray(errorIds) && errorIds.length) {
-              // dispatch('bet/updateComboBets', errorIds, { root: true })
-              // dispatch('setCombosStructure', [])
-            }
-          } else {
-            // state.combosStructure = state.combosStructure.map(comboItem => {
-            //   comboItem.lock = true
-            //   // comboItem.gold = ''
-            //   return comboItem
-            // })
-          }
+          // if (['1X034'].includes(errorCode)) {
+          //   // 根据返回出异常的errorIds标出有异常的玩法
+          //   if (Array.isArray(errorIds) && errorIds.length) {
+          //     // dispatch('bet/updateComboBets', errorIds, { root: true })
+          //     // dispatch('setCombosStructure', [])
+          //   }
+          // }
         } else {
           const comboCount = state.comboMarkets.length
           const comboList = chaiCombo(comboCount, orderData)
@@ -473,12 +496,13 @@ const bettingModule: Module<Betting, any> = {
             }
             state.comboMarkets = state.comboMarkets.map((marketInfo: MarketInfo) => {
               const playOnlyId = MarketInfo.getPlayOnlyId(marketInfo)
+              const { awayTeam, homeTeam } = marketInfo
               const find = orderData.find((info: MarketInfo) => {
                 return MarketInfo.getPlayOnlyId(info) === playOnlyId
               })
               if (find) {
                 const gameType = find.gameType || marketInfo.gameType
-                return { ...marketInfo, ...find, gameType }
+                return { ...marketInfo, ...find, gameType, awayTeam, homeTeam }
               }
               return marketInfo
             })
@@ -589,6 +613,10 @@ const bettingModule: Module<Betting, any> = {
     // 清空
     clearResult({ state }) {
       state.results = []
+    },
+    // 清空
+    clearComboMarkets({ state }) {
+      state.comboMarkets = []
     }
   }
 }

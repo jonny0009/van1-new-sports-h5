@@ -1,6 +1,9 @@
 <template>
   <div class="betting-collapse">
-    <van-tabs v-model:active="tabActive" shrink line-height="0" @change="onChangeTabs">
+    <Loading v-if="loading" />
+    <EmptyData v-else-if="betList.length === 0" :text="$t('live.platCloseAll')" />
+
+    <van-tabs v-show="betList.length > 0" v-model:active="tabActive" shrink line-height="0" @change="onChangeTabs">
       <van-tab v-for="(tab, index) in tabList" :key="index" :name="tab.id + ''">
         <template #title>
           <div class="tab-title">
@@ -8,7 +11,7 @@
           </div>
         </template>
         <!-- start -->
-        <van-collapse v-if="betList.length > 0" v-model="activeNames">
+        <van-collapse v-model="activeNames">
           <van-collapse-item v-for="(play, i) in betList" :key="i" :name="`${i + 1}`" :border="false">
             <template #title>
               <span v-play="play.playInfo"></span>
@@ -62,8 +65,6 @@
             </div>
           </van-collapse-item>
         </van-collapse>
-
-        <EmptyData v-else :text="'盘口已关闭'" />
         <!-- end -->
       </van-tab>
     </van-tabs>
@@ -84,6 +85,10 @@ const props = defineProps({
   matchInfo: {
     type: Object,
     default: () => {}
+  },
+  loading: {
+    type: Boolean,
+    default: false
   }
 })
 const emits = defineEmits(['tab-change'])
@@ -110,6 +115,9 @@ const activeNames = ref(['1'])
       }
       .van-tab--shrink {
         padding: 0 8px;
+      }
+      .van-tabs__line {
+        display: none;
       }
     }
 

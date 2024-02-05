@@ -93,8 +93,10 @@ export default {
   end: '~ 위에',
   noFinal: '불안',
   final: '안정된',
-  hk: '홍콩 디스크[HK]',
-  Europe: '유럽 ​​핸디캡[DEC]',
+  hk: 'Hong Kong [HK]',
+  Europe: 'Decimal [DEC]',
+  IDOdd: 'Indonesia [ID]',
+  MYOdd: 'Malaysia [MY]',
   today: '오늘',
   fortyEight: '지난 48시간',
   sevenDay: '지난 7일',
@@ -127,6 +129,11 @@ export default {
   aheadFinal: '조기 결제',
   // 新增7
   contactUs: '연락처',
+  type: '유형',
+  homeName:'홈팀',
+  awayName:'원정팀',
+
+
 
   sports: {
     officeNumber: '국 번호',

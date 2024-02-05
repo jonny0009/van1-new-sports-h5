@@ -2,6 +2,8 @@ import axios from 'axios'
 import router from '@/router'
 import { showDialog } from 'vant'
 import { getToken, removeToken } from './auth'
+import { getBrowserLanguage } from './index'
+import store from '@/store'
 // import { useI18n } from 'vue-i18n'
 // const { t } = useI18n()
 // .env.development/.env.production配置
@@ -11,7 +13,7 @@ const service = axios.create({
   timeout: 30000 // request timeout
 })
 // 不需要传groupId参数的数组
-const noGroupId:Array<string> = [
+const noGroupId: Array<string> = [
   '/order/all/betRecordTab',
   '/common/businessConfig',
   '/merchantAccountServer/api/c/getCMerAccessType'
@@ -27,10 +29,9 @@ service.interceptors.request.use(
     const groupId = 3
     config.headers['Content-Type'] = 'application/json'
     config.headers.token = token
-    config.headers.terType = '2'
-    config.headers.wid = 1
-    // config.headers.lang = 'zh-cn'
-    config.headers.lang = localStorage.getItem('locale') || 'zh-cn'
+    config.headers.terType = '16'
+    config.headers.wid = store.state.user.currentWallet?.walletId || 1
+    config.headers.lang = localStorage.getItem('locale') || getBrowserLanguage()
     config.headers.apiVer = '4.06'
     config.headers.groupId = groupId
     if (config.method === 'post') {
@@ -55,8 +56,8 @@ const authCode: any = [401, 403, 1010]
 service.interceptors.response.use(
   (response: any) => {
     if (authCode.includes(response.data.code)) {
-      removeToken()
-      const locale:any = localStorage.getItem('locale') || 'zh-cn'
+      // removeToken()
+      const locale: any = localStorage.getItem('locale') || getBrowserLanguage()
       const inform: any = {
         'zh-cn': '登录信息已失效,请重新登录',
         'vi-vn': 'Thông tin đăng nhập đã hết hạn, vui lòng đăng nhập lại',
@@ -68,11 +69,17 @@ service.interceptors.response.use(
         message: inform[locale],
         theme: 'round-button'
       }).then(() => {
+        removeToken()
         router.push('/login')
       })
       // router.push('/login')
-    } else if (+response.data.code !== 200) {
-      return response.data
+    } else if (+response.data.code == 403) {
+      router.push('/403')
+    } else if (+response.data.code == 503) {
+      store.commit('app/updateMantainInfo', response.data.msg)
+      if (location.href.indexOf('/503') === -1) {
+        router.push('/503')
+      }
     } else {
       return response.data
     }

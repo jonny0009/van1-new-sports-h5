@@ -8,9 +8,9 @@
     <div class="main">
       <div class="main-menu">
         <div
-          class="nav"
           v-for="(nav, i) in navList"
           :key="i"
+          class="nav"
           :class="{ selected: route.path.endsWith(nav.path) }"
           @click="onNavClick(nav.path)"
         >
@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { Ref, ref, reactive, computed, onBeforeMount, watch, defineAsyncComponent } from 'vue'
+import { Ref, ref, reactive, computed, onBeforeMount, watch, defineAsyncComponent, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { matcheInfo, extendInfo } from '@/api/live'
 import store from '@/store'
@@ -56,7 +56,7 @@ const showFixedBet = computed(() => store.state.app.showFixedBet)
 const paramsId = computed(() => route.params['id'])
 const navList = reactive([
   { title: t('live.bet'), iconName: 'live-bet', path: 'bets' },
-  { title: t('live.betWith'), iconName: 'live-combined', path: 'with' },
+  // { title: t('live.betWith'), iconName: 'live-combined', path: 'with' },
   { title: t('live.stackBet'), iconName: 'live-stack', path: 'mixs' },
   { title: t('live.dataBase'), iconName: 'live-data', path: 'data' },
   { title: t('live.more'), iconName: 'live-grid', path: 'other' }
@@ -105,12 +105,14 @@ const startInterval = () => {
   closeInterval()
   intervalTimer = setInterval(() => {
     getMatcheInfo()
+    store.commit('match/SET_NEED_TIMER', true)
   }, 5000)
 }
 const closeInterval = () => {
   if (intervalTimer) {
     clearInterval(intervalTimer)
     intervalTimer = null
+    store.commit('match/SET_NEED_TIMER', false)
   }
 }
 
@@ -118,6 +120,10 @@ onBeforeMount(() => {
   getMatcheInfo()
   getExtendInfo()
   startInterval()
+})
+
+onUnmounted(() => {
+  closeInterval()
 })
 
 watch(
@@ -202,6 +208,7 @@ watch(
       left: 0;
       right: 0;
       bottom: 0;
+      z-index: 99;
       margin-left: 90px;
       display: flex;
       align-items: center;

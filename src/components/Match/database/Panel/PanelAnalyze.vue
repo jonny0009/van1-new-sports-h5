@@ -69,7 +69,39 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+import { ref } from 'vue'
+// playType  ---M独赢 R让球 OU大小 RM滚球独赢 RE滚球让球 ROU滚球大小  必传
+
+// R
+// ratioType=RH 主队
+// ratioType=RC 客队
+// RM的时候
+// ratioType=RMC 客队
+// ratioType=RMN 平
+// ratioType=RMH 主队
+// RE的时候
+// ratioType=REH 主队
+// ratioType=REC 客队
+// rou
+// ratioType=OUH 大
+// ratioType=OUC 小
+
+// 当传参为M的时候
+// ratioType=MC 客队
+// ratioType=MN 平
+// ratioType=MH 主队
+
+const props = defineProps({
+  data: {
+    type: Array as any,
+    default: () => []
+  }
+})
+const list = ref(props.data)
+
+</script>
 
 <style lang="scss" scoped>
 .analyze {

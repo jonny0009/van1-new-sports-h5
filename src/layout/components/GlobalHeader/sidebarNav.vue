@@ -6,13 +6,16 @@
         <div class="top">
           <div class="top_1">
             <div class="left">
-              <img v-img="userInfo.headImg" class="headImg" :type="3" style="object-fit: cover;" @click.stop="toUser('/userInfo')" />
+              <img v-img="userInfo.headImg" class="headImg" :type="3" style="object-fit: cover;"
+                @click.stop="toUser('/userInfo')" />
             </div>
             <div class="right">
               <div class="head">
                 <div class="head_1" @click.self="toUser('/userInfo')"> {{ $t('user.ViewProfile') }} </div>
-                <img v-if="ifBLue" class="headImg_1" fit="contain" src="@/assets/images/user/blue/bell.png" @click="toUser('/notice')" />
-                <img v-else class="headImg_1" fit="contain" src="@/assets/images/user/notice.svg" @click="toUser('/notice')" />
+                <img v-if="ifBLue" class="headImg_1" fit="contain" src="@/assets/images/user/blue/bell.png"
+                  @click="toUser('/notice')" />
+                <img v-else class="headImg_1" fit="contain" src="@/assets/images/user/notice.svg"
+                  @click="toUser('/notice')" />
               </div>
               <div class="money">
                 <img v-if="currency === 'CNY'" class="headImg_2" :src="CNY" style="object-fit: contain;" />
@@ -52,11 +55,11 @@
             <div class="menu_2">{{ $t('user.edit') }}</div>
           </div>
           <!-- 联系我们 -->
-          <!-- <div class="menu" @click="toUser('/contactUs')">
+          <div class="menu" @click="toUser('/contactUs')">
             <img v-if="ifBLue" class="menu_1" fit="contain" src="@/assets/images/user/blue/sever.png" />
             <img v-else class="menu_1" fit="contain" src="@/assets/images/user/icon2.svg" />
             <div class="menu_2">{{ $t('user.customer') }}</div>
-          </div> -->
+          </div>
         </div>
         <!-- logo -->
         <div class="logoImg">
@@ -138,8 +141,8 @@ defineExpose({
     }
 
     .headImg {
-      width: 100px;
-      height: 110px;
+      width: 103px;
+      height: 108px;
       border-radius: 50%;
     }
 

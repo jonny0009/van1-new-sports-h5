@@ -10,7 +10,8 @@ export default {
       name: 'Sport',
       meta: {
         showSportsTabsView: true,
-        showRefresh: true
+        // showRefresh: true,
+        KeepAlive:true
       }
     }
   ]

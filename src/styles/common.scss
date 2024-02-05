@@ -203,6 +203,7 @@ img:not([src]) {
   overflow: hidden !important;
 }
 
+////
 .global-nav-vant-tabs {
   .van-tabs__wrap {
     .van-tabs__nav {
@@ -211,6 +212,9 @@ img:not([src]) {
     }
     .van-tab--shrink {
       padding: 0 8px;
+    }
+    .van-tabs__line {
+      display: none;
     }
   }
   .tab-title {

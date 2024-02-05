@@ -1,22 +1,16 @@
 <template>
-  <div
-    class="ImageButton"
-    :class="[
-      {
-        'active': active
-      }
-    ]"
-  >
-    <img
-      v-img="src"
-      class="img"
-      :type="type"
-      style="object-fit: contain;"
-    />
+  <div class="ImageButton" :class="[
+    {
+      'active': active
+    }
+  ]">
+    <img v-img="src" class="img" :class="ifCircle?'img-1':''" :type="type" style="object-fit: contain;"/>
     <span>
       {{ text }}
     </span>
-    <span v-if="count" class="count">{{ count }}</span>
+    <span v-if="count" class="count" :class="[{ 'count-1': active }]">
+      {{ count }}
+    </span>
   </div>
 </template>
 <script lang="ts" setup>
@@ -25,6 +19,12 @@ defineProps({
     type: String,
     default: function () {
       return ''
+    }
+  },
+  ifCircle: {
+    type: Boolean,
+    default: function () {
+      return false
     }
   },
   type: {
@@ -55,36 +55,49 @@ defineProps({
 
 </script>
 <style lang="scss" scoped>
-.ImageButton{
+.ImageButton {
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
   height: 64px;
-  border-radius:30px;
+  border-radius: 30px;
   padding-left: 17px;
   padding-right: 40px;
   background: var(--color-global-buttonBg);
-  color: var( --color-global-buttonCl);
+  color: var(--color-text-5);
   transition: all .3s;
   font-size: 24px;
   font-weight: bold;
   box-shadow: var(--color-global-buttonShadow);
-  span{
+
+  span {
     font-size: 24px;
-    line-height:24px;
+    line-height: 24px;
   }
-  &.active{
-    background: var(--color-global-buttonActiveBg);
-    color:#fff;
+
+  &.active {
+    background: var(--color-global-buttonPrimaryBg);
+    color: #fff;
   }
-  .img{
-    width:44px;
-    height: 44px;
+
+  .img {
+    width: 44px;
+    height: 32px;
     margin-right: 10px;
   }
-  .count{
-    margin-left: 5px;
-    color: #546371;
+  .img-1{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .count {
+    margin-left: 12px;
+    color: var(--color-text-5);
+  }
+  .count-1 {
+    color: #fff;
   }
 }
 </style>

@@ -1,6 +1,7 @@
 <template>
   <div class="database">
-    <van-tabs class="global-nav-vant-tabs" v-model:active="tabActive" shrink line-height="0" @change="onChangeTabs">
+
+    <van-tabs v-model:active="tabActive" class="global-nav-vant-tabs" shrink line-height="0" @change="onChangeTabs">
       <van-tab v-for="(tab, index) in tabList" :key="index" :name="tab.name">
         <template #title>
           <div class="tab-title">
@@ -10,51 +11,66 @@
       </van-tab>
     </van-tabs>
 
-    <component :key="tabActive" :is="components[tabActive]" :match-data="matchData" />
+    <component :is="components[tabActive]" :key="tabActive" :match-data="matchData" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch, onBeforeMount } from 'vue'
 import { matchStatusApi } from '@/api/live'
+import { useRoute } from 'vue-router'
+import store from '@/store'
+import { useI18n } from 'vue-i18n'
+import { match } from 'assert'
 import TabSummary from './Tabs/TabSummary.vue'
 import TabBattle from './Tabs/TabBattle.vue'
 import TabRecord from './Tabs/TabRecord.vue'
 import TabEvents from './Tabs/TabEvents.vue'
-import store from '@/store'
-import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
+const route = useRoute()
+const gameType = ref('')
 const matchInfo = computed(() => store.state.match.matchInfo)
+const tabList = ref([
+  { name: 1, title: t('live.navBattle') },
+  { name: 2, title: t('live.navRecent') }
+])
+
 watch(
   () => matchInfo.value,
   () => {
     fetchData()
   }
 )
+onBeforeMount(() => {
+  gameType.value = route.query.gameType
+})
 onMounted(() => {
+  if (gameType.value === 'FT') {
+    tabList.value.unshift({ name: 0, title: t('live.navSummary') })
+
+    tabList.value.push({ name: 3, title: t('live.navEvents') })
+  }
+  if (gameType.value === 'BK') {
+    tabList.value.unshift({ name: 0, title: t('live.navSummary') })
+  }
   fetchData()
 })
 
-const { t } = useI18n()
-
 const matchData = ref()
 const fetchData = async () => {
-  const { gidm } = matchInfo.value
+  const { gidm, systemId } = matchInfo.value
   if (gidm) {
     const res: any = await matchStatusApi({ gidm })
     if (res.code === 200) {
       const data = res.data
-      matchData.value = { ...data, icGidm: gidm }
+      matchData.value = { ...data, icGidm: gidm, systemId }
     }
   }
 }
+// 文字概况是有足球有
+// 统计数据 只有 足球篮球有
 
-const tabList = ref([
-  { name: 0, title: t('live.navSummary') },
-  { name: 1, title: t('live.navBattle') },
-  { name: 2, title: t('live.navRecent') },
-  { name: 3, title: t('live.navEvents') }
-])
 const tabActive = ref(0)
 const components = [TabSummary, TabBattle, TabRecord, TabEvents]
 

@@ -179,7 +179,7 @@ defineExpose({
 <style lang="scss" scoped>
 //球类型
 .ball-type {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 // 状态

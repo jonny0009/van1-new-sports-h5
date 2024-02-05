@@ -5,12 +5,8 @@
       <div class="title-left">
         <div>{{ item.parlayNum }}{{ $t('user.session') }}</div>
         <div>
-          <SportsIcon
-            v-for="(item2, index1) in item.betDTOList"
-            :key="index1"
-            :icon-src="item2.gameType"
-            class="ball-img"
-          />
+          <SportsIcon v-for="(item2, index1) in item.betDTOList" :key="index1" :icon-src="item2.gameType"
+            class="ball-img" />
         </div>
       </div>
       <div class="cur-odds">
@@ -43,7 +39,8 @@
               {{ getLangBet(item1.betItemLang) }}
             </span>
             <span :class="[getRatioColor(item1.betResultDetail)]">
-              @{{ item1.ioRatio }}
+              <!-- @{{ item1.ioRatio }} -->
+              @<span v-points="item1.ioRatio"></span>
             </span>
           </div>
           <div class="one two">
@@ -54,11 +51,8 @@
               <!-- 平局图标找到了 -->
               <SvgIcon v-if="Number(item.cashoutType) === 2" name="user-ahead" class="icon-svg-1" />
               <SvgIcon v-if="item.state === 1" name="user-postpone" class="icon-svg-1" />
-              <SvgIcon
-                v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
-                :name="`user-${item1.betResultDetail}`"
-                class="icon-svg-1"
-              />
+              <SvgIcon v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
+                :name="`user-${item1.betResultDetail}`" class="icon-svg-1" />
               <img v-else class="img_1" src="@/assets/images/user/D1.png" alt="" />
 
             </span>
@@ -84,12 +78,11 @@
         <span class="money-num-money">
 
           <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
-          <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
+          <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1">K₫ </span>
           <SvgIcon v-else name="user-usdt" class="img_1" />
 
-          <span>
-            {{ formatMoney(item.gold) }}
-          </span>
+          <!-- 投注额 -->
+          <span v-points="item.gold"></span>
         </span>
       </div>
       <div class="money-num-2">
@@ -111,15 +104,15 @@
 
           <span v-if="item.state !== 3 && item.state !== 5">
             <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
-            <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
+            <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1">K₫ </span>
             <SvgIcon v-else name="user-usdt" class="img_1" />
           </span>
 
           <span v-if="item.state === 0 || item.state === -1 || item.state === 1" class="num">
-            {{ formatMoney(getProfit(item)) }}
+            <span v-points="getProfit(item)"></span>
           </span>
           <span v-else-if="item.state !== 3 && item.state !== 5" class="num">
-            {{ formatMoney(item.winGold) }}
+            <span v-points="item.winGold"></span>
           </span>
         </span>
       </div>
@@ -140,24 +133,20 @@
       </div>
     </div>
     <!-- 提前结算 -->
-    <div v-if="item.creditState===0 && earlyMoney(item)">
+    <div v-if="item.creditState === 0 && earlyMoney(item)">
       <div v-if="!item.btnLogin" class="ahead-btn" @click="handleFinal(item)">
         <span>{{ $t('user.aheadFinal') }}</span>
         <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
-        <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
+        <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1">K₫ </span>
         <SvgIcon v-else name="user-usdt" class="img_1" />
-        <span>
-          {{ formatMoney(earlyMoney(item)) }}
-        </span>
+        <span v-points="earlyMoney(item)"></span>
       </div>
       <div v-else class="ahead-btn">
         <span>{{ $t('user.aheadFinal') }}</span>
         <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
-        <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
+        <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1">K₫ </span>
         <SvgIcon v-else name="user-usdt" class="img_1" />
-        <span>
-          {{ formatMoney(earlyMoney(item)) }}
-        </span>
+        <span v-points="earlyMoney(item)"></span>
         <span class="loading-icon"></span>
       </div>
     </div>
@@ -167,7 +156,7 @@
 
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
-import { formatMoney } from '@/utils/index'
+// import { formatMoney } from '@/utils/index'
 
 import { computed } from 'vue'
 import store from '@/store'
@@ -392,10 +381,12 @@ const getLangBet = (item: any) => {
       color: var(--color-text-1);
       letter-spacing: 0;
       font-weight: 400;
+
       .icon-svg-1 {
         font-size: 32px;
         margin-right: 5px;
       }
+
       .img_1 {
         width: 40px;
         height: 30px;
@@ -444,10 +435,12 @@ const getLangBet = (item: any) => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    .money-num-money{
+
+    .money-num-money {
       color: var(--color-search-box-text-1);
 
     }
+
     .img_1 {
       margin-right: 5px;
       width: 17px;
@@ -501,6 +494,7 @@ const getLangBet = (item: any) => {
     font-weight: 400;
   }
 }
+
 // 提前结算
 .ahead-btn {
   margin-top: 13px;

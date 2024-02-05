@@ -22,7 +22,11 @@ const userModule: Module<User, any> = {
     peopleInfo: {},
     aheadOrderList: [],
     resultTab: 0,
-    isAnonymity
+    keepCache: false,
+    locationHeight: false,
+    scrollNumY: 0,
+    isAnonymity,
+    currentWallet: {}
   },
   mutations: {
     SET_TOKEN: (state, token: string) => {
@@ -67,7 +71,7 @@ const userModule: Module<User, any> = {
     async configSettingNew({ state }, params = {}) {
       localStore.setItem('plateMaskKey', params.handicapType)
       const res = await configSettingNew(params)
-      state.userConfig = res.data || {}
+      state.userConfig = res?.data || {}
     },
     // 用户配置
     async anonyToken({ commit }) {
@@ -90,6 +94,7 @@ const userModule: Module<User, any> = {
       if (res.code === 200) {
         state.currencyData = res.data || {}
         state.currency = res.data[0].currency || {}
+        state.currentWallet = res.data[0]
         this.dispatch('user/getBalance', { wid: res.data[0].walletId || '' })
       }
     },
@@ -140,6 +145,15 @@ const userModule: Module<User, any> = {
     // 结果tabIndex
     async getResultTab({ state }, params) {
       state.resultTab = params
+    },
+
+    // 页面高度
+    async getScrollNumY({ state }, params) {
+      state.scrollNumY = params
+    },
+    // 是否有坐标高度
+    async getLocationHeight({ state }, params) {
+      state.locationHeight = params
     },
     // 进行中的注单
     async pendingOrder({ state }, params = { }) {

@@ -1,7 +1,7 @@
 <template>
   <div class="sport-champion-list">
     <div class="champion-title">
-      <ArrowTitle class="mt10 mb10 goodArrowTitle" :src="titleIcon" :text="$t('sport.champion')" @returnSuccess="CloseClick" />
+      <ArrowTitle class="mt10 mb10 goodArrowTitle" ref="championArrowTitle"  :src="titleIcon" :text="$t('sport.champion')" @returnSuccess="CloseClick" />
     </div>
     <div v-show="isOpen" class="champion-group-body">
       <Loading v-if="championListLoading" />
@@ -23,6 +23,7 @@
 import championIcon from '@/assets/images/champion/league-icon.png'
 import Championitem from './champion-item.vue'
 import titleIcon from '@/assets/images/home/title-recommend.png'
+const championArrowTitle = ref()
 import { ref } from 'vue'
 const isOpen: any = ref(true)
 defineProps({
@@ -39,9 +40,13 @@ defineProps({
     }
   }
 })
-const CloseClick = (val:any) => {
+const CloseClick = (val: any) => {
+  championArrowTitle.value.activeVal = val
   isOpen.value = !val
 }
+defineExpose({
+  CloseClick
+})
 </script>
 
 <style lang="scss" scoped>

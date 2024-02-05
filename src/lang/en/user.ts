@@ -93,8 +93,10 @@ export default {
   end: 'Over',
   noFinal: 'Unsettlement',
   final: 'Settled',
-  hk: 'Hong Kong Handicap[Hk]',
-  Europe: 'European Handicap[Dec]',
+  hk: 'Hong Kong [HK]',
+  Europe: 'Decimal [DEC]',
+  IDOdd: 'Indonesia [ID]',
+  MYOdd: 'Malaysia [MY]',
   today: 'Today',
   fortyEight: 'Last 48 Hours',
   sevenDay: 'Last 7 Days',
@@ -127,6 +129,9 @@ export default {
   aheadFinal: 'Advance settlement',
   // 新增7
   contactUs: 'Contact Us',
+  type: 'Type',
+  homeName:'host',
+  awayName:'visitor',
 
   sports: {
     officeNumber: 'Bureau Number',

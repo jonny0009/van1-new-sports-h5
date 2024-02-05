@@ -45,5 +45,27 @@ export default {
   clickSub: 'Bấm để đặt chỗ',
   playNow: 'Bắt đầu chơi',
   emptyText: 'Không truy vấn dữ liệu liên quan',
-  platCloseAll: 'Điểm chấp đã đóng'
+  platCloseAll: 'Điểm chấp đã đóng',
+
+  clickOpenChat: 'Click để mở phòng trò chuyện',
+  stackBet: 'ngăn xếp',
+  dataBase: 'dữ liệu',
+  navSummary: 'Thống kê',
+  navBattle: 'Sơ đồ đội hình',
+  navRecent: 'Kết quả gần đây',
+  navEvents: 'Văn bản trực tiếp',
+  solveAnalyse: 'phân tích dự đoán',
+  score: 'điểm',
+  summaryInfo: 'thông tin thống kê',
+  battleWait: 'thay thế',
+  noDataHost: 'Không có đội chủ nhà thay thế',
+  noDataAway: 'Không có đội khách thay thế',
+  leaguePoints: 'bảng xếp hạng giải đấu',
+  rank: 'Xếp hạng',
+  balls: 'đội',
+  win: 'thắng',
+  tie: 'phẳng',
+  lose: 'tiêu cực',
+  point: 'điểm'
 }
+

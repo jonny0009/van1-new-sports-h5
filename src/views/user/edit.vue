@@ -97,6 +97,14 @@ const plateData = reactive<{ arr: any[] }>({
     {
       value: t('user.Europe'),
       key: 'E'
+    },
+    {
+      value: t('user.IDOdd'),
+      key: 'I'
+    },
+    {
+      value: t('user.MYOdd'),
+      key: 'M'
     }
   ]
 })

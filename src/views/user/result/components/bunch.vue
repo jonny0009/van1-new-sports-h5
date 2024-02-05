@@ -50,7 +50,8 @@
               {{ getLangBet(item1.betItemLang) }}
             </span>
             <span :class="[getRatioColor(item1.betResultDetail)]">
-              @{{ item1.ioRatio }}
+              <!-- @{{ item1.ioRatio }} -->
+              @<span v-points="item1.ioRatio "></span>
             </span>
           </div>
           <div class="one two">
@@ -90,17 +91,19 @@
         <span>{{ $t('user.BettingAmount') }}:</span>
         <span class="money-num-money">
           <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
-          <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
+          <!-- <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" /> -->
+          <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" >K₫ </span>
           <SvgIcon v-else name="user-usdt" class="img_1" />
           <span>
-            {{ formatMoney(item.gold) }}
+            <!-- 投注额 -->
+            <span  v-points="item.gold"></span>
           </span>
         </span>
       </div>
       <div class="money-num-2">
 
         <span v-if="item.state === 0|| item.state===-1||item.state=== 1">{{ $t('user.CompensableAmount') }}:</span>
-        <span v-else-if="item.state !==3&& item.state !==5 &&item.state !==0">{{ $t('user.practical') }}:</span>
+        <span v-else-if="ifPracticalMoneyNum(item)">{{ $t('user.practical') }}:</span>
 
         <span>
           <!-- 受理状态 -->
@@ -113,17 +116,18 @@
             </span>
           </span>
           <!-- 币种 -->
-          <span v-if="item.state !== 3 && item.state !== 5">
+          <span  v-if="ifPracticalMoneyNum(item)">
             <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
-            <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
+            <!-- <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" /> -->
+            <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" >K₫ </span>
             <SvgIcon v-else name="user-usdt" class="img_1" />
           </span>
 
           <span v-if="item.state === 0|| item.state===-1||item.state=== 1" class="num">
-            {{ formatMoney(getProfit(item)) }}
+            <span  v-points="getProfit(item)"></span>
           </span>
-          <span v-else-if="item.state !==3&& item.state !==5 " class="num">
-            {{ formatMoney(item.winGold) }}
+          <span v-else-if="ifPracticalMoneyNum(item)" class="num">
+            <span  v-points="item.winGold"></span>
           </span>
         </span>
       </div>
@@ -148,7 +152,7 @@
 
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
-import { formatMoney } from '@/utils/index'
+// import { formatMoney } from '@/utils/index'
 import { computed } from 'vue'
 import store from '@/store'
 const currency = computed(() => store.state.user.currency)
@@ -163,6 +167,14 @@ const props = defineProps({
 
 const getProfit = (item: any) => {
   return item.gold * item.sioRatio
+}
+
+// 是否显示实际金额
+const ifPracticalMoneyNum = (item: any) => {
+  if (item.state !== 3 && item.state !== 5 ||Number(item.cashoutType) === 2) {
+    return true
+  }
+  return false
 }
 // 图标状态
 const battleStatus = (val: any) => {

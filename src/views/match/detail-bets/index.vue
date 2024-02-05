@@ -2,8 +2,9 @@
   <div class="panel-bet">
     <BettingCollapse
       :match-info="matchInfo"
-      :group-list="playGroupList"
+      :group-list="playGroupBetList"
       :betting-list="playBettingList"
+      :loading="apiLoading"
       @tab-change="findGroupById"
     />
   </div>
@@ -16,7 +17,7 @@ import BettingCollapse from '@/components/BettingCollapse/index.vue'
 import store from '@/store'
 
 const matchInfo = computed(() => store.state.match.matchInfo)
-const { playGroupList, playBettingList, findGroupById } = useBetting()
+const { findGroupById, playGroupBetList, playBettingList, apiLoading } = useBetting()
 </script>
 
 <style lang="scss" scoped>

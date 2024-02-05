@@ -149,3 +149,34 @@ export const getURLSearchParams = () => {
 export const setTheme = () => {
   document.documentElement.dataset.theme = getTheme() || ''
 }
+
+// 获取默认语言
+export const getBrowserLanguage = () => {
+  const searchParams = getURLSearchParams()
+  if (window.navigator && window.navigator.language) {
+    const obj: any = {
+      'zh-cn': 'zh-cn',
+      'zh-tw': 'zh-tw',
+      'en-us': 'en-us',
+      'vi-vn': 'vi-vn',
+      'th-th': 'th-th',
+      'ko-kr': 'ko-kr',
+      'pt-pt': 'pt-pt',
+      en: 'en-us',
+      vi: 'vi-vn',
+      th: 'th-th',
+      ko: 'ko-kr',
+      pt: 'pt-pt'
+    }
+
+    let sysLanguage = ''
+    if (searchParams && searchParams.lang) {
+      sysLanguage = searchParams.lang
+    } else {
+      sysLanguage = window.navigator.language.toLowerCase()
+    }
+
+    return obj[sysLanguage] ? obj[sysLanguage] : 'en-us'
+  }
+  return 'en-us'
+}

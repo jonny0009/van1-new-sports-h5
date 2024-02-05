@@ -24,6 +24,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 import router from '@/router'
+import store from '@/store'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
@@ -65,6 +66,7 @@ const homeBarList = ref([
 ])
 
 const goClick = ({ routerName }: any) => {
+  store.dispatch('user/getLocationHeight', false)
   const params = {
     name: routerName
   }

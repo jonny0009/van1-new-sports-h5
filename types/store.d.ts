@@ -28,7 +28,11 @@ declare interface User {
   championLangList: any
   peopleInfo: any
   aheadOrderList: any
-  resultTab:any
+  resultTab: any
+  scrollNumY: any
+  locationHeight: any
+  currentWallet: any
+  keepCache: any
   token: string | undefined | null
 }
 declare interface Betting {
@@ -53,18 +57,21 @@ declare interface Betting {
   comboT: any
   markets: any
   comboMarkets: any
+  parlayMarkets: any
   results: any
   isOne: boolean
   hitState: any
   moreShow: any
   moreParams: any
   oddChangesState: any
+  combosErrorIds: any
 }
 
 declare interface Match {
   pictureinpictureGidm: any
   matchInfo: any
   matchData: any
+  needTimer: boolean
 }
 
 declare module '@vue/runtime-core' {

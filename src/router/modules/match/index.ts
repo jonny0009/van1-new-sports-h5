@@ -8,7 +8,8 @@ export default {
       path: '',
       component: () => import('@/views/match/list.vue'),
       meta: {
-        showSportsTabsView: true
+        showSportsTabsView: true,
+        KeepAlive:true
       }
     },
 

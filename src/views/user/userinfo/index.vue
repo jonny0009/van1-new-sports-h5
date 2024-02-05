@@ -154,7 +154,8 @@ onMounted(() => {
 
 const getStandings = async () => {
   const params = {
-    type: 2
+    type: '3',
+    lastDayCount:90
   }
   const res: any = await standings(params)
   if (res.code !== 200) {
