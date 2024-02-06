@@ -421,8 +421,9 @@ defineExpose({
           }
 
           .money-symbol {
-            font-size: 22px;
+            font-size: 24px;
             color: var(--color-search-box-text-1);
+            margin-right: 5px;
           }
         }
       }
