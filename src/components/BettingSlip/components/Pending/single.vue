@@ -135,13 +135,13 @@
       <div v-if="item.creditState === 0 && earlyMoney(item)">
         <div v-if="!item.btnLogin" class="ahead-btn" @click="handleFinal(item)">
           <span>{{ $t('user.aheadFinal') }}</span>
-          <CurrencyComp />
-          <span v-points="earlyMoney(item)"></span>
+          <CurrencyComp class="money-icon"/>
+          <span class="money-num" v-points="earlyMoney(item)"></span>
         </div>
         <div v-else class="ahead-btn">
           <span>{{ $t('user.aheadFinal') }}</span>
-          <CurrencyComp />
-          <span v-points="earlyMoney(item)"></span>
+          <CurrencyComp class="money-icon"/>
+          <span  class="money-num" v-points="earlyMoney(item)"></span>
           <span class="loading-icon"></span>
         </div>
       </div>
@@ -475,7 +475,15 @@ const getLangBet = (item: any) => {
   color: #FFFFFF;
   letter-spacing: 0;
   font-weight: 600;
-
+  display: flex;
+  align-items: center;
+  .money-icon{
+    margin-top: -12px !important;
+  }
+  .money-num{
+    margin-left: 29px;
+  }
+  
   .img_1 {
     margin: 0 8px;
     font-weight: 500;
