@@ -465,15 +465,16 @@ defineExpose({
           color: var(--color-search-box-text-1);
           letter-spacing: 0;
           font-weight: 600;
-          span {}
+
           img {
             width: 20px;
             height: 20px;
           }
 
           .money-symbol {
-            font-size: 22px;
+            font-size: 24px;
             color: var(--color-search-box-text-1);
+            margin-right: 5px;
           }
         }
       }
