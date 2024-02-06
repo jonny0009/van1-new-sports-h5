@@ -79,7 +79,7 @@
         <!-- logo -->
         <div class="logoImg">
           <template v-if="config.leftLogo">
-            <van-image class="logo" fit="contain" :src="config.leftLogo" />
+            <van-image class="logo" fit="contain" :src="window.AIConfig.static_url + config.leftLogo" />
           </template>
           <template v-else>
             <van-image v-if="ifBLue" class="logo" fit="contain" :src="aiLogo" />

@@ -9,31 +9,34 @@
         />
       </template>
       <template #title>
-        <img v-if="ifBLue" class="img_2" src="@/assets/images/user/blue/logo1.png" alt="" />
-        <img v-else class="img_2" src="@/assets/images/user/logo1.png" alt="" />
-      </template>
-      <template #right>
 
-        <template v-if="config.loginBanner">
+        <template v-if="config.loginBarLogo">
           <img
-            :src="config.loginBanner "
+            :src="window.AIConfig.static_url + config.loginBarLogo"
             alt=""
           >
         </template>
+
         <template v-else>
-          <img
-            v-if="ifBLue"
-            class="img_3"
-            src="@/assets/images/user/blue/sever.png"
-            alt=""
-          />
-          <img
-            v-else
-            class="img_3"
-            src="@/assets/images/login/service@2x.png"
-            alt=""
-          />
+          <img v-if="ifBLue" class="img_2" src="@/assets/images/user/blue/logo1.png" alt="" />
+          <img v-else class="img_2" src="@/assets/images/user/logo1.png" alt="" />
         </template>
+
+      </template>
+      <template #right>
+
+        <img
+          v-if="ifBLue"
+          class="img_3"
+          src="@/assets/images/user/blue/sever.png"
+          alt=""
+        />
+        <img
+          v-else
+          class="img_3"
+          src="@/assets/images/login/service@2x.png"
+          alt=""
+        />
 
       </template>
     </van-nav-bar>
@@ -47,18 +50,27 @@
         <span @click="login">{{ $t('user.logOn') }}</span>
       </div>
       <div class="ban">
-        <img
-          v-if="ifBLue"
-          class="ban_1"
-          src="@/assets/images/user/blue/login_bg.png"
-          alt=""
-        />
-        <img
-          v-else
-          class="ban_1"
-          src="@/assets/images/login/login.png"
-          alt=""
-        />
+
+        <template v-if="config.loginBanner">
+          <img
+            :src="window.AIConfig.static_url + config.loginBanner"
+            alt=""
+          >
+        </template>
+        <template v-else>
+          <img
+            v-if="ifBLue"
+            class="ban_1"
+            src="@/assets/images/user/blue/login_bg.png"
+            alt=""
+          />
+          <img
+            v-else
+            class="ban_1"
+            src="@/assets/images/login/login.png"
+            alt=""
+          />
+        </template>
       </div>
 
       <div class="list-set">
