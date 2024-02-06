@@ -118,16 +118,12 @@
     <div v-if="item.creditState === 0 && earlyMoney(item)">
       <div v-if="!item.btnLogin" class="ahead-btn" @click="handleFinal(item)">
         <span>{{ $t('user.aheadFinal') }}</span>
-        <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
-        <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1">K₫ </span>
-        <SvgIcon v-else name="user-usdt" class="img_1" />
+        <CurrencyComp />
         <span v-points="earlyMoney(item)"></span>
       </div>
       <div v-else class="ahead-btn">
         <span>{{ $t('user.aheadFinal') }}</span>
-        <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
-        <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1">K₫ </span>
-        <SvgIcon v-else name="user-usdt" class="img_1" />
+        <CurrencyComp />
         <span v-points="earlyMoney(item)"></span>
         <span class="loading-icon"></span>
       </div>
@@ -143,7 +139,6 @@ import { computed } from 'vue'
 import store from '@/store'
 import CurrencyComp from './currency.vue'
 
-const currency = computed(() => store.state.user.currency)
 const teamNameList = computed(() => store.state.user.teamNameList || [])
 const aheadOrderList = computed(() => store.state.user.aheadOrderList || [])
 
