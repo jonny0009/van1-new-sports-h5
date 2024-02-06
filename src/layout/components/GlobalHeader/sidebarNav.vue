@@ -6,16 +6,31 @@
         <div class="top">
           <div class="top_1">
             <div class="left">
-              <img v-img="userInfo.headImg" class="headImg" :type="3" style="object-fit: cover;"
-                @click.stop="toUser('/userInfo')" />
+              <img
+                v-img="userInfo.headImg"
+                class="headImg"
+                :type="3"
+                style="object-fit: cover;"
+                @click.stop="toUser('/userInfo')"
+              />
             </div>
             <div class="right">
               <div class="head">
                 <div class="head_1" @click.self="toUser('/userInfo')"> {{ $t('user.ViewProfile') }} </div>
-                <img v-if="ifBLue" class="headImg_1" fit="contain" src="@/assets/images/user/blue/bell.png"
-                  @click="toUser('/notice')" />
-                <img v-else class="headImg_1" fit="contain" src="@/assets/images/user/notice.svg"
-                  @click="toUser('/notice')" />
+                <img
+                  v-if="ifBLue"
+                  class="headImg_1"
+                  fit="contain"
+                  src="@/assets/images/user/blue/bell.png"
+                  @click="toUser('/notice')"
+                />
+                <img
+                  v-else
+                  class="headImg_1"
+                  fit="contain"
+                  src="@/assets/images/user/notice.svg"
+                  @click="toUser('/notice')"
+                />
               </div>
               <div class="money">
                 <img v-if="currency === 'CNY'" class="headImg_2" :src="CNY" style="object-fit: contain;" />
@@ -92,6 +107,7 @@ const balance = computed(() => store.state.user.balance)
 const currency = computed(() => store.state.user.currency)
 const theme = computed(() => store.state.app.theme)
 const config = computed(() => store.state.app.customizeConfig)
+console.log(config, 'config')
 
 import CNY from '@/assets/images/user/CNY.svg'
 import VNDK from '@/assets/images/user/VNDK.svg'
