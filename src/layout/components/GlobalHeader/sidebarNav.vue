@@ -79,7 +79,7 @@
         <!-- logo -->
         <div class="logoImg">
           <template v-if="config.leftLogo">
-            <van-image class="logo" fit="contain" :src="window.AIConfig.static_url + config.leftLogo" />
+            <van-image class="logo" fit="contain" :src="imgUrlFormat(config.leftLogo)" />
           </template>
           <template v-else>
             <van-image v-if="ifBLue" class="logo" fit="contain" :src="aiLogo" />
@@ -97,7 +97,7 @@ import { ref, computed } from 'vue'
 import logoImg from '@/assets/images/user/logo.png'
 import aiLogo from '@/assets/images/user/blue/ai_logo.png'
 import USDTImg from '@/assets/images/globalLayout/header/USDT.png'
-import { formatMoney } from '@/utils/index'
+import { formatMoney, imgUrlFormat } from '@/utils/index'
 
 import store from '@/store'
 

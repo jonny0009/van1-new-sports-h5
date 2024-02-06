@@ -12,7 +12,7 @@
 
         <template v-if="config.loginBarLogo">
           <img
-            :src="window.AIConfig.static_url + config.loginBarLogo"
+            :src="imgUrlFormat(config.loginBarLogo)"
             alt=""
           >
         </template>
@@ -53,7 +53,7 @@
 
         <template v-if="config.loginBanner">
           <img
-            :src="window.AIConfig.static_url + config.loginBanner"
+            :src="imgUrlFormat(config.loginBanner)"
             alt=""
           >
         </template>
@@ -130,6 +130,7 @@ import localStore from '@/utils/localStore'
 // import { getPlateMask } from '@/api/user'
 // import { getToken } from '@/utils/auth'
 import store from '@/store'
+import { imgUrlFormat } from '@/utils/index'
 
 const $router = useRouter()
 const popupTitle = ref('')
