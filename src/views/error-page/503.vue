@@ -41,11 +41,12 @@ const config = computed(() => store.state.app.customizeConfig)
 
 const timeDate = computed(() => {
   const time = store.state.app.systemTime - new Date().getTime()
+  console.log(time)
   return time
 })
 
 function finish() {
-  $router.push('/home')
+  // $router.push('/home')
 }
 </script>
 
