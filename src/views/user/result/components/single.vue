@@ -106,18 +106,16 @@
             </span>
 
             <!-- 币种 -->
-
             <span v-if="ifPracticalMoneyNum(item, item1)">
-              <span v-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL'">
-                <CurrencyComp />
-              </span>
-              <span v-if="item.state === 0 || item.state === -1 || item.state === 1" class="num color-1">
-                <span v-points="getProfit(item, item1)"></span>
-              </span>
-              <span v-else-if="ifPracticalMoneyNum(item, item1)" class="color-1">
-                <span v-points="item.winGold"></span>
-              </span>
+              <CurrencyComp />
             </span>
+            <span v-if="item.state === 0 || item.state === -1 || item.state === 1" class="num color-1">
+              <span v-points="getProfit(item, item1)"></span>
+            </span>
+            <span v-else-if="ifPracticalMoneyNum(item, item1)" class="color-1">
+              <span v-points="item.winGold"></span>
+            </span>
+            
           </div>
         </div>
       </div>

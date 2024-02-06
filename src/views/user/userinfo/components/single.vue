@@ -100,6 +100,7 @@
                 {{ $t('user.affirmPend') }}
               </span>
             </span>
+            
             <span v-if="ifPracticalMoneyNum(item,item1)">
               <CurrencyComp />
             </span>
