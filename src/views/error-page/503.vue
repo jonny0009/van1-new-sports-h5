@@ -3,7 +3,7 @@
     <div class="title">
       <img
         v-if="config.maintainLogo"
-        :src="imgUrlFormat( config.maintainLogo)"
+        :src="imgUrlFormat(config.maintainLogo)"
         alt=""
       >
       <img
@@ -40,7 +40,17 @@ const $router = useRouter()
 const config = computed(() => store.state.app.customizeConfig)
 
 const timeDate = computed(() => {
-  const time = store.state.app.systemTime - new Date().getTime()
+  // const time = store.state.app.systemTime - new Date().getTime()s
+  const msg = store.state.app.mantainMsg
+
+  // const systemTime = store.state.app.systemTime
+  // const msg = '3,2024-01-24 16:13:37,2024-01-24 23:59:59,true'
+  let time = null
+  if (msg) {
+    const strFlag = msg.split(',')[2]
+    time = strFlag.replaceAll('-', '/')
+    time = new Date(time).getTime() - store.state.app.systemTime
+  }
   return time
 })
 
