@@ -96,7 +96,8 @@ const userModule: Module<User, any> = {
         state.currency = res.data[0].currency || {}
         state.currentWallet = res.data[0]
         this.dispatch('user/getBalance', { wid: res.data[0].walletId || '' })
-        this.dispatch('app/getConfig', { wid: res.data[0].walletId || '' })
+      } else {
+        this.dispatch('app/getConfig', { wid: 1 })
       }
     },
 
