@@ -11,7 +11,6 @@
         <div v-else class="avatar" @click="showInfo">
           <img v-img="userInfo.headImg" :type="3" style="object-fit: cover" />
         </div>
-
         <div v-if="loginToken && !isAnonymity" class="wallet">
           <div class="cur">
             <img :src="imgUrlFormat(currentWallet.currencyLogo)" style="object-fit: contain;" />
@@ -33,6 +32,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { imgUrlFormat } from '@/utils/index'
 import { getToken } from '@/utils/auth'
 import router from '@/router'
 import store from '@/store'
@@ -42,7 +42,6 @@ import CNY from '@/assets/images/user/CNY.svg'
 import VNDK from '@/assets/images/user/VNDK.svg'
 // import BAXI from '@/assets/images/user/BAXI.svg'
 import transactionImg from '@/assets/images/globalLayout/header/transaction.png'
-import { imgUrlFormat } from '@/utils/index'
 
 // import { formatMoney } from '@/utils/index'
 const isAnonymity = computed(() => store.state.user.isAnonymity)
