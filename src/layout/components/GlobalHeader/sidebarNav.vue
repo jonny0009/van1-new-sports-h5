@@ -33,9 +33,9 @@
                 />
               </div>
               <div class="money">
-                <span class="headImg_2">{{ currency }}</span>
-                <!-- <img v-if="currency === 'CNY'" class="headImg_2" :src="CNY" style="object-fit: contain;" />
-                <img v-else-if="currency === 'VNDK'" class="headImg_2" :src="VNDK" style="object-fit: contain;" />
+                <!-- <span class="headImg_2">{{ currency }}</span> -->
+                <img class="headImg_2" :src="imgUrlFormat(currentWallet.currencyLogo)" style="object-fit: contain;" />
+                <!--  <img v-else-if="currency === 'VNDK'" class="headImg_2" :src="VNDK" style="object-fit: contain;" />
                 <img v-else class="headImg_2" :src="USDTImg" style="object-fit: contain;" /> -->
                 <span>{{ formatMoney(balance.balance) }}</span>
               </div>
@@ -94,18 +94,18 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
+import { formatMoney, imgUrlFormat } from '@/utils/index'
 
 import logoImg from '@/assets/images/user/logo.png'
 import aiLogo from '@/assets/images/user/blue/ai_logo.png'
 import USDTImg from '@/assets/images/globalLayout/header/USDT.png'
-import { formatMoney, imgUrlFormat } from '@/utils/index'
 
 import store from '@/store'
 
 const userInfo = computed(() => store.state.user.userInfo)
 const peopleInfo = computed(() => store.state.user.peopleInfo)
 const balance = computed(() => store.state.user.balance)
-const currency = computed(() => store.state.user.currency)
+const currentWallet = computed(() => store.state.user.currentWallet)
 const theme = computed(() => store.state.app.theme)
 const config = computed(() => store.state.app.customizeConfig)
 

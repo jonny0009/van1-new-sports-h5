@@ -99,14 +99,14 @@
               <div v-if="item.payWay === 4"> {{ $t('user.compensate') }}</div>
               <div v-else> {{ $t('user.betNum') }}</div>
               <div class="right-1">
-                <CurrencyComp />
+                <span class="money-symbol">{{ currency }}</span>
                 <span v-points="item.tradeGold"></span>
               </div>
             </div>
             <div>
               <div> {{ $t('user.balance') }}</div>
               <div class="right-1">
-                <CurrencyComp />
+                <span class="money-symbol">{{ currency }}</span>
                 <span v-points="item.gold"></span>
               </div>
             </div>
@@ -119,7 +119,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import { formatToDateTime } from '@/utils/date'
 // import { formatMoney } from '@/utils/index'
 import moment from 'moment'
@@ -127,7 +127,9 @@ import moment from 'moment'
 import CNY1 from '@/assets/images/user/CNY1.svg'
 // import VNDK1 from '@/assets/images/user/VNDK1.svg'
 import USDT1 from '@/assets/images/user/USDT1.png'
-import CurrencyComp from './currency.vue'
+import store from '@/store'
+
+const currency = computed(() => store.state.user.currency)
 
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
@@ -463,7 +465,7 @@ defineExpose({
           color: var(--color-search-box-text-1);
           letter-spacing: 0;
           font-weight: 600;
-
+          span {}
           img {
             width: 20px;
             height: 20px;
