@@ -107,7 +107,6 @@ const balance = computed(() => store.state.user.balance)
 const currency = computed(() => store.state.user.currency)
 const theme = computed(() => store.state.app.theme)
 const config = computed(() => store.state.app.customizeConfig)
-console.log(config, 'config')
 
 import CNY from '@/assets/images/user/CNY.svg'
 import VNDK from '@/assets/images/user/VNDK.svg'
