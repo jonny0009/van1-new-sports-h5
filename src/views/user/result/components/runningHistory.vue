@@ -30,8 +30,15 @@
       {{ $t('user.noData') }}
     </p>
   </div>
-  <van-list v-if="list.arr.length || !finished" v-model:loading="loading" :finished="finished"
-    :finished-text="$t('live.noMore')" :loading-text="$t('user.loadingText')" class="dataList" @load="onLoad">
+  <van-list
+    v-if="list.arr.length || !finished"
+    v-model:loading="loading"
+    :finished="finished"
+    :finished-text="$t('live.noMore')"
+    :loading-text="$t('user.loadingText')"
+    class="dataList"
+    @load="onLoad"
+  >
     <div v-for="(outItem, outIndex) in dataList.arr" :key="outIndex" class="dataList-item">
       <div class="date-title">{{ outItem.date }}</div>
       <div v-for="(item, index) in outItem.list" :key="index" class="item">
@@ -57,14 +64,14 @@
               <div v-if="getPayStatus(item)"> {{ $t('user.compensate') }}</div>
               <div v-else> {{ $t('user.betNum') }}</div>
               <div class="right-1">
-                <CurrencyComp />
+                <span class="money-symbol">{{ currency }}</span>
                 <span v-points="item.tradeGold"></span>
               </div>
             </div>
             <div>
               <div> {{ $t('user.balance') }}</div>
               <div class="right-1">
-                <CurrencyComp />
+                <span class="money-symbol">{{ currency }}</span>
                 <span v-points="item.gold"></span>
               </div>
             </div>
@@ -77,11 +84,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import { formatToDateTime } from '@/utils/date'
 import moment from 'moment'
+import store from '@/store'
 
-import CurrencyComp from './currency.vue'
+const currency = computed(() => store.state.user.currency)
 
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
@@ -136,7 +144,7 @@ const setDateTime = (values: any) => {
 }
 // 结算方式
 const getPayStatus = (item:any) => {
-  if (item.tradeType==='SETTLEMENT'||item.tradeType==='CASHOUT_ALL') {
+  if (item.tradeType === 'SETTLEMENT' || item.tradeType === 'CASHOUT_ALL') {
     return true
   }
   return false
