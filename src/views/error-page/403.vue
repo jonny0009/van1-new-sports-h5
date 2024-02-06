@@ -1,9 +1,10 @@
 <template>
   <div class="page-404">
     <div class="title">
+
       <img
         v-if="config.maintainLogo"
-        src=""
+        :src="window.AIConfig.static_url + config.maintainLogo"
         alt=""
       >
       <img
