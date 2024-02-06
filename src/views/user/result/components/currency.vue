@@ -1,16 +1,11 @@
 <template>
-
-  <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
-  <span v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1">{{ currentWallet.flatMoney }} </span>
-  <SvgIcon v-else name="user-usdt" class="img_1" />
-
+  <span class="img_1">{{ currency }} </span>
 </template>
 <script lang="ts" setup>
 import store from '@/store'
 import {  computed} from 'vue'
 
 const currency = computed(() => store.state.user.currency)
-const currentWallet = computed(() => store.state.user.currentWallet)
 </script>
 
 <style scoped>
