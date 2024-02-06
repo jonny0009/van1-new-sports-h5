@@ -3,7 +3,7 @@
     <div class="title">
       <img
         v-if="config.maintainLogo"
-        :src="window.AIConfig.static_url + config.maintainLogo"
+        :src="imgUrlFormat(config.maintainLogo)"
         alt=""
       >
       <img
@@ -27,6 +27,8 @@
 import { computed } from 'vue'
 import store from '@/store'
 const config = computed(() => store.state.app.customizeConfig)
+import { imgUrlFormat } from '@/utils/index'
+
 </script>
 
 <style lang="scss" scoped>
