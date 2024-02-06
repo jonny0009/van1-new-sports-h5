@@ -14,9 +14,7 @@
 
         <div v-if="loginToken && !isAnonymity" class="wallet">
           <div class="cur">
-            <img v-if="currency==='CNY'" :src="currentWallet.currencyLogo || CNY" style="object-fit: contain;" />
-            <img v-else-if="currency==='VNDK'" :src="currentWallet.currencyLogo || VNDK" style="object-fit: contain;" />
-            <img v-else :src="USDTImg" style="object-fit: contain;" />
+            <img :src="imgUrlFormat(currentWallet.currencyLogo)" style="object-fit: contain;" />
           </div>
           <span v-points="balance.balance"></span>
           <div class="transaction">
@@ -44,6 +42,7 @@ import CNY from '@/assets/images/user/CNY.svg'
 import VNDK from '@/assets/images/user/VNDK.svg'
 // import BAXI from '@/assets/images/user/BAXI.svg'
 import transactionImg from '@/assets/images/globalLayout/header/transaction.png'
+import { imgUrlFormat } from '@/utils/index'
 
 // import { formatMoney } from '@/utils/index'
 const isAnonymity = computed(() => store.state.user.isAnonymity)
