@@ -107,7 +107,7 @@ const getMatcheInfo = async () => {
 
 const gotoLive = () => {
   const { showtype, gidm } = matchInfo.value
-  if (showtype == 'RB') {
+  if (showtype === 'RB') {
     router.push(`/match/${gidm}`)
   }
 }
