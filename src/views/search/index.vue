@@ -237,6 +237,7 @@ const toUrlGame = (item: any) => {
     .line-color {
       background: #E5ECF3;
       height: 2px;
+      margin-top: 6px;
     }
 
     .font_1 {
@@ -317,6 +318,7 @@ const toUrlGame = (item: any) => {
     .content-list {
       // height: calc(100vh - 300px);
       padding-bottom: 50px;
+      margin-top: -7px;
       overflow-y: auto;
     }
 
