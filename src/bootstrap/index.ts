@@ -29,6 +29,7 @@ export default async () => {
   modifyRatioTypeListMapping()
   // 查询单双线玩法
   store.dispatch('app/getDoubleLineInfo')
+  store.dispatch('app/getConfig', { wid: 1 })
 
   // 匿名登录
   if (
