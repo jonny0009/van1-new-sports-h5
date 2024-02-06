@@ -14,6 +14,7 @@
           <img
             :src="imgUrlFormat(config.loginBarLogo)"
             alt=""
+            class="img_2"
           >
         </template>
 
@@ -60,13 +61,11 @@
         <template v-else>
           <img
             v-if="ifBLue"
-            class="ban_1"
             src="@/assets/images/user/blue/login_bg.png"
             alt=""
           />
           <img
             v-else
-            class="ban_1"
             src="@/assets/images/login/login.png"
             alt=""
           />
@@ -190,7 +189,7 @@ const onClickRight = () => {
 
 onMounted(() => {
   const obj = plateData.arr.find((item: any) => {
-    if (item.key === plateMaskKey || '') {
+    if (item.key === plateMaskKey ) {
       return item
     }
   })
@@ -255,6 +254,7 @@ const login = () => {
       // width: 77px;
       height: 63px;
       color: var(--title-text-font-color);
+      object-fit: cover;
     }
 
     .img_3 {

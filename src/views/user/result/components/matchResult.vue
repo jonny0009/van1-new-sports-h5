@@ -220,6 +220,12 @@ defineExpose({
   }
 }
 
+.color-line {
+  margin-top: 20px;
+  margin-bottom: 18px;
+  background: var(--color-search-box-sidebar);
+}
+
 // 列表
 .dataList {
   margin-top: 20px;
@@ -236,10 +242,6 @@ defineExpose({
 
   .color-3 {
     color: red;
-  }
-
-  .color-line {
-    background: var(--color-search-box-sidebar);
   }
 
   .item {

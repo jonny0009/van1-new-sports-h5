@@ -135,8 +135,8 @@ const setDateTime = (values: any) => {
   onLoad()
 }
 // 结算方式
-const getPayStatus = (item:any) => {
-  if (item.tradeType==='SETTLEMENT'||item.tradeType==='CASHOUT_ALL') {
+const getPayStatus = (item: any) => {
+  if (item.tradeType === 'SETTLEMENT' || item.tradeType === 'CASHOUT_ALL') {
     return true
   }
   return false
@@ -300,6 +300,12 @@ defineExpose({
   }
 }
 
+.color-line {
+  margin-top: 20px;
+  margin-bottom: 18px;
+  background: var(--color-search-box-sidebar);
+}
+
 // 列表
 .dataList {
   margin-top: 20px;
@@ -319,9 +325,7 @@ defineExpose({
     color: #1ebb52;
   }
 
-  .color-line {
-    background: var(--color-search-box-sidebar);
-  }
+
 
   .date-title {
     font-family: PingFangSC-Semibold;
