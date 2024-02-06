@@ -24,6 +24,11 @@
         />
       </div>
 
+      <div class="area-btn">
+
+        <span @click="contactUs">{{ $t('user.contactUs') }}</span>
+      </div>
+
     </div>
 
   </div>
@@ -50,12 +55,19 @@ const timeDate = computed(() => {
     const strFlag = msg.split(',')[2]
     time = strFlag.replaceAll('-', '/')
     time = new Date(time).getTime() - store.state.app.systemTime
+    if (time < 0) {
+      finish()
+    }
   }
   return time
 })
 
 function finish() {
-  // $router.push('/home')
+  $router.push('/home')
+}
+
+function contactUs() {
+  $router.push('/user/contactUs')
 }
 </script>
 
@@ -67,7 +79,7 @@ function finish() {
 
 .page-404 {
   .title {
-    padding-top: 86px;
+    padding-top: 80px;
     width: 100%;
     text-align: center;
     img {
@@ -78,7 +90,7 @@ function finish() {
   .content {
     .img-warp {
       text-align: center;
-      padding-top: 150px;
+      padding-top: 80px;
       width: 100%;
       img {
         width: 400px;
@@ -107,4 +119,29 @@ function finish() {
     }
   }
 }
+
+ .area-btn {
+      margin-top: 60px;
+        text-align: center;
+
+      span {
+        display: inline-block;
+        background-image: linear-gradient(
+          to right,
+          var(--color-login-button-color-1),
+          var(--color-login-button-color-2)
+        );
+        text-align: center;
+        font-size: 28px;
+        font-weight: 500;
+        font-family: PingFangSC-Semibold;
+        height: 80px;
+        line-height: 80px;
+        width: 320px;
+        border-radius: 80px;
+
+          color: #ffff;
+
+      }
+    }
 </style>
