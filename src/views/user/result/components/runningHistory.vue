@@ -54,7 +54,7 @@
           </div>
           <div class="right">
             <div>
-              <div v-if="item.payWay === 4"> {{ $t('user.compensate') }}</div>
+              <div v-if="getPayStatus(item)"> {{ $t('user.compensate') }}</div>
               <div v-else> {{ $t('user.betNum') }}</div>
               <div class="right-1">
                 <CurrencyComp />
@@ -104,7 +104,7 @@ const typeList = reactive<{ arr: any }>({ arr: [] })
 
 const emit = defineEmits(['valueChange', 'timeChange'])
 
-const popupList = reactive<{ arr: any[] }>({arr: []})
+const popupList = reactive<{ arr: any[] }>({ arr: [] })
 
 import { showToast } from 'vant'
 
@@ -114,10 +114,10 @@ const dateTimeVal = ref<any>({
 })
 
 onMounted(() => {
+  TradeTyp()
   endTime.value = moment().valueOf()
   const oneDayDate = 24 * 60 * 60 * 1000
   beginTime.value = endTime.value - oneDayDate * 90
-  TradeTyp()
 })
 
 const setDateTime = (values: any) => {
@@ -133,6 +133,13 @@ const setDateTime = (values: any) => {
   page = 0
   list.arr = []
   onLoad()
+}
+// 结算方式
+const getPayStatus = (item:any) => {
+  if (item.tradeType==='SETTLEMENT'||item.tradeType==='CASHOUT_ALL') {
+    return true
+  }
+  return false
 }
 
 async function setPk(val: any) {
