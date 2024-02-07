@@ -112,7 +112,7 @@ const handleSave = async () => {
   }
   const params = {
     nickName: username.value,
-    lang: localStorage.getItem('locale')
+    lang: localStorage.getItem('locale')|| 'zh-cn'
   }
   const res: any = await updatePlayerInfo(params)
   if (res.code !== 200) {

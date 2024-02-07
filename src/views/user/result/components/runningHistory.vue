@@ -238,7 +238,7 @@ const getTitle = (type: any) => {
   if (typeList.arr.length) {
     const target = typeList.arr.find((item: any) => item.tradeType === type)
     const closeType = JSON.parse(target.manyName)
-    const lang: any = localStorage.getItem('locale') || {}
+    const lang: any = localStorage.getItem('locale') || 'zh-cn'
     return closeType[lang] || ''
   }
 }
