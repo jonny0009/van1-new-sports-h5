@@ -13,7 +13,14 @@
         </div>
         <div v-if="loginToken && !isAnonymity" class="wallet">
           <div class="cur">
-            <img :src="imgUrlFormat(currentWallet.currencyLogo)" style="object-fit: contain;" />
+            <template v-if="currentWallet.currencyLogo">
+              <img :src="imgUrlFormat(currentWallet.currencyLogo)" style="object-fit: contain;" />
+            </template>
+            <template v-else>
+              <img v-if="currency==='CNY'" :src="CNY" style="object-fit: contain;" />
+              <img v-else-if="currency==='VNDK'" :src="VNDK" style="object-fit: contain;" />
+              <img v-else :src="USDTImg" style="object-fit: contain;" />
+            </template>
           </div>
           <span v-points="balance.balance"></span>
           <div class="transaction">

@@ -3,7 +3,7 @@
 </template>
 <script lang="ts" setup>
 import store from '@/store'
-import {  computed} from 'vue'
+import { computed } from 'vue'
 
 const currency = computed(() => store.state.user.currency)
 </script>

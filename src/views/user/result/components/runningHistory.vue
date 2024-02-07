@@ -90,6 +90,7 @@ import moment from 'moment'
 import store from '@/store'
 
 const currency = computed(() => store.state.user.currency)
+// const currentWallet = computed(() => store.state.user.currentWallet)
 
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()

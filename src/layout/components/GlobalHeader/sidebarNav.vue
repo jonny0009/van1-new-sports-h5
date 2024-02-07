@@ -33,10 +33,15 @@
                 />
               </div>
               <div class="money">
-                <!-- <span class="headImg_2">{{ currency }}</span> -->
-                <img class="headImg_2" :src="imgUrlFormat(currentWallet.currencyLogo)" style="object-fit: contain;" />
-                <!--  <img v-else-if="currency === 'VNDK'" class="headImg_2" :src="VNDK" style="object-fit: contain;" />
-                <img v-else class="headImg_2" :src="USDTImg" style="object-fit: contain;" /> -->
+                <template v-if="currentWallet.currencyLogo">
+                  <img class="headImg_2" :src="imgUrlFormat(currentWallet.currencyLogo)" style="object-fit: contain;" />
+                </template>
+                <template v-else>
+                  <img v-if="currency === 'CNY'" class="headImg_2" :src="CNY" style="object-fit: contain;" />
+                  <img v-else-if="currency === 'VNDK'" class="headImg_2" :src="VNDK" style="object-fit: contain;" />
+                  <img v-else class="headImg_2" :src="USDTImg" style="object-fit: contain;" />
+                </template>
+
                 <span>{{ formatMoney(balance.balance) }}</span>
               </div>
             </div>
