@@ -63,7 +63,7 @@ const handleSave = async () => {
   const params = {
     headImg: postImg.value,
     nickName: userInfo.value.nickName,
-    lang: localStorage.getItem('locale')
+    lang: localStorage.getItem('locale')|| 'zh-cn'
   }
   const res: any = await updatePlayerInfo(params)
   if (res.code !== 200) {
