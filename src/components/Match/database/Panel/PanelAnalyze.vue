@@ -101,6 +101,7 @@ const plays = ['RE', 'R', 'RM', 'M', 'ROU', 'OU']
 const list = computed(() => {
   const showList: any[] = []
   const gameType = props.matchData.gameType
+  const session = gameType === 'BK' ? '0' : ''
   plays.forEach((playType: any) => {
     const playList = props.data[playType]
     if (playList?.length) {
@@ -119,7 +120,7 @@ const list = computed(() => {
         }
       })
       showList.push({
-        name: playName({ gameType, playType }),
+        name: playName({ gameType, playType, session }),
         ratios
       })
     }

@@ -4,10 +4,13 @@
       <van-collapse-item name="1" :title="$t('live.navRecent')" :border="false">
         <div class="panel-main">
           <div class="panel-main__wrapper">
-            <EmptyData v-if="recentList.length === 0" />
             <!-- start -->
-            <div v-else class="panel-recent">
-              <div class="panel-recent__item" v-for="item in recentList" :key="item.matchId">
+            <div class="panel-recent">
+              <div class="recent-header">
+                <div class="header-item" :class="{ active: teamType === 1 }" @click="fetchRecent(1)">{{ home }}</div>
+                <div class="header-item" :class="{ active: teamType === 2 }" @click="fetchRecent(2)">{{ away }}</div>
+              </div>
+              <div class="panel-recent__item" v-if="recentList.length" v-for="item in recentList" :key="item.matchId">
                 <div :class="['bar', 'host', barScoreColor(item, 'home')]"></div>
                 <section class="team">
                   <div class="team-host">
@@ -29,6 +32,7 @@
                 </section>
                 <div :class="['bar', 'away', barScoreColor(item, 'away')]"></div>
               </div>
+              <EmptyData v-else />
             </div>
             <!-- end -->
           </div>
@@ -75,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, ref, watch, onMounted } from 'vue'
+import { Ref, computed, onMounted, ref } from 'vue'
 import { teamRecentApi, homeAwayIntegralApi } from '@/api/live'
 import { formatToDate } from '@/utils/date'
 const props = defineProps({
@@ -84,25 +88,26 @@ const props = defineProps({
     default: () => {}
   }
 })
-watch(
-  () => props.matchData,
-  () => {
-    // fetchRecent()
-    // fetchIntegral()
-  }
-)
+
 onMounted(() => {
   fetchRecent()
   fetchIntegral()
 })
-
+const home = computed(() => {
+  return props.matchData.homeTeamShort || props.matchData.homeTeam
+})
+const away = computed(() => {
+  return props.matchData.awayTeamShort || props.matchData.awayTeam
+})
 const activeNames = ref(['1'])
 
 const recentList: Ref<any[]> = ref([])
-const fetchRecent = async () => {
-  const { homeTeamId } = props.matchData || {}
+const teamType = ref(1)
+const fetchRecent = async (state: number = 1) => {
+  teamType.value = state
+  const { homeTeamId, awayTeamId } = props.matchData || {}
   const params = {
-    teamId: homeTeamId,
+    teamId: teamType.value === 1 ? homeTeamId : awayTeamId,
     limit: 5
   }
   const res: any = await teamRecentApi(params)
@@ -181,6 +186,32 @@ const barScoreColor = (item: any, type: string) => {
 .panel-recent {
   min-height: 300px;
   padding: 20px 6px;
+
+  .recent-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+
+    .header-item {
+      width: 306px;
+      line-height: 52px;
+      text-align: center;
+      background-color: #007cfa;
+      font-size: 24px;
+      color: #fff;
+      font-family: PingFangSC-Medium;
+      border-radius: 25px;
+      opacity: 0.5;
+      &:nth-child(even) {
+        background-color: #dc3656;
+      }
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
+
   &__item {
     display: flex;
     flex-direction: column;
