@@ -416,8 +416,8 @@ const bettingModule: Module<Betting, any> = {
       if (state.comboMarkets.length === 0) {
         const markets = JSON.parse(JSON.stringify(state.markets))
         state.comboMarkets = markets.map((market: MarketInfo) => {
-          const { eoIor } = market
-          market.ior = eoIor * 1
+          const { eoIor, ior } = market
+          market.ior = eoIor * 1 || ior * 1
           return market
         })
       }
@@ -428,7 +428,6 @@ const bettingModule: Module<Betting, any> = {
 
       const params: any = combosHitParams(state.comboMarkets)
       const res: any = await betComboOrder(params).catch(() => {})
-      debugger
       if (res?.code === 200 && res?.data && res?.data?.length) {
         const data: any = res?.data[0] || {}
         const orderData = data.orderData || []
