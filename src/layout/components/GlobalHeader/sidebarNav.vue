@@ -110,6 +110,7 @@ import store from '@/store'
 const userInfo = computed(() => store.state.user.userInfo)
 const peopleInfo = computed(() => store.state.user.peopleInfo)
 const balance = computed(() => store.state.user.balance)
+const currency = computed(() => store.state.user.currency)
 const currentWallet = computed(() => store.state.user.currentWallet)
 const theme = computed(() => store.state.app.theme)
 const config = computed(() => store.state.app.customizeConfig)
