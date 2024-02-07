@@ -4,13 +4,11 @@
       <van-collapse-item name="1" :title="$t('live.solveAnalyse')" :border="false">
         <div class="panel-main">
           <div class="panel-main__wrapper">
-
-            <EmptyData v-if="anlyzeList.length === 0" />
-            <PanelAnalyze v-else :data="anlyzeList" />
+            <EmptyData v-if="JSON.stringify(anlyzeList) === '{}'" />
+            <PanelAnalyze v-else :data="anlyzeList" :matchData="matchData" />
           </div>
         </div>
       </van-collapse-item>
-
       <van-collapse-item name="2" :title="$t('live.score')" :border="false">
         <div class="panel-main">
           <div class="panel-main__wrapper">
@@ -58,7 +56,7 @@ onMounted(() => {
   fetchBetAnlyze()
 })
 
-const anlyzeList = ref([])
+const anlyzeList = ref({})
 const staticsList = ref([])
 const scoreList = ref([])
 const fetchStaticsEvents = async () => {

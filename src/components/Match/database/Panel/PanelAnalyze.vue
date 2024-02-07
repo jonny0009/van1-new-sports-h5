@@ -1,36 +1,43 @@
 <template>
   <div class="analyze">
     <van-swipe indicator-color="#9417D5">
-      <van-swipe-item v-for="item in 3" :key="item">
+      <van-swipe-item v-for="item in list" :key="item">
         <div class="analyze-header">
           <div class="host">
             <img src="@/assets/images/live/sub_d.png" alt="" />
-            <span>水晶宫 U21</span>
+            <span>{{ matchData.homeTeamShort || matchData.homeTeam }}</span>
           </div>
           <div class="away">
-            <span>西汉姆 U21</span>
+            <span>{{ matchData.awayTeamShort || matchData.awayTeam }}</span>
             <img src="@/assets/images/live/sub_u.png" alt="" />
           </div>
         </div>
         <div class="analyze-item">
-          <div class="analyze-title">独赢 — 投注次数</div>
+          <div class="analyze-title">{{ item.name }} — 投注次数</div>
           <div class="analyze-content">
-            <section class="host" style="flex: 33.3 1 0%">
-              <div class="percent">33.3%</div>
+            <section class="host" :style="{ flex: `${item.ratios[0].betCountRate * 100} 1 0%` }">
+              <div class="percent">{{ item.ratios[0].betCountRate * 100 }}%</div>
               <div class="bar"></div>
               <div class="value">
                 <span>1</span>
               </div>
             </section>
-            <section class="draw" style="flex: 0 1 0%">
-              <div class="percent">0%</div>
+            <section
+              class="draw"
+              v-if="item.ratios.length === 3"
+              :style="{ flex: `${item.ratios[1].betCountRate * 100} 1 0%` }"
+            >
+              <div class="percent">{{ item.ratios[1].betCountRate * 100 }}%</div>
               <div class="bar"></div>
               <div class="value">
                 <span>0</span>
               </div>
             </section>
-            <section class="away active" style="flex: 66.7 1 0%">
-              <div class="percent">66.7%</div>
+            <section
+              class="away active"
+              :style="{ flex: `${item.ratios[item.ratios.length - 1].betCountRate * 100} 1 0%` }"
+            >
+              <div class="percent">{{ item.ratios[item.ratios.length - 1].betCountRate * 100 }}%</div>
               <div class="bar"></div>
               <div class="value">
                 <span>3</span>
@@ -39,24 +46,31 @@
           </div>
         </div>
         <div class="analyze-item">
-          <div class="analyze-title">独赢 — 投注次数</div>
+          <div class="analyze-title">{{ item.name }} — 投注金额</div>
           <div class="analyze-content">
-            <section class="host" style="flex: 33.3 1 0%">
-              <div class="percent">33.3%</div>
+            <section class="host" :style="{ flex: `${item.ratios[0].betGoldRate * 100} 1 0%` }">
+              <div class="percent">{{ item.ratios[0].betGoldRate * 100 }}%</div>
               <div class="bar"></div>
               <div class="value">
                 <span>1</span>
               </div>
             </section>
-            <section class="draw" style="flex: 0 1 0%">
-              <div class="percent">0%</div>
+            <section
+              class="draw"
+              v-if="item.ratios.length === 3"
+              :style="{ flex: `${item.ratios[1].betGoldRate * 100} 1 0%` }"
+            >
+              <div class="percent">{{ item.ratios[1].betGoldRate * 100 }}%</div>
               <div class="bar"></div>
               <div class="value">
                 <span>0</span>
               </div>
             </section>
-            <section class="away active" style="flex: 66.7 1 0%">
-              <div class="percent">66.7%</div>
+            <section
+              class="away active"
+              :style="{ flex: `${item.ratios[item.ratios.length - 1].betGoldRate * 100} 1 0%` }"
+            >
+              <div class="percent">{{ item.ratios[item.ratios.length - 1].betGoldRate * 100 }}%</div>
               <div class="bar"></div>
               <div class="value">
                 <span>3</span>
@@ -70,11 +84,9 @@
 </template>
 
 <script setup lang="ts">
-
-import { ref } from 'vue'
+import { computed } from 'vue'
+import playName from '@/utils/playName'
 // playType  ---M独赢 R让球 OU大小 RM滚球独赢 RE滚球让球 ROU滚球大小  必传
-
-// R
 // ratioType=RH 主队
 // ratioType=RC 客队
 // RM的时候
@@ -97,10 +109,45 @@ const props = defineProps({
   data: {
     type: Array as any,
     default: () => []
+  },
+  matchData: {
+    type: Object,
+    default: () => {}
   }
 })
-const list = ref(props.data)
+const plays = ['RE', 'R', 'RM', 'M', 'ROU', 'OU']
 
+const list = computed(() => {
+  const showList: any[] = []
+  const gameType = props.matchData.gameType
+  plays.forEach((playType: any) => {
+    const playList = props.data[playType]
+    if (playList?.length) {
+      const playData = window.aiRatioType[playType]
+      const sorts = playData.sort
+      const ratios = sorts.map((ratioType: any) => {
+        const find = playList.find((play: any) => play.ratioType === ratioType)
+        if (find) {
+          return find
+        }
+        return {
+          betCountRate: 0,
+          betGoldRate: 0,
+          playType,
+          ratioType
+        }
+      })
+      showList.push({
+        name: playName({ gameType, playType }),
+        ratios
+      })
+    }
+  })
+
+  return showList
+})
+
+console.log(props.data)
 </script>
 
 <style lang="scss" scoped>

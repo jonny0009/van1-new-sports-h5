@@ -19,11 +19,11 @@
           @<span v-points="marketInfo.ior"></span>
           <span class="ior-change" :class="marketInfo.iorChange"></span>
         </div>
-        <div v-if="accountState && !marketInfo.iorChange && goldRule&&!error" class="gold-tips">
+        <div v-if="accountState && !marketInfo.iorChange && goldRule && !error" class="gold-tips">
           {{ $t('betting.goldTips', { min: marketInfo.goldMin, max: marketInfo.goldMax }) }}
           <div class="tips-arrow"></div>
         </div>
-        <div v-if="accountState&&!error" class="action">
+        <div v-if="accountState && !error" class="action">
           <div v-if="marketInfo.ratioChange" class="betting-slip-accept-button" @click="clearOddChange">
             {{ $t('betting.acceptRatios') }}
           </div>
@@ -32,7 +32,7 @@
           </div>
           <div v-else ref="inputBtn" class="betting-slip-input" :class="{ error: goldRule }" @click="inputTouch">
             <span class="currency"><van-icon name="balance-o" /></span>
-            <div style="flex: 1 1 0%;"></div>
+            <div style="flex: 1 1 0%"></div>
             <span class="amount" :class="{ selected: marketInfo.playOnlyId === editId }">{{ marketInfo.gold }}</span>
             <span v-show="marketInfo.playOnlyId === editId" class="cursor">|</span>
           </div>
@@ -41,25 +41,26 @@
       <div v-if="isCombo" class="combo-enable"></div>
       <div v-if="error" class="error-popup">
         <div class="lock"></div>
-        <div class="tips"> {{ $t('betting.eventClosure') }}</div>
+        <div class="tips">{{ $t('betting.eventClosure') }}</div>
       </div>
     </div>
   </transition>
 </template>
 <script lang="ts" setup>
 import store from '@/store'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 const inputBtn = ref()
 const props = defineProps({
   marketInfo: {
     type: Object,
-    default: () => { }
+    default: () => {}
   },
   accountState: {
     type: Boolean,
     default: false
   }
 })
+const userConfig: any = computed(() => store.state.user.userConfig)
 const mode = computed(() => store.state.betting.mode)
 const error = computed(() => {
   if (props.marketInfo.goldMax === '') {
@@ -74,12 +75,22 @@ const goldRule = computed(() => {
   if (props.marketInfo.gold * 1 <= 0) {
     return false
   }
-  if (props.marketInfo.gold * 1 > props.marketInfo.goldMax * 1 || props.marketInfo.gold * 1 < props.marketInfo.goldMin * 1) {
+  if (
+    props.marketInfo.gold * 1 > props.marketInfo.goldMax * 1 ||
+    props.marketInfo.gold * 1 < props.marketInfo.goldMin * 1
+  ) {
     return true
   }
   return false
 })
-
+watch(
+  () => userConfig.value.acceptAll,
+  () => {
+    if (userConfig.value.acceptAll) {
+      clearIorChange()
+    }
+  }
+)
 const state = ref(false)
 const remove = () => {
   state.value = true
@@ -142,7 +153,7 @@ const inputTouch = () => {
       margin: 5px;
       font-family: PingFangSC-Medium;
       font-size: 24px;
-      color: #FFFFFF;
+      color: #ffffff;
       letter-spacing: 0;
       font-weight: 500;
     }
@@ -191,7 +202,7 @@ const inputTouch = () => {
       align-items: center;
       overflow: hidden;
 
-      .sport-icon{
+      .sport-icon {
         color: var(--color-bet-sportstext);
       }
 
@@ -235,11 +246,11 @@ const inputTouch = () => {
       font-weight: 600;
 
       &.up {
-        color: #FB0738;
+        color: #fb0738;
       }
 
       &.down {
-        color: #0BBA3E;
+        color: #0bba3e;
       }
 
       .ior-change {
@@ -264,14 +275,14 @@ const inputTouch = () => {
 
     .gold-tips {
       position: absolute;
-      background: #FB0738;
+      background: #fb0738;
       border-radius: 22px;
       padding: 5px 12px;
       right: 12px;
       bottom: 70px;
       font-family: PingFangSC-Semibold;
       font-size: 20px;
-      color: #FFFFFF;
+      color: #ffffff;
       letter-spacing: 0.67px;
       text-align: justify;
       font-weight: 600;
@@ -288,7 +299,7 @@ const inputTouch = () => {
         left: 0;
         right: 0;
         margin: auto;
-        border-top-color: #FB0738;
+        border-top-color: #fb0738;
         border-bottom-width: 0;
       }
     }
@@ -310,7 +321,7 @@ const inputTouch = () => {
         padding-left: 5px;
         padding-right: 11px;
         border-radius: 0.16rem;
-        border: 2px solid #96A5AA;
+        border: 2px solid #96a5aa;
         border-radius: 10px;
         background-color: #fff;
         font-family: PingFangSC-Semibold;
@@ -323,7 +334,6 @@ const inputTouch = () => {
         &.error {
           border: 2px solid rgba(251, 7, 56, 1);
         }
-
       }
 
       .betting-slip-accept-button {
@@ -337,7 +347,7 @@ const inputTouch = () => {
         border-radius: 12px;
         font-family: PingFangSC-Medium;
         font-size: 24px;
-        color: #FFFFFF;
+        color: #ffffff;
         letter-spacing: 0.8px;
         text-align: center;
         font-weight: 500;
@@ -356,7 +366,7 @@ const inputTouch = () => {
         position: relative;
         right: -4px;
         top: -3px;
-        animation: auto-opacity .5s linear infinite alternate;
+        animation: auto-opacity 0.5s linear infinite alternate;
       }
     }
   }
@@ -364,18 +374,18 @@ const inputTouch = () => {
   .combo-enable {
     width: 16px;
     height: 100%;
-    background: #0BBA3E;
+    background: #0bba3e;
     border-radius: 0px 20px 20px 0px;
   }
 }
 
 @keyframes auto-opacity {
   0% {
-    opacity: 1
+    opacity: 1;
   }
 
   to {
-    opacity: 0
+    opacity: 0;
   }
 }
 </style>
