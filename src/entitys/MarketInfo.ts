@@ -132,6 +132,12 @@ export class MarketInfo {
       sourceCompany: this.sourceCompany
     })
 
+    const { handicapType } = store.state.user.userConfig || {}
+
+    if (this.isEuropePlay && handicapType === 'E') {
+      this.eoIor = info.ior + 1
+    }
+
     this.splitRatio()
   }
   splitRatio() {
