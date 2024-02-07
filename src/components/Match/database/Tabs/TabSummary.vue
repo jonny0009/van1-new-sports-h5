@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, onMounted, ref, watch } from 'vue'
+import { defineAsyncComponent, onMounted, ref, watch, onActivated } from 'vue'
 import { scoresstaticseventsApi, betAnalyzeApi } from '@/api/live'
 const PanelAnalyze = defineAsyncComponent(() => import('../Panel/PanelAnalyze.vue'))
 const PanelScore = defineAsyncComponent(() => import('../Panel/PanelScore.vue'))
@@ -52,6 +52,10 @@ watch(
   }
 )
 onMounted(() => {
+  fetchStaticsEvents()
+  fetchBetAnlyze()
+})
+onActivated(() => {
   fetchStaticsEvents()
   fetchBetAnlyze()
 })
