@@ -1,5 +1,8 @@
 <template>
-  <span class="img_1">{{ currency }} </span>
+  <span class="img_1" v-if="currency==='CNY'">{{ '¥' }} </span>
+  <span class="img_1" v-else-if="currency==='VNDK'">{{ '₫(K)' }} </span>
+  <span class="img_1" v-else-if="currency==='USDT'">{{ 'T' }} </span>
+  <span class="img_1" v-else>{{ currency }} </span>
 </template>
 <script lang="ts" setup>
 import store from '@/store'
