@@ -64,14 +64,18 @@
               <div v-if="getPayStatus(item)"> {{ $t('user.compensate') }}</div>
               <div v-else> {{ $t('user.betNum') }}</div>
               <div class="right-1">
-                <span class="money-symbol">{{ currency }}</span>
+                <span class="money-symbol">
+                  <CurrencyComp />
+                </span>
                 <span v-points="item.tradeGold"></span>
               </div>
             </div>
             <div>
               <div> {{ $t('user.balance') }}</div>
               <div class="right-1">
-                <span class="money-symbol">{{ currency }}</span>
+                <span class="money-symbol">
+                   <CurrencyComp />
+                </span>
                 <span v-points="item.gold"></span>
               </div>
             </div>
@@ -90,6 +94,8 @@ import moment from 'moment'
 import store from '@/store'
 
 const currency = computed(() => store.state.user.currency)
+import CurrencyComp from './currency.vue'
+
 // const currentWallet = computed(() => store.state.user.currentWallet)
 
 import { useI18n } from 'vue-i18n'
