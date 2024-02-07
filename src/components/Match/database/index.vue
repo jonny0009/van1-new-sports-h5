@@ -9,15 +9,13 @@
         </template>
       </van-tab>
     </van-tabs>
-
     <component :is="components[tabActive]" :key="tabActive" :match-data="matchData" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch, nextTick } from 'vue'
+import { computed, ref, watch, nextTick } from 'vue'
 import { matchStatusApi } from '@/api/live'
-import { useRoute } from 'vue-router'
 import store from '@/store'
 import { useI18n } from 'vue-i18n'
 import TabSummary from './Tabs/TabSummary.vue'
@@ -26,22 +24,26 @@ import TabRecord from './Tabs/TabRecord.vue'
 import TabEvents from './Tabs/TabEvents.vue'
 const { t } = useI18n()
 
-const route = useRoute()
 const matchInfo = computed(() => store.state.match.matchInfo)
-const tabList = ref([
+const tabListOrg: any = ref([
   { name: 1, title: t('live.navBattle') },
   { name: 2, title: t('live.navRecent') }
 ])
-
+const tabList: any = ref([])
+let gameType = ''
 watch(
   () => matchInfo.value,
   () => {
-    fetchData()
+    if (!gameType) {
+      gameType = matchInfo.value.gameType
+      getData()
+    }
   }
 )
-const gameType = route.query.gameType
-onMounted(() => {
+const getData = () => {
+  tabList.value = []
   if (gameType === 'FT') {
+    tabList.value.push(...tabListOrg.value)
     tabList.value.unshift({ name: 0, title: t('live.navSummary') })
 
     tabList.value.push({ name: 3, title: t('live.navEvents') })
@@ -51,13 +53,14 @@ onMounted(() => {
     })
   }
   if (gameType === 'BK') {
+    tabList.value.push(...tabListOrg.value)
     tabList.value.unshift({ name: 0, title: t('live.navSummary') })
     nextTick(() => {
       tabActive.value = 0
     })
   }
   fetchData()
-})
+}
 
 const matchData = ref()
 const fetchData = async () => {
