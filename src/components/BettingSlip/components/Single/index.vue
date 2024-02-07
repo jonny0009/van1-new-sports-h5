@@ -48,7 +48,7 @@
 </template>
 <script lang="ts" setup>
 import store from '@/store'
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 const inputBtn = ref()
 const props = defineProps({
   marketInfo: {
@@ -60,7 +60,6 @@ const props = defineProps({
     default: false
   }
 })
-const userConfig: any = computed(() => store.state.user.userConfig)
 const mode = computed(() => store.state.betting.mode)
 const error = computed(() => {
   if (props.marketInfo.goldMax === '') {
@@ -83,14 +82,7 @@ const goldRule = computed(() => {
   }
   return false
 })
-watch(
-  () => userConfig.value.acceptAll,
-  () => {
-    if (userConfig.value.acceptAll) {
-      clearIorChange()
-    }
-  }
-)
+
 const state = ref(false)
 const remove = () => {
   state.value = true

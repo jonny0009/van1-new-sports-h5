@@ -428,6 +428,7 @@ const bettingModule: Module<Betting, any> = {
 
       const params: any = combosHitParams(state.comboMarkets)
       const res: any = await betComboOrder(params).catch(() => {})
+      debugger
       if (res?.code === 200 && res?.data && res?.data?.length) {
         const data: any = res?.data[0] || {}
         const orderData = data.orderData || []
