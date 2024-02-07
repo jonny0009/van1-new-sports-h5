@@ -132,9 +132,7 @@ export class MarketInfo {
       sourceCompany: this.sourceCompany
     })
 
-    const { handicapType } = store.state.user.userConfig || {}
-
-    if (this.isEuropePlay && handicapType === 'E') {
+    if (this.isEuropePlay) {
       this.eoIor = info.ior + 1
     }
 

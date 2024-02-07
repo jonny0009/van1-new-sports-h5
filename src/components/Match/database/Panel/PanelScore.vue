@@ -3,15 +3,15 @@
     <div class="score">
       <div class="score-team">
         <div class="score-team_head">
-          <span v-html="setMatch.showRBTime(matchInfo)"></span>
+          <span v-html="setMatch.showRBTime(matchData)"></span>
         </div>
         <div class="score-team_wrap">
-          <img v-img="matchInfo.homeLogo" :type="4" alt="" />
-          <span>{{ matchInfo.homeTeamAbbr }}</span>
+          <img v-img="matchData.homeLogo" :type="4" alt="" />
+          <span>{{ home }}</span>
         </div>
         <div class="score-team_wrap">
-          <img v-img="matchInfo.awayLogo" :type="5" alt="" />
-          <span>{{ matchInfo.awayTeamAbbr }}</span>
+          <img v-img="matchData.awayLogo" :type="5" alt="" />
+          <span>{{ away }}</span>
         </div>
       </div>
 
@@ -46,7 +46,7 @@
       <div class="left">
         <strong>{{ `${scoreResult.homeTeamScore} : ${scoreResult.awayTeamScore}` }}</strong>
         <span>&nbsp;</span>
-        <strong>{{ `${matchInfo.homeTeamAbbr} vs ${matchInfo.awayTeamAbbr}` }}</strong>
+        <strong>{{ `${home} vs ${away}` }}</strong>
       </div>
     </div>
   </div>
@@ -54,17 +54,26 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import store from '@/store'
 import { useMatch } from '@/utils/useMatch'
 
 const props = defineProps({
   scoreList: {
     type: Array as any,
     default: () => []
+  },
+  matchData: {
+    type: Object,
+    default: () => {}
   }
 })
+
+const home = computed(() => {
+  return props.matchData.homeTeamShort || props.matchData.homeTeam
+})
+const away = computed(() => {
+  return props.matchData.awayTeamShort || props.matchData.awayTeam
+})
 const setMatch = useMatch()
-const matchInfo = computed(() => store.state.match.matchInfo)
 const scoreListComputed = computed(() => {
   const exit = ['Current', 'Normaltime']
   return props.scoreList.filter((m: any) => !exit.includes(m.type))

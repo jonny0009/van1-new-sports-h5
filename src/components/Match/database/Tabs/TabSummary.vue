@@ -13,7 +13,7 @@
         <div class="panel-main">
           <div class="panel-main__wrapper">
             <EmptyData v-if="scoreList.length === 0" />
-            <PanelScore v-else :score-list="scoreList" />
+            <PanelScore v-else :score-list="scoreList" :matchData="matchData" />
           </div>
         </div>
       </van-collapse-item>
