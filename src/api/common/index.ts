@@ -33,3 +33,21 @@ export const getDoubleLineInfo = () => {
   })
 }
 
+/**
+ * 匿名登录
+ * @returns
+ */
+export const anonyToken = () => {
+  return request({
+    url: '/ai/mobile/anonyToken',
+    method: 'get'
+  })
+}
+
+export const getConfig = (params:any) => {
+  return request({
+    url: '/ai/mobile/merchant/merchantCustomize',
+    method: 'get',
+    params
+  })
+}

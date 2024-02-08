@@ -149,6 +149,7 @@ const onSubmit = async (values?: any) => {
   const res: any = await login(params)
   if (res.code === 200) {
     setToken(res.data)
+    store.commit('user/SET_ANONYMITY', false)
     window.location.href = '/'
     // checkFirstEnter()
     return

@@ -45,5 +45,26 @@ export default {
   clickSub: '点击预约',
   playNow: '即将播放',
   emptyText: '未查询到相关数据',
-  platCloseAll: '全部盘口已关闭'
+  platCloseAll: '全部盘口已关闭',
+
+  clickOpenChat: '点击开启聊天室',
+  stackBet: '串关',
+  dataBase: '数据',
+  navSummary: '统计数据',
+  navBattle: '阵容图',
+  navRecent: '近期战绩',
+  navEvents: '文字实况',
+  solveAnalyse: '竞猜分析',
+  score: '比分',
+  summaryInfo: '统计信息',
+  battleWait: '替补阵容',
+  noDataHost: '暂无主队替补阵容',
+  noDataAway: '暂无客队替补阵容',
+  leaguePoints: '联赛积分榜',
+  rank: '排名',
+  balls: '球队',
+  win: '胜',
+  tie: '平',
+  lose: '负',
+  point: '积分'
 }

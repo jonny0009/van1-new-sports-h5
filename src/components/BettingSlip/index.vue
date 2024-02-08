@@ -72,19 +72,18 @@
               />
             </div>
           </div>
-          <div class="cur-odds">
-            @<span v-points="combosIor"></span>
-          </div>
+          <div class="cur-odds">@<span v-points="combosIor"></span></div>
         </div>
         <template v-if="mode === 1">
-          <Singles v-for="market in markets " :key="market.playOnlyId" :account-state="true" :market-info="market">
+          <Singles v-for="market in markets" :key="market.playOnlyId" :account-state="true" :market-info="market">
           </Singles>
         </template>
-        <Parlay v-else :markets="markets"></Parlay>
-        <ActionBar v-if="open" />
+        <Parlay v-else :markets="parlayMarkets"></Parlay>
+        <Anonymity v-if="isAnonymity"></Anonymity>
+        <ActionBar v-else-if="open" />
       </div>
       <Result v-if="type !== 3 && results.length"></Result>
-      <div v-if="type == 3" class="bet-content bet-pending">
+      <div v-if="type === 3" class="bet-content bet-pending">
         <Pending></Pending>
       </div>
     </div>
@@ -99,6 +98,7 @@ import Parlay from './components/Parlay/index.vue'
 import Singles from './components/Single/index.vue'
 import Result from './components/Result/index.vue'
 import ActionBar from './components/ActionBar/index.vue'
+import Anonymity from './components/Anonymity/index.vue'
 import Keyboard from './components/Keyboard/index.vue'
 import Pending from './components/Pending/index.vue'
 import { useI18n } from 'vue-i18n'
@@ -142,32 +142,44 @@ const isOne = computed(() => store.state.betting.isOne)
 const mode = computed(() => store.state.betting.mode)
 const boardShow = computed(() => store.state.betting.boardShow)
 const markets = computed(() => store.state.betting.markets)
+const parlayMarkets = computed(() => store.state.betting.comboMarkets)
 const results = computed(() => store.state.betting.results)
 const betsProfit = computed(() => store.getters['betting/betsProfit'])
 const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
 const combosIor = computed(() => store.getters['betting/combosIor'])
 const userConfig = computed(() => store.state.user.userConfig)
+const isAnonymity = computed(() => store.state.user.isAnonymity)
 store.dispatch('betting/setMode', 1)
 const emit = defineEmits(['close'])
-watch(() => isOne.value, () => {
-  if (isOne.value) {
-    open.value = true
-    bodyOverflow()
+watch(
+  () => isOne.value,
+  () => {
+    if (isOne.value) {
+      open.value = true
+      bodyOverflow()
+    }
   }
-})
-watch(() => markets.value.length, () => {
-  if (!isOne.value) {
-    hitTimer()
+)
+watch(
+  () => markets.value.length,
+  () => {
+    if (!isOne.value) {
+      hitTimer()
+    }
   }
-})
-watch(() => open.value, () => {
-  if (open.value) {
-    hitTimer()
-  } else {
-    store.dispatch('betting/setBoardShow', { status: false })
-    store.dispatch('betting/clearResult')
+)
+watch(
+  () => open.value,
+  () => {
+    if (open.value) {
+      hitTimer()
+    } else {
+      store.dispatch('betting/setBoardShow', { status: false })
+      store.dispatch('betting/clearResult')
+      store.dispatch('betting/clearComboMarkets')
+    }
   }
-})
+)
 const toogle = () => {
   open.value = !open.value
   emit('close', open.value)
@@ -182,7 +194,7 @@ const bodyOverflow = () => {
     }
   } else {
     document.body.classList.remove('popup-overflow-hidden')
-    document.body.ontouchmove = function () { }
+    document.body.ontouchmove = function () {}
   }
 }
 bodyOverflow()
@@ -202,14 +214,16 @@ const hitTimer = () => {
     if (mode.value === 2) {
       store.dispatch('betting/comboMarketHit')
     }
-    if (mode.value < 3) {
+    if (mode.value === 1) {
       store.dispatch('betting/marketHit')
     }
   }
   clearInterval(timer.value)
   timer.value = setInterval(() => {
     if (open.value && mode.value < 3) {
-      store.dispatch('betting/marketHit')
+      if (mode.value === 1) {
+        store.dispatch('betting/marketHit')
+      }
       if (mode.value === 2) {
         store.dispatch('betting/comboMarketHit')
       }
@@ -220,7 +234,6 @@ hitTimer()
 defineExpose({
   open
 })
-
 </script>
 <style lang="scss" scoped>
 .betting-slip-bg {
@@ -234,12 +247,12 @@ defineExpose({
   opacity: 0;
   margin: auto;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, .3);
+  background-color: rgba(0, 0, 0, 0.3);
 
   &.open {
     display: block;
     opacity: 1;
-    transition: all .3s;
+    transition: all 0.3s;
   }
 }
 
@@ -254,12 +267,12 @@ defineExpose({
   z-index: 290;
   display: flex;
   flex-direction: column;
-  transform: translateY(100%) translateY(-185px);
-  transition: transform .3s;
+  transform: translateY(100%) translateY(-96px);
+  transition: transform 0.3s;
   border-radius: 10px 10px 0px 0px;
 
   &.open {
-    transform: translateY(-88px);
+    transform: translateY(0px);
   }
 }
 
@@ -283,7 +296,7 @@ defineExpose({
     display: inline-block;
     width: 30px;
     height: 32px;
-    color: #FFFFFF;
+    color: #ffffff;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -295,7 +308,7 @@ defineExpose({
     margin-right: 10px;
     font-family: PingFangSC-Medium;
     font-size: 28px;
-    color: #FFFFFF;
+    color: #ffffff;
     letter-spacing: 0;
     text-align: center;
     font-weight: 500;
@@ -324,7 +337,7 @@ defineExpose({
     background-repeat: no-repeat;
     background-position: center;
     background-image: url('@/assets/images/betting/arrow-up.png');
-    color: #FFFFFF;
+    color: #ffffff;
 
     &.open {
       transform: rotate(-180deg);
@@ -334,7 +347,7 @@ defineExpose({
   .bet-all-ior {
     font-family: Arial-BoldMT;
     font-size: 32px;
-    color: #FFFFFF;
+    color: #ffffff;
     letter-spacing: 0;
     text-align: center;
     font-weight: 700;
@@ -349,7 +362,7 @@ defineExpose({
       flex: 1;
       font-family: PingFangSC-Medium;
       font-size: 24px;
-      color: #FFFFFF;
+      color: #ffffff;
       letter-spacing: 0;
       text-align: center;
       font-weight: 500;
@@ -393,7 +406,7 @@ defineExpose({
   flex-direction: column;
   flex: 1;
   opacity: 0;
-  transition: opacity .3s;
+  transition: opacity 0.3s;
   overflow-y: auto;
   overflow-x: hidden;
 
@@ -423,7 +436,7 @@ defineExpose({
         display: inline-block;
         font-family: PingFangSC-Medium;
         font-size: 23px;
-        color: #FFFFFF;
+        color: #ffffff;
         background-color: var(--color-bet-iortext);
         letter-spacing: 0;
         text-align: center;
@@ -440,7 +453,6 @@ defineExpose({
       &.active {
         color: var(--color-bet-tabtext-2);
       }
-
     }
 
     .tab-line {
@@ -450,7 +462,7 @@ defineExpose({
       left: 0;
       background-color: var(--color-text-5);
       width: 27vw;
-      transition: all .3s;
+      transition: all 0.3s;
       border-radius: 3px;
     }
   }
@@ -459,7 +471,7 @@ defineExpose({
     flex: 1;
     padding: 20px 0;
     overflow: auto;
-    transition: height .3s;
+    transition: height 0.3s;
     overscroll-behavior: contain;
 
     .betting-slip-combo-header {
@@ -488,9 +500,8 @@ defineExpose({
       }
     }
   }
-  .bet-pending{
+  .bet-pending {
     padding: 0 0;
   }
-
 }
 </style>

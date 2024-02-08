@@ -26,7 +26,7 @@ const props = defineProps({
   type: {
     type: String,
     default: function () {
-      return '1'
+      return '6'
     }
   },
   text: {
@@ -42,8 +42,11 @@ const clickChangActive = () => {
   activeVal.value = !activeVal.value
   emit('returnSuccess', activeVal.value)
 }
+const changeClick = (val: any) => {
+  activeVal.value = val
+}
 defineExpose({
-  activeVal
+  activeVal,changeClick
 })
 
 </script>

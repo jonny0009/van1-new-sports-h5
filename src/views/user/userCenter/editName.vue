@@ -22,7 +22,7 @@
       />
 
       <!--用户名规则  -->
-      <p class=" edit-name">{{ $t('user.font7') }}</p>
+      <p class=" edit-name">{{ $t('user.fontNickName') }}</p>
       <p class="userName">{{ $t('user.text3') }}:</p>
       <p class="explain">
         <img v-if="!ifStandard" class="noPitch" src="@/assets/images/login/noPitch.png" />
@@ -107,12 +107,12 @@ const getAccountInfo = async () => {
   updateName(res.data.nickName)
 }
 const handleSave = async () => {
-  if (!ifStandard.value || !ifStandard.value || !ifStandard.value) {
+  if (!ifStandard.value || !ifSpecial.value || !ifSpace.value) {
     return showToast(t('user.text11'))
   }
   const params = {
     nickName: username.value,
-    lang: localStorage.getItem('locale')
+    lang: localStorage.getItem('locale')|| 'zh-cn'
   }
   const res: any = await updatePlayerInfo(params)
   if (res.code !== 200) {

@@ -80,6 +80,7 @@ import Match from './components/match.vue'
 
 import { useRouter } from 'vue-router'
 const $router = useRouter()
+// const $route = useRoute()
 
 import { showToast } from 'vant'
 import localStore from '@/utils/localStore'
@@ -176,11 +177,13 @@ const getList = async () => {
   }
 }
 const toUrl = () => {
-  store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
-  $router.push({ path: '/home' })
+  store.dispatch('user/getLocationHeight', true)
+  $router.back()
+  // store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
+  // $router.push({ path: '/home' })
 }
 const toUrlGame = (item: any) => {
-  store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
+  // store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
   $router.push({
     path: `/sport/${item.gameType}`
 
@@ -225,6 +228,8 @@ const toUrlGame = (item: any) => {
   }
 
   >.content {
+    height: calc(100vh - 126px);
+    overflow-y: auto;
     margin-top: 31px;
     padding: 0 36px;
     background-color: var(--color-background-color);
@@ -232,6 +237,7 @@ const toUrlGame = (item: any) => {
     .line-color {
       background: #E5ECF3;
       height: 2px;
+      margin-top: 6px;
     }
 
     .font_1 {
@@ -312,6 +318,7 @@ const toUrlGame = (item: any) => {
     .content-list {
       // height: calc(100vh - 300px);
       padding-bottom: 50px;
+      margin-top: -7px;
       overflow-y: auto;
     }
 

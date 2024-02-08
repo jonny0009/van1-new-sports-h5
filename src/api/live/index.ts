@@ -87,3 +87,91 @@ export const lastMessageByPage = (params: any) => {
     params
   })
 }
+
+// 串关-赛事类型
+export const matchConditionApi = (params: any) => {
+  return request({
+    url: '/ai/mobile/game/multiNote/matchCondition',
+    method: 'get',
+    params
+  })
+}
+
+export const comBoByGameTypeApi = (params: any) => {
+  return request({
+    url: '/ai/mobile/matches/comBoByGameType',
+    method: 'get',
+    params
+  })
+}
+
+export const matchListApi = (params: any) => {
+  return request({
+    url: '/ai/mobile/game/multiNote/matchList',
+    method: 'get',
+    params
+  })
+}
+
+// 数据-赛事
+export const matchStatusApi = (params: any) => {
+  return request({
+    url: '/ai/match/status',
+    method: 'get',
+    params
+  })
+}
+
+// 数据-赛况
+export const scoresstaticseventsApi = (params: any) => {
+  return request({
+    url: '/ai/match/scoresstaticsevents',
+    method: 'get',
+    params
+  })
+}
+
+// 数据-历史交锋 ?homeTeamId=42329&awayTeamId=41293&limit=5
+export const teamHistoryApi = (params: any) => {
+  return request({
+    url: '/ai/game/homeTeamVsAwayTeamHistory',
+    method: 'get',
+    params
+  })
+}
+
+// 数据-近期比赛
+export const teamRecentApi = (params: any) => {
+  return request({
+    url: '/ai/game/homeTeamVsAwayTeamRecent',
+    method: 'get',
+    params
+  })
+}
+
+// 数据-积分榜
+export const homeAwayIntegralApi = (params: any) => {
+  return request({
+    url: '/ai/match/homeAwayIntegral',
+    method: 'get',
+    params
+  })
+}
+
+// 数据-阵容图
+export const lineupApi = (params: any) => {
+  return request({
+    url: '/ai/match/lineup',
+    method: 'get',
+    params
+  })
+}
+
+// 数据分析图
+export const betAnalyzeApi = (params: any) => {
+  return request({
+    url: '/ai/mobile/order/bettingAnalyze',
+    method: 'get',
+    params
+  })
+}

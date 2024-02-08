@@ -45,5 +45,26 @@ export default {
   clickSub: 'Click to Reserve',
   playNow: 'Playing Soon',
   emptyText: 'No relevant data found',
-  platCloseAll: 'All markets closed'
+  platCloseAll: 'All markets closed',
+
+  clickOpenChat: 'Click to open the chat room',
+  stackBet: 'stack',
+  dataBase: 'data',
+  navSummary: 'Statistics',
+  navBattle: 'Lineup Chart',
+  navRecent: 'Recent results',
+  navEvents: 'Text Live',
+  solveAnalyse: 'guess analysis',
+  score: 'score',
+  summaryInfo: 'statistical information',
+  battleWait: 'substitute',
+  noDataHost: 'No home team substitute lineup',
+  noDataAway: 'No visiting team substitutes',
+  leaguePoints: 'league standings',
+  rank: 'Ranking',
+  balls: 'team',
+  win: 'win',
+  tie: 'flat',
+  lose: 'negative',
+  point: 'point'
 }

@@ -42,7 +42,8 @@
               {{ getLangBet(item1.betItemLang) }}
             </span>
             <span :class="[getRatioColor(item1.betResultDetail)]">
-              @{{ item1.ioRatio }}
+              <!-- @{{ item1.ioRatio }} -->
+              @<span v-points="item1.ioRatio "></span>
             </span>
           </div>
           <div class="one two">
@@ -73,12 +74,11 @@
         <div class="one">
           <span>{{ $t('user.BettingAmount') }}</span>
           <div class="money-num-money">
-
-            <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
-            <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
-            <SvgIcon v-else name="user-usdt" class="img_1" />
-
-            <span> {{ formatMoney(item.gold) }}</span>
+            <CurrencyComp />
+             <!-- 投注额 -->
+            <span v-if="Number(item1.ioRatio)>0"  v-points="item.gold"></span>
+            <span v-if="Number(item1.ioRatio)<0"  v-points="ifBetNum(item,item1)"></span>
+            <span v-if="Number(item1.ioRatio)<0" >(<span  v-points="item.gold"/>)</span>
           </div>
         </div>
         <div class="one two">
@@ -87,7 +87,7 @@
           <!-- 未结算的注单显示：可赔付额；取消/延期，输的注单不显示赔付额这一栏 -->
           <!-- creditState 0 未结算 1 已结算-->
           <span v-if="item.state === 0 || item.state === -1 || item.state === 1">{{ $t('user.CompensableAmount') }}:</span>
-          <span v-else-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL'">{{ $t('user.practical')
+          <span v-else-if="ifPracticalMoneyNum(item,item1)">{{ $t('user.practical')
           }}:</span>
 
           <div>
@@ -100,17 +100,15 @@
                 {{ $t('user.affirmPend') }}
               </span>
             </span>
-            <span v-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail == 'LL'">
-              <SvgIcon v-if="currency === 'CNY'" name="user-cny" class="img_1" />
-              <SvgIcon v-else-if="currency === 'VNDK'" name="user-vndk" class="img_1" />
-              <SvgIcon v-else name="user-usdt" class="img_1" />
+            
+            <span v-if="ifPracticalMoneyNum(item,item1)">
+              <CurrencyComp />
             </span>
-
             <span v-if="item.state === 0 || item.state === -1 || item.state === 1" class="num color-1">
-              {{ formatMoney(getProfit(item)) }}
+              <span  v-points="getProfit(item,item1)"></span>
             </span>
-            <span v-else-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL'" class="color-1">
-              {{ formatMoney(item.winGold) }}
+            <span v-else-if="ifPracticalMoneyNum(item,item1)" class="color-1">
+              <span  v-points="item.winGold"></span>
             </span>
 
           </div>
@@ -142,13 +140,10 @@
 </template>
 
 <script lang="ts" setup>
-
-// import { formatToDateTime } from '@/utils/date'
-import { formatMoney } from '@/utils/index'
-
+import {  accDiv,accMul,accAdd } from '@/utils/math'
 import { computed } from 'vue'
 import store from '@/store'
-const currency = computed(() => store.state.user.currency)
+import CurrencyComp from './currency.vue'
 const teamNameList = computed(() => store.state.user.teamNameList || [])
 const championLangList = computed(() => store.state.user.championLangList || [])
 
@@ -159,8 +154,37 @@ const props = defineProps({
   }
 })
 
-const getProfit = (item: any) => {
-  return item.gold * item.sioRatio
+// 是否显示马尼,印尼括号金额
+const ifBetNum = (item:any,item1:any) => {
+  if (Number(item1.ioRatio)<0) {
+     // 马来绝对值都小于1,  印尼绝对值都大于1
+    let absNum: any = Math.abs(Number(item1.ioRatio))
+     return accDiv(item.gold,absNum)
+   }
+}
+// 可赔付金额
+const getProfit = (item: any, item1: any) => {
+   if (Number(item1.ioRatio)<0) {
+     // 马来绝对值都小于1,  印尼绝对值都大于1
+     let sumNum:any = 0
+     let absNum:any = Math.abs(Number(item1.ioRatio))
+     if (absNum>1) {
+       sumNum = accAdd(accDiv(item.gold,absNum),item.gold)
+     }
+     if (absNum<1) {
+       sumNum = accAdd(accDiv(item.gold,absNum),item.gold)
+     }
+     return sumNum
+   }
+  // return item.gold * item.sioRatio
+  return accMul(item.gold,item.sioRatio)
+}
+// 是否显示实际金额
+const ifPracticalMoneyNum = (item: any, item1: any) => {
+  if (item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL'||Number(item.cashoutType) === 2) {
+    return true
+  }
+  return false
 }
 
 // 图标状态

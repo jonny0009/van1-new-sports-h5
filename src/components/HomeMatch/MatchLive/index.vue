@@ -48,11 +48,12 @@
           <div class="match-info-live__header border-bottom">
             <div v-if="showSportsIcon(sendParams)" class="live-icon" @click="goToDetail(sendParams)"><i v class="iconfont icon-footer-live"></i></div>
             <div class="up-match-league">
+              <SportsIcon :icon-src="props.sendParams.gameType" class="ball-img" />
               <div class="text">{{ getLeagueShortName(sendParams) }}</div>
             </div>
             <div class="flex-cross-center">
               <div class="up-match-time">
-                <SportsIcon v-show="showSportsIcon(sendParams)" :icon-src="'live'" class="mr5" />
+                <SportsIcon v-show="showSportsIcon(sendParams)" :icon-src="'sportlive'" class="live-img" />
                 <div class="up-match-time-html" :class="sendParams.gameType" v-html="showRBTime(sendParams)"></div>
               </div>
             </div>
@@ -148,7 +149,7 @@
       <!--  -->
       <div class="up-match__footer">
         <div class="match-footer">
-          <div class="match-footer__item" @click="store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })">
+          <div class="match-footer__item" @click="betMoreShow">
             <span>{{ $t('home.morePlay') }}</span>
             <!-- <span class="num">149</span> -->
             <van-icon class="arrow" name="arrow" />
@@ -164,7 +165,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, computed, onBeforeUnmount } from 'vue'
+import { ref, computed } from 'vue'
 import { tnStObj, bsStObj, opScoreObj } from '@/utils/home/gameInfo'
 import { dateFormat } from '@/utils/date'
 import { getScore } from '@/utils/home/getScore'
@@ -450,6 +451,22 @@ const showSportsIcon = (item:any) => {
 }
 
 const goToDetail = (item:any) => {
-  router.push(`/broadcast/${item.gidm}`)
+  router.push(`/match/${item.gidm}/bets`)
+}
+const betMoreShow = () => {
+  store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })
+  store.dispatch('user/getLocationHeight', false)
 }
 </script>
+<style lang="scss" scoped>
+.ball-img {
+  font-size: 28px;
+  color: var(--color-text-3);
+  font-weight: 500;
+  margin-right: 5px;
+}
+.live-img{
+  font-size: 28px;
+  margin-right: 5px;
+}
+</style>

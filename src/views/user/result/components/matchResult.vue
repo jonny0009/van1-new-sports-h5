@@ -21,15 +21,8 @@
     </p>
   </div>
   <!-- 列表 -->
-  <van-list
-    v-if="list.arr.length || !finished"
-    v-model:loading="loading"
-    :finished="finished"
-    :finished-text="$t('user.noMoreMatch')"
-    :loading-text="$t('user.loadingText')"
-    class="dataList"
-    @load="onLoad"
-  >
+  <van-list v-if="list.arr.length || !finished" v-model:loading="loading" :finished="finished"
+    :finished-text="$t('user.noMoreMatch')" :loading-text="$t('user.loadingText')" class="dataList" @load="onLoad">
     <div v-for="(item, index) in list.arr" :key="index" class="item">
       <div class="title">
         <div class="left  title-left">
@@ -69,8 +62,6 @@
 
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from 'vue'
-
-import SportsTabs from '@/components/tabs/SportsTabs/index.vue'
 
 import moment from 'moment'
 import store from '@/store'
@@ -129,7 +120,12 @@ const onLoad = async () => {
     // showToast(res.msg)
   }
 }
-
+//  比赛详情
+// const toMatch = async (item: any) => {
+//   console.log(item, '取消跳转=');
+//   store.dispatch('user/getResultTab', 2)
+//   store.dispatch('betting/setMoreShow', { status: true, moreParams: { gidm: item.matchId } })
+// }
 // 获取游戏时间
 const getMatchTime = (item: any) => {
   if (item.gameDate) {
@@ -177,7 +173,7 @@ defineExpose({
 <style lang="scss" scoped>
 //球类型
 .ball-type {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 // 状态
@@ -224,6 +220,12 @@ defineExpose({
   }
 }
 
+.color-line {
+  margin-top: 20px;
+  margin-bottom: 18px;
+  background: var(--color-search-box-sidebar);
+}
+
 // 列表
 .dataList {
   margin-top: 20px;
@@ -240,10 +242,6 @@ defineExpose({
 
   .color-3 {
     color: red;
-  }
-
-  .color-line {
-    background: var(--color-search-box-sidebar);
   }
 
   .item {

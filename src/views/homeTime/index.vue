@@ -1,56 +1,68 @@
 <template>
   <div class="homeTime-page">
-    <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
-      <van-collapse-item name="1">
-        <template #title>
-          <ArrowTitle class="mt10 mb10" :src="titleTime" :text="$t('home.latestMatch')" />
-        </template>
-        <SportsTabs ref="refSportsTabs" class="pb10" @returnSportsSuccess="returnSportsSuccess" />
-        <tabsTime @returnTimeSuccess="returnTimeSuccess" />
-        <van-list
-          v-model="loading"
-          :finished="finished"
-          :finished-text="$t('live.noMore')"
-          @load="onLoad"
-        >
-          <template v-if="!isShow">
-            <template v-if="isLoading">
-              <HomeMatchHandicap
-                v-for="(item,idx) in recommendEventsList"
-                :key="idx"
-                :send-params="item"
-                :class="{'mt20':idx !== 0}"
-              />
-              <HomeEmpty v-if="!recommendEventsList.length"></HomeEmpty>
-            </template>
-            <Loading
-              v-if="!isLoading || loading"
-              :class="{
-                'new_loading mt10' : loading
-              }"
+  <van-pull-refresh  v-model="isRefreshLoading"  @refresh="onRefresh">
+    <SportsTabs ref="refSportsTabs" class="pb10" @returnSportsSuccess="returnSportsSuccess" />
+    <tabsTime v-if="routerName === 'HomeTime'" @returnTimeSuccess="returnTimeSuccess" />
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      :finished-text="$t('live.noMore')"
+      @load="onLoad"
+    >
+      <template v-if="isLoading">
+        <div ref="newContainer">
+          <template v-for="(item,idx) in recommendEventsList" :key="idx">
+            <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="52222">
+              <playTitle :class="{'mt20':idx !== 0}" :send-params="item" />
+            </van-sticky>
+            <HomeMatchHandicap
+              :play-title-toggle="false"
+              :send-params="item"
+              :class="{'mt20':idx !== 0}"
             />
           </template>
-        </van-list>
-        <FooterHeight />
-      </van-collapse-item>
-    </van-collapse>
+        </div>
+        <HomeEmpty v-if="!recommendEventsList.length"></HomeEmpty>
+      </template>
+      <Loading
+        v-if="!isLoading || loading"
+        :class="{
+          'new_loading mt10' : loading
+        }"
+      />
+    </van-list>
+  </van-pull-refresh>
+    <FooterHeight />
   </div>
 </template>
 <script lang="ts" setup>
-import Dayjs from 'dayjs' // YYYY-MM-DD HH:mm:ss
+import Dayjs from 'dayjs'
 import tabsTime from './tabsTime/index.vue'
-import titleTime from '@/assets/images/home/title-time.png'
+import playTitle from '@/components/Title/playTitle/index.vue'
 import { recommendEvents } from '@/api/home'
 import store from '@/store'
 import { onBeforeMount, ref, reactive, computed, watch } from 'vue'
-const activeNames = ref('1')
+import router from '@/router'
+const offsetTop = computed(() => {
+  const offsetTop = store.state.app.globalBarHeaderHeight || 48
+  var offsetTopval = 48
+  if (offsetTop > 60) {
+    offsetTopval = 48
+  } else {
+    offsetTopval = offsetTop
+  }
+  return offsetTopval
+})
+const newContainer = ref(null)
+const routerName:any = computed(() => {
+  return router?.currentRoute?.value?.name || ''
+})
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout:any = ref('')
 const refSportsTabs = ref()
 watch(refreshChangeTime, (val) => {
   if (val) {
     refSportsTabs.value?.resetParams()
-    activeNames.value = '1'
     clearTimeout(timeout.value)
     timeout.value = setTimeout(async () => {
       await initData()
@@ -59,12 +71,17 @@ watch(refreshChangeTime, (val) => {
   }
 })
 const isLoading = ref(false)
+const isRefreshLoading = ref(false)
 const params:any = reactive({
   page: 1,
   pageSize: 5,
   gradeType: 2,
   gameType: 'FT'
 })
+if (routerName.value === 'sportToday') {
+  params.startDate = Dayjs().format('YYYY-MM-DD') + ' 00:00:00'
+  params.endDate = Dayjs().format('YYYY-MM-DD') + ' 23:59:59'
+}
 const recommendEventsList = reactive([])
 const totalVal = ref(0)
 const getLoading = (val:any = false, nextToggle:any = '') => {
@@ -73,6 +90,10 @@ const getLoading = (val:any = false, nextToggle:any = '') => {
   } else {
     isLoading.value = val
   }
+}
+const onRefresh = () => {
+  isRefreshLoading.value = false
+  store.dispatch('home/setRefreshChangeTime', new Date().getTime())
 }
 const getRecommendEvents = async (nextToggle:any = '') => {
   getLoading(false, nextToggle)
@@ -98,16 +119,21 @@ const getRecommendEvents = async (nextToggle:any = '') => {
 const loading = ref(false)
 const finished = ref(false)
 const timer:any = ref('')
+const onLoadToggle = ref(false)
 const onLoad = () => {
-  if (!finished.value) {
-    if (!loading.value) {
-      loading.value = true
-      clearTimeout(timer.value)
-      timer.value = setTimeout(() => {
-        params.page++
-        getRecommendEvents(true)
-      }, 100)
+  if (onLoadToggle.value) {
+    if (!finished.value) {
+      if (!loading.value) {
+        loading.value = true
+        clearTimeout(timer.value)
+        timer.value = setTimeout(() => {
+          params.page++
+          getRecommendEvents(true)
+        }, 100)
+      }
     }
+  } else {
+    onLoadToggle.value = true
   }
 }
 const returnTimeSuccess = (val:any) => {
@@ -137,7 +163,6 @@ const returnSportsSuccess = (val:any) => {
   params.page = 1
   getRecommendEvents()
 }
-
 const initData = () => {
   params.page = 1
   params.gameType = 'FT'
@@ -151,12 +176,13 @@ onBeforeMount(() => {
 </script>
 <style lang="scss" scoped>
 .homeTime-page{
-  padding: 0 40px;
-
+  padding: 40px 40px 0;
 }
-
+.earlyArrowTitle{
+  position: relative;
+  top: -4px;
+}
 </style>
-
 <style lang="scss">
 .new_loading{
   height: auto !important;

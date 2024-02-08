@@ -1,15 +1,24 @@
 <template>
+  <swipeLive class="mt10" />
   <div class="sportlive">
     <div v-if="gameTypeList.length" class="sportlive-Match-Tabs">
       <TextButton :text="$t('sport.all')" :active="!gameType" @click="clickGameType({})" />
-      <SportsButton v-for="(item,idx) in gameTypeList" :key="idx" :text="item.gameType" :active="gameType===item.gameType" @click="clickGameType(item)" />
+
+      <SportsButton
+        v-for="(item, idx) in gameTypeList"
+        :key="idx"
+        :text="item.gameType"
+        :active="gameType === item.gameType"
+        :count="item.count"
+        show-count
+        @click="clickGameType(item)"
+      />
     </div>
   </div>
-  <swipeLive />
   <div class="sportlive">
     <Loading v-if="!isLoading" />
     <template v-else>
-      <MatchLive v-for="(item,idx) in commonMatchesList" :key="idx" :send-params="item" />
+      <MatchLive v-for="(item, idx) in commonMatchesList" :key="idx" :send-params="item" />
       <HomeEmpty v-if="!commonMatchesList.length"></HomeEmpty>
     </template>
     <div v-if="commonMatchesList.length" class="Button-MatchMore mt10" @click="noMoreclick">
@@ -27,23 +36,23 @@ import swipeLive from './swipeLive/index.vue'
 import store from '@/store'
 import { ref, onBeforeMount, onActivated, onDeactivated, onBeforeUnmount, computed, watch } from 'vue'
 import { apiRBCondition, apiCommonMatches } from '@/api/home'
-const gameType:any = ref()
+const gameType: any = ref()
 const isLoading = ref(false)
-const init = async (toggleLoading:any = true) => {
+const init = async (toggleLoading: any = true) => {
   await getApiRBCondition()
   await getApiCommonMatches(toggleLoading)
 }
-const showGameTypeList:any = ref([''])
-const gameTypeList:any = ref([])
+const showGameTypeList: any = ref([''])
+const gameTypeList: any = ref([])
 const getApiRBCondition = async () => {
-  const res:any = await apiRBCondition({ }) || {}
+  const res: any = (await apiRBCondition({})) || {}
   if (res.code === 200 && res.data) {
     const dataList = res.data || []
-    gameTypeList.value = dataList.filter((t:any) => !showGameTypeList.value.includes(t.gameType))
+    gameTypeList.value = dataList.filter((t: any) => !showGameTypeList.value.includes(t.gameType))
   }
 }
-const commonMatchesList:any = ref([])
-const getApiCommonMatches = async (toggleLoading:any = true) => {
+const commonMatchesList: any = ref([])
+const getApiCommonMatches = async (toggleLoading: any = true) => {
   const params = {
     gameType: gameType.value || '',
     showtype: 'RB',
@@ -60,13 +69,13 @@ const getApiCommonMatches = async (toggleLoading:any = true) => {
   if (toggleLoading) {
     isLoading.value = false
   }
-  const res:any = await apiCommonMatches(params) || {}
+  const res: any = (await apiCommonMatches(params)) || {}
   if (toggleLoading) {
     isLoading.value = true
   }
   if (res.code === 200 && res.data?.matchList?.baseData) {
     const dataList = res.data?.matchList?.baseData || []
-    commonMatchesList.value = dataList.filter((t:any) => !showGameTypeList.value.includes(t.gameType))
+    commonMatchesList.value = dataList.filter((t: any) => !showGameTypeList.value.includes(t.gameType))
   } else {
     commonMatchesList.value = []
   }
@@ -74,7 +83,7 @@ const getApiCommonMatches = async (toggleLoading:any = true) => {
 const noMoreclick = () => {
   return
 }
-const clickGameType = (item:any) => {
+const clickGameType = (item: any) => {
   gameType.value = item.gameType
   getApiCommonMatches()
 }
@@ -104,18 +113,18 @@ onBeforeUnmount(() => {
     value: true
   })
 })
-const pushSwitch:any = computed(() => store.state.app.businessConfig.pushSwitch)
+const pushSwitch: any = computed(() => store.state.app.businessConfig.pushSwitch)
 watch(pushSwitch, () => {
   startInterval()
 })
-const IntervalTimer:any = ref()
+const IntervalTimer: any = ref()
 const startInterval = () => {
   clearTimeout(IntervalTimer)
   IntervalTimer.value = setTimeout(() => {
     setIntervalSendData()
   }, 100)
 }
-const setIntervalDate:any = ref((10 + 5) * 1000)
+const setIntervalDate: any = ref((10 + 5) * 1000)
 const setIntervalSendData = () => {
   if (+pushSwitch.value === 1) {
     setIntervalDate.value = 2 * 60 * 1000
@@ -125,26 +134,24 @@ const setIntervalSendData = () => {
     init(false)
   }, setIntervalDate.value)
 }
-const setIntervalTimer:any = ref()
+const setIntervalTimer: any = ref()
 const setClearInterval = () => {
   clearInterval(setIntervalTimer.value)
 }
-const timeout:any = ref('')
+const timeout: any = ref('')
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 watch(refreshChangeTime, (val) => {
   if (val) {
     clearTimeout(timeout.value)
-    timeout.value = setTimeout(() => {
-      console.log('console console')
-    }, 100)
+    timeout.value = setTimeout(() => {}, 100)
   }
 })
 </script>
 <style lang="scss" scoped>
-.sportlive{
+.sportlive {
   padding: 0 40px;
 }
-.sportlive-Match-Tabs{
+.sportlive-Match-Tabs {
   padding: 20px 0;
   display: flex;
   overflow: auto;
@@ -156,7 +163,7 @@ watch(refreshChangeTime, (val) => {
     margin-right: 20px;
     flex-shrink: 1;
   }
-  .SportsButton{
+  .SportsButton {
     margin-right: 20px;
     flex-shrink: 1;
   }

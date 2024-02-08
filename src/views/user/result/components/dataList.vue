@@ -47,15 +47,11 @@
 </template>
 
 <script lang="ts" setup>
-// nextTick
 import { ref, reactive, onMounted } from 'vue'
 import moment from 'moment'
-
 import Bunch from './bunch.vue'
 import Single from './single.vue'
 
-// import arrow from '@/assets/images/components/title/arrow.png'
-// getGameManyInfo
 import { betRecordTab } from '@/api/user'
 const list = reactive<{ arr: any }>({ arr: [] })
 import store from '@/store'
@@ -92,16 +88,14 @@ const popupList = reactive<{ arr: any[] }>({
   ]
 })
 const dateTimeVal = ref<any>({
-  // beginName: moment().subtract(7, 'days').format('YYYY/MM/DD'),
-  // endName: moment().format('YYYY/MM/DD')
-  beginName: moment().subtract(7, 'days').format('MM/DD'),
+  beginName: moment().subtract(90, 'days').format('MM/DD'),
   endName: moment().format('MM/DD')
 })
 
 onMounted(() => {
   endTime.value = moment().valueOf()
   const oneDayDate = 24 * 60 * 60 * 1000
-  beginTime.value = endTime.value - oneDayDate * 7
+  beginTime.value = endTime.value - oneDayDate * 90
 })
 const onLoad = () => {
   getNoAccount()
@@ -117,8 +111,6 @@ const setDate = () => {
 }
 const setDateTime = (values: any) => {
   const [start, end] = values
-  // dateTimeVal.value.beginName = moment(start).format('YYYY/MM/DD')
-  // dateTimeVal.value.endName = moment(end).format('YYYY/MM/DD')
   dateTimeVal.value.beginName = moment(start).format('MM/DD')
   dateTimeVal.value.endName = moment(end).format('MM/DD')
 
@@ -131,7 +123,6 @@ const setDateTime = (values: any) => {
   list.arr = []
   getNoAccount()
 
-  // emit('timeChange', true)
 }
 async function setPk(val: any) {
   commonKey.value = val

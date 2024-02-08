@@ -5,7 +5,7 @@ import { RouteRecordRaw } from 'vue-router'
 declare interface App {
   showFixedBet: any
   theme: any
-  globalBarHeaderHeight:any
+  globalBarHeaderHeight: any
   doubleLineInfo: any
   sports: any
   moduleConfig: any
@@ -14,9 +14,13 @@ declare interface App {
   queryCMerLanguage: any
   state: boolean
   pictureinpictureGidm: any
+  mantainMsg: any
+  systemTime: any
+  customizeConfig: any
 }
 
 declare interface User {
+  isAnonymity: any
   userConfig: any
   userInfo: any
   balance: any
@@ -26,6 +30,12 @@ declare interface User {
   teamNameList: any
   championLangList: any
   peopleInfo: any
+  aheadOrderList: any
+  resultTab: any
+  scrollNumY: any
+  locationHeight: any
+  currentWallet: any
+  keepCache: any
   token: string | undefined | null
 }
 declare interface Betting {
@@ -50,12 +60,21 @@ declare interface Betting {
   comboT: any
   markets: any
   comboMarkets: any
+  parlayMarkets: any
   results: any
   isOne: boolean
   hitState: any
   moreShow: any
   moreParams: any
   oddChangesState: any
+  combosErrorIds: any
+}
+
+declare interface Match {
+  pictureinpictureGidm: any
+  matchInfo: any
+  matchData: any
+  needTimer: boolean
 }
 
 declare module '@vue/runtime-core' {

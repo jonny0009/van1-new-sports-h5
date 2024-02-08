@@ -35,7 +35,7 @@ export default {
   NoAccountYet: '还没账号',
   phoneNumber: '手机号码',
   CreateUsername: '创建用户名',
-  text3: '用户名必须',
+  text3: '昵称必须至少包含',
   text4: '至少6个字母数字（最多16个）',
   text5: '不能有特殊字符',
   text6: '不能有空格',
@@ -96,7 +96,9 @@ export default {
   noFinal: '未结算',
   final: '已结算',
   hk: '香港盘[HK]',
-  Europe: '欧洲盘[DEC]',
+  Europe: '欧洲盘 [DEC]',
+  IDOdd: '印尼盘 [ID]',
+  MYOdd: '马来盘 [MY]',
   today: '今日',
   fortyEight: '近48小时',
   sevenDay: '近7天',
@@ -128,6 +130,16 @@ export default {
   editPend: '受理中 ',
   affirmPend: '确认中 ',
   noDataRelated: '未查询到相关数据',
+  // 新增6
+  fontNickName: '昵称只允许编辑一次，且不可与他人重复或含有非法字元',
+  aheadFinal: '提前结算',
+
+  // 新增7
+  contactUs: '联系我们',
+  type: '类型',
+  
+  homeName:'主 ',
+  awayName:'客 ',
 
   sports: {
     'officeNumber': '局号',

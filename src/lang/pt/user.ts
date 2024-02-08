@@ -93,8 +93,10 @@ export default {
   end: 'sobre',
   noFinal: 'Desassentamento',
   final: 'Assentou',
-  hk: 'Disco de Hong Kong[HK]',
-  Europe: 'Handicap Europeu[DEZ]',
+  hk: 'Hong Kong [HK]',
+  Europe: 'Decimal [DEC]',
+  IDOdd: 'Indonesia [ID]',
+  MYOdd: 'Malaysia [MY]',
   today: 'hoje',
   fortyEight: 'últimas 48 horas',
   sevenDay: 'Últimos 7 dias',
@@ -125,6 +127,12 @@ export default {
   // 新增6
   fontNickName: 'Os apelidos só podem ser editados uma vez e não podem ser duplicados ou conter caracteres ilegais com outros',
   aheadFinal: 'Liquidação antecipada',
+  // 新增7
+  contactUs: 'entre em contato conosco',
+  type: 'tipo',
+  homeName:'principal',
+  awayName:'passageiro',
+
 
   sports: {
     officeNumber: 'Número da agência',

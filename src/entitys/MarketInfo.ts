@@ -1,5 +1,5 @@
 import store from '@/store'
-import { points } from '@/utils'
+import { accAdd, accDiv, moneyFormat } from '@/utils/math'
 import { createBetItem, config } from 'xcsport-lib'
 const { letBallMap } = config
 interface MarketInfoInterface {
@@ -59,6 +59,7 @@ export class MarketInfo {
   session: any
   ior: any
   oldIor: any
+  eoIor: any
   leagueName: any
   homeTeam: any
   awayTeam: any
@@ -131,6 +132,10 @@ export class MarketInfo {
       sourceCompany: this.sourceCompany
     })
 
+    if (this.isEuropePlay) {
+      this.eoIor = info.ior + 1
+    }
+
     this.splitRatio()
   }
   splitRatio() {
@@ -158,20 +163,13 @@ export class MarketInfo {
       console.warn(`缺少：${warnings.toString()}`)
     }
   }
-  static getSourceCompany(gidm:string = '') {
+  static getSourceCompany(gidm: string = '') {
     return gidm.split('_')[0]
   }
-  static isOddsTypeChange({ playType, gameType, sourceCompany }:any) {
+  static isOddsTypeChange({ playType, gameType, sourceCompany }: any) {
     let newPlay = playType
-    const specifiersPlay = [
-      '_conner',
-      '_card',
-      '_OT',
-      '_PS',
-      '_promote',
-      '_champion'
-    ]
-    specifiersPlay.map(item => {
+    const specifiersPlay = ['_conner', '_card', '_OT', '_PS', '_promote', '_champion']
+    specifiersPlay.map((item) => {
       const lowerPlayStr = playType.toLowerCase()
       const lowerItemStr = item.toLowerCase()
       if (lowerPlayStr.includes(lowerItemStr)) {
@@ -180,15 +178,13 @@ export class MarketInfo {
       }
     })
     let isSecifiers = false
-    const dataSourceMap:any = {
+    const dataSourceMap: any = {
       ib: 'ibo',
       sd: 'sd',
       ic: 'bti'
     }
     const oddsTypeChangeArraymap = store.state.app.doubleLineInfo
-    const oddsTypeChangeArrayNew =
-      (store.state.app && oddsTypeChangeArraymap[dataSourceMap[sourceCompany]]) ||
-      null
+    const oddsTypeChangeArrayNew = (store.state.app && oddsTypeChangeArraymap[dataSourceMap[sourceCompany]]) || null
     if (oddsTypeChangeArrayNew) {
       isSecifiers = oddsTypeChangeArrayNew.includes(playType)
       return isSecifiers && !(newPlay === 'PR' && gameType === 'BK')
@@ -216,8 +212,24 @@ export class MarketInfo {
     // 判断是否是串关并且属于欧洲玩法的 + 1
     if (this.isEuropePlay && handicapType === 'E') {
       // 当前属于欧洲盘，并且属于可欧洲玩法的 赔率+1
-      return points(this.ior * 1 + 1)
+      const ior = accAdd(this.ior * 1, 1)
+      return moneyFormat(ior)
+
+      // 印尼
+    } else if (this.isEuropePlay && handicapType === 'I') {
+      if (this.ior * 1 > 1) {
+        return moneyFormat(this.ior) || ''
+      }
+      const ior = accDiv(-1, this.ior * 1)
+      return moneyFormat(ior)
+      // 马来盘
+    } else if (this.isEuropePlay && handicapType === 'M') {
+      if (this.ior * 1 < 1) {
+        return moneyFormat(this.ior) || ''
+      }
+      const ior = accDiv(-1, this.ior * 1)
+      return moneyFormat(ior)
     }
-    return points(this.ior) || ''
+    return moneyFormat(this.ior) || ''
   }
 }

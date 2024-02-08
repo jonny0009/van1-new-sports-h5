@@ -20,10 +20,8 @@
   <van-calendar v-model:show="show" type="range" @confirm="onConfirm" />
 </template>
 <script lang="ts" setup>
-
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
-
 import { ref, nextTick } from 'vue'
 import Dayjs from 'dayjs' // YYYY-MM-DD HH:mm:ss
 const homeTimeArray = ref([
