@@ -107,11 +107,9 @@ watch(
     getIntoRoom()
   }
 )
-onMounted(() => {
-
-})
+onMounted(() => {})
 onUnmounted(() => {
-  websocket.disconnect()
+  websocket?.disconnect()
 })
 
 const chatRoomInfo: Ref<any> = ref({})

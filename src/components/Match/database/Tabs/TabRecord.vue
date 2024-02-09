@@ -202,12 +202,9 @@ const barScoreColor = (item: any, type: string) => {
       color: #fff;
       font-family: PingFangSC-Medium;
       border-radius: 25px;
-      opacity: 0.5;
-      &:nth-child(even) {
-        background-color: #dc3656;
-      }
+      background-color: rgba(72, 163, 255, 0.24);
       &.active {
-        opacity: 1;
+        background-color: rgb(255, 92, 36);
       }
     }
   }
