@@ -129,6 +129,7 @@ const tryPlay = async () => {
     const res: any = await tryLogin(params)
     if (res.code === 200) {
       const { token } = res.data || {}
+      localStore.setItem('visitor', '1')
       setToken(token)
       // setUserInfo()
       window.location.href = '/'
@@ -148,6 +149,7 @@ const onSubmit = async (values?: any) => {
   }
   const res: any = await login(params)
   if (res.code === 200) {
+    localStore.removeItem('visitor')
     setToken(res.data)
     store.commit('user/SET_ANONYMITY', false)
     window.location.href = '/'

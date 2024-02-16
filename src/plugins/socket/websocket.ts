@@ -69,7 +69,7 @@ class WebSocketItem {
   }
 
   disconnect() {
-    if (this.stompClient !== null) {
+    if (this.stompClient?.connected) {
       console.log('断开链接')
       this.stompClient.disconnect()
       this.stompClient = null
