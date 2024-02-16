@@ -1,6 +1,6 @@
 <template>
   <div class="match-video">
-    <iframe v-if="urlHtml" :src="urlHtml" style="width:100%;height:100%"></iframe>
+    <iframe v-if="urlHtml && !videoWaiting" :src="urlHtml" style="width:100%;height:100%"></iframe>
     <video v-else ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
 
     <div v-if="videoWaiting" class="mask-loading">
@@ -74,15 +74,6 @@ const initVideo = (url: string) => {
         type: 'application/x-mpegURL'
         // src: 'https://vjs.zencdn.net/v/oceans.mp4',
         // type: 'video/mp4'
-      },
-
-      {
-        src: '',
-        type: 'video/x-flv'
-      },
-      {
-        src: '',
-        type: 'rtmp/flv'
       }
     ]
   }
