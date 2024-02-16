@@ -27,6 +27,10 @@ watch(
   () => props.url,
   (newUrl) => {
     videoWaiting.value = true
+    if (!newUrl) {
+      emits('on-error', '没有播放链接')
+      return
+    }
     getUrl(newUrl as string)
   }
 )
@@ -54,7 +58,7 @@ const route = useRoute()
 const router = useRouter()
 let player: any = null
 const videoRef = ref<HTMLDivElement | string>('')
-const videoWaiting = ref(false)
+const videoWaiting = ref(true)
 const videoIsInpicture = ref(false)
 const initVideo = (url: string) => {
   const options = {
@@ -65,7 +69,7 @@ const initVideo = (url: string) => {
     muted: false,
     controls: true,
     fluid: true,
-    // bigPlayButton: false,
+    bigPlayButton: false,
     loadingSpinner: false,
     errorDisplay: false,
     sources: [
