@@ -40,7 +40,7 @@ const getUrl = (url: string) => {
   urlHtml.value = ''
   if (url.indexOf('.html') > -1) {
     urlHtml.value = url
-    videoWaiting.value = false
+    loadingNone()
     return
   }
 
@@ -48,7 +48,7 @@ const getUrl = (url: string) => {
     player?.src(url)
     player?.load()
     player?.play()
-    videoWaiting.value = false
+    loadingNone()
   } else {
     initVideo(url)
   }
@@ -120,6 +120,11 @@ const initVideo = (url: string) => {
         router.push(`/match/${gidm}/bets`)
       }
     })
+  })
+}
+const loadingNone = () => {
+  nextTick(() => {
+    videoWaiting.value = false
   })
 }
 
