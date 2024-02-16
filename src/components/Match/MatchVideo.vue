@@ -90,7 +90,6 @@ const initVideo = (url: string) => {
           player.log('画中画模式已关闭')
         })
       }
-      videoWaiting.value = false
     })
 
     player.on('waiting', () => {
@@ -100,7 +99,7 @@ const initVideo = (url: string) => {
 
     player.on('playing', () => {
       console.log('playing', new Date().getTime())
-      // videoWaiting.value = false
+      videoWaiting.value = false
     })
 
     player.on('error', (err: any) => {
