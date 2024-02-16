@@ -74,15 +74,6 @@ const initVideo = (url: string) => {
         type: 'application/x-mpegURL'
         // src: 'https://vjs.zencdn.net/v/oceans.mp4',
         // type: 'video/mp4'
-      },
-
-      {
-        src: '',
-        type: 'video/x-flv'
-      },
-      {
-        src: '',
-        type: 'rtmp/flv'
       }
     ]
   }
