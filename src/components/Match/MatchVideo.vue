@@ -26,6 +26,7 @@ const urlHtml = ref('')
 watch(
   () => props.url,
   (newUrl) => {
+    videoWaiting.value = true
     getUrl(newUrl as string)
   }
 )
@@ -35,6 +36,7 @@ const getUrl = (url: string) => {
   urlHtml.value = ''
   if (url.indexOf('.html') > -1) {
     urlHtml.value = url
+    videoWaiting.value = false
     return
   }
 
@@ -42,6 +44,7 @@ const getUrl = (url: string) => {
     player?.src(url)
     player?.load()
     player?.play()
+    videoWaiting.value = false
   } else {
     initVideo(url)
   }
@@ -71,6 +74,15 @@ const initVideo = (url: string) => {
         type: 'application/x-mpegURL'
         // src: 'https://vjs.zencdn.net/v/oceans.mp4',
         // type: 'video/mp4'
+      },
+
+      {
+        src: '',
+        type: 'video/x-flv'
+      },
+      {
+        src: '',
+        type: 'rtmp/flv'
       }
     ]
   }
@@ -83,14 +95,17 @@ const initVideo = (url: string) => {
           player.log('画中画模式已关闭')
         })
       }
+      videoWaiting.value = false
     })
 
     player.on('waiting', () => {
-      videoWaiting.value = true
+      console.log('waiting', new Date().getTime())
+      // videoWaiting.value = true
     })
 
     player.on('playing', () => {
-      videoWaiting.value = false
+      console.log('playing', new Date().getTime())
+      // videoWaiting.value = false
     })
 
     player.on('error', (err: any) => {
