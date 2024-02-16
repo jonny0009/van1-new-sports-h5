@@ -40,7 +40,7 @@ const getUrl = (url: string) => {
   urlHtml.value = ''
   if (url.indexOf('.html') > -1) {
     urlHtml.value = url
-    videoWaiting.value = false
+    loadingNone()
     return
   }
 
@@ -48,7 +48,7 @@ const getUrl = (url: string) => {
     player?.src(url)
     player?.load()
     player?.play()
-    videoWaiting.value = false
+    loadingNone()
   } else {
     initVideo(url)
   }
@@ -90,7 +90,6 @@ const initVideo = (url: string) => {
           player.log('画中画模式已关闭')
         })
       }
-      videoWaiting.value = false
     })
 
     player.on('waiting', () => {
@@ -100,7 +99,7 @@ const initVideo = (url: string) => {
 
     player.on('playing', () => {
       console.log('playing', new Date().getTime())
-      // videoWaiting.value = false
+      videoWaiting.value = false
     })
 
     player.on('error', (err: any) => {
@@ -120,6 +119,11 @@ const initVideo = (url: string) => {
         router.push(`/match/${gidm}/bets`)
       }
     })
+  })
+}
+const loadingNone = () => {
+  nextTick(() => {
+    videoWaiting.value = false
   })
 }
 
