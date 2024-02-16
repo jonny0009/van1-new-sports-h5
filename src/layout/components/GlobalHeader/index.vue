@@ -5,9 +5,9 @@
         <div v-if="$route.meta.showheadGoBack" class="arrowLeft" @click="goBackClick">
           <van-icon name="arrow-left" />
         </div>
-        <div v-else-if="isAnonymity" class="avatar" @click="toUrl('/login')">
+        <!-- <div v-else-if="isAnonymity" class="avatar" @click="toUrl('/login')">
           <img v-img="''" :type="3" style="object-fit: cover" />
-        </div>
+        </div> -->
         <div v-else class="avatar" @click="showInfo">
           <img v-img="userInfo.headImg" :type="3" style="object-fit: cover" />
         </div>
@@ -75,12 +75,7 @@ const ifBLue = computed(() => {
 const loginToken = ref(getToken())
 const $router = useRouter()
 const toUrl = (url: string) => {
-  if (url === '/search') {
-    store.dispatch('user/getLocationHeight', false)
-  } else {
-    store.dispatch('user/getLocationHeight', false)
-  }
-
+  store.dispatch('user/getLocationHeight', false)
   $router.push({ path: url })
 }
 
