@@ -1,7 +1,12 @@
 import Layout from '@/layout/index.vue'
+
+// key 不要删 解决子路由切换 同级组件刷新问题
 export default {
   path: '/match',
   component: Layout,
+  meta: {
+    key: 'matchId'
+  },
   children: [
     {
       name: 'Match',
@@ -9,7 +14,8 @@ export default {
       component: () => import('@/views/match/list.vue'),
       meta: {
         showSportsTabsView: true,
-        KeepAlive:true
+        KeepAlive: true,
+        key: 'matchId'
       }
     },
 
@@ -22,7 +28,9 @@ export default {
       },
       component: () => import('@/views/match/detail.vue'),
       meta: {
-        showheadGoBack: true
+        showheadGoBack: true,
+        key: 'matchId',
+        KeepAlive: false
       },
       children: [
         {
