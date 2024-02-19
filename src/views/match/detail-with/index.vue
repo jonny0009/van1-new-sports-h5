@@ -133,14 +133,14 @@ const getWithData = async () => {
     return
   }
 
-  const apiFun = navActive.value == 1 ? betRecord : betRecordAll
+  const apiFun = navActive.value === 1 ? betRecord : betRecordAll
   const params = {
     page: 1,
     pageSize: 50,
     gidm
   }
   const res: any = await apiFun(params)
-  if (res.code == 200) {
+  if (res.code === 200) {
     const dataList = res.data.map((item: any) => {
       const dataInfo = { ...item }
       const playInfo = {

@@ -14,7 +14,8 @@ export default {
       component: () => import('@/views/match/list.vue'),
       meta: {
         showSportsTabsView: true,
-        KeepAlive: false
+        KeepAlive: true,
+        key: 'matchId'
       }
     },
 
@@ -27,7 +28,9 @@ export default {
       },
       component: () => import('@/views/match/detail.vue'),
       meta: {
-        showheadGoBack: true
+        showheadGoBack: true,
+        key: 'matchId',
+        KeepAlive: false
       },
       children: [
         {
