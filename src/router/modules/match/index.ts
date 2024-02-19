@@ -1,4 +1,6 @@
 import Layout from '@/layout/index.vue'
+
+// key 不要删 解决子路由切换 同级组件刷新问题
 export default {
   path: '/match',
   component: Layout,
