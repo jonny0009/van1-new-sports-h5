@@ -20,7 +20,7 @@
       </div>
       <div class="main-view">
         <router-view v-slot="{ Component, route }">
-          <component :is="getComponent(Component, route)" :key="route.key" />
+          <component :is="getComponent(Component, route)" key="matchId" />
         </router-view>
       </div>
       <div class="main-chat">

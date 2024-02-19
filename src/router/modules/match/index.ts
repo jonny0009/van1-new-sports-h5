@@ -2,6 +2,11 @@ import Layout from '@/layout/index.vue'
 export default {
   path: '/match',
   component: Layout,
+  key: 'matchId',
+  meta: {
+    KeepAlive: true,
+    key: 'matchId'
+  },
   children: [
     {
       name: 'Match',
@@ -9,7 +14,7 @@ export default {
       component: () => import('@/views/match/list.vue'),
       meta: {
         showSportsTabsView: true,
-        KeepAlive:true
+        KeepAlive: true
       }
     },
 

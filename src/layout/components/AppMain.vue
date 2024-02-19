@@ -2,15 +2,18 @@
   <div class="app-main">
     <!-- :include="keepAlives" -->
     <router-view v-slot="{ Component , route}">
-      <keep-alive >
-        <component :is="getComponent(Component, route)" v-if="$route.meta.KeepAlive" :key="route.path"/>
+      <keep-alive v-if="$route.meta.KeepAlive && !$route.meta.key">
+        <component :is="getComponent(Component, route)" :key="route.path" />
+      </keep-alive>
+      <keep-alive v-if="$route.meta.KeepAlive && $route.meta.key">
+        <component :is="getComponent(Component, route)" :key="$route.meta.key" />
       </keep-alive>
       <component :is="getComponent(Component, route)" v-if="!$route.meta.KeepAlive" :key="route.path" />
     </router-view>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent,onActivated } from 'vue'
+import { defineComponent, onActivated } from 'vue'
 export default defineComponent({
   name: 'AppMain'
 })
@@ -26,7 +29,6 @@ const getComponent = (Component:any, route: any) => {
 }
 // 缓存触发组件
 onActivated(() => {})
-
 
 </script>
 <style scoped>
