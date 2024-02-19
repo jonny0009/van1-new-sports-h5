@@ -38,7 +38,7 @@ export function useBetting() {
     if (gameType) {
       const res: any = await playGroup({ gameType })
       const data = res.data || {}
-      if (res.code == 200) {
+      if (res.code === 200) {
         const patternList = data[FORMAT_TYPE[formatType]]
         playGroupBetList.value = patternList
       }

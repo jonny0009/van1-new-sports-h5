@@ -62,7 +62,7 @@ const navList = reactive([
   { title: t('live.more'), iconName: 'live-grid', path: 'other' }
 ])
 const onNavClick = (path: string) => {
-  router.replace(`/match/${paramsId.value}/${path}`)
+  router.push(`/match/${paramsId.value}/${path}`)
 }
 
 const matchInfo: Ref<any> = ref({})
@@ -105,7 +105,8 @@ const startInterval = () => {
   closeInterval()
   intervalTimer = setInterval(() => {
     getMatcheInfo()
-    store.commit('match/SET_NEED_TIMER', true)
+    // 切换投注不显示问题
+    store.commit('match/SET_NEED_TIMER', false)
   }, 5000)
 }
 const closeInterval = () => {
