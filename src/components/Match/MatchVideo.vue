@@ -27,6 +27,10 @@ watch(
   () => props.url,
   (newUrl) => {
     videoWaiting.value = true
+    if (!newUrl) {
+      emits('on-error', '没有播放链接')
+      return
+    }
     getUrl(newUrl as string)
   }
 )
@@ -36,7 +40,7 @@ const getUrl = (url: string) => {
   urlHtml.value = ''
   if (url.indexOf('.html') > -1) {
     urlHtml.value = url
-    videoWaiting.value = false
+    loadingNone()
     return
   }
 
@@ -44,7 +48,7 @@ const getUrl = (url: string) => {
     player?.src(url)
     player?.load()
     player?.play()
-    videoWaiting.value = false
+    loadingNone()
   } else {
     initVideo(url)
   }
@@ -54,7 +58,7 @@ const route = useRoute()
 const router = useRouter()
 let player: any = null
 const videoRef = ref<HTMLDivElement | string>('')
-const videoWaiting = ref(false)
+const videoWaiting = ref(true)
 const videoIsInpicture = ref(false)
 const initVideo = (url: string) => {
   const options = {
@@ -65,7 +69,7 @@ const initVideo = (url: string) => {
     muted: false,
     controls: true,
     fluid: true,
-    // bigPlayButton: false,
+    bigPlayButton: false,
     loadingSpinner: false,
     errorDisplay: false,
     sources: [
@@ -86,7 +90,6 @@ const initVideo = (url: string) => {
           player.log('画中画模式已关闭')
         })
       }
-      videoWaiting.value = false
     })
 
     player.on('waiting', () => {
@@ -96,7 +99,7 @@ const initVideo = (url: string) => {
 
     player.on('playing', () => {
       console.log('playing', new Date().getTime())
-      // videoWaiting.value = false
+      videoWaiting.value = false
     })
 
     player.on('error', (err: any) => {
@@ -116,6 +119,11 @@ const initVideo = (url: string) => {
         router.push(`/match/${gidm}/bets`)
       }
     })
+  })
+}
+const loadingNone = () => {
+  nextTick(() => {
+    videoWaiting.value = false
   })
 }
 
