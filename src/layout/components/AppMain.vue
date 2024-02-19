@@ -1,14 +1,11 @@
 <template>
   <div class="app-main">
-
     <!-- :include="keepAlives" -->
     <router-view v-slot="{ Component , route}">
-      <keep-alive v-if="$route.meta.KeepAlive && !$route.meta.key">
-        <component :is="getComponent(Component, route)" :key="route.path" />
+      <keep-alive>
+        <component :is="getComponent(Component, route)" v-if="$route.meta.KeepAlive" :key="route.path" />
       </keep-alive>
-
-      <component :is="getComponent(Component, route)" v-if="!$route.meta.KeepAlive && !$route.meta.key" :key="route.path" />
-      <component :is="getComponent(Component, route)" v-if="!$route.meta.KeepAlive && $route.meta.key" :key="$route.meta.key" />
+      <component :is="getComponent(Component, route)" v-if="!$route.meta.KeepAlive" :key="route.path" />
     </router-view>
   </div>
 </template>
