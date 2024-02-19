@@ -23,7 +23,7 @@ import { computed } from 'vue'
 const props = defineProps({
   result: {
     type: Object,
-    default: () => { }
+    default: () => {}
   },
   stateClass: {
     type: String,
@@ -69,10 +69,11 @@ const getAcceptOrderStateTask = async () => {
   const { code, data } = res
   if (code === 200 && Array.isArray(data) && data.length) {
     const resultItem: any = data[0]
-    const status = stateMap[resultItem.state]
+    let status = stateMap[resultItem.state]
     let errorCode = resultItem.errorCode
     if ([5, 6, 7].includes(status)) {
       errorCode = 'errorCode'
+      status = '2'
     }
     props.result.status = status
     props.result.errorCode = errorCode
@@ -85,7 +86,7 @@ const getAcceptOrderStateTask = async () => {
   align-items: center;
   width: 675px;
   height: 135px;
-  background: #EFF0F1;
+  background: #eff0f1;
   border-radius: 20px;
   overflow: hidden;
   margin-bottom: 15px;
@@ -106,7 +107,7 @@ const getAcceptOrderStateTask = async () => {
       align-items: center;
       overflow: hidden;
 
-      .sport-icon{
+      .sport-icon {
         color: var(--color-bet-sportstext);
       }
       .betting-name {
@@ -142,7 +143,7 @@ const getAcceptOrderStateTask = async () => {
     width: 220px;
     font-family: PingFangSC-Semibold;
     font-size: 30px;
-    color: #7642FD;
+    color: #7642fd;
     letter-spacing: 1px;
     text-align: center;
     font-weight: 600;
@@ -153,15 +154,15 @@ const getAcceptOrderStateTask = async () => {
     height: 100%;
 
     &.check {
-      background: #0BBA3E;
+      background: #0bba3e;
     }
 
     &.accepting {
-      background: #FF9A00;
+      background: #ff9a00;
     }
 
     &.error {
-      background: #FB0738;
+      background: #fb0738;
     }
   }
 }

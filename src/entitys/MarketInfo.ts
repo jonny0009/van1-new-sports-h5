@@ -221,14 +221,14 @@ export class MarketInfo {
         return moneyFormat(this.ior) || ''
       }
       const ior = accDiv(-1, this.ior * 1)
-      return moneyFormat(ior)
+      return ior.toFixed(2)
       // 马来盘
     } else if (this.isEuropePlay && handicapType === 'M') {
       if (this.ior * 1 < 1) {
         return moneyFormat(this.ior) || ''
       }
       const ior = accDiv(-1, this.ior * 1)
-      return moneyFormat(ior)
+      return ior.toFixed(2)
     }
     return moneyFormat(this.ior) || ''
   }
