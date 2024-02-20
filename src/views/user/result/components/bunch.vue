@@ -119,6 +119,7 @@
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
 import { accMul } from '@/utils/math'
+import {getBrowserLanguage } from '@/utils'
 import { computed } from 'vue'
 import store from '@/store'
 
@@ -186,7 +187,7 @@ const getTeam = (item: any) => {
 // 获取多语言bet
 const getLangBet = (item: any) => {
   const itemA = JSON.parse(item)
-  const lang = localStorage.getItem('locale') || 'zh-cn'
+  const lang = localStorage.getItem('locale') || getBrowserLanguage()
   return itemA[lang]
 }
 

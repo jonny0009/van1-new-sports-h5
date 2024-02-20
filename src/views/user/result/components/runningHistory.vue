@@ -88,12 +88,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted, } from 'vue'
 import { formatToDateTime } from '@/utils/date'
 import moment from 'moment'
-import store from '@/store'
+// import store from '@/store'
+import {getBrowserLanguage } from '@/utils'
 
-const currency = computed(() => store.state.user.currency)
+
+
+// const currency = computed(() => store.state.user.currency)
 import CurrencyComp from './currency.vue'
 
 // const currentWallet = computed(() => store.state.user.currentWallet)
@@ -244,7 +247,7 @@ const getTitle = (type: any) => {
   if (typeList.arr.length) {
     const target = typeList.arr.find((item: any) => item.tradeType === type)
     const closeType = JSON.parse(target.manyName)
-    const lang: any = localStorage.getItem('locale') || 'zh-cn'
+    const lang: any = localStorage.getItem('locale') || getBrowserLanguage()
     return closeType[lang] || ''
   }
 }

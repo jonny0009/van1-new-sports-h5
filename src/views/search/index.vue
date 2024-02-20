@@ -69,6 +69,7 @@
 
 <script lang="ts" setup>
 import { ref, reactive, onMounted, computed } from 'vue'
+import {getBrowserLanguage } from '@/utils'
 import { rightSearch, hotSearch } from '@/api/user'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 
@@ -135,7 +136,7 @@ const sportsList = computed(() => {
 
 const getHotSearchList = async () => {
   const params = {
-    lang: localStorage.getItem('locale') || 'zh-cn',
+    lang: localStorage.getItem('locale') || getBrowserLanguage(),
     gameType: ''
   }
   const res: any = await hotSearch(params) || {}
@@ -210,6 +211,11 @@ const toUrlGame = (item: any) => {
       padding-top: 13px;
       background: var(--color-search-box) !important;
       border-radius: 34px;
+      display: flex;
+      align-items: center;
+    }
+    :deep(.van-field__body){
+      margin-top: -8px;
     }
 
     .searchImg {

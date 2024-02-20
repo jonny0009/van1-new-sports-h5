@@ -7,12 +7,12 @@
         {{ $t('sport.chooseLeague') }}
       </span>
     </div>
-    <template v-if="!isLoading">
     <ul class="game-type-wrap">
       <li v-for="(item, idx) in gameTypeTabList" :key="idx" @click="clickGameType(item)">
         <SportsButton :text="item.gameType" :active="chooseGameType === item.gameType" />
       </li>
     </ul>
+  <template v-if="!isLoading">
     <ul class="league-tab-wrap">
       <!-- <li :class="chooseLeagueId==='0'?'active':''" @click="clickLeague({leagueId:'0'})">
         <div class="all">{{ $t('sport.all') }}</div>
