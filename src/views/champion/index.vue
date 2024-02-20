@@ -166,6 +166,13 @@ const clickSportPage = (item: any) => {
 
   .game-type-wrap {
     margin: 23px 0 31px 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    &::-webkit-scrollbar {
+      height: 0;
+      display: none;
+    }
 
     li {
       margin: 0 8px;

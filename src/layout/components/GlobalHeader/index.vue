@@ -19,6 +19,7 @@
             <template v-else>
               <img v-if="currency==='CNY'" :src="CNY" style="object-fit: contain;" />
               <img v-else-if="currency==='VNDK'" :src="VNDK" style="object-fit: contain;" />
+              <img v-else-if="currency==='BRL'" :src="BRL" style="object-fit: contain;" />
               <img v-else :src="USDTImg" style="object-fit: contain;" />
             </template>
           </div>
@@ -48,6 +49,7 @@ import USDTImg from '@/assets/images/globalLayout/header/USDT.png'
 import CNY from '@/assets/images/user/CNY.svg'
 import VNDK from '@/assets/images/user/VNDK.svg'
 // import BAXI from '@/assets/images/user/BAXI.svg'
+import BRL from '@/assets/images/user/BRL.svg'
 import transactionImg from '@/assets/images/globalLayout/header/transaction.png'
 
 // import { formatMoney } from '@/utils/index'
