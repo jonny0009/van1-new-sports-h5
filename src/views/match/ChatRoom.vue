@@ -222,6 +222,9 @@ const onSend = () => {
   &.has-bet {
     padding-bottom: 96px;
   }
+  &.video {
+    height: calc(100% - 96px - 420px);
+  }
 }
 .chat-main {
   position: relative;

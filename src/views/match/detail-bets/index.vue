@@ -17,7 +17,7 @@ import BettingCollapse from '@/components/BettingCollapse/index.vue'
 import store from '@/store'
 
 const matchInfo = computed(() => store.state.match.matchInfo)
-const { findGroupById, playGroupBetList, playBettingList, apiLoading } = useBetting()
+const { findGroupById, playGroupBetList, playBettingList, apiLoading } = useBetting(true)
 </script>
 
 <style lang="scss" scoped>
