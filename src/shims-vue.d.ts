@@ -8,6 +8,7 @@ declare module '*.vue' {
 declare interface Window {
   AIConfig: any
   wf: any
+  aiRatioType: any
 }
 
 declare module 'fingerprintjs2' {

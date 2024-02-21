@@ -2,23 +2,21 @@
   <div class="panel-score">
     <div class="score">
       <div class="score-team">
-        <div class="score-team_head">
-          <span v-html="setMatch.showRBTime(matchInfo)"></span>
+        <div class="score-team_head"></div>
+        <div class="score-team_wrap">
+          <img v-img="matchData.homeLogo" :type="4" alt="" />
+          <span>{{ home }}</span>
         </div>
         <div class="score-team_wrap">
-          <img v-img="matchInfo.homeLogo" :type="4" alt="" />
-          <span>{{ matchInfo.homeTeamAbbr }}</span>
-        </div>
-        <div class="score-team_wrap">
-          <img v-img="matchInfo.awayLogo" :type="5" alt="" />
-          <span>{{ matchInfo.awayTeamAbbr }}</span>
+          <img v-img="matchData.awayLogo" :type="5" alt="" />
+          <span>{{ away }}</span>
         </div>
       </div>
 
       <div class="score-main">
         <div class="score-main__item" v-for="(item, i) in scoreListComputed" :key="i">
           <div class="head">
-            <strong>{{ i + 1 }}</strong>
+            <strong>{{ i + 1 }} {{ matchData.gameType === 'FT' ? '盘' : '节' }}</strong>
           </div>
           <div class="nums">
             <span>{{ item.homeTeamScore }}</span>
@@ -30,7 +28,7 @@
       </div>
 
       <div class="score-result">
-        <div class="head"><strong>结果</strong></div>
+        <div class="head"><strong>比赛</strong></div>
         <div class="nums">
           <span>{{ scoreResult.homeTeamScore }}</span>
         </div>
@@ -42,29 +40,30 @@
       <div class="bot-bg"></div>
     </div>
 
-    <div class="footer">
-      <div class="left">
-        <strong>{{ `${scoreResult.homeTeamScore} : ${scoreResult.awayTeamScore}` }}</strong>
-        <span>&nbsp;</span>
-        <strong>{{ `${matchInfo.homeTeamAbbr} vs ${matchInfo.awayTeamAbbr}` }}</strong>
-      </div>
-    </div>
+    <div class="footer"></div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import store from '@/store'
-import { useMatch } from '@/utils/useMatch'
 
 const props = defineProps({
   scoreList: {
     type: Array as any,
     default: () => []
+  },
+  matchData: {
+    type: Object,
+    default: () => {}
   }
 })
-const setMatch = useMatch()
-const matchInfo = computed(() => store.state.match.matchInfo)
+
+const home = computed(() => {
+  return props.matchData.homeTeamShort || props.matchData.homeTeam
+})
+const away = computed(() => {
+  return props.matchData.awayTeamShort || props.matchData.awayTeam
+})
 const scoreListComputed = computed(() => {
   const exit = ['Current', 'Normaltime']
   return props.scoreList.filter((m: any) => !exit.includes(m.type))

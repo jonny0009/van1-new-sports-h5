@@ -21,6 +21,7 @@ export function setTheme(token: string) {
 export function removeToken() {
   return localStore.removeItem(TokenKey)
 }
+
 export const getAnonymity = () => {
   const anonymity: any = localStorage.getItem('_h5_anonymity_')
   try {
@@ -29,6 +30,11 @@ export const getAnonymity = () => {
     return false
   }
 }
+
 export const setAnonymity = (state: any) => {
   return localStorage.setItem('_h5_anonymity_', state)
+}
+
+export const removeAnonymity = () => {
+  return localStore.removeItem('_h5_anonymity_')
 }

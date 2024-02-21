@@ -30,28 +30,28 @@ const betsGolds = computed(() => store.getters['betting/betsGolds'])
 const betsProfit = computed(() => store.getters['betting/betsProfit'])
 const combosBetGolds = computed(() => store.getters['betting/combosBetGolds'])
 const combosProfit = computed(() => store.getters['betting/combosProfit'])
-const golds = computed(() => mode.value === 1 ? betsGolds.value : combosBetGolds.value)
-const profit = computed(() => mode.value === 1 ? betsProfit.value * 1 + golds.value * 1 : combosProfit.value * 1 + golds.value * 1)
+const golds = computed(() => (mode.value === 1 ? betsGolds.value : combosBetGolds.value))
+const profit = computed(() =>
+  mode.value === 1 ? betsProfit.value * 1 + golds.value * 1 : combosProfit.value * 1 + golds.value * 1
+)
 
 const login = () => {
   router.push({
     name: 'Login'
   })
 }
-
 </script>
 <style lang="scss" scoped>
-
 .gold-tips {
   position: absolute;
-  background: #FB0738;
+  background: #fb0738;
   border-radius: 22px;
   padding: 5px 12px;
   right: 12px;
   bottom: 60px;
   font-family: PingFangSC-Semibold;
   font-size: 20px;
-  color: #FFFFFF;
+  color: #ffffff;
   letter-spacing: 0.67px;
   text-align: justify;
   font-weight: 600;
@@ -68,7 +68,7 @@ const login = () => {
     left: 0;
     right: 0;
     margin: auto;
-    border-top-color: #FB0738;
+    border-top-color: #fb0738;
     border-bottom-width: 0;
   }
 }
@@ -122,7 +122,7 @@ const login = () => {
       font-weight: 600;
     }
   }
-  .login-tips  {
+  .login-tips {
     margin-bottom: 30px;
     font-family: PingFangSC-Medium;
     font-size: 24px;
@@ -148,9 +148,7 @@ const login = () => {
       color: #fff;
       border-radius: 40px;
       border: none;
-
     }
   }
 }
-
 </style>

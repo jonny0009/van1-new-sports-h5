@@ -57,6 +57,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted, reactive } from 'vue'
+import {getBrowserLanguage } from '@/utils'
 // import { queryCMerLanguage } from '@/api/auth'
 
 import { useRouter } from 'vue-router'
@@ -142,7 +143,7 @@ function showPk(val?: any) {
   popupList.arr = []
   if (val === 1) {
     popupList.arr = languageList.value || []
-    commonKey.key = lang.value.key || 'zh-cn'
+    commonKey.key = lang.value.key || getBrowserLanguage()
     popupTitle.value = 'lang'
   }
   if (val === 3) {

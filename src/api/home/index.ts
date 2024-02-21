@@ -31,6 +31,15 @@ export const commonMatches = (params:any) => {
     params
   })
 }
+// 超级联赛轮播====
+// gameSort=1&gameType=&gameTypeSon=&showtype=&page=1&pageSize=20&groupId=1
+export const homeCommonMatches = (params:any) => {
+  return request({
+    url: '/ai/mobile/home/common/matches',
+    method: 'get',
+    params
+  })
+}
 export const recommendEvents = (params:any) => {
   return request({
     url: '/ai/mobile/recommend/events',

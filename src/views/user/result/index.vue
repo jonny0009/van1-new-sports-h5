@@ -14,13 +14,14 @@
         :title-inactive-color="ifBLue?'#88A6BB': '#96A5AA'"
         :title-active-color="ifBLue?'#0E3D66': '#1F2630'"
         line-width="40px"
+        swipe-threshold="2"
         :duration="0.3"
       >
         <van-tab :title="$t('user.BettingHistory')">
           <dataList ref="childRefA" @valueChange="setStatus" @timeChange="setDate"></dataList>
         </van-tab>
         <van-tab :title="$t('user.FlowingHistory')">
-          <RunningHistory></RunningHistory>
+          <RunningHistory ref="childRefC" @valueChange="setStatus" @timeChange="setDate"></RunningHistory >
         </van-tab>
         <van-tab :title="$t('user.matchResult')">
           <MatchResult ref="childRefB" @valueChange="setStatus" @timeChange="setDate"></MatchResult>
@@ -34,7 +35,7 @@
         :duration="0.2"
         closeable
         round
-        :style="{ maxHeight: '50%' }"
+        :style="{ maxHeight: '60%' }"
         @close="handleClose('close')"
       >
         <div class="popup-title">{{ popupTitle }}</div>
@@ -51,7 +52,7 @@
                 {{ item.value }}
               </span>
               <span v-if="way === 2">
-                {{ $t(`user.sports.${item.gameType}`) }}
+                {{ item.value  }}
               </span>
               <span v-if="way === 3">
                 {{ item.name }}
@@ -112,6 +113,7 @@ const dateWay = ref(1)
 const index = computed(() => store.state.user.resultTab || 0)
 const childRefA = ref()
 const childRefB = ref()
+const childRefC = ref()
 const showBottom = ref(false)
 
 const show = ref(false)
@@ -157,7 +159,7 @@ async function setPk(val: any) {
     childRefA.value.setPk(val)
   }
   if (way.value === 2) {
-    childRefB.value.setBallSelect(val)
+    childRefC.value.setPk(val)
   }
   if (way.value === 3) {
     childRefB.value.setPk(val)
@@ -167,6 +169,10 @@ const setDate = (val: any, num: any, start:any, end:any) => {
   console.log(num)
   dateWay.value = num
   if (num === 1) {
+    defaultDate.value = [new Date(start), new Date(end)]
+    show.value = val
+  }
+  if (num === 2) {
     defaultDate.value = [new Date(start), new Date(end)]
     show.value = val
   }
@@ -180,6 +186,10 @@ const onConfirm = (val: any) => {
     childRefA.value.setDateTime(val)
     show.value = false
   }
+  if (dateWay.value === 2) {
+    childRefC.value.setDateTime(val)
+    show.value = false
+  }
   if (dateWay.value === 3) {
     childRefB.value.setDateTime(val)
     showTime.value = false
@@ -188,6 +198,9 @@ const onConfirm = (val: any) => {
 const setDateBottom = () => {
   if (dateWay.value === 1) {
     childRefA.value.showBottom2 = false
+  }
+  if (dateWay.value === 2) {
+    childRefC.value.showBottom2 = false
   }
   if (dateWay.value === 3) {
     childRefB.value.showBottom = false
@@ -200,7 +213,7 @@ const handleClose = (item: any) => {
     childRefA.value.showBottom = false
   }
   if (way.value === 2) {
-    childRefB.value.showBottom1 = false
+    childRefC.value.showBottom = false
   }
   if (way.value === 3) {
     childRefB.value.showBottom = false

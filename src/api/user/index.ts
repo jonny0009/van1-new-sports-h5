@@ -222,4 +222,12 @@ export const standings = (params:any) => {
     params
   })
 }
+// 联系我们
+export const contact = (params:any) => {
+  return request({
+    url: '/ai/mobile/merchant/contact',
+    method: 'get',
+    params
+  })
+}
 

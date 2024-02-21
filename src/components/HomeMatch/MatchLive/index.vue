@@ -46,15 +46,14 @@
         <div class="up-match">
           <!--  -->
           <div class="match-info-live__header border-bottom">
-            <div v-if="showSportsIcon(sendParams)" class="live-icon" @click="goToDetail(sendParams)">
-              <i v class="iconfont icon-footer-live"></i>
-            </div>
+            <div v-if="showSportsIcon(sendParams)" class="live-icon" @click="goToDetail(sendParams)"><i v class="iconfont icon-footer-live"></i></div>
             <div class="up-match-league">
+              <SportsIcon :icon-src="props.sendParams.gameType" class="ball-img" />
               <div class="text">{{ getLeagueShortName(sendParams) }}</div>
             </div>
             <div class="flex-cross-center">
               <div class="up-match-time">
-                <SportsIcon v-show="showSportsIcon(sendParams)" :icon-src="'live'" class="mr5" />
+                <SportsIcon v-show="showSportsIcon(sendParams)" :icon-src="'sportlive'" class="live-img" />
                 <div class="up-match-time-html" :class="sendParams.gameType" v-html="showRBTime(sendParams)"></div>
               </div>
             </div>
@@ -62,20 +61,32 @@
           <!--  -->
           <div class="up-match-score border-bottom">
             <div class="item mb5">
-              <img v-img="sendParams.homeLogo" :type="4" class="my-image img" style="object-fit: contain" alt="" />
+              <img
+                v-img="sendParams.homeLogo"
+                :type="4"
+                class="my-image img"
+                style="object-fit: contain;"
+                alt=""
+              >
               <div class="name">{{ sendParams.homeTeamAbbr || sendParams.homeTeam }}</div>
               <div class="container">
                 <div class="value">
-                  {{ getScore(sendParams, 'H') }}
+                  {{ getScore(sendParams,'H') }}
                 </div>
               </div>
             </div>
             <div class="item">
-              <img v-img="sendParams.awayLogo" class="my-image img" :type="5" style="object-fit: contain" alt="" />
+              <img
+                v-img="sendParams.awayLogo"
+                class="my-image img"
+                :type="5"
+                style="object-fit: contain;"
+                alt=""
+              >
               <div class="name">{{ sendParams.awayTeamAbbr || sendParams.awayTeam }}</div>
               <div class="container">
                 <div class="value">
-                  {{ getScore(sendParams, 'C') }}
+                  {{ getScore(sendParams,'C') }}
                 </div>
               </div>
             </div>
@@ -97,7 +108,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('RE', sendParams)" :type="'RB'" />
+                    <Handicap :send-params="getHandicap('RE',sendParams)" :type="'RB'" />
                   </div>
                 </div>
               </div>
@@ -111,7 +122,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('ROU', sendParams)" :type="'RB'" />
+                    <Handicap :send-params="getHandicap('ROU',sendParams)" :type="'RB'" />
                   </div>
                 </div>
               </div>
@@ -125,7 +136,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('RM', sendParams)" :type="'RB'" />
+                    <Handicap :send-params="getHandicap('RM',sendParams)" :type="'RB'" />
                   </div>
                 </div>
               </div>
@@ -216,7 +227,7 @@ const offsetTop = computed(() => {
   return offsetTopval
 })
 //
-const sectionMap: any = {
+const sectionMap:any = {
   0: '',
   Q1: t('live.Q1'),
   Q2: t('live.Q2'),
@@ -239,15 +250,15 @@ const sectionMap: any = {
   h1: t('live.H1'),
   h2: t('live.H2')
 }
-const BKSection = (section: any) => {
+const BKSection = (section:any) => {
   const sectionToLowerCase = section.toLowerCase()
   return sectionMap[sectionToLowerCase]
 }
-const currBkTime: any = ref('')
-const showRBTime = (raceinfo: any = {}) => {
+const currBkTime:any = ref('')
+const showRBTime = (raceinfo:any = {}) => {
   const { showtype, gameType, gameInfo, showType, homeTeamSuffix, gidm } = raceinfo
   const Obj = opScoreObj(gameInfo, 5)
-  const seNow: any = gameInfo && gameInfo.se_now
+  const seNow:any = gameInfo && gameInfo.se_now
   if (showtype === 'RB' || showType === 'RB') {
     switch (gameType) {
       // 足球
@@ -302,8 +313,8 @@ const showRBTime = (raceinfo: any = {}) => {
           // 上半场and下半场
           return secssion === '1H'
             ? t('home.HNumber1', { number: newRaceTimeVal })
-            : //  `上半场<span class='time-h-Up'>${newRaceTimeVal}</span>`
-              t('home.HNumber2', { number: newRaceTimeVal })
+            //  `上半场<span class='time-h-Up'>${newRaceTimeVal}</span>`
+            : t('home.HNumber2', { number: newRaceTimeVal })
           // `下半场<span class='time-h-d'>${newRaceTimeVal}</span>`
         } else if (gameInfo?.re_time) {
           // 比赛时间容错
@@ -316,7 +327,7 @@ const showRBTime = (raceinfo: any = {}) => {
       //
       case 'TN':
         if (gameInfo) {
-          const tninfo: any = tnStObj(gameInfo)
+          const tninfo:any = tnStObj(gameInfo)
           if (tninfo?.sciwd) {
             return t('live.pause')
           }
@@ -336,12 +347,9 @@ const showRBTime = (raceinfo: any = {}) => {
             // 原本data显示空
             return t('home.img')
           }
-          const bsScoreObj: any = gameInfo ? bsStObj(gameInfo) : ''
-          const inningNum = gameInfo.inningNum
-            ? gameInfo?.inningNum
-            : bsScoreObj.se_now > 0
-            ? bsScoreObj.se_now
-            : bsScoreObj.score.num
+          const bsScoreObj:any = gameInfo ? bsStObj(gameInfo) : ''
+          const inningNum = gameInfo.inningNum ? gameInfo?.inningNum
+            : bsScoreObj.se_now > 0 ? bsScoreObj.se_now : bsScoreObj.score.num
           const juCount = t('home.set', {
             number: inningNum
           })
@@ -360,11 +368,8 @@ const showRBTime = (raceinfo: any = {}) => {
             number: dateFormat(currBkTime.value * 1000, 'mm:ss')
           })
         }
-        return seNow && currBkTime
-          ? `${BKSection(gameInfo?.se_now)}<span>${dateFormat(currBkTime.value * 1000, 'mm:ss')}</span>`
-          : !currBkTime.value && seNow
-          ? `${BKSection(gameInfo.se_now)}<span>00:00</span>`
-          : ''
+        return seNow && currBkTime ? `${BKSection(gameInfo?.se_now)}<span>${dateFormat(currBkTime.value * 1000, 'mm:ss')}</span>` : !currBkTime.value && seNow
+          ? `${BKSection(gameInfo.se_now)}<span>00:00</span>` : ''
       //
       // 美式足球
       case 'BK_AFT':
@@ -373,20 +378,18 @@ const showRBTime = (raceinfo: any = {}) => {
           return t('home.img')
         } else {
           if (gameInfo?.se_now === 'HT' || gameInfo?.se_now === 'ht') {
-            // 中场休息
+          // 中场休息
             return t('live.HT')
           }
           if (gameInfo?.se_now.indexOf('OT') > -1 || gameInfo?.se_now.indexOf('ot') > -1) {
-            // 加时
+          // 加时
             return t('home.addTimeNumber', {
               number: dateFormat(gameInfo.t_count * 1000, 'mm:ss')
             })
           }
           const seNow1 = gameInfo && gameInfo.se_now
           const tCount1 = gameInfo && +gameInfo.t_count
-          return seNow1 && tCount1
-            ? `${BKSection(gameInfo.se_now)}<span>${dateFormat(gameInfo.t_count * 1000, 'mm:ss')}</span>`
-            : ''
+          return seNow1 && tCount1 ? `${BKSection(gameInfo.se_now)}<span>${dateFormat(gameInfo.t_count * 1000, 'mm:ss')}</span>` : ''
         }
       //
       // 乒乓球
@@ -395,7 +398,7 @@ const showRBTime = (raceinfo: any = {}) => {
           // 原本data显示空
           return t('home.img')
         } else {
-          const newSeNow: any = gameInfo?.se_now.replace(/[^0-9]/gi, '') || ''
+          const newSeNow:any = gameInfo?.se_now.replace(/[^0-9]/gi, '') || ''
           return t('home.set', {
             number: newSeNow
           })
@@ -403,11 +406,9 @@ const showRBTime = (raceinfo: any = {}) => {
       //
       // 排球
       case 'OP_VB': // 排球
-        return Obj
-          ? t('home.set', {
-              number: Obj.scorePan.num
-            })
-          : ''
+        return Obj ? t('home.set', {
+          number: Obj.scorePan.num
+        }) : ''
       //
       // 电竞
       case 'OP_DJ': // 电竞
@@ -440,7 +441,7 @@ const props = defineProps({
   }
 })
 
-const showSportsIcon = (item: any) => {
+const showSportsIcon = (item:any) => {
   const { live, merchantAnchor, merchantStreamNa } = item
 
   if (live * 1 !== 1 || (merchantAnchor && merchantAnchor?.length && merchantStreamNa && merchantStreamNa?.length)) {
@@ -449,11 +450,23 @@ const showSportsIcon = (item: any) => {
   return false
 }
 
-const goToDetail = (item: any) => {
-  router.push(`/match/${item.gidm}`)
+const goToDetail = (item:any) => {
+  router.push(`/match/${item.gidm}/bets`)
 }
 const betMoreShow = () => {
   store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })
   store.dispatch('user/getLocationHeight', false)
 }
 </script>
+<style lang="scss" scoped>
+.ball-img {
+  font-size: 28px;
+  color: var(--color-text-3);
+  font-weight: 500;
+  margin-right: 5px;
+}
+.live-img{
+  font-size: 28px;
+  margin-right: 5px;
+}
+</style>

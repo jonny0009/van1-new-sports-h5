@@ -6,18 +6,43 @@
         <div class="top">
           <div class="top_1">
             <div class="left">
-              <img v-img="userInfo.headImg" class="headImg" :type="3" style="object-fit: cover;" @click.stop="toUser('/userInfo')" />
+              <img
+                v-img="userInfo.headImg"
+                class="headImg"
+                :type="3"
+                style="object-fit: cover;"
+                @click.stop="toUser('/userInfo')"
+              />
             </div>
             <div class="right">
               <div class="head">
                 <div class="head_1" @click.self="toUser('/userInfo')"> {{ $t('user.ViewProfile') }} </div>
-                <img v-if="ifBLue" class="headImg_1" fit="contain" src="@/assets/images/user/blue/bell.png" @click="toUser('/notice')" />
-                <img v-else class="headImg_1" fit="contain" src="@/assets/images/user/notice.svg" @click="toUser('/notice')" />
+                <img
+                  v-if="ifBLue"
+                  class="headImg_1"
+                  fit="contain"
+                  src="@/assets/images/user/blue/bell.png"
+                  @click="toUser('/notice')"
+                />
+                <img
+                  v-else
+                  class="headImg_1"
+                  fit="contain"
+                  src="@/assets/images/user/notice.svg"
+                  @click="toUser('/notice')"
+                />
               </div>
               <div class="money">
-                <img v-if="currency === 'CNY'" class="headImg_2" :src="CNY" style="object-fit: contain;" />
-                <img v-else-if="currency === 'VNDK'" class="headImg_2" :src="VNDK" style="object-fit: contain;" />
-                <img v-else class="headImg_2" :src="USDTImg" style="object-fit: contain;" />
+                <template v-if="currentWallet.currencyLogo">
+                  <img class="headImg_2" :src="imgUrlFormat(currentWallet.currencyLogo)" style="object-fit: contain;" />
+                </template>
+                <template v-else>
+                  <img v-if="currency === 'CNY'" class="headImg_2" :src="CNY" style="object-fit: contain;" />
+                  <img v-else-if="currency === 'VNDK'" class="headImg_2" :src="VNDK" style="object-fit: contain;" />
+                  <img v-else-if="currency==='BRL'" class="headImg_2" :src="BRL" style="object-fit: contain;" />
+                  <img v-else class="headImg_2" :src="USDTImg" style="object-fit: contain;" />
+                </template>
+
                 <span>{{ formatMoney(balance.balance) }}</span>
               </div>
             </div>
@@ -52,16 +77,21 @@
             <div class="menu_2">{{ $t('user.edit') }}</div>
           </div>
           <!-- 联系我们 -->
-          <!-- <div class="menu" @click="toUser('/contactUs')">
+          <div class="menu" @click="toUser('/contactUs')">
             <img v-if="ifBLue" class="menu_1" fit="contain" src="@/assets/images/user/blue/sever.png" />
             <img v-else class="menu_1" fit="contain" src="@/assets/images/user/icon2.svg" />
             <div class="menu_2">{{ $t('user.customer') }}</div>
-          </div> -->
+          </div>
         </div>
         <!-- logo -->
         <div class="logoImg">
-          <van-image v-if="ifBLue" class="logo" fit="contain" :src="aiLogo" />
-          <van-image v-else class="logo" fit="contain" :src="logoImg" />
+          <template v-if="config.leftLogo">
+            <van-image class="logo" fit="contain" :src="imgUrlFormat(config.leftLogo)" />
+          </template>
+          <template v-else>
+            <van-image v-if="ifBLue" class="logo" fit="contain" :src="aiLogo" />
+            <van-image v-else class="logo" fit="contain" :src="logoImg" />
+          </template>
         </div>
       </div>
     </van-popup>
@@ -70,11 +100,11 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
+import { formatMoney, imgUrlFormat } from '@/utils/index'
 
 import logoImg from '@/assets/images/user/logo.png'
 import aiLogo from '@/assets/images/user/blue/ai_logo.png'
 import USDTImg from '@/assets/images/globalLayout/header/USDT.png'
-import { formatMoney } from '@/utils/index'
 
 import store from '@/store'
 
@@ -82,10 +112,13 @@ const userInfo = computed(() => store.state.user.userInfo)
 const peopleInfo = computed(() => store.state.user.peopleInfo)
 const balance = computed(() => store.state.user.balance)
 const currency = computed(() => store.state.user.currency)
+const currentWallet = computed(() => store.state.user.currentWallet)
 const theme = computed(() => store.state.app.theme)
+const config = computed(() => store.state.app.customizeConfig)
 
 import CNY from '@/assets/images/user/CNY.svg'
 import VNDK from '@/assets/images/user/VNDK.svg'
+import BRL from '@/assets/images/user/BRL.svg'
 
 import { useRouter } from 'vue-router'
 const $router = useRouter()

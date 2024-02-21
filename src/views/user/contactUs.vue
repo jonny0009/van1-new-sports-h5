@@ -5,49 +5,30 @@
         <van-icon name="arrow-left" class="img_1" @click="goBack()" />
       </template>
     </van-nav-bar>
-    <div class="content">
-      <!-- <div class="top1">
-        <span>{{ $t('user.userName') }}</span>
-        <span class="font2">{{ '111' }}</span>
-      </div> -->
-      <div class="box">
-        <SvgIcon name="user-telegram" class="icon-svg-1" />
-        <div class="right">
-          <p v-copy="info.account">Telegram</p>
-          <p>Telegram</p>
-          <p>Telegram</p>
-          <p>Telegram</p>
+    <div class="content" v-if="contactInfoArr.length">
+      <div v-for="(item, index) in contactInfoArr" :key="index">
+        <div class="box">
+          <img v-img="item.icon" class="img_2" alt="" :type="1">
+          <div class="right">
+            <p>{{ item.type }}</p>
+            <p>
+              <span v-if="item.url" @click="toUrl(item.url, 1)">
+                {{ item.contactInfo }}
+              </span>
+              <span v-else v-copy="item.contactInfo" class="noUrl">
+                {{ item.contactInfo }}
+              </span>
+            </p>
+          </div>
         </div>
+        <div class="line-color" />
       </div>
-      <div class="line-color" />
-      <div class="box">
-        <SvgIcon name="user-email" class="icon-svg-1" />
-        <div class="right">
-          <p>Email</p>
-          <p>Telegram</p>
-          <p>Telegram</p>
-          <p>Telegram</p>
-        </div>
-      </div>
-      <div class="line-color" />
-      <div class="box">
-        <SvgIcon name="user-skype" class="icon-svg-1" />
-        <div class="right">
-          <p>Skype</p>
-          <p>
-            <a href="mailto:xxx@gmail.com">Telegram</a>
-          </p>
-          <p>
-            <a href="mailto:xxx@gmail.com">Telegram</a>
-          </p>
-          <p>
-            <a href="mailto:xxx@gmail.com">Telegram</a>
-          </p>
-
-        </div>
-      </div>
-      <div class="line-color" />
-
+    </div>
+    <div v-if="!contactInfoArr.length" class="noData">
+      <img class="img_1" src="@/assets/images/user/noData.png" />
+      <p>
+        {{ $t('user.noData') }}
+      </p>
     </div>
 
   </div>
@@ -57,27 +38,56 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 const $router = useRouter()
+import { contact } from '@/api/user'
+import { showToast } from 'vant'
+
+
 
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const title = ref(t('user.contactUs'))
-const info = ref<any>({
-  account: '你好'
-})
 
 onMounted(() => { getInfo() })
 
-const getInfo = () => {
-  console.log('获取信息====')
+
+const contactInfoArr = ref<any>([])
+const contactType1 = ref<any>([])
+const contactType2 = ref<any>([])
+const contactType3 = ref<any>([])
+
+const getInfo = async () => {
+  const res: any = await contact({})
+  if (res.code !== 200) {
+    return showToast(res.msg)
+  }
+  contactType1.value = res.data.filter((item: any) => {
+    return item.type === '1'
+  })
+  contactType2.value = res.data.filter((item: any) => {
+    return item.type === '2'
+  })
+  contactType3.value = res.data.filter((item: any) => {
+    return item.type === '3'
+  })
+  contactInfoArr.value = res.data.filter((item: any) => {
+    return item.state === 1
+  })
+
+  // console.log([...contactInfoArr.value], "=====");
+
 }
 const goBack = () => {
   $router.back()
 }
 
 // _blank  _self
-// const toUrl = () => {
-//   window.open('mailto:xxx@gmail.com', '_self')
-// }
+const toUrl = (url: any, num: any) => {
+  if (num === 1) {
+    window.open(url, '_self')
+  } else {
+    window.open(`mailto:${url}`, '_self')
+  }
+}
 
 </script>
 
@@ -105,10 +115,15 @@ const goBack = () => {
       padding: 50px 20px 30px 20px;
       display: flex;
 
-      .icon-svg-1 {
-        font-size: 48px;
-        color: var(--color-bet-tabtext-2);
+      // .icon-svg-1 {
+      //   font-size: 48px;
+      //   color: var(--color-bet-tabtext-2);
 
+      // }
+      .img_2 {
+        height: 48px;
+        width: 48px;
+        border-radius: 50%;
       }
 
       .right {
@@ -120,16 +135,21 @@ const goBack = () => {
         p {
           margin-bottom: 16px;
         }
-        p:first-child{
+
+        p:first-child {
           font-size: 28px;
           color: var(--color-text-5);
           font-weight: 500;
+        }
+
+        .noUrl {
+          color: var(--color-loadingcl);
         }
       }
     }
 
     .line-color {
-      background: #E5ECF3;
+      background: #E5ECF3;;
       height: 2px;
     }
 
@@ -157,6 +177,25 @@ const goBack = () => {
         text-align: right;
         font-weight: 500;
       }
+
+    }
+  }
+
+  .noData {
+    width: 100%;
+    text-align: center;
+    font-family: PingFangSC-Medium;
+    font-size: 24px;
+    color: var(--color-no-data-font);
+    letter-spacing: 0;
+    font-weight: 500;
+    height: 850px;
+
+    >.img_1 {
+      margin-top: 331px;
+      width: 102px;
+      height: 121px;
+      margin-bottom: 57px;
 
     }
   }

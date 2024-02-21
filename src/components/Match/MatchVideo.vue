@@ -1,6 +1,7 @@
 <template>
   <div class="match-video">
-    <video ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
+    <iframe v-if="urlHtml && !videoWaiting" :src="urlHtml" style="width:100%;height:100%"></iframe>
+    <video v-else ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
 
     <div v-if="videoWaiting" class="mask-loading">
       <div class="icon"></div>
@@ -20,18 +21,34 @@ const emits = defineEmits(['on-error'])
 const props = defineProps({
   url: String
 })
+
+const urlHtml = ref('')
 watch(
   () => props.url,
   (newUrl) => {
+    videoWaiting.value = true
+    if (!newUrl) {
+      emits('on-error', '没有播放链接')
+      return
+    }
     getUrl(newUrl as string)
   }
 )
 
 const getUrl = (url: string) => {
+  //  加载视频网页 不全是 m3u8
+  urlHtml.value = ''
+  if (url.indexOf('.html') > -1) {
+    urlHtml.value = url
+    loadingNone()
+    return
+  }
+
   if (player) {
     player?.src(url)
     player?.load()
     player?.play()
+    loadingNone()
   } else {
     initVideo(url)
   }
@@ -41,7 +58,7 @@ const route = useRoute()
 const router = useRouter()
 let player: any = null
 const videoRef = ref<HTMLDivElement | string>('')
-const videoWaiting = ref(false)
+const videoWaiting = ref(true)
 const videoIsInpicture = ref(false)
 const initVideo = (url: string) => {
   const options = {
@@ -52,7 +69,7 @@ const initVideo = (url: string) => {
     muted: false,
     controls: true,
     fluid: true,
-    // bigPlayButton: false,
+    bigPlayButton: false,
     loadingSpinner: false,
     errorDisplay: false,
     sources: [
@@ -76,10 +93,12 @@ const initVideo = (url: string) => {
     })
 
     player.on('waiting', () => {
-      videoWaiting.value = true
+      console.log('waiting', new Date().getTime())
+      // videoWaiting.value = true
     })
 
     player.on('playing', () => {
+      console.log('playing', new Date().getTime())
       videoWaiting.value = false
     })
 
@@ -100,6 +119,11 @@ const initVideo = (url: string) => {
         router.push(`/match/${gidm}/bets`)
       }
     })
+  })
+}
+const loadingNone = () => {
+  nextTick(() => {
+    videoWaiting.value = false
   })
 }
 

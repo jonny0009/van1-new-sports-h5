@@ -4,17 +4,16 @@
       <van-collapse-item name="1" :title="$t('live.solveAnalyse')" :border="false">
         <div class="panel-main">
           <div class="panel-main__wrapper">
-            <!-- <PanelAnalyze /> -->
-            <EmptyData />
+            <EmptyData v-if="JSON.stringify(anlyzeList) === '{}'" />
+            <PanelAnalyze v-else :data="anlyzeList" :matchData="matchData" />
           </div>
         </div>
       </van-collapse-item>
-
       <van-collapse-item name="2" :title="$t('live.score')" :border="false">
         <div class="panel-main">
           <div class="panel-main__wrapper">
             <EmptyData v-if="scoreList.length === 0" />
-            <PanelScore v-else :score-list="scoreList" />
+            <PanelScore v-else :score-list="scoreList" :matchData="matchData" />
           </div>
         </div>
       </van-collapse-item>
@@ -32,9 +31,9 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, onMounted, ref, watch } from 'vue'
-import { scoresstaticseventsApi } from '@/api/live'
-// const PanelAnalyze = defineAsyncComponent(() => import('../Panel/PanelAnalyze.vue'))
+import { defineAsyncComponent, onMounted, ref, watch, onActivated } from 'vue'
+import { scoresstaticseventsApi, betAnalyzeApi } from '@/api/live'
+const PanelAnalyze = defineAsyncComponent(() => import('../Panel/PanelAnalyze.vue'))
 const PanelScore = defineAsyncComponent(() => import('../Panel/PanelScore.vue'))
 const PanelStatistic = defineAsyncComponent(() => import('../Panel/PanelStatistic.vue'))
 
@@ -49,12 +48,19 @@ watch(
   () => props.matchData,
   () => {
     fetchStaticsEvents()
+    fetchBetAnlyze()
   }
 )
 onMounted(() => {
   fetchStaticsEvents()
+  fetchBetAnlyze()
+})
+onActivated(() => {
+  fetchStaticsEvents()
+  fetchBetAnlyze()
 })
 
+const anlyzeList = ref({})
 const staticsList = ref([])
 const scoreList = ref([])
 const fetchStaticsEvents = async () => {
@@ -74,6 +80,25 @@ const fetchStaticsEvents = async () => {
     const data = res.data || {}
     staticsList.value = data.statics || []
     scoreList.value = data.scores || []
+  }
+}
+
+const fetchBetAnlyze = async () => {
+  try {
+    if (!(props.matchData && props.matchData.systemId)) {
+      return
+    }
+    const { systemId } = props.matchData
+
+    const res: any = await betAnalyzeApi({
+      systemId
+    })
+    if (res.code === 200) {
+      const data = res.data || {}
+      anlyzeList.value = data
+    }
+  } catch (e) {
+    console.log(e)
   }
 }
 

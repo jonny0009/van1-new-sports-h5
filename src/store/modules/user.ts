@@ -1,6 +1,14 @@
 import { Module } from 'vuex'
 import { login, playAccount, getBalance } from '@/api/login'
-import { getCMerAccessWallet, betRecordTab, getGameManyInfo, selectChampionManyName, playerInfo, getCashoutInfo, confirmCashout } from '@/api/user'
+import {
+  getCMerAccessWallet,
+  betRecordTab,
+  getGameManyInfo,
+  selectChampionManyName,
+  playerInfo,
+  getCashoutInfo,
+  confirmCashout
+} from '@/api/user'
 import { User } from '#/store'
 import { getToken, setToken, removeToken, getAnonymity, setAnonymity } from '@/utils/auth'
 import { configSettingNew } from '@/api/auth'
@@ -37,7 +45,6 @@ const userModule: Module<User, any> = {
       state.isAnonymity = status
       setAnonymity(status)
     }
-
   },
   actions: {
     // user login
@@ -71,7 +78,7 @@ const userModule: Module<User, any> = {
     async configSettingNew({ state }, params = {}) {
       localStore.setItem('plateMaskKey', params.handicapType)
       const res = await configSettingNew(params)
-      state.userConfig = res.data || {}
+      state.userConfig = res?.data || {}
     },
     // 用户配置
     async anonyToken({ commit }) {
@@ -83,53 +90,55 @@ const userModule: Module<User, any> = {
     },
     // 用户信息
     async userInfo({ state }, params = {}) {
-      const res:any = await playAccount(params) || {}
+      const res: any = (await playAccount(params)) || {}
       if (res.code === 200) {
         state.userInfo = res.data || {}
       }
     },
     // 获取钱包币种
     async getCurrency({ state }, params = {}) {
-      const res:any = await getCMerAccessWallet(params) || {}
+      const res: any = (await getCMerAccessWallet(params)) || {}
       if (res.code === 200) {
         state.currencyData = res.data || {}
         state.currency = res.data[0].currency || {}
         state.currentWallet = res.data[0]
         this.dispatch('user/getBalance', { wid: res.data[0].walletId || '' })
+      } else {
+        this.dispatch('app/getConfig', { wid: 1 })
       }
     },
 
     // 账户余额
     async getBalance({ state }, params = { wid: 1 }) {
-      const res:any = await getBalance(params) || {}
+      const res: any = (await getBalance(params)) || {}
       if (res.code === 200) {
         state.balance = res.data || {}
       }
     },
     // 队伍多语言
     async getMoreTeamList({ state }, params) {
-      const res:any = await getGameManyInfo({ gidms: params }) || []
+      const res: any = (await getGameManyInfo({ gidms: params })) || []
       if (res.code === 200) {
-        state.teamNameList = [...state.teamNameList, ...res.data || []]
+        state.teamNameList = [...state.teamNameList, ...(res.data || [])]
       }
     },
     // 冠军国际化
     async getChampionLang({ state }, params) {
-      const res:any = await selectChampionManyName({ gidm: params }) || []
+      const res: any = (await selectChampionManyName({ gidm: params })) || []
       if (res.code === 200) {
-        state.championLangList = [...state.championLangList, ...res.data || []]
+        state.championLangList = [...state.championLangList, ...(res.data || [])]
       }
     },
     // 提前结算信息
     async getOrderList({ state }, params) {
-      const res:any = await getCashoutInfo({ cashoutInfoReq: JSON.parse(params) }) || []
+      const res: any = (await getCashoutInfo({ cashoutInfoReq: JSON.parse(params) })) || []
       if (res.code === 200) {
-        state.aheadOrderList = [...state.aheadOrderList, ...res.data || []]
+        state.aheadOrderList = [...state.aheadOrderList, ...(res.data || [])]
       }
     },
     // 提前结算信息
     async handleConfirmCashout({ state, dispatch }, params) {
-      const res:any = await confirmCashout(params) || []
+      const res: any = (await confirmCashout(params)) || []
       if (res.code === 200) {
         dispatch('getBalance')
         dispatch('pendingOrder')
@@ -137,7 +146,7 @@ const userModule: Module<User, any> = {
     },
     // 获取账户信息
     async getAccountInfo({ state }, params) {
-      const res:any = await playerInfo({ fPlayerId: state.userInfo.playerId }) || []
+      const res: any = (await playerInfo({ fPlayerId: state.userInfo.playerId })) || []
       if (res.code === 200) {
         state.peopleInfo = res.data || {}
       }
@@ -156,21 +165,22 @@ const userModule: Module<User, any> = {
       state.locationHeight = params
     },
     // 进行中的注单
-    async pendingOrder({ state }, params = { }) {
-      const res: any = await betRecordTab({
-        orderState: '0',
-        page: 1,
-        pageSize: 99,
-        beginTime: '',
-        endTime: ''
-      }) || {}
+    async pendingOrder({ state }, params = {}) {
+      const res: any =
+        (await betRecordTab({
+          orderState: '0',
+          page: 1,
+          pageSize: 99,
+          beginTime: '',
+          endTime: ''
+        })) || {}
       if (res.code === 200) {
         state.pendingData = res.data || []
       }
     },
     // remove token
     clearUserInfo({ commit, dispatch }) {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         commit('SET_TOKEN', '')
         commit('SET_ROLES', [])
         dispatch('tagsView/delAllViews', null, { root: true })
@@ -179,7 +189,6 @@ const userModule: Module<User, any> = {
         location.reload()
       })
     }
-
   }
 }
 

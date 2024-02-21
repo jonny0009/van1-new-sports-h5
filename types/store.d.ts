@@ -14,6 +14,9 @@ declare interface App {
   queryCMerLanguage: any
   state: boolean
   pictureinpictureGidm: any
+  mantainMsg: any
+  systemTime: any
+  customizeConfig: any
 }
 
 declare interface User {
@@ -28,11 +31,11 @@ declare interface User {
   championLangList: any
   peopleInfo: any
   aheadOrderList: any
-  resultTab:any
-  scrollNumY:any
-  locationHeight:any
-  currentWallet:any
-  keepCache:any
+  resultTab: any
+  scrollNumY: any
+  locationHeight: any
+  currentWallet: any
+  keepCache: any
   token: string | undefined | null
 }
 declare interface Betting {
@@ -64,6 +67,7 @@ declare interface Betting {
   moreShow: any
   moreParams: any
   oddChangesState: any
+  combosErrorIds: any
 }
 
 declare interface Match {

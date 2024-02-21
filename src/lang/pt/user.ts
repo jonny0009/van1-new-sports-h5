@@ -129,6 +129,10 @@ export default {
   aheadFinal: 'Liquidação antecipada',
   // 新增7
   contactUs: 'entre em contato conosco',
+  type: 'tipo',
+  homeName:'principal',
+  awayName:'passageiro',
+
 
   sports: {
     officeNumber: 'Número da agência',

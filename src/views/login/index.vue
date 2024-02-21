@@ -1,17 +1,44 @@
 <template>
   <div class="login-page">
-    <van-nav-bar class="bg-title" :class="[changeImg ? 'theme' : '']" :border="false">
+    <van-nav-bar class="bg-title" :class="[changeImg ? 'theme' : '']" :border="false" @click-right="onClickRight">
       <template #left>
-        <van-icon name="arrow-left" class="img_1" @click="goBack()" />
+        <van-icon
+          name="arrow-left"
+          class="img_1"
+          @click="goBack()"
+        />
       </template>
       <template #title>
-        <img v-if="ifBLue" class="img_2" src="@/assets/images/user/blue/logo1.png" alt="" />
-        <img v-else class="img_2" src="@/assets/images/user/logo1.png" alt="" />
+
+        <template v-if="config.loginBarLogo">
+          <img
+            :src="imgUrlFormat(config.loginBarLogo)"
+            alt=""
+            class="img_2"
+          >
+        </template>
+
+        <template v-else>
+          <img v-if="ifBLue" class="img_2" src="@/assets/images/user/blue/logo1.png" alt="" />
+          <img v-else class="img_2" src="@/assets/images/user/logo1.png" alt="" />
+        </template>
 
       </template>
       <template #right>
-        <img v-if="ifBLue" class="img_3" src="@/assets/images/user/blue/sever.png" alt="" />
-        <img v-else class="img_3" src="@/assets/images/login/service@2x.png" alt="" />
+
+        <img
+          v-if="ifBLue"
+          class="img_3"
+          src="@/assets/images/user/blue/sever.png"
+          alt=""
+        />
+        <img
+          v-else
+          class="img_3"
+          src="@/assets/images/login/service@2x.png"
+          alt=""
+        />
+
       </template>
     </van-nav-bar>
     <!-- 头部=== -->
@@ -24,24 +51,53 @@
         <span @click="login">{{ $t('user.logOn') }}</span>
       </div>
       <div class="ban">
-        <img v-if="ifBLue" class="ban_1" src="@/assets/images/user/blue/login_bg.png" alt="" />
-        <img v-else class="ban_1" src="@/assets/images/login/login.png" alt="" />
+
+        <template v-if="config.loginBanner">
+          <img
+            :src="imgUrlFormat(config.loginBanner)"
+            alt=""
+          >
+        </template>
+        <template v-else>
+          <img
+            v-if="ifBLue"
+            src="@/assets/images/user/blue/login_bg.png"
+            alt=""
+          />
+          <img
+            v-else
+            src="@/assets/images/login/login.png"
+            alt=""
+          />
+        </template>
       </div>
 
       <div class="list-set">
-        <div class="item" @click="showPk(3)">
+        <div
+          class="item"
+          @click="showPk(3)"
+        >
           <div class="label-info flex align-center">
             <div class="icon"><img src="@/assets/images/login/pankou@2x.png" /></div>
             <div class="label">{{ $t('user.Handicap') }}</div>
           </div>
           <div class="label-right">
             <div class="label">{{ plateMask?.value }}</div>
-            <img class="arrow" src="@/assets/images/login/go@2x.png" />
+            <img
+              class="arrow"
+              src="@/assets/images/login/go@2x.png"
+            />
           </div>
         </div>
       </div>
     </div>
-    <van-popup v-model:show="showBottom" :duration="0.2" position="bottom" closeable round>
+    <van-popup
+      v-model:show="showBottom"
+      :duration="0.2"
+      position="bottom"
+      closeable
+      round
+    >
       <div class="popup-title">{{ $t(`user.${popupTitle}`) }}</div>
       <div class="pk-list">
         <div
@@ -73,6 +129,7 @@ import localStore from '@/utils/localStore'
 // import { getPlateMask } from '@/api/user'
 // import { getToken } from '@/utils/auth'
 import store from '@/store'
+import { imgUrlFormat } from '@/utils/index'
 
 const $router = useRouter()
 const popupTitle = ref('')
@@ -81,6 +138,7 @@ const commonKey = reactive({ key: '' })
 const popupIndex = ref(0)
 const popupList = reactive<{ arr: any[] }>({ arr: [] })
 const theme = computed(() => store.state.app.theme)
+const config = computed(() => store.state.app.customizeConfig)
 
 const showBottom = ref(false)
 
@@ -121,9 +179,17 @@ const defaultPlate = {
   value: t('user.hk'),
   key: 'H'
 }
+
+const onClickRight = () => {
+  $router.push({
+    name: 'ContactUs'
+  })
+  console.log('onClickRight')
+}
+
 onMounted(() => {
   const obj = plateData.arr.find((item: any) => {
-    if (item.key === plateMaskKey || '') {
+    if (item.key === plateMaskKey ) {
       return item
     }
   })
@@ -164,7 +230,6 @@ const register = () => {
 const login = () => {
   $router.push({ path: '/sign_in' })
 }
-
 </script>
 
 <style lang="scss" scope>
@@ -189,6 +254,7 @@ const login = () => {
       // width: 77px;
       height: 63px;
       color: var(--title-text-font-color);
+      object-fit: cover;
     }
 
     .img_3 {
@@ -205,12 +271,12 @@ const login = () => {
   .head-height {
     height: 16px;
     background-color: var(--title-background-color-2);
-    border-bottom:1px solid var(--color-global-headBrBg) ;
+    border-bottom: 1px solid var(--color-global-headBrBg);
   }
 
   .content {
     // margin-top:-26px ;
-    margin-top:0px ;
+    margin-top: 0px;
     height: calc(100vh - 150px);
     background: var(--color-background-color);
     border-radius: 16px 16px 0px 0px;
@@ -239,7 +305,11 @@ const login = () => {
 
       span {
         display: inline-block;
-        background-image: linear-gradient(to right, var(--color-login-button-color-1), var(--color-login-button-color-2));
+        background-image: linear-gradient(
+          to right,
+          var(--color-login-button-color-1),
+          var(--color-login-button-color-2)
+        );
         text-align: center;
         font-size: 28px;
         font-weight: 500;
@@ -291,7 +361,7 @@ const login = () => {
             height: 36px;
             margin-right: 23px;
 
-            >img {
+            > img {
               display: block;
               width: 100%;
               height: 100%;
@@ -361,7 +431,6 @@ const login = () => {
       color: var(--color-user-pop-up-text-color-2);
     }
   }
-
 }
 </style>
 

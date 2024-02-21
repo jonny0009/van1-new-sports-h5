@@ -1,18 +1,18 @@
 <template>
   <div class="champion-page">
-    <van-pull-refresh  v-model="isRefreshLoading"  @refresh="onRefresh">
+    <!-- <van-pull-refresh  v-model="isRefreshLoading"  @refresh="onRefresh"> -->
     <div class="title">
       <img fit="contain" class="item-img" :src="leagueIcon" />
       <span class="st">
         {{ $t('sport.chooseLeague') }}
       </span>
     </div>
-    <template v-if="!isLoading">
     <ul class="game-type-wrap">
       <li v-for="(item, idx) in gameTypeTabList" :key="idx" @click="clickGameType(item)">
         <SportsButton :text="item.gameType" :active="chooseGameType === item.gameType" />
       </li>
     </ul>
+  <template v-if="!isLoading">
     <ul class="league-tab-wrap">
       <!-- <li :class="chooseLeagueId==='0'?'active':''" @click="clickLeague({leagueId:'0'})">
         <div class="all">{{ $t('sport.all') }}</div>
@@ -46,7 +46,7 @@
     </div>
   </template>
   <Loading v-if="isLoading"/>
-</van-pull-refresh>
+<!-- </van-pull-refresh> -->
 
   </div>
 </template>
@@ -166,6 +166,13 @@ const clickSportPage = (item: any) => {
 
   .game-type-wrap {
     margin: 23px 0 31px 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    &::-webkit-scrollbar {
+      height: 0;
+      display: none;
+    }
 
     li {
       margin: 0 8px;

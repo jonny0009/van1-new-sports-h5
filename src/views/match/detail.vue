@@ -8,9 +8,9 @@
     <div class="main">
       <div class="main-menu">
         <div
-          class="nav"
           v-for="(nav, i) in navList"
           :key="i"
+          class="nav"
           :class="{ selected: route.path.endsWith(nav.path) }"
           @click="onNavClick(nav.path)"
         >
@@ -20,7 +20,7 @@
       </div>
       <div class="main-view">
         <router-view v-slot="{ Component, route }">
-          <component :is="getComponent(Component, route)" :key="route.key" />
+          <component :is="getComponent(Component, route)" key="matchId" />
         </router-view>
       </div>
       <div class="main-chat">
@@ -56,13 +56,13 @@ const showFixedBet = computed(() => store.state.app.showFixedBet)
 const paramsId = computed(() => route.params['id'])
 const navList = reactive([
   { title: t('live.bet'), iconName: 'live-bet', path: 'bets' },
-  { title: t('live.betWith'), iconName: 'live-combined', path: 'with' },
+  // { title: t('live.betWith'), iconName: 'live-combined', path: 'with' },
   { title: t('live.stackBet'), iconName: 'live-stack', path: 'mixs' },
   { title: t('live.dataBase'), iconName: 'live-data', path: 'data' },
   { title: t('live.more'), iconName: 'live-grid', path: 'other' }
 ])
 const onNavClick = (path: string) => {
-  router.replace(`/match/${paramsId.value}/${path}`)
+  router.push(`/match/${paramsId.value}/${path}`)
 }
 
 const matchInfo: Ref<any> = ref({})
@@ -84,7 +84,7 @@ const videoError = ref(false)
 const getExtendInfo = async () => {
   const gidm = paramsId.value
   const res: any = await extendInfo({ gidm })
-  if (res.code == 200) {
+  if (res.code === 200) {
     const { streamNa } = res.data || {}
     const { liveali } = streamNa || {}
     videoUrl.value = (liveali || {}).m3u8
@@ -105,7 +105,8 @@ const startInterval = () => {
   closeInterval()
   intervalTimer = setInterval(() => {
     getMatcheInfo()
-    store.commit('match/SET_NEED_TIMER', true)
+    // 切换投注不显示问题
+    store.commit('match/SET_NEED_TIMER', false)
   }, 5000)
 }
 const closeInterval = () => {

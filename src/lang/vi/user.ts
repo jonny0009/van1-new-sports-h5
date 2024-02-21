@@ -72,7 +72,7 @@ export default {
   football: 'Ngôi sao bóng đá',
   otherCharacters: 'Nhân vật khác',
   Background: 'Màu nền',
-  Followed: 'Đã theo dõi',
+  Followed: 'Khách hàng',
 
   // 新增===
   area: 'Quận',
@@ -123,6 +123,7 @@ export default {
   text16: 'Tài khoản bị cấm',
   account: 'Số tài khoản',
 
+
   // 新增4
   hotSearch: 'Tìm kiếm phổ biến',
   lookInfo: 'Xem tin nhắn đầy đủ',
@@ -137,6 +138,12 @@ export default {
   aheadFinal: 'Thanh toán sớm',
   // 新增7
   contactUs: 'Liên hệ',
+  type: 'Loại',
+  homeName:'Đội nhà',
+  awayName:'Đội khách',
+ 
+
+
 
   sports: {
     'officeNumber': 'số trò chơi',

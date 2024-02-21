@@ -129,6 +129,11 @@ export default {
   aheadFinal: '조기 결제',
   // 新增7
   contactUs: '연락처',
+  type: '유형',
+  homeName:'홈팀',
+  awayName:'원정팀',
+
+
 
   sports: {
     officeNumber: '국 번호',

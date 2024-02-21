@@ -12,7 +12,7 @@ export default {
         showSportsTabsView: true,
         showBarTabsView: true,
         // showRefresh: true,
-        KeepAlive:true
+        // KeepAlive:true
       }
     }
   ]

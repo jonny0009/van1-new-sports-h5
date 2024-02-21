@@ -44,3 +44,10 @@ export const anonyToken = () => {
   })
 }
 
+export const getConfig = (params:any) => {
+  return request({
+    url: '/ai/mobile/merchant/merchantCustomize',
+    method: 'get',
+    params
+  })
+}

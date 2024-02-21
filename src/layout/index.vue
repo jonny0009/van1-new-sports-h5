@@ -3,14 +3,20 @@
     <GlobalHeader v-if="!$route.meta.hideGlobalHeaderView" />
     <GlobalRefresh>
       <GlobalSportsTabsView v-if="$route.meta.showSportsTabsView" />
-      <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pb10 pt20" />
+      <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pb5 pt15" />
       <AppMain />
     </GlobalRefresh>
     <!-- <GlobalFooter /> -->
     <BettingSlip v-if="betShow && isOpen && !$route.meta.hideGlobalBottomBet" ref="bettingSlip" @close="betClose" />
-    <van-back-top v-if="backTopShow" bottom="100" right="20" class="GlobalTop" :class="{
-      showBettingSlip: betShow && isOpen
-    }">
+    <van-back-top
+      v-if="backTopShow"
+      bottom="100"
+      right="20"
+      class="GlobalTop"
+      :class="{
+        showBettingSlip: betShow && isOpen
+      }"
+    >
       <van-icon name="down" />
     </van-back-top>
   </div>
@@ -47,12 +53,12 @@ onUpdated(() => {
     // getPageMove()
     setTimeout(() => {
       getPageMove()
-    }, 50);
+    }, 50)
   }
 })
 
 // 缓存
-onActivated(() => {  })
+onActivated(() => { })
 
 // 坐标
 const handleScroll = () => {
@@ -61,7 +67,6 @@ const handleScroll = () => {
     store.dispatch('user/getScrollNumY', window.scrollY)
   }
 }
-
 
 const ifShowFixedBet = () => {
   if (betShow.value && isOpen.value) {
@@ -103,12 +108,12 @@ watch(scrollNum, (newValue, oldValue) => {
   } else {
     heightNumY.value = oldValue
   }
-});
+})
 
 const getPageMove = () => {
   nextTick(() => {
     window.scrollTo({
-      top: heightNumY.value,
+      top: heightNumY.value
       // behavior: "smooth"
     })
   })

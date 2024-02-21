@@ -45,5 +45,26 @@ export default {
   clickSub: 'Clique para Reservar',
   playNow: 'Em Breve',
   emptyText: 'Nenhum dado encontrado',
-  platCloseAll: 'Todas as Opções de Aposta Encerradas'
+  platCloseAll: 'Todas as Opções de Aposta Encerradas',
+
+  clickOpenChat: 'Clique para abrir a sala de chat',
+  stackBet: 'pilha',
+  dataBase: 'dados',
+  navSummary: 'Estatísticas',
+  navBattle: 'Gráfico de escalação',
+  navRecent: 'Resultados recentes',
+  navEvents: 'Texto ao vivo',
+  solveAnalyse: 'análise de suposição',
+  score: 'pontuação',
+  summaryInfo: 'informações estatísticas',
+  battleWait: 'substituto',
+  noDataHost: 'Não há escalação substituta para o time da casa',
+  noDataAway: 'Não há substitutos para a equipe visitante',
+  leaguePoints: 'classificação da liga',
+  rank: 'Classificação',
+  balls: 'time',
+  win: 'ganhar',
+  tie: 'plana',
+  lose: 'negativo',
+  point: 'ponto'
 }

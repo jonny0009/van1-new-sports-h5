@@ -45,5 +45,26 @@ export default {
   clickSub: '예약 클릭',
   playNow: '곧 재생됩니다',
   emptyText: '관련 데이터 없음',
-  platCloseAll: '모든 판매가 닫혔습니다'
+  platCloseAll: '모든 판매가 닫혔습니다',
+
+  clickOpenChat: '대화방을 열려면 클릭하세요',
+  stackBet: '스택',
+  dataBase: '데이터',
+  navSummary: '통계',
+  navBattle: '라인업 차트',
+  navRecent: '최근 결과',
+  navEvents: '텍스트 라이브',
+  solveAnalyse: '추측 분석',
+  score: '점수',
+  summaryInfo: '통계 정보',
+  battleWait: '대체',
+  noDataHost: '홈팀 대체 라인업 없음',
+  noDataAway: '방문팀 대체 선수 없음',
+  leaguePoints: '리그 순위',
+  rank: '순위',
+  balls: '팀',
+  win: '승리',
+  tie: '플랫',
+  lose: '부정적',
+  point: '포인트'
 }

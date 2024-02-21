@@ -166,3 +166,12 @@ export const lineupApi = (params: any) => {
     params
   })
 }
+
+// 数据分析图
+export const betAnalyzeApi = (params: any) => {
+  return request({
+    url: '/ai/mobile/order/bettingAnalyze',
+    method: 'get',
+    params
+  })
+}

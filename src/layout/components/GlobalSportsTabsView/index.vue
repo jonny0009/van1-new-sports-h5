@@ -96,20 +96,22 @@ const active: any = computed(() => {
     min-width: 124px;
     padding-top: 40px;
     .name {
-      height: 20px;
+      // height: 20px;
+      height: 22px;
       line-height: 20px;
       font-size: 20px;
-      margin-top: 7px;
+      // margin-top: 7px;
+      margin-top: 5px;
       font-weight: 600;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      // overflow: hidden;
+      // text-overflow: ellipsis;
       white-space: nowrap;
       width: 100%;
       text-align: center;
       span {
         display: none;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
         white-space: nowrap;
         width: 100%;
         text-align: center;

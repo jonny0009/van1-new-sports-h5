@@ -47,7 +47,7 @@ import titleHot from '@/assets/images/home/title-hot.png'
 import { onBeforeMount, reactive, ref, computed, watch } from 'vue'
 import store from '@/store'
 import { imgUrlFormat } from '@/utils/index'
-import { firstLeagues,recommendLeague } from '@/api/home'
+import { firstLeagues, recommendLeague } from '@/api/home'
 import router from '@/router'
 const activeNames = ref('1')
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
@@ -68,7 +68,7 @@ const getFirstLeagues = async () => {
   isLoading.value = false
   // const res:any = await firstLeagues()
   const res: any = await recommendLeague({ gameType: 'home' })
-  
+
   isLoading.value = true
   if (res.code === 200) {
     // const list:any = res?.data || []
