@@ -171,7 +171,7 @@ const earlyMoney = (item: any) => {
   if (aheadOrderList.value.length) {
     const item1 = aheadOrderList.value.find((e: any) => e.orderId === item.orderId)
     if (item1) {
-      return item1.realCashoutMax
+      return item1.cashoutMax
     }
     return 0
   }

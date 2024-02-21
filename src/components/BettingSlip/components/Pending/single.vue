@@ -209,7 +209,7 @@ const earlyMoney = (item: any) => {
   if (aheadOrderList.value.length) {
     const item1 = aheadOrderList.value.find((e: any) => e.orderId === item.orderId)
     if (item1) {
-      return item1.realCashoutMax
+      return item1.cashoutMax
     }
     return 0
   }
@@ -254,7 +254,7 @@ const getTeam = (item: any) => {
     leagueShortName: '?'
   }
 }
-// 获取冠军赛果句话
+// 获取冠军赛果
 const getChampionName = (item: any) => {
   if (championLangList.value.length) {
     const item1 = championLangList.value.find((e: any) => e.ratioId === item)

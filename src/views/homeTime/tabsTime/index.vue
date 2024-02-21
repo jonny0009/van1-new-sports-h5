@@ -116,7 +116,8 @@ const refHomeTimePage = ref()
       white-space:nowrap;
     }
     &.active{
-      background: var(--color-primary);
+      // background: var(--color-primary);
+      background: var(--color-global-buttonPrimaryBg);
       color: #fff;
     }
   }
