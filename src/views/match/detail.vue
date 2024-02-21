@@ -28,8 +28,9 @@
       </div>
     </div>
 
-    <ChatRoom v-model:show="showChat" />
+    <ChatRoom v-model:show="showChat" :class="{ 'video': !videoError }" />
   </div>
+
 </template>
 
 <script setup lang="ts">
@@ -62,7 +63,7 @@ const navList = reactive([
   { title: t('live.more'), iconName: 'live-grid', path: 'other' }
 ])
 const onNavClick = (path: string) => {
-  router.push(`/match/${paramsId.value}/${path}`)
+  router.replace(`/match/${paramsId.value}/${path}`)
 }
 
 const matchInfo: Ref<any> = ref({})
@@ -106,7 +107,7 @@ const startInterval = () => {
   intervalTimer = setInterval(() => {
     getMatcheInfo()
     // 切换投注不显示问题
-    store.commit('match/SET_NEED_TIMER', false)
+    store.commit('match/SET_NEED_TIMER', true)
   }, 5000)
 }
 const closeInterval = () => {
