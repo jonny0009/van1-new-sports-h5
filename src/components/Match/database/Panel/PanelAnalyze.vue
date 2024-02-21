@@ -13,10 +13,10 @@
           </div>
         </div>
         <div class="analyze-item">
-          <div class="analyze-title">{{ item.name }} — 投注次数</div>
+          <div class="analyze-title">{{ item.name }} — {{ $t('user.NumberOfBets') }}</div>
           <div class="analyze-content">
             <section class="host" :style="{ flex: `${item.ratios[0].betCountRate * 100} 1 0%` }">
-              <div class="percent">{{ item.ratios[0].betCountRate * 100 }}%</div>
+              <div class="percent">{{ calcRatioPer(item.ratios[0].betCountRate) }}%</div>
               <div class="bar"></div>
               <div class="value">
                 <span>1</span>
@@ -27,7 +27,7 @@
               v-if="item.ratios.length === 3"
               :style="{ flex: `${item.ratios[1].betCountRate * 100} 1 0%` }"
             >
-              <div class="percent">{{ item.ratios[1].betCountRate * 100 }}%</div>
+              <div class="percent">{{ calcRatioPer(item.ratios[1].betCountRate) }}%</div>
               <div class="bar"></div>
               <div class="value">
                 <span>0</span>
@@ -37,7 +37,7 @@
               class="away active"
               :style="{ flex: `${item.ratios[item.ratios.length - 1].betCountRate * 100} 1 0%` }"
             >
-              <div class="percent">{{ item.ratios[item.ratios.length - 1].betCountRate * 100 }}%</div>
+              <div class="percent">{{ calcRatioPer(item.ratios[item.ratios.length - 1].betCountRate) }}%</div>
               <div class="bar"></div>
               <div class="value">
                 <span>3</span>
@@ -46,10 +46,10 @@
           </div>
         </div>
         <div class="analyze-item">
-          <div class="analyze-title">{{ item.name }} — 投注金额</div>
+          <div class="analyze-title">{{ item.name }} — {{ $t('user.BetAmount') }}</div>
           <div class="analyze-content">
             <section class="host" :style="{ flex: `${item.ratios[0].betGoldRate * 100} 1 0%` }">
-              <div class="percent">{{ item.ratios[0].betGoldRate * 100 }}%</div>
+              <div class="percent">{{ calcRatioPer(item.ratios[0].betGoldRate) }}%</div>
               <div class="bar"></div>
               <div class="value">
                 <span>1</span>
@@ -60,7 +60,7 @@
               v-if="item.ratios.length === 3"
               :style="{ flex: `${item.ratios[1].betGoldRate * 100} 1 0%` }"
             >
-              <div class="percent">{{ item.ratios[1].betGoldRate * 100 }}%</div>
+              <div class="percent">{{ calcRatioPer(item.ratios[1].betGoldRate) }}%</div>
               <div class="bar"></div>
               <div class="value">
                 <span>0</span>
@@ -70,7 +70,7 @@
               class="away active"
               :style="{ flex: `${item.ratios[item.ratios.length - 1].betGoldRate * 100} 1 0%` }"
             >
-              <div class="percent">{{ item.ratios[item.ratios.length - 1].betGoldRate * 100 }}%</div>
+              <div class="percent">{{ calcRatioPer(item.ratios[item.ratios.length - 1].betGoldRate) }}%</div>
               <div class="bar"></div>
               <div class="value">
                 <span>3</span>
@@ -128,6 +128,10 @@ const list = computed(() => {
 
   return showList
 })
+
+const calcRatioPer = (num: any) => {
+  return (num * 100)?.toFixed(2)
+}
 
 console.log(props.data)
 </script>
