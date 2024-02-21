@@ -1,20 +1,20 @@
 <template>
   <div id="main">
-    <GlobalHeader v-if="!$route.meta.hideGlobalHeaderView" />
+    <GlobalHeader v-if="!$route.meta.hideGlobalHeaderView" @betShow="betShow" />
     <GlobalRefresh>
       <GlobalSportsTabsView v-if="$route.meta.showSportsTabsView" />
       <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pb5 pt15" />
       <AppMain />
     </GlobalRefresh>
     <!-- <GlobalFooter /> -->
-    <BettingSlip v-if="betShow && isOpen && !$route.meta.hideGlobalBottomBet" ref="bettingSlip" @close="betClose" />
+    <BettingSlip v-if="betShowState && !$route.meta.hideGlobalBottomBet" ref="bettingSlip" />
     <van-back-top
       v-if="backTopShow"
       bottom="100"
       right="20"
       class="GlobalTop"
       :class="{
-        showBettingSlip: betShow && isOpen
+        showBettingSlip: betShowState
       }"
     >
       <van-icon name="down" />
@@ -29,25 +29,26 @@ import GlobalBarTabsView from './components/GlobalBarTabsView/index.vue'
 import AppMain from './components/AppMain.vue'
 // import GlobalFooter from './components/GlobalFooter/index.vue'
 import BettingSlip from '@/components/BettingSlip/index.vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { computed, ref, watch, onMounted, onActivated, onUpdated, nextTick } from 'vue'
 import store from '@/store'
+
+const route = useRoute()
 const { currentRoute } = useRouter()
-const betShow: any = ref(true)
 const unShow: any = ref(['game'])
 const heightNumY: any = ref(0)
+const betShowState: any = ref(!unShow.value.includes(route.name))
 
-const markets = computed(() => store.state.betting.markets)
 const scrollNum = computed(() => store.state.user.scrollNumY)
 const locationHeight = computed(() => store.state.user.locationHeight)
 const KeepAlive = computed(() => currentRoute.value.meta.KeepAlive)
 
-const isOpen = ref(markets.value.length > 0)
 const bettingSlip = ref()
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
 })
+
 onUpdated(() => {
   if (KeepAlive.value && locationHeight.value) {
     // getPageMove()
@@ -58,7 +59,7 @@ onUpdated(() => {
 })
 
 // 缓存
-onActivated(() => { })
+onActivated(() => {})
 
 // 坐标
 const handleScroll = () => {
@@ -68,8 +69,12 @@ const handleScroll = () => {
   }
 }
 
+const betShow = () => {
+  bettingSlip.value.open = true
+}
+
 const ifShowFixedBet = () => {
-  if (betShow.value && isOpen.value) {
+  if (betShowState.value) {
     store.dispatch('app/setKeyValue', {
       key: 'showFixedBet',
       value: true
@@ -85,22 +90,12 @@ watch(
   () => currentRoute.value,
   (route: any) => {
     const name: string = route.name
-    betShow.value = !unShow.value.includes(name)
+    betShowState.value = !unShow.value.includes(name)
     ifShowFixedBet()
   },
   { immediate: true }
 )
-watch(
-  () => markets.value.length,
-  () => {
-    if (markets.value.length) {
-      isOpen.value = true
-    } else if (!bettingSlip.value.open && markets.value.length === 0) {
-      isOpen.value = false
-    }
-    ifShowFixedBet()
-  }
-)
+
 watch(scrollNum, (newValue, oldValue) => {
   // console.log(`doubleCount发生变化，新值为：${newValue}，旧值为：${oldValue}`);
   if (newValue) {
@@ -117,12 +112,6 @@ const getPageMove = () => {
       // behavior: "smooth"
     })
   })
-}
-const betClose = (state: boolean) => {
-  if (!state && markets.value.length === 0) {
-    isOpen.value = false
-  }
-  ifShowFixedBet()
 }
 
 const backTopShow = computed(() => {
