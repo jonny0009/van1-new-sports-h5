@@ -1,29 +1,43 @@
 <template>
-  <Singles v-for="market in comboMarkets " :key="market.playOnlyId" :market-info="market"></Singles>
+  <Singles v-for="market in comboMarkets" :key="market.playOnlyId" :market-info="market"></Singles>
   <div v-if="notComboMarkets.length" class="nothing-combo-wrap">
-    <Singles v-for="market in notComboMarkets " :key="market.playOnlyId" :market-info="market"></Singles>
+    <Singles v-for="market in notComboMarkets" :key="market.playOnlyId" ref="singles" :market-info="market"></Singles>
   </div>
   <div v-if="notComboMarkets.length" class="not-combo-tips">
-    <span class="icon"></span>
-    <span class="tips">{{ $t('betting.noComboTips') }}</span>
+    <span class="left">
+      <span class="icon"></span>
+      <span class="tips">{{ $t('betting.noComboTips') }}</span>
+    </span>
+    <div class="clear-btn" @click="clearBets">一鍵清除</div>
   </div>
 </template>
 <script lang="ts" setup>
 import { MarketInfo } from '@/entitys/MarketInfo'
 import store from '@/store'
 import Singles from '../Single/index.vue'
-import { computed } from 'vue'
-
+import { computed, ref } from 'vue'
+const singles = ref()
 const props = defineProps({
   markets: {
     type: Object,
-    default: () => { }
+    default: () => {}
   }
 })
 const comboMarketPlayOnlyIds = computed(() => store.getters['betting/comboMarketPlayOnlyIds'])
-const comboMarkets = computed(() => props.markets.filter((market: MarketInfo) => comboMarketPlayOnlyIds.value.includes(market.playOnlyId)))
-const notComboMarkets = computed(() => props.markets.filter((market: MarketInfo) => !comboMarketPlayOnlyIds.value.includes(market.playOnlyId)))
+const comboMarkets = computed(() =>
+  props.markets.filter((market: MarketInfo) => comboMarketPlayOnlyIds.value.includes(market.playOnlyId))
+)
+const notComboMarkets = computed(() =>
+  props.markets.filter((market: MarketInfo) => !comboMarketPlayOnlyIds.value.includes(market.playOnlyId))
+)
 
+const clearBets = () => {
+  if (singles.value && singles.value.length) {
+    singles.value.forEach((item: any) => {
+      item?.remove()
+    })
+  }
+}
 </script>
 <style scoped lang="scss">
 .nothing-combo-wrap {
@@ -38,13 +52,23 @@ const notComboMarkets = computed(() => props.markets.filter((market: MarketInfo)
       margin-bottom: 0;
     }
   }
-
 }
 
 .not-combo-tips {
-  margin: 25px 38px;
+  margin: 10px 38px 36px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+
+  .left {
+    display: flex;
+    align-items: center;
+  }
+  .clear-btn {
+    margin-right: 10px;
+    font-size: 24px;
+    color: rgb(72, 163, 255);
+  }
 
   .icon {
     display: block;
@@ -57,7 +81,7 @@ const notComboMarkets = computed(() => props.markets.filter((market: MarketInfo)
   }
 
   .tips {
-    margin-left: 21px;
+    margin-left: 10px;
     font-family: PingFangSC-Medium;
     font-size: 24px;
     color: #000000;

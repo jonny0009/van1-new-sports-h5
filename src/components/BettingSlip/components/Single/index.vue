@@ -105,6 +105,10 @@ const inputTouch = () => {
     })
   })
 }
+
+defineExpose({
+  remove
+})
 </script>
 <style scoped lang="scss">
 .Single-wrap {
