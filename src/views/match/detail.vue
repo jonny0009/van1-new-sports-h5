@@ -62,7 +62,7 @@ const navList = reactive([
   { title: t('live.more'), iconName: 'live-grid', path: 'other' }
 ])
 const onNavClick = (path: string) => {
-  router.push(`/match/${paramsId.value}/${path}`)
+  router.replace(`/match/${paramsId.value}/${path}`)
 }
 
 const matchInfo: Ref<any> = ref({})
