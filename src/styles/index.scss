@@ -581,7 +581,7 @@
     .btn{
       border-radius: 8px;
       font-size: 24px;
-      background: #eff2f2;
+      background: var(--color-global-buttonBg);
       color: var(--color-text-2);
       min-width:110px;
       padding: 0 10px;
