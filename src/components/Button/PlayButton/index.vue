@@ -50,8 +50,8 @@ textval.value = props.text
   border-radius:30px;
   padding-left: 17px;
   padding-right: 40px;
-  background: #eff2f2;
-  color: #96a5aa;
+  background: var(--color-global-buttonBg);
+  color: var(--color-text-2);
   transition: all .3s;
   font-size: 24px;
   &.active{
