@@ -117,7 +117,7 @@
     <!-- 提前结算 -->
     <div v-if="item.creditState === 0 && earlyMoney(item)">
       <div v-if="Number(item.cashoutType)===2" class="ahead-btn">
-          <span>{{ $t('user.affirmPend') }}</span>
+          <span>{{ $t('user.affirmPend') }}...</span>
         </div>
       <div v-else-if="!item.btnLogin" class="ahead-btn" @click="handleFinal(item)">
         <span>{{ $t('user.aheadFinal') }}</span>
