@@ -7,46 +7,57 @@
         {{ $t('sport.chooseLeague') }}
       </span>
     </div>
-    <template v-if="!isLoading">
-    <ul class="game-type-wrap">
+    <!-- <ul class="game-type-wrap">
       <li v-for="(item, idx) in gameTypeTabList" :key="idx" @click="clickGameType(item)">
         <SportsButton :text="item.gameType" :active="chooseGameType === item.gameType" />
       </li>
-    </ul>
-    <ul class="league-tab-wrap">
-      <!-- <li :class="chooseLeagueId==='0'?'active':''" @click="clickLeague({leagueId:'0'})">
+    </ul> -->
+    <div class="tabs-cut">
+      <van-tabs :duration="0.2" v-model:active="chooseGameType" shrink line-height="0" @change="onChangeTabs"
+        :swipe-threshold="3">
+        <van-tab v-for="(item, index) in gameTypeTabList" :key="index" :name="item.gameType">
+          <template #title>
+            <SportsButton class="tabs-cut-1" :text="item.gameType" :active="chooseGameType === item.gameType"
+              :class="item.text" />
+          </template>
+        </van-tab>
+      </van-tabs>
+    </div>
+    <template v-if="!isLoading">
+      <ul class="league-tab-wrap">
+        <!-- <li :class="chooseLeagueId==='0'?'active':''" @click="clickLeague({leagueId:'0'})">
         <div class="all">{{ $t('sport.all') }}</div>
       </li> -->
-      <div class="all" :class="chooseLeagueId === '0' ? 'all-1' : ''" @click="clickLeague({ leagueId: '0' })">
-        {{ $t('sport.all') }}
-      </div>
-      <li v-for="(value, key) in groupedArrays" :key="key" :class="chooseLeagueId === value[0].countryFlag? 'active' : ''"
-        @click="clickLeague(value)">
-        <div class="img-wrap">
-          <img v-img="value[0].countryFlag" type="1" fit="contain" class="item-img" />
+        <div class="all" :class="chooseLeagueId === '0' ? 'all-1' : ''" @click="clickLeague({ leagueId: '0' })">
+          {{ $t('sport.all') }}
         </div>
-      </li>
-    </ul>
-    <div class="league-list">
-      <div v-for="(item, idx) in leagueList" :key="idx" class="up-league-item" @click="clickSportPage(item)">
-        <img v-img="item.countryFlag" type="1" fit="contain" class="my-image icon" />
-        <div class="content">
-          <!-- <div class="top"><span v-game="item.gameType" class="sport">
+        <li v-for="(value, key) in groupedArrays" :key="key"
+          :class="chooseLeagueId === value[0].countryFlag ? 'active' : ''" @click="clickLeague(value)">
+          <div class="img-wrap">
+            <img v-img="value[0].countryFlag" type="1" fit="contain" class="item-img" />
+          </div>
+        </li>
+      </ul>
+      <div class="league-list">
+        <div v-for="(item, idx) in leagueList" :key="idx" class="up-league-item" @click="clickSportPage(item)">
+          <img v-img="item.countryFlag" type="1" fit="contain" class="my-image icon" />
+          <div class="content">
+            <!-- <div class="top"><span v-game="item.gameType" class="sport">
           </span></div> -->
-          <div class="name">
-            <div class="name-1">
-              {{ item.countryName||'International' }}
-            </div>
-            <div>
-              {{ item.leagueName }}
+            <div class="name">
+              <div class="name-1">
+                {{ item.countryName || 'International' }}
+              </div>
+              <div>
+                {{ item.leagueName }}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </template>
-  <Loading v-if="isLoading"/>
-<!-- </van-pull-refresh> -->
+    </template>
+    <Loading v-if="isLoading" />
+    <!-- </van-pull-refresh> -->
 
   </div>
 </template>
@@ -67,8 +78,13 @@ const isLoading = ref(true)
 const isRefreshLoading = ref(false)
 
 
-const clickGameType = async (item: any) => {
-  chooseGameType.value = item.gameType
+// const clickGameType = async (item: any) => {
+//   chooseGameType.value = item.gameType
+//   chooseLeagueId.value = '0'
+//   getChampionLeagueInfo()
+// }
+const onChangeTabs = async () => {
+  // chooseGameType.value = item.gameType
   chooseLeagueId.value = '0'
   getChampionLeagueInfo()
 }
@@ -81,7 +97,7 @@ const onRefresh = async () => {
 }
 
 const clickLeague = (item: any) => {
-  
+
   if (item.leagueId === '0') {
     chooseLeagueId.value = '0'
     leagueList.value = leagueListAll.value
@@ -164,6 +180,21 @@ const clickSportPage = (item: any) => {
     }
   }
 
+  // tabs;
+  .tabs-cut {
+    margin-top: -10px;
+    margin-bottom: 20px;
+  }
+
+  .tabs-cut-1 {
+    margin-left: -30px;
+    margin-right: 10px;
+  }
+
+  :deep(.van-tabs__nav--complete) {
+    background-color: var(--color-background-color);
+  }
+
   .game-type-wrap {
     margin: 23px 0 31px 0;
     overflow-x: auto;
@@ -197,11 +228,14 @@ const clickSportPage = (item: any) => {
       font-size: 24px;
       font-weight: 500;
       margin: 0 8px;
-      background: var(--color-champion-choose-bg);
+      background: var(--color-global-buttonBg);
+      box-shadow: var(--color-global-buttonShadow);
+      color: var(--color-global-minButtonCl);
+      transition: all 0.3s;
 
       &.active {
         color: #FFFFFF;
-        background: var(--color-primary);
+        background: var(--color-global-buttonPrimaryBg);
       }
     }
 
@@ -213,13 +247,16 @@ const clickSportPage = (item: any) => {
       justify-content: center;
       font-size: 24px;
       padding: 16px 20px;
-      background: var(--color-champion-choose-bg);
+      background: var(--color-global-buttonBg);
+      box-shadow: var(--color-global-buttonShadow);
+      color: var(--color-global-minButtonCl);
+      transition: all 0.3s;
       white-space: nowrap;
     }
 
     .all-1 {
       color: #FFFFFF;
-      background: var(--color-primary);
+      background: var(--color-global-buttonPrimaryBg);
     }
 
     .img-wrap,
@@ -285,7 +322,8 @@ const clickSportPage = (item: any) => {
           color: var(--color-champion-item-text);
           letter-spacing: 0;
           font-weight: 600;
-          .name-1{
+
+          .name-1 {
             color: var(--color-text-4-1);
             font-size: 23px;
           }

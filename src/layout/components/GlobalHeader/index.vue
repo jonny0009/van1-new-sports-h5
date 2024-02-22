@@ -14,17 +14,17 @@
         <div v-if="loginToken && !isAnonymity" class="wallet">
           <div class="cur">
             <template v-if="currentWallet.currencyLogo">
-              <img :src="imgUrlFormat(currentWallet.currencyLogo)" style="object-fit: contain;" />
+              <img :src="imgUrlFormat(currentWallet.currencyLogo)" style="object-fit: contain" />
             </template>
             <template v-else>
-              <img v-if="currency==='CNY'" :src="CNY" style="object-fit: contain;" />
-              <img v-else-if="currency==='VNDK'" :src="VNDK" style="object-fit: contain;" />
-              <img v-else-if="currency==='BRL'" :src="BRL" style="object-fit: contain;" />
-              <img v-else :src="USDTImg" style="object-fit: contain;" />
+              <img v-if="currency === 'CNY'" :src="CNY" style="object-fit: contain" />
+              <img v-else-if="currency === 'VNDK'" :src="VNDK" style="object-fit: contain" />
+              <img v-else-if="currency === 'BRL'" :src="BRL" style="object-fit: contain" />
+              <img v-else :src="USDTImg" style="object-fit: contain" />
             </template>
           </div>
           <span v-points="balance.balance"></span>
-          <div class="transaction">
+          <div class="transaction" @click="betShow">
             <img :src="transactionImg" />
           </div>
         </div>
@@ -53,18 +53,17 @@ import BRL from '@/assets/images/user/BRL.svg'
 import transactionImg from '@/assets/images/globalLayout/header/transaction.png'
 
 // import { formatMoney } from '@/utils/index'
-const isAnonymity = computed(() => store.state.user.isAnonymity)
 import { useRouter } from 'vue-router'
 import { ref, computed, onMounted } from 'vue'
 
 import SidebarNav from './sidebarNav.vue'
-
+const emit = defineEmits(['betShow'])
 const userInfo = computed(() => store.state.user.userInfo)
 const balance = computed(() => store.state.user.balance)
 const currency = computed(() => store.state.user.currency)
 const currentWallet = computed(() => store.state.user.currentWallet)
 const theme = computed(() => store.state.app.theme)
-
+const isAnonymity = computed(() => store.state.user.isAnonymity)
 const childNav = ref()
 
 const ifBLue = computed(() => {
@@ -88,6 +87,10 @@ const showInfo = () => {
 const goBackClick = () => {
   store.dispatch('user/getLocationHeight', true)
   router.go(-1)
+}
+
+const betShow = () => {
+  emit('betShow')
 }
 
 const refGlobalBarHeader = ref()
@@ -222,4 +225,5 @@ onMounted(() => {
       display: block;
     }
   }
-}</style>
+}
+</style>

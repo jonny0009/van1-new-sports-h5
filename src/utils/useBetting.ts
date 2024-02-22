@@ -10,7 +10,7 @@ const FORMAT_TYPE: any = {
   2: 'novice',
   3: 'veteran'
 }
-export function useBetting() {
+export function useBetting(flag:any) {
   const matchInfo = computed(() => store.state.match.matchInfo)
   const userConfig = computed(() => store.state.user.userConfig)
   const needTimer = computed(() => store.state.match.needTimer)
@@ -29,7 +29,7 @@ export function useBetting() {
   // 1
   const playGroupBetList: Ref<any[]> = ref([])
   const fetchGroup = async () => {
-    if (needTimer.value) {
+    if (needTimer.value && !flag) {
       return
     }
 

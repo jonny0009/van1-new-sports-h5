@@ -1,6 +1,6 @@
 <template>
   <div class="match-video">
-    <iframe v-if="urlHtml && !videoWaiting" :src="urlHtml" style="width:100%;height:100%"></iframe>
+    <iframe v-if="urlHtml && !videoWaiting" :src="urlHtml" style="width:100%;height:100%" frameborder="0"></iframe>
     <video v-else ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
 
     <div v-if="videoWaiting" class="mask-loading">
@@ -167,8 +167,8 @@ onUnmounted(() => {
       // height: 120px;
       // background: url('@/assets/images/live/ai_loading.gif') no-repeat;
       width: 300px;
-      height: 100px;
-      background: url('@/assets/images/live/v_loading.png') no-repeat;
+      height: 165px;
+      background: url('@/assets/images/live/v_loading.gif') no-repeat;
       background-size: 100% auto;
     }
     .text {

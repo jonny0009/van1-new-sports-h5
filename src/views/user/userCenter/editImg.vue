@@ -40,6 +40,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted } from 'vue'
+import {getBrowserLanguage } from '@/utils'
 
 import { useRouter } from 'vue-router'
 const $router = useRouter()
@@ -63,7 +64,7 @@ const handleSave = async () => {
   const params = {
     headImg: postImg.value,
     nickName: userInfo.value.nickName,
-    lang: localStorage.getItem('locale')|| 'zh-cn'
+    lang: localStorage.getItem('locale')|| getBrowserLanguage()
   }
   const res: any = await updatePlayerInfo(params)
   if (res.code !== 200) {
@@ -156,8 +157,10 @@ const goBack = () => {
       letter-spacing: 0;
       font-weight: 600;
       text-align: center;
-      width: 250px;
+      display: inline-block;
+      width: 268px;
       white-space: normal;
+      word-break:break-all;
     }
 
     .active {

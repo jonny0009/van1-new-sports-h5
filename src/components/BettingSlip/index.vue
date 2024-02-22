@@ -211,6 +211,9 @@ const radioChange = (acceptAll: number) => {
 const timer = ref()
 const hitTimer = () => {
   if (open.value) {
+    if (mode.value === 3) {
+      store.dispatch('user/pendingOrder')
+    }
     if (mode.value === 2) {
       store.dispatch('betting/comboMarketHit')
     }
@@ -220,13 +223,18 @@ const hitTimer = () => {
   }
   clearInterval(timer.value)
   timer.value = setInterval(() => {
-    if (open.value && mode.value < 3) {
+    if (open.value && mode.value <=3) {
       if (mode.value === 1) {
         store.dispatch('betting/marketHit')
       }
       if (mode.value === 2) {
         store.dispatch('betting/comboMarketHit')
       }
+      if (mode.value === 3) {
+        store.dispatch('user/pendingOrder')
+      }
+     
+      
     }
   }, 10 * 1000)
 }

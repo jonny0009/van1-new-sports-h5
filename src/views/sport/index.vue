@@ -38,7 +38,7 @@
               <ImageButton
                 class="tabs-cut-1"
                 :text="item.leagueName"
-                :src="item.homeLeagueLogo"
+                :src="item.leagueLogo"
                 :active="leagueId === item.leagueId"
                 type="6"
                 :count="item.gameTypeCount || '0'"
@@ -492,17 +492,28 @@ const onChangeTabs = () => {
   activeNames.value = '1'
   leagueArrowTitle?.value?.changeClick(false)
   championGuessing?.value?.CloseClick(false)
-  if (!leagueId.value || !ifLeagueNum.value && leagueId.value === 'all') {
-    closeSlideshow.value = true
-  }
-  if (leagueId.value === 'all') {
-    leagueId.value = ''
-  }
+  // if (!leagueId.value || !ifLeagueNum.value && leagueId.value === 'all') {
+  //   closeSlideshow.value = true
+  // }
+  // if (leagueId.value === 'all') {
+  //   leagueId.value = ''
+  // }
   if (leagueId.value) {
     ifLeagueNum.value = false
     closeSlideshow.value = false
   }
-  initData()
+  if (leagueId.value !=='all') {
+    ifLeagueNum.value = false
+    closeSlideshow.value = false
+    initData()
+  }
+  if (!leagueId.value || !ifLeagueNum.value && leagueId.value === 'all') {
+    closeSlideshow.value = true
+  }
+  if (leagueId.value === 'all') {
+    ifLeagueNum.value = true
+    closeSlideshow.value = false
+  }
 }
 // 获取联赛数量
 const ifLeagueNum: any = ref(false)
