@@ -132,16 +132,16 @@
         </div>
       </div>
       <!-- 提前结算 -->
-      <div v-if="item.creditState === 0 && earlyMoney(item)">
+      <div v-if="item.creditState === 0 ">
         <div v-if="Number(item.cashoutType)===2" class="ahead-btn">
-          <span>{{ $t('user.affirmPend') }}</span>
+          <span>{{ $t('user.affirmPend') }}...</span>
         </div>
-        <div v-else-if="!item.btnLogin" class="ahead-btn" @click="handleFinal(item)">
+        <div v-else-if="!item.btnLogin && earlyMoney(item)" class="ahead-btn" @click="handleFinal(item)">
           <span>{{ $t('user.aheadFinal') }}</span>
           <CurrencyComp/>
           <span  v-points="earlyMoney(item)"></span>
         </div>
-        <div v-else class="ahead-btn">
+        <div v-else-if="item.btnLogin && earlyMoney(item)" class="ahead-btn">
           <span>{{ $t('user.aheadFinal') }}</span>
           <CurrencyComp/>
           <span  v-points="earlyMoney(item)"></span>
