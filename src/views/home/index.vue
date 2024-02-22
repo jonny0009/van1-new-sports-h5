@@ -1,9 +1,9 @@
 <template>
   <div class="home-page">
   <van-pull-refresh  v-model="isLoading"  @refresh="onRefresh">
-    <HotMatch ref="refHotMatch" />
-    <GoodMatch ref="refGoodMatch" />
-    <LatestMatch ref="refLatestMatch" />
+    <HotMatch ref="refHotMatch" :firstLeaguesList="firstLeaguesList"/>
+    <GoodMatch ref="refGoodMatch" :leagueIdArr="leagueIdArr"/>
+    <LatestMatch ref="refLatestMatch" :leagueIdArr="leagueIdArr"/>
   </van-pull-refresh>
     <FooterHeight />
   
@@ -16,15 +16,47 @@ import HotMatch from './HotMatch/index.vue'
 import GoodMatch from './GoodMatch/index.vue'
 import LatestMatch from './LatestMatch/index.vue'
 import store from '@/store'
-import { onMounted, onBeforeUnmount } from 'vue'
-
+import { onMounted, onBeforeUnmount,reactive,watch,computed } from 'vue'
+import { recommendLeague } from '@/api/home'
+const refHotMatch = ref()
 const isLoading = ref(false)
 const onRefresh = () => {
   isLoading.value = false
   store.dispatch('home/setRefreshChangeTime', new Date().getTime())
 }
-
-onMounted(() => {})
+onMounted(() => { 
+  getFirstLeagues()
+})
+const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
+const timeout:any = ref('')
+watch(refreshChangeTime, (val) => {
+  if (val) {
+    refHotMatch.value.activeNames = '1'
+    clearTimeout(timeout.value)
+    timeout.value = setTimeout(() => {
+      getFirstLeagues()
+    }, 100)
+  }
+})
+const firstLeaguesList:any = reactive([])
+const leagueIdArr:any = ref([])
+const getFirstLeagues = async () => {
+  refHotMatch.value.isLoading = false
+  const res: any = await recommendLeague({ gameType: 'home' })
+  refHotMatch.value.isLoading = true
+  if (res.code === 200) {
+    leagueIdArr.value = []
+    const list:any = res?.data.list || []
+    firstLeaguesList.length = 0
+    firstLeaguesList.push(...list)
+    firstLeaguesList.map((n: any)=>{
+      if (n.leagueId) {
+        leagueIdArr.value.push(n.leagueId)
+      }
+    })
+    
+  }
+}
 onBeforeUnmount(() => {
   store.dispatch('home/setKeyValue', {
     key: 'RrefShow',

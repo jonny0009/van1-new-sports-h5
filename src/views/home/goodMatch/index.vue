@@ -33,6 +33,12 @@ import { onBeforeMount, reactive, ref, computed, watch } from 'vue'
 import store from '@/store'
 import router from '@/router'
 import { recommendEvents } from '@/api/home'
+const props = defineProps({
+  leagueIdArr: {
+    type: Array as any,
+    default: () => []
+  }
+})
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout:any = ref('')
 const activeNames = ref('1')
@@ -53,6 +59,7 @@ const getRecommendEvents = async (gameType:any = 'FT') => {
   const params = {
     gradeType: 1,
     gameType: gameType,
+    leagueId:props.leagueIdArr.join(),
     startDate: dateUtil().format('YYYY-MM-DD') + ' 00:00:00',
     endDate: dateUtil().add(1, 'day').format('YYYY-MM-DD') + ' 23:59:59'
   }
