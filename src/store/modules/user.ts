@@ -119,21 +119,21 @@ const userModule: Module<User, any> = {
     async getMoreTeamList({ state }, params) {
       const res: any = (await getGameManyInfo({ gidms: params })) || []
       if (res.code === 200) {
-        state.teamNameList = [...state.teamNameList, ...(res.data || [])]
+        state.teamNameList = res.data || []
       }
     },
     // 冠军国际化
     async getChampionLang({ state }, params) {
       const res: any = (await selectChampionManyName({ gidm: params })) || []
       if (res.code === 200) {
-        state.championLangList = [...state.championLangList, ...(res.data || [])]
+        state.championLangList = res.data || []
       }
     },
     // 提前结算信息
     async getOrderList({ state }, params) {
       const res: any = (await getCashoutInfo({ cashoutInfoReq: JSON.parse(params) })) || []
       if (res.code === 200) {
-        state.aheadOrderList = [...state.aheadOrderList, ...(res.data || [])]
+        state.aheadOrderList = res.data || []
       }
     },
     // 提前结算信息
@@ -165,7 +165,7 @@ const userModule: Module<User, any> = {
       state.locationHeight = params
     },
     // 进行中的注单
-    async pendingOrder({ state }, params = {}) {
+    async pendingOrder({ state,dispatch }, params = {}) {
       const res: any =
         (await betRecordTab({
           orderState: '0',
@@ -176,6 +176,19 @@ const userModule: Module<User, any> = {
         })) || {}
       if (res.code === 200) {
         state.pendingData = res.data || []
+        // 提前结算信息
+        const aheadOrderList: any = []
+        res.data.map((m:any) => {
+          if (m.creditState === 0) {
+            const orderObj = {
+              orderId: m.orderId
+            }
+            aheadOrderList.push(orderObj)
+          }
+        })
+        if (aheadOrderList.length) {
+         dispatch('getOrderList', JSON.stringify(aheadOrderList))
+        }
       }
     },
     // remove token

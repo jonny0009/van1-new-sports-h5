@@ -6,7 +6,7 @@ import head from '@/assets/images/empty/head.png?url'
 import blueHead from '@/assets/images/user/blue/head.png?url'
 import homeTeam from '@/assets/images/empty/match/team-home.svg?url'
 import awayTeam from '@/assets/images/empty/match/team-away.svg?url'
-import matchlLeague from '@/assets/images/empty/match/league.svg?url'
+import matchlLeague from '@/assets/images/empty/match/league1.svg?url'
 import { computed } from 'vue'
 import store from '@/store'
 const theme = computed(() => store.state.app.theme)
