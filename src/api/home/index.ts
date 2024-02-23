@@ -68,3 +68,19 @@ export const pushAnchor = (params:any) => {
     params
   })
 }
+// 查询国家信息
+export const searchCountryInfo = (params:any) => {
+  return request({
+    url: '/ai/mobile/matches/country',
+    method: 'get',
+    params
+  })
+}
+// 通过国家查询下面的联赛信息
+export const searchLeagueByCountryInfo = (params:any) => {
+  return request({
+    url: '/ai/mobile/matches/leagueByCountry',
+    method: 'get',
+    params
+  })
+}

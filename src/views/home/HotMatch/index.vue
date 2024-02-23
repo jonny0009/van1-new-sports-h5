@@ -44,57 +44,36 @@
 </template>
 <script lang="ts" setup>
 import titleHot from '@/assets/images/home/title-hot.png'
-import { onBeforeMount, reactive, ref, computed, watch } from 'vue'
-import store from '@/store'
+import {  ref, computed,  } from 'vue'
 import { imgUrlFormat } from '@/utils/index'
-import { firstLeagues, recommendLeague } from '@/api/home'
 import router from '@/router'
-const activeNames = ref('1')
-const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
-const noDataToggle = computed(() => firstLeaguesList.length === 0)
-const timeout:any = ref('')
-watch(refreshChangeTime, (val) => {
-  if (val) {
-    activeNames.value = '1'
-    clearTimeout(timeout.value)
-    timeout.value = setTimeout(() => {
-      getFirstLeagues()
-    }, 100)
+const props = defineProps({
+  firstLeaguesList: {
+    type: Array as any,
+    default: () => []
   }
 })
-const firstLeaguesList:any = reactive([])
+const activeNames = ref('1')
 const isLoading = ref(false)
-const getFirstLeagues = async () => {
-  isLoading.value = false
-  // const res:any = await firstLeagues()
-  const res: any = await recommendLeague({ gameType: 'home' })
-
-  isLoading.value = true
-  if (res.code === 200) {
-    // const list:any = res?.data || []
-    const list:any = res?.data.list || []
-    firstLeaguesList.length = 0
-    firstLeaguesList.push(...list)
-  }
-}
+const noDataToggle = computed(() => props.firstLeaguesList.length === 0)
 const goSportClick = (item:any) => {
-  const { leagueId, gameType } = item
+  const { leagueId, gameType,countryId } = item
   router.push({
     name: 'Sport',
     query: {
-      leagueId
+      leagueId,
+      countryId
     },
     params: {
       type: gameType
     }
   })
 }
-const init = () => {
-  getFirstLeagues()
-}
-onBeforeMount(() => {
-  init()
+defineExpose({
+  isLoading, activeNames, 
 })
+
+
 </script>
 <style lang="scss" scoped>
   .onImgError{

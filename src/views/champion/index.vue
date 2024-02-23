@@ -146,6 +146,7 @@ const clickSportPage = (item: any) => {
     name: 'Sport',
     query: {
       leagueId: item.leagueId,
+      countryId:item.countryId,
       ischampion: 'yes'
     },
     params: {

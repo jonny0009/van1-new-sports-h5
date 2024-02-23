@@ -9,15 +9,9 @@
     -->
     <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
       <!-- 使用切换栏组件 -->
-      <div v-if="firstLeaguesList.length" class="tabs-cut">
-        <van-tabs
-          v-model:active="leagueId"
-          :duration="0.2"
-          shrink
-          line-height="0"
-          :swipe-threshold="3"
-          @change="onChangeTabs"
-        >
+      <div v-if="groupedArrays.length" class="tabs-cut">
+        <van-tabs v-model:active="leagueId" :duration="0.2" shrink line-height="0" :swipe-threshold="3"
+          @change="onChangeTabs">
           <van-tab name="all">
             <template #title>
               <div class="league-num tabs-cut-1" :class="ifLeagueNum ? 'league-num-1' : ''" @click="clickLeagueNum">
@@ -35,35 +29,25 @@
           </van-tab>
           <van-tab v-for="(item, index) in firstLeaguesList" :key="index" :name="item.leagueId">
             <template #title>
-              <ImageButton
-                class="tabs-cut-1"
-                :text="item.leagueName"
-                :src="item.leagueLogo"
-                :active="leagueId === item.leagueId"
-                type="6"
-                :count="item.gameTypeCount || '0'"
-                :if-circle="true"
-              />
+              <ImageButton class="tabs-cut-1" :text="item.leagueName" :src="item.leagueLogo"
+                :active="leagueId === item.leagueId" type="6" :count="item.gameTypeCount || '0'" :if-circle="true" />
             </template>
           </van-tab>
         </van-tabs>
       </div>
       <!-- <Loading v-if="!firstLeaguesList.length" /> -->
       <!-- 地区联赛折叠 -->
-      <van-collapse v-if="ifLeagueNum" v-model="activeCollapseNames" :border="false">
-        <van-collapse-item v-for="(value, key) in groupedArrays" :key="key" :name="value[0].countryId" :border="false">
+      <van-collapse v-if="ifLeagueNum" v-model="activeCollapseNames" accordion :border="false" @change="collapseChange">
+        <van-collapse-item v-for="(value, key) in groupedArrays" :key="key" :name="value.countryId" :border="false">
           <template #title>
             <div class="collapseAll">
-              <img v-img="value[0].countryFlag" type="1" class="collapse-name" />
-              <span class="collapse-title">{{ value[0].countryName || 'International' }}</span>
-              <span class="collapse-num">{{ value.length }}</span>
+              <img v-img="value.countryFlag" type="1" class="collapse-name" />
+              <span class="collapse-title">{{ value.countryCn || 'International' }}</span>
+              <span class="collapse-num">{{ value.leagueCount }}</span>
             </div>
           </template>
-          <div v-for="(item, index) in value" :key="index" class="collapse-concent">
-            <div v-if="item.gameTypeCount" @click="clickLeague(item)">
-              {{ item.leagueName }}
-            </div>
-            <div v-else class="collapse-concent-1" @click="clickLeague(item)">
+          <div v-for="(item, index) in LeagueByCountryInfoArr" :key="index" class="collapse-concent">
+            <div :class="item.gameTypeCount ? '' : 'collapse-concent-1'" @click="clickLeague(item)">
               {{ item.leagueName }}
             </div>
           </div>
@@ -72,20 +56,17 @@
       </van-collapse>
       <!-- end==== -->
       <!-- 联赛轮播图 -->
-      <Slideshow v-if="commonMatchesList.length && closeSlideshow" ref="slideshow" :common-matches-list="commonMatchesList">
+      <Slideshow v-if="commonMatchesList.length && closeSlideshow" ref="slideshow"
+        :common-matches-list="commonMatchesList">
       </Slideshow>
       <template v-if="!leagueId">
         <!-- 推荐 -->
         <van-collapse v-model="activeNamesB" accordion :border="false" class="GlobalCollapse">
           <van-collapse-item name="b1">
             <template #title>
-              <ArrowTitle
-                v-if="recommendList.length || (!getRecommendEventsIsLoading || isLoadingRecommend)"
-                ref="leagueArrowTitle"
-                class="mt10 mb10 goodArrowTitle"
-                :src="recommendIcon"
-                :text="$t('sport.recommend')"
-              />
+              <ArrowTitle v-if="recommendList.length || (!getRecommendEventsIsLoading || isLoadingRecommend)"
+                ref="leagueArrowTitle" class="mt10 mb10 goodArrowTitle" :src="recommendIcon"
+                :text="$t('sport.recommend')" />
             </template>
             <Loading v-if="!getRecommendEventsIsLoading || isLoadingRecommend" />
             <template v-else>
@@ -108,12 +89,8 @@
         <van-collapse v-model="activeNamesC" accordion :border="false" class="GlobalCollapse">
           <van-collapse-item name="c1">
             <template #title>
-              <ArrowTitle
-                ref="leagueArrowTitle"
-                class="mt10 mb10 latestArrowTitle"
-                :src="earlyIcon"
-                :text="$t('sport.early')"
-              />
+              <ArrowTitle ref="leagueArrowTitle" class="mt10 mb10 latestArrowTitle" :src="earlyIcon"
+                :text="$t('sport.early')" />
             </template>
             <Loading v-if="!getRecommendEventsIsLoading || isLoadingEarly" />
             <template v-else>
@@ -171,7 +148,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { ref, onBeforeMount, watch, computed, nextTick, onMounted, onActivated } from 'vue'
 // import router from '@/router'
 import { apiChampionpPlayTypes } from '@/api/champion'
-import { recommendLeague, commonMatches, homeCommonMatches } from '@/api/home'
+import { recommendLeague, commonMatches, homeCommonMatches, searchCountryInfo, searchLeagueByCountryInfo } from '@/api/home'
 import { MarketInfo } from '@/entitys/MarketInfo'
 // const { currentRoute } = useRouter()
 const route: any = useRoute()
@@ -193,17 +170,18 @@ const returnSportsSuccess = (item: any) => {
   leagueArrowTitle?.value?.changeClick(false)
   ifLeagueNum.value = false
   closeSlideshow.value = true
-  activeCollapseNames.value = []
+  activeCollapseNames.value = ''
   commonMatchesList.value = []
   // end=====
   gameType.value = item
   store.dispatch('user/getLocationHeight', false)
+  getRecommendEventsIsLoading.value = false
   initList()
 }
 const activeNames = ref('1')
 const activeNamesB = ref('b1')
 const activeNamesC = ref('c1')
-const activeCollapseNames = ref([''])
+const activeCollapseNames = ref('')
 
 const championGuessing = ref<any>()
 const leagueArrowTitle = ref<any>()
@@ -221,20 +199,70 @@ const isRefreshLoading = ref(false)
 import store from '@/store'
 const locationHeight = computed(() => store.state.user.locationHeight)
 
-// 页面缓存, 隐藏
-// watch(() => currentRoute.value, () => {
-//   leagueId.value = ''
-//   recommendPage.value = 1
-//   earlyPage.value = 1
-//   getFirstLeagues()
-//   initData()
-// }
-// )
+// 选中全部
+const ifLeagueNum: any = ref(false)
+watch(() => leagueId.value, (newData, oldData) => {
+  if (newData === 'all') {
+    leagueId.value = oldData
+    ifLeagueNum.value = !ifLeagueNum.value
+    if (ifLeagueNum.value) {
+      closeSlideshow.value = false
+    }
+  }
+  if (!ifUnfold.value) {
+    ifLeagueNum.value = false
+  }
+
+}
+)
 
 onMounted(() => {
   // 初始化
   // initList()
 })
+// 手风琴展开
+const LeagueByCountryInfoArr: any = ref([])
+
+const collapseChange = (countryId: any) => {
+  LeagueByCountryInfoArr.value = []
+  if (countryId) {
+    getLeagueByCountryInfo(countryId, 1)
+  }
+}
+
+// 获取国家联赛信息
+const getLeagueByCountryInfo = async (countryId: any, num: any) => {
+  const leagueByCountryParams: any = ref({
+    countryId,
+    groupId: 3,
+    showType: 'FU',
+    gameType: gameType.value,
+  })
+  const res: any = await searchLeagueByCountryInfo(leagueByCountryParams.value) || {}
+  if (res.code === 200 && res.data) {
+    LeagueByCountryInfoArr.value = res.data || []
+    if (num === 3) {
+      firstLeaguesList.value = res.data || []
+      leagueIdArr.value = []
+      firstLeaguesList.value.map((n: any) => {
+        if (n.leagueId) {
+          leagueIdArr.value.push(n.leagueId)
+        }
+      })
+      const leagueIdObj = firstLeaguesList.value.find((item: any) => {
+        return item.leagueId === leagueId.value
+      })
+      if (!leagueIdObj) {
+        leagueId.value = ''
+        closeSlideshow.value = true
+      }
+     initData()
+    }
+  } else {
+    LeagueByCountryInfoArr.value = []
+  }
+}
+
 const onRefresh = () => {
   isRefreshLoading.value = false
   initList()
@@ -245,8 +273,26 @@ const initList = () => {
   recommendPage.value = 1
   earlyPage.value = 1
   getFirstLeagues()
-  initData()
   getCommonMatches()
+  getSearchCountryInfo()
+}
+// 获取国家信息
+const groupedArrays: any = ref([])
+const LeaguesInfo: any = ref({})
+const getSearchCountryInfo = async () => {
+  activeCollapseNames.value = ''
+  const CountryInfoParams: any = ref({
+    gameType: gameType.value,
+    page: 1,
+    row: 999
+  })
+  const res: any = await searchCountryInfo(CountryInfoParams.value) || {}
+  if (res.code === 200 && res.data) {
+    LeaguesInfo.value = res.data
+    groupedArrays.value = res.data?.countryData || []
+  } else {
+    groupedArrays.value = []
+  }
 }
 
 // 获取联赛轮播
@@ -274,6 +320,7 @@ const getCommonMatches = async () => {
 const initData = async () => {
   if (leagueId.value) {
     // 按联赛查询
+    ifLeagueNum.value = false
     const leagueParames: any = ref({
       gradeType: 1,
       gameTypeSon: '',
@@ -298,7 +345,8 @@ const initData = async () => {
       gameSort: 3,
       dateStage: 0,
       isNovice: 'Y',
-      leagueIds: '',
+      leagueIds: leagueIdArr.value.join(),
+      // leagueIds: '',
       onlyFavorite: 0,
       page: 1,
       pageSize: 10
@@ -314,6 +362,7 @@ const initData = async () => {
       gameSort: 3,
       dateStage: 0,
       isNovice: 'Y',
+      filterLeagueIds: leagueIdArr.value.join(),
       leagueIds: '',
       onlyFavorite: 0,
       page: 1,
@@ -323,26 +372,36 @@ const initData = async () => {
   }
 }
 const firstLeaguesList: any = ref([])
-const LeaguesInfo: any = ref({})
-const groupedArrays: any = ref([])
+// const LeaguesInfo: any = ref({})
+// const groupedArrays: any = ref([])
+// 联赛Ids
+const leagueIdArr: any = ref([])
 // 获取一级联赛 / 更换fuByGameType 接口
 const getFirstLeagues = async () => {
   firstLeaguesList.value = []
-  activeCollapseNames.value = []
   if (gameType.value) {
     // showType：FT-今日 FU-早盘 RB-滚球
     const res: any = await recommendLeague({ gameType: gameType.value, showType: 'FU' }) || {}
     if (res.code === 200 && res.data) {
+      leagueIdArr.value = []
       firstLeaguesList.value = res.data.list || []
-      LeaguesInfo.value = res.data
-      groupedArrays.value = res.data.list?.reduce((acc: any, obj: any) => {
-        const key = obj.countryId
-        if (!acc[key]) {
-          acc[key] = []
+      // LeaguesInfo.value = res.data
+      // 地区分组
+      // groupedArrays.value = res.data.list?.reduce((acc: any, obj: any) => {
+      //   const key = obj.countryId
+      //   if (!acc[key]) {
+      //     acc[key] = []
+      //   }
+      //   acc[key].push(obj)
+      //   return acc
+      // }, {})
+      // 联赛ID
+      firstLeaguesList.value.map((n: any) => {
+        if (n.leagueId) {
+          leagueIdArr.value.push(n.leagueId)
         }
-        acc[key].push(obj)
-        return acc
-      }, {})
+      })
+      initData()
     } else {
       firstLeaguesList.value = []
     }
@@ -350,6 +409,7 @@ const getFirstLeagues = async () => {
       return item.leagueId === leagueId.value
     })
     if (!leagueIdObj) {
+      leagueId.value = ''
       closeSlideshow.value = true
     }
   }
@@ -368,6 +428,7 @@ const moreEarly = async () => {
     gameSort: 3,
     dateStage: 0,
     isNovice: 'Y',
+    filterLeagueIds: leagueIdArr.value.join(),
     leagueIds: '',
     onlyFavorite: 0,
     gameType: gameType.value, gradeType: 2,
@@ -399,7 +460,8 @@ const moreRecommend = async () => {
     gameSort: 3,
     dateStage: 0,
     isNovice: 'Y',
-    leagueIds: '',
+    leagueIds: leagueIdArr.value.join(),
+    // leagueIds: '',
     onlyFavorite: 0,
     gameType: gameType.value, gradeType: 1,
     page: recommendPage.value, pageSize: recommendPageSize.value
@@ -477,32 +539,30 @@ const getChampionpPlayTypes = async () => {
     championList.value = []
   }
 }
+const ifUnfold = ref<any>(true)
 const clickLeague = (item: any) => {
-  activeCollapseNames.value = []
-  ifLeagueNum.value = false
+  activeCollapseNames.value = ''
+  ifUnfold.value = false
   activeNames.value = '1'
   leagueArrowTitle?.value?.changeClick(false)
   championGuessing?.value?.CloseClick(false)
   leagueId.value = item.leagueId
+  firstLeaguesList.value = LeagueByCountryInfoArr.value
+  leagueIdArr.value = []
+  firstLeaguesList.value.map((n: any) => {
+    if (n.leagueId) {
+      leagueIdArr.value.push(n.leagueId)
+    }
+  })
   initData()
 }
 const closeSlideshow: any = ref(true)
 const onChangeTabs = () => {
-  activeCollapseNames.value = []
+  activeCollapseNames.value = ''
   activeNames.value = '1'
   leagueArrowTitle?.value?.changeClick(false)
   championGuessing?.value?.CloseClick(false)
-  // if (!leagueId.value || !ifLeagueNum.value && leagueId.value === 'all') {
-  //   closeSlideshow.value = true
-  // }
-  // if (leagueId.value === 'all') {
-  //   leagueId.value = ''
-  // }
-  if (leagueId.value) {
-    ifLeagueNum.value = false
-    closeSlideshow.value = false
-  }
-  if (leagueId.value !=='all') {
+  if (leagueId.value !== 'all') {
     ifLeagueNum.value = false
     closeSlideshow.value = false
     initData()
@@ -510,29 +570,22 @@ const onChangeTabs = () => {
   if (!leagueId.value || !ifLeagueNum.value && leagueId.value === 'all') {
     closeSlideshow.value = true
   }
-  if (leagueId.value === 'all') {
-    ifLeagueNum.value = true
-    closeSlideshow.value = false
-  }
 }
-// 获取联赛数量
-const ifLeagueNum: any = ref(false)
 const clickLeagueNum = () => {
-  ifLeagueNum.value = !ifLeagueNum.value
-  if (ifLeagueNum.value) {
-    closeSlideshow.value = false
-  }
-  // closeSlideshow.value = !closeSlideshow.value
+  ifUnfold.value = true
 }
 // onBeforeMount(async () => {
 //   getFirstLeagues()
-//   initData()
 //   nextTick(() => {
 //     refSportsTabs.value?.setSports(gameType.value)
 //   })
 // })
 onActivated(async () => {
+  groupedArrays.value = []
   ifLeagueNum.value = false
+  closeSlideshow.value = false
+  getRecommendEventsIsLoading.value = false
+  championListLoading.value = true
   if (locationHeight.value) {
     return
   }
@@ -546,11 +599,15 @@ onActivated(async () => {
     leagueArrowTitle?.value?.changeClick(false)
     championGuessing?.value?.CloseClick(false)
   }
+  const countryId = route.query?.countryId || ''
+  if (countryId) {
+    getLeagueByCountryInfo(countryId, 3)
+  } else {
+    getFirstLeagues()
+  }
   leagueId.value = route.query?.leagueId || ''
-  closeSlideshow.value = false
-  getFirstLeagues()
-  initData()
   getCommonMatches()
+  getSearchCountryInfo()
   nextTick(() => {
     refSportsTabs.value?.setSports(gameType.value)
   })
@@ -559,9 +616,11 @@ onActivated(async () => {
 <style lang="scss" scoped>
 .sport-page {
   padding: 0 36px;
-  .tabs-top{
+
+  .tabs-top {
     padding-top: 30px;
   }
+
   .my-scroll__content {
     margin-top: -10px;
     width: 100%;
@@ -706,6 +765,7 @@ onActivated(async () => {
       color: var(--color-loadingcl);
     }
   }
+
   :deep(.van-tabs__nav--complete) {
     background-color: var(--color-background-color);
   }
