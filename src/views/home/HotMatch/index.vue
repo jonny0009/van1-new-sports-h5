@@ -57,11 +57,12 @@ const activeNames = ref('1')
 const isLoading = ref(false)
 const noDataToggle = computed(() => props.firstLeaguesList.length === 0)
 const goSportClick = (item:any) => {
-  const { leagueId, gameType } = item
+  const { leagueId, gameType,countryId } = item
   router.push({
     name: 'Sport',
     query: {
-      leagueId
+      leagueId,
+      countryId
     },
     params: {
       type: gameType

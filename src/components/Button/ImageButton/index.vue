@@ -1,6 +1,7 @@
 <template>
   <div class="ImageButton" :class="[
     {
+      'greyBg':count==0,
       'active': active
     }
   ]">
@@ -75,6 +76,10 @@ defineProps({
     line-height: 24px;
   }
 
+  // &.greyBg {
+  //   background: var(--color-text-4);
+  //   color: var(--color-text-5);
+  // }
   &.active {
     background: var(--color-global-buttonPrimaryBg);
     color: #fff;
