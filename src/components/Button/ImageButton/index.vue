@@ -9,7 +9,7 @@
     <span>
       {{ text }}
     </span>
-    <span v-if="count" class="count" :class="[{ 'count-1': active }]">
+    <span v-if="count" class="count" :class="[{'count-2':count==0, 'count-1': active }]">
       {{ count }}
     </span>
   </div>
@@ -76,10 +76,10 @@ defineProps({
     line-height: 24px;
   }
 
-  // &.greyBg {
-  //   background: var(--color-text-4);
-  //   color: var(--color-text-5);
-  // }
+  &.greyBg {
+    background: var( --color-grey-out-bg);
+    color: var( --color-grey-out-text);
+  }
   &.active {
     background: var(--color-global-buttonPrimaryBg);
     color: #fff;
@@ -100,6 +100,9 @@ defineProps({
   .count {
     margin-left: 12px;
     color: var(--color-text-5);
+  }
+  .count-2 {
+    color: var( --color-grey-out-text);
   }
   .count-1 {
     color: #fff;
