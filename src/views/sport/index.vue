@@ -264,7 +264,9 @@ const getLeagueByCountryInfo = async (countryId: any, num: any) => {
 }
 
 const onRefresh = () => {
+  closeSlideshow.value = false
   isRefreshLoading.value = false
+  ifLeagueNum.value = false
   initList()
 }
 // 初始化方法

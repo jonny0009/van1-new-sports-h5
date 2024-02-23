@@ -117,6 +117,9 @@
   --color-live-collapse-base-font: #546371;
   --color-live-collapse-play-nums: #546371;
   --color-live-chat-field-bg: #f5f5f5;
+  // 早盘置灰按钮
+  --color-grey-out-bg: #eff2f2;
+  --color-grey-out-text:#000;
 }
 // 蓝色版本
 :root[data-theme='blue'] {
@@ -240,4 +243,8 @@
   --color-live-collapse-base-font: #546371;
   --color-live-collapse-play-nums: #88a6bb;
   --color-live-chat-field-bg: #fff;
+
+  // 早盘置灰按钮
+  --color-grey-out-bg: #E3E7F0;
+  --color-grey-out-text: #88A6BB;
 }
