@@ -1,7 +1,7 @@
 <template>
   <div class="ImageButton" :class="[
     {
-      'greyBg':count==0,
+      'greyBg':ifCount===0,
       'active': active
     }
   ]">
@@ -9,7 +9,7 @@
     <span>
       {{ text }}
     </span>
-    <span v-if="count" class="count" :class="[{'count-2':count==0, 'count-1': active }]">
+    <span v-if="count" class="count" :class="[{'count-2':ifCount===0, 'count-1': active }]">
       {{ count }}
     </span>
   </div>
@@ -47,6 +47,12 @@ defineProps({
     }
   },
   count: {
+    type: [String, Number],
+    default: function () {
+      return ''
+    }
+  },
+  ifCount: {
     type: [String, Number],
     default: function () {
       return ''
