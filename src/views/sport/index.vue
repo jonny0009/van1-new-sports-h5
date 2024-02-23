@@ -30,7 +30,8 @@
           <van-tab v-for="(item, index) in firstLeaguesList" :key="index" :name="item.leagueId">
             <template #title>
               <ImageButton class="tabs-cut-1" :text="item.leagueName" :src="item.leagueLogo"
-                :active="leagueId === item.leagueId" type="6" :count="item.gameTypeCount || '0'" :if-circle="true" />
+                :active="leagueId === item.leagueId" type="6" :count="item.gameTypeCount || '0'"
+                :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" />
             </template>
           </van-tab>
         </van-tabs>
@@ -256,7 +257,7 @@ const getLeagueByCountryInfo = async (countryId: any, num: any) => {
         leagueId.value = ''
         closeSlideshow.value = true
       }
-     initData()
+      initData()
     }
   } else {
     LeagueByCountryInfoArr.value = []
