@@ -2,7 +2,7 @@
   <div class="betting-slip-bg" :class="{ open }" @click="toogle"></div>
   <BallEffect></BallEffect>
   <div class="betting-slip-popup" :class="{ open }">
-    <div class="betting-slip-header" @click="toogle">
+    <div class="betting-slip-header" @click="toogle" :class="{ selected: userConfig.acceptAll === 1 }">
       <div class="bet-header-left">
         <span class="bet-icon"></span>
         <span class="bet-title">{{ $t('betting.title') }}</span>
@@ -223,7 +223,7 @@ const hitTimer = () => {
   }
   clearInterval(timer.value)
   timer.value = setInterval(() => {
-    if (open.value && mode.value <=3) {
+    if (open.value && mode.value <= 3) {
       if (mode.value === 1) {
         store.dispatch('betting/marketHit')
       }
@@ -233,8 +233,6 @@ const hitTimer = () => {
       if (mode.value === 3) {
         store.dispatch('user/pendingOrder')
       }
-     
-      
     }
   }, 10 * 1000)
 }
@@ -292,8 +290,13 @@ defineExpose({
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-image: linear-gradient(270deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-1) 100%);
   border-radius: 10px 10px 0px 0px;
+  background-image: initial;
+  background-color: var(--color-linear-gradient-2);
+  &.selected {
+    background-color: initial;
+    background-image: linear-gradient(270deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-2) 100%);
+  }
 
   .bet-header-left {
     display: flex;

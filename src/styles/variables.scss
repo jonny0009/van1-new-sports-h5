@@ -1,8 +1,8 @@
 // 默认紫色版本
 :root {
   --color-primary: #7642fe;
-  --color-linear-gradient-1: #7642fe;
-  --color-linear-gradient-2: #7541fd;
+  --color-linear-gradient-1: #9d10ff;
+  --color-linear-gradient-2: rgb(118, 66, 254);
   --color-bg-1: #7642fd;
   --color-text-1: #080808;
   --color-text-2: #1f2630;
@@ -124,8 +124,8 @@
 // 蓝色版本
 :root[data-theme='blue'] {
   --color-primary: #48A3FF;
-  --color-linear-gradient-1: #48A3FF;
-  --color-linear-gradient-2: #2C88E5;
+  --color-linear-gradient-1: rgb(19, 194, 255); 
+  --color-linear-gradient-2: rgb(44, 136, 229);
   --color-bg-1: #488DD2;
   --color-text-1: #56809F;
   --color-text-2: #0E3D66;
