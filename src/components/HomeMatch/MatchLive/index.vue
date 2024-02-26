@@ -1,6 +1,6 @@
 <template>
   <div ref="container" class="homeMatchHandicap" :data-val="offsetTop">
-    <van-sticky :offset-top="offsetTop" :container="container" z-index="5">
+    <van-sticky v-if="playTitleToggle" :offset-top="offsetTop" :container="container" z-index="5">
       <div class="home-tabs-play">
         <TimeView :time-send-params="sendParams" />
         <div class="play">
@@ -435,6 +435,12 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  playTitleToggle: {
+    type: Boolean,
+    default: function () {
+      return true
+    }
+  }
 })
 
 const showSportsIcon = (item: any) => {

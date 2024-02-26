@@ -18,7 +18,7 @@
             <HomeMatchHandicap
               :play-title-toggle="false"
               :send-params="item"
-              :class="{'mt20':idx !== 0}"
+              :class="{'mt10':idx !== 0}"
             />
           </template>
         </div>

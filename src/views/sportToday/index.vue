@@ -10,7 +10,7 @@
               <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
                 <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
               </van-sticky>
-              <HomeMatchHandicap :play-title-toggle="false" :send-params="item" :class="{ 'mt20': idx !== 0 }" />
+              <HomeMatchHandicap :play-title-toggle="false" :send-params="item" :class="{ 'mt10': idx !== 0 }" />
             </template>
           </div>
           <HomeEmpty v-if="!recommendEventsList.length"></HomeEmpty>
