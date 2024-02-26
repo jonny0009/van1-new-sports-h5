@@ -74,9 +74,9 @@
               <template v-if="recommendList.length">
                 <div class="recommend-list">
                   <!-- <HomeMatchHandicap v-for="(item, idx) in recommendList" :key="idx" :send-params="item" /> -->
-                  <div ref="newContainer">
+                  <div ref="newContainerRecommend">
                     <template v-for="(item, idx) in recommendList" :key="idx">
-                      <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
+                      <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainerRecommend" z-index="8">
                         <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
                       </van-sticky>
                       <HomeMatchHandicap :play-title-toggle="false" :send-params="item" :class="{ 'mt10': idx !== 0 }" />
@@ -224,6 +224,7 @@ const earlyLoadAll: any = ref(false)
 const recommendLoadAll: any = ref(false)
 const isRefreshLoading = ref(false)
 const newContainer = ref(null)
+const newContainerRecommend = ref(null)
 
 import store from '@/store'
 

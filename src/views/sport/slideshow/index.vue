@@ -2,14 +2,14 @@
   <div class="slideshow">
     <van-swipe class="my-swipe" :loop="true" indicator-color="white" :autoplay="3000">
       <van-swipe-item v-for="(item, index) in props.commonMatchesList" :key="index">
-        <div class="bannerBg" :class="{'bannerBg-blue':ifBLue}">
+        <div class="bannerBg" :class="{ 'bannerBg-blue': ifBLue }">
           <!-- 头部 -->
           <p class="top">
           <div>
             <SportsIcon :icon-src="item.gameType" class="ball-img" />
-            <span>
+            <div class="topName">
               {{ item.leagueName }}
-            </span>
+            </div>
           </div>
           <span class="time">
             {{ formatToDate(item.gameDate, 'MM-DD HH:mm') }}
@@ -18,13 +18,13 @@
           <!-- 比赛 -->
           <div class="match">
             <img v-img="item.homeLogo" class="img_1" alt="" :type="4" style="object-fit: contain;">
-            <span v-if="item.R||item.RE">
+            <span v-if="item.R || item.RE">
               {{ $t('home.RInfo') }}
             </span>
-            <span v-else-if="item.OU||item.ROU">
+            <span v-else-if="item.OU || item.ROU">
               {{ $t('home.OU') }}
             </span>
-            <span v-else-if="item.M||item.RM">
+            <span v-else-if="item.M || item.RM">
               {{ $t('home.M') }}
             </span>
             <img v-img="item.awayLogo" class="img_1" alt="" :type="5" style="object-fit: contain;">
@@ -107,6 +107,14 @@ const props = defineProps({
         margin-right: 3px;
         font-weight: 500;
       }
+
+      .topName {
+        display: inline-block;
+        width: 450px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
     }
 
     .match {
@@ -137,6 +145,7 @@ const props = defineProps({
         text-overflow: ellipsis;
         /* 使用省略号代替溢出的文本 */
       }
+
       &-name-right {
         width: 250px;
         text-align: right;
@@ -161,7 +170,8 @@ const props = defineProps({
     }
 
   }
-  .bannerBg-blue{
+
+  .bannerBg-blue {
     background: url('@/assets/images/user/blue/leagueBg.png');
     width: 678px;
     height: 284px;
