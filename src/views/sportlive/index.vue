@@ -4,15 +4,8 @@
     <div v-if="gameTypeList.length" class="sportlive-Match-Tabs">
       <TextButton :text="$t('sport.all')" :active="!gameType" @click="clickGameType({})" />
 
-      <SportsButton
-        v-for="(item, idx) in gameTypeList"
-        :key="idx"
-        :text="item.gameType"
-        :active="gameType === item.gameType"
-        :count="item.count"
-        show-count
-        @click="clickGameType(item)"
-      />
+      <SportsButton v-for="(item, idx) in gameTypeList" :key="idx" :text="item.gameType"
+        :active="gameType === item.gameType" :count="item.count" show-count @click="clickGameType(item)" />
     </div>
   </div>
   <div class="sportlive">
@@ -20,13 +13,13 @@
     <template v-else>
       <!-- <MatchLive v-for="(item, idx) in commonMatchesList" :key="idx" :send-params="item" :tabType="'RB'"/> -->
       <div ref="newContainer">
-            <template v-for="(item, idx) in commonMatchesList" :key="idx">
-              <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
-                <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
-              </van-sticky>
-              <MatchLive :play-title-toggle="false" :send-params="item"  :tabType="'RB'" :class="{ 'mt10': idx !== 0 }" />
-            </template>
-          </div>
+        <template v-for="(item, idx) in commonMatchesList" :key="idx">
+          <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
+            <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
+          </van-sticky>
+          <MatchLive :play-title-toggle="false" :send-params="item" :tabType="'RB'" :class="{ 'mt10': idx !== 0 }" />
+        </template>
+      </div>
       <HomeEmpty v-if="!commonMatchesList.length"></HomeEmpty>
     </template>
     <div v-if="commonMatchesList.length" class="Button-MatchMore mt10" @click="noMoreclick">
@@ -163,7 +156,7 @@ const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 watch(refreshChangeTime, (val) => {
   if (val) {
     clearTimeout(timeout.value)
-    timeout.value = setTimeout(() => {}, 100)
+    timeout.value = setTimeout(() => { }, 100)
   }
 })
 </script>
@@ -171,18 +164,22 @@ watch(refreshChangeTime, (val) => {
 .sportlive {
   padding: 0 40px;
 }
+
 .sportlive-Match-Tabs {
   padding: 20px 0;
   display: flex;
   overflow: auto;
+
   &::-webkit-scrollbar {
     height: 0;
     display: none;
   }
+
   .textButton {
     margin-right: 20px;
     flex-shrink: 1;
   }
+
   .SportsButton {
     margin-right: 20px;
     flex-shrink: 1;

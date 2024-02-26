@@ -76,10 +76,12 @@
                   <!-- <HomeMatchHandicap v-for="(item, idx) in recommendList" :key="idx" :send-params="item" /> -->
                   <div ref="newContainerRecommend">
                     <template v-for="(item, idx) in recommendList" :key="idx">
-                      <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainerRecommend" z-index="8">
-                        <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
+                      <van-sticky :offset-top="offsetTop" :container="newContainerRecommend" z-index="8"
+                        :class="{ 'mt10': idx !== 0 }">
+                        <playTitle :send-params="item" />
                       </van-sticky>
-                      <HomeMatchHandicap :play-title-toggle="false" :send-params="item" :class="{ 'mt10': idx !== 0 }" />
+                      <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
+                        :class="{ 'mt10': idx !== 0 }" />
                     </template>
                   </div>
                 </div>
@@ -108,8 +110,9 @@
                   <!-- <HomeMatchHandicap v-for="(item, idx) in earlyList" :key="idx" :send-params="item" /> -->
                   <div ref="newContainer">
                     <template v-for="(item, idx) in earlyList" :key="idx">
-                      <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
-                        <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
+                      <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5"
+                        :class="{ 'mt10': idx !== 0 }">
+                        <playTitle :send-params="item" />
                       </van-sticky>
                       <HomeMatchHandicap :play-title-toggle="false" :send-params="item" :class="{ 'mt10': idx !== 0 }" />
                     </template>
@@ -138,15 +141,17 @@
             <Loading v-if="!getRecommendEventsIsLoading" />
             <template v-else>
               <div v-if="recommendList.length" class="recommend-list">
-                <HomeMatchHandicap v-for="(item, idx) in recommendList" :key="idx" :send-params="item" />
-                <!-- <div ref="newContainer">
-                    <template v-for="(item, idx) in recommendList" :key="idx">
-                      <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
-                        <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
-                      </van-sticky>
-                      <HomeMatchHandicap :play-title-toggle="false" :send-params="item" :class="{ 'mt10': idx !== 0 }" />
-                    </template>
-                  </div> -->
+                <!-- <HomeMatchHandicap v-for="(item, idx) in recommendList" :key="idx" :send-params="item" /> -->
+                <div ref="newContainerRecommend">
+                  <template v-for="(item, idx) in recommendList" :key="idx">
+                    <van-sticky :offset-top="offsetTop" :container="newContainerRecommend" z-index="8"
+                      :class="{ 'mt10': idx !== 0 }">
+                      <playTitle :send-params="item" />
+                    </van-sticky>
+                    <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
+                      :class="{ 'mt10': idx !== 0 }" />
+                  </template>
+                </div>
               </div>
               <HomeEmpty v-else></HomeEmpty>
             </template>
@@ -177,6 +182,8 @@ import { ref, onBeforeMount, watch, computed, nextTick, onMounted, onActivated }
 import { apiChampionpPlayTypes } from '@/api/champion'
 import { recommendLeague, commonMatches, homeCommonMatches, searchCountryInfo, searchLeagueByCountryInfo } from '@/api/home'
 import { MarketInfo } from '@/entitys/MarketInfo'
+import moment from 'moment'
+
 // const { currentRoute } = useRouter()
 const route: any = useRoute()
 const gameType1 = computed(() => {
@@ -490,6 +497,7 @@ const moreEarly = async () => {
   isLoadingEarly.value = false
 }
 // 推荐更多
+const recommendListArr: any = ref([])
 const isLoadingRecommend: any = ref(false)
 const moreRecommend = async () => {
   if (recommendLoadAll.value) {
@@ -512,9 +520,34 @@ const moreRecommend = async () => {
   isLoadingRecommend.value = true
   const res: any = await commonMatches(recommendParames.value) || {}
   if (res.code === 200 && res.data?.matchList?.baseData && res.data?.matchList?.baseData.length) {
-    recommendList.value.push(...res.data.matchList.baseData)
+    // recommendList.value.push(...res.data.matchList.baseData)
+    recommendListArr.value.push(...res.data.matchList.baseData)
+    const listObj: any = {}
+    const listArr: any = []
+    const sortArr = recommendListArr.value.sort((a: any, b: any) => {
+      return a.gameDate - b.gameDate
+    })
+    sortArr.map((item: any) => {
+      const date = moment(item.gameDate).format('YYYY/MM/DD')
+      if (listObj[date]) {
+        listObj[date].list.push(item)
+      } else {
+        listObj[date] = {
+          gameDate: item.gameDate,
+          list: [item]
+        }
+      }
+    })
+    Object.keys(listObj).map(item => {
+      listArr.push(JSON.parse(JSON.stringify(listObj[item])))
+    })
+
+    recommendList.value = listArr
+
+
+
   }
-  if (recommendList.value.length < recommendPage.value * recommendPageSize.value) {
+  if (recommendListArr.value.length < recommendPage.value * recommendPageSize.value) {
     recommendLoadAll.value = true
   } else {
     recommendLoadAll.value = false
@@ -539,7 +572,28 @@ const getRecommendEvents = async (params: any) => {
       if (listFlag.length) {
         leagueLogo.value = listFlag[0].leagueLogo
         leagueName.value = listFlag[0].leagueShortName
-        recommendList.value = listFlag
+        recommendListArr.value = listFlag
+        const listObj: any = {}
+        const listArr: any = []
+        const sortArr = recommendListArr.value.sort((a: any, b: any) => {
+          return a.gameDate - b.gameDate
+        })
+        sortArr.map((item: any) => {
+          const date = moment(item.gameDate).format('YYYY/MM/DD')
+          if (listObj[date]) {
+            listObj[date].list.push(item)
+          } else {
+            listObj[date] = {
+              date: date,
+              gameDate: item.gameDate,
+              list: [item]
+            }
+          }
+        })
+        Object.keys(listObj).map(item => {
+          listArr.push(JSON.parse(JSON.stringify(listObj[item])))
+        })
+        recommendList.value = listArr
       } else {
         leagueLogo.value = ''
         leagueName.value = ''
@@ -627,11 +681,11 @@ onActivated(async () => {
   groupedArrays.value = []
   ifLeagueNum.value = false
   closeSlideshow.value = false
-  getRecommendEventsIsLoading.value = false
-  championListLoading.value = true
   if (locationHeight.value) {
     return
   }
+  getRecommendEventsIsLoading.value = false
+  championListLoading.value = true
   const isChampion = route.query?.ischampion || ''
   if (isChampion === 'yes') {
     activeNames.value = '2'
