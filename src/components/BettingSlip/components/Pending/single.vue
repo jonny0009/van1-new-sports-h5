@@ -74,10 +74,10 @@
           <div class="money-num-money">
             <CurrencyComp />
 
-           <!-- 投注额 -->
-           <span v-if="Number(item1.ioRatio)>0"  v-points="item.gold"></span>
-            <span v-if="Number(item1.ioRatio)<0"  v-points="ifBetNum(item,item1)"></span>
-            <span v-if="Number(item1.ioRatio)<0" >(<span  v-points="item.gold"/>)</span>
+            <!-- 投注额 -->
+            <span v-if="Number(item1.ioRatio) > 0" v-points="item.gold"></span>
+            <span v-if="Number(item1.ioRatio) < 0" v-points="ifBetNum(item, item1)"></span>
+            <span v-if="Number(item1.ioRatio) < 0">(<span v-points="item.gold" />)</span>
           </div>
         </div>
         <div class="one two">
@@ -132,19 +132,19 @@
         </div>
       </div>
       <!-- 提前结算 -->
-      <div v-if="item.creditState === 0 ">
-        <div v-if="Number(item.cashoutType)===2" class="ahead-btn">
+      <div v-if="item.creditState === 0">
+        <div v-if="Number(item.cashoutType) === 2" class="ahead-btn">
           <span>{{ $t('user.affirmPend') }}...</span>
         </div>
         <div v-else-if="!item.btnLogin && earlyMoney(item)" class="ahead-btn" @click="handleFinal(item)">
           <span>{{ $t('user.aheadFinal') }}</span>
-          <CurrencyComp/>
-          <span  v-points="earlyMoney(item)"></span>
+          <CurrencyComp />
+          <span v-points="earlyMoney(item)"></span>
         </div>
         <div v-else-if="item.btnLogin && earlyMoney(item)" class="ahead-btn">
           <span>{{ $t('user.aheadFinal') }}</span>
-          <CurrencyComp/>
-          <span  v-points="earlyMoney(item)"></span>
+          <CurrencyComp />
+          <span v-points="earlyMoney(item)"></span>
           <span class="loading-icon"></span>
         </div>
       </div>
@@ -156,7 +156,7 @@
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
 import { accDiv, accMul, accAdd } from '@/utils/math'
-import {getBrowserLanguage } from '@/utils'
+import { getBrowserLanguage } from '@/utils'
 import { computed } from 'vue'
 import store from '@/store'
 import CurrencyComp from './currency.vue'
@@ -172,35 +172,35 @@ const props = defineProps({
 })
 
 // 是否显示马尼,印尼括号金额
-const ifBetNum = (item:any,item1:any) => {
-  if (Number(item1.ioRatio)<0) {
-     // 马来绝对值都小于1,  印尼绝对值都大于1
+const ifBetNum = (item: any, item1: any) => {
+  if (Number(item1.ioRatio) < 0) {
+    // 马来绝对值都小于1,  印尼绝对值都大于1
     let absNum: any = Math.abs(Number(item1.ioRatio))
-     return accDiv(item.gold,absNum)
-   }
+    return accDiv(item.gold, absNum)
+  }
 }
 // 可赔付金额
 const getProfit = (item: any, item1: any) => {
-   if (Number(item1.ioRatio)<0) {
-     // 马来绝对值都小于1,  印尼绝对值都大于1
-     let sumNum:any = 0
-     let absNum:any = Math.abs(Number(item1.ioRatio))
-     if (absNum>1) {
-       sumNum = accAdd(accDiv(item.gold,absNum),item.gold)
-     }
-     if (absNum<1) {
-       sumNum = accAdd(accDiv(item.gold,absNum),item.gold)
-     }
-     return sumNum
-   }
+  if (Number(item1.ioRatio) < 0) {
+    // 马来绝对值都小于1,  印尼绝对值都大于1
+    let sumNum: any = 0
+    let absNum: any = Math.abs(Number(item1.ioRatio))
+    if (absNum > 1) {
+      sumNum = accAdd(accDiv(item.gold, absNum), item.gold)
+    }
+    if (absNum < 1) {
+      sumNum = accAdd(accDiv(item.gold, absNum), item.gold)
+    }
+    return sumNum
+  }
   // return item.gold * item.sioRatio
-  return accMul(item.gold,item.sioRatio)
+  return accMul(item.gold, item.sioRatio)
 }
 // 提前结算
 const handleFinal = (item: any) => {
   item.btnLogin = true
   const params: any = {
-    amount: earlyMoney(item),
+    amount: earlyMoney(item, 2),
     orderId: item.orderId
   }
   store.dispatch('user/handleConfirmCashout', params)
@@ -208,11 +208,14 @@ const handleFinal = (item: any) => {
   return
 }
 
-const earlyMoney = (item: any) => {
+const earlyMoney = (item: any, type?: any) => {
   if (aheadOrderList.value.length) {
     const item1 = aheadOrderList.value.find((e: any) => e.orderId === item.orderId)
     if (item1) {
-      return item1.realCashoutMax
+      if (type === 2) {
+        return item1.realCashoutMax
+      }
+      return item1.cashoutMax
     }
     return 0
   }
@@ -481,7 +484,7 @@ const getLangBet = (item: any) => {
   font-weight: 600;
   display: flex;
   align-items: center;
- 
+
   .img_1 {
     margin: 0 8px;
     font-weight: 500;

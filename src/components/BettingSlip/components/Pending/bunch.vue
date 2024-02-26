@@ -115,16 +115,16 @@
       </div>
     </div>
     <!-- 提前结算 -->
-    <div v-if="item.creditState === 0 ">
-      <div v-if="Number(item.cashoutType)===2" class="ahead-btn">
-          <span>{{ $t('user.affirmPend') }}...</span>
-        </div>
-      <div v-else-if="!item.btnLogin&& earlyMoney(item)" class="ahead-btn" @click="handleFinal(item)">
+    <div v-if="item.creditState === 0">
+      <div v-if="Number(item.cashoutType) === 2" class="ahead-btn">
+        <span>{{ $t('user.affirmPend') }}...</span>
+      </div>
+      <div v-else-if="!item.btnLogin && earlyMoney(item)" class="ahead-btn" @click="handleFinal(item)">
         <span>{{ $t('user.aheadFinal') }}</span>
         <CurrencyComp />
         <span v-points="earlyMoney(item)"></span>
       </div>
-      <div v-else-if="item.btnLogin&& earlyMoney(item)" class="ahead-btn">
+      <div v-else-if="item.btnLogin && earlyMoney(item)" class="ahead-btn">
         <span>{{ $t('user.aheadFinal') }}</span>
         <CurrencyComp />
         <span v-points="earlyMoney(item)"></span>
@@ -141,7 +141,7 @@ import { accMul } from '@/utils/math'
 import { computed } from 'vue'
 import store from '@/store'
 import CurrencyComp from './currency.vue'
-import {getBrowserLanguage } from '@/utils'
+import { getBrowserLanguage } from '@/utils'
 
 
 const teamNameList = computed(() => store.state.user.teamNameList || [])
@@ -162,7 +162,7 @@ const getProfit = (item: any) => {
 const handleFinal = (item: any) => {
   item.btnLogin = true
   const params: any = {
-    amount: earlyMoney(item),
+    amount: earlyMoney(item, 2),
     orderId: item.orderId
   }
   store.dispatch('user/handleConfirmCashout', params)
@@ -170,10 +170,13 @@ const handleFinal = (item: any) => {
   return
 }
 
-const earlyMoney = (item: any) => {
+const earlyMoney = (item: any, type?: any) => {
   if (aheadOrderList.value.length) {
     const item1 = aheadOrderList.value.find((e: any) => e.orderId === item.orderId)
     if (item1) {
+      if (type === 2) {
+        return item1.realCashoutMax
+      }
       return item1.realCashoutMax
     }
     return 0

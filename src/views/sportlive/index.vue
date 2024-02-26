@@ -18,7 +18,15 @@
   <div class="sportlive">
     <Loading v-if="!isLoading" />
     <template v-else>
-      <MatchLive v-for="(item, idx) in commonMatchesList" :key="idx" :send-params="item" :tabType="'RB'"/>
+      <!-- <MatchLive v-for="(item, idx) in commonMatchesList" :key="idx" :send-params="item" :tabType="'RB'"/> -->
+      <div ref="newContainer">
+            <template v-for="(item, idx) in commonMatchesList" :key="idx">
+              <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
+                <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
+              </van-sticky>
+              <MatchLive :play-title-toggle="false" :send-params="item"  :tabType="'RB'" :class="{ 'mt10': idx !== 0 }" />
+            </template>
+          </div>
       <HomeEmpty v-if="!commonMatchesList.length"></HomeEmpty>
     </template>
     <div v-if="commonMatchesList.length" class="Button-MatchMore mt10" @click="noMoreclick">
@@ -32,12 +40,24 @@
 <script lang="ts" setup>
 import TextButton from '@/components/Button/TextButton/index.vue'
 import MatchLive from '@/components/HomeMatch/MatchLive/index.vue'
+import playTitle from '@/components/Title/playTitle/index.vue'
 import swipeLive from './swipeLive/index.vue'
 import store from '@/store'
+const offsetTop = computed(() => {
+  const offsetTop = store.state.app.globalBarHeaderHeight || 48
+  var offsetTopval = 48
+  if (offsetTop > 60) {
+    offsetTopval = 48
+  } else {
+    offsetTopval = offsetTop
+  }
+  return offsetTopval
+})
 import { ref, onBeforeMount, onActivated, onDeactivated, onBeforeUnmount, computed, watch } from 'vue'
 import { apiRBCondition, apiCommonMatches } from '@/api/home'
 const gameType: any = ref()
 const isLoading = ref(false)
+const newContainer = ref(null)
 const init = async (toggleLoading: any = true) => {
   await getApiRBCondition()
   await getApiCommonMatches(toggleLoading)

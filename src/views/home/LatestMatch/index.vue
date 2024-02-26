@@ -9,8 +9,16 @@
         <Loading v-if="!isLoading" />
         <template v-else>
           <HomeEmpty v-if="!recommendEventsList.length" class="marginAuto"></HomeEmpty>
-          <HomeMatchHandicap v-for="(item, idx) in recommendEventsList" v-else :key="idx" :send-params="item"
-            class="mb10" />
+          <!-- <HomeMatchHandicap v-for="(item, idx) in recommendEventsList" v-else :key="idx" :index-num="idx" :send-params="item"
+            class="mb10" /> -->
+          <div ref="newContainer">
+            <template v-for="(item, idx) in recommendEventsList" :key="idx">
+              <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
+                <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
+              </van-sticky>
+              <HomeMatchHandicap :play-title-toggle="false" :send-params="item" :class="{ 'mt10': idx !== 0 }" />
+            </template>
+          </div>
         </template>
         <div v-if="recommendEventsList.length" class="Button-MatchMore mt10 mb10" @click="goHomeTime">
           <span>
@@ -25,9 +33,20 @@
 import Dayjs from 'dayjs'
 const dateUtil = Dayjs
 import titleTime from '@/assets/images/home/title-time.png'
+import playTitle from '@/components/Title/playTitle/index.vue'
 import { onMounted, reactive, ref, computed, watch } from 'vue'
 import store from '@/store'
 import router from '@/router'
+const offsetTop = computed(() => {
+  const offsetTop = store.state.app.globalBarHeaderHeight || 48
+  var offsetTopval = 48
+  if (offsetTop > 60) {
+    offsetTopval = 48
+  } else {
+    offsetTopval = offsetTop
+  }
+  return offsetTopval
+})
 import { recommendEvents } from '@/api/home'
 const props = defineProps({
   leagueIdArr: {
@@ -37,6 +56,7 @@ const props = defineProps({
 })
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout: any = ref('')
+const newContainer = ref(null)
 const activeNames = ref('1')
 const refSportsTabs = ref()
 watch(refreshChangeTime, (val) => {

@@ -73,7 +73,15 @@
             <template v-else>
               <template v-if="recommendList.length">
                 <div class="recommend-list">
-                  <HomeMatchHandicap v-for="(item, idx) in recommendList" :key="idx" :send-params="item" />
+                  <!-- <HomeMatchHandicap v-for="(item, idx) in recommendList" :key="idx" :send-params="item" /> -->
+                  <div ref="newContainer">
+                    <template v-for="(item, idx) in recommendList" :key="idx">
+                      <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
+                        <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
+                      </van-sticky>
+                      <HomeMatchHandicap :play-title-toggle="false" :send-params="item" :class="{ 'mt10': idx !== 0 }" />
+                    </template>
+                  </div>
                 </div>
                 <div class="Button-MatchMore mt20 mb20" :class="recommendLoadAll ? 'no-more' : ''" @click="moreRecommend">
                   <span>
@@ -97,7 +105,15 @@
             <template v-else>
               <template v-if="earlyList.length">
                 <div class="early-list">
-                  <HomeMatchHandicap v-for="(item, idx) in earlyList" :key="idx" :send-params="item" />
+                  <!-- <HomeMatchHandicap v-for="(item, idx) in earlyList" :key="idx" :send-params="item" /> -->
+                  <div ref="newContainer">
+                    <template v-for="(item, idx) in earlyList" :key="idx">
+                      <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
+                        <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
+                      </van-sticky>
+                      <HomeMatchHandicap :play-title-toggle="false" :send-params="item" :class="{ 'mt10': idx !== 0 }" />
+                    </template>
+                  </div>
                 </div>
                 <div class="Button-MatchMore mt20 mb20" :class="earlyLoadAll ? 'no-more' : ''" @click="moreEarly">
                   <span>
@@ -123,6 +139,14 @@
             <template v-else>
               <div v-if="recommendList.length" class="recommend-list">
                 <HomeMatchHandicap v-for="(item, idx) in recommendList" :key="idx" :send-params="item" />
+                <!-- <div ref="newContainer">
+                    <template v-for="(item, idx) in recommendList" :key="idx">
+                      <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
+                        <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
+                      </van-sticky>
+                      <HomeMatchHandicap :play-title-toggle="false" :send-params="item" :class="{ 'mt10': idx !== 0 }" />
+                    </template>
+                  </div> -->
               </div>
               <HomeEmpty v-else></HomeEmpty>
             </template>
@@ -145,6 +169,8 @@ import recommendIcon from '@/assets/images/home/title-recommend.png'
 import ChampionList from './champion/index.vue'
 import Slideshow from './slideshow/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
+import playTitle from '@/components/Title/playTitle/index.vue'
+
 import { useRoute, useRouter } from 'vue-router'
 import { ref, onBeforeMount, watch, computed, nextTick, onMounted, onActivated } from 'vue'
 // import router from '@/router'
@@ -197,8 +223,21 @@ const earlyPageSize: any = ref(10)
 const earlyLoadAll: any = ref(false)
 const recommendLoadAll: any = ref(false)
 const isRefreshLoading = ref(false)
+const newContainer = ref(null)
+
 import store from '@/store'
+
 const locationHeight = computed(() => store.state.user.locationHeight)
+const offsetTop = computed(() => {
+  const offsetTop = store.state.app.globalBarHeaderHeight || 48
+  var offsetTopval = 48
+  if (offsetTop > 60) {
+    offsetTopval = 48
+  } else {
+    offsetTopval = offsetTop
+  }
+  return offsetTopval
+})
 
 // 选中全部
 const ifLeagueNum: any = ref(false)
