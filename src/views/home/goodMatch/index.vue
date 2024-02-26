@@ -29,7 +29,7 @@ import Dayjs from 'dayjs'
 import { arrayGetKey } from '@/utils/home/arrayGetKey'
 const dateUtil = Dayjs
 import titleRecommend from '@/assets/images/home/title-recommend.png'
-import { onBeforeMount, reactive, ref, computed, watch } from 'vue'
+import { onMounted, reactive, ref, computed, watch } from 'vue'
 import store from '@/store'
 import router from '@/router'
 import { recommendEvents } from '@/api/home'
@@ -53,6 +53,14 @@ watch(refreshChangeTime, (val) => {
     }, 100)
   }
 })
+watch(
+  () => props.leagueIdArr,
+  (val, old) => {
+    if (val.join() !== old.join()) {
+      getRecommendEvents()
+    }
+  }
+)
 const recommendEventsList = reactive([])
 const isLoading = ref(false)
 const getRecommendEvents = async (gameType:any = 'FT') => {
@@ -77,12 +85,12 @@ const returnSportsSuccess = (val:any) => {
   gameType.value = val
   getRecommendEvents(val)
 }
-const init = () => {
-  getRecommendEvents()
-}
-onBeforeMount(() => {
-  init()
-})
+// const init = () => {
+//   getRecommendEvents()
+// }
+// onMounted(() => {
+//   init()
+// })
 
 const gameType = ref('FT')
 const goToSport = () => {

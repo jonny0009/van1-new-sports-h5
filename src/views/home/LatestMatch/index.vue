@@ -2,18 +2,15 @@
   <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
     <van-collapse-item name="1">
       <template #title>
-        <ArrowTitle
-          :src="titleTime"
-          :text="$t('home.latestMatch')"
-          class="mt10 latestArrowTitle"
-        />
+        <ArrowTitle :src="titleTime" :text="$t('home.latestMatch')" class="mt10 latestArrowTitle" />
       </template>
       <div class="LatestMatch">
         <SportsTabs ref="refSportsTabs" class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess" />
         <Loading v-if="!isLoading" />
         <template v-else>
           <HomeEmpty v-if="!recommendEventsList.length" class="marginAuto"></HomeEmpty>
-          <HomeMatchHandicap v-for="(item,idx) in recommendEventsList" v-else :key="idx" :send-params="item" class="mb10" />
+          <HomeMatchHandicap v-for="(item, idx) in recommendEventsList" v-else :key="idx" :send-params="item"
+            class="mb10" />
         </template>
         <div v-if="recommendEventsList.length" class="Button-MatchMore mt10 mb10" @click="goHomeTime">
           <span>
@@ -28,7 +25,7 @@
 import Dayjs from 'dayjs'
 const dateUtil = Dayjs
 import titleTime from '@/assets/images/home/title-time.png'
-import { onBeforeMount, reactive, ref, computed, watch } from 'vue'
+import { onMounted, reactive, ref, computed, watch } from 'vue'
 import store from '@/store'
 import router from '@/router'
 import { recommendEvents } from '@/api/home'
@@ -39,7 +36,7 @@ const props = defineProps({
   }
 })
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
-const timeout:any = ref('')
+const timeout: any = ref('')
 const activeNames = ref('1')
 const refSportsTabs = ref()
 watch(refreshChangeTime, (val) => {
@@ -52,37 +49,45 @@ watch(refreshChangeTime, (val) => {
     }, 100)
   }
 })
+watch(
+  () => props.leagueIdArr,
+  (val, old) => {
+    if (val.join() !== old.join()) {
+      getRecommendEvents()
+    }
+  }
+)
 const recommendEventsList = reactive([])
 const isLoading = ref(false)
-const getRecommendEvents = async (gameType:any = 'FT') => {
+const getRecommendEvents = async (gameType: any = 'FT') => {
   isLoading.value = false
   const params = {
     gradeType: 2,
     gameType: gameType,
-    filterLeagueIds:props.leagueIdArr.join(),
+    filterLeagueIds: props.leagueIdArr.join(),
     startDate: dateUtil().format('YYYY-MM-DD') + ' 00:00:00',
     endDate: dateUtil().add(1, 'day').format('YYYY-MM-DD') + ' 23:59:59'
   }
-  const res:any = await recommendEvents(params)
+  const res: any = await recommendEvents(params)
   isLoading.value = true
   if (res.code === 200) {
-    const data:any = res?.data || {}
+    const data: any = res?.data || {}
     const { baseData } = data
     recommendEventsList.length = 0
     recommendEventsList.push(...baseData)
   }
 }
 const goHomeTime = () => {
-  const params:any = { name: 'HomeTime' }
+  const params: any = { name: 'HomeTime' }
   router.push(params)
 }
-const returnSportsSuccess = (val:any) => {
+const returnSportsSuccess = (val: any) => {
   getRecommendEvents(val)
 }
-const init = () => {
-  getRecommendEvents()
-}
-onBeforeMount(() => {
-  init()
-})
+// const init = () => {
+//   getRecommendEvents()
+// }
+// onMounted(() => {
+//   init()
+// })
 </script>
