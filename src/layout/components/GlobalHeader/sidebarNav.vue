@@ -161,6 +161,7 @@ defineExpose({
   color: var(--color-bet-tabtext-2);
   letter-spacing: 0;
   font-weight: 500;
+  z-index: 100;
 
   .top {
     padding: 84px 52px;

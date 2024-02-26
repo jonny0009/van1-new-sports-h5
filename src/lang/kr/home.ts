@@ -46,5 +46,9 @@ export default {
   numberHour: '{number}시간',
   numberDay: '{number}일',
   'hot': '더운',
-  'todayUpcoming': '오늘예정'
+  'todayUpcoming': '오늘예정',
+  // new
+  RBInfo: '라이브 아시안 핸디캡',
+  RBSize: '라이브 크기',
+  RBRide: '라이브 1X2',
 }

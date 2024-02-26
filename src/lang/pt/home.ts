@@ -43,5 +43,9 @@ export default {
   numberHour: '{number} Horas',
   numberDay: '{number} Dias',
   hot: 'Popular',
-  todayUpcoming: 'Sessão Matinal'
+  todayUpcoming: 'Sessão Matinal',
+   // new
+   RBInfo: 'Handicap Asiático Jogo Completo',
+   RBSize: 'Mais/Menos Jogo Completo',
+   RBRide: 'Resultado Final 1X2',
 }

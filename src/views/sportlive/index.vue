@@ -18,7 +18,7 @@
   <div class="sportlive">
     <Loading v-if="!isLoading" />
     <template v-else>
-      <MatchLive v-for="(item, idx) in commonMatchesList" :key="idx" :send-params="item" />
+      <MatchLive v-for="(item, idx) in commonMatchesList" :key="idx" :send-params="item" :tabType="'RB'"/>
       <HomeEmpty v-if="!commonMatchesList.length"></HomeEmpty>
     </template>
     <div v-if="commonMatchesList.length" class="Button-MatchMore mt10" @click="noMoreclick">

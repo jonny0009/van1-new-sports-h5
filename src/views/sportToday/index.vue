@@ -7,7 +7,7 @@
         <template v-if="isLoading">
           <div ref="newContainer">
             <template v-for="(item, idx) in recommendEventsList" :key="idx">
-              <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="52222">
+              <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
                 <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
               </van-sticky>
               <HomeMatchHandicap :play-title-toggle="false" :send-params="item" :class="{ 'mt20': idx !== 0 }" />

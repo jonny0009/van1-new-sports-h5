@@ -5,37 +5,25 @@
         <TimeView :time-send-params="sendParams" />
         <div class="play">
           <div class="flex-1"></div>
-          <span
-            class="btn R"
-            :class="[
-              {
-                active: RrefShow
-              }
-            ]"
-            @click="Rclick"
-          >
+          <span class="btn R" :class="[
+            {
+              active: RrefShow
+            }
+          ]" @click="Rclick">
             {{ $t('home.R') }}
           </span>
-          <span
-            class="btn OU"
-            :class="[
-              {
-                active: OUrefShow
-              }
-            ]"
-            @click="OUclick"
-          >
+          <span class="btn OU" :class="[
+            {
+              active: OUrefShow
+            }
+          ]" @click="OUclick">
             {{ $t('home.OU') }}
           </span>
-          <span
-            class="btn M"
-            :class="[
-              {
-                active: MrefShow
-              }
-            ]"
-            @click="Mclick"
-          >
+          <span class="btn M" :class="[
+            {
+              active: MrefShow
+            }
+          ]" @click="Mclick">
             {{ $t('home.M') }}
           </span>
         </div>
@@ -46,7 +34,8 @@
         <div class="up-match">
           <!--  -->
           <div class="match-info-live__header border-bottom">
-            <div v-if="showSportsIcon(sendParams)" class="live-icon" @click="goToDetail(sendParams)"><i v class="iconfont icon-footer-live"></i></div>
+            <div v-if="showSportsIcon(sendParams)" class="live-icon" @click="goToDetail(sendParams)"><i v
+                class="iconfont icon-footer-live"></i></div>
             <div class="up-match-league">
               <SportsIcon :icon-src="props.sendParams.gameType" class="ball-img" />
               <div class="text">{{ getLeagueShortName(sendParams) }}</div>
@@ -61,32 +50,20 @@
           <!--  -->
           <div class="up-match-score border-bottom">
             <div class="item mb5">
-              <img
-                v-img="sendParams.homeLogo"
-                :type="4"
-                class="my-image img"
-                style="object-fit: contain;"
-                alt=""
-              >
+              <img v-img="sendParams.homeLogo" :type="4" class="my-image img" style="object-fit: contain;" alt="">
               <div class="name">{{ sendParams.homeTeamAbbr || sendParams.homeTeam }}</div>
               <div class="container">
                 <div class="value">
-                  {{ getScore(sendParams,'H') }}
+                  {{ getScore(sendParams, 'H') }}
                 </div>
               </div>
             </div>
             <div class="item">
-              <img
-                v-img="sendParams.awayLogo"
-                class="my-image img"
-                :type="5"
-                style="object-fit: contain;"
-                alt=""
-              >
+              <img v-img="sendParams.awayLogo" class="my-image img" :type="5" style="object-fit: contain;" alt="">
               <div class="name">{{ sendParams.awayTeamAbbr || sendParams.awayTeam }}</div>
               <div class="container">
                 <div class="value">
-                  {{ getScore(sendParams,'C') }}
+                  {{ getScore(sendParams, 'C') }}
                 </div>
               </div>
             </div>
@@ -96,7 +73,12 @@
             <div v-if="RrefShow && sendParams.RE" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">
-                  {{ $t('home.RInfo') }}
+                  <span v-if="tabType === 'RB'">
+                    {{ $t('home.RBInfo') }}
+                  </span>
+                  <span v-else>
+                    {{ $t('home.RInfo') }}
+                  </span>
                   <!-- <van-popover placement="top" theme="dark" trigger="click" class="newPopover" :to="`.flex-cross-center-${sendParams.gidm}${sendParams.systemId}`">
                     <div class="popover-text">{{ $t('home.RInfo2') }}</div>
                     <template #reference>
@@ -108,7 +90,7 @@
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('RE',sendParams)" :type="'RB'" />
+                    <Handicap :send-params="getHandicap('RE', sendParams)" :type="'RB'" />
                   </div>
                 </div>
               </div>
@@ -116,13 +98,18 @@
             <div v-if="OUrefShow && sendParams.ROU" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">
-                  {{ $t('home.OUInfo') }}
+                  <span v-if="tabType === 'RB'">
+                    {{ $t('home.RBSize') }}
+                  </span>
+                  <span v-else>
+                    {{ $t('home.OUInfo') }}
+                  </span>
                 </div>
               </div>
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('ROU',sendParams)" :type="'RB'" />
+                    <Handicap :send-params="getHandicap('ROU', sendParams)" :type="'RB'" />
                   </div>
                 </div>
               </div>
@@ -130,13 +117,18 @@
             <div v-if="MrefShow && sendParams.RM" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">
-                  {{ $t('home.MInfo') }}
+                  <span v-if="tabType === 'RB'">
+                    {{ $t('home.RBRide') }}
+                  </span>
+                  <span v-else>
+                    {{ $t('home.MInfo') }}
+                  </span>
                 </div>
               </div>
               <div class="match-betting-item__content">
                 <div class="betting-select">
                   <div class="betting-select__list">
-                    <Handicap :send-params="getHandicap('RM',sendParams)" :type="'RB'" />
+                    <Handicap :send-params="getHandicap('RM', sendParams)" :type="'RB'" />
                   </div>
                 </div>
               </div>
@@ -227,7 +219,7 @@ const offsetTop = computed(() => {
   return offsetTopval
 })
 //
-const sectionMap:any = {
+const sectionMap: any = {
   0: '',
   Q1: t('live.Q1'),
   Q2: t('live.Q2'),
@@ -250,15 +242,15 @@ const sectionMap:any = {
   h1: t('live.H1'),
   h2: t('live.H2')
 }
-const BKSection = (section:any) => {
+const BKSection = (section: any) => {
   const sectionToLowerCase = section.toLowerCase()
   return sectionMap[sectionToLowerCase]
 }
-const currBkTime:any = ref('')
-const showRBTime = (raceinfo:any = {}) => {
+const currBkTime: any = ref('')
+const showRBTime = (raceinfo: any = {}) => {
   const { showtype, gameType, gameInfo, showType, homeTeamSuffix, gidm } = raceinfo
   const Obj = opScoreObj(gameInfo, 5)
-  const seNow:any = gameInfo && gameInfo.se_now
+  const seNow: any = gameInfo && gameInfo.se_now
   if (showtype === 'RB' || showType === 'RB') {
     switch (gameType) {
       // 足球
@@ -327,7 +319,7 @@ const showRBTime = (raceinfo:any = {}) => {
       //
       case 'TN':
         if (gameInfo) {
-          const tninfo:any = tnStObj(gameInfo)
+          const tninfo: any = tnStObj(gameInfo)
           if (tninfo?.sciwd) {
             return t('live.pause')
           }
@@ -347,7 +339,7 @@ const showRBTime = (raceinfo:any = {}) => {
             // 原本data显示空
             return t('home.img')
           }
-          const bsScoreObj:any = gameInfo ? bsStObj(gameInfo) : ''
+          const bsScoreObj: any = gameInfo ? bsStObj(gameInfo) : ''
           const inningNum = gameInfo.inningNum ? gameInfo?.inningNum
             : bsScoreObj.se_now > 0 ? bsScoreObj.se_now : bsScoreObj.score.num
           const juCount = t('home.set', {
@@ -378,11 +370,11 @@ const showRBTime = (raceinfo:any = {}) => {
           return t('home.img')
         } else {
           if (gameInfo?.se_now === 'HT' || gameInfo?.se_now === 'ht') {
-          // 中场休息
+            // 中场休息
             return t('live.HT')
           }
           if (gameInfo?.se_now.indexOf('OT') > -1 || gameInfo?.se_now.indexOf('ot') > -1) {
-          // 加时
+            // 加时
             return t('home.addTimeNumber', {
               number: dateFormat(gameInfo.t_count * 1000, 'mm:ss')
             })
@@ -398,7 +390,7 @@ const showRBTime = (raceinfo:any = {}) => {
           // 原本data显示空
           return t('home.img')
         } else {
-          const newSeNow:any = gameInfo?.se_now.replace(/[^0-9]/gi, '') || ''
+          const newSeNow: any = gameInfo?.se_now.replace(/[^0-9]/gi, '') || ''
           return t('home.set', {
             number: newSeNow
           })
@@ -438,10 +430,14 @@ const props = defineProps({
     default: function () {
       return {}
     }
-  }
+  },
+  tabType: {
+    type: String,
+    default: ''
+  },
 })
 
-const showSportsIcon = (item:any) => {
+const showSportsIcon = (item: any) => {
   const { live, merchantAnchor, merchantStreamNa } = item
 
   if (live * 1 !== 1 || (merchantAnchor && merchantAnchor?.length && merchantStreamNa && merchantStreamNa?.length)) {
@@ -450,7 +446,7 @@ const showSportsIcon = (item:any) => {
   return false
 }
 
-const goToDetail = (item:any) => {
+const goToDetail = (item: any) => {
   router.push(`/match/${item.gidm}/bets`)
 }
 const betMoreShow = () => {
@@ -465,7 +461,8 @@ const betMoreShow = () => {
   font-weight: 500;
   margin-right: 5px;
 }
-.live-img{
+
+.live-img {
   font-size: 28px;
   margin-right: 5px;
 }

@@ -46,5 +46,9 @@ export default {
   'numberHour': '{number}tiếng',
   'numberDay': '{number}ngày',
   'hot': 'nóng',
-  'todayUpcoming': 'hôm naySắp tới'
+  'todayUpcoming': 'hôm naySắp tới',
+   // new
+   RBInfo: 'Chấp châu Á toàn bộ trận đấu',
+   RBSize: 'Trên/Dưới toàn bộ trận đấu',
+   RBRide: 'Toàn trận 1X2',
 }

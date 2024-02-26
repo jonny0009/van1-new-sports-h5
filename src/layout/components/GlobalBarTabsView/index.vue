@@ -104,7 +104,7 @@ const homeBarArray:any = ref(homeBarArrayTable(''))
   }
   .item{
     flex-shrink: 1;
-    margin: 0 18px;
+    // margin: 0 18px;
     &:first-child{
       margin: 0 18px 0 0;
     }

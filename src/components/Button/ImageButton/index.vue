@@ -66,6 +66,7 @@ defineProps({
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
+  min-width: 200px;
   height: 64px;
   border-radius: 30px;
   padding-left: 17px;

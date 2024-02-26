@@ -43,5 +43,10 @@ export default {
   numberHour: '{number} hours',
   numberDay: '{number} days',
   hot: 'Hot',
-  todayUpcoming: 'TodayUpComing'
+  todayUpcoming: 'TodayUpComing',
+
+  // new
+  RBInfo: 'RB Asian Handicap',
+  RBSize: 'RB O/U',
+  RBRide: 'RB 1X2',
 }
