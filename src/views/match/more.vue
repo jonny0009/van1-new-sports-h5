@@ -2,7 +2,8 @@
   <div class="bet-container" :class="{ 'has-bet': showFixedBet }">
     <!-- 赛事信息 -->
     <div class="team">
-      <van-image class="bannerBg-1" fit="fill" :src="getImgUrl()" />
+      <!-- <van-image class="bannerBg-1" fit="fill" :src="getImgUrl()" /> -->
+      <img class="bannerBg-1" fit="fill" :src="getImgUrl()" />
       <div class="team-dim">
         <div class="team-header">
           <div class="league">
@@ -84,7 +85,9 @@ const onMenuClick = (item: any) => {
 
 const getImgUrl = () => {
   const gameType = computed(() => route.query['gameType'])
-  return new URL(`../../assets/images/sport/${gameType.value}.png`, import.meta.url).href
+  // return new URL(`../../assets/images/sport/${gameType.value}.png`, import.meta.url).href
+  // return new URL(`@/assets/images/sport/${gameType.value}.png`, import.meta.url).href
+  return `/src/assets/images/sport/${gameType.value}.png`
 }
 
 const matchInfo: Ref<any> = ref({})

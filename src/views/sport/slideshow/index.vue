@@ -3,7 +3,8 @@
     <van-swipe class="my-swipe" :loop="true" indicator-color="white" :autoplay="30000">
       <van-swipe-item v-for="(item, index) in props.commonMatchesList" :key="index">
         <div class="bannerBg">
-          <van-image class="bannerBg-1" fit="contain" :src="getImgUrl(item)" />
+          <!-- <van-image class="bannerBg-1" fit="contain" :src="getImgUrl(item)" /> -->
+          <img class="bannerBg-1" fit="fill" :src="getImgUrl(item)" />
           <div class="team-dim">
             <!-- 头部 -->
             <p class="top">
@@ -58,7 +59,8 @@ import { getHandicap } from '@/utils/home/getHandicap'
 import Handicap from './Handicap.vue'
 
 const getImgUrl = (item: any) => {
-  return new URL(`../../../assets/images/sport/${item.gameType}.png`, import.meta.url).href
+  // return new URL(`../../../assets/images/sport/${item.gameType}.png`, import.meta.url).href
+  return `/src/assets/images/sport/${item.gameType}.png`
 }
 
 const props = defineProps({
@@ -193,4 +195,5 @@ const props = defineProps({
   }
 
 
-}</style>
+}
+</style>
