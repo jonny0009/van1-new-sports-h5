@@ -120,6 +120,8 @@
   // 早盘置灰按钮
   --color-grey-out-bg: #eff2f2;
   --color-grey-out-text:#000;
+  --color-match-team-dim-bg: rgba(118, 66, 253, 0.6);
+
 }
 // 蓝色版本
 :root[data-theme='blue'] {
@@ -247,4 +249,5 @@
   // 早盘置灰按钮
   --color-grey-out-bg: #E3E7F0;
   --color-grey-out-text: #88A6BB;
+  --color-match-team-dim-bg: rgba(0, 99, 200, 0.6);
 }

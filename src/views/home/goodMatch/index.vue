@@ -95,7 +95,8 @@ const getRecommendEvents = async (gameType: any = 'FT') => {
   if (res.code === 200) {
     const data: any = res?.data || {}
     const { baseData } = data
-    recommendEventsList.length = 0
+    recommendEventsList.value = []
+    recommendEventsListArr.value = []
     // recommendEventsList.value.push(...baseData)
     recommendEventsListArr.value.push(...baseData)
     const listObj: any = {}

@@ -1,47 +1,50 @@
 <template>
   <div class="slideshow">
-    <van-swipe class="my-swipe" :loop="true" indicator-color="white" :autoplay="3000">
+    <van-swipe class="my-swipe" :loop="true" indicator-color="white" :autoplay="30000">
       <van-swipe-item v-for="(item, index) in props.commonMatchesList" :key="index">
-        <div class="bannerBg" :class="{ 'bannerBg-blue': ifBLue }">
-          <!-- 头部 -->
-          <p class="top">
-          <div>
-            <SportsIcon :icon-src="item.gameType" class="ball-img" />
-            <div class="topName">
-              {{ item.leagueName }}
+        <div class="bannerBg">
+          <van-image class="bannerBg-1" fit="contain" :src="getImgUrl(item)" />
+          <div class="team-dim">
+            <!-- 头部 -->
+            <p class="top">
+            <div class="top-left">
+              <SportsIcon :icon-src="item.gameType" class="ball-img" />
+              <div class="topName">
+                {{ item.leagueName }}
+              </div>
             </div>
-          </div>
-          <span class="time">
-            {{ formatToDate(item.gameDate, 'MM-DD HH:mm') }}
-          </span>
-          </p>
-          <!-- 比赛 -->
-          <div class="match">
-            <img v-img="item.homeLogo" class="img_1" alt="" :type="4" style="object-fit: contain;">
-            <span v-if="item.R || item.RE">
-              {{ $t('home.RInfo') }}
+            <span class="time">
+              {{ formatToDate(item.gameDate, 'MM-DD HH:mm') }}
             </span>
-            <span v-else-if="item.OU || item.ROU">
-              {{ $t('home.OU') }}
-            </span>
-            <span v-else-if="item.M || item.RM">
-              {{ $t('home.M') }}
-            </span>
-            <img v-img="item.awayLogo" class="img_1" alt="" :type="5" style="object-fit: contain;">
-          </div>
-          <!-- 队伍名称 -->
-          <div class="matchName">
-            <div class="matchName-name">{{ item.homeTeam }}</div>
-            <div class="matchName-name-right">{{ item.awayTeam }}</div>
-          </div>
-          <!-- 比分 -->
-          <div class="score">
-            <Handicap v-if="item.R" :send-params="getHandicap('R', item)" :type="'RB'" />
-            <Handicap v-else-if="item.RE" :send-params="getHandicap('RE', item)" :type="'RB'" />
-            <Handicap v-else-if="item.OU" :send-params="getHandicap('OU', item)" :type="'RB'" />
-            <Handicap v-else-if="item.ROU" :send-params="getHandicap('ROU', item)" :type="'RB'" />
-            <Handicap v-else-if="item.M" :send-params="getHandicap('M', item)" :type="'RB'" />
-            <Handicap v-else-if="item.RM" :send-params="getHandicap('RM', item)" :type="'RB'" />
+            </p>
+            <!-- 比赛 -->
+            <div class="match">
+              <img v-img="item.homeLogo" class="img_1" alt="" :type="4" style="object-fit: contain;">
+              <span v-if="item.R || item.RE">
+                {{ $t('home.RInfo') }}
+              </span>
+              <span v-else-if="item.OU || item.ROU">
+                {{ $t('home.OU') }}
+              </span>
+              <span v-else-if="item.M || item.RM">
+                {{ $t('home.M') }}
+              </span>
+              <img v-img="item.awayLogo" class="img_1" alt="" :type="5" style="object-fit: contain;">
+            </div>
+            <!-- 队伍名称 -->
+            <div class="matchName">
+              <div class="matchName-name">{{ item.homeTeam }}</div>
+              <div class="matchName-name-right">{{ item.awayTeam }}</div>
+            </div>
+            <!-- 比分 -->
+            <div class="score">
+              <Handicap v-if="item.R" :send-params="getHandicap('R', item)" :type="'RB'" />
+              <Handicap v-else-if="item.RE" :send-params="getHandicap('RE', item)" :type="'RB'" />
+              <Handicap v-else-if="item.OU" :send-params="getHandicap('OU', item)" :type="'RB'" />
+              <Handicap v-else-if="item.ROU" :send-params="getHandicap('ROU', item)" :type="'RB'" />
+              <Handicap v-else-if="item.M" :send-params="getHandicap('M', item)" :type="'RB'" />
+              <Handicap v-else-if="item.RM" :send-params="getHandicap('RM', item)" :type="'RB'" />
+            </div>
           </div>
         </div>
       </van-swipe-item>
@@ -54,15 +57,9 @@ import { formatToDate } from '@/utils/date'
 import { getHandicap } from '@/utils/home/getHandicap'
 import Handicap from './Handicap.vue'
 
-import { computed } from 'vue'
-import store from '@/store'
-const theme = computed(() => store.state.app.theme)
-const ifBLue = computed(() => {
-  if (theme.value === 'blue') {
-    return true
-  }
-  return false
-})
+const getImgUrl = (item: any) => {
+  return new URL(`../../../assets/images/sport/${item.gameType}.png`, import.meta.url).href
+}
 
 const props = defineProps({
   commonMatchesList: {
@@ -84,14 +81,33 @@ const props = defineProps({
   }
 
   .bannerBg {
+    border-radius: 16px;
     width: 678px;
     height: 284px;
-    border-radius: 16px;
-    background: url('@/assets/images/user/leagueBg.png');
-    background-size: 100% 100%;
-    padding: 12px;
-    font-size: 24px;
-    color: #FFF;
+    position: relative;
+
+    &-1 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      border-radius: 16px;
+      height: 100%;
+      width: 100%;
+    }
+
+    .team-dim {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 12px;
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      font-size: 24px;
+      color: #FFF;
+      background-color: var(--color-match-team-dim-bg);
+    }
 
     .top {
       display: flex;
@@ -99,6 +115,11 @@ const props = defineProps({
       justify-content: space-between;
       font-size: 24px;
       color: #FFF;
+
+      &-left {
+        display: flex;
+        align-items: center;
+      }
 
       .ball-img {
         font-size: 24px;
@@ -171,14 +192,5 @@ const props = defineProps({
 
   }
 
-  .bannerBg-blue {
-    background: url('@/assets/images/user/blue/leagueBg.png');
-    width: 678px;
-    height: 284px;
-    border-radius: 16px;
-    background-size: 100% 100%;
-    padding: 12px;
-    font-size: 24px;
-  }
 
 }</style>
