@@ -13,10 +13,11 @@
             class="mb10" /> -->
           <div ref="newContainer">
             <template v-for="(item, idx) in recommendEventsList" :key="idx">
-              <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
-                <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
+              <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="8" :class="{ 'mt10': idx !== 0 }">
+                <playTitle :send-params="item" />
               </van-sticky>
-              <HomeMatchHandicap :play-title-toggle="false" :send-params="item" :class="{ 'mt10': idx !== 0 }" />
+              <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
+                :class="{ 'mt10': idx !== 0 }" />
             </template>
           </div>
         </template>
@@ -35,6 +36,7 @@ const dateUtil = Dayjs
 import titleTime from '@/assets/images/home/title-time.png'
 import playTitle from '@/components/Title/playTitle/index.vue'
 import { onMounted, reactive, ref, computed, watch } from 'vue'
+import moment from 'moment'
 import store from '@/store'
 import router from '@/router'
 const offsetTop = computed(() => {
@@ -77,7 +79,8 @@ watch(
     }
   }
 )
-const recommendEventsList = reactive([])
+const recommendEventsList: any = ref([])
+const recommendEventsListArr: any = ref([])
 const isLoading = ref(false)
 const getRecommendEvents = async (gameType: any = 'FT') => {
   isLoading.value = false
@@ -94,7 +97,29 @@ const getRecommendEvents = async (gameType: any = 'FT') => {
     const data: any = res?.data || {}
     const { baseData } = data
     recommendEventsList.length = 0
-    recommendEventsList.push(...baseData)
+    // recommendEventsList.push(...baseData)
+    recommendEventsListArr.value.push(...baseData)
+    const listObj: any = {}
+    const listArr: any = []
+    const sortArr = recommendEventsListArr.value.sort((a: any, b: any) => {
+      return a.gameDate - b.gameDate
+    })
+    sortArr.map((item: any) => {
+      const date = moment(item.gameDate).format('YYYY/MM/DD')
+      if (listObj[date]) {
+        listObj[date].list.push(item)
+      } else {
+        listObj[date] = {
+          gameDate: item.gameDate,
+          list: [item]
+        }
+      }
+    })
+    Object.keys(listObj).map(item => {
+      listArr.push(JSON.parse(JSON.stringify(listObj[item])))
+    })
+
+    recommendEventsList.value = listArr
   }
 }
 const goHomeTime = () => {

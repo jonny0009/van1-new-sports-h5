@@ -110,11 +110,12 @@
                   <!-- <HomeMatchHandicap v-for="(item, idx) in earlyList" :key="idx" :send-params="item" /> -->
                   <div ref="newContainer">
                     <template v-for="(item, idx) in earlyList" :key="idx">
-                      <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5"
+                      <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="8"
                         :class="{ 'mt10': idx !== 0 }">
                         <playTitle :send-params="item" />
                       </van-sticky>
-                      <HomeMatchHandicap :play-title-toggle="false" :send-params="item" :class="{ 'mt10': idx !== 0 }" />
+                      <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
+                        :class="{ 'mt10': idx !== 0 }" />
                     </template>
                   </div>
                 </div>
@@ -175,9 +176,10 @@ import ChampionList from './champion/index.vue'
 import Slideshow from './slideshow/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
 import playTitle from '@/components/Title/playTitle/index.vue'
-
-import { useRoute, useRouter } from 'vue-router'
-import { ref, onBeforeMount, watch, computed, nextTick, onMounted, onActivated } from 'vue'
+// useRouter
+import { useRoute, } from 'vue-router'
+// onBeforeMount
+import { ref,  watch, computed, nextTick, onMounted, onActivated } from 'vue'
 // import router from '@/router'
 import { apiChampionpPlayTypes } from '@/api/champion'
 import { recommendLeague, commonMatches, homeCommonMatches, searchCountryInfo, searchLeagueByCountryInfo } from '@/api/home'
@@ -395,7 +397,7 @@ const initData = async () => {
       gameSort: 3,
       dateStage: 0,
       isNovice: 'Y',
-      leagueIds: leagueIdArr.value.join(),
+      leagueIds: leagueIdArr.value.join() || -1,
       // leagueIds: '',
       onlyFavorite: 0,
       page: 1,
@@ -466,6 +468,7 @@ const getFirstLeagues = async () => {
 }
 // 早盘更多
 const isLoadingEarly: any = ref(false)
+const earlyListArr: any = ref([])
 const moreEarly = async () => {
   if (earlyLoadAll.value) {
     return
@@ -487,9 +490,31 @@ const moreEarly = async () => {
   isLoadingEarly.value = true
   const res: any = await commonMatches(earlyParames.value) || {}
   if (res.code === 200 && res.data?.matchList?.baseData && res.data?.matchList?.baseData.length) {
-    earlyList.value.push(...res.data.matchList.baseData)
+    // earlyList.value.push(...res.data.matchList.baseData)
+    earlyListArr.value.push(...res.data.matchList.baseData)
+    const listObj: any = {}
+    const listArr: any = []
+    const sortArr = earlyListArr.value.sort((a: any, b: any) => {
+      return a.gameDate - b.gameDate
+    })
+    sortArr.map((item: any) => {
+      const date = moment(item.gameDate).format('YYYY/MM/DD')
+      if (listObj[date]) {
+        listObj[date].list.push(item)
+      } else {
+        listObj[date] = {
+          gameDate: item.gameDate,
+          list: [item]
+        }
+      }
+    })
+    Object.keys(listObj).map(item => {
+      listArr.push(JSON.parse(JSON.stringify(listObj[item])))
+    })
+
+    earlyList.value = listArr
   }
-  if (earlyList.value.length < earlyPage.value * earlyPageSize.value) {
+  if (earlyListArr.value.length < earlyPage.value * earlyPageSize.value) {
     earlyLoadAll.value = true
   } else {
     earlyLoadAll.value = false
@@ -511,7 +536,7 @@ const moreRecommend = async () => {
     gameSort: 3,
     dateStage: 0,
     isNovice: 'Y',
-    leagueIds: leagueIdArr.value.join(),
+    leagueIds: leagueIdArr.value.join() || -1,
     // leagueIds: '',
     onlyFavorite: 0,
     gameType: gameType.value, gradeType: 1,
@@ -601,7 +626,29 @@ const getRecommendEvents = async (params: any) => {
       }
     } else if (params.gradeType === 2) {
       if (listFlag.length) {
-        earlyList.value = listFlag
+        // earlyList.value = listFlag
+        earlyListArr.value = listFlag
+        const listObj: any = {}
+        const listArr: any = []
+        const sortArr = earlyListArr.value.sort((a: any, b: any) => {
+          return a.gameDate - b.gameDate
+        })
+        sortArr.map((item: any) => {
+          const date = moment(item.gameDate).format('YYYY/MM/DD')
+          if (listObj[date]) {
+            listObj[date].list.push(item)
+          } else {
+            listObj[date] = {
+              date: date,
+              gameDate: item.gameDate,
+              list: [item]
+            }
+          }
+        })
+        Object.keys(listObj).map(item => {
+          listArr.push(JSON.parse(JSON.stringify(listObj[item])))
+        })
+        earlyList.value = listArr
       } else {
         earlyList.value = []
       }

@@ -146,6 +146,8 @@ onUnmounted(() => {
   .team {
     height: 252px;
     background: url('@/assets/images/live/game_mask.png') no-repeat;
+    // background-color: #0063c8;
+    // border-radius: 16px;
     background-size: auto 100%;
     margin: 40px 36px 20px 36px;
     font-size: 24px;

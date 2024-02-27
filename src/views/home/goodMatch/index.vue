@@ -2,11 +2,7 @@
   <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
     <van-collapse-item name="1">
       <template #title>
-        <ArrowTitle
-          class="mt10 goodArrowTitle"
-          :src="titleRecommend"
-          :text="$t('home.goofMatch')"
-        />
+        <ArrowTitle class="mt10 goodArrowTitle" :src="titleRecommend" :text="$t('home.goofMatch')" />
       </template>
       <div class="goodMatch">
         <SportsTabs ref="refSportsTabs" class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess" />
@@ -16,10 +12,11 @@
           <!-- <HomeMatchHandicap v-for="(item,idx) in recommendEventsList" :key="idx" :send-params="item" class="mb10" /> -->
           <div ref="newContainer">
             <template v-for="(item, idx) in recommendEventsList" :key="idx">
-              <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
-                <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
+              <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="8" :class="{ 'mt10': idx !== 0 }">
+                <playTitle :send-params="item" />
               </van-sticky>
-              <HomeMatchHandicap :play-title-toggle="false" :send-params="item" :class="{ 'mt10': idx !== 0 }" />
+              <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
+                :class="{ 'mt10': idx !== 0 }" />
             </template>
           </div>
         </template>
@@ -34,11 +31,11 @@
 </template>
 <script lang="ts" setup>
 import Dayjs from 'dayjs'
-import { arrayGetKey } from '@/utils/home/arrayGetKey'
 const dateUtil = Dayjs
 import titleRecommend from '@/assets/images/home/title-recommend.png'
 import playTitle from '@/components/Title/playTitle/index.vue'
-import { onMounted, reactive, ref, computed, watch } from 'vue'
+import { onMounted, ref, computed, watch } from 'vue'
+import moment from 'moment'
 import store from '@/store'
 import router from '@/router'
 const offsetTop = computed(() => {
@@ -81,27 +78,50 @@ watch(
     }
   }
 )
-const recommendEventsList = reactive([])
+const recommendEventsList: any = ref([])
+const recommendEventsListArr: any = ref([])
 const isLoading = ref(false)
-const getRecommendEvents = async (gameType:any = 'FT') => {
+const getRecommendEvents = async (gameType: any = 'FT') => {
   const params = {
     gradeType: 1,
     gameType: gameType,
-    leagueId:props.leagueIdArr.join(),
+    leagueId: props.leagueIdArr.join(),
     startDate: dateUtil().format('YYYY-MM-DD') + ' 00:00:00',
     endDate: dateUtil().add(1, 'day').format('YYYY-MM-DD') + ' 23:59:59'
   }
   isLoading.value = false
-  const res:any = await recommendEvents(params)
+  const res: any = await recommendEvents(params)
   isLoading.value = true
   if (res.code === 200) {
-    const data:any = res?.data || {}
+    const data: any = res?.data || {}
     const { baseData } = data
     recommendEventsList.length = 0
-    recommendEventsList.push(...baseData)
+    // recommendEventsList.value.push(...baseData)
+    recommendEventsListArr.value.push(...baseData)
+    const listObj: any = {}
+    const listArr: any = []
+    const sortArr = recommendEventsListArr.value.sort((a: any, b: any) => {
+      return a.gameDate - b.gameDate
+    })
+    sortArr.map((item: any) => {
+      const date = moment(item.gameDate).format('YYYY/MM/DD')
+      if (listObj[date]) {
+        listObj[date].list.push(item)
+      } else {
+        listObj[date] = {
+          gameDate: item.gameDate,
+          list: [item]
+        }
+      }
+    })
+    Object.keys(listObj).map(item => {
+      listArr.push(JSON.parse(JSON.stringify(listObj[item])))
+    })
+
+    recommendEventsList.value = listArr
   }
 }
-const returnSportsSuccess = (val:any) => {
+const returnSportsSuccess = (val: any) => {
   gameType.value = val
   getRecommendEvents(val)
 }

@@ -75,6 +75,7 @@ declare interface Match {
   matchInfo: any
   matchData: any
   needTimer: boolean
+  turnSound: boolean
 }
 
 declare module '@vue/runtime-core' {
