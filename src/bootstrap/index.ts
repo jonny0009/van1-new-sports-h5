@@ -17,6 +17,9 @@ export default async () => {
   //   store.commit('app/SET_THEME', searchParams.theme)
   // }
   store.commit('app/SET_THEME', 'blue') // 默认蓝色
+  if (searchParams.theme === 'purple') {
+    store.commit('app/SET_THEME', '') // 紫色
+  }
   if (typeof searchParams.brandType === 'string') {
     localStore.setItem('visitor', '1')
   }
