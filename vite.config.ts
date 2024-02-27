@@ -79,7 +79,15 @@ export default () => {
           }
         }
       },
-      chunkSizeWarningLimit: 500
-    }
+      chunkSizeWarningLimit: 500,
+      // 配置发布后图片无法显示
+      target: 'es2020',
+    },
+    //配置发布后图片无法显示
+    optimizedeps: {
+      esbuildoptions: {
+        target: 'es2020'
+      }
+    },
   }
 }
