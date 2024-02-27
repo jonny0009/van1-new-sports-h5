@@ -18,8 +18,8 @@
           :loading-text="$t('user.loadingText')" @load="onLoad">
           <van-swipe-cell v-for="(item, index) in list.arr" :key="index" :before-close="beforeClose" class="itemContent">
             <div class="cell" @click="toDetail(item)">
-              <p class="font_1">{{ item.title }}</p>
-              <div class="font_2" v-html="replaceImgUrl(item.content)"></div>
+              <p style=" -webkit-box-orient: vertical;" class="font_1">{{ item.title }}</p>
+              <div style=" -webkit-box-orient: vertical;" class="font_2" v-html="replaceImgUrl(item.content)"></div>
               <div class="font_3">
                 <span>{{ $t('user.lookInfo') }}</span>
                 <span>{{ formatToDateTime(item.optTime) }}</span>
