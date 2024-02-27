@@ -57,10 +57,12 @@
 import { formatToDate } from '@/utils/date'
 import { getHandicap } from '@/utils/home/getHandicap'
 import Handicap from './Handicap.vue'
+import { sportBgArr } from '@/utils/sportBg'
+
 
 const getImgUrl = (item: any) => {
   // return new URL(`../../../assets/images/sport/${item.gameType}.png`, import.meta.url).href
-  return `/src/assets/images/sport/${item.gameType}.png`
+  return sportBgArr()[item.gameType]
 }
 
 const props = defineProps({

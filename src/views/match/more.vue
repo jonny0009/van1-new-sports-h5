@@ -59,11 +59,13 @@ import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { matcheInfo } from '@/api/live'
 import { useMatch } from '@/utils/useMatch'
+import { sportBgArr } from '@/utils/sportBg'
 import { useBetting } from '@/utils/useBetting'
 import { formatToDate } from '@/utils/date'
 import BettingCollapse from '@/components/BettingCollapse/index.vue'
 import MatchDatabase from '@/components/Match/database/index.vue'
 import store from '@/store'
+const gameType = computed(() => route.query['gameType'])||'FT'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -84,10 +86,8 @@ const onMenuClick = (item: any) => {
 }
 
 const getImgUrl = () => {
-  const gameType = computed(() => route.query['gameType'])
   // return new URL(`../../assets/images/sport/${gameType.value}.png`, import.meta.url).href
-  // return new URL(`@/assets/images/sport/${gameType.value}.png`, import.meta.url).href
-  return `/src/assets/images/sport/${gameType.value}.png`
+  return sportBgArr()[gameType.value]
 }
 
 const matchInfo: Ref<any> = ref({})
