@@ -7,7 +7,8 @@ const matchModule: Module<Match, any> = {
     pictureinpictureGidm: null,
     matchInfo: {},
     matchData: {},
-    needTimer: false
+    needTimer: false,
+    turnSound: false
   },
 
   mutations: {
@@ -19,6 +20,9 @@ const matchModule: Module<Match, any> = {
     },
     SET_NEED_TIMER: (state, flag: boolean) => {
       state.needTimer = flag
+    },
+    SET_TURN_SOUND: (state, flag: boolean) => {
+      state.turnSound = !flag
     }
   },
 

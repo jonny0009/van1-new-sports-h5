@@ -7,10 +7,11 @@
         <template v-if="isLoading">
           <div ref="newContainer">
             <template v-for="(item, idx) in recommendEventsList" :key="idx">
-              <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
-                <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
+              <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="5" :class="{ 'mt10': idx !== 0 }">
+                <playTitle :send-params="item" />
               </van-sticky>
-              <HomeMatchHandicap :play-title-toggle="false" :send-params="item" :class="{ 'mt10': idx !== 0 }" />
+              <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
+                :class="{ 'mt10': idx !== 0 }" />
             </template>
           </div>
           <HomeEmpty v-if="!recommendEventsList.length"></HomeEmpty>
@@ -27,7 +28,9 @@
 import Dayjs from 'dayjs'
 import tabsTime from './tabsTime/index.vue'
 import playTitle from '@/components/Title/playTitle/index.vue'
-import { recommendEvents, commonMatches } from '@/api/home'
+// recommendEvents
+import {  commonMatches } from '@/api/home'
+import moment from 'moment'
 import store from '@/store'
 import { onBeforeMount, ref, reactive, computed, watch } from 'vue'
 import router from '@/router'
@@ -79,7 +82,8 @@ if (routerName.value === 'sportToday') {
   params.startDate = Dayjs().format('YYYY-MM-DD') + ' 00:00:00'
   params.endDate = Dayjs().format('YYYY-MM-DD') + ' 23:59:59'
 }
-const recommendEventsList = reactive([])
+const recommendEventsList: any = ref([])
+const recommendEventsListArr: any = ref([])
 const totalVal = ref(0)
 const getLoading = (val: any = false, nextToggle: any = '') => {
   if (nextToggle) {
@@ -110,7 +114,29 @@ const getRecommendEvents = async (nextToggle: any = '') => {
     } else {
       recommendEventsList.length = 0
     }
-    recommendEventsList.push(...baseData)
+    // recommendEventsList.value.push(...baseData)
+    recommendEventsListArr.value.push(...baseData)
+    const listObj: any = {}
+    const listArr: any = []
+    const sortArr = recommendEventsListArr.value.sort((a: any, b: any) => {
+      return a.gameDate - b.gameDate
+    })
+    sortArr.map((item: any) => {
+      const date = moment(item.gameDate).format('YYYY/MM/DD')
+      if (listObj[date]) {
+        listObj[date].list.push(item)
+      } else {
+        listObj[date] = {
+          gameDate: item.gameDate,
+          list: [item]
+        }
+      }
+    })
+    Object.keys(listObj).map(item => {
+      listArr.push(JSON.parse(JSON.stringify(listObj[item])))
+    })
+
+    recommendEventsList.value = listArr
   }
 }
 const loading = ref(false)

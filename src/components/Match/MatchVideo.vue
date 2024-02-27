@@ -1,7 +1,7 @@
 <template>
   <div class="match-video">
     <iframe v-if="urlHtml && !videoWaiting" :src="urlHtml" style="width:100%;height:100%" frameborder="0"></iframe>
-    <video v-else ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
+    <video v-else ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type  ></video>
 
     <div v-if="videoWaiting" class="mask-loading">
       <div class="icon"></div>
@@ -14,8 +14,9 @@
 import 'video.js/dist/video-js.min.css'
 import videojs from 'video.js'
 import store from '@/store'
-import { watch, nextTick, onUnmounted, ref } from 'vue'
+import { watch, nextTick, onUnmounted, ref,computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+const turnSound = computed(() => store.state.match.turnSound)
 
 const emits = defineEmits(['on-error'])
 const props = defineProps({
@@ -81,6 +82,13 @@ const initVideo = (url: string) => {
       }
     ]
   }
+  // 获取声音是否关闭
+  if (turnSound.value) {
+    options.muted=false
+  } else {
+    options.muted=true
+    
+  }
   nextTick(() => {
     player = videojs(videoRef.value, options, () => {
       player.log('onPlayerReady')
@@ -95,6 +103,15 @@ const initVideo = (url: string) => {
     player.on('waiting', () => {
       console.log('waiting', new Date().getTime())
       // videoWaiting.value = true
+    })
+    
+    player.on('volumechange', (event:any) => {
+      console.log('监听音量', event)
+      if (turnSound.value) {
+        store.commit('match/SET_TURN_SOUND', true)
+      } else {
+        store.commit('match/SET_TURN_SOUND', false)
+      }
     })
 
     player.on('playing', () => {

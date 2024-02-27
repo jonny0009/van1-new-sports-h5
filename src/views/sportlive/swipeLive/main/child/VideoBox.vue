@@ -34,7 +34,10 @@
 <script lang="ts" setup>
 import Video from 'video.js'
 import 'video.js/dist/video-js.css'
-import { ref, onBeforeMount, onBeforeUnmount, nextTick } from 'vue'
+import { ref,watch, onBeforeMount, onBeforeUnmount, nextTick, computed } from 'vue'
+import store from '@/store'
+const turnSound = computed(() => store.state.match.turnSound)
+
 const props:any = defineProps({
   liveUrl: {
     type: String,
@@ -45,9 +48,21 @@ const props:any = defineProps({
     default: true
   }
 })
+
 const videoExample:any = ref(null)
 const videoErrorState:any = ref(false)
 const muted = ref(true)
+
+watch(turnSound, (newValue, oldValue) => {
+  console.log(`turnSound发生变化，新值为：${newValue}，旧值为：${oldValue}`);
+  if (newValue) {
+    videoExample.value.muted(false)
+    muted.value = false
+  } else {
+    videoExample.value.muted(true)
+    muted.value = true
+  }
+})
 
 const setTimeoutTime = ref()
 const initVideo = () => {
@@ -107,11 +122,14 @@ const soundHandle = () => {
     return false
   }
   if (videoExample.value.muted()) {
-    videoExample.value.muted(false)
-    muted.value = false
+    // videoExample.value.muted(false)
+    // muted.value = false
+    
+    store.commit('match/SET_TURN_SOUND', false)
   } else {
-    videoExample.value.muted(true)
-    muted.value = true
+    // videoExample.value.muted(true)
+    // muted.value = true
+    store.commit('match/SET_TURN_SOUND', true)
   }
 }
 const emit = defineEmits(['refresh', 'touchVideo'])
