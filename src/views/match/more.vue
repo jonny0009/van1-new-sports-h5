@@ -2,60 +2,51 @@
   <div class="bet-container" :class="{ 'has-bet': showFixedBet }">
     <!-- 赛事信息 -->
     <div class="team">
-      <div class="team-header">
-        <div class="league">
-          <SvgIcon name="live-football" />
-          <span>{{ matchInfo.leagueName }}</span>
-        </div>
-        <div class="date">{{ formatToDate(matchInfo.gameDate, 'MM-DD HH:mm') }}</div>
-      </div>
-      <div class="team-box">
-        <div class="team-player host">
-          <div class="img-num">
-            <img v-img="matchInfo.homeLogo" :type="4" alt="" />
-            <span>{{ setMatch.getScore(matchInfo, 'H') }}</span>
+      <van-image class="bannerBg-1" fit="fill" :src="getImgUrl()" />
+      <div class="team-dim">
+        <div class="team-header">
+          <div class="league">
+            <SvgIcon name="live-football" />
+            <span>{{ matchInfo.leagueName }}</span>
           </div>
-          <strong>{{ matchInfo.homeTeam }}</strong>
+          <div class="date">{{ formatToDate(matchInfo.gameDate, 'MM-DD HH:mm') }}</div>
         </div>
-        <div class="team-score" @click="gotoLive">
-          <span class="default" v-html="setMatch.showRBTime(matchInfo)"></span>
-          <span v-if="matchInfo.showtype == 'RB'" class="icons">
-            <SvgIcon name="live-play" />
-          </span>
-        </div>
-        <div class="team-player away">
-          <div class="img-num">
-            <span>{{ setMatch.getScore(matchInfo, 'C') }}</span>
-            <img v-img="matchInfo.awayLogo" :type="5" alt="" />
+        <div class="team-box">
+          <div class="team-player host">
+            <div class="img-num">
+              <img v-img="matchInfo.homeLogo" :type="4" alt="" />
+              <span>{{ setMatch.getScore(matchInfo, 'H') }}</span>
+            </div>
+            <strong>{{ matchInfo.homeTeam }}</strong>
           </div>
-          <strong>{{ matchInfo.awayTeam }}</strong>
+          <div class="team-score" @click="gotoLive">
+            <span class="default" v-html="setMatch.showRBTime(matchInfo)"></span>
+            <span v-if="matchInfo.showtype == 'RB'" class="icons">
+              <SvgIcon name="live-play" />
+            </span>
+          </div>
+          <div class="team-player away">
+            <div class="img-num">
+              <span>{{ setMatch.getScore(matchInfo, 'C') }}</span>
+              <img v-img="matchInfo.awayLogo" :type="5" alt="" />
+            </div>
+            <strong>{{ matchInfo.awayTeam }}</strong>
+          </div>
         </div>
       </div>
     </div>
     <!-- end -->
 
     <div class="bet-menu">
-      <div
-        v-for="(item, index) in menuList"
-        :key="index"
-        class="bet-menu__nav"
-        :class="{ selected: menuType === item.type }"
-        @click="onMenuClick(item)"
-      >
+      <div v-for="(item, index) in menuList" :key="index" class="bet-menu__nav"
+        :class="{ selected: menuType === item.type }" @click="onMenuClick(item)">
         <SvgIcon :name="item.iconName" />
         <span class="title">{{ item.title }}</span>
       </div>
     </div>
     <div class="bet-main">
-      <BettingCollapse
-        v-show="menuType === 0"
-        :match-info="matchInfo"
-        :group-list="playGroupBetList"
-        :betting-list="playBettingList"
-        :loading="apiLoading"
-        @tab-change="findGroupById"
-      />
-
+      <BettingCollapse v-show="menuType === 0" :match-info="matchInfo" :group-list="playGroupBetList"
+        :betting-list="playBettingList" :loading="apiLoading" @tab-change="findGroupById" />
       <MatchDatabase v-show="menuType === 1" />
     </div>
   </div>
@@ -89,6 +80,11 @@ const menuList = ref([
 const menuType = ref(0)
 const onMenuClick = (item: any) => {
   menuType.value = item.type
+}
+
+const getImgUrl = () => {
+  const gameType = computed(() => route.query['gameType'])
+  return new URL(`../../assets/images/sport/${gameType.value}.png`, import.meta.url).href
 }
 
 const matchInfo: Ref<any> = ref({})
@@ -143,17 +139,38 @@ onUnmounted(() => {
   &.has-bet {
     padding-bottom: 96px;
   }
+
   .team {
     height: 252px;
-    background: url('@/assets/images/live/game_mask.png') no-repeat;
-    // background-color: #0063c8;
-    // border-radius: 16px;
+    // background: url('@/assets/images/live/game_mask.png') no-repeat;
+    border-radius: 16px;
     background-size: auto 100%;
     margin: 40px 36px 20px 36px;
-    font-size: 24px;
-    color: #ffffff;
-    letter-spacing: 0;
-    font-weight: 500;
+    position: relative;
+    .bannerBg-1 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      border-radius: 16px;
+      height: 100%;
+      width: 100%;
+    }
+
+    &-dim {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      background-color: var(--color-match-team-dim-bg);
+      font-size: 24px;
+      letter-spacing: 0;
+      font-weight: 500;
+      color: #ffffff;
+    }
+
     &-header {
       height: 46px;
       display: flex;
@@ -161,28 +178,34 @@ onUnmounted(() => {
       justify-content: space-between;
       padding: 0 16px;
       color: #b4bbc2;
+
       .league {
         display: flex;
         align-items: center;
-        > img {
+
+        >img {
           width: 24px;
           height: 24px;
           margin-right: 6px;
         }
-        > span {
+
+        >span {
           max-width: 320px;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
         }
+
         .svg-icon {
           margin-right: 6px;
         }
       }
+
       .date {
         white-space: nowrap;
       }
     }
+
     &-box {
       display: flex;
       margin: 40px 0 0 0;
@@ -193,21 +216,25 @@ onUnmounted(() => {
       width: 200px;
       display: flex;
       flex-direction: column;
+
       .img-num {
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin-bottom: 17px;
         width: 100%;
-        > img {
+
+        >img {
           display: block;
           width: 62px;
           height: 62px;
         }
-        > span {
+
+        >span {
           font-size: 28px;
         }
       }
+
       strong {
         max-width: 200px;
         display: block;
@@ -215,15 +242,19 @@ onUnmounted(() => {
         white-space: nowrap;
         text-overflow: ellipsis;
       }
+
       &.host {
         align-items: flex-start;
-        .img-num > span {
+
+        .img-num>span {
           padding-right: 20px;
         }
       }
+
       &.away {
         align-items: flex-end;
-        .img-num > span {
+
+        .img-num>span {
           padding-left: 20px;
         }
       }
@@ -237,10 +268,12 @@ onUnmounted(() => {
       padding: 15px 0 0 0;
       color: #b1b8bf;
       overflow: hidden;
+
       .icons {
         color: #f2f2f2;
         margin-top: 10px;
       }
+
       .svg-icon {
         font-size: 38px;
       }
@@ -254,6 +287,7 @@ onUnmounted(() => {
     margin: 0 -12px;
     padding: 0 36px;
   }
+
   &-menu__nav {
     flex: 1;
     height: 64px;
@@ -268,14 +302,17 @@ onUnmounted(() => {
     font-weight: 800;
     transition: all 0.3s;
     margin: 0 12px;
+
     .svg-icon {
       color: var(--color-global-minButtonicoCl);
       font-size: 38px;
       margin: 0 22px 0 0;
     }
+
     &.selected {
       background-image: linear-gradient(180deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-2) 100%);
       color: #fff;
+
       .svg-icon {
         color: #fff;
       }
@@ -285,5 +322,4 @@ onUnmounted(() => {
   &-main {
     padding: 30px 14px 0 14px;
   }
-}
-</style>
+}</style>

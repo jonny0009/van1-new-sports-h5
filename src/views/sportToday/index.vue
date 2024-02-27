@@ -112,7 +112,9 @@ const getRecommendEvents = async (nextToggle: any = '') => {
         finished.value = true
       }
     } else {
-      recommendEventsList.length = 0
+      // recommendEventsList.length = 0
+      recommendEventsList.value = []
+      recommendEventsListArr.value = []
     }
     // recommendEventsList.value.push(...baseData)
     recommendEventsListArr.value.push(...baseData)
