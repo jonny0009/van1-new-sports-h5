@@ -200,7 +200,7 @@ const getProfit = (item: any, item1: any) => {
 const handleFinal = (item: any) => {
   item.btnLogin = true
   const params: any = {
-    amount: earlyMoney(item),
+    amount: earlyMoney(item, 2),
     orderId: item.orderId
   }
   store.dispatch('user/handleConfirmCashout', params)
@@ -208,10 +208,13 @@ const handleFinal = (item: any) => {
   return
 }
 
-const earlyMoney = (item: any) => {
+const earlyMoney = (item: any,type?: any) => {
   if (aheadOrderList.value.length) {
     const item1 = aheadOrderList.value.find((e: any) => e.orderId === item.orderId)
     if (item1) {
+      if (type === 2) {
+        return item1.realCashoutMax
+      }
       return item1.cashoutMax
     }
     return 0
