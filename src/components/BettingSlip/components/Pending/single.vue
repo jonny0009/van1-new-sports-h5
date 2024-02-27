@@ -59,8 +59,11 @@
               <!-- 平局图标找到了 -->
               <SvgIcon v-if="Number(item.cashoutType) === 2" name="user-ahead" class="icon-svg-1" />
               <SvgIcon v-if="item.state === 1" name="user-postpone" class="icon-svg-1" />
-              <SvgIcon v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
-                :name="`user-${item1.betResultDetail}`" class="icon-svg-1" />
+              <SvgIcon
+                v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
+                :name="`user-${item1.betResultDetail}`"
+                class="icon-svg-1"
+              />
               <img v-else class="img_1" src="@/assets/images/user/D1.png" alt="" />
 
             </span>
@@ -175,7 +178,7 @@ const props = defineProps({
 const ifBetNum = (item: any, item1: any) => {
   if (Number(item1.ioRatio) < 0) {
     // 马来绝对值都小于1,  印尼绝对值都大于1
-    let absNum: any = Math.abs(Number(item1.ioRatio))
+    const absNum: any = Math.abs(Number(item1.ioRatio))
     return accDiv(item.gold, absNum)
   }
 }
@@ -184,7 +187,7 @@ const getProfit = (item: any, item1: any) => {
   if (Number(item1.ioRatio) < 0) {
     // 马来绝对值都小于1,  印尼绝对值都大于1
     let sumNum: any = 0
-    let absNum: any = Math.abs(Number(item1.ioRatio))
+    const absNum: any = Math.abs(Number(item1.ioRatio))
     if (absNum > 1) {
       sumNum = accAdd(accDiv(item.gold, absNum), item.gold)
     }
