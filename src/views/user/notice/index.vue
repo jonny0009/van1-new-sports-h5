@@ -14,13 +14,8 @@
         </p>
       </div>
       <div v-if="list.arr.length || !finished" class="list">
-        <van-list
-          v-model:loading="loading"
-          :finished="finished"
-          :finished-text="$t('live.noMore')"
-          :loading-text="$t('user.loadingText')"
-          @load="onLoad"
-        >
+        <van-list v-model:loading="loading" :finished="finished" :finished-text="$t('live.noMore')"
+          :loading-text="$t('user.loadingText')" @load="onLoad">
           <van-swipe-cell v-for="(item, index) in list.arr" :key="index" :before-close="beforeClose" class="itemContent">
             <div class="cell" @click="toDetail(item)">
               <p class="font_1">{{ item.title }}</p>
@@ -84,7 +79,13 @@ const onLoad = async () => {
   const res: any = await messageList(params)
   const data = res.data
   if (res.code === 200) {
-    data.messages.forEach((item: any) => {
+    let messageArr: any = []
+    if (!data.messages) {
+      messageArr = []
+    } else {
+      messageArr = data.messages
+    }
+    messageArr.forEach((item: any) => {
       list.arr.push(item)
     })
     loading.value = false
