@@ -1,7 +1,8 @@
 <template>
   <div class="match-video">
-    <iframe v-if="urlHtml && !videoWaiting" :src="urlHtml" style="width:100%;height:100%" frameborder="0"></iframe>
-    <video v-else ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type  ></video>
+    <iframe v-if="urlHtml && !videoWaiting" ref="videoFrame" @load="handleLoad" :src="urlHtml"
+      style="width:100%;height:100%" frameborder="0"></iframe>
+    <video v-else ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
 
     <div v-if="videoWaiting" class="mask-loading">
       <div class="icon"></div>
@@ -14,7 +15,7 @@
 import 'video.js/dist/video-js.min.css'
 import videojs from 'video.js'
 import store from '@/store'
-import { watch, nextTick, onUnmounted, ref,computed } from 'vue'
+import { watch, nextTick, onUnmounted, ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 const turnSound = computed(() => store.state.match.turnSound)
 
@@ -24,6 +25,7 @@ const props = defineProps({
 })
 
 const urlHtml = ref('')
+const videoFrame = ref()
 watch(
   () => props.url,
   (newUrl) => {
@@ -84,10 +86,10 @@ const initVideo = (url: string) => {
   }
   // 获取声音是否关闭
   if (turnSound.value) {
-    options.muted=false
+    options.muted = false
   } else {
-    options.muted=true
-    
+    options.muted = true
+
   }
   nextTick(() => {
     player = videojs(videoRef.value, options, () => {
@@ -104,8 +106,8 @@ const initVideo = (url: string) => {
       console.log('waiting', new Date().getTime())
       // videoWaiting.value = true
     })
-    
-    player.on('volumechange', (event:any) => {
+
+    player.on('volumechange', (event: any) => {
       console.log('监听音量', event)
       if (turnSound.value) {
         store.commit('match/SET_TURN_SOUND', true)
@@ -143,6 +145,18 @@ const loadingNone = () => {
     videoWaiting.value = false
   })
 }
+// iframe 事件加载===
+const handleLoad = () => {
+  const iframeWindow = videoFrame.value;
+  console.log(iframeWindow,"=====");
+  
+  // iframeWindow.contentWindow.addEventListener('volumechange', handleVolumeChange);
+}
+// const handleVolumeChange = () => {
+//   // 处理音量变化事件
+//   console.log('音量发生变化');
+// };
+
 
 const disposePlayer = () => {
   if (!videoIsInpicture.value) {
@@ -163,6 +177,7 @@ onUnmounted(() => {
   background: #000;
   display: flex;
   align-items: center;
+
   .video-js {
     font-size: 20px;
     height: 100% !important;
@@ -179,6 +194,7 @@ onUnmounted(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     .icon {
       // width: 120px;
       // height: 120px;
@@ -188,11 +204,11 @@ onUnmounted(() => {
       background: url('@/assets/images/live/v_loading.gif') no-repeat;
       background-size: 100% auto;
     }
+
     .text {
       font-size: 24px;
       color: rgba(255, 255, 255, 0.5);
       margin-top: 20px;
     }
   }
-}
-</style>
+}</style>

@@ -42,7 +42,7 @@ const firstLeaguesList: any = reactive([])
 const leagueIdArr: any = ref([])
 const getFirstLeagues = async () => {
   refHotMatch.value.isLoading = false
-  const res: any = await recommendLeague({ gameType: 'home' })
+  const res: any = await recommendLeague({ gameType: 'home',showType:'FAST' })
   refHotMatch.value.isLoading = true
   if (res.code === 200) {
     leagueIdArr.value = []
