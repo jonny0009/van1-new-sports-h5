@@ -8,8 +8,8 @@
       公共 联赛
     -->
     <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
-      <!-- 使用切换栏组件 -->
-      <div v-if="groupedArrays.length" class="tabs-cut">
+      <!-- 使用切换栏组件 v-if="groupedArrays.length" -->
+      <div class="tabs-cut">
         <van-tabs v-model:active="leagueId" :duration="0.2" shrink line-height="0" :swipe-threshold="3"
           @change="onChangeTabs">
           <van-tab name="all">
@@ -31,6 +31,19 @@
             <template #title>
               <ImageButton class="tabs-cut-1" :text="item.leagueName" :src="item.leagueLogo"
                 :active="leagueId === item.leagueId" type="6" :count="item.gameTypeCount || '0'"
+                :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" />
+            </template>
+          </van-tab>
+        </van-tabs>
+      </div>
+      <!-- 地区联赛 -->
+      <div v-if="areaLeaguesList.length" class="tabs-cut">
+        <van-tabs v-model:active="areaLeagueId" :duration="0.2" shrink line-height="0" :swipe-threshold="3"
+          @change="onChangeAreaTabs">
+          <van-tab v-for="(item, index) in areaLeaguesList" :key="index" :name="item.leagueId">
+            <template #title>
+              <ImageButton class="tabs-cut-1" :text="item.leagueName" :src="item.leagueLogo"
+                :active="areaLeagueId === item.leagueId" type="6" :count="item.gameTypeCount || '0'"
                 :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" />
             </template>
           </van-tab>
@@ -179,7 +192,7 @@ import playTitle from '@/components/Title/playTitle/index.vue'
 // useRouter
 import { useRoute, } from 'vue-router'
 // onBeforeMount
-import { ref,  watch, computed, nextTick, onMounted, onActivated } from 'vue'
+import { ref, watch, computed, nextTick, onMounted, onActivated } from 'vue'
 // import router from '@/router'
 import { apiChampionpPlayTypes } from '@/api/champion'
 import { recommendLeague, commonMatches, homeCommonMatches, searchCountryInfo, searchLeagueByCountryInfo } from '@/api/home'
@@ -223,6 +236,7 @@ const championGuessing = ref<any>()
 const leagueArrowTitle = ref<any>()
 
 const leagueId: any = ref(route.query.leagueId)
+const areaLeagueId: any = ref(route.query.leagueId)
 const leagueLogo: any = ref()
 const leagueName: any = ref()
 const recommendPage: any = ref(1)
@@ -281,6 +295,7 @@ const collapseChange = (countryId: any) => {
 }
 
 // 获取国家联赛信息
+const ifAreaInfo: any = ref(false)
 const getLeagueByCountryInfo = async (countryId: any, num: any) => {
   const leagueByCountryParams: any = ref({
     countryId,
@@ -291,23 +306,20 @@ const getLeagueByCountryInfo = async (countryId: any, num: any) => {
   const res: any = await searchLeagueByCountryInfo(leagueByCountryParams.value) || {}
   if (res.code === 200 && res.data) {
     LeagueByCountryInfoArr.value = res.data || []
-    if (num === 3) {
-      firstLeaguesList.value = res.data || []
-      leagueIdArr.value = []
-      firstLeaguesList.value.map((n: any) => {
-        if (n.leagueId) {
-          leagueIdArr.value.push(n.leagueId)
-        }
+    if (num === 2) {
+      // areaLeaguesList.value = res.data || []
+      ifAreaInfo.value = true
+      areaLeaguesList.value = res.data.filter((item: any) => {
+        return item.leagueId !== leagueId.value
       })
-      const leagueIdObj = firstLeaguesList.value.find((item: any) => {
-        return item.leagueId === leagueId.value
-      })
-      if (!leagueIdObj) {
-        leagueId.value = ''
-        closeSlideshow.value = true
-      }
+      areaLeagueId.value = ''
       initData()
     }
+    if (num === 3) {
+      firstLeaguesList.value = res.data || []
+      initData()
+    }
+
   } else {
     LeagueByCountryInfoArr.value = []
   }
@@ -321,6 +333,7 @@ const onRefresh = () => {
 }
 // 初始化方法
 const initList = () => {
+  areaLeaguesList.value = []
   leagueId.value = ''
   recommendPage.value = 1
   earlyPage.value = 1
@@ -424,30 +437,25 @@ const initData = async () => {
   }
 }
 const firstLeaguesList: any = ref([])
-// const LeaguesInfo: any = ref({})
-// const groupedArrays: any = ref([])
 // 联赛Ids
 const leagueIdArr: any = ref([])
 // 获取一级联赛 / 更换fuByGameType 接口
 const getFirstLeagues = async () => {
-  firstLeaguesList.value = []
+  // firstLeaguesList.value = []
   if (gameType.value) {
     // showType：FT-今日 FU-早盘 RB-滚球
     const res: any = await recommendLeague({ gameType: gameType.value, showType: 'FU' }) || {}
     if (res.code === 200 && res.data) {
-      leagueIdArr.value = []
       firstLeaguesList.value = res.data.list || []
-      // LeaguesInfo.value = res.data
-      // 地区分组
-      // groupedArrays.value = res.data.list?.reduce((acc: any, obj: any) => {
-      //   const key = obj.countryId
-      //   if (!acc[key]) {
-      //     acc[key] = []
-      //   }
-      //   acc[key].push(obj)
-      //   return acc
-      // }, {})
       // 联赛ID
+      const leagueIdObj = firstLeaguesList.value.find((item: any) => {
+        return item.leagueId === leagueId.value
+      })
+      if (!leagueIdObj) {
+        leagueId.value = ''
+        closeSlideshow.value = true
+      }
+      leagueIdArr.value = []
       firstLeaguesList.value.map((n: any) => {
         if (n.leagueId) {
           leagueIdArr.value.push(n.leagueId)
@@ -457,13 +465,7 @@ const getFirstLeagues = async () => {
     } else {
       firstLeaguesList.value = []
     }
-    const leagueIdObj = firstLeaguesList.value.find((item: any) => {
-      return item.leagueId === leagueId.value
-    })
-    if (!leagueIdObj) {
-      leagueId.value = ''
-      closeSlideshow.value = true
-    }
+
   }
 }
 // 早盘更多
@@ -684,37 +686,86 @@ const getChampionpPlayTypes = async () => {
   }
 }
 const ifUnfold = ref<any>(true)
+const areaLeaguesList = ref<any>([])
 const clickLeague = (item: any) => {
   activeCollapseNames.value = ''
   ifUnfold.value = false
   activeNames.value = '1'
   leagueArrowTitle?.value?.changeClick(false)
   championGuessing?.value?.CloseClick(false)
-  leagueId.value = item.leagueId
-  firstLeaguesList.value = LeagueByCountryInfoArr.value
-  leagueIdArr.value = []
-  firstLeaguesList.value.map((n: any) => {
-    if (n.leagueId) {
-      leagueIdArr.value.push(n.leagueId)
-    }
+  //  判断推荐联赛里面是否有地区联赛
+  const leagueIdObj = firstLeaguesList.value.find((e: any) => {
+    return e.leagueId === item.leagueId
   })
+  if (!leagueIdObj) {
+    if (!firstLeaguesList.value.length) {
+      leagueId.value = item.leagueId
+      firstLeaguesList.value = LeagueByCountryInfoArr.value
+      return
+    }
+    areaLeaguesList.value = LeagueByCountryInfoArr.value
+    areaLeagueId.value = item.leagueId
+    leagueId.value = item.leagueId
+  } else {
+    leagueId.value = item.leagueId
+    areaLeaguesList.value = []
+  }
+  // leagueIdArr.value = []
+  // firstLeaguesList.value.map((n: any) => {
+  //   if (n.leagueId) {
+  //     leagueIdArr.value.push(n.leagueId)
+  //   }
+  // })
   initData()
 }
 const closeSlideshow: any = ref(true)
 const onChangeTabs = () => {
+  ifAreaInfo.value = false
   activeCollapseNames.value = ''
-  activeNames.value = '1'
   leagueArrowTitle?.value?.changeClick(false)
   championGuessing?.value?.CloseClick(false)
   if (leagueId.value !== 'all') {
+    activeNames.value = '1'
     ifLeagueNum.value = false
     closeSlideshow.value = false
-    initData()
+    leagueId.value = leagueId.value
+    if (leagueId.value) {
+      const leagueIdObj = firstLeaguesList.value.find((item: any) => {
+        return item.leagueId === leagueId.value
+      })
+      if (leagueIdObj) {
+        areaLeaguesList.value = []
+        if (leagueIdObj.countryId) {
+          getLeagueByCountryInfo(leagueIdObj.countryId, 2)
+        } else {
+          initData()
+        }
+      }
+    } else {
+      areaLeaguesList.value = []
+      getFirstLeagues()
+    }
   }
+
   if (!leagueId.value || !ifLeagueNum.value && leagueId.value === 'all') {
     closeSlideshow.value = true
   }
 }
+const onChangeAreaTabs = () => {
+  if (ifAreaInfo.value) {
+    ifAreaInfo.value = false
+    areaLeagueId.value = ''
+    return
+  }
+  if (areaLeagueId.value) {
+    ifUnfold.value = false
+    leagueId.value = areaLeagueId.value
+    closeSlideshow.value = false
+    initData()
+  }
+
+}
+
 const clickLeagueNum = () => {
   ifUnfold.value = true
 }
@@ -725,14 +776,29 @@ const clickLeagueNum = () => {
 //   })
 // })
 onActivated(async () => {
+  gameType.value = route.params?.type || 'FT'
   groupedArrays.value = []
+  areaLeaguesList.value = []
+  firstLeaguesList.value = []
+  championListLoading.value = true
   ifLeagueNum.value = false
   closeSlideshow.value = false
   if (locationHeight.value) {
     return
   }
-  getRecommendEventsIsLoading.value = false
-  championListLoading.value = true
+  getCommonMatches()
+  const countryId = route.query?.countryId || ''
+  leagueId.value = route.query?.leagueId || ''
+  if (countryId) {
+    getLeagueByCountryInfo(countryId, 3)
+  } else {
+    getFirstLeagues()
+  }
+  getSearchCountryInfo()
+  nextTick(() => {
+    refSportsTabs.value?.setSports(gameType.value)
+  })
+  // 是否冠军赛
   const isChampion = route.query?.ischampion || ''
   if (isChampion === 'yes') {
     activeNames.value = '2'
@@ -743,18 +809,6 @@ onActivated(async () => {
     leagueArrowTitle?.value?.changeClick(false)
     championGuessing?.value?.CloseClick(false)
   }
-  const countryId = route.query?.countryId || ''
-  if (countryId) {
-    getLeagueByCountryInfo(countryId, 3)
-  } else {
-    getFirstLeagues()
-  }
-  leagueId.value = route.query?.leagueId || ''
-  getCommonMatches()
-  getSearchCountryInfo()
-  nextTick(() => {
-    refSportsTabs.value?.setSports(gameType.value)
-  })
 })
 </script>
 <style lang="scss" scoped>
