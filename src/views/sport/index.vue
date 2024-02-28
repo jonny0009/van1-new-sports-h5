@@ -300,7 +300,7 @@ const getLeagueByCountryInfo = async (countryId: any, num: any) => {
   const leagueByCountryParams: any = ref({
     countryId,
     groupId: 3,
-    showType: 'FU',
+    showType: 'FAST',
     gameType: gameType.value,
   })
   const res: any = await searchLeagueByCountryInfo(leagueByCountryParams.value) || {}
@@ -348,6 +348,7 @@ const getSearchCountryInfo = async () => {
   activeCollapseNames.value = ''
   const CountryInfoParams: any = ref({
     gameType: gameType.value,
+    showtype: 'FAST',
     page: 1,
     row: 999
   })
@@ -366,7 +367,7 @@ const getCommonMatches = async () => {
   const commonMatchesParams: any = ref({
     gradeType: 1,
     gameTypeSon: '',
-    showtype: 'FU',
+    showtype: 'FAST',
     // timeStage: 0,
     gameSort: 3,
     // dateStage: 0,
@@ -389,7 +390,7 @@ const initData = async () => {
     const leagueParames: any = ref({
       gradeType: 1,
       gameTypeSon: '',
-      showtype: 'FU',
+      showtype: 'FAST',
       timeStage: 0,
       gameSort: 3,
       dateStage: 0,
@@ -405,7 +406,7 @@ const initData = async () => {
       gradeType: 1,
       gameTypeSon: '',
       gameType: gameType.value,
-      showtype: 'FU',
+      showtype: 'FAST',
       timeStage: 0,
       gameSort: 3,
       dateStage: 0,
@@ -422,7 +423,7 @@ const initData = async () => {
       gradeType: 2,
       gameTypeSon: '',
       gameType: gameType.value,
-      showtype: 'FT',
+      showtype: 'FAST',
       timeStage: 0,
       gameSort: 3,
       dateStage: 0,
@@ -443,8 +444,8 @@ const leagueIdArr: any = ref([])
 const getFirstLeagues = async () => {
   // firstLeaguesList.value = []
   if (gameType.value) {
-    // showType：FT-今日 FU-早盘 RB-滚球
-    const res: any = await recommendLeague({ gameType: gameType.value, showType: 'FU' }) || {}
+    // showType：FT-今日 FU-早盘 RB-滚球 
+    const res: any = await recommendLeague({ gameType: gameType.value,showType:'FAST' }) || {}
     if (res.code === 200 && res.data) {
       firstLeaguesList.value = res.data.list || []
       // 联赛ID
@@ -478,7 +479,7 @@ const moreEarly = async () => {
   earlyPage.value = earlyPage.value + 1
   const earlyParames: any = ref({
     gameTypeSon: '',
-    showtype: 'FT',
+    showtype: 'FAST',
     timeStage: 0,
     gameSort: 3,
     dateStage: 0,
@@ -533,7 +534,7 @@ const moreRecommend = async () => {
   recommendPage.value = recommendPage.value + 1
   const recommendParames: any = ref({
     gameTypeSon: '',
-    showtype: 'FU',
+    showtype: 'FAST',
     timeStage: 0,
     gameSort: 3,
     dateStage: 0,
