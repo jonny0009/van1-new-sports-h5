@@ -78,7 +78,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .slideshow {
-  margin-top: 20px;
+  margin-top: 30px;
 
   :deep(.van-swipe__indicators) {
     bottom: 8px;

@@ -8,46 +8,27 @@
       公共 联赛
     -->
     <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
-      <!-- 使用切换栏组件 v-if="groupedArrays.length" -->
-      <div class="tabs-cut">
-        <van-tabs v-model:active="leagueId" :duration="0.2" shrink line-height="0" :swipe-threshold="3"
-          @change="onChangeTabs">
-          <van-tab name="all">
-            <template #title>
-              <div class="league-num tabs-cut-1" :class="ifLeagueNum ? 'league-num-1' : ''" @click="clickLeagueNum">
-                <!-- <span> {{ $t(`user.sports.${gameType}`) }}</span> -->
-                <span> {{ $t(`user.whole`) }}</span>
-                <span class="league-match-num">{{ LeaguesInfo.total || 0 }}</span>
-                <SvgIcon name="user-down" class="icon-svg-1" />
-              </div>
-            </template>
-          </van-tab>
-          <van-tab name="">
-            <template #title>
-              <TextButton class="tabs-cut-1" :text="$t('sport.recommend')" :active="!leagueId" />
-            </template>
-          </van-tab>
-          <van-tab v-for="(item, index) in firstLeaguesList" :key="index" :name="item.leagueId">
-            <template #title>
-              <ImageButton class="tabs-cut-1" :text="item.leagueName" :src="item.leagueLogo"
-                :active="leagueId === item.leagueId" type="6" :count="item.gameTypeCount || '0'"
-                :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" />
-            </template>
-          </van-tab>
-        </van-tabs>
-      </div>
-      <!-- 地区联赛 -->
-      <div v-if="areaLeaguesList.length" class="tabs-cut">
-        <van-tabs v-model:active="areaLeagueId" :duration="0.2" shrink line-height="0" :swipe-threshold="3"
-          @change="onChangeAreaTabs">
-          <van-tab v-for="(item, index) in areaLeaguesList" :key="index" :name="item.leagueId">
-            <template #title>
-              <ImageButton class="tabs-cut-1" :text="item.leagueName" :src="item.leagueLogo"
-                :active="areaLeagueId === item.leagueId" type="6" :count="item.gameTypeCount || '0'"
-                :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" />
-            </template>
-          </van-tab>
-        </van-tabs>
+      <!-- 新tab -->
+      <div class="my-scroll__content">
+        <div class="tabs-cut tabs-cut-2">
+          <div class="league-num tabs-cut-1" :class="ifLeagueNum ? 'league-num-1' : ''" @click="clickLeagueNum">
+            <span> {{ $t(`user.whole`) }}</span>
+            <span class="league-match-num">{{ LeaguesInfo.total || 0 }}</span>
+            <SvgIcon name="user-down" class="icon-svg-1" />
+          </div>
+          <TextButton class="tabs-cut-1" :text="$t('sport.recommend')" :active="!leagueId" @click="handleRecommend()" />
+          <ImageButton
+            v-for="(item, index) in firstLeaguesList.slice(0, firstLeaguesList.length > 1 ? Math.floor(firstLeaguesList.length / 2) : 1)"
+            :key="index" class="tabs-cut-1" :text="item.leagueName" :src="item.leagueLogo"
+            :active="leagueId === item.leagueId" type="6" :count="item.gameTypeCount || '0'"
+            :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" @click="handleChangeLeagueId(item)" />
+        </div>
+        <div class="tabs-cut tabs-cut-3" v-if="firstLeaguesList.length > 1">
+          <ImageButton v-for="(item, index) in firstLeaguesList.slice(Math.floor(firstLeaguesList.length / 2))"
+            :key="index" class="tabs-cut-1" :text="item.leagueName" :src="item.leagueLogo"
+            :active="leagueId === item.leagueId" type="6" :count="item.gameTypeCount || '0'"
+            :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" @click="handleChangeLeagueId(item)" />
+        </div>
       </div>
       <!-- <Loading v-if="!firstLeaguesList.length" /> -->
       <!-- 地区联赛折叠 -->
@@ -65,7 +46,6 @@
               {{ item.leagueName }}
             </div>
           </div>
-
         </van-collapse-item>
       </van-collapse>
       <!-- end==== -->
@@ -86,7 +66,6 @@
             <template v-else>
               <template v-if="recommendList.length">
                 <div class="recommend-list">
-                  <!-- <HomeMatchHandicap v-for="(item, idx) in recommendList" :key="idx" :send-params="item" /> -->
                   <div ref="newContainerRecommend">
                     <template v-for="(item, idx) in recommendList" :key="idx">
                       <van-sticky :offset-top="offsetTop" :container="newContainerRecommend" z-index="8"
@@ -191,8 +170,8 @@ import TextButton from '@/components/Button/TextButton/index.vue'
 import playTitle from '@/components/Title/playTitle/index.vue'
 // useRouter
 import { useRoute, } from 'vue-router'
-// onBeforeMount
-import { ref, watch, computed, nextTick, onMounted, onActivated } from 'vue'
+// onBeforeMount, watch,
+import { ref, computed, nextTick, onMounted, onActivated } from 'vue'
 // import router from '@/router'
 import { apiChampionpPlayTypes } from '@/api/champion'
 import { recommendLeague, commonMatches, homeCommonMatches, searchCountryInfo, searchLeagueByCountryInfo } from '@/api/home'
@@ -236,7 +215,6 @@ const championGuessing = ref<any>()
 const leagueArrowTitle = ref<any>()
 
 const leagueId: any = ref(route.query.leagueId)
-const areaLeagueId: any = ref(route.query.leagueId)
 const leagueLogo: any = ref()
 const leagueName: any = ref()
 const recommendPage: any = ref(1)
@@ -263,23 +241,6 @@ const offsetTop = computed(() => {
   return offsetTopval
 })
 
-// 选中全部
-const ifLeagueNum: any = ref(false)
-watch(() => leagueId.value, (newData, oldData) => {
-  if (newData === 'all') {
-    leagueId.value = oldData
-    ifLeagueNum.value = !ifLeagueNum.value
-    if (ifLeagueNum.value) {
-      closeSlideshow.value = false
-    }
-  }
-  if (!ifUnfold.value) {
-    ifLeagueNum.value = false
-  }
-
-}
-)
-
 onMounted(() => {
   // 初始化
   // initList()
@@ -295,7 +256,6 @@ const collapseChange = (countryId: any) => {
 }
 
 // 获取国家联赛信息
-const ifAreaInfo: any = ref(false)
 const getLeagueByCountryInfo = async (countryId: any, num: any) => {
   const leagueByCountryParams: any = ref({
     countryId,
@@ -307,16 +267,13 @@ const getLeagueByCountryInfo = async (countryId: any, num: any) => {
   if (res.code === 200 && res.data) {
     LeagueByCountryInfoArr.value = res.data || []
     if (num === 2) {
-      // areaLeaguesList.value = res.data || []
-      ifAreaInfo.value = true
-      areaLeaguesList.value = res.data.filter((item: any) => {
+      const leagueIdObj = res.data.find((e: any) => {
+        return e.leagueId === leagueId.value
+      })
+      firstLeaguesList.value = res.data.filter((item: any) => {
         return item.leagueId !== leagueId.value
       })
-      areaLeagueId.value = ''
-      initData()
-    }
-    if (num === 3) {
-      firstLeaguesList.value = res.data || []
+      firstLeaguesList.value.unshift(leagueIdObj)
       initData()
     }
 
@@ -328,12 +285,11 @@ const getLeagueByCountryInfo = async (countryId: any, num: any) => {
 const onRefresh = () => {
   closeSlideshow.value = false
   isRefreshLoading.value = false
-  ifLeagueNum.value = false
+  // ifLeagueNum.value = false
   initList()
 }
 // 初始化方法
 const initList = () => {
-  areaLeaguesList.value = []
   leagueId.value = ''
   recommendPage.value = 1
   earlyPage.value = 1
@@ -445,7 +401,7 @@ const getFirstLeagues = async () => {
   // firstLeaguesList.value = []
   if (gameType.value) {
     // showType：FT-今日 FU-早盘 RB-滚球 
-    const res: any = await recommendLeague({ gameType: gameType.value,showType:'FAST' }) || {}
+    const res: any = await recommendLeague({ gameType: gameType.value, showType: 'FAST' }) || {}
     if (res.code === 200 && res.data) {
       firstLeaguesList.value = res.data.list || []
       // 联赛ID
@@ -548,7 +504,6 @@ const moreRecommend = async () => {
   isLoadingRecommend.value = true
   const res: any = await commonMatches(recommendParames.value) || {}
   if (res.code === 200 && res.data?.matchList?.baseData && res.data?.matchList?.baseData.length) {
-    // recommendList.value.push(...res.data.matchList.baseData)
     recommendListArr.value.push(...res.data.matchList.baseData)
     const listObj: any = {}
     const listArr: any = []
@@ -629,7 +584,6 @@ const getRecommendEvents = async (params: any) => {
       }
     } else if (params.gradeType === 2) {
       if (listFlag.length) {
-        // earlyList.value = listFlag
         earlyListArr.value = listFlag
         const listObj: any = {}
         const listArr: any = []
@@ -686,100 +640,51 @@ const getChampionpPlayTypes = async () => {
     championList.value = []
   }
 }
-const ifUnfold = ref<any>(true)
-const areaLeaguesList = ref<any>([])
 const clickLeague = (item: any) => {
   activeCollapseNames.value = ''
-  ifUnfold.value = false
-  activeNames.value = '1'
+  firstLeaguesList.value = []
   leagueArrowTitle?.value?.changeClick(false)
   championGuessing?.value?.CloseClick(false)
   //  判断推荐联赛里面是否有地区联赛
-  const leagueIdObj = firstLeaguesList.value.find((e: any) => {
+  const leagueIdObj = LeagueByCountryInfoArr.value.find((e: any) => {
     return e.leagueId === item.leagueId
   })
-  if (!leagueIdObj) {
-    if (!firstLeaguesList.value.length) {
-      leagueId.value = item.leagueId
-      firstLeaguesList.value = LeagueByCountryInfoArr.value
-      return
-    }
-    areaLeaguesList.value = LeagueByCountryInfoArr.value
-    areaLeagueId.value = item.leagueId
-    leagueId.value = item.leagueId
-  } else {
-    leagueId.value = item.leagueId
-    areaLeaguesList.value = []
-  }
-  // leagueIdArr.value = []
-  // firstLeaguesList.value.map((n: any) => {
-  //   if (n.leagueId) {
-  //     leagueIdArr.value.push(n.leagueId)
-  //   }
-  // })
+  leagueId.value = item.leagueId
+  firstLeaguesList.value = LeagueByCountryInfoArr.value.filter((i: any) => {
+    return i.leagueId !== item.leagueId
+  })
+  firstLeaguesList.value.unshift(leagueIdObj)
+
   initData()
 }
+
 const closeSlideshow: any = ref(true)
-const onChangeTabs = () => {
-  ifAreaInfo.value = false
-  activeCollapseNames.value = ''
+const ifLeagueNum: any = ref(false)
+const clickLeagueNum = () => {
+  ifLeagueNum.value = !ifLeagueNum.value
+  closeSlideshow.value = false
+}
+const handleRecommend = () => {
+  leagueId.value = ''
+  closeSlideshow.value = true
+  getFirstLeagues()
+}
+const handleChangeLeagueId = (item: any) => {
+  closeSlideshow.value = false
+  activeNames.value = '1'
   leagueArrowTitle?.value?.changeClick(false)
   championGuessing?.value?.CloseClick(false)
-  if (leagueId.value !== 'all') {
-    activeNames.value = '1'
-    ifLeagueNum.value = false
-    closeSlideshow.value = false
-    leagueId.value = leagueId.value
-    if (leagueId.value) {
-      const leagueIdObj = firstLeaguesList.value.find((item: any) => {
-        return item.leagueId === leagueId.value
-      })
-      if (leagueIdObj) {
-        areaLeaguesList.value = []
-        if (leagueIdObj.countryId) {
-          getLeagueByCountryInfo(leagueIdObj.countryId, 2)
-        } else {
-          initData()
-        }
-      }
-    } else {
-      areaLeaguesList.value = []
-      getFirstLeagues()
-    }
-  }
-
-  if (!leagueId.value || !ifLeagueNum.value && leagueId.value === 'all') {
-    closeSlideshow.value = true
-  }
-}
-const onChangeAreaTabs = () => {
-  if (ifAreaInfo.value) {
-    ifAreaInfo.value = false
-    areaLeagueId.value = ''
+  leagueId.value = item.leagueId
+  if (item.countryId) {
+    getLeagueByCountryInfo(item.countryId, 2)
     return
   }
-  if (areaLeagueId.value) {
-    ifUnfold.value = false
-    leagueId.value = areaLeagueId.value
-    closeSlideshow.value = false
-    initData()
-  }
-
+  initData()
 }
 
-const clickLeagueNum = () => {
-  ifUnfold.value = true
-}
-// onBeforeMount(async () => {
-//   getFirstLeagues()
-//   nextTick(() => {
-//     refSportsTabs.value?.setSports(gameType.value)
-//   })
-// })
 onActivated(async () => {
   gameType.value = route.params?.type || 'FT'
   groupedArrays.value = []
-  areaLeaguesList.value = []
   firstLeaguesList.value = []
   championListLoading.value = true
   ifLeagueNum.value = false
@@ -791,7 +696,7 @@ onActivated(async () => {
   const countryId = route.query?.countryId || ''
   leagueId.value = route.query?.leagueId || ''
   if (countryId) {
-    getLeagueByCountryInfo(countryId, 3)
+    getLeagueByCountryInfo(countryId, 2)
   } else {
     getFirstLeagues()
   }
@@ -821,16 +726,18 @@ onActivated(async () => {
   }
 
   .my-scroll__content {
-    margin-top: -10px;
     width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
 
+
     &::-webkit-scrollbar {
       height: 0;
       display: none;
     }
+
+
 
     .betting-sport-nav {
       margin-top: 26px;
@@ -899,10 +806,24 @@ onActivated(async () => {
     }
 
     .tabs-cut-1 {
-      margin-left: -30px;
+      // margin-left: -30px;
       margin-right: 10px;
     }
   }
+
+  .tabs-cut-2 {
+    margin-top: 20px;
+    display: flex;
+    margin-bottom: 2px;
+
+  }
+
+  .tabs-cut-3 {
+    margin-top: 26px;
+    margin-bottom: 10px;
+    display: flex;
+  }
+
 
   // 地区联赛折叠
   .van-collapse-item {
