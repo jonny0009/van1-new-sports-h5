@@ -326,7 +326,7 @@ const bettingModule: Module<Betting, any> = {
               iorChange = 'down'
             }
           }
-          if (letBallMap.includes(playType) && oldRatio * 1 !== ratio * 1 && !autoOdd) {
+          if (letBallMap.includes(playType) && Math.abs(oldRatio * 1) !== Math.abs(ratio * 1) && !autoOdd) {
             if (oldRatio * 1 > ratio) {
               ratioChange = 'up'
             } else {
