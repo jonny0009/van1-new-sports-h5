@@ -15,6 +15,7 @@
         :title-active-color="ifBLue?'#0E3D66': '#1F2630'"
         line-width="40px"
         swipe-threshold="2"
+        animated
         :duration="0.3"
       >
         <van-tab :title="$t('user.BettingHistory')">
