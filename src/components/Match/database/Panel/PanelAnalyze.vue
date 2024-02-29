@@ -1,15 +1,26 @@
 <template>
   <div class="analyze">
     <van-swipe indicator-color="#9417D5">
-      <van-swipe-item v-for="item in list" :key="item">
+
+      <van-swipe-item
+        v-for="item in list"
+        :key="item"
+      >
+
         <div class="analyze-header">
           <div class="host">
-            <img src="@/assets/images/live/sub_d.png" alt="" />
+            <img
+              src="@/assets/images/live/sub_d.png"
+              alt=""
+            />
             <span>{{ matchData.homeTeamShort || matchData.homeTeam }}</span>
           </div>
           <div class="away">
             <span>{{ matchData.awayTeamShort || matchData.awayTeam }}</span>
-            <img src="@/assets/images/live/sub_u.png" alt="" />
+            <img
+              src="@/assets/images/live/sub_u.png"
+              alt=""
+            />
           </div>
         </div>
         <div class="analyze-item">
@@ -19,18 +30,18 @@
               <div class="percent">{{ calcRatioPer(item.ratios[0].betCountRate) }}%</div>
               <div class="bar"></div>
               <div class="value">
-                <span>1</span>
+                <span>{{ item.ratios[0].betCount }}</span>
               </div>
             </section>
             <section
-              class="draw"
               v-if="item.ratios.length === 3"
+              class="draw"
               :style="{ flex: `${item.ratios[1].betCountRate * 100} 1 0%` }"
             >
               <div class="percent">{{ calcRatioPer(item.ratios[1].betCountRate) }}%</div>
               <div class="bar"></div>
               <div class="value">
-                <span>0</span>
+                <span>{{ item.ratios[1].betCount }}</span>
               </div>
             </section>
             <section
@@ -40,7 +51,7 @@
               <div class="percent">{{ calcRatioPer(item.ratios[item.ratios.length - 1].betCountRate) }}%</div>
               <div class="bar"></div>
               <div class="value">
-                <span>3</span>
+                <span>{{ item.ratios[item.ratios.length - 1].betCount }}</span>
               </div>
             </section>
           </div>
@@ -52,18 +63,18 @@
               <div class="percent">{{ calcRatioPer(item.ratios[0].betGoldRate) }}%</div>
               <div class="bar"></div>
               <div class="value">
-                <span>1</span>
+                <Currency /><span v-points="item.ratios[0].betGold"></span>
               </div>
             </section>
             <section
-              class="draw"
               v-if="item.ratios.length === 3"
+              class="draw"
               :style="{ flex: `${item.ratios[1].betGoldRate * 100} 1 0%` }"
             >
               <div class="percent">{{ calcRatioPer(item.ratios[1].betGoldRate) }}%</div>
               <div class="bar"></div>
               <div class="value">
-                <span>0</span>
+                <Currency /><span v-points="item.ratios[1].betGold"></span>
               </div>
             </section>
             <section
@@ -73,7 +84,7 @@
               <div class="percent">{{ calcRatioPer(item.ratios[item.ratios.length - 1].betGoldRate) }}%</div>
               <div class="bar"></div>
               <div class="value">
-                <span>3</span>
+                <Currency /><span v-points="item.ratios[item.ratios.length - 1].betGold"></span>
               </div>
             </section>
           </div>
@@ -86,6 +97,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import playName from '@/utils/playName'
+
+import Currency from '@/components/Currency/index.vue'
+
 const props = defineProps({
   data: {
     type: Array as any,
@@ -104,21 +118,25 @@ const list = computed(() => {
   const session = gameType === 'BK' ? '0' : ''
   plays.forEach((playType: any) => {
     const playList = props.data[playType]
+
     if (playList?.length) {
       const playData = window.aiRatioType[playType]
       const sorts = playData.sort
       const ratios = sorts.map((ratioType: any) => {
+        // debugger
         const find = playList.find((play: any) => play.ratioType === ratioType)
         if (find) {
           return find
         }
         return {
+          ...playList[0],
           betCountRate: 0,
           betGoldRate: 0,
           playType,
           ratioType
         }
       })
+      console.log(ratios, '----')
       showList.push({
         name: playName({ gameType, playType, session }),
         ratios
