@@ -1,12 +1,16 @@
 <template>
   <div class="app-main">
     <!-- :include="keepAlives" -->
-    <router-view v-slot="{ Component , route}">
-      <keep-alive>
-        <component :is="getComponent(Component, route)" v-if="$route.meta.KeepAlive" :key="route.path" />
-      </keep-alive>
-      <component :is="getComponent(Component, route)" v-if="!$route.meta.KeepAlive && !$route.meta.key" :key="route.path" />
-      <component :is="getComponent(Component, route)" v-if="!$route.meta.KeepAlive && $route.meta.key" :key="$route.meta.key" />
+    <router-view v-slot="{ Component, route }">
+      <transition name="fade" mode="out-in">
+        <keep-alive>
+          <component :is="getComponent(Component, route)" v-if="$route.meta.KeepAlive" :key="route.path" />
+        </keep-alive>
+      </transition>
+      <component :is="getComponent(Component, route)" v-if="!$route.meta.KeepAlive && !$route.meta.key"
+        :key="route.path" />
+      <component :is="getComponent(Component, route)" v-if="!$route.meta.KeepAlive && $route.meta.key"
+        :key="$route.meta.key" />
     </router-view>
   </div>
 </template>
@@ -19,19 +23,48 @@ export default defineComponent({
 <script setup lang="ts">
 // import { computed } from 'vue'
 // const keepAlives = computed(() => [])
-const getComponent = (Component:any, route: any) => {
+const getComponent = (Component: any, route: any) => {
   if (!Component.type.name) {
     Component.type.name = route.name
   }
   return Component
 }
 // 缓存触发组件
-onActivated(() => {})
+onActivated(() => { })
 
 </script>
 <style scoped>
 .app-main {
   position: relative;
   overflow: hidden;
+}
+
+.fade-enter-from {
+  /* 进入时的透明度为0 和 刚开始进入时的原始位置通过active透明度渐渐变为1 */
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.fade-enter-to {
+  /*定义进入完成后的位置 和 透明度 */
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+.fade-leave-active,
+.fade-enter-active {
+  transition: all 0.1s ease-out;
+}
+
+.fade-leave-from {
+  /* 页面离开时一开始的css样式,离开后为leave-to，经过active渐渐透明 */
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+.fade-leave-to {
+  /* 这个是离开后的透明度通过下面的active阶段渐渐变为0 */
+  transform: translateX(100%);
+  opacity: 0;
 }
 </style>

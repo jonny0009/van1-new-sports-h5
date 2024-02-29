@@ -641,6 +641,7 @@ const getChampionpPlayTypes = async () => {
   }
 }
 const clickLeague = (item: any) => {
+  if (!item.gameTypeCount) return
   activeCollapseNames.value = ''
   firstLeaguesList.value = []
   leagueArrowTitle?.value?.changeClick(false)
@@ -670,11 +671,14 @@ const handleRecommend = () => {
   getFirstLeagues()
 }
 const handleChangeLeagueId = (item: any) => {
+  if (!item.gameTypeCount) return
   closeSlideshow.value = false
   activeNames.value = '1'
   leagueArrowTitle?.value?.changeClick(false)
   championGuessing?.value?.CloseClick(false)
   leagueId.value = item.leagueId
+  
+  
   if (item.countryId) {
     getLeagueByCountryInfo(item.countryId, 2)
     return
