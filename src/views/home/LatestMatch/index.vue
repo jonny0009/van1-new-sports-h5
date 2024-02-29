@@ -88,6 +88,8 @@ const getRecommendEvents = async (gameType: any = 'FT') => {
     gradeType: 2,
     gameType: gameType,
     filterLeagueIds: props.leagueIdArr.join(),
+    page: 1,
+    pageSize:10
     // startDate: dateUtil().format('YYYY-MM-DD') + ' 00:00:00',
     // endDate: dateUtil().add(1, 'day').format('YYYY-MM-DD') + ' 23:59:59'
   }
