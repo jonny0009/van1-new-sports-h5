@@ -64,6 +64,7 @@ const navList = reactive([
 ])
 const onNavClick = (path: string) => {
   router.replace(`/match/${paramsId.value}/${path}`)
+  getMatcheInfo()
 }
 
 const matchInfo: Ref<any> = ref({})
@@ -104,11 +105,10 @@ const showChat = ref(false)
 let intervalTimer: any = null
 const startInterval = () => {
   closeInterval()
-  intervalTimer = setInterval(() => {
-    getMatcheInfo()
-    // 切换投注不显示问题
-    store.commit('match/SET_NEED_TIMER', true)
-  }, 5000)
+  // intervalTimer = setInterval(() => {
+  //   getMatcheInfo()
+  //   store.commit('match/SET_NEED_TIMER', true)
+  // }, 10000)
 }
 const closeInterval = () => {
   if (intervalTimer) {
@@ -121,11 +121,11 @@ const closeInterval = () => {
 onBeforeMount(() => {
   getMatcheInfo()
   getExtendInfo()
-  startInterval()
+  // startInterval()
 })
 
 onUnmounted(() => {
-  closeInterval()
+  // closeInterval()
 })
 
 watch(
