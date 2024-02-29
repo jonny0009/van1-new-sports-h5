@@ -85,7 +85,7 @@ const getMatcheInfo = async (toggle: boolean = true) => {
   const gidm = route.params['id']
   const res: any = await matcheInfo({ gidm })
   matchInfo.value = res.data || {}
-  if (res.code == 200) {
+  if (res.code === 200) {
     playBetList.value = await getPlayGroupType(matchInfo.value)
     isLoading.value = false
   }
@@ -93,7 +93,7 @@ const getMatcheInfo = async (toggle: boolean = true) => {
 
 const gotoLive = () => {
   const { showtype, gidm } = matchInfo.value
-  if (showtype == 'RB') {
+  if (showtype === 'RB') {
     router.push(`/match/${gidm}`)
   }
 }
