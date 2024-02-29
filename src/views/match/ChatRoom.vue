@@ -2,18 +2,44 @@
   <van-popup
     v-model:show="modelShow"
     class="chat"
-    :class="{ 'has-bet': showFixedBet }"
+    :class="{ 'has-bet': showFixedBet , 'fh': arrow === 2}"
     position="bottom"
     :overlay="false"
     :close-on-click-overlay="true"
+    close-icon=""
     round
   >
     <div class="chat-main">
-      <div class="close-down">
-        <img src="@/assets/images/live/down_round.png" @click="modelShow = false" />
+      <div class="close">
+        <img
+          src="@/assets/images/live/close@2x.png"
+          @click="modelShow = false"
+        />
       </div>
 
-      <div ref="chatRef" class="chat-main__wrapper">
+      <div
+        v-if="arrow === 1"
+        class="close-down"
+      >
+        <img
+          src="@/assets/images/live/up_round.png"
+          @click="handlerClick(2)"
+        />
+      </div>
+      <div
+        v-if="arrow === 2"
+        class="close-down"
+      >
+        <img
+          src="@/assets/images/live/down_round.png"
+          @click="handlerClick(1)"
+        />
+      </div>
+
+      <div
+        ref="chatRef"
+        class="chat-main__wrapper"
+      >
         <div class="item">
           <div class="item-avatar">
             <SvgIcon name="bot" />
@@ -22,9 +48,16 @@
           <div class="item-cont">{{ $t('live.chatSys') }}</div>
         </div>
 
-        <div v-for="item in chatMessageList" :key="item.msgId" class="item">
+        <div
+          v-for="item in chatMessageList"
+          :key="item.msgId"
+          class="item"
+        >
           <div class="item-avatar">
-            <img v-img="item.headImg" :type="3" />
+            <img
+              v-img="item.headImg"
+              :type="3"
+            />
           </div>
           <div class="item-name">{{ item.nickName }}<em>:</em></div>
           <div class="item-cont">{{ item.content }}</div>
@@ -32,7 +65,10 @@
       </div>
 
       <div class="chat-main__form">
-        <van-form submit-on-enter @submit="onSend">
+        <van-form
+          submit-on-enter
+          @submit="onSend"
+        >
           <van-field
             v-model="msgInput"
             autocomplete="off"
@@ -40,10 +76,16 @@
             :disabled="disabledField"
             :maxlength="50"
           />
-          <button native-type="submit" hidden />
+          <button
+            native-type="submit"
+            hidden
+          />
         </van-form>
         <div class="action">
-          <van-button :disabled="disabledSend" @click="onSend">{{ $t('live.send') }}</van-button>
+          <van-button
+            :disabled="disabledSend"
+            @click="onSend"
+          >{{ $t('live.send') }}</van-button>
         </div>
       </div>
     </div>
@@ -206,6 +248,10 @@ const onSend = () => {
   msgInput.value = ''
 }
 
+const arrow: Ref<any> = ref(1)
+const handlerClick = (val: number) => {
+  arrow.value = val
+}
 // const msgInputRef = ref()
 // const onMsgFocus = () => {
 //   const ele: any = msgInputRef.value.$el
@@ -216,8 +262,7 @@ const onSend = () => {
 <style lang="scss" scoped>
 .chat {
   overflow: hidden;
-  // height: 70%;
-  height: calc(100% - 96px - 280px);
+  height: 50%;
   box-shadow: 0 -8px 20px 0 rgba(0, 0, 0, 0.1);
   &.has-bet {
     padding-bottom: 96px;
@@ -225,12 +270,26 @@ const onSend = () => {
   &.video {
     height: calc(100% - 96px - 420px);
   }
+
+  &.fh {
+    height: calc(100% - 96px - 280px);
+  }
 }
 .chat-main {
   position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
+  .close {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+    z-index: 15;
+    img {
+      width: 21px;
+      height: 21px;
+    }
+  }
   .close-down {
     position: absolute;
     left: 0;
