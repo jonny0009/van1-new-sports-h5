@@ -6,7 +6,6 @@
     position="bottom"
     :overlay="false"
     :close-on-click-overlay="true"
-    close-icon=""
     round
   >
     <div class="chat-main">
@@ -205,7 +204,6 @@ const getSubscribe = async () => {
   const topic = `/topic/1/${roomNo}`
   websocket.subscribe(topic, (greeting: any) => {
     const body = JSON.parse(greeting.body)
-    console.log(body, '--')
     if (body && body.action === 1000) {
       const [item] = body.data
       handlerMessage(item)
@@ -262,17 +260,14 @@ const handlerClick = (val: number) => {
 <style lang="scss" scoped>
 .chat {
   overflow: hidden;
-  height: 50%;
+  height: 34%;
   box-shadow: 0 -8px 20px 0 rgba(0, 0, 0, 0.1);
   &.has-bet {
     padding-bottom: 96px;
   }
-  &.video {
-    height: calc(100% - 96px - 420px);
-  }
 
   &.fh {
-    height: calc(100% - 96px - 280px);
+    height: 52.8%;
   }
 }
 .chat-main {
