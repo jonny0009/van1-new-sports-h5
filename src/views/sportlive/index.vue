@@ -1,33 +1,35 @@
 <template>
-  <swipeLive class="mt10" />
-  <div class="sportlive">
-    <div v-if="gameTypeList.length" class="sportlive-Match-Tabs">
-      <TextButton :text="$t('sport.all')" :active="!gameType" @click="clickGameType({})" />
+  <div>
+    <swipeLive class="mt10" />
+    <div class="sportlive">
+      <div v-if="gameTypeList.length" class="sportlive-Match-Tabs">
+        <TextButton :text="$t('sport.all')" :active="!gameType" @click="clickGameType({})" />
 
-      <SportsButton v-for="(item, idx) in gameTypeList" :key="idx" :text="item.gameType"
-        :active="gameType === item.gameType" :count="item.count" show-count @click="clickGameType(item)" />
-    </div>
-  </div>
-  <div class="sportlive">
-    <Loading v-if="!isLoading" />
-    <template v-else>
-      <!-- <MatchLive v-for="(item, idx) in commonMatchesList" :key="idx" :send-params="item" :tabType="'RB'"/> -->
-      <div ref="newContainer">
-        <template v-for="(item, idx) in commonMatchesList" :key="idx">
-          <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
-            <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
-          </van-sticky>
-          <MatchLive :play-title-toggle="false" :send-params="item" :tabType="'RB'" :class="{ 'mt10': idx !== 0 }" />
-        </template>
+        <SportsButton v-for="(item, idx) in gameTypeList" :key="idx" :text="item.gameType"
+          :active="gameType === item.gameType" :count="item.count" show-count @click="clickGameType(item)" />
       </div>
-      <HomeEmpty v-if="!commonMatchesList.length"></HomeEmpty>
-    </template>
-    <div v-if="commonMatchesList.length" class="Button-MatchMore mt10" @click="noMoreclick">
-      <span>
-        {{ $t('live.noMore') }}
-      </span>
     </div>
-    <FooterHeight />
+    <div class="sportlive">
+      <Loading v-if="!isLoading" />
+      <template v-else>
+        <!-- <MatchLive v-for="(item, idx) in commonMatchesList" :key="idx" :send-params="item" :tabType="'RB'"/> -->
+        <div ref="newContainer">
+          <template v-for="(item, idx) in commonMatchesList" :key="idx">
+            <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
+              <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
+            </van-sticky>
+            <MatchLive :play-title-toggle="false" :send-params="item" :tabType="'RB'" :class="{ 'mt10': idx !== 0 }" />
+          </template>
+        </div>
+        <HomeEmpty v-if="!commonMatchesList.length"></HomeEmpty>
+      </template>
+      <div v-if="commonMatchesList.length" class="Button-MatchMore mt10" @click="noMoreclick">
+        <span>
+          {{ $t('live.noMore') }}
+        </span>
+      </div>
+      <FooterHeight />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
