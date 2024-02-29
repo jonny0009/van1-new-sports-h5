@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <ChatRoom v-model:show="showChat" :class="{ 'video': !videoError }" />
+    <ChatRoom v-model:show="showChat" />
   </div>
 
 </template>
@@ -65,6 +65,7 @@ const navList = reactive([
 const onNavClick = (path: string) => {
   router.replace(`/match/${paramsId.value}/${path}`)
   getMatchInfo()
+  store.commit('match/SET_NEED_TIMER', true)
 }
 
 const matchInfo: Ref<any> = ref({})
@@ -127,6 +128,7 @@ onBeforeMount(() => {
 
 onUnmounted(() => {
   // closeInterval()
+  store.commit('match/SET_NEED_TIMER', false)
 })
 
 watch(
