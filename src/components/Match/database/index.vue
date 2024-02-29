@@ -76,7 +76,7 @@ const fetchData = async () => {
 // 文字概况是有足球有
 // 统计数据 只有 足球篮球有
 
-const tabActive = ref(1)
+const tabActive = ref(-1)
 const components = [TabSummary, TabBattle, TabRecord, TabEvents]
 
 const onChangeTabs = () => {}
