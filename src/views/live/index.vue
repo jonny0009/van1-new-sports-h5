@@ -26,7 +26,7 @@
             @load="onLoad"
           >
             <div class="grid-wrapper">
-              <div class="flex-item" v-for="item in list" :key="item.gidm">
+              <div v-for="item in list" :key="item.gidm" class="flex-item">
                 <LiveItem :item="item" @click="onItemClick(item)" />
               </div>
             </div>
@@ -73,19 +73,19 @@ const onLoad = async () => {
     page: page,
     pageSize: 20
   }
-  if (navActive.value == 'RB') {
+  if (navActive.value === 'RB') {
     params.rbType = 1
   } else {
     params.gameType = navActive.value
   }
   const res: any = await anchorLiveList(params)
   const data = res.data
-  if (res.code == 200) {
+  if (res.code === 200) {
     data.list.forEach((item: any) => {
       list.value.push(item)
     })
     loading.value = false
-    finished.value = list.value.length == data.total
+    finished.value = list.value.length === data.total
   } else {
     finished.value = true
   }

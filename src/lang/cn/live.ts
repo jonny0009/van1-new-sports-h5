@@ -66,5 +66,6 @@ export default {
   win: '胜',
   tie: '平',
   lose: '负',
-  point: '积分'
+  point: '积分',
+  nextAM: '下一场直播将于<span class="time-num">{num}</span>开播'
 }
