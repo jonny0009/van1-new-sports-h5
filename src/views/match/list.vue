@@ -1,5 +1,9 @@
 <template>
-  <div class="live-page" :class="{ 'has-bet': showFixedBet }">
+  <div
+    class="live-page"
+    :class="{ 'has-bet': showFixedBet }"
+  >
+
     <van-tabs
       v-model:active="navActive"
       swipeable
@@ -9,7 +13,11 @@
       line-height="0"
       @change="onChangeTabs"
     >
-      <van-tab v-for="(nav, index) in navList" :key="index" :name="nav.type">
+      <van-tab
+        v-for="(nav, index) in navList"
+        :key="index"
+        :name="nav.type"
+      >
         <template #title>
           <div class="tab-title">
             <SvgIcon :name="nav.iconName" />
@@ -17,7 +25,23 @@
           </div>
         </template>
 
-        <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+        <div v-if="list.length === 0 && time > 0" class="next">
+          <div class="img">
+            <img
+              src="~@/assets/images/live/no_an_ma.png"
+              alt=""
+            >
+          </div>
+          <p v-html="$t('live.nextAM',{num: countTime})">
+          </p>
+        </div>
+
+        <van-pull-refresh
+          v-if="time <= 0"
+          v-model="refreshing"
+          @refresh="onRefresh"
+        >
+
           <EmptyData v-if="finished && list.length === 0" />
           <van-list
             v-model:loading="loading"
@@ -26,8 +50,15 @@
             @load="onLoad"
           >
             <div class="grid-wrapper">
-              <div class="flex-item" v-for="item in list" :key="item.gidm">
-                <ListItem :item="item" @click="onItemClick(item)" />
+              <div
+                v-for="item in list"
+                :key="item.gidm"
+                class="flex-item"
+              >
+                <ListItem
+                  :item="item"
+                  @click="onItemClick(item)"
+                />
               </div>
             </div>
           </van-list>
@@ -40,7 +71,7 @@
 <script lang="ts" setup>
 import { reactive, ref, Ref, onMounted, computed } from 'vue'
 import ListItem from './ListItem.vue'
-import { anchorLiveList } from '@/api/live'
+import { anchorLiveList, nextAnchorMatchDate } from '@/api/live'
 import router from '@/router'
 import { useI18n } from 'vue-i18n'
 import store from '@/store'
@@ -58,6 +89,9 @@ const navList = reactive([
 ])
 const navActive = ref('RB')
 
+const time = ref(-1)
+const countTime = ref('')
+
 let page: number = 0
 const list: Ref<any[]> = ref([])
 const loading = ref(false)
@@ -73,19 +107,35 @@ const onLoad = async () => {
     page: page,
     pageSize: 20
   }
-  if (navActive.value == 'RB') {
+  if (navActive.value === 'RB') {
     params.rbType = 1
   } else {
     params.gameType = navActive.value
   }
   const res: any = await anchorLiveList(params)
   const data = res.data
-  if (res.code == 200) {
+  loading.value = false
+
+  if (res.code === 200) {
+    if (data.list.length === 0) {
+      const res1: any = await nextAnchorMatchDate()
+      if (res1.code === 200 && res1.data) {
+        finished.value = true
+        time.value = res1.data - new Date().getTime()
+        setInterval(() => {
+          time.value -= 1
+          if (time.value <= 0) {
+            onRefresh()
+          }
+          countDown()
+        }, 1000)
+      }
+      return
+    }
     data.list.forEach((item: any) => {
       list.value.push(item)
     })
-    loading.value = false
-    finished.value = list.value.length == data.total
+    finished.value = list.value.length === data.total
   } else {
     finished.value = true
   }
@@ -105,6 +155,21 @@ const onChangeTabs = () => {
 
 const onItemClick = (item: any) => {
   router.push(`/match/${item.gidm}`)
+}
+
+const countDown = () => {
+  function addZero(i: any) {
+    return i < 10 ? '0' + i : i
+  }
+  const leftTime = time.value
+  let hour = parseInt((leftTime / (60 * 60)) % 24)
+  let minute = parseInt((leftTime / 60) % 60)
+  let second = parseInt(leftTime % 60)
+
+  hour = addZero(hour)
+  minute = addZero(minute)
+  second = addZero(second)
+  countTime.value = hour + ':' + minute + ':' + second
 }
 </script>
 
@@ -170,6 +235,21 @@ const onItemClick = (item: any) => {
 
   .van-list :deep(.van-list__finished-text) {
     min-height: var(--van-list-text-line-height);
+  }
+}
+.next {
+  text-align: center;
+  padding-top: 150px;
+  img {
+    width: 226px;
+    height: 223px;
+  }
+  p {
+    padding-top: 30px;
+    color: var(--van-list-text-color);
+  }
+  :deep(.time-num) {
+    color: var(--color-user-pop-up-text-color-2);
   }
 }
 </style>

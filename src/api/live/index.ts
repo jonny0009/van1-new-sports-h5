@@ -175,3 +175,10 @@ export const betAnalyzeApi = (params: any) => {
     params
   })
 }
+
+export const nextAnchorMatchDate = () => {
+  return request({
+    url: '/ai/mobile/anchor/recentAnchorGameDate',
+    method: 'get'
+  })
+}
