@@ -333,4 +333,8 @@ const clickSportPage = (item: any) => {
 
     }
   }
-}</style>
+}
+:deep(.van-tabs__line){
+ display: none;
+}
+</style>

@@ -4,19 +4,13 @@
     <GlobalRefresh>
       <GlobalSportsTabsView v-if="$route.meta.showSportsTabsView" />
       <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pb5 pt15" />
-      <AppMain />
+      <AppMain ref="appContent" />
     </GlobalRefresh>
     <!-- <GlobalFooter /> -->
     <BettingSlip v-if="betShowState && !$route.meta.hideGlobalBottomBet" ref="bettingSlip" />
-    <van-back-top
-      v-if="backTopShow"
-      bottom="100"
-      right="20"
-      class="GlobalTop"
-      :class="{
-        showBettingSlip: betShowState
-      }"
-    >
+    <van-back-top v-if="backTopShow" bottom="100" right="20" class="GlobalTop" :class="{
+      showBettingSlip: betShowState
+    }">
       <van-icon name="down" />
     </van-back-top>
   </div>
@@ -32,18 +26,36 @@ import BettingSlip from '@/components/BettingSlip/index.vue'
 import { useRouter, useRoute } from 'vue-router'
 import { computed, ref, watch, onMounted, onActivated, onUpdated, nextTick } from 'vue'
 import store from '@/store'
+const appContent = ref()
+
 
 const route = useRoute()
 const { currentRoute } = useRouter()
 const unShow: any = ref(['game'])
 const heightNumY: any = ref(0)
+const indexNum: any = ref(0)
 const betShowState: any = ref(!unShow.value.includes(route.name))
 
 const scrollNum = computed(() => store.state.user.scrollNumY)
 const locationHeight = computed(() => store.state.user.locationHeight)
 const KeepAlive = computed(() => currentRoute.value.meta.KeepAlive)
+const pageIndex: any = computed(() => currentRoute.value.meta.index)
 
 const bettingSlip = ref()
+
+watch(
+  () => route.path,
+  (to) => {
+    console.log('path', to);
+    if (pageIndex.value > indexNum.value) {
+      appContent.value.transitionName = 'fade-right'
+      indexNum.value = pageIndex.value
+    } else {
+      appContent.value.transitionName = 'fade-left'
+      indexNum.value = pageIndex.value
+    }
+  }
+);
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
@@ -59,7 +71,7 @@ onUpdated(() => {
 })
 
 // 缓存
-onActivated(() => {})
+onActivated(() => { })
 
 // 坐标
 const handleScroll = () => {

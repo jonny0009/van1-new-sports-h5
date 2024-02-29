@@ -16,7 +16,7 @@
         line-width="40px"
         swipe-threshold="2"
         animated
-        :duration="0.1"
+        :duration="0.2"
       >
         <van-tab :title="$t('user.BettingHistory')">
           <dataList ref="childRefA" @valueChange="setStatus" @timeChange="setDate"></dataList>
