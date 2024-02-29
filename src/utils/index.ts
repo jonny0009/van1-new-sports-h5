@@ -150,21 +150,22 @@ export const setTheme = () => {
   document.documentElement.dataset.theme = getTheme() || ''
 }
 
-// 获取默认语言
+// 获取默认语言,繁体默认简体中文,泰语隐藏,本地没有
 export const getBrowserLanguage = () => {
   const searchParams = getURLSearchParams()
   if (window.navigator && window.navigator.language) {
     const obj: any = {
       'zh-cn': 'zh-cn',
-      'zh-tw': 'zh-tw',
+      'zh-tw': 'zh-cn',
       'en-us': 'en-us',
       'vi-vn': 'vi-vn',
-      'th-th': 'th-th',
+      // 'th-th': 'th-th',
       'ko-kr': 'ko-kr',
       'pt-pt': 'pt-pt',
+      cn: 'zh-cn',
       en: 'en-us',
       vi: 'vi-vn',
-      th: 'th-th',
+      // th: 'th-th',
       ko: 'ko-kr',
       pt: 'pt-pt'
     }
