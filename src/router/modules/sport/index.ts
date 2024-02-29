@@ -11,7 +11,8 @@ export default {
       meta: {
         showSportsTabsView: true,
         // showRefresh: true,
-        KeepAlive:true
+        KeepAlive: true,
+        index:6
       }
     }
   ]

@@ -97,7 +97,8 @@ export const constantRoutes: Array<any> = [
           showSportsTabsView: true,
           showBarTabsView: true,
           // showRefresh: true,
-          KeepAlive:true
+          KeepAlive: true,
+          index:1
         }
       }
     ]
