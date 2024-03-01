@@ -26,6 +26,13 @@
           ]" @click="Mclick">
             {{ $t('home.M') }}
           </span>
+          <span class="btn PD" :class="[
+            {
+              active: PDrefShow
+            }
+          ]" @click="PDclick">
+            {{ $t('live.score') }}
+          </span>
         </div>
       </div>
     </van-sticky>
@@ -102,6 +109,20 @@
                 </div>
               </div>
             </div>
+            <!-- 正确比分 -->
+            <div v-if="PDrefShow && sendParams.PD" ref="Mref" class="match-betting-item">
+              <div class="match-betting-item__title">
+                <div class="flex-cross-center">{{ $t('home.PDscore') }}</div>
+              </div>
+              <div class="match-betting-item__content">
+                <div class="betting-select">
+                  <div class="betting-select__list">
+                    <!-- 比分盘口-->
+                    <HandicapScore :send-params="sendParams" :type="'PD'"/>
+                  </div>
+                </div>
+              </div>
+            </div>
             <!--
              -->
           </div>
@@ -111,8 +132,7 @@
       <!--  @click="store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })"> -->
       <div class="up-match__footer">
         <div class="match-footer">
-          <div class="match-footer__item"
-            @click="betMoreShow">
+          <div class="match-footer__item" @click="betMoreShow">
             <span>{{ $t('home.morePlay') }}</span>
             <!-- <span class="num">149</span> -->
             <van-icon class="arrow" name="arrow" />
@@ -131,6 +151,7 @@
 import { matchDateFormat } from '@/utils/date'
 import { getHandicap } from '@/utils/home/getHandicap'
 import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
+import HandicapScore from '@/components/HomeMatch/public/HandicapScore/index.vue'
 import TimeView from '@/components/HomeMatch/public/time/index.vue'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 import { computed, ref } from 'vue'
@@ -197,6 +218,14 @@ const Mclick = () => {
   store.dispatch('home/setKeyValue', {
     key: 'MrefShow',
     value: !MrefShow.value
+  })
+}
+const PDrefShow = computed(() => store.state.home.PDrefShow)
+const PDclick = () => {
+  //
+  store.dispatch('home/setKeyValue', {
+    key: 'PDrefShow',
+    value: !PDrefShow.value
   })
 }
 const betMoreShow = () => {

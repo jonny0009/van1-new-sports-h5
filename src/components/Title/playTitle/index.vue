@@ -36,6 +36,17 @@
       >
         {{ $t('home.M') }}
       </span>
+      <span
+        class="btn PD"
+        :class="[
+          {
+            active: PDrefShow
+          }
+        ]"
+        @click="PDclick"
+      >
+        {{ $t('live.score') }}
+      </span>
     </div>
   </div>
 </template>
@@ -77,6 +88,14 @@ const Mclick = () => {
   store.dispatch('home/setKeyValue', {
     key: 'MrefShow',
     value: !MrefShow.value
+  })
+}
+const PDrefShow = computed(() => store.state.home.PDrefShow)
+const PDclick = () => {
+  //
+  store.dispatch('home/setKeyValue', {
+    key: 'PDrefShow',
+    value: !PDrefShow.value
   })
 }
 // defineExpose

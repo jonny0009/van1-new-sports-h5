@@ -26,6 +26,13 @@
           ]" @click="Mclick">
             {{ $t('home.M') }}
           </span>
+          <span class="btn PD" :class="[
+            {
+              active: PDrefShow
+            }
+          ]" @click="PDclick">
+            {{ $t('live.score') }}
+          </span>
         </div>
       </div>
     </van-sticky>
@@ -133,6 +140,20 @@
                 </div>
               </div>
             </div>
+            <!-- 滚球正确比分 -->
+            <div v-if="PDrefShow && sendParams.RPD" ref="Mref" class="match-betting-item">
+              <div class="match-betting-item__title">
+                <div class="flex-cross-center">{{ $t('home.PDscore') }}</div>
+              </div>
+              <div class="match-betting-item__content">
+                <div class="betting-select">
+                  <div class="betting-select__list">
+                    <!-- 比分盘口-->
+                    <HandicapScore :send-params="sendParams" :type="'RPD'" />
+                  </div>
+                </div>
+              </div>
+            </div>
             <!--
              -->
           </div>
@@ -164,6 +185,7 @@ import { getScore } from '@/utils/home/getScore'
 import { getHandicap } from '@/utils/home/getHandicap'
 // components
 import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
+import HandicapScore from '@/components/HomeMatch/public/HandicapScore/index.vue'
 import TimeView from '@/components/HomeMatch/public/time/index.vue'
 // import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 import router from '@/router'
@@ -204,6 +226,14 @@ const Mclick = () => {
   store.dispatch('home/setKeyValue', {
     key: 'MrefShow',
     value: !MrefShow.value
+  })
+}
+const PDrefShow = computed(() => store.state.home.PDrefShow)
+const PDclick = () => {
+  //
+  store.dispatch('home/setKeyValue', {
+    key: 'PDrefShow',
+    value: !PDrefShow.value
   })
 }
 
