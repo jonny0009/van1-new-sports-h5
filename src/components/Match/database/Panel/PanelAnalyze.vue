@@ -26,7 +26,10 @@
         <div class="analyze-item">
           <div class="analyze-title">{{ item.name }} — {{ $t('user.NumberOfBets') }}</div>
           <div class="analyze-content">
-            <section class="host" :style="{ flex: `${item.ratios[0].betCountRate * 100} 1 0%` }">
+            <section
+              class="host"
+              :style="{ flex: `${item.ratios[0].betCountRate * 100} 1 0%` }"
+            >
               <div class="percent">{{ calcRatioPer(item.ratios[0].betCountRate) }}%</div>
               <div class="bar"></div>
               <div class="value">
@@ -59,7 +62,10 @@
         <div class="analyze-item">
           <div class="analyze-title">{{ item.name }} — {{ $t('user.BetAmount') }}</div>
           <div class="analyze-content">
-            <section class="host" :style="{ flex: `${item.ratios[0].betGoldRate * 100} 1 0%` }">
+            <section
+              class="host"
+              :style="{ flex: `${item.ratios[0].betGoldRate * 100} 1 0%` }"
+            >
               <div class="percent">{{ calcRatioPer(item.ratios[0].betGoldRate) }}%</div>
               <div class="bar"></div>
               <div class="value">
@@ -123,7 +129,6 @@ const list = computed(() => {
       const playData = window.aiRatioType[playType]
       const sorts = playData.sort
       const ratios = sorts.map((ratioType: any) => {
-        // debugger
         const find = playList.find((play: any) => play.ratioType === ratioType)
         if (find) {
           return find
@@ -150,8 +155,6 @@ const list = computed(() => {
 const calcRatioPer = (num: any) => {
   return (num * 100)?.toFixed(2)
 }
-
-console.log(props.data)
 </script>
 
 <style lang="scss" scoped>
@@ -251,5 +254,16 @@ console.log(props.data)
       }
     }
   }
+}
+
+:deep(.van-swipe__indicator) {
+  width: 20px;
+  height: 8px;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+:deep(.van-swipe__indicator--active) {
+  background-color: var(--color-primary) !important;
 }
 </style>

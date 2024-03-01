@@ -14,9 +14,10 @@
       </div>
 
       <div class="score-main">
-        <div class="score-main__item" v-for="(item, i) in scoreListComputed" :key="i">
+        <div v-for="(item, i) in scoreListComputed" :key="i" class="score-main__item">
           <div class="head">
-            <strong>{{ i + 1 }} {{ matchData.gameType === 'FT' ? '盘' : '节' }}</strong>
+            <!-- {{ matchData.gameType === 'FT' ? '盘' : '节' }} -->
+            <strong>{{ i + 1 }} </strong>
           </div>
           <div class="nums">
             <span>{{ item.homeTeamScore }}</span>
@@ -28,7 +29,7 @@
       </div>
 
       <div class="score-result">
-        <div class="head"><strong>比赛</strong></div>
+        <div class="head"><strong>{{ $t('user.result') }}</strong></div>
         <div class="nums">
           <span>{{ scoreResult.homeTeamScore }}</span>
         </div>
