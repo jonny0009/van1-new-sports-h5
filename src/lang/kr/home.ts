@@ -51,4 +51,6 @@ export default {
   RBInfo: '라이브 아시안 핸디캡',
   RBSize: '라이브 크기',
   RBRide: '라이브 1X2',
+  PDscore: '정확한 점수',
+
 }

@@ -49,4 +49,6 @@ export default {
   RBInfo: 'RB Asian Handicap',
   RBSize: 'RB O/U',
   RBRide: 'RB 1X2',
+  PDscore: 'Correct Score',
+
 }

@@ -6,7 +6,8 @@ const HomeModule: Module<Home, any> = {
     refreshChangeTime: '',
     RrefShow: true,
     OUrefShow: true,
-    MrefShow: true
+    MrefShow: true,
+    PDrefShow: true,
   },
   mutations: {},
   getters: {},
