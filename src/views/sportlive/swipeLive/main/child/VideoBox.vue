@@ -7,6 +7,7 @@
       playsinline="true"
       controls
       preload="metadata"
+      @play="playVideo"
     ></video>
     <div v-if="videoErrorState" class="video-error">
       <span class="video-icon"></span>
@@ -64,6 +65,16 @@ watch(turnSound, (newValue, oldValue) => {
   }
 })
 
+const playVideo = () => {
+  if (turnSound.value) {
+    muted.value = false
+    videoExample.value.muted(false)
+  } else {
+    muted.value = true
+    videoExample.value.muted(true)
+  }
+  
+}
 const setTimeoutTime = ref()
 const initVideo = () => {
   clearTimeout(setTimeoutTime.value)
@@ -122,13 +133,13 @@ const soundHandle = () => {
     return false
   }
   if (videoExample.value.muted()) {
-    // videoExample.value.muted(false)
-    // muted.value = false
+    videoExample.value.muted(false)
+    muted.value = false
     
     store.commit('match/SET_TURN_SOUND', false)
   } else {
-    // videoExample.value.muted(true)
-    // muted.value = true
+    videoExample.value.muted(true)
+    muted.value = true
     store.commit('match/SET_TURN_SOUND', true)
   }
 }

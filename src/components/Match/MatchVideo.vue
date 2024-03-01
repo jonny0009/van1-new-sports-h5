@@ -15,7 +15,7 @@
 import 'video.js/dist/video-js.min.css'
 import videojs from 'video.js'
 import store from '@/store'
-import { watch, nextTick, onUnmounted, ref, computed } from 'vue'
+import { watch, nextTick, onUnmounted, ref, computed,onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 const turnSound = computed(() => store.state.match.turnSound)
 
@@ -37,6 +37,14 @@ watch(
     getUrl(newUrl as string)
   }
 )
+
+onMounted(() => {
+	// message 该事件通过或者从对象(WebSocket, Web Worker, Event Source 或者子 frame 或父窗口)接收到消息时触发
+	window.addEventListener('message',payEvent)
+})
+const payEvent=(event:any)=> {
+  console.log(event, "监听frame消息====");
+}
 
 const getUrl = (url: string) => {
   //  加载视频网页 不全是 m3u8
@@ -148,14 +156,13 @@ const loadingNone = () => {
 // iframe 事件加载===
 const handleLoad = () => {
   const iframeWindow = videoFrame.value;
-  console.log(iframeWindow,"=====");
-  
-  // iframeWindow.contentWindow.addEventListener('volumechange', handleVolumeChange);
+  console.log(iframeWindow,"iframe 事件加载===");
+  iframeWindow.contentWindow.addEventListener('volumechange', handleVolumeChange);
 }
-// const handleVolumeChange = () => {
-//   // 处理音量变化事件
-//   console.log('音量发生变化');
-// };
+const handleVolumeChange = () => {
+  // 处理音量变化事件
+  console.log('音量发生变化');
+};
 
 
 const disposePlayer = () => {
@@ -167,6 +174,8 @@ const disposePlayer = () => {
 
 onUnmounted(() => {
   disposePlayer()
+  // 移除监听消息事件==
+  window.removeEventListener('message',payEvent)
 })
 </script>
 
