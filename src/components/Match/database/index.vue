@@ -22,6 +22,10 @@ import TabSummary from './Tabs/TabSummary.vue'
 import TabBattle from './Tabs/TabBattle.vue'
 import TabRecord from './Tabs/TabRecord.vue'
 import TabEvents from './Tabs/TabEvents.vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+
+
 const { t } = useI18n()
 
 const matchInfo = computed(() => store.state.match.matchInfo)
@@ -36,6 +40,14 @@ watch(
   () => {
     if (!gameType) {
       gameType = matchInfo.value.gameType
+      getData()
+    }
+  }
+)
+watch(
+  () => route.params['id'],
+  (newValue: any) => {
+    if (newValue) {
       getData()
     }
   }

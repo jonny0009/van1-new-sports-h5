@@ -17,7 +17,7 @@ export function useBetting(flag:any) {
   const apiLoading = ref(true)
 
   watch(
-    () => matchInfo.value,
+    () => matchInfo.value?.gidm,
     () => {
       fetchGroup()
     }
@@ -41,6 +41,9 @@ export function useBetting(flag:any) {
       if (res.code === 200) {
         const patternList = data[FORMAT_TYPE[formatType]]
         playGroupBetList.value = patternList
+        if (flag===1) {
+          findGroupById('0')
+        }
       }
     }
   }

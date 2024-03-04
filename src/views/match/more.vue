@@ -46,15 +46,18 @@
       </div>
     </div>
     <div class="bet-main">
-      <BettingCollapse v-show="menuType === 0" :match-info="matchInfo" :group-list="playGroupBetList"
-        :betting-list="playBettingList" :loading="apiLoading" @tab-change="findGroupById" />
+      <!-- <BettingCollapse v-show="menuType === 0" :match-info="matchInfo" :group-list="playGroupBetList"
+        :betting-list="playBettingList" :loading="apiLoading" @tab-change="findGroupById" /> -->
+      <BettingCollapse v-show="menuType === 0" :match-info="matchInfo" :group-list="bettingInfo.playGroupBetList"
+        :betting-list="bettingInfo.playBettingList" :loading="bettingInfo.apiLoading"
+        @tab-change="bettingInfo.findGroupById" />
       <MatchDatabase v-show="menuType === 1" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Ref, computed, onBeforeMount, onUnmounted, ref, watch } from 'vue'
+import { Ref, computed, onBeforeMount, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { matcheInfo } from '@/api/live'
@@ -71,11 +74,11 @@ const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const setMatch = useMatch()
-const { findGroupById, playGroupBetList, playBettingList, apiLoading } = useBetting()
+// const { findGroupById, playGroupBetList, playBettingList, apiLoading }:any = useBetting()
+const bettingInfo: any = ref({})
 
 const paramsId = computed(() => route.params['id'])
 const showFixedBet = computed(() => store.state.app.showFixedBet)
-const ifSearchDo = computed(() => store.state.user.ifSearchDo)
 
 const menuList = ref([
   { type: 0, title: t('live.bet'), iconName: 'live-bet' },
@@ -102,7 +105,7 @@ const getMatcheInfo = async () => {
     const gameInfo = game.gameInfo || {}
     matchInfo.value.gameInfo = gameInfo
   }
-  apiLoading.value = false
+  
   store.commit('match/SET_MATCH_INFO', matchInfo.value)
 }
 
@@ -128,20 +131,19 @@ const closeInterval = () => {
     store.commit('match/SET_NEED_TIMER', false)
   }
 }
-// 监听搜索操作
 watch(
-  () => ifSearchDo.value,
+  () => route.params['id'],
   (newValue: any) => {
     if (newValue) {
-      apiLoading.value =true
       matchInfo.value = {}
       getMatcheInfo()
-      startInterval()
-      // useBetting(null)
+      bettingInfo.value = useBetting(1)
     }
   }
 )
-
+onMounted(() => {
+  bettingInfo.value = useBetting()
+})
 onBeforeMount(() => {
   getMatcheInfo()
   startInterval()
