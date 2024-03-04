@@ -2,7 +2,9 @@
   <div class="panel-score">
     <div class="score">
       <div class="score-team">
-        <div class="score-team_head"></div>
+        <div class="score-team_head">
+          {{ playerName }}
+        </div>
         <div class="score-team_wrap">
           <img v-img="matchData.homeLogo" :type="4" alt="" />
           <span>{{ home }}</span>
@@ -41,12 +43,14 @@
       <div class="bot-bg"></div>
     </div>
 
-    <div class="footer"></div>
+    <!-- <div class="footer"></div> -->
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const props = defineProps({
   scoreList: {
@@ -71,6 +75,14 @@ const scoreListComputed = computed(() => {
 })
 const scoreResult = computed(() => {
   return props.scoreList.find((m: any) => m.type === 'Current') || {}
+})
+
+const playerName = computed(() => {
+  const obj :any = {
+    'FT': t('live.halfPlay'),
+    'BK': t('live.section')
+  }
+  return obj[props.matchData.gameType] || ''
 })
 </script>
 

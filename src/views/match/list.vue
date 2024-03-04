@@ -92,6 +92,8 @@ const navActive = ref('RB')
 const time = ref(-1)
 const countTime = ref('')
 
+let timer: any = reactive({})
+
 let page: number = 0
 const list: Ref<any[]> = ref([])
 const loading = ref(false)
@@ -117,12 +119,12 @@ const onLoad = async () => {
   loading.value = false
 
   if (res.code === 200) {
-    if (data.list.length === 0) {
+    if (data.list.length === 0 && navActive.value === 'RB') {
       const res1: any = await nextAnchorMatchDate()
       if (res1.code === 200 && res1.data) {
         finished.value = true
         time.value = res1.data - new Date().getTime()
-        setInterval(() => {
+        timer = setInterval(() => {
           time.value -= 1
           if (time.value <= 0) {
             onRefresh()
@@ -150,6 +152,7 @@ const onRefresh = () => {
 
 const onChangeTabs = () => {
   refreshing.value = true
+  clearInterval(timer)
   onRefresh()
 }
 

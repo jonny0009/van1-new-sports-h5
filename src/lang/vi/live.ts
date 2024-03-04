@@ -66,6 +66,10 @@ export default {
   win: 'thắng',
   tie: 'phẳng',
   lose: 'tiêu cực',
-  point: 'điểm'
+  point: 'điểm',
+  nextAM: 'Buổi phát sóng trực tiếp tiếp theo sẽ bắt đầu vào <span class="time-num">{num}</span>',
+  HalfPlay: 'giờ nghỉ giải lao',
+  section: 'phần'
+
 }
 
