@@ -29,7 +29,8 @@
           </div>
         </div>
         <div v-else class="wallet" @click="toUrl('/login')">{{ $t('user.logOn') }} / {{ $t('user.register') }}</div>
-        <div class="right-area" @click="toUrl('/search')">
+        <!-- @click="toUrl('/search')" -->
+        <div class="right-area" @click="showSearchInfo">
           <img v-if="ifBLue" class="search" fit="contain" src="@/assets/images/user/blue/search.png" />
           <img v-else class="search" :src="searchImg" style="object-fit: contain" />
         </div>
@@ -37,6 +38,8 @@
     </div>
 
     <sidebar-nav ref="childNav"></sidebar-nav>
+    <!-- 搜索 -->
+    <search-nav ref="searchNav"></search-nav>
   </div>
 </template>
 <script lang="ts" setup>
@@ -57,6 +60,7 @@ import { useRouter } from 'vue-router'
 import { ref, computed, onMounted } from 'vue'
 
 import SidebarNav from './sidebarNav.vue'
+import SearchNav from "./searchNav/index.vue";
 const emit = defineEmits(['betShow'])
 const userInfo = computed(() => store.state.user.userInfo)
 const balance = computed(() => store.state.user.balance)
@@ -65,6 +69,7 @@ const currentWallet = computed(() => store.state.user.currentWallet)
 const theme = computed(() => store.state.app.theme)
 const isAnonymity = computed(() => store.state.user.isAnonymity)
 const childNav = ref()
+const searchNav = ref()
 
 const ifBLue = computed(() => {
   if (theme.value === 'blue') {
@@ -82,6 +87,10 @@ const toUrl = (url: string) => {
 
 const showInfo = () => {
   childNav.value.openNav()
+}
+const showSearchInfo = () => {
+  store.dispatch('user/getIfSearchInfo', false)
+  searchNav.value.openSearchNav()
 }
 
 const goBackClick = () => {

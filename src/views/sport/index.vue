@@ -171,7 +171,7 @@ import playTitle from '@/components/Title/playTitle/index.vue'
 // useRouter
 import { useRoute, } from 'vue-router'
 // onBeforeMount, watch,
-import { ref, computed, nextTick, onMounted, onActivated } from 'vue'
+import { ref, computed, nextTick, onMounted, onActivated, watch } from 'vue'
 // import router from '@/router'
 import { apiChampionpPlayTypes } from '@/api/champion'
 import { recommendLeague, commonMatches, homeCommonMatches, searchCountryInfo, searchLeagueByCountryInfo } from '@/api/home'
@@ -230,6 +230,7 @@ const newContainerRecommend = ref(null)
 import store from '@/store'
 
 const locationHeight = computed(() => store.state.user.locationHeight)
+const ifSearchDo = computed(() => store.state.user.ifSearchDo)
 const offsetTop = computed(() => {
   const offsetTop = store.state.app.globalBarHeaderHeight || 48
   var offsetTopval = 48
@@ -245,6 +246,32 @@ onMounted(() => {
   // 初始化
   // initList()
 })
+// 监听搜索操作
+watch(
+  () => ifSearchDo.value,
+  (newValue: any) => {
+    if (newValue) {
+      gameType.value = route.params?.type || 'FT'
+      groupedArrays.value = []
+      firstLeaguesList.value = []
+      championListLoading.value = true
+      ifLeagueNum.value = false
+      closeSlideshow.value = false
+      getCommonMatches()
+      const countryId = route.query?.countryId || ''
+      leagueId.value = newValue 
+      if (countryId) {
+        getLeagueByCountryInfo(countryId, 2)
+      } else {
+        getFirstLeagues()
+      }
+      getSearchCountryInfo()
+      nextTick(() => {
+        refSportsTabs.value?.setSports(gameType.value)
+      })
+    }
+  }
+)
 // 手风琴展开
 const LeagueByCountryInfoArr: any = ref([])
 
@@ -677,8 +704,8 @@ const handleChangeLeagueId = (item: any) => {
   leagueArrowTitle?.value?.changeClick(false)
   championGuessing?.value?.CloseClick(false)
   leagueId.value = item.leagueId
-  
-  
+
+
   if (item.countryId) {
     getLeagueByCountryInfo(item.countryId, 2)
     return
@@ -687,15 +714,13 @@ const handleChangeLeagueId = (item: any) => {
 }
 
 onActivated(async () => {
+  if (locationHeight.value) return
   gameType.value = route.params?.type || 'FT'
   groupedArrays.value = []
   firstLeaguesList.value = []
   championListLoading.value = true
   ifLeagueNum.value = false
   closeSlideshow.value = false
-  if (locationHeight.value) {
-    return
-  }
   getCommonMatches()
   const countryId = route.query?.countryId || ''
   leagueId.value = route.query?.leagueId || ''
