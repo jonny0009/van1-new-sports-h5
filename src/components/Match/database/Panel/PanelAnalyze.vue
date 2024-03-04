@@ -33,7 +33,7 @@
               <div class="percent">{{ calcRatioPer(item.ratios[0].betCountRate) }}%</div>
               <div class="bar"></div>
               <div
-                v-if="item.ratios[0].betCountRate === item.ratios[item.ratios.length - 1].betCountRate && item.ratios[0].betGold > item.ratios[item.ratios.length - 1].betGold || item.ratios[0].betCountRate > item.ratios[item.ratios.length - 1].betCountRate"
+                v-if="item.ratios[0].betCount === item.ratios[item.ratios.length - 1].betCount === item.ratios[1].betCount && item.ratios[0].betGold > item.ratios[item.ratios.length - 1].betGold || item.ratios[0].betCountRate > item.ratios[item.ratios.length - 1].betCountRate"
 
                 class="value"
               >
@@ -93,7 +93,7 @@
             >
               <div class="percent">{{ calcRatioPer(item.ratios[item.ratios.length - 1].betGoldRate) }}%</div>
               <div class="bar"></div>
-              <div v-if="item.ratios[0].betGold < item.ratios[item.ratios.length - 1].betGold" class="value">
+              <div v-if="item.ratios[0].betGold < item.ratios[item.ratios.length - 1].betGold && item.ratios[1].betGold < item.ratios[item.ratios.length - 1].betGold" class="value">
                 <Currency /><span v-points="item.ratios[item.ratios.length - 1].betGold"></span>
               </div>
             </section>

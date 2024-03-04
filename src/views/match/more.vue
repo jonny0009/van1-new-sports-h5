@@ -39,8 +39,13 @@
     <!-- end -->
 
     <div class="bet-menu">
-      <div v-for="(item, index) in menuList" :key="index" class="bet-menu__nav"
-        :class="{ selected: menuType === item.type }" @click="onMenuClick(item)">
+      <div
+        v-for="(item, index) in menuList"
+        :key="index"
+        class="bet-menu__nav"
+        :class="{ selected: menuType === item.type }"
+        @click="onMenuClick(item)"
+      >
         <SvgIcon :name="item.iconName" />
         <span class="title">{{ item.title }}</span>
       </div>
@@ -48,9 +53,14 @@
     <div class="bet-main">
       <!-- <BettingCollapse v-show="menuType === 0" :match-info="matchInfo" :group-list="playGroupBetList"
         :betting-list="playBettingList" :loading="apiLoading" @tab-change="findGroupById" /> -->
-      <BettingCollapse v-show="menuType === 0" :match-info="matchInfo" :group-list="bettingInfo.playGroupBetList"
-        :betting-list="bettingInfo.playBettingList" :loading="bettingInfo.apiLoading"
-        @tab-change="bettingInfo.findGroupById" />
+      <BettingCollapse
+        v-show="menuType === 0"
+        :match-info="matchInfo"
+        :group-list="bettingInfo.playGroupBetList"
+        :betting-list="bettingInfo.playBettingList"
+        :loading="bettingInfo.apiLoading"
+        @tab-change="bettingInfo.findGroupById"
+      />
       <MatchDatabase v-show="menuType === 1" />
     </div>
   </div>
@@ -105,7 +115,7 @@ const getMatcheInfo = async () => {
     const gameInfo = game.gameInfo || {}
     matchInfo.value.gameInfo = gameInfo
   }
-  
+
   store.commit('match/SET_MATCH_INFO', matchInfo.value)
 }
 
