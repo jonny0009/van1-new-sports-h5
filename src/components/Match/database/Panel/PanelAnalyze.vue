@@ -72,7 +72,7 @@
             >
               <div class="percent">{{ calcRatioPer(item.ratios[0].betGoldRate) }}%</div>
               <div class="bar"></div>
-              <div v-if="item.ratios[0].betGold >= item.ratios[item.ratios.length - 1].betGold" class="value">
+              <div v-if="item.ratios[0].betGoldRate > item.ratios[item.ratios.length - 1].betGoldRate && item.ratios[0].betGoldRate > item.ratios[1].betGoldRate" class="value">
                 <Currency /><span v-points="item.ratios[0].betGold"></span>
               </div>
             </section>
@@ -83,7 +83,7 @@
             >
               <div class="percent">{{ calcRatioPer(item.ratios[1].betGoldRate) }}%</div>
               <div class="bar"></div>
-              <div class="value">
+              <div v-if="item.ratios[1].betGoldRate > item.ratios[0].betGoldRate && item.ratios[1].betGoldRate > item.ratios[item.ratios.length - 1].betGoldRate" class="value">
                 <Currency /><span v-points="item.ratios[1].betGold"></span>
               </div>
             </section>
@@ -93,7 +93,7 @@
             >
               <div class="percent">{{ calcRatioPer(item.ratios[item.ratios.length - 1].betGoldRate) }}%</div>
               <div class="bar"></div>
-              <div v-if="item.ratios[0].betGold < item.ratios[item.ratios.length - 1].betGold && item.ratios[1].betGold < item.ratios[item.ratios.length - 1].betGold" class="value">
+              <div v-if="item.ratios[0].betGoldRate < item.ratios[item.ratios.length - 1].betGoldRate && item.ratios[1].betGoldRate < item.ratios[item.ratios.length - 1].betGoldRate" class="value">
                 <Currency /><span v-points="item.ratios[item.ratios.length - 1].betGold"></span>
               </div>
             </section>
@@ -145,7 +145,7 @@ const list = computed(() => {
           ratioType
         }
       })
-      console.log(ratios, '----')
+      console.log(ratios, '--')
       showList.push({
         name: playName({ gameType, playType, session }),
         ratios
