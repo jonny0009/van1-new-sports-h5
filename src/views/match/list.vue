@@ -42,7 +42,7 @@
             @refresh="onRefresh"
           >
 
-            <EmptyData v-if="(finished && list.length === 0 && navActive !== 'RB') || (list.length === 0 && time <= -1 && navActive === 'RB' && finished)" />
+            <EmptyData v-if="(finished && list.length === 0 && navActive !== 'RB') || (list.length === 0 && time < 0 && navActive === 'RB' && finished)" />
             <van-list
               v-model:loading="loading"
               :finished="finished"
@@ -102,27 +102,7 @@ const loading = ref(false)
 const finished = ref(false)
 const refreshing = ref(false)
 const onLoad = async () => {
-  if (navActive.value === 'RB') {
-    if (time.value > 0) {
-      refreshing.value = false
-      loading.value = false
-      list.value = []
-      return
-    }
-    const res1: any = await nextAnchorMatchDate()
-    if (res1.code === 200 && res1.data) {
-      finished.value = true
-      if (res1.data < res1.systemTime) {
-        time.value = res1.data - res1.systemTime
-        timer = setInterval(() => {
-          time.value -= 1000
-          time.value === 0 && clearInterval(timer)
-          countDown()
-        }, 1000)
-        return
-      }
-    }
-  }
+  if (time.value > 0) return
 
   if (refreshing.value) {
     list.value = []
@@ -142,12 +122,24 @@ const onLoad = async () => {
   const data = res.data
   loading.value = false
 
-  if (time.value > -1 && navActive.value === 'RB') {
-    list.value = []
-    return
-  }
-
   if (res.code === 200) {
+    if (navActive.value === 'RB' && data.list.length === 0) {
+      finished.value = true
+      const res1: any = await nextAnchorMatchDate()
+      if (res1.code === 200 && res1.data) {
+        if (res1.data > res1.systemTime) {
+          time.value = res1.data - res1.systemTime
+          timer = setInterval(() => {
+            time.value -= 1000
+            time.value === 0 && clearInterval(timer)
+            countDown()
+          }, 1000)
+          return
+        }
+      }
+      return
+    }
+
     data.list.forEach((item: any) => {
       list.value.push(item)
     })
