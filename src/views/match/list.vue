@@ -21,7 +21,7 @@
         <template #title>
           <div class="tab-title">
             <SvgIcon :name="nav.iconName" />
-            <span>{{ nav.title }}</span>
+            <span>{{ nav.title }}   </span>
           </div>
         </template>
 
@@ -102,6 +102,26 @@ const loading = ref(false)
 const finished = ref(false)
 const refreshing = ref(false)
 const onLoad = async () => {
+  if (navActive.value === 'RB') {
+    if (time.value > 0) {
+      refreshing.value = false
+      loading.value = false
+      list.value = []
+      return
+    }
+    const res1: any = await nextAnchorMatchDate()
+    if (res1.code === 200 && res1.data) {
+      finished.value = true
+      time.value = res1.data - res1.systemTime
+      timer = Number(setInterval(() => {
+        time.value -= 1
+        time.value === 0 && clearInterval(timer)
+        countDown()
+      }, 1000))
+    }
+    return
+  }
+
   if (refreshing.value) {
     list.value = []
     refreshing.value = false
@@ -121,19 +141,6 @@ const onLoad = async () => {
   loading.value = false
 
   if (res.code === 200) {
-    if (data.list.length === 0 && navActive.value === 'RB') {
-      finished.value = true
-      const res1: any = await nextAnchorMatchDate()
-      if (res1.code === 200 && res1.data) {
-        finished.value = true
-        time.value = res1.data - new Date().getTime()
-        timer = setInterval(() => {
-          time.value -= 1
-          countDown()
-        }, 1000)
-      }
-      return
-    }
     data.list.forEach((item: any) => {
       list.value.push(item)
     })
@@ -144,7 +151,6 @@ const onLoad = async () => {
 }
 
 const onRefresh = () => {
-  time.value = -1
   page = 0
   finished.value = false
   loading.value = true
@@ -153,8 +159,6 @@ const onRefresh = () => {
 
 const onChangeTabs = () => {
   refreshing.value = true
-  time.value = -1
-  clearInterval(timer)
   onRefresh()
 }
 
@@ -173,9 +177,10 @@ const countDown = () => {
     return i < 10 ? '0' + i : i
   }
   const leftTime:number = time.value
-  let hour = parseInt((leftTime / (60 * 60)) % 24)
-  let minute = parseInt((leftTime / 60) % 60)
-  let second = parseInt(leftTime % 60)
+
+  let hour = Math.floor((leftTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) // 小时
+  let minute = Math.floor((leftTime % (1000 * 60 * 60)) / (1000 * 60)) // 分钟
+  let second = Math.floor((leftTime % (1000 * 60)) / 1000) // 秒
 
   hour = addZero(hour)
   minute = addZero(minute)
