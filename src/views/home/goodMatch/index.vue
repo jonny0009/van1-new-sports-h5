@@ -1,43 +1,49 @@
 <template>
-  <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
-    <van-collapse-item name="1">
-      <template #title>
-        <ArrowTitle class="mt10 goodArrowTitle" :src="titleRecommend" :text="$t('home.goofMatch')" />
-      </template>
-      <div class="goodMatch">
-        <SportsTabs ref="refSportsTabs" class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess" />
-        <Loading v-if="!isLoading" />
-        <template v-else>
-          <HomeEmpty v-if="!recommendEventsList.length" />
-          <!-- <HomeMatchHandicap v-for="(item,idx) in recommendEventsList" :key="idx" :send-params="item" class="mb10" /> -->
-          <div ref="newContainer">
-            <template v-for="(item, idx) in recommendEventsList" :key="idx">
-              <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="8" :class="{ 'mt10': idx !== 0 }">
-                <playTitle :send-params="item" />
-              </van-sticky>
-              <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
-                :class="{ 'mt10': idx !== 0 }" />
-            </template>
-          </div>
+  <div ref="newContainer">
+    <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
+      <van-collapse-item name="1">
+        <template #title>
+          <ArrowTitle class="mt10 goodArrowTitle" :src="titleRecommend" :text="$t('home.goofMatch')" />
         </template>
-        <div v-if="recommendEventsList.length" class="Button-MatchMore mt10" @click="goToSport">
-          <span>
-            {{ $t('home.lookMoreMatch') }}
-          </span>
+        <div class="goodMatch">
+          <SportsTabs ref="refSportsTabs" class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess">
+            <template #body>
+              <div class="mt10">
+                <Loading v-if="!isLoading" />
+                <template v-else>
+                  <HomeEmpty v-if="!recommendEventsList.length" />
+                  <template v-for="(item, idx) in recommendEventsList" :key="idx">
+                    <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="8"
+                      :class="{ 'mt10': idx !== 0 }">
+                      <playTitle :send-params="item" />
+                    </van-sticky>
+                    <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
+                      :class="{ 'mt10': idx !== 0 }" />
+                  </template>
+                </template>
+                <div v-if="recommendEventsList.length" class="Button-MatchMore mt10" @click="goToSport">
+                  <span>
+                    {{ $t('home.lookMoreMatch') }}
+                  </span>
+                </div>
+              </div>
+            </template>
+          </SportsTabs>
         </div>
-      </div>
-    </van-collapse-item>
-  </van-collapse>
+      </van-collapse-item>
+    </van-collapse>
+  </div>
 </template>
 <script lang="ts" setup>
-import Dayjs from 'dayjs'
-const dateUtil = Dayjs
+// import Dayjs from 'dayjs'
+// const dateUtil = Dayjs
 import titleRecommend from '@/assets/images/home/title-recommend.png'
 import playTitle from '@/components/Title/playTitle/index.vue'
-import { onMounted, ref, computed, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 import moment from 'moment'
 import store from '@/store'
 import router from '@/router'
+const scrollNum = computed(() => store.state.user.scrollNumY)
 const offsetTop = computed(() => {
   const offsetTop = store.state.app.globalBarHeaderHeight || 48
   var offsetTopval = 48
@@ -60,6 +66,12 @@ const timeout: any = ref('')
 const newContainer = ref(null)
 const activeNames = ref('1')
 const refSportsTabs = ref()
+
+watch(() => scrollNum.value, (newValue) => {
+  if (newValue > 88) {
+    refSportsTabs.value.ifAnimated = false
+  }
+})
 watch(refreshChangeTime, (val) => {
   if (val) {
     refSportsTabs.value?.resetParams()
@@ -87,7 +99,7 @@ const getRecommendEvents = async (gameType: any = 'FT') => {
     gameType: gameType,
     leagueId: props.leagueIdArr.join(),
     page: 1,
-    pageSize:10
+    pageSize: 10
     // startDate: dateUtil().format('YYYY-MM-DD') + ' 00:00:00',
     // endDate: dateUtil().add(1, 'day').format('YYYY-MM-DD') + ' 23:59:59'
   }
@@ -99,7 +111,6 @@ const getRecommendEvents = async (gameType: any = 'FT') => {
     const { baseData } = data
     recommendEventsList.value = []
     recommendEventsListArr.value = []
-    // recommendEventsList.value.push(...baseData)
     recommendEventsListArr.value.push(...baseData)
     const listObj: any = {}
     const listArr: any = []
@@ -125,15 +136,11 @@ const getRecommendEvents = async (gameType: any = 'FT') => {
   }
 }
 const returnSportsSuccess = (val: any) => {
+  recommendEventsList.value = []
   gameType.value = val
   getRecommendEvents(val)
 }
-// const init = () => {
-//   getRecommendEvents()
-// }
-// onMounted(() => {
-//   init()
-// })
+
 
 const gameType = ref('FT')
 const goToSport = () => {

@@ -1,27 +1,31 @@
 <template>
-  <div class="homeTime-page">
-    <SportsTabs ref="refSportsTabs" class="pb10" @returnSportsSuccess="returnSportsSuccess" />
-    <tabsTime v-if="routerName === 'HomeTime'" @returnTimeSuccess="returnTimeSuccess" />
-    <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
-      <van-list v-model="loading" :finished="finished" :finished-text="$t('live.noMore')" @load="onLoad">
-        <template v-if="isLoading">
-          <div ref="newContainer">
-            <template v-for="(item, idx) in recommendEventsList" :key="idx">
-              <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="5" :class="{ 'mt10': idx !== 0 }">
-                <playTitle :send-params="item" />
-              </van-sticky>
-              <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
-                :class="{ 'mt10': idx !== 0 }" />
-            </template>
-          </div>
-          <HomeEmpty v-if="!recommendEventsList.length"></HomeEmpty>
-        </template>
-        <Loading v-if="!isLoading || loading" :class="{
-          'new_loading mt10': loading
-        }" />
-      </van-list>
-    </van-pull-refresh>
-    <FooterHeight />
+  <div class="homeTime-page" ref="newContainer">
+    <SportsTabs ref="refSportsTabs" class="pb10" @returnSportsSuccess="returnSportsSuccess">
+      <template #body>
+        <div class="mt10">
+          <tabsTime v-if="routerName === 'HomeTime'" @returnTimeSuccess="returnTimeSuccess" />
+          <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
+            <van-list v-model="loading" :finished="finished" :finished-text="$t('live.noMore')" @load="onLoad">
+              <template v-if="isLoading">
+                <template v-for="(item, idx) in recommendEventsList" :key="idx">
+                  <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="500"
+                    :class="{ 'mt10': idx !== 0 }">
+                    <playTitle :send-params="item" />
+                  </van-sticky>
+                  <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
+                    :class="{ 'mt10': idx !== 0 }" />
+                </template>
+                <HomeEmpty v-if="!recommendEventsList.length"></HomeEmpty>
+              </template>
+              <Loading v-if="!isLoading || loading" :class="{
+                'new_loading mt10': loading
+              }" />
+            </van-list>
+          </van-pull-refresh>
+          <FooterHeight />
+        </div>
+      </template>
+    </SportsTabs>
   </div>
 </template>
 <script lang="ts" setup>
@@ -29,11 +33,12 @@ import Dayjs from 'dayjs'
 import tabsTime from './tabsTime/index.vue'
 import playTitle from '@/components/Title/playTitle/index.vue'
 // recommendEvents
-import {  commonMatches } from '@/api/home'
+import { commonMatches } from '@/api/home'
 import moment from 'moment'
 import store from '@/store'
 import { onBeforeMount, ref, reactive, computed, watch } from 'vue'
 import router from '@/router'
+const scrollNum = computed(() => store.state.user.scrollNumY)
 const offsetTop = computed(() => {
   const offsetTop = store.state.app.globalBarHeaderHeight || 48
   var offsetTopval = 48
@@ -59,6 +64,12 @@ watch(refreshChangeTime, (val) => {
       await initData()
       await getRecommendEvents()
     }, 100)
+  }
+})
+watch(() => scrollNum.value, (newValue) => {
+  // console.log(`doubleCount发生变化，新值为：${newValue}`);
+  if (newValue > 88) {
+    refSportsTabs.value.ifAnimated = false
   }
 })
 const isLoading = ref(false)
@@ -93,8 +104,12 @@ const getLoading = (val: any = false, nextToggle: any = '') => {
   }
 }
 const onRefresh = () => {
+  // store.dispatch('home/setRefreshChangeTime', new Date().getTime())
   isRefreshLoading.value = false
-  store.dispatch('home/setRefreshChangeTime', new Date().getTime())
+  isLoading.value = true
+  finished.value = false
+  params.page = 1
+  getRecommendEvents()
 }
 const getRecommendEvents = async (nextToggle: any = '') => {
   getLoading(false, nextToggle)

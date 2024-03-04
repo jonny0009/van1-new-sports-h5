@@ -1,163 +1,171 @@
 <template>
-  <div class="sport-page">
-    <!--
+  <div class="sport-page" ref="newContainerRecommend">
+    <div ref="newContainer">
+      <!--
       公共 体育项
     -->
-    <SportsTabs ref="refSportsTabs" class="tabs-top" @returnSportsSuccess="returnSportsSuccess" />
-    <!--
-      公共 联赛
-    -->
-    <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
-      <!-- 新tab -->
-      <div class="my-scroll__content">
-        <div class="tabs-cut tabs-cut-2">
-          <div class="league-num tabs-cut-1" :class="ifLeagueNum ? 'league-num-1' : ''" @click="clickLeagueNum">
-            <span> {{ $t(`user.whole`) }}</span>
-            <span class="league-match-num">{{ LeaguesInfo.total || 0 }}</span>
-            <SvgIcon name="user-down" class="icon-svg-1" />
-          </div>
-          <TextButton class="tabs-cut-1" :text="$t('sport.recommend')" :active="!leagueId" @click="handleRecommend()" />
-          <ImageButton
-            v-for="(item, index) in firstLeaguesList.slice(0, firstLeaguesList.length > 1 ? Math.floor(firstLeaguesList.length / 2) : 1)"
-            :key="index" class="tabs-cut-1" :text="item.leagueName" :src="item.leagueLogo"
-            :active="leagueId === item.leagueId" type="6" :count="item.gameTypeCount || '0'"
-            :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" @click="handleChangeLeagueId(item)" />
-        </div>
-        <div class="tabs-cut tabs-cut-3" v-if="firstLeaguesList.length > 1">
-          <ImageButton v-for="(item, index) in firstLeaguesList.slice(Math.floor(firstLeaguesList.length / 2))"
-            :key="index" class="tabs-cut-1" :text="item.leagueName" :src="item.leagueLogo"
-            :active="leagueId === item.leagueId" type="6" :count="item.gameTypeCount || '0'"
-            :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" @click="handleChangeLeagueId(item)" />
-        </div>
-      </div>
-      <!-- <Loading v-if="!firstLeaguesList.length" /> -->
-      <!-- 地区联赛折叠 -->
-      <van-collapse v-if="ifLeagueNum" v-model="activeCollapseNames" accordion :border="false" @change="collapseChange">
-        <van-collapse-item v-for="(value, key) in groupedArrays" :key="key" :name="value.countryId" :border="false">
-          <template #title>
-            <div class="collapseAll">
-              <img v-img="value.countryFlag" type="1" class="collapse-name" />
-              <span class="collapse-title">{{ value.countryCn || 'International' }}</span>
-              <span class="collapse-num">{{ value.leagueCount }}</span>
-            </div>
-          </template>
-          <div v-for="(item, index) in LeagueByCountryInfoArr" :key="index" class="collapse-concent">
-            <div :class="item.gameTypeCount ? '' : 'collapse-concent-1'" @click="clickLeague(item)">
-              {{ item.leagueName }}
-            </div>
-          </div>
-        </van-collapse-item>
-      </van-collapse>
-      <!-- end==== -->
-      <!-- 联赛轮播图 -->
-      <Slideshow v-if="commonMatchesList.length && closeSlideshow" ref="slideshow"
-        :common-matches-list="commonMatchesList">
-      </Slideshow>
-      <template v-if="!leagueId">
-        <!-- 推荐 -->
-        <van-collapse v-model="activeNamesB" accordion :border="false" class="GlobalCollapse">
-          <van-collapse-item name="b1">
+      <div class="mt10">
+        <van-tabs :duration="0.2" v-model:active="active" shrink line-height="0" :animated="ifAnimated"
+          @change="onChangeTabs" :swipe-threshold="3" @click-tab="ifAnimated = true">
+          <van-tab v-for="(item, index) in sportsList" :key="index" :name="item.text">
             <template #title>
-              <ArrowTitle v-if="recommendList.length || (!getRecommendEventsIsLoading || isLoadingRecommend)"
-                ref="leagueArrowTitle" class="mt10 mb10 goodArrowTitle" :src="recommendIcon"
-                :text="$t('sport.recommend')" />
+              <SportsButton class="tabs-cut-7" :text="item.text" :active="active === item.text" :class="item.text" />
             </template>
-            <Loading v-if="!getRecommendEventsIsLoading || isLoadingRecommend" />
-            <template v-else>
-              <template v-if="recommendList.length">
-                <div class="recommend-list">
-                  <div ref="newContainerRecommend">
-                    <template v-for="(item, idx) in recommendList" :key="idx">
-                      <van-sticky :offset-top="offsetTop" :container="newContainerRecommend" z-index="8"
-                        :class="{ 'mt10': idx !== 0 }">
-                        <playTitle :send-params="item" />
-                      </van-sticky>
-                      <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
-                        :class="{ 'mt10': idx !== 0 }" />
-                    </template>
+            <!-- 公共联赛 -->
+            <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
+              <!-- 新tab -->
+              <div class="my-scroll__content">
+                <div class="tabs-cut tabs-cut-2">
+                  <div class="league-num tabs-cut-1" :class="ifLeagueNum ? 'league-num-1' : ''" @click="clickLeagueNum">
+                    <span> {{ $t(`user.whole`) }}</span>
+                    <span class="league-match-num">{{ LeaguesInfo.total || 0 }}</span>
+                    <SvgIcon name="user-down" class="icon-svg-1" />
                   </div>
+                  <TextButton class="tabs-cut-1" :text="$t('sport.recommend')" :active="!leagueId"
+                    @click="handleRecommend()" />
+                  <ImageButton
+                    v-for="(item, index) in firstLeaguesList.slice(0, firstLeaguesList.length > 1 ? Math.floor(firstLeaguesList.length / 2) : 1)"
+                    :key="index" class="tabs-cut-1" :text="item.leagueName" :src="item.leagueLogo"
+                    :active="leagueId === item.leagueId" type="6" :count="item.gameTypeCount || '0'"
+                    :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" @click="handleChangeLeagueId(item)" />
                 </div>
-                <div class="Button-MatchMore mt20 mb20" :class="recommendLoadAll ? 'no-more' : ''" @click="moreRecommend">
-                  <span>
-                    {{ recommendLoadAll ? $t('live.noMore') : $t('home.lookMoreMatch') }}
-                  </span>
-                </div>
-              </template>
-              <!-- <HomeEmpty v-else></HomeEmpty> -->
-            </template>
-          </van-collapse-item>
-        </van-collapse>
-
-        <!-- 早盘 -->
-        <van-collapse v-model="activeNamesC" accordion :border="false" class="GlobalCollapse">
-          <van-collapse-item name="c1">
-            <template #title>
-              <ArrowTitle ref="leagueArrowTitle" class="mt10 mb10 latestArrowTitle" :src="earlyIcon"
-                :text="$t('sport.early')" />
-            </template>
-            <Loading v-if="!getRecommendEventsIsLoading || isLoadingEarly" />
-            <template v-else>
-              <template v-if="earlyList.length">
-                <div class="early-list">
-                  <!-- <HomeMatchHandicap v-for="(item, idx) in earlyList" :key="idx" :send-params="item" /> -->
-                  <div ref="newContainer">
-                    <template v-for="(item, idx) in earlyList" :key="idx">
-                      <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="8"
-                        :class="{ 'mt10': idx !== 0 }">
-                        <playTitle :send-params="item" />
-                      </van-sticky>
-                      <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
-                        :class="{ 'mt10': idx !== 0 }" />
-                    </template>
-                  </div>
-                </div>
-                <div class="Button-MatchMore mt20 mb20" :class="earlyLoadAll ? 'no-more' : ''" @click="moreEarly">
-                  <span>
-                    {{ earlyLoadAll ? $t('live.noMore') : $t('home.lookMoreMatch') }}
-                  </span>
-                </div>
-              </template>
-              <HomeEmpty v-else></HomeEmpty>
-            </template>
-          </van-collapse-item>
-        </van-collapse>
-
-      </template>
-      <template v-if="leagueId">
-
-        <!-- 联赛 -->
-        <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
-          <van-collapse-item name="1">
-            <template #title>
-              <ArrowTitle ref="leagueArrowTitle" class="mt10 mb10" :src="leagueLogo" type="6" :text="leagueName" />
-            </template>
-            <Loading v-if="!getRecommendEventsIsLoading" />
-            <template v-else>
-              <div v-if="recommendList.length" class="recommend-list">
-                <!-- <HomeMatchHandicap v-for="(item, idx) in recommendList" :key="idx" :send-params="item" /> -->
-                <div ref="newContainerRecommend">
-                  <template v-for="(item, idx) in recommendList" :key="idx">
-                    <van-sticky :offset-top="offsetTop" :container="newContainerRecommend" z-index="8"
-                      :class="{ 'mt10': idx !== 0 }">
-                      <playTitle :send-params="item" />
-                    </van-sticky>
-                    <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
-                      :class="{ 'mt10': idx !== 0 }" />
-                  </template>
+                <div class="tabs-cut tabs-cut-3" v-if="firstLeaguesList.length > 1">
+                  <ImageButton v-for="(item, index) in firstLeaguesList.slice(Math.floor(firstLeaguesList.length / 2))"
+                    :key="index" class="tabs-cut-1" :text="item.leagueName" :src="item.leagueLogo"
+                    :active="leagueId === item.leagueId" type="6" :count="item.gameTypeCount || '0'"
+                    :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" @click="handleChangeLeagueId(item)" />
                 </div>
               </div>
-              <HomeEmpty v-else></HomeEmpty>
-            </template>
-          </van-collapse-item>
-        </van-collapse>
+              <!-- <Loading v-if="!firstLeaguesList.length" /> -->
+              <!-- 地区联赛折叠 -->
+              <van-collapse v-if="ifLeagueNum" v-model="activeCollapseNames" accordion :border="false"
+                @change="collapseChange">
+                <van-collapse-item v-for="(value, key) in groupedArrays" :key="key" :name="value.countryId"
+                  :border="false">
+                  <template #title>
+                    <div class="collapseAll">
+                      <img v-img="value.countryFlag" type="1" class="collapse-name" />
+                      <span class="collapse-title">{{ value.countryCn || 'International' }}</span>
+                      <span class="collapse-num">{{ value.leagueCount }}</span>
+                    </div>
+                  </template>
+                  <div v-for="(item, index) in LeagueByCountryInfoArr" :key="index" class="collapse-concent">
+                    <div :class="item.gameTypeCount ? '' : 'collapse-concent-1'" @click="clickLeague(item)">
+                      {{ item.leagueName }}
+                    </div>
+                  </div>
+                </van-collapse-item>
+              </van-collapse>
+              <!-- end==== -->
+              <!-- 联赛轮播图 -->
+              <Slideshow v-if="commonMatchesList.length && closeSlideshow" ref="slideshow"
+                :common-matches-list="commonMatchesList">
+              </Slideshow>
+              <template v-if="!leagueId">
+                <!-- 推荐 -->
+                <van-collapse v-model="activeNamesB" accordion :border="false" class="GlobalCollapse">
+                  <van-collapse-item name="b1">
+                    <template #title>
+                      <ArrowTitle v-if="recommendList.length || (!getRecommendEventsIsLoading || isLoadingRecommend)"
+                        ref="leagueArrowTitle" class="mt10 mb10 goodArrowTitle" :src="recommendIcon"
+                        :text="$t('sport.recommend')" />
+                    </template>
+                    <Loading v-if="!getRecommendEventsIsLoading || isLoadingRecommend" />
+                    <template v-else>
+                      <template v-if="recommendList.length">
+                        <div class="recommend-list">
+                          <template v-for="(item, idx) in recommendList" :key="idx">
+                            <van-sticky :offset-top="offsetTop" :container="newContainerRecommend" z-index="8"
+                              :class="{ 'mt10': idx !== 0 }">
+                              <playTitle :send-params="item" />
+                            </van-sticky>
+                            <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false"
+                              :send-params="item1" :class="{ 'mt10': idx !== 0 }" />
+                          </template>
+                        </div>
+                        <div class="Button-MatchMore mt20 mb20" :class="recommendLoadAll ? 'no-more' : ''"
+                          @click="moreRecommend">
+                          <span>
+                            {{ recommendLoadAll ? $t('live.noMore') : $t('home.lookMoreMatch') }}
+                          </span>
+                        </div>
+                      </template>
+                      <!-- <HomeEmpty v-else></HomeEmpty> -->
+                    </template>
+                  </van-collapse-item>
+                </van-collapse>
 
-        <!-- 冠军 -->
-        <ChampionList ref="championGuessing" :champion-list="championList" :champion-list-loading="championListLoading" />
+                <!-- 早盘 -->
+                <van-collapse v-model="activeNamesC" accordion :border="false" class="GlobalCollapse">
+                  <van-collapse-item name="c1">
+                    <template #title>
+                      <ArrowTitle ref="leagueArrowTitle" class="mt10 mb10 latestArrowTitle" :src="earlyIcon"
+                        :text="$t('sport.early')" />
+                    </template>
+                    <Loading v-if="!getRecommendEventsIsLoading || isLoadingEarly" />
+                    <template v-else>
+                      <template v-if="earlyList.length">
+                        <div class="early-list">
+                          <!-- <HomeMatchHandicap v-for="(item, idx) in earlyList" :key="idx" :send-params="item" /> -->
+                            <template v-for="(item, idx) in earlyList" :key="idx">
+                              <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="8"
+                                :class="{ 'mt10': idx !== 0 }">
+                                <playTitle :send-params="item" />
+                              </van-sticky>
+                              <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false"
+                                :send-params="item1" :class="{ 'mt10': idx !== 0 }" />
+                            </template>
+                        </div>
+                        <div class="Button-MatchMore mt20 mb20" :class="earlyLoadAll ? 'no-more' : ''" @click="moreEarly">
+                          <span>
+                            {{ earlyLoadAll ? $t('live.noMore') : $t('home.lookMoreMatch') }}
+                          </span>
+                        </div>
+                      </template>
+                      <HomeEmpty v-else></HomeEmpty>
+                    </template>
+                  </van-collapse-item>
+                </van-collapse>
 
-      </template>
-    </van-pull-refresh>
+              </template>
+              <template v-if="leagueId">
 
-    <FooterHeight />
+                <!-- 联赛 -->
+                <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
+                  <van-collapse-item name="1">
+                    <template #title>
+                      <ArrowTitle ref="leagueArrowTitle" class="mt10 mb10" :src="leagueLogo" type="6"
+                        :text="leagueName" />
+                    </template>
+                    <Loading v-if="!getRecommendEventsIsLoading" />
+                    <template v-else>
+                      <div v-if="recommendList.length" class="recommend-list">
+                        <template v-for="(item, idx) in recommendList" :key="idx">
+                          <van-sticky :offset-top="offsetTop" :container="newContainerRecommend" z-index="8"
+                            :class="{ 'mt10': idx !== 0 }">
+                            <playTitle :send-params="item" />
+                          </van-sticky>
+                          <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false"
+                            :send-params="item1" :class="{ 'mt10': idx !== 0 }" />
+                        </template>
+                      </div>
+                      <HomeEmpty v-else></HomeEmpty>
+                    </template>
+                  </van-collapse-item>
+                </van-collapse>
+
+                <!-- 冠军 -->
+                <ChampionList ref="championGuessing" :champion-list="championList"
+                  :champion-list-loading="championListLoading" />
+
+              </template>
+            </van-pull-refresh>
+
+            <FooterHeight />
+          </van-tab>
+        </van-tabs>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -171,7 +179,7 @@ import playTitle from '@/components/Title/playTitle/index.vue'
 // useRouter
 import { useRoute, } from 'vue-router'
 // onBeforeMount, watch,
-import { ref, computed, nextTick, onMounted, onActivated, watch } from 'vue'
+import { ref, computed, onMounted, onActivated, watch } from 'vue'
 // import router from '@/router'
 import { apiChampionpPlayTypes } from '@/api/champion'
 import { recommendLeague, commonMatches, homeCommonMatches, searchCountryInfo, searchLeagueByCountryInfo } from '@/api/home'
@@ -180,22 +188,17 @@ import moment from 'moment'
 
 // const { currentRoute } = useRouter()
 const route: any = useRoute()
+const scrollNum = computed(() => store.state.user.scrollNumY)
 const gameType1 = computed(() => {
   return route.params?.type || 'FT'
 })
 const gameType = ref<any>(gameType1.value)
-const refSportsTabs = ref()
-const returnSportsSuccess = (item: any) => {
-  // router.push({
-  //   name: 'Sport',
-  //   params: {
-  //     type: item
-  //   }
-  // })
+const onChangeTabs = (item: any) => {
+ 
   // 新增
   activeNamesB.value = 'b1'
   activeNamesC.value = 'c1'
-  leagueArrowTitle?.value?.changeClick(false)
+  // leagueArrowTitle?.value?.changeClick(false)
   ifLeagueNum.value = false
   closeSlideshow.value = true
   activeCollapseNames.value = ''
@@ -206,13 +209,16 @@ const returnSportsSuccess = (item: any) => {
   getRecommendEventsIsLoading.value = false
   initList()
 }
+
+const ifAnimated: any = ref(true)
+const active = ref('FT')
 const activeNames = ref('1')
 const activeNamesB = ref('b1')
 const activeNamesC = ref('c1')
 const activeCollapseNames = ref('')
 
 const championGuessing = ref<any>()
-const leagueArrowTitle = ref<any>()
+const leagueArrowTitle = ref()
 
 const leagueId: any = ref(route.query.leagueId)
 const leagueLogo: any = ref()
@@ -241,10 +247,32 @@ const offsetTop = computed(() => {
   }
   return offsetTopval
 })
+const sportsList = computed(() => {
+  const sports = store.state.app.sports || []
+  const newSportsA = sports.filter((e: any) => {
+    return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.gameCount
+    // return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType)
+  })
+  let newSportsB: any = []
+  if (newSportsA.length) {
+    const newSportsC = newSportsA.map((e: any) => {
+      return {
+        text: e.gameType
+      }
+    })
+    newSportsB = [...newSportsC]
+  }
+  return newSportsB
+})
 
 onMounted(() => {
   // 初始化
   // initList()
+})
+watch(() => scrollNum.value, (newValue) => {
+  if (newValue > 88) {
+    ifAnimated.value = false
+  }
 })
 // 监听搜索操作
 watch(
@@ -253,14 +281,12 @@ watch(
     if (newValue) {
       store.dispatch('user/getIfSearchInfo', false)
       gameType.value = route.params?.type || 'FT'
+      active.value = gameType.value
       championListLoading.value = true
       ifLeagueNum.value = false
       closeSlideshow.value = false
       leagueId.value = newValue
       initData()
-      nextTick(() => {
-        refSportsTabs.value?.setSports(gameType.value)
-      })
     }
   }
 )
@@ -468,7 +494,6 @@ const moreEarly = async () => {
   isLoadingEarly.value = true
   const res: any = await commonMatches(earlyParames.value) || {}
   if (res.code === 200 && res.data?.matchList?.baseData && res.data?.matchList?.baseData.length) {
-    // earlyList.value.push(...res.data.matchList.baseData)
     earlyListArr.value.push(...res.data.matchList.baseData)
     const listObj: any = {}
     const listArr: any = []
@@ -663,8 +688,8 @@ const clickLeague = (item: any) => {
   if (!item.gameTypeCount) return
   activeCollapseNames.value = ''
   firstLeaguesList.value = []
-  leagueArrowTitle?.value?.changeClick(false)
-  championGuessing?.value?.CloseClick(false)
+  // leagueArrowTitle?.value?.changeClick(false)
+  // championGuessing?.value?.CloseClick(false)
   //  判断推荐联赛里面是否有地区联赛
   const leagueIdObj = LeagueByCountryInfoArr.value.find((e: any) => {
     return e.leagueId === item.leagueId
@@ -693,8 +718,8 @@ const handleChangeLeagueId = (item: any) => {
   if (!item.gameTypeCount) return
   closeSlideshow.value = false
   activeNames.value = '1'
-  leagueArrowTitle?.value?.changeClick(false)
-  championGuessing?.value?.CloseClick(false)
+  // leagueArrowTitle?.value?.changeClick(false)
+  // championGuessing?.value?.CloseClick(false)
   leagueId.value = item.leagueId
 
 
@@ -722,19 +747,18 @@ onActivated(async () => {
     getFirstLeagues()
   }
   getSearchCountryInfo()
-  nextTick(() => {
-    refSportsTabs.value?.setSports(gameType.value)
-  })
+  
+  active.value = gameType.value
   // 是否冠军赛
   const isChampion = route.query?.ischampion || ''
   if (isChampion === 'yes') {
     activeNames.value = '2'
-    leagueArrowTitle?.value?.changeClick(true)
-    championGuessing?.value?.CloseClick(false)
+    // leagueArrowTitle?.value?.changeClick(true)
+    // championGuessing?.value?.CloseClick(false)
   } else {
     activeNames.value = '1'
-    leagueArrowTitle?.value?.changeClick(false)
-    championGuessing?.value?.CloseClick(false)
+    // leagueArrowTitle?.value?.changeClick(false)
+    // championGuessing?.value?.CloseClick(false)
   }
 })
 </script>
@@ -909,6 +933,11 @@ onActivated(async () => {
 
   :deep(.van-tabs__nav--complete) {
     background-color: var(--color-background-color);
+  }
+
+  .tabs-cut-7 {
+    margin-left: -30px;
+    margin-right: 10px;
   }
 }
 </style>

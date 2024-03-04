@@ -17,7 +17,7 @@
       </div>
     </div>
   </div>
-  <van-calendar v-model:show="show" type="range" @confirm="onConfirm" />
+  <!-- <van-calendar v-model:show="show" type="range" @confirm="onConfirm" /> -->
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
@@ -38,16 +38,16 @@ const homeTimeArray = ref([
 ])
 
 const active = ref('')
-const emit = defineEmits(['returnTimeSuccess'])
+const emit = defineEmits(['returnTimeSuccess','DateShow'])
 const TimeClick = (item:any) => {
   active.value = item.values
   emit('returnTimeSuccess', active.value)
 }
 
-const show = ref(false)
+// const show = ref(false)
 const onConfirm = (values:any) => {
   const [start, end] = values
-  show.value = false
+  // show.value = false
   const newHomeTimeArray = homeTimeArray.value.filter(e => {
     return e.defaultToggle
   })
@@ -63,10 +63,13 @@ const onConfirm = (values:any) => {
   })
 }
 const moreTimeClick = () => {
-  show.value = true
+  // show.value = true
+  emit('DateShow', true,)
+
 }
 defineExpose({
-  active
+  active,
+  onConfirm
 })
 const refHomeTime = ref()
 const refHomeTimePage = ref()
