@@ -66,5 +66,8 @@ export default {
   win: 'win',
   tie: 'flat',
   lose: 'negative',
-  point: 'point'
+  point: 'point',
+  nextAM: 'The next live broadcast will start on <span class="time-num">{num}</span>',
+  halfPlay: 'halftime',
+  section: 'section'
 }
