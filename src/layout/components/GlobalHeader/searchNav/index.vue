@@ -1,6 +1,6 @@
 <template>
  <div>
-  <van-popup v-model:show="showSearchNav" :duration="0.3" position="right" :style="{ width: '100%', height: '100%' }">
+  <van-popup v-model:show="showSearchNav" :duration="0.2" position="right" :style="{ width: '100%', height: '100%' }">
     <div class="search">
       <div class="search_box">
         <van-cell-group inset>
