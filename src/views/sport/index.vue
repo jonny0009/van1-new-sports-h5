@@ -251,21 +251,13 @@ watch(
   () => ifSearchDo.value,
   (newValue: any) => {
     if (newValue) {
+      store.dispatch('user/getIfSearchInfo', false)
       gameType.value = route.params?.type || 'FT'
-      groupedArrays.value = []
-      firstLeaguesList.value = []
       championListLoading.value = true
       ifLeagueNum.value = false
       closeSlideshow.value = false
-      getCommonMatches()
-      const countryId = route.query?.countryId || ''
-      leagueId.value = newValue 
-      if (countryId) {
-        getLeagueByCountryInfo(countryId, 2)
-      } else {
-        getFirstLeagues()
-      }
-      getSearchCountryInfo()
+      leagueId.value = newValue
+      initData()
       nextTick(() => {
         refSportsTabs.value?.setSports(gameType.value)
       })
