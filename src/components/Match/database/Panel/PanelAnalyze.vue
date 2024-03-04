@@ -61,7 +61,7 @@
               <div class="bar"></div>
               <div
 
-                v-if="(item.ratios.length == 2 && item.ratios[1].betCountRate > item.ratios[0].betCountRate) || (item.ratios.length == 3 && item.ratios[2].betCountRate > item.ratios[1].betCountRate && item.ratios[2].betCountRate > item.ratios[0].betCountRate)"
+                v-if="(item.ratios.length == 2 && item.ratios[1].betCountRate > item.ratios[0].betCountRate) || (item.ratios.length == 3 && item.ratios[2].betCountRate >= item.ratios[1].betCountRate && item.ratios[2].betCountRate > item.ratios[0].betCountRate)"
                 class="value"
               >
                 <span>{{ item.ratios[item.ratios.length - 1].betCount }}</span>
@@ -109,7 +109,7 @@
               <div class="percent">{{ calcRatioPer(item.ratios[item.ratios.length - 1].betGoldRate) }}%</div>
               <div class="bar"></div>
               <div
-                v-if="(item.ratios.length == 2 && item.ratios[1].betCountRate > item.ratios[0].betCountRate) || (item.ratios.length == 3 && item.ratios[2].betCountRate > item.ratios[1].betCountRate && item.ratios[2].betCountRate > item.ratios[0].betCountRate)"
+                v-if="(item.ratios.length == 2 && item.ratios[1].betCountRate > item.ratios[0].betCountRate) || (item.ratios.length == 3 && item.ratios[2].betCountRate >= item.ratios[1].betCountRate && item.ratios[2].betCountRate > item.ratios[0].betCountRate)"
 
                 class="value"
               >
