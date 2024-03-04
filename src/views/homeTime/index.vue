@@ -1,27 +1,32 @@
 <template>
-  <div class="homeTime-page">
+  <div class="homeTime-page" ref="newContainer">
     <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
-      <SportsTabs ref="refSportsTabs" class="pb10" @returnSportsSuccess="returnSportsSuccess" />
-      <tabsTime v-if="routerName === 'HomeTime'" @returnTimeSuccess="returnTimeSuccess" />
-      <van-list v-model="loading" :finished="finished" :finished-text="$t('live.noMore')" @load="onLoad">
-        <template v-if="isLoading">
-          <div ref="newContainer">
-            <template v-for="(item, idx) in recommendEventsList" :key="idx">
-              <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="8" :class="{ 'mt10': idx !== 0 }">
-                <playTitle :send-params="item" />
-              </van-sticky>
-              <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
-                :class="{ 'mt10': idx !== 0 }" />
-            </template>
+      <SportsTabs ref="refSportsTabs" class="pb10" @returnSportsSuccess="returnSportsSuccess">
+        <template #body>
+          <div class="mt10">
+            <tabsTime v-if="routerName === 'HomeTime'" ref="refTimeTabs" @returnTimeSuccess="returnTimeSuccess"  @DateShow="DateShow"/>
+            <van-list v-model="loading" :finished="finished" :finished-text="$t('live.noMore')" @load="onLoad">
+              <template v-if="isLoading">
+                <template v-for="(item, idx) in recommendEventsList" :key="idx">
+                  <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="8"
+                    :class="{ 'mt10': idx !== 0 }">
+                    <playTitle :send-params="item" />
+                  </van-sticky>
+                  <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
+                    :class="{ 'mt10': idx !== 0 }" />
+                </template>
+                <HomeEmpty v-if="!recommendEventsList.length"></HomeEmpty>
+              </template>
+              <Loading v-if="!isLoading || loading" :class="{
+                'new_loading mt10': loading
+              }" />
+            </van-list>
           </div>
-          <HomeEmpty v-if="!recommendEventsList.length"></HomeEmpty>
         </template>
-        <Loading v-if="!isLoading || loading" :class="{
-          'new_loading mt10': loading
-        }" />
-      </van-list>
+      </SportsTabs>
     </van-pull-refresh>
     <FooterHeight />
+    <van-calendar v-model:show="show" type="range" @confirm="onConfirm" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -33,6 +38,7 @@ import store from '@/store'
 import { onBeforeMount, ref, reactive, computed, watch } from 'vue'
 import moment from 'moment'
 import router from '@/router'
+const scrollNum = computed(() => store.state.user.scrollNumY)
 const offsetTop = computed(() => {
   const offsetTop = store.state.app.globalBarHeaderHeight || 48
   var offsetTopval = 48
@@ -44,12 +50,21 @@ const offsetTop = computed(() => {
   return offsetTopval
 })
 const newContainer = ref(null)
+const show = ref(false)
+
 const routerName: any = computed(() => {
   return router?.currentRoute?.value?.name || ''
 })
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout: any = ref('')
 const refSportsTabs = ref()
+const refTimeTabs = ref()
+
+watch(() => scrollNum.value, (newValue) => {
+  if (newValue > 88) {
+    refSportsTabs.value.ifAnimated = false
+  }
+})
 watch(refreshChangeTime, (val) => {
   if (val) {
     refSportsTabs.value?.resetParams()
@@ -149,6 +164,13 @@ const onLoad = () => {
   } else {
     onLoadToggle.value = true
   }
+}
+const DateShow = (val:any) => {
+  show.value = val
+}
+const onConfirm = (value: any) => {
+  show.value = false
+  refTimeTabs.value.onConfirm(value)
 }
 const returnTimeSuccess = (val: any) => {
   if (val) {
