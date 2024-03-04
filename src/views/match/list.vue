@@ -25,7 +25,7 @@
           </div>
         </template>
 
-        <div v-if="list.length === 0 && time > 0" class="next">
+        <div v-if="list.length === 0 && time > 0 && navActive === 'RB'" class="next">
           <div class="img">
             <img
               src="~@/assets/images/live/no_an_ma.png"
@@ -36,33 +36,35 @@
           </p>
         </div>
 
-        <van-pull-refresh
-          v-if="time <= 0"
-          v-model="refreshing"
-          @refresh="onRefresh"
-        >
-
-          <EmptyData v-if="finished && list.length === 0" />
-          <van-list
-            v-model:loading="loading"
-            :finished="finished"
-            :finished-text="list.length == 0 ? '' : $t('live.noMore')"
-            @load="onLoad"
+        <div>
+          <van-pull-refresh
+            v-model="refreshing"
+            @refresh="onRefresh"
           >
-            <div class="grid-wrapper">
-              <div
-                v-for="item in list"
-                :key="item.gidm"
-                class="flex-item"
-              >
-                <ListItem
-                  :item="item"
-                  @click="onItemClick(item)"
-                />
+
+            <EmptyData v-if="(finished && list.length === 0 && navActive !== 'RB') || (list.length === 0 && time <= -1 && navActive === 'RB' && finished)" />
+            <van-list
+              v-model:loading="loading"
+              :finished="finished"
+              :finished-text="list.length == 0 ? '' : $t('live.noMore')"
+              @load="onLoad"
+            >
+              <div class="grid-wrapper">
+                <div
+                  v-for="item in list"
+                  :key="item.gidm"
+                  class="flex-item"
+                >
+                  <ListItem
+                    :item="item"
+                    @click="onItemClick(item)"
+                  />
+                </div>
               </div>
-            </div>
-          </van-list>
-        </van-pull-refresh>
+            </van-list>
+          </van-pull-refresh>
+        </div>
+
       </van-tab>
     </van-tabs>
   </div>
@@ -120,15 +122,13 @@ const onLoad = async () => {
 
   if (res.code === 200) {
     if (data.list.length === 0 && navActive.value === 'RB') {
+      finished.value = true
       const res1: any = await nextAnchorMatchDate()
       if (res1.code === 200 && res1.data) {
         finished.value = true
         time.value = res1.data - new Date().getTime()
         timer = setInterval(() => {
           time.value -= 1
-          if (time.value <= 0) {
-            onRefresh()
-          }
           countDown()
         }, 1000)
       }
@@ -144,6 +144,7 @@ const onLoad = async () => {
 }
 
 const onRefresh = () => {
+  time.value = -1
   page = 0
   finished.value = false
   loading.value = true
@@ -152,6 +153,7 @@ const onRefresh = () => {
 
 const onChangeTabs = () => {
   refreshing.value = true
+  time.value = -1
   clearInterval(timer)
   onRefresh()
 }
@@ -161,10 +163,16 @@ const onItemClick = (item: any) => {
 }
 
 const countDown = () => {
+  if (time.value === -1) {
+    clearInterval(timer)
+    onRefresh()
+    return
+  }
+
   function addZero(i: any) {
     return i < 10 ? '0' + i : i
   }
-  const leftTime = time.value
+  const leftTime:number = time.value
   let hour = parseInt((leftTime / (60 * 60)) % 24)
   let minute = parseInt((leftTime / 60) % 60)
   let second = parseInt(leftTime % 60)
