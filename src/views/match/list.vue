@@ -113,11 +113,13 @@ const onLoad = async () => {
     if (res1.code === 200 && res1.data) {
       finished.value = true
       time.value = res1.data - res1.systemTime
-      timer = Number(setInterval(() => {
-        time.value -= 1
+      console.log(time.value)
+
+      timer = setInterval(() => {
+        time.value -= 1000
         time.value === 0 && clearInterval(timer)
         countDown()
-      }, 1000))
+      }, 1000)
     }
     return
   }
@@ -139,6 +141,11 @@ const onLoad = async () => {
   const res: any = await anchorLiveList(params)
   const data = res.data
   loading.value = false
+
+  if (time.value > -1 && navActive.value === 'RB') {
+    list.value = []
+    return
+  }
 
   if (res.code === 200) {
     data.list.forEach((item: any) => {
@@ -176,17 +183,20 @@ const countDown = () => {
   function addZero(i: any) {
     return i < 10 ? '0' + i : i
   }
-  const leftTime:number = time.value
+  const timeDiff:number = Math.round(time.value / 1000)
 
-  let hour = Math.floor((leftTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) // 小时
-  let minute = Math.floor((leftTime % (1000 * 60 * 60)) / (1000 * 60)) // 分钟
-  let second = Math.floor((leftTime % (1000 * 60)) / 1000) // 秒
+  let hour = parseInt((timeDiff / 3600) % 24)
+  // 获取还剩多少分钟
+  let minute = parseInt((timeDiff / 60) % 60)
+  // 获取还剩多少秒
+  let second = timeDiff % 60
 
   hour = addZero(hour)
   minute = addZero(minute)
   second = addZero(second)
   countTime.value = hour + ':' + minute + ':' + second
 }
+
 </script>
 
 <style lang="scss" scoped>
