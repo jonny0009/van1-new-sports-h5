@@ -112,16 +112,16 @@ const onLoad = async () => {
     const res1: any = await nextAnchorMatchDate()
     if (res1.code === 200 && res1.data) {
       finished.value = true
-      time.value = res1.data - res1.systemTime
-      console.log(time.value)
-
-      timer = setInterval(() => {
-        time.value -= 1000
-        time.value === 0 && clearInterval(timer)
-        countDown()
-      }, 1000)
+      if (res1.data < res1.systemTime) {
+        time.value = res1.data - res1.systemTime
+        timer = setInterval(() => {
+          time.value -= 1000
+          time.value === 0 && clearInterval(timer)
+          countDown()
+        }, 1000)
+        return
+      }
     }
-    return
   }
 
   if (refreshing.value) {
@@ -174,7 +174,7 @@ const onItemClick = (item: any) => {
 }
 
 const countDown = () => {
-  if (time.value === -1) {
+  if (time.value < 0) {
     clearInterval(timer)
     onRefresh()
     return
