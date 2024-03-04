@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, computed, onBeforeMount, onUnmounted, ref } from 'vue'
+import { Ref, computed, onBeforeMount, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { matcheInfo } from '@/api/live'
@@ -65,7 +65,7 @@ import { formatToDate } from '@/utils/date'
 import BettingCollapse from '@/components/BettingCollapse/index.vue'
 import MatchDatabase from '@/components/Match/database/index.vue'
 import store from '@/store'
-const gameType = computed(() => route.query['gameType'])||'FT'
+const gameType = computed(() => route.query['gameType']) || 'FT'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -75,6 +75,7 @@ const { findGroupById, playGroupBetList, playBettingList, apiLoading } = useBett
 
 const paramsId = computed(() => route.params['id'])
 const showFixedBet = computed(() => store.state.app.showFixedBet)
+const ifSearchDo = computed(() => store.state.user.ifSearchDo)
 
 const menuList = ref([
   { type: 0, title: t('live.bet'), iconName: 'live-bet' },
@@ -101,6 +102,7 @@ const getMatcheInfo = async () => {
     const gameInfo = game.gameInfo || {}
     matchInfo.value.gameInfo = gameInfo
   }
+  apiLoading.value = false
   store.commit('match/SET_MATCH_INFO', matchInfo.value)
 }
 
@@ -126,6 +128,19 @@ const closeInterval = () => {
     store.commit('match/SET_NEED_TIMER', false)
   }
 }
+// 监听搜索操作
+watch(
+  () => ifSearchDo.value,
+  (newValue: any) => {
+    if (newValue) {
+      apiLoading.value =true
+      matchInfo.value = {}
+      getMatcheInfo()
+      startInterval()
+      // useBetting(null)
+    }
+  }
+)
 
 onBeforeMount(() => {
   getMatcheInfo()
@@ -150,6 +165,7 @@ onUnmounted(() => {
     background-size: auto 100%;
     margin: 40px 36px 20px 36px;
     position: relative;
+
     .bannerBg-1 {
       position: absolute;
       top: 0;
@@ -325,4 +341,5 @@ onUnmounted(() => {
   &-main {
     padding: 30px 14px 0 14px;
   }
-}</style>
+}
+</style>

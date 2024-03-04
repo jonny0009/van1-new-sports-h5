@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-popup v-model:show="showLeft" :duration="0.2" position="left" :style="{ width: '71.5%', height: '100%' }">
+    <van-popup v-model:show="showLeft" :duration="0.3" position="left" :style="{ width: '71.5%', height: '100%' }">
       <div class="userInfo">
         <!-- 头部 -->
         <div class="top">

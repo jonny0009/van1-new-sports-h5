@@ -7,7 +7,7 @@ import {
   selectChampionManyName,
   playerInfo,
   getCashoutInfo,
-  confirmCashout
+  confirmCashout,
 } from '@/api/user'
 import { User } from '#/store'
 import { getToken, setToken, removeToken, getAnonymity, setAnonymity } from '@/utils/auth'
@@ -34,7 +34,9 @@ const userModule: Module<User, any> = {
     locationHeight: false,
     scrollNumY: 0,
     isAnonymity,
-    currentWallet: {}
+    currentWallet: {},
+    ifSearchDo:false
+
   },
   mutations: {
     SET_TOKEN: (state, token: string) => {
@@ -163,6 +165,10 @@ const userModule: Module<User, any> = {
     // 是否有坐标高度
     async getLocationHeight({ state }, params) {
       state.locationHeight = params
+    },
+    // 是否搜索操作
+    async getIfSearchInfo({ state }, params) {
+      state.ifSearchDo = params
     },
     // 进行中的注单
     async pendingOrder({ state,dispatch }, params = {}) {
