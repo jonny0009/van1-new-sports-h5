@@ -60,8 +60,8 @@ export const constantRoutes: Array<any> = [
         component: () => import('@/views/search/index.vue'),
         name: 'Search',
         meta: {
-          hideGlobalHeaderView:true,
-          hideGlobalBottomBet:true
+          hideGlobalHeaderView: true,
+          hideGlobalBottomBet: true
         }
       }
     ]
@@ -98,7 +98,7 @@ export const constantRoutes: Array<any> = [
           showBarTabsView: true,
           // showRefresh: true,
           KeepAlive: true,
-          index:1
+          index: 1
         }
       }
     ]
@@ -185,7 +185,7 @@ export const constantRoutes: Array<any> = [
   },
 
   ...modules,
-  
+
 ]
 
 export const router = createRouter({
