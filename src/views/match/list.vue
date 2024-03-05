@@ -78,7 +78,9 @@ import router from '@/router'
 import { useI18n } from 'vue-i18n'
 import store from '@/store'
 
-onMounted(() => {})
+onMounted(() => {
+  onRefresh()
+})
 
 const showFixedBet = computed(() => store.state.app.showFixedBet)
 const { t } = useI18n()
