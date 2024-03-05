@@ -187,6 +187,9 @@ watch(refreshChangeTime, (val) => {
   margin-left: -30px;
   margin-right: 10px;
 }
+:deep(.van-tabs__line) {
+  display: none;
+}
 
 :deep(.van-tabs__nav--complete) {
   background-color: var(--color-background-color);
