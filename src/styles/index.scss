@@ -440,15 +440,31 @@
           height: 46px;
           width: 100%;
           left: 0;
-          background: #fff;
+          // background: #fff;
+          background: var(--color-match-BetBg);
           z-index: 1;
         }
         &::before{
           content: '';
           display: inline-block;
-          height: 28px;
-          width: 28px;
+          height: 26px;
+          width: 22px;
           background: url('@/assets/images/home/match/lock.png') no-repeat;
+          background-size: contain;
+          position: absolute;
+          left: 50%;
+          margin-left: -14px;
+          bottom: 20px;
+          z-index: 2;
+        }
+      }
+      .blue-lock{
+        &::before{
+          content: '';
+          display: inline-block;
+          height: 26px;
+          width: 22px;
+          background: url('@/assets/images/home/match/blue-lock.png') no-repeat;
           background-size: contain;
           position: absolute;
           left: 50%;
