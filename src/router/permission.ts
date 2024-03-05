@@ -15,4 +15,4 @@ router.beforeEach(async (_to: any, _from: any, next) => {
   next()
 })
 
-router.afterEach(() => {})
+router.afterEach(() => { })

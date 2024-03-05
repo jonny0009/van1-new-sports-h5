@@ -21,11 +21,11 @@
         <template #title>
           <div class="tab-title">
             <SvgIcon :name="nav.iconName" />
-            <span>{{ nav.title }}</span>
+            <span>{{ nav.title }}   </span>
           </div>
         </template>
 
-        <div v-if="list.length === 0 && time > 0" class="next">
+        <div v-if="list.length === 0 && time > 0 && navActive === 'RB'" class="next">
           <div class="img">
             <img
               src="~@/assets/images/live/no_an_ma.png"
@@ -36,33 +36,35 @@
           </p>
         </div>
 
-        <van-pull-refresh
-          v-if="time <= 0"
-          v-model="refreshing"
-          @refresh="onRefresh"
-        >
-
-          <EmptyData v-if="finished && list.length === 0" />
-          <van-list
-            v-model:loading="loading"
-            :finished="finished"
-            :finished-text="list.length == 0 ? '' : $t('live.noMore')"
-            @load="onLoad"
+        <div>
+          <van-pull-refresh
+            v-model="refreshing"
+            @refresh="onRefresh"
           >
-            <div class="grid-wrapper">
-              <div
-                v-for="item in list"
-                :key="item.gidm"
-                class="flex-item"
-              >
-                <ListItem
-                  :item="item"
-                  @click="onItemClick(item)"
-                />
+
+            <EmptyData v-if="(finished && list.length === 0 && navActive !== 'RB') || (list.length === 0 && time < 0 && navActive === 'RB' && finished)" />
+            <van-list
+              v-model:loading="loading"
+              :finished="finished"
+              :finished-text="list.length == 0 ? '' : $t('live.noMore')"
+              @load="onLoad"
+            >
+              <div class="grid-wrapper">
+                <div
+                  v-for="item in list"
+                  :key="item.gidm"
+                  class="flex-item"
+                >
+                  <ListItem
+                    :item="item"
+                    @click="onItemClick(item)"
+                  />
+                </div>
               </div>
-            </div>
-          </van-list>
-        </van-pull-refresh>
+            </van-list>
+          </van-pull-refresh>
+        </div>
+
       </van-tab>
     </van-tabs>
   </div>
@@ -76,7 +78,9 @@ import router from '@/router'
 import { useI18n } from 'vue-i18n'
 import store from '@/store'
 
-onMounted(() => {})
+onMounted(() => {
+  onRefresh()
+})
 
 const showFixedBet = computed(() => store.state.app.showFixedBet)
 const { t } = useI18n()
@@ -92,6 +96,8 @@ const navActive = ref('RB')
 const time = ref(-1)
 const countTime = ref('')
 
+let timer: any = reactive({})
+
 let page: number = 0
 const list: Ref<any[]> = ref([])
 const loading = ref(false)
@@ -102,6 +108,11 @@ const onLoad = async () => {
     list.value = []
     refreshing.value = false
   }
+  if (time.value > 0 && navActive.value === 'RB') {
+    loading.value = false
+    return
+  }
+
   page++
   const params: any = {
     page: page,
@@ -117,21 +128,23 @@ const onLoad = async () => {
   loading.value = false
 
   if (res.code === 200) {
-    if (data.list.length === 0) {
+    if (navActive.value === 'RB' && data.list.length === 0) {
+      finished.value = true
       const res1: any = await nextAnchorMatchDate()
       if (res1.code === 200 && res1.data) {
-        finished.value = true
-        time.value = res1.data - new Date().getTime()
-        setInterval(() => {
-          time.value -= 1
-          if (time.value <= 0) {
-            onRefresh()
-          }
-          countDown()
-        }, 1000)
+        if (res1.data > res1.systemTime) {
+          time.value = res1.data - res1.systemTime
+          timer = setInterval(() => {
+            time.value -= 1000
+            time.value === 0 && clearInterval(timer)
+            countDown()
+          }, 1000)
+          return
+        }
       }
       return
     }
+
     data.list.forEach((item: any) => {
       list.value.push(item)
     })
@@ -158,19 +171,29 @@ const onItemClick = (item: any) => {
 }
 
 const countDown = () => {
+  if (time.value < 0) {
+    clearInterval(timer)
+    onRefresh()
+    return
+  }
+
   function addZero(i: any) {
     return i < 10 ? '0' + i : i
   }
-  const leftTime = time.value
-  let hour = parseInt((leftTime / (60 * 60)) % 24)
-  let minute = parseInt((leftTime / 60) % 60)
-  let second = parseInt(leftTime % 60)
+  const timeDiff:number = Math.round(time.value / 1000)
+
+  let hour = parseInt((timeDiff / 3600) % 24)
+  // 获取还剩多少分钟
+  let minute = parseInt((timeDiff / 60) % 60)
+  // 获取还剩多少秒
+  let second = timeDiff % 60
 
   hour = addZero(hour)
   minute = addZero(minute)
   second = addZero(second)
   countTime.value = hour + ':' + minute + ':' + second
 }
+
 </script>
 
 <style lang="scss" scoped>

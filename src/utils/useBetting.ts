@@ -17,7 +17,7 @@ export function useBetting(flag:any) {
   const apiLoading = ref(true)
 
   watch(
-    () => matchInfo.value?.gidm,
+    () => matchInfo.value,
     () => {
       fetchGroup()
     }
@@ -26,7 +26,6 @@ export function useBetting(flag:any) {
     // fetchGroup()
   })
 
-  // 1
   const playGroupBetList: Ref<any[]> = ref([])
   const fetchGroup = async () => {
     if (needTimer.value && !flag) {
@@ -41,7 +40,7 @@ export function useBetting(flag:any) {
       if (res.code === 200) {
         const patternList = data[FORMAT_TYPE[formatType]]
         playGroupBetList.value = patternList
-        if (flag===1) {
+        if (flag === 1) {
           findGroupById('0')
         }
       }

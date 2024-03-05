@@ -32,7 +32,10 @@
             >
               <div class="percent">{{ calcRatioPer(item.ratios[0].betCountRate) }}%</div>
               <div class="bar"></div>
-              <div class="value">
+              <div
+                v-if="(item.ratios.length == 2 && item.ratios[0].betCountRate >= item.ratios[1].betCountRate) || (item.ratios.length == 3 && item.ratios[0].betCountRate >= item.ratios[1].betCountRate && item.ratios[0].betCountRate >= item.ratios[2].betCountRate)"
+                class="value"
+              >
                 <span>{{ item.ratios[0].betCount }}</span>
               </div>
             </section>
@@ -43,7 +46,10 @@
             >
               <div class="percent">{{ calcRatioPer(item.ratios[1].betCountRate) }}%</div>
               <div class="bar"></div>
-              <div class="value">
+              <div
+                v-if="item.ratios[1].betCountRate > item.ratios[0].betCountRate && item.ratios[1].betCountRate > item.ratios[2].betCountRate"
+                class="value"
+              >
                 <span>{{ item.ratios[1].betCount }}</span>
               </div>
             </section>
@@ -53,7 +59,11 @@
             >
               <div class="percent">{{ calcRatioPer(item.ratios[item.ratios.length - 1].betCountRate) }}%</div>
               <div class="bar"></div>
-              <div class="value">
+              <div
+
+                v-if="(item.ratios.length == 2 && item.ratios[1].betCountRate > item.ratios[0].betCountRate) || (item.ratios.length == 3 && item.ratios[2].betCountRate >= item.ratios[1].betCountRate && item.ratios[2].betCountRate > item.ratios[0].betCountRate)"
+                class="value"
+              >
                 <span>{{ item.ratios[item.ratios.length - 1].betCount }}</span>
               </div>
             </section>
@@ -68,7 +78,11 @@
             >
               <div class="percent">{{ calcRatioPer(item.ratios[0].betGoldRate) }}%</div>
               <div class="bar"></div>
-              <div class="value">
+              <div
+                v-if="(item.ratios.length == 2 && item.ratios[0].betCountRate >= item.ratios[1].betCountRate) || (item.ratios.length == 3 && item.ratios[0].betCountRate >= item.ratios[1].betCountRate && item.ratios[0].betCountRate >= item.ratios[2].betCountRate)"
+
+                class="value"
+              >
                 <Currency /><span v-points="item.ratios[0].betGold"></span>
               </div>
             </section>
@@ -79,7 +93,12 @@
             >
               <div class="percent">{{ calcRatioPer(item.ratios[1].betGoldRate) }}%</div>
               <div class="bar"></div>
-              <div class="value">
+              <div
+
+                v-if="item.ratios[1].betCountRate > item.ratios[0].betCountRate && item.ratios[1].betCountRate > item.ratios[2].betCountRate"
+
+                class="value"
+              >
                 <Currency /><span v-points="item.ratios[1].betGold"></span>
               </div>
             </section>
@@ -89,7 +108,11 @@
             >
               <div class="percent">{{ calcRatioPer(item.ratios[item.ratios.length - 1].betGoldRate) }}%</div>
               <div class="bar"></div>
-              <div class="value">
+              <div
+                v-if="(item.ratios.length == 2 && item.ratios[1].betCountRate > item.ratios[0].betCountRate) || (item.ratios.length == 3 && item.ratios[2].betCountRate >= item.ratios[1].betCountRate && item.ratios[2].betCountRate > item.ratios[0].betCountRate)"
+
+                class="value"
+              >
                 <Currency /><span v-points="item.ratios[item.ratios.length - 1].betGold"></span>
               </div>
             </section>
@@ -141,7 +164,7 @@ const list = computed(() => {
           ratioType
         }
       })
-      console.log(ratios, '----')
+      console.log(ratios, '--')
       showList.push({
         name: playName({ gameType, playType, session }),
         ratios
@@ -214,7 +237,7 @@ const calcRatioPer = (num: any) => {
         transition: all 0.3s;
       }
       .value {
-        visibility: hidden;
+        // visibility: hidden;
         font-size: 24px;
         line-height: 1.6;
         transition: all 0.3s;

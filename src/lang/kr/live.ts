@@ -66,5 +66,8 @@ export default {
   win: '승리',
   tie: '플랫',
   lose: '부정적',
-  point: '포인트'
+  point: '포인트',
+  nextAM: '다음 라이브 방송은 <span class="time-num">{num}</span>에 시작됩니다',
+  halfPlay: '하프타임',
+  section: '섹션'
 }

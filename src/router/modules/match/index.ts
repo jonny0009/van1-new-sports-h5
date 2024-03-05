@@ -16,7 +16,7 @@ export default {
         showSportsTabsView: true,
         KeepAlive: true,
         key: 'matchId',
-        index:7
+        index: 7
       }
     },
 
@@ -32,7 +32,7 @@ export default {
         showheadGoBack: true,
         key: 'matchId',
         KeepAlive: false,
-        index:999
+        index: 999
       },
       children: [
         {
@@ -70,7 +70,7 @@ export default {
       component: () => import('@/views/match/more.vue'),
       meta: {
         showheadGoBack: true,
-        index:999
+        index: 999
       }
     }
   ]
