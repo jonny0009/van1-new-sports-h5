@@ -104,12 +104,15 @@ const loading = ref(false)
 const finished = ref(false)
 const refreshing = ref(false)
 const onLoad = async () => {
-  if (time.value > 0) return
-
   if (refreshing.value) {
     list.value = []
     refreshing.value = false
   }
+  if (time.value > 0 && navActive.value === 'RB') {
+    loading.value = false
+    return
+  }
+
   page++
   const params: any = {
     page: page,
