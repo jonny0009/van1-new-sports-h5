@@ -15,7 +15,8 @@ export default {
       meta: {
         showSportsTabsView: true,
         KeepAlive: true,
-        key: 'matchId'
+        key: 'matchId',
+        index:7
       }
     },
 
@@ -30,7 +31,8 @@ export default {
       meta: {
         showheadGoBack: true,
         key: 'matchId',
-        KeepAlive: false
+        KeepAlive: false,
+        index:999
       },
       children: [
         {
@@ -67,7 +69,8 @@ export default {
       path: 'more/:id',
       component: () => import('@/views/match/more.vue'),
       meta: {
-        showheadGoBack: true
+        showheadGoBack: true,
+        index:999
       }
     }
   ]
