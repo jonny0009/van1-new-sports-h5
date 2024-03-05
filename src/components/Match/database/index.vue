@@ -37,10 +37,12 @@ let gameType = ''
 watch(
   () => matchInfo.value,
   () => {
-    if (!gameType) {
-      gameType = matchInfo.value.gameType
-      getData()
-    }
+    // 首次进来不更新问题
+    // if (!gameType) {
+
+    // }
+    gameType = matchInfo.value.gameType
+    getData()
   }
 )
 // watch(
