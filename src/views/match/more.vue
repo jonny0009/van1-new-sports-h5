@@ -152,7 +152,7 @@ watch(
   }
 )
 onMounted(() => {
-  bettingInfo.value = useBetting()
+  bettingInfo.value = useBetting(1)
 })
 onBeforeMount(() => {
   getMatcheInfo()
@@ -214,13 +214,13 @@ onUnmounted(() => {
         display: flex;
         align-items: center;
 
-        >img {
+        > img {
           width: 24px;
           height: 24px;
           margin-right: 6px;
         }
 
-        >span {
+        > span {
           max-width: 320px;
           overflow: hidden;
           white-space: nowrap;
@@ -255,13 +255,13 @@ onUnmounted(() => {
         margin-bottom: 17px;
         width: 100%;
 
-        >img {
+        > img {
           display: block;
           width: 62px;
           height: 62px;
         }
 
-        >span {
+        > span {
           font-size: 28px;
         }
       }
@@ -277,7 +277,7 @@ onUnmounted(() => {
       &.host {
         align-items: flex-start;
 
-        .img-num>span {
+        .img-num > span {
           padding-right: 20px;
         }
       }
@@ -285,7 +285,7 @@ onUnmounted(() => {
       &.away {
         align-items: flex-end;
 
-        .img-num>span {
+        .img-num > span {
           padding-left: 20px;
         }
       }

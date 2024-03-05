@@ -10,7 +10,7 @@ const FORMAT_TYPE: any = {
   2: 'novice',
   3: 'veteran'
 }
-export function useBetting(flag:any) {
+export function useBetting(flag: any) {
   const matchInfo = computed(() => store.state.match.matchInfo)
   const userConfig = computed(() => store.state.user.userConfig)
   const needTimer = computed(() => store.state.match.needTimer)
