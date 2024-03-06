@@ -1,15 +1,11 @@
 <template>
-  <span class="img_1" v-if="currency==='CNY'">{{ '¥' }} </span>
-  <span class="img_1" v-else-if="currency==='VNDK'">{{ '₫(K)' }} </span>
-  <span class="img_1" v-else-if="currency==='USDT'">{{ 'T' }} </span>
-  <span class="img_1" v-else-if="currency==='BRL'">{{ 'R$' }} </span>
-  <span class="img_1" v-else>{{ currency }} </span>
+  <span class="img_1">{{ symbol }} </span>
+
 </template>
 <script lang="ts" setup>
 import store from '@/store'
 import { computed } from 'vue'
-
-const currency = computed(() => store.state.user.currency)
+const symbol = computed(() => store.state.user.symbol)
 </script>
 
 <style scoped>
