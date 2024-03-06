@@ -10,7 +10,10 @@ const FORMAT_TYPE: any = {
   2: 'novice',
   3: 'veteran'
 }
+const flagNum: Ref<any> = ref(0)
+
 export function useBetting(flag: any) {
+  flagNum.value = flag
   const matchInfo = computed(() => store.state.match.matchInfo)
   const userConfig = computed(() => store.state.user.userConfig)
   const needTimer = computed(() => store.state.match.needTimer)
@@ -31,7 +34,6 @@ export function useBetting(flag: any) {
     if (needTimer.value && !flag) {
       return
     }
-
     const { formatType } = userConfig.value
     const { gameType } = matchInfo.value
     if (gameType) {
@@ -40,7 +42,8 @@ export function useBetting(flag: any) {
       if (res.code === 200) {
         const patternList = data[FORMAT_TYPE[formatType]]
         playGroupBetList.value = patternList
-        if (flag === 1) {
+        if (flagNum.value === 1) {
+          flagNum.value = 0
           findGroupById('0')
         }
       }
