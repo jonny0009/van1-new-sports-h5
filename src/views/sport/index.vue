@@ -83,6 +83,7 @@
                   :key="key"
                   :name="value.countryId"
                   :border="false"
+                  class="collapse-item"
                 >
                   <template #title>
                     <div class="collapseAll">
@@ -973,6 +974,11 @@ onActivated(async () => {
   }
 
   // 地区联赛折叠
+  .collapse-item {
+    :deep(.van-cell__title) {
+      flex: none;
+    }
+  }
   .van-collapse-item {
     :deep(.van-collapse-item__title) {
       background: none;
@@ -980,7 +986,9 @@ onActivated(async () => {
       .van-icon-arrow {
         color: var(--color-text-3);
         font-weight: 800;
-        // display: none;
+        margin-left: 20px;
+        margin-top: 3px;
+        font-size: 30px;
       }
     }
 
@@ -998,7 +1006,8 @@ onActivated(async () => {
       width: 58px;
       border-radius: 50%;
       overflow: hidden;
-      border: 1px solid #eff2f2;
+      border: 1px solid #c8c9cc;
+      // border: 1px solid rgb(180 180 181);
     }
 
     .collapse-title {

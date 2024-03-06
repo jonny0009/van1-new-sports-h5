@@ -106,7 +106,7 @@ const active: any = computed(() => {
       // overflow: hidden;
       // text-overflow: ellipsis;
       white-space: nowrap;
-      width: 100%;
+      width: 300%;
       text-align: center;
       span {
         display: none;
