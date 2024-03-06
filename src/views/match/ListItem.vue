@@ -95,9 +95,11 @@ const imgCover = computed(() => {
 const watchNumText = computed(() => {
   const num = props.item.watchTotal.toLocaleString()
   if (props.item.showType == 'RB') {
-    return t('live.xLooks', { num })
+    // return t('live.xLooks', { num })
+    return num
   }
-  return t('live.xReserve', { num })
+  // return t('live.xReserve', { num })
+  return num
 })
 const leagueIcon = computed(() => {
   const icon: any = {

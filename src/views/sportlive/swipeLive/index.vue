@@ -75,6 +75,7 @@ onBeforeMount(() => {
   padding: 0 0 20px;
   position: relative;
 }
+
 .my-swipe {
   .van-swipe-item {
     color: #fff;
@@ -83,6 +84,7 @@ onBeforeMount(() => {
     text-align: center;
     display: flex;
     flex-direction: column;
+
     .wrap {
       flex: 1;
       overflow: auto;
@@ -90,6 +92,7 @@ onBeforeMount(() => {
       background: #000;
       border-bottom-right-radius: 15px;
       border-bottom-left-radius: 15px;
+
       .loading {
         position: absolute;
         left: 50%;
@@ -103,13 +106,20 @@ onBeforeMount(() => {
 }
 </style>
 <style lang="scss" >
-  .swipeLive{
-    .van-swipe__indicators {
-      bottom: 18px;
-      .van-swipe__indicator {
-        width: 14px;
-        height: 14px;
-      }
+.swipeLive {
+  .van-swipe__indicators {
+    bottom: 18px;
+
+    .van-swipe__indicator {
+      width: 12px;
+      height: 12px;
+    }
+
+    .van-swipe__indicator--active {
+      width: 24px;
+      height: 12px;
+      border-radius: 24px;
     }
   }
+}
 </style>

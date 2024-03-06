@@ -2,7 +2,8 @@
   <div class="ImageButton" :class="[
     {
       'greyBg':ifCount===0,
-      'active': active
+      'active': active,
+      'ifShadow':!ifShadow
     }
   ]">
     <img v-img="src" class="img" :class="ifCircle?'img-1':''" :type="type" style="object-fit: contain;"/>
@@ -56,6 +57,12 @@ defineProps({
     type: [String, Number],
     default: function () {
       return ''
+    }
+  },
+  ifShadow: {
+    type: Boolean,
+    default: function () {
+      return true
     }
   }
 })
@@ -114,5 +121,8 @@ defineProps({
   .count-1 {
     color: #fff;
   }
+}
+.ifShadow{
+  box-shadow: none;
 }
 </style>
