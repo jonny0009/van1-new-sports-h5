@@ -1,74 +1,90 @@
 <template>
- <div>
-  <van-popup v-model:show="showSearchNav" :duration="0.2" position="right" :style="{ width: '100%', height: '100%' }">
-    <div class="search">
-      <div class="search_box">
-        <van-cell-group inset>
-          <van-field v-model="keyWords" center clearable :placeholder="$t('user.search')" @update:model-value="getList">
-            <template #left-icon>
-              <img v-if="ifBLue" class="searchImg" fit="contain" src="@/assets/images/user/blue/search.png" />
-              <van-image v-else class="searchImg" fit="contain" :src="searchImg" />
-            </template>
-          </van-field>
-        </van-cell-group>
-        <span class="cancel" @click="toUrl()">{{ $t('user.cancellation') }}</span>
-      </div>
-      <!-- 推荐 -->
-      <div v-if="!keyWords" class="content">
-        <div v-if="searchHistory.arr.length">
-          <p class="font_1 font-2">
-            <span>{{ $t('user.SearchHistory') }}</span>
-            <img v-if="ifBLue" class="img_3" src="@/assets/images/user/blue/delete.png" alt="" @click="hanDleClear" />
-            <img v-else class="img_3" src="@/assets/images/user/del.svg" alt="" @click="hanDleClear" />
-          </p>
-          <van-divider class="line-color" />
-          <div class="historyList">
-            <div v-for="(item) in searchHistory.arr" :key="item" class="item">
-              <van-image class="itemImg" fit="contain" :src="time" />
-              <span class="font_2" @click="keyWordsSearch(item)">{{ item }}</span>
-            </div>
-          </div>
-        </div>
-        <!-- 热门搜索 -->
-        <div v-if="hotList.arr.length" class="hot-recommend">
-          <p class="font_1">{{ $t('user.hotSearch') }}</p>
-          <van-divider class="line-color" />
-          <div class="hot-list">
-            <span v-for="(item) in hotList.arr" :key="item" class="item" @click="keyWordsSearch(item.hotSearchName)">
-              {{ item.hotSearchName }}
-            </span>
-          </div>
+  <div>
+    <van-popup v-model:show="showSearchNav" :duration="0.2" position="right" :style="{ width: '100%', height: '100%' }">
+      <div class="search">
+        <div class="search_box">
+          <van-cell-group inset>
+            <van-field
+              v-model="keyWords"
+              center
+              clearable
+              :placeholder="$t('user.search')"
+              @update:model-value="getList"
+            >
+              <template #left-icon>
+                <img v-if="ifBLue" class="searchImg" fit="contain" src="@/assets/images/user/blue/search.png" />
+                <van-image v-else class="searchImg" fit="contain" :src="searchImg" />
+              </template>
+            </van-field>
+          </van-cell-group>
+          <span class="cancel" @click="toUrl()">{{ $t('user.cancellation') }}</span>
         </div>
         <!-- 推荐 -->
-        <p class="font_1">{{ $t('user.recommend') }}</p>
-        <van-divider class="line-color" />
-        <div class="content-list">
-          <div v-for="(item, index) in sportsList" :key="index" class="detail" @click="toUrlGame(item)">
-            <div class="left">
-              <SportsIcon :icon-src="item.value" class="itemImg" />
-              <span class="font_2">
-                {{ $t(`user.sports.${item.gameType}`) }}
+        <div v-if="!keyWords" class="content">
+          <div v-if="searchHistory.arr.length">
+            <p class="font_1 font-2">
+              <span>{{ $t('user.SearchHistory') }}</span>
+              <img v-if="ifBLue" class="img_3" src="@/assets/images/user/blue/delete.png" alt="" @click="hanDleClear" />
+              <img v-else class="img_3" src="@/assets/images/user/del.svg" alt="" @click="hanDleClear" />
+            </p>
+            <van-divider class="line-color" />
+            <div class="historyList">
+              <div v-for="item in searchHistory.arr" :key="item" class="item">
+                <van-image class="itemImg" fit="contain" :src="time" />
+                <span class="font_2" @click="keyWordsSearch(item)">{{ item }}</span>
+              </div>
+            </div>
+          </div>
+          <!-- 热门搜索 -->
+          <div v-if="hotList.arr.length" class="hot-recommend">
+            <p class="font_1">{{ $t('user.hotSearch') }}</p>
+            <van-divider class="line-color" />
+            <div class="hot-list">
+              <span v-for="item in hotList.arr" :key="item" class="item" @click="keyWordsSearch(item.hotSearchName)">
+                {{ item.hotSearchName }}
               </span>
             </div>
-            <div class="right">
-              {{ item.gameCount }}
+          </div>
+          <!-- 推荐 -->
+          <p class="font_1">{{ $t('user.recommend') }}</p>
+          <van-divider class="line-color" />
+          <div class="content-list">
+            <div v-for="(item, index) in sportsList" :key="index" class="detail" @click="toUrlGame(item)">
+              <div class="left">
+                <SportsIcon :icon-src="item.value" class="itemImg" />
+                <span class="font_2">
+                  {{ $t(`user.sports.${item.gameType}`) }}
+                </span>
+              </div>
+              <div class="right">
+                {{ item.gameCount }}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div v-else class="matchList">
-        <div class="area-btn_1">
-          <span :class="index === 1 ? 'active' : ''" @click="index = 1">{{ $t('user.league') }}</span>
-          <span :class="index === 2 ? 'active' : ''" @click="index = 2">{{ $t('user.competition') }}</span>
+        <div v-else class="matchList">
+          <div class="area-btn_1">
+            <span :class="index === 1 ? 'active' : ''" @click="index = 1">{{ $t('user.league') }}</span>
+            <span :class="index === 2 ? 'active' : ''" @click="index = 2">{{ $t('user.competition') }}</span>
+          </div>
+          <van-loading v-if="listLoading" size="24" type="spinner" vertical />
+          <League
+            v-if="index === 1"
+            @showSearchValue="HandleShowSearchNav"
+            :league-list="leagueList.arr"
+            :key-words="keyWords"
+          ></League>
+          <Match
+            v-if="index === 2"
+            @showSearchValue="HandleShowSearchNav"
+            :game-list="gameList.arr"
+            :key-words="keyWords"
+          ></Match>
         </div>
-        <van-loading v-if="listLoading" size="24" type="spinner" vertical />
-        <League v-if="index === 1" @showSearchValue="HandleShowSearchNav" :league-list="leagueList.arr" :key-words="keyWords"></League>
-        <Match v-if="index === 2" @showSearchValue="HandleShowSearchNav" :game-list="gameList.arr" :key-words="keyWords"></Match>
       </div>
-    </div>
-  </van-popup>
- </div>
+    </van-popup>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -123,9 +139,7 @@ const sportsList = computed(() => {
   const newSportsA = sports.filter((e: any) => {
     return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.gameCount
   })
-  let newSportsB: any = [
-
-  ]
+  let newSportsB: any = []
   if (newSportsA.length) {
     const newSportsC = newSportsA.map((e: any) => {
       return {
@@ -148,7 +162,7 @@ const openSearchNav = () => {
   store.dispatch('app/getAllSports')
   showSearchNav.value = true
 }
-const HandleShowSearchNav = (val:any) => {
+const HandleShowSearchNav = (val: any) => {
   showSearchNav.value = val
 }
 
@@ -157,7 +171,7 @@ const getHotSearchList = async () => {
     lang: localStorage.getItem('locale') || getBrowserLanguage(),
     gameType: ''
   }
-  const res: any = await hotSearch(params) || {}
+  const res: any = (await hotSearch(params)) || {}
   if (res.code === 200) {
     hotList.arr = res.data
   }
@@ -207,7 +221,6 @@ const toUrlGame = (item: any) => {
   showSearchNav.value = false
   $router.push({
     path: `/sport/${item.gameType}`
-
   })
 }
 defineExpose({
@@ -238,6 +251,10 @@ defineExpose({
 
     :deep(.van-field__body) {
       margin-top: -8px;
+      .van-field__control {
+        // color: var(--color-text-5);
+        color: var(--color-text-4);
+      }
     }
 
     .searchImg {
@@ -255,7 +272,7 @@ defineExpose({
     }
   }
 
-  >.content {
+  > .content {
     // height: calc(100vh - 126px);
     height: calc(100vh - 136px);
     overflow-y: auto;
@@ -264,7 +281,7 @@ defineExpose({
     background-color: var(--color-background-color);
 
     .line-color {
-      background: #E5ECF3;
+      background: #e5ecf3;
       height: 2px;
       margin-top: 6px;
     }
@@ -272,7 +289,7 @@ defineExpose({
     .font_1 {
       font-family: PingFangSC-Semibold;
       font-size: 24px;
-      color: #96A5AA;
+      color: #96a5aa;
       letter-spacing: 0;
       font-weight: 600;
     }
@@ -340,7 +357,6 @@ defineExpose({
           background: var(--color-search-box-frame);
           border-radius: 10px;
         }
-
       }
     }
 
@@ -388,7 +404,6 @@ defineExpose({
         text-align: right;
         font-weight: 500;
       }
-
     }
   }
 
@@ -422,9 +437,7 @@ defineExpose({
         }
       }
     }
-
   }
-
 }
 
 :deep(.van-field__control) {
@@ -443,10 +456,9 @@ defineExpose({
   // background: var(--color-background-color);
   margin-top: 1px;
 }
-
 </style>
 
-<style >
+<style>
 :root {
   --van-field-placeholder-text-color: var(--color-text-4);
 }
