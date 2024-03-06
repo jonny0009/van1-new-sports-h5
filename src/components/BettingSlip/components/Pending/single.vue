@@ -105,7 +105,7 @@
 
             <!-- 币种 -->
             <span v-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL'">
-              <CurrencyComp class-name="mr3" />
+              <CurrencyComp class-name="mr3 color1" />
             </span>
             <span v-if="item.creditState === 0" class="num color-1">
               <span v-points="getProfit(item, item1)"></span>
