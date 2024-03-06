@@ -114,7 +114,6 @@
                     <template #title>
                       <ArrowTitle
                         v-if="recommendList.length || !getRecommendEventsIsLoading || isLoadingRecommend"
-                        ref="leagueArrowTitle"
                         class="mt10 mb10 goodArrowTitle"
                         :src="recommendIcon"
                         :text="$t('sport.recommend')"
@@ -160,12 +159,7 @@
                 <van-collapse v-model="activeNamesC" accordion :border="false" class="GlobalCollapse">
                   <van-collapse-item name="c1">
                     <template #title>
-                      <ArrowTitle
-                        ref="leagueArrowTitle"
-                        class="mt10 mb10 latestArrowTitle"
-                        :src="earlyIcon"
-                        :text="$t('sport.early')"
-                      />
+                      <ArrowTitle class="mt10 mb10 latestArrowTitle" :src="earlyIcon" :text="$t('sport.early')" />
                     </template>
                     <Loading v-if="!getRecommendEventsIsLoading || isLoadingEarly" />
                     <template v-else>
@@ -206,15 +200,22 @@
               </template>
               <template v-if="leagueId">
                 <!-- 联赛 -->
-                <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
+                <van-collapse
+                  v-model="activeNames"
+                  accordion
+                  :border="false"
+                  class="GlobalCollapse"
+                  @change="leagueArrowShow = !leagueArrowShow"
+                >
                   <van-collapse-item name="1">
                     <template #title>
                       <ArrowTitle
-                        ref="leagueArrowTitle"
                         class="mt10 mb10"
                         :src="leagueLogo"
                         type="6"
                         :text="leagueName"
+                        :arrowShow="leagueArrowShow"
+                        :showOther="true"
                       />
                     </template>
                     <Loading v-if="!getRecommendEventsIsLoading" />
@@ -243,11 +244,7 @@
                 </van-collapse>
 
                 <!-- 冠军 -->
-                <ChampionList
-                  ref="championGuessing"
-                  :champion-list="championList"
-                  :champion-list-loading="championListLoading"
-                />
+                <ChampionList :champion-list="championList" :champion-list-loading="championListLoading" />
               </template>
             </van-pull-refresh>
 
@@ -292,7 +289,7 @@ const onChangeTabs = (item: any) => {
   // 新增
   activeNamesB.value = 'b1'
   activeNamesC.value = 'c1'
-  // leagueArrowTitle?.value?.changeClick(false)
+  leagueArrowShow.value = false
   ifLeagueNum.value = false
   closeSlideshow.value = true
   activeCollapseNames.value = ''
@@ -311,8 +308,8 @@ const activeNamesB = ref('b1')
 const activeNamesC = ref('c1')
 const activeCollapseNames = ref('')
 
-const championGuessing = ref<any>()
-const leagueArrowTitle = ref()
+// 联赛折叠图标
+const leagueArrowShow = ref<Boolean>(false)
 
 const leagueId: any = ref(route.query.leagueId)
 const leagueLogo: any = ref()
@@ -800,8 +797,10 @@ const clickLeague = (item: any) => {
   if (!item.gameTypeCount) return
   activeCollapseNames.value = ''
   firstLeaguesList.value = []
-  // leagueArrowTitle?.value?.changeClick(false)
-  // championGuessing?.value?.CloseClick(false)
+  leagueArrowShow.value = false
+
+  activeNames.value = '1'
+
   //  判断推荐联赛里面是否有地区联赛
   const leagueIdObj = LeagueByCountryInfoArr.value.find((e: any) => {
     return e.leagueId === item.leagueId
@@ -830,8 +829,8 @@ const handleChangeLeagueId = (item: any) => {
   if (!item.gameTypeCount) return
   closeSlideshow.value = false
   activeNames.value = '1'
-  // leagueArrowTitle?.value?.changeClick(false)
-  // championGuessing?.value?.CloseClick(false)
+  leagueArrowShow.value = false
+
   leagueId.value = item.leagueId
 
   if (item.countryId) {
@@ -864,12 +863,10 @@ onActivated(async () => {
   const isChampion = route.query?.ischampion || ''
   if (isChampion === 'yes') {
     activeNames.value = '2'
-    // leagueArrowTitle?.value?.changeClick(true)
-    // championGuessing?.value?.CloseClick(false)
+    leagueArrowShow.value = true
   } else {
     activeNames.value = '1'
-    // leagueArrowTitle?.value?.changeClick(false)
-    // championGuessing?.value?.CloseClick(false)
+    leagueArrowShow.value = false
   }
 })
 </script>
