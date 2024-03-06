@@ -7,7 +7,7 @@ import {
   selectChampionManyName,
   playerInfo,
   getCashoutInfo,
-  confirmCashout,
+  confirmCashout
 } from '@/api/user'
 import { User } from '#/store'
 import { getToken, setToken, removeToken, getAnonymity, setAnonymity } from '@/utils/auth'
@@ -35,8 +35,8 @@ const userModule: Module<User, any> = {
     scrollNumY: 0,
     isAnonymity,
     currentWallet: {},
-    ifSearchDo:false
-
+    ifSearchDo: false,
+    symbol: ''
   },
   mutations: {
     SET_TOKEN: (state, token: string) => {
@@ -103,6 +103,7 @@ const userModule: Module<User, any> = {
       if (res.code === 200) {
         state.currencyData = res.data || {}
         state.currency = res.data[0].currency || {}
+        state.symbol = res.data[0].symbol || ''
         state.currentWallet = res.data[0]
         this.dispatch('user/getBalance', { wid: res.data[0].walletId || '' })
       } else {
