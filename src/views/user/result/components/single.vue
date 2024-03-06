@@ -110,7 +110,7 @@
 
             <!-- 币种 -->
             <span v-if="ifPracticalMoneyNum(item, item1)">
-              <CurrencyComp class-name="mr3" />
+              <CurrencyComp class-name="mr3 color1" />
             </span>
             <span v-if="item.state === 0 || item.state === -1 || item.state === 1" class="num color-1">
               <span v-points="getProfit(item, item1)"></span>
