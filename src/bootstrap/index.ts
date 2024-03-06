@@ -8,7 +8,7 @@ export default async () => {
   const searchParams = getURLSearchParams()
   const plateMaskKey = localStore.getItem('plateMaskKey')
 
-  /** sharpsports演示需要，临时去掉url带入的token，走路由拦截试玩自动登录 */
+  /** af 演示需要，临时去掉url带入的token，走路由拦截试玩自动登录 */
   if (searchParams.token) {
     store.commit('user/SET_TOKEN', searchParams.token)
     store.commit('user/SET_ANONYMITY', false)
