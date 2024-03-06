@@ -29,5 +29,12 @@ const symbol = computed(() => store.state.user.symbol)
 .mr3 {
   margin-right: 3px;
 }
+
+.color1 {
+ color: var(--color-bet-iortext);
+}
+.fs24 {
+  font-size: 24px;
+}
 </style>
 

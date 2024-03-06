@@ -2,18 +2,34 @@
   <div class="action-bar">
     <div class="bet-golds">
       <span class="title">{{ $t('betting.betGolds') }} ：</span>
-      <span v-points="golds" class="value"></span>
+      <div>
+        <CurrencyComp class-name="mr3 fs24" />
+        <span
+          v-points="golds"
+          class="value"
+        ></span>
+      </div>
     </div>
     <div class="bet-profit">
       <span class="title">{{ $t('betting.betProfit') }} ：</span>
-      <span v-points="profit" class="value"></span>
+      <div>
+        <CurrencyComp class-name="mr3 color1" />
+        <span
+          v-points="profit"
+          class="value"
+        ></span>
+      </div>
     </div>
 
     <div class="confirm-button-wrap">
       <div class="login-tips">
         {{ $t('betting.loginTips') }}
       </div>
-      <button v-debounce="login" type="button" class="confirm-button">
+      <button
+        v-debounce="login"
+        type="button"
+        class="confirm-button"
+      >
         {{ $t('betting.login') }}
       </button>
     </div>
@@ -25,6 +41,8 @@ import { computed } from 'vue'
 // const { t } = useI18n()
 import store from '@/store'
 import router from '@/router'
+import CurrencyComp from '@/components/Currency'
+
 const mode = computed(() => store.state.betting.mode)
 const betsGolds = computed(() => store.getters['betting/betsGolds'])
 const betsProfit = computed(() => store.getters['betting/betsProfit'])
