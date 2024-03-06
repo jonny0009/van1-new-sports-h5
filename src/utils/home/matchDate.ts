@@ -24,5 +24,6 @@ export function matchDate(date: any) {
   //   }
   //   return `${dateUtil(date).format('DD/MM')} ${text}`
   // }
-  return `${week[datas]} ${dateUtil(date).format('DD/MM')}`
+  // return `${week[datas]} ${dateUtil(date).format('DD/MM')}`
+  return `${week[datas]} ${dateUtil(date).format('MM/DD')}`
 }

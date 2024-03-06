@@ -56,7 +56,7 @@
           </div>
           <!--  -->
           <div class="up-match-score border-bottom">
-            <div class="item mb5">
+            <div class="item mb5 mt10">
               <img v-img="sendParams.homeLogo" :type="4" class="my-image img" style="object-fit: contain;" alt="">
               <div class="name">{{ sendParams.homeTeamAbbr || sendParams.homeTeam }}</div>
               <div class="container">
