@@ -93,8 +93,8 @@ export function useMatch() {
             }
             // 上半场and下半场
             return secssion === '1H'
-              ? `${t('live.H1')}<span class='time-h-Up'>${newRaceTimeVal}</span>`
-              : `${t('live.H2')}<span class='time-h-d'>${newRaceTimeVal}</span>`
+              ? `${t('live.H1')}&nbsp;<span class='time-h-Up'>${newRaceTimeVal}</span>`
+              : `${t('live.H2')}&nbsp;<span class='time-h-d'>${newRaceTimeVal}</span>`
           } else if (gameInfo?.re_time) {
             // 比赛时间容错
             return gameInfo.re_time
@@ -146,9 +146,9 @@ export function useMatch() {
             return `加时<span>${dateFormat(currBkTime.value * 1000, 'mm:ss')}</span>`
           }
           return seNow && currBkTime
-            ? `${BKSection(gameInfo?.se_now)}<span>${dateFormat(currBkTime.value * 1000, 'mm:ss')}</span>`
+            ? `${BKSection(gameInfo?.se_now)}&nbsp;<span>${dateFormat(currBkTime.value * 1000, 'mm:ss')}</span>`
             : !currBkTime.value && seNow
-            ? `${BKSection(gameInfo.se_now)}<span>00:00</span>`
+            ? `${BKSection(gameInfo.se_now)}&nbsp;<span>00:00</span>`
             : ''
         //
         // 美式足球
@@ -168,7 +168,7 @@ export function useMatch() {
             const seNow1 = gameInfo && gameInfo.se_now
             const tCount1 = gameInfo && +gameInfo.t_count
             return seNow1 && tCount1
-              ? `${BKSection(gameInfo.se_now)}<span>${dateFormat(gameInfo.t_count * 1000, 'mm:ss')}</span>`
+              ? `${BKSection(gameInfo.se_now)}&nbsp;<span>${dateFormat(gameInfo.t_count * 1000, 'mm:ss')}</span>`
               : ''
           }
         //

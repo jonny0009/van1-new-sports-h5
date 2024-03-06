@@ -3,7 +3,8 @@
     class="textButton"
     :class="[
       {
-        active: activeVal
+        active: activeVal,
+        'ifShadow':!ifShadow
       }
     ]"
   >
@@ -25,6 +26,12 @@ const props = defineProps({
     type: String,
     default: function () {
       return ''
+    }
+  },
+  ifShadow: {
+    type: Boolean,
+    default: function () {
+      return true
     }
   }
 })
@@ -74,5 +81,8 @@ textval.value = props.text
     display: inline-block;
     height: 44px;
   }
+}
+.ifShadow{
+  box-shadow: none;
 }
 </style>

@@ -21,19 +21,19 @@
                     <span class="league-match-num">{{ LeaguesInfo.total || 0 }}</span>
                     <SvgIcon name="user-down" class="icon-svg-1" />
                   </div>
-                  <TextButton class="tabs-cut-1" :text="$t('sport.recommend')" :active="!leagueId"
+                  <TextButton class="tabs-cut-1" :text="$t('sport.recommend')" :if-shadow="false" :active="!leagueId"
                     @click="handleRecommend()" />
                   <ImageButton
                     v-for="(item, index) in firstLeaguesList.slice(0, firstLeaguesList.length > 1 ? Math.floor(firstLeaguesList.length / 2) : 1)"
                     :key="index" class="tabs-cut-1" :text="item.leagueName" :src="item.leagueLogo"
                     :active="leagueId === item.leagueId" type="6" :count="item.gameTypeCount || '0'"
-                    :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" @click="handleChangeLeagueId(item)" />
+                    :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" @click="handleChangeLeagueId(item)" :if-shadow="false"/>
                 </div>
                 <div class="tabs-cut tabs-cut-3" v-if="firstLeaguesList.length > 1">
                   <ImageButton v-for="(item, index) in firstLeaguesList.slice(Math.floor(firstLeaguesList.length / 2))"
                     :key="index" class="tabs-cut-1" :text="item.leagueName" :src="item.leagueLogo"
                     :active="leagueId === item.leagueId" type="6" :count="item.gameTypeCount || '0'"
-                    :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" @click="handleChangeLeagueId(item)" />
+                    :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" @click="handleChangeLeagueId(item)" :if-shadow="false"/>
                 </div>
               </div>
               <!-- <Loading v-if="!firstLeaguesList.length" /> -->
@@ -815,7 +815,7 @@ onActivated(async () => {
       font-weight: 600;
       color: var(--color-global-minButtonCl);
       background: var(--color-global-buttonBg);
-      box-shadow: var(--color-global-buttonShadow);
+      // box-shadow: var(--color-global-buttonShadow);
       transition: all 0.3s;
 
       .league-match-num {
@@ -897,7 +897,8 @@ onActivated(async () => {
       width: 58px;
       border-radius: 50%;
       overflow: hidden;
-
+      border:1px solid #eff2f2;
+ 
     }
 
     .collapse-title {
