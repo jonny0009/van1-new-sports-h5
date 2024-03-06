@@ -6,7 +6,7 @@
         <span>{{ $t('user.time') }}</span>
         <div class="round" @click.stop="setDate()">
           <span>{{ dateTimeVal.beginName }} </span> ~ <span>{{ dateTimeVal.endName }}</span>
-          <img class="img_1 " :class="[showBottom2 ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
+          <img class="img_1" :class="[showBottom2 ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
         </div>
       </div>
     </div>
@@ -17,7 +17,7 @@
         <span>{{ $t('user.type') }}</span>
         <div class="round" @click.stop="seStatus()">
           <span>{{ commonKey.value }}</span>
-          <img class="img_1 " :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
+          <img class="img_1" :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
         </div>
       </div>
     </div>
@@ -61,8 +61,8 @@
           </div>
           <div class="right">
             <div>
-              <div v-if="getPayStatus(item)"> {{ $t('user.compensate') }}</div>
-              <div v-else> {{ $t('user.betNum') }}</div>
+              <div v-if="getPayStatus(item)">{{ $t('user.compensate') }}</div>
+              <div v-else>{{ $t('user.betNum') }}</div>
               <div class="right-1">
                 <span class="money-symbol">
                   <CurrencyComp />
@@ -71,7 +71,7 @@
               </div>
             </div>
             <div>
-              <div> {{ $t('user.balance') }}</div>
+              <div>{{ $t('user.balance') }}</div>
               <div class="right-1">
                 <span class="money-symbol">
                   <CurrencyComp />
@@ -81,7 +81,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </van-list>
@@ -151,7 +150,7 @@ const setDateTime = (values: any) => {
   onLoad()
 }
 // 结算方式
-const getPayStatus = (item:any) => {
+const getPayStatus = (item: any) => {
   if (item.tradeType === 'SETTLEMENT' || item.tradeType === 'CASHOUT_ALL') {
     return true
   }
@@ -201,7 +200,7 @@ const onLoad = async () => {
         }
       }
     })
-    Object.keys(listObj).map(item => {
+    Object.keys(listObj).map((item) => {
       listFlag.push(JSON.parse(JSON.stringify(listObj[item])))
     })
 
@@ -227,11 +226,12 @@ const TradeTyp = async () => {
     return showToast(res.msg)
   }
   typeList.arr = res.data
-  popupList.arr = [{
-    value: t('user.whole'),
-    key: ''
-  },
-  ...res.data
+  popupList.arr = [
+    {
+      value: t('user.whole'),
+      key: ''
+    },
+    ...res.data
   ]
   popupList.arr.map((item) => {
     if (item.tradeType) {
@@ -251,9 +251,11 @@ const getTitle = (type: any) => {
 }
 
 defineExpose({
-  setPk, setDateTime, showBottom, showBottom2
+  setPk,
+  setDateTime,
+  showBottom,
+  showBottom2
 })
-
 </script>
 
 <style lang="scss" scoped>
@@ -329,7 +331,7 @@ defineExpose({
   height: calc(100vh - 320px);
   overflow-y: auto;
 
-  >&-item {
+  > &-item {
     margin-bottom: 10px;
   }
 
@@ -357,7 +359,7 @@ defineExpose({
     padding: 15px 20px;
     margin-bottom: 20px;
 
-    >.title {
+    > .title {
       font-family: PingFangSC-Medium;
       font-size: 24px;
       color: var(--color-search-box-text-1);
@@ -365,7 +367,7 @@ defineExpose({
       font-weight: 500;
     }
 
-    >.line {
+    > .line {
       // margin-top: 5px;
       display: flex;
       align-items: center;
@@ -451,7 +453,7 @@ defineExpose({
   font-weight: 500;
   height: 850px;
 
-  >.img_1 {
+  > .img_1 {
     margin-top: 331px;
     width: 102px;
     height: 121px;

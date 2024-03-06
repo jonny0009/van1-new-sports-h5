@@ -1,7 +1,8 @@
 <template>
   <div class="matchList-1">
     <div v-for="(item, index) in props.leagueList" :key="index" class="left1" @click="toLeague(item)">
-      <SportsIcon :icon-src="item.gameType" class="itemImg" />
+      <!-- <SportsIcon :icon-src="item.gameType" class="itemImg" /> -->
+      <img v-img="''" class="itemImg" :type="6" style="object-fit: contain" />
       <div class="font_2" v-html="highlightText(props.keyWords, item.name)"></div>
     </div>
     <div v-if="!props.leagueList.length" class="noData">
@@ -14,11 +15,9 @@
 </template>
 
 <script lang="ts" setup>
-
 import { useRouter } from 'vue-router'
 const $router = useRouter()
 import store from '@/store'
-
 
 const emit = defineEmits(['showSearchValue'])
 
@@ -35,10 +34,9 @@ const props = defineProps({
       return ''
     }
   }
-
 })
 const toLeague = async (item: any) => {
-  store.dispatch('user/getIfSearchInfo',item.id)
+  store.dispatch('user/getIfSearchInfo', item.id)
   emit('showSearchValue', false)
   $router.push({
     path: `/sport/${item.gameType}`,
@@ -51,10 +49,12 @@ const toLeague = async (item: any) => {
 const highlightText = (field: any, text: any) => {
   // 使用正则表达式替换文本中的相同字段，并添加样式
   const regex = new RegExp(field, 'gi')
-  const highlightedText = text.replace(regex, `<span style="color:var(--color-bg-1);font-weight:600">${field}</span>`)
+  const highlightedText = text.replace(
+    regex,
+    `<span style="color:var(--color-bet-text-1);font-weight:600">${field}</span>`
+  )
   return highlightedText
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -72,7 +72,6 @@ const highlightText = (field: any, text: any) => {
     width: 102px;
     height: 121px;
     margin-bottom: 57px;
-
   }
 }
 
@@ -100,9 +99,10 @@ const highlightText = (field: any, text: any) => {
   font-weight: 600;
 
   .itemImg {
-    // height: 64px;
-    // width: 64px;
-    font-size: 38px;
+    height: 64px;
+    width: 64px;
+    // font-size: 38px;
+    border-radius: 50%;
     margin-right: 15px;
     color: var(--color-search-box-text-2);
     font-weight: 400;

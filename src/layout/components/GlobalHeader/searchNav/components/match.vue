@@ -3,20 +3,8 @@
     <div v-for="(item, index) in props.gameList" :key="index" class="left1 left2" @click="toMatch(item)">
       <div class="left3">
         <div class="itemImg">
-          <img
-            v-img="item.homeLogo"
-            class="itemImg-1"
-            alt=""
-            :type="4"
-            style="object-fit: contain;"
-          >
-          <img
-            v-img="item.awayLogo"
-            class="itemImg-2"
-            alt=""
-            :type="5"
-            style="object-fit: contain;"
-          >
+          <img v-img="item.homeLogo" class="itemImg-1" alt="" :type="4" style="object-fit: contain" />
+          <img v-img="item.awayLogo" class="itemImg-2" alt="" :type="5" style="object-fit: contain" />
         </div>
         <div class="center">
           <div>
@@ -28,7 +16,6 @@
             <span>{{ getMatchTime(item.gameDate) }}</span>
           </div>
         </div>
-
       </div>
       <div class="right">
         <van-image class="goImg" fit="contain" :src="goImg" />
@@ -75,7 +62,7 @@ const getMatchTime = (item: any) => {
 
 const toMatch = async (item: any) => {
   emit('showSearchValue', false)
-  store.dispatch('user/getIfSearchInfo',true)
+  store.dispatch('user/getIfSearchInfo', true)
   store.dispatch('betting/setMoreShow', { status: true, moreParams: item })
   // store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
 
@@ -91,11 +78,16 @@ const toMatch = async (item: any) => {
 // 搜索字体颜色
 const highlightText = (field: any, text: any) => {
   // 使用正则表达式替换文本中的相同字段，并添加样式
+  console.log(field, '1111=====')
+  console.log(text, '1222221=====')
+
   const regex = new RegExp(field, 'gi')
-  const highlightedText = text.replace(regex, `<span style="color:var(--color-bg-1);font-weight:600">${field}</span>`)
+  const highlightedText = text.replace(
+    regex,
+    `<span style="color:var(--color-bet-text-1);font-weight:600">${field}</span>`
+  )
   return highlightedText
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -113,7 +105,6 @@ const highlightText = (field: any, text: any) => {
     width: 102px;
     height: 121px;
     margin-bottom: 57px;
-
   }
 }
 
@@ -139,7 +130,6 @@ const highlightText = (field: any, text: any) => {
   color: var(--color-search-box-text-1);
   letter-spacing: 0;
   font-weight: 600;
-
 }
 
 .left2 {
@@ -184,7 +174,7 @@ const highlightText = (field: any, text: any) => {
       display: flex;
       align-items: center;
       font-size: 24px;
-      color: #96A5AA;
+      color: #96a5aa;
 
       .ball4 {
         margin-right: 10px;
@@ -201,4 +191,5 @@ const highlightText = (field: any, text: any) => {
     width: 30px;
     height: 35px;
   }
-}</style>
+}
+</style>
