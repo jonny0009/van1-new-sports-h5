@@ -17,7 +17,7 @@
               <span v-play="play.playInfo"></span>
             </template>
             <div :class="['bet', play.ratioList?.length === 3 ? 'col-3' : 'col-2']">
-              <BettingOption v-for="(item, ind) in play.ratioList" :key="ind" :market-info="item" class="bet-item">
+              <BettingOption v-for="item in play.ratioList" :key="item.playOnlyId" :market-info="item" class="bet-item">
                 <template #default="scope">
                   <div class="bet-top">
                     <span class="name">{{ item.ratioMatch || item.ratioName }}</span>

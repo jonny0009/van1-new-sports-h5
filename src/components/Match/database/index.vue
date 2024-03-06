@@ -60,18 +60,22 @@ const getData = () => {
     tabList.value.unshift({ name: 0, title: t('live.navSummary') })
 
     tabList.value.push({ name: 3, title: t('live.navEvents') })
-
-    nextTick(() => {
-      tabActive.value = 0
-    })
+    if (tabActive.value === -1) {
+      nextTick(() => {
+        tabActive.value = 0
+      })
+    }
   }
   if (gameType === 'BK') {
     tabList.value.push(...tabListOrg.value)
     tabList.value.unshift({ name: 0, title: t('live.navSummary') })
-    nextTick(() => {
-      tabActive.value = 0
-    })
+    if (tabActive.value === -1) {
+      nextTick(() => {
+        tabActive.value = 0
+      })
+    }
   }
+
   fetchData()
 }
 

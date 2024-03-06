@@ -25,7 +25,8 @@ export function useBetting(flag: any) {
   onMounted(() => {
     // fetchGroup()
   })
-
+  const fistState = ref(true)
+  const selectId = ref('0')
   const playGroupBetList: Ref<any[]> = ref([])
   const fetchGroup = async () => {
     if (needTimer.value && !flag) {
@@ -34,28 +35,30 @@ export function useBetting(flag: any) {
 
     const { formatType } = userConfig.value
     const { gameType } = matchInfo.value
-    if (gameType) {
+    if (gameType && fistState.value) {
       const res: any = await playGroup({ gameType })
       const data = res.data || {}
       if (res.code === 200) {
         const patternList = data[FORMAT_TYPE[formatType]]
         playGroupBetList.value = patternList
-        if (flag === 1) {
-          findGroupById('0')
-        }
+        fistState.value = false
       }
+    }
+    if (flag) {
+      findGroupById(selectId.value)
     }
   }
 
   const currentGroupPlay = ref([])
-  const findGroupById = (id: string, tabState: boolean = false) => {
-    const currentGroup = playGroupBetList.value.find((m: any) => m.id?.toString() === id)
+  const findGroupById = (id: string) => {
+    selectId.value = id
+    const currentGroup = playGroupBetList.value.find((m: any) => m.id?.toString() === selectId.value)
     currentGroupPlay.value = currentGroup.playData
-    getBettingData(tabState)
+    getBettingData()
   }
 
   const playBettingList: Ref<any[]> = ref([])
-  const getBettingData = (tabState: boolean = false) => {
+  const getBettingData = () => {
     const { detail, gameType, systemId, homeTeamAbbr, awayTeamAbbr } = matchInfo.value
     if (detail && detail.length > 0) {
       const playDataList: any[] = []
@@ -105,9 +108,7 @@ export function useBetting(flag: any) {
       const betPlayRatioSort = playRatioSort(betPlayTypeSort)
       const betPlayMergeList = playTypeMerge(betPlayRatioSort, 'typeTemp')
 
-      if (!tabState) {
-        playGroupBetList.value = getGroupListCombo(playDataListNew)
-      }
+      playGroupBetList.value = getGroupListCombo(playDataListNew)
       playBettingList.value = betPlayMergeList
       apiLoading.value = false
     }

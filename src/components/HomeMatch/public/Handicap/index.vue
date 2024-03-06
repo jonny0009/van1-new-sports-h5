@@ -1,8 +1,13 @@
 <template>
-  <BettingOption v-for="(item, idx) in sendParams" v-if="sendParams.length" :key="idx + 'key'" :market-info="item.marketInfo"
-    class="betting-option">
+  <BettingOption
+    v-for="(item, idx) in sendParams"
+    v-if="sendParams.length"
+    :key="idx + 'key'"
+    :market-info="item.marketInfo"
+    class="betting-option"
+  >
     <template #default="scope">
-      <i v-if="scope.lock" class="lock" :class="ifBLue?'blue-lock':''"></i>
+      <i v-if="scope.lock" class="lock" :class="ifBLue ? 'blue-lock' : ''"></i>
       <span class="up-betting-name">
         <span class="text">
           <span class="team">
@@ -16,9 +21,13 @@
       <div class="details">
         <div class="item">
           <i v-if="type === 'RB'" class="vior-down" :class="{ 'change-odds': scope.iorChange === 'down-ior' }"></i>
-          <div v-if="type === 'RB'" class="RB-ChangeIor" :class="{
-            'no-RBtransition': !['up-ior', 'down-ior'].includes(item.marketInfo.iorChangeTransition)
-          }">
+          <div
+            v-if="type === 'RB'"
+            class="RB-ChangeIor"
+            :class="{
+              'no-RBtransition': !['up-ior', 'down-ior'].includes(item.marketInfo.iorChangeTransition)
+            }"
+          >
             <transition :name="['up-ior', 'down-ior'].includes(item.marketInfo.iorChangeTransition) ? 'listdown' : ''">
               <div v-if="item.marketInfo.iorChangeTransition === 'up-ior'" class="vior">
                 {{ item.marketInfo.iorChangeTransition === 'up-ior' ? item.marketInfo.vior : item.marketInfo.oldIor }}
@@ -64,6 +73,4 @@ defineProps({
     }
   }
 })
-
 </script>
-
