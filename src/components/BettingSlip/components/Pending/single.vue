@@ -59,8 +59,11 @@
               <!-- 平局图标找到了 -->
               <SvgIcon v-if="Number(item.cashoutType) === 2" name="user-ahead" class="icon-svg-1" />
               <SvgIcon v-if="item.state === 1" name="user-postpone" class="icon-svg-1" />
-              <SvgIcon v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
-                :name="`user-${item1.betResultDetail}`" class="icon-svg-1" />
+              <SvgIcon
+                v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
+                :name="`user-${item1.betResultDetail}`"
+                class="icon-svg-1"
+              />
               <img v-else class="img_1" src="@/assets/images/user/D1.png" alt="" />
 
             </span>
@@ -72,12 +75,11 @@
         <div class="one">
           <span>{{ $t('user.BettingAmount') }}</span>
           <div class="money-num-money">
-            <CurrencyComp />
-
-           <!-- 投注额 -->
-           <span v-if="Number(item1.ioRatio)>0"  v-points="item.gold"></span>
-            <span v-if="Number(item1.ioRatio)<0"  v-points="ifBetNum(item,item1)"></span>
-            <span v-if="Number(item1.ioRatio)<0" >(<span  v-points="item.gold"/>)</span>
+            <CurrencyComp class-name="mr3" />
+            <!-- 投注额 -->
+            <span v-if="Number(item1.ioRatio)>0" v-points="item.gold"></span>
+            <span v-if="Number(item1.ioRatio)<0" v-points="ifBetNum(item,item1)"></span>
+            <span v-if="Number(item1.ioRatio)<0">(<span v-points="item.gold" />)</span>
           </div>
         </div>
         <div class="one two">
@@ -103,7 +105,7 @@
 
             <!-- 币种 -->
             <span v-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL'">
-              <CurrencyComp />
+              <CurrencyComp class-name="mr3" />
             </span>
             <span v-if="item.creditState === 0" class="num color-1">
               <span v-points="getProfit(item, item1)"></span>
@@ -138,13 +140,13 @@
         </div>
         <div v-else-if="!item.btnLogin && earlyMoney(item)" class="ahead-btn" @click="handleFinal(item)">
           <span>{{ $t('user.aheadFinal') }}</span>
-          <CurrencyComp/>
-          <span  v-points="earlyMoney(item)"></span>
+          <CurrencyComp class-name="mr3" />
+          <span v-points="earlyMoney(item)"></span>
         </div>
         <div v-else-if="item.btnLogin && earlyMoney(item)" class="ahead-btn">
           <span>{{ $t('user.aheadFinal') }}</span>
-          <CurrencyComp/>
-          <span  v-points="earlyMoney(item)"></span>
+          <CurrencyComp class-name="mr3" />
+          <span v-points="earlyMoney(item)"></span>
           <span class="loading-icon"></span>
         </div>
       </div>
@@ -156,10 +158,10 @@
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
 import { accDiv, accMul, accAdd } from '@/utils/math'
-import {getBrowserLanguage } from '@/utils'
+import { getBrowserLanguage } from '@/utils'
 import { computed } from 'vue'
 import store from '@/store'
-import CurrencyComp from './currency.vue'
+import CurrencyComp from '@/components/Currency/index'
 const teamNameList = computed(() => store.state.user.teamNameList || [])
 const championLangList = computed(() => store.state.user.championLangList || [])
 const aheadOrderList = computed(() => store.state.user.aheadOrderList || [])
@@ -172,29 +174,29 @@ const props = defineProps({
 })
 
 // 是否显示马尼,印尼括号金额
-const ifBetNum = (item:any,item1:any) => {
-  if (Number(item1.ioRatio)<0) {
-     // 马来绝对值都小于1,  印尼绝对值都大于1
-    let absNum: any = Math.abs(Number(item1.ioRatio))
-     return accDiv(item.gold,absNum)
-   }
+const ifBetNum = (item:any, item1:any) => {
+  if (Number(item1.ioRatio) < 0) {
+    // 马来绝对值都小于1,  印尼绝对值都大于1
+    const absNum: any = Math.abs(Number(item1.ioRatio))
+    return accDiv(item.gold, absNum)
+  }
 }
 // 可赔付金额
 const getProfit = (item: any, item1: any) => {
-   if (Number(item1.ioRatio)<0) {
-     // 马来绝对值都小于1,  印尼绝对值都大于1
-     let sumNum:any = 0
-     let absNum:any = Math.abs(Number(item1.ioRatio))
-     if (absNum>1) {
-       sumNum = accAdd(accDiv(item.gold,absNum),item.gold)
-     }
-     if (absNum<1) {
-       sumNum = accAdd(accDiv(item.gold,absNum),item.gold)
-     }
-     return sumNum
-   }
+  if (Number(item1.ioRatio) < 0) {
+    // 马来绝对值都小于1,  印尼绝对值都大于1
+    let sumNum:any = 0
+    const absNum:any = Math.abs(Number(item1.ioRatio))
+    if (absNum > 1) {
+      sumNum = accAdd(accDiv(item.gold, absNum), item.gold)
+    }
+    if (absNum < 1) {
+      sumNum = accAdd(accDiv(item.gold, absNum), item.gold)
+    }
+    return sumNum
+  }
   // return item.gold * item.sioRatio
-  return accMul(item.gold,item.sioRatio)
+  return accMul(item.gold, item.sioRatio)
 }
 // 提前结算
 const handleFinal = (item: any) => {
@@ -208,7 +210,7 @@ const handleFinal = (item: any) => {
   return
 }
 
-const earlyMoney = (item: any,type?: any) => {
+const earlyMoney = (item: any, type?: any) => {
   if (aheadOrderList.value.length) {
     const item1 = aheadOrderList.value.find((e: any) => e.orderId === item.orderId)
     if (item1) {
@@ -484,7 +486,7 @@ const getLangBet = (item: any) => {
   font-weight: 600;
   display: flex;
   align-items: center;
- 
+
   .img_1 {
     margin: 0 8px;
     font-weight: 500;

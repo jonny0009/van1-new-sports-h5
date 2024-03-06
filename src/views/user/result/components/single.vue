@@ -61,8 +61,11 @@
               <!-- 平局图标找到了 -->
               <SvgIcon v-if="Number(item.cashoutType) === 2" name="user-ahead" class="icon-svg-1" />
               <SvgIcon v-if="item.state === 1" name="user-postpone" class="icon-svg-1" />
-              <SvgIcon v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
-                :name="`user-${item1.betResultDetail}`" class="icon-svg-1" />
+              <SvgIcon
+                v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
+                :name="`user-${item1.betResultDetail}`"
+                class="icon-svg-1"
+              />
               <img v-else class="img_1" src="@/assets/images/user/D1.png" alt="" />
 
             </span>
@@ -74,7 +77,7 @@
         <div class="one">
           <span>{{ $t('user.BettingAmount') }}</span>
           <div class="money-num-money">
-            <CurrencyComp />
+            <CurrencyComp class-name="mr3" />
 
             <!-- 投注额 -->
             <span v-if="Number(item1.ioRatio) > 0" v-points="item.gold"></span>
@@ -107,7 +110,7 @@
 
             <!-- 币种 -->
             <span v-if="ifPracticalMoneyNum(item, item1)">
-              <CurrencyComp />
+              <CurrencyComp class-name="mr3" />
             </span>
             <span v-if="item.state === 0 || item.state === -1 || item.state === 1" class="num color-1">
               <span v-points="getProfit(item, item1)"></span>
@@ -115,7 +118,7 @@
             <span v-else-if="ifPracticalMoneyNum(item, item1)" class="color-1">
               <span v-points="item.winGold"></span>
             </span>
-            
+
           </div>
         </div>
       </div>
@@ -143,13 +146,12 @@
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
 import { accDiv, accMul, accAdd } from '@/utils/math'
-import {getBrowserLanguage } from '@/utils'
-
+import { getBrowserLanguage } from '@/utils'
 
 import { computed } from 'vue'
 import store from '@/store'
 
-import CurrencyComp from './currency.vue'
+import CurrencyComp from '@/components/Currency/index.vue'
 
 const teamNameList = computed(() => store.state.user.teamNameList || [])
 const championLangList = computed(() => store.state.user.championLangList || [])
