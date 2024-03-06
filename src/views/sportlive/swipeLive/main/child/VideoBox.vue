@@ -11,8 +11,8 @@
     ></video>
     <div v-if="videoErrorState" class="video-error">
       <span class="video-icon"></span>
-      <div class="error-tips">视频加载失败，请刷新重试</div>
-      <div class="error-btn" @click="refresh">刷新视频</div>
+      <div class="error-tips">{{ $t('live.videoFailure') }}</div>
+      <div class="error-btn" @click="refresh"> {{ $t('live.refreshVideo') }}</div>
     </div>
 
     <div
@@ -249,7 +249,7 @@ onBeforeUnmount(() => {
   line-height: 60px;
   margin-top: 20px;
   text-align: center;
-  background: #7642fe;
+  background: var(--color-primary);
   border-radius: 4px;
   font-size: 24px;
   color: #ffffff;

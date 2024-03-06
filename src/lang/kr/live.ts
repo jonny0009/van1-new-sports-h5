@@ -69,5 +69,7 @@ export default {
   point: '포인트',
   nextAM: '다음 라이브 방송은 <span class="time-num">{num}</span>에 시작됩니다',
   halfPlay: '하프타임',
-  section: '섹션'
+  section: '섹션',
+  videoFailure: '새로 고침 다시 시도하십시오.',
+  refreshVideo: '비디오 새로 고침',
 }

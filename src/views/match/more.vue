@@ -341,7 +341,8 @@ onUnmounted(() => {
     }
 
     &.selected {
-      background-image: linear-gradient(180deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-2) 100%);
+      // background-image: linear-gradient(180deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-2) 100%);
+      background: var(--color-global-buttonPrimaryBg);
       color: #fff;
 
       .svg-icon {

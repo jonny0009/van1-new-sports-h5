@@ -69,5 +69,7 @@ export default {
   point: 'point',
   nextAM: 'The next live broadcast will start on <span class="time-num">{num}</span>',
   halfPlay: 'halftime',
-  section: 'section'
+  section: 'section',
+  videoFailure: 'Please refresh and try again',
+  refreshVideo: 'Refresh Video',
 }

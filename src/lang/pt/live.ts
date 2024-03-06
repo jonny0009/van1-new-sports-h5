@@ -70,5 +70,7 @@ export default {
   nextAM: 'A próxima transmissão ao vivo começará em <span class="time-num">{num}</span>',
 
   halfPlay: 'intervalo',
-  section: 'seção'
+  section: 'seção',
+  videoFailure: 'Por favor, atualize e tente novamente',
+  refreshVideo: 'Actualizar o Vídeo',
 }

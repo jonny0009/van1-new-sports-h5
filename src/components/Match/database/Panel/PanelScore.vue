@@ -30,6 +30,9 @@
         </div>
       </div>
 
+      <div class="score-line"/>
+
+
       <div class="score-result">
         <div class="head"><strong>{{ $t('user.result') }}</strong></div>
         <div class="nums">
@@ -178,6 +181,13 @@ const playerName = computed(() => {
     display: flex;
     overflow-x: auto;
     justify-content: flex-end;
+  }
+  &-line{
+    width: 2px;
+    height: 90px;
+    background: var(--color-panel-score-score);
+    z-index: 10;
+    margin-top: 60px;
   }
 }
 

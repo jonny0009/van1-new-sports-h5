@@ -292,7 +292,8 @@ const handlerClick = (val: number) => {
     right: 0;
     z-index: 14;
     padding-bottom: 10px;
-    background: #f4f5f8;
+    // background: #f4f5f8;
+    background: var(--color-chat-room-wrapper-bg);
     > img {
       display: block;
       width: 120px;
@@ -304,10 +305,11 @@ const handlerClick = (val: number) => {
   &__form {
     display: flex;
     align-items: center;
-    min-height: 100px;
-    height: 100px;
+    min-height: 120px;
+    height: 120px;
     padding: 5px 12px;
-    background: rgba(72, 163, 255, 0.15);
+    // background: rgba(72, 163, 255, 0.15);
+    background: var(--color-chat-room-bg);
     .van-form {
       flex: 1;
       margin-right: 10px;
@@ -329,11 +331,12 @@ const handlerClick = (val: number) => {
       .van-button {
         color: #fff;
         border: none;
-        background-image: linear-gradient(
-          180deg,
-          var(--color-linear-gradient-1) 0%,
-          var(--color-linear-gradient-2) 100%
-        );
+        // background-image: linear-gradient(
+        //   180deg,
+        //   var(--color-linear-gradient-1) 0%,
+        //   var(--color-linear-gradient-2) 100%
+        // );
+        background: var(--color-global-buttonPrimaryBg);
         border-radius: 32px;
         width: 120px;
         height: 64px;
@@ -344,7 +347,8 @@ const handlerClick = (val: number) => {
   &__wrapper {
     flex: 1;
     overflow-y: auto;
-    background: #f4f5f8;
+    // background: #f4f5f8;
+    background: var(--color-chat-room-wrapper-bg);
     padding: 24px;
     padding-top: 70px;
     .item {
@@ -354,7 +358,8 @@ const handlerClick = (val: number) => {
       &-avatar {
         position: absolute;
         left: 0;
-        top: 20px;
+        // top: 20px;
+        top: -7px;
         > img {
           display: block;
           width: 48px;
@@ -366,7 +371,7 @@ const handlerClick = (val: number) => {
         }
       }
       &-name {
-        color: #546371;
+        color: var(--color-text-3);
         font-size: 24px;
         margin-bottom: 6px;
         zoom: 0.9;
@@ -375,20 +380,21 @@ const handlerClick = (val: number) => {
         }
       }
       &-cont {
+        margin-top: 0px;
         font-size: 24px;
-        padding: 12px 20px;
+        // padding: 12px 20px;
         border-radius: 10px;
         position: relative;
-        background: #fff;
-        color: #000;
+        // background: #fff;
+        color: var(--color-text-5);
         word-break: break-all;
         &::before {
           content: '';
           position: absolute;
           width: 18px;
           height: 18px;
-          background: #fff;
-          left: -5px;
+          // background: #fff;
+          // left: -5px;
           top: 12px;
           transform: rotateZ(60deg);
           z-index: 1;

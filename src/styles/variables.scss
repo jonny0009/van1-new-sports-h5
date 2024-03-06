@@ -122,6 +122,9 @@
   --color-grey-out-bg: #eff2f2;
   --color-grey-out-text:#000;
   --color-match-team-dim-bg: rgba(118, 66, 253, 0.6);
+  --color-panel-score-score: rgb(255 255 255);
+  --color-chat-room-bg: rgb(239 241 242 0.25);
+  --color-chat-room-wrapper-bg: rgb(227 231 240);
 
 }
 // 蓝色版本
@@ -252,4 +255,9 @@
   --color-grey-out-bg: #E3E7F0;
   --color-grey-out-text: #88A6BB;
   --color-match-team-dim-bg: rgba(0, 99, 200, 0.6);
+  --color-panel-score-score: rgb(239 241 242);
+  --color-chat-room-bg: rgb(72, 163, 255, 0.25);
+  --color-chat-room-wrapper-bg: rgb(255 255 255);
+
+
 }
