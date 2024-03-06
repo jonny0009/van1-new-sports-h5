@@ -60,7 +60,7 @@ import { useRouter } from 'vue-router'
 import { ref, computed, onMounted } from 'vue'
 
 import SidebarNav from './sidebarNav.vue'
-import SearchNav from "./searchNav/index.vue";
+import SearchNav from './searchNav/index.vue'
 const emit = defineEmits(['betShow'])
 const userInfo = computed(() => store.state.user.userInfo)
 const balance = computed(() => store.state.user.balance)
