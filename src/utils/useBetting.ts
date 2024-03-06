@@ -48,14 +48,14 @@ export function useBetting(flag: any) {
   }
 
   const currentGroupPlay = ref([])
-  const findGroupById = (id: string) => {
+  const findGroupById = (id: string, tabState: boolean = false) => {
     const currentGroup = playGroupBetList.value.find((m: any) => m.id?.toString() === id)
     currentGroupPlay.value = currentGroup.playData
-    getBettingData()
+    getBettingData(tabState)
   }
 
   const playBettingList: Ref<any[]> = ref([])
-  const getBettingData = () => {
+  const getBettingData = (tabState: boolean = false) => {
     const { detail, gameType, systemId, homeTeamAbbr, awayTeamAbbr } = matchInfo.value
     if (detail && detail.length > 0) {
       const playDataList: any[] = []
@@ -105,7 +105,9 @@ export function useBetting(flag: any) {
       const betPlayRatioSort = playRatioSort(betPlayTypeSort)
       const betPlayMergeList = playTypeMerge(betPlayRatioSort, 'typeTemp')
 
-      playGroupBetList.value = getGroupListCombo(playDataListNew)
+      if (!tabState) {
+        playGroupBetList.value = getGroupListCombo(playDataListNew)
+      }
       playBettingList.value = betPlayMergeList
       apiLoading.value = false
     }
