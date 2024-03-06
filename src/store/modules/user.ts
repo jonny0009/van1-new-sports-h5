@@ -165,7 +165,7 @@ const userModule: Module<User, any> = {
       state.locationHeight = params
     },
     // 进行中的注单
-    async pendingOrder({ state,dispatch }, params = {}) {
+    async pendingOrder({ state, dispatch }, params = {}) {
       const res: any =
         (await betRecordTab({
           orderState: '0',
@@ -187,7 +187,7 @@ const userModule: Module<User, any> = {
           }
         })
         if (aheadOrderList.length) {
-         dispatch('getOrderList', JSON.stringify(aheadOrderList))
+          dispatch('getOrderList', JSON.stringify(aheadOrderList))
         }
       }
     },
