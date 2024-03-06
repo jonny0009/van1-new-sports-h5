@@ -5,32 +5,48 @@
         <TimeView :time-send-params="sendParams" />
         <div class="play">
           <div class="flex-1"></div>
-          <span class="btn R" :class="[
-            {
-              active: RrefShow
-            }
-          ]" @click="Rclick">
+          <span
+            class="btn R"
+            :class="[
+              {
+                active: RrefShow
+              }
+            ]"
+            @click="Rclick"
+          >
             {{ $t('home.R') }}
           </span>
-          <span class="btn OU" :class="[
-            {
-              active: OUrefShow
-            }
-          ]" @click="OUclick">
+          <span
+            class="btn OU"
+            :class="[
+              {
+                active: OUrefShow
+              }
+            ]"
+            @click="OUclick"
+          >
             {{ $t('home.OU') }}
           </span>
-          <span class="btn M" :class="[
-            {
-              active: MrefShow
-            }
-          ]" @click="Mclick">
+          <span
+            class="btn M"
+            :class="[
+              {
+                active: MrefShow
+              }
+            ]"
+            @click="Mclick"
+          >
             {{ $t('home.M') }}
           </span>
-          <span class="btn PD" :class="[
-            {
-              active: PDrefShow
-            }
-          ]" @click="PDclick">
+          <span
+            class="btn PD"
+            :class="[
+              {
+                active: PDrefShow
+              }
+            ]"
+            @click="PDclick"
+          >
             {{ $t('live.score') }}
           </span>
         </div>
@@ -41,8 +57,9 @@
         <div class="up-match">
           <!--  -->
           <div class="match-info-live__header border-bottom">
-            <div v-if="showSportsIcon(sendParams)" class="live-icon" @click="goToDetail(sendParams)"><i v
-                class="iconfont icon-footer-live"></i></div>
+            <div v-if="showSportsIcon(sendParams)" class="live-icon" @click="goToDetail(sendParams)">
+              <i v class="iconfont icon-footer-live"></i>
+            </div>
             <div class="up-match-league">
               <SportsIcon :icon-src="props.sendParams.gameType" class="ball-img" />
               <div class="text">{{ getLeagueShortName(sendParams) }}</div>
@@ -57,7 +74,7 @@
           <!--  -->
           <div class="up-match-score border-bottom">
             <div class="item mb5 mt10">
-              <img v-img="sendParams.homeLogo" :type="4" class="my-image img" style="object-fit: contain;" alt="">
+              <img v-img="sendParams.homeLogo" :type="4" class="my-image img" style="object-fit: contain" alt="" />
               <div class="name">{{ sendParams.homeTeamAbbr || sendParams.homeTeam }}</div>
               <div class="container">
                 <div class="value">
@@ -66,7 +83,7 @@
               </div>
             </div>
             <div class="item">
-              <img v-img="sendParams.awayLogo" class="my-image img" :type="5" style="object-fit: contain;" alt="">
+              <img v-img="sendParams.awayLogo" class="my-image img" :type="5" style="object-fit: contain" alt="" />
               <div class="name">{{ sendParams.awayTeamAbbr || sendParams.awayTeam }}</div>
               <div class="container">
                 <div class="value">
@@ -86,12 +103,6 @@
                   <span v-else>
                     {{ $t('home.RInfo') }}
                   </span>
-                  <!-- <van-popover placement="top" theme="dark" trigger="click" class="newPopover" :to="`.flex-cross-center-${sendParams.gidm}${sendParams.systemId}`">
-                    <div class="popover-text">{{ $t('home.RInfo2') }}</div>
-                    <template #reference>
-                      <van-icon name="info" />
-                    </template>
-                  </van-popover> -->
                 </div>
               </div>
               <div class="match-betting-item__content">
@@ -335,8 +346,8 @@ const showRBTime = (raceinfo: any = {}) => {
           // 上半场and下半场
           return secssion === '1H'
             ? t('home.HNumber1', { number: newRaceTimeVal })
-            //  `上半场<span class='time-h-Up'>${newRaceTimeVal}</span>`
-            : t('home.HNumber2', { number: newRaceTimeVal })
+            : //  `上半场<span class='time-h-Up'>${newRaceTimeVal}</span>`
+              t('home.HNumber2', { number: newRaceTimeVal })
           // `下半场<span class='time-h-d'>${newRaceTimeVal}</span>`
         } else if (gameInfo?.re_time) {
           // 比赛时间容错
@@ -370,8 +381,11 @@ const showRBTime = (raceinfo: any = {}) => {
             return t('home.img')
           }
           const bsScoreObj: any = gameInfo ? bsStObj(gameInfo) : ''
-          const inningNum = gameInfo.inningNum ? gameInfo?.inningNum
-            : bsScoreObj.se_now > 0 ? bsScoreObj.se_now : bsScoreObj.score.num
+          const inningNum = gameInfo.inningNum
+            ? gameInfo?.inningNum
+            : bsScoreObj.se_now > 0
+            ? bsScoreObj.se_now
+            : bsScoreObj.score.num
           const juCount = t('home.set', {
             number: inningNum
           })
@@ -390,8 +404,11 @@ const showRBTime = (raceinfo: any = {}) => {
             number: dateFormat(currBkTime.value * 1000, 'mm:ss')
           })
         }
-        return seNow && currBkTime ? `${BKSection(gameInfo?.se_now)}<span>${dateFormat(currBkTime.value * 1000, 'mm:ss')}</span>` : !currBkTime.value && seNow
-          ? `${BKSection(gameInfo.se_now)}<span>00:00</span>` : ''
+        return seNow && currBkTime
+          ? `${BKSection(gameInfo?.se_now)}<span>${dateFormat(currBkTime.value * 1000, 'mm:ss')}</span>`
+          : !currBkTime.value && seNow
+          ? `${BKSection(gameInfo.se_now)}<span>00:00</span>`
+          : ''
       //
       // 美式足球
       case 'BK_AFT':
@@ -411,7 +428,9 @@ const showRBTime = (raceinfo: any = {}) => {
           }
           const seNow1 = gameInfo && gameInfo.se_now
           const tCount1 = gameInfo && +gameInfo.t_count
-          return seNow1 && tCount1 ? `${BKSection(gameInfo.se_now)}<span>${dateFormat(gameInfo.t_count * 1000, 'mm:ss')}</span>` : ''
+          return seNow1 && tCount1
+            ? `${BKSection(gameInfo.se_now)}<span>${dateFormat(gameInfo.t_count * 1000, 'mm:ss')}</span>`
+            : ''
         }
       //
       // 乒乓球
@@ -428,9 +447,11 @@ const showRBTime = (raceinfo: any = {}) => {
       //
       // 排球
       case 'OP_VB': // 排球
-        return Obj ? t('home.set', {
-          number: Obj.scorePan.num
-        }) : ''
+        return Obj
+          ? t('home.set', {
+              number: Obj.scorePan.num
+            })
+          : ''
       //
       // 电竞
       case 'OP_DJ': // 电竞

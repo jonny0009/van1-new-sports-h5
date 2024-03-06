@@ -72,7 +72,7 @@
       <div class="money-num-1">
         <span>{{ $t('user.BettingAmount') }}:</span>
         <span class="money-num-money">
-          <CurrencyComp />
+          <CurrencyComp class-name="mr3" />
           <!-- 投注额 -->
           <span v-points="item.gold"></span>
         </span>
@@ -95,7 +95,7 @@
           </span>
 
           <span v-if="item.state !== 3 && item.state !== 5">
-            <CurrencyComp />
+            <CurrencyComp class-name="color1 mr3" />
           </span>
           <span v-if="item.state === 0 || item.state === -1 || item.state === 1" class="num">
             <span v-points="getProfit(item)"></span>
