@@ -94,7 +94,7 @@
           </span>
           <!-- 币种 -->
           <span v-if="ifPracticalMoneyNum(item)">
-            <CurrencyComp class-name="mr3" />
+            <CurrencyComp class-name="mr3 color1" />
           </span>
           <span v-if="item.state === 0 || item.state === -1 || item.state === 1" class="num">
             <span v-points="getProfit(item)"></span>
@@ -130,7 +130,6 @@ import { getBrowserLanguage } from '@/utils'
 import { computed } from 'vue'
 import store from '@/store'
 
-// 需要大小
 import CurrencyComp from '@/components/Currency/index.vue'
 
 const teamNameList = computed(() => store.state.user.teamNameList || [])
