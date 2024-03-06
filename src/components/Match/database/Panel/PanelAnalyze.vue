@@ -195,7 +195,8 @@ const calcRatioPer = (num: any) => {
 
   &-header {
     padding: 16px 8px 10px 8px;
-    border-bottom: 1px solid #e5ecf3;
+    // border-bottom: 1px solid #e5ecf3;
+    border-bottom: 1px solid var(--color-match-brBg-line);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -280,9 +281,11 @@ const calcRatioPer = (num: any) => {
 }
 
 :deep(.van-swipe__indicator) {
-  width: 20px;
-  height: 8px;
-  border-radius: 10px;
+  // width: 20px;
+  // height: 8px;
+  width: 12px;
+  height: 12px;
+  border-radius: 12px;
   background-color: #fff;
 }
 

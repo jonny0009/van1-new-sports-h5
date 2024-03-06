@@ -3,12 +3,13 @@
     <!-- 战力 -->
     <div class="top-1 top-2">
       <div class="left-text">
-        <img class="img_1" src="@/assets/images/user/bottom.png" alt="" />
+        <img v-if="ifBlueTheme" class="img_1" src="@/assets/images/user/blue/monad.png" alt="" />
+        <img v-else class="img_1" src="@/assets/images/user/bottom.png" alt="" />
         <span>{{ $t('user.betForm') }}</span>
       </div>
       <div class="right">
         <!-- 显示5个,问号是进行中的 -->
-        <span>{{ $t('user.RecentAchievements') }}:</span>
+        <span class="right-text">{{ $t('user.RecentAchievements') }}:</span>
         <!-- <img class="img_1" src="@/assets/images/user/ask.svg" alt="" /> -->
         <span v-for="(item, index) in list.arr.slice(0,5)" :key="index" class="img_1">
           <img v-if="item.state === 2" class="img_1" src="@/assets/images/user/win.svg" alt="" />
@@ -65,6 +66,8 @@ import moment from 'moment'
 
 import store from '@/store'
 const userInfo = computed(() => store.state.user.userInfo)
+const ifBlueTheme = computed(() => store.state.app.theme === 'blue')
+
 
 const beginTime = ref<any>('')
 const endTime = ref<any>('')

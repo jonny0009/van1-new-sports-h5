@@ -1,9 +1,7 @@
 <template>
   <div class="sport-page" ref="newContainerRecommend">
     <div ref="newContainer">
-      <!--
-      公共 体育项
-    -->
+      <!--公共 体育项-->
       <div class="mt10">
         <van-tabs :duration="0.2" v-model:active="active" shrink line-height="0" :animated="ifAnimated"
           @change="onChangeTabs" :swipe-threshold="3" @click-tab="ifAnimated = true">
@@ -27,13 +25,15 @@
                     v-for="(item, index) in firstLeaguesList.slice(0, firstLeaguesList.length > 1 ? Math.floor(firstLeaguesList.length / 2) : 1)"
                     :key="index" class="tabs-cut-1" :text="item.leagueName" :src="item.leagueLogo"
                     :active="leagueId === item.leagueId" type="6" :count="item.gameTypeCount || '0'"
-                    :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" @click="handleChangeLeagueId(item)" :if-shadow="false"/>
+                    :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" @click="handleChangeLeagueId(item)"
+                    :if-shadow="false" />
                 </div>
                 <div class="tabs-cut tabs-cut-3" v-if="firstLeaguesList.length > 1">
                   <ImageButton v-for="(item, index) in firstLeaguesList.slice(Math.floor(firstLeaguesList.length / 2))"
                     :key="index" class="tabs-cut-1" :text="item.leagueName" :src="item.leagueLogo"
                     :active="leagueId === item.leagueId" type="6" :count="item.gameTypeCount || '0'"
-                    :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" @click="handleChangeLeagueId(item)" :if-shadow="false"/>
+                    :ifCount="Number(item.gameTypeCount) || 0" :if-circle="true" @click="handleChangeLeagueId(item)"
+                    :if-shadow="false" />
                 </div>
               </div>
               <!-- <Loading v-if="!firstLeaguesList.length" /> -->
@@ -107,14 +107,14 @@
                       <template v-if="earlyList.length">
                         <div class="early-list">
                           <!-- <HomeMatchHandicap v-for="(item, idx) in earlyList" :key="idx" :send-params="item" /> -->
-                            <template v-for="(item, idx) in earlyList" :key="idx">
-                              <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="8"
-                                :class="{ 'mt10': idx !== 0 }">
-                                <playTitle :send-params="item" />
-                              </van-sticky>
-                              <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false"
-                                :send-params="item1" :class="{ 'mt10': idx !== 0 }" />
-                            </template>
+                          <template v-for="(item, idx) in earlyList" :key="idx">
+                            <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="8"
+                              :class="{ 'mt10': idx !== 0 }">
+                              <playTitle :send-params="item" />
+                            </van-sticky>
+                            <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false"
+                              :send-params="item1" :class="{ 'mt10': idx !== 0 }" />
+                          </template>
                         </div>
                         <div class="Button-MatchMore mt20 mb20" :class="earlyLoadAll ? 'no-more' : ''" @click="moreEarly">
                           <span>
@@ -194,7 +194,7 @@ const gameType1 = computed(() => {
 })
 const gameType = ref<any>(gameType1.value)
 const onChangeTabs = (item: any) => {
- 
+
   // 新增
   activeNamesB.value = 'b1'
   activeNamesC.value = 'c1'
@@ -747,7 +747,7 @@ onActivated(async () => {
     getFirstLeagues()
   }
   getSearchCountryInfo()
-  
+
   active.value = gameType.value
   // 是否冠军赛
   const isChampion = route.query?.ischampion || ''
@@ -897,8 +897,8 @@ onActivated(async () => {
       width: 58px;
       border-radius: 50%;
       overflow: hidden;
-      border:1px solid #eff2f2;
- 
+      border: 1px solid #eff2f2;
+
     }
 
     .collapse-title {

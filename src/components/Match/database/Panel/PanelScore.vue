@@ -177,6 +177,7 @@ const playerName = computed(() => {
     flex: 1;
     display: flex;
     overflow-x: auto;
+    justify-content: flex-end;
   }
 }
 

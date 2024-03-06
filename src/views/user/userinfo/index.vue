@@ -1,15 +1,5 @@
 <template>
   <div class="userInfo">
-    <!-- <van-nav-bar class="bg-title" :title="title" :border="false">
-      <template #left>
-        <img class="img_1" src="@/assets/images/login/return@2x.png" alt="" @click="goBack()" />
-      </template>
-      <template #right>
-        <img class="img_1" src="@/assets/images/user/edit.png" alt="" @click="goUrl('/editUser')" />
-      </template>
-    </van-nav-bar> -->
-    <!-- 头部= -->
-
     <div class="user" :class="{'user-blue':ifBLue}">
       <div class="nav-bar">
         <span class="left">
@@ -56,7 +46,8 @@
     </div>
     <div class="content">
       <div class="top-1">
-        <img class="img_1" src="@/assets/images/user/data.png" alt="" />
+        <img v-if="ifBlueTheme" class="img_1" src="@/assets/images/user/blue/betData.png" alt="" />
+        <img v-else class="img_1" src="@/assets/images/user/data.png" alt="" />
         <span>{{ $t('user.text8',{num:90}) }}</span>
       </div>
       <div class="circle">
@@ -98,6 +89,8 @@ import store from '@/store'
 const userInfo = computed(() => store.state.user.userInfo)
 const peopleInfo = computed(() => store.state.user.peopleInfo)
 const theme = computed(() => store.state.app.theme)
+const ifBlueTheme = computed(() => store.state.app.theme === 'blue')
+
 
 const userStandInfo = ref<any>({})
 const currentNumber = ref<any>('')
