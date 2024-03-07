@@ -498,6 +498,8 @@ defineExpose({
         justify-content: space-between;
 
         .sport-icon {
+          font-size: 24px;
+          font-weight: 500;
           color: var(--color-bet-sportstext);
         }
       }

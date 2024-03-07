@@ -44,6 +44,7 @@ const clearBets = () => {
   border: 6px solid rgba(250, 179, 7, 1);
   border-radius: 28px;
   margin: 25px 38px 10px;
+  overflow: hidden;
 
   .Single-wrap {
     margin: 0 0 10px;

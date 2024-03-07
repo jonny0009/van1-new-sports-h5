@@ -199,7 +199,8 @@ defineExpose({
       overflow: hidden;
 
       .sport-icon {
-        font-size: 30px;
+        font-size: 24px;
+        font-weight: 500;
         color: var(--color-bet-sportstext);
       }
 

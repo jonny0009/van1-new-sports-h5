@@ -108,6 +108,8 @@ const getAcceptOrderStateTask = async () => {
       overflow: hidden;
 
       .sport-icon {
+        font-size: 24px;
+        font-weight: 500;
         color: var(--color-bet-sportstext);
       }
       .betting-name {
