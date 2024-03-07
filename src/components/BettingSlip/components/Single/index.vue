@@ -2,7 +2,7 @@
   <transition :class="`animate__animated ${state ? 'animate__fadeOutLeft' : ''}`">
     <div class="Single-wrap">
       <div class="remove">
-        <van-icon name="cross" :class="{ fixed: error }" @click.stop="remove" />
+        <SvgIcon name="betting-close" class="betting-close" :class="{ fixed: error }" @click.stop="remove" z></SvgIcon>
       </div>
       <div class="content">
         <div class="title">
@@ -120,7 +120,7 @@ defineExpose({
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url('@/assets/images/betting/single-bg.png');
+  background-color: #fff;
 
   .error-popup {
     display: flex;
@@ -167,11 +167,11 @@ defineExpose({
     background-color: var(--color-bet-removebg);
     border-radius: 20px 0 0 20px;
 
-    .van-icon {
-      font-size: 32px;
-      color: #fff;
+    .betting-close {
+      font-size: 20px;
 
       &.fixed {
+        color: #fff;
         position: absolute;
         top: 0;
         bottom: 0;
@@ -199,6 +199,7 @@ defineExpose({
       overflow: hidden;
 
       .sport-icon {
+        font-size: 30px;
         color: var(--color-bet-sportstext);
       }
 
@@ -206,7 +207,7 @@ defineExpose({
         margin-left: 8px;
         font-family: PingFangSC-Medium;
         font-size: 28px;
-        color: #000000;
+        color: rgb(14, 61, 102);
         letter-spacing: 0;
         font-weight: 500;
       }
@@ -218,7 +219,7 @@ defineExpose({
       .play-name {
         font-family: PingFangSC-Medium;
         font-size: 24px;
-        color: #546371;
+        color: rgb(136, 166, 187);
         letter-spacing: 0;
         font-weight: 500;
       }
@@ -226,7 +227,7 @@ defineExpose({
       .team-info {
         font-family: PingFangSC-Medium;
         font-size: 24px;
-        color: #546371;
+        color: rgb(136, 166, 187);
         letter-spacing: 0;
         font-weight: 500;
       }
