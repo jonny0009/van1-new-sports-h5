@@ -68,7 +68,7 @@ const clearBets = () => {
   .clear-btn {
     margin-right: 10px;
     font-size: 24px;
-    color: rgb(72, 163, 255);
+    color: var(--color-bet-cleartext);
   }
 
   .icon {
