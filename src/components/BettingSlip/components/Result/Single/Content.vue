@@ -86,7 +86,7 @@ const getAcceptOrderStateTask = async () => {
   align-items: center;
   width: 675px;
   height: 135px;
-  background: #eff0f1;
+  background-color: var(--color-bet-contentbg);
   border-radius: 20px;
   overflow: hidden;
   margin-bottom: 15px;
@@ -108,6 +108,8 @@ const getAcceptOrderStateTask = async () => {
       overflow: hidden;
 
       .sport-icon {
+        font-size: 24px;
+        font-weight: 500;
         color: var(--color-bet-sportstext);
       }
       .betting-name {
@@ -143,7 +145,7 @@ const getAcceptOrderStateTask = async () => {
     width: 220px;
     font-family: PingFangSC-Semibold;
     font-size: 30px;
-    color: #7642fd;
+    color: var(--color-bet-iortext);
     letter-spacing: 1px;
     text-align: center;
     font-weight: 600;

@@ -2,15 +2,15 @@
   <div
     class="ArrowTitle"
     :class="{
-      'active':activeVal
+      active: showOther ? arrowShow : activeVal
     }"
     @click="clickChangActive"
   >
-    <img v-img="props.src" :type="type" class="img mr10" style="object-fit: contain;" />
+    <img v-img="props.src" :type="type" class="img mr10" style="object-fit: contain" />
     <span>
       {{ props.text }}
     </span>
-    <img v-img="arrow" class="arrow ml10" style="object-fit: contain;" />
+    <img v-img="arrow" class="arrow ml10" style="object-fit: contain" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -34,6 +34,18 @@ const props = defineProps({
     default: function () {
       return ''
     }
+  },
+  arrowShow: {
+    type: Boolean,
+    default: function () {
+      return false
+    }
+  },
+  showOther: {
+    type: Boolean,
+    default: function () {
+      return false
+    }
   }
 })
 const emit = defineEmits(['returnSuccess'])
@@ -46,32 +58,32 @@ const changeClick = (val: any) => {
   activeVal.value = val
 }
 defineExpose({
-  activeVal,changeClick
+  activeVal,
+  changeClick
 })
-
 </script>
 <style lang="scss" scoped>
-.ArrowTitle{
+.ArrowTitle {
   display: flex;
   align-items: center;
   font-weight: 600;
   color: var(--color-text-2);
-  &> span{
+  & > span {
     font-size: 32px;
     display: inline-block;
   }
-  .img{
+  .img {
     width: 40px;
     height: 40px;
     display: block;
   }
-  .arrow{
+  .arrow {
     width: 18px;
     height: 18px;
     transition: all 0.5s;
   }
-  &.active{
-    .arrow{
+  &.active {
+    .arrow {
       transform: rotate(180deg);
       margin-top: 8px;
     }

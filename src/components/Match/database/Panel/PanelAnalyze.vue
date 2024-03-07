@@ -1,26 +1,15 @@
 <template>
   <div class="analyze">
     <van-swipe indicator-color="#9417D5">
-
-      <van-swipe-item
-        v-for="item in list"
-        :key="item"
-      >
-
+      <van-swipe-item v-for="item in list" :key="item">
         <div class="analyze-header">
           <div class="host">
-            <img
-              src="@/assets/images/live/sub_d.png"
-              alt=""
-            />
+            <img src="@/assets/images/live/sub_d1.png" alt="" />
             <span>{{ matchData.homeTeamShort || matchData.homeTeam }}</span>
           </div>
           <div class="away">
             <span>{{ matchData.awayTeamShort || matchData.awayTeam }}</span>
-            <img
-              src="@/assets/images/live/sub_u.png"
-              alt=""
-            />
+            <img src="@/assets/images/live/sub_u1.png" alt="" />
           </div>
         </div>
         <div class="analyze-item">
@@ -29,7 +18,15 @@
             <section class="host" :style="{ flex: `${item.ratios[0].betCountRate * 100} 1 0%` }">
               <div class="percent">{{ calcRatioPer(item.ratios[0].betCountRate) }}%</div>
               <div class="bar"></div>
-              <div class="value">
+              <div
+                v-if="
+                  (item.ratios.length == 2 && item.ratios[0].betCountRate >= item.ratios[1].betCountRate) ||
+                  (item.ratios.length == 3 &&
+                    item.ratios[0].betCountRate >= item.ratios[1].betCountRate &&
+                    item.ratios[0].betCountRate >= item.ratios[2].betCountRate)
+                "
+                class="value"
+              >
                 <span>{{ item.ratios[0].betCount }}</span>
               </div>
             </section>
@@ -40,7 +37,13 @@
             >
               <div class="percent">{{ calcRatioPer(item.ratios[1].betCountRate) }}%</div>
               <div class="bar"></div>
-              <div class="value">
+              <div
+                v-if="
+                  item.ratios[1].betCountRate > item.ratios[0].betCountRate &&
+                  item.ratios[1].betCountRate > item.ratios[2].betCountRate
+                "
+                class="value"
+              >
                 <span>{{ item.ratios[1].betCount }}</span>
               </div>
             </section>
@@ -50,7 +53,15 @@
             >
               <div class="percent">{{ calcRatioPer(item.ratios[item.ratios.length - 1].betCountRate) }}%</div>
               <div class="bar"></div>
-              <div class="value">
+              <div
+                v-if="
+                  (item.ratios.length == 2 && item.ratios[1].betCountRate > item.ratios[0].betCountRate) ||
+                  (item.ratios.length == 3 &&
+                    item.ratios[2].betCountRate >= item.ratios[1].betCountRate &&
+                    item.ratios[2].betCountRate > item.ratios[0].betCountRate)
+                "
+                class="value"
+              >
                 <span>{{ item.ratios[item.ratios.length - 1].betCount }}</span>
               </div>
             </section>
@@ -62,7 +73,15 @@
             <section class="host" :style="{ flex: `${item.ratios[0].betGoldRate * 100} 1 0%` }">
               <div class="percent">{{ calcRatioPer(item.ratios[0].betGoldRate) }}%</div>
               <div class="bar"></div>
-              <div class="value">
+              <div
+                v-if="
+                  (item.ratios.length == 2 && item.ratios[0].betCountRate >= item.ratios[1].betCountRate) ||
+                  (item.ratios.length == 3 &&
+                    item.ratios[0].betCountRate >= item.ratios[1].betCountRate &&
+                    item.ratios[0].betCountRate >= item.ratios[2].betCountRate)
+                "
+                class="value"
+              >
                 <Currency /><span v-points="item.ratios[0].betGold"></span>
               </div>
             </section>
@@ -73,7 +92,13 @@
             >
               <div class="percent">{{ calcRatioPer(item.ratios[1].betGoldRate) }}%</div>
               <div class="bar"></div>
-              <div class="value">
+              <div
+                v-if="
+                  item.ratios[1].betCountRate > item.ratios[0].betCountRate &&
+                  item.ratios[1].betCountRate > item.ratios[2].betCountRate
+                "
+                class="value"
+              >
                 <Currency /><span v-points="item.ratios[1].betGold"></span>
               </div>
             </section>
@@ -83,7 +108,15 @@
             >
               <div class="percent">{{ calcRatioPer(item.ratios[item.ratios.length - 1].betGoldRate) }}%</div>
               <div class="bar"></div>
-              <div class="value">
+              <div
+                v-if="
+                  (item.ratios.length == 2 && item.ratios[1].betCountRate > item.ratios[0].betCountRate) ||
+                  (item.ratios.length == 3 &&
+                    item.ratios[2].betCountRate >= item.ratios[1].betCountRate &&
+                    item.ratios[2].betCountRate > item.ratios[0].betCountRate)
+                "
+                class="value"
+              >
                 <Currency /><span v-points="item.ratios[item.ratios.length - 1].betGold"></span>
               </div>
             </section>
@@ -123,7 +156,6 @@ const list = computed(() => {
       const playData = window.aiRatioType[playType]
       const sorts = playData.sort
       const ratios = sorts.map((ratioType: any) => {
-        // debugger
         const find = playList.find((play: any) => play.ratioType === ratioType)
         if (find) {
           return find
@@ -136,7 +168,7 @@ const list = computed(() => {
           ratioType
         }
       })
-      console.log(ratios, '----')
+      console.log(ratios, '--')
       showList.push({
         name: playName({ gameType, playType, session }),
         ratios
@@ -150,8 +182,6 @@ const list = computed(() => {
 const calcRatioPer = (num: any) => {
   return (num * 100)?.toFixed(2)
 }
-
-console.log(props.data)
 </script>
 
 <style lang="scss" scoped>
@@ -169,7 +199,8 @@ console.log(props.data)
 
   &-header {
     padding: 16px 8px 10px 8px;
-    border-bottom: 1px solid #e5ecf3;
+    // border-bottom: 1px solid #e5ecf3;
+    border-bottom: 1px solid var(--color-match-brBg-line);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -178,8 +209,8 @@ console.log(props.data)
       align-items: center;
       color: #546371;
       img {
-        width: 24px;
-        height: 24px;
+        width: 26px;
+        height: 25px;
       }
     }
     .host img {
@@ -211,7 +242,7 @@ console.log(props.data)
         transition: all 0.3s;
       }
       .value {
-        visibility: hidden;
+        // visibility: hidden;
         font-size: 24px;
         line-height: 1.6;
         transition: all 0.3s;
@@ -251,5 +282,19 @@ console.log(props.data)
       }
     }
   }
+}
+
+:deep(.van-swipe__indicator) {
+  // width: 20px;
+  // height: 8px;
+  width: 12px;
+  height: 12px;
+  border-radius: 12px;
+  // background-color: #fff;
+  background-color: rgb(188, 174, 174);
+}
+
+:deep(.van-swipe__indicator--active) {
+  background-color: var(--color-primary) !important;
 }
 </style>

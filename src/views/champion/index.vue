@@ -7,56 +7,49 @@
         {{ $t('sport.chooseLeague') }}
       </span>
     </div>
-    <!-- <ul class="game-type-wrap">
-      <li v-for="(item, idx) in gameTypeTabList" :key="idx" @click="clickGameType(item)">
-        <SportsButton :text="item.gameType" :active="chooseGameType === item.gameType" />
-      </li>
-    </ul> -->
     <div class="tabs-cut">
       <van-tabs :duration="0.2" v-model:active="chooseGameType" shrink line-height="0" @change="onChangeTabs"
-        :swipe-threshold="3">
+        :swipe-threshold="3" animated>
         <van-tab v-for="(item, index) in gameTypeTabList" :key="index" :name="item.gameType">
           <template #title>
             <SportsButton class="tabs-cut-1" :text="item.gameType" :active="chooseGameType === item.gameType"
               :class="item.text" />
           </template>
+          <div class="mt10">
+            <template v-if="!isLoading">
+              <ul class="league-tab-wrap">
+                <div class="all" :class="chooseLeagueId === '0' ? 'all-1' : ''" @click="clickLeague({ leagueId: '0' })">
+                  {{ $t('sport.all') }}
+                </div>
+                <li v-for="(value, key) in groupedArrays" :key="key"
+                  :class="chooseLeagueId === value[0].countryFlag ? 'active' : ''" @click="clickLeague(value)">
+                  <div class="img-wrap">
+                    <img v-img="value[0].countryFlag" type="1" fit="contain" class="item-img" />
+                  </div>
+                </li>
+              </ul>
+              <div class="league-list">
+                <div v-for="(item, idx) in leagueList" :key="idx" class="up-league-item" @click="clickSportPage(item)">
+                  <img v-img="item.countryFlag" type="1" fit="contain" class="my-image icon" />
+                  <div class="content">
+                    <div class="name">
+                      <div class="name-1">
+                        {{ item.countryName || 'International' }}
+                      </div>
+                      <div>
+                        {{ item.leagueName }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </template>
+            <Loading v-if="isLoading" />
+          </div>
         </van-tab>
       </van-tabs>
     </div>
-    <template v-if="!isLoading">
-      <ul class="league-tab-wrap">
-        <!-- <li :class="chooseLeagueId==='0'?'active':''" @click="clickLeague({leagueId:'0'})">
-        <div class="all">{{ $t('sport.all') }}</div>
-      </li> -->
-        <div class="all" :class="chooseLeagueId === '0' ? 'all-1' : ''" @click="clickLeague({ leagueId: '0' })">
-          {{ $t('sport.all') }}
-        </div>
-        <li v-for="(value, key) in groupedArrays" :key="key"
-          :class="chooseLeagueId === value[0].countryFlag ? 'active' : ''" @click="clickLeague(value)">
-          <div class="img-wrap">
-            <img v-img="value[0].countryFlag" type="1" fit="contain" class="item-img" />
-          </div>
-        </li>
-      </ul>
-      <div class="league-list">
-        <div v-for="(item, idx) in leagueList" :key="idx" class="up-league-item" @click="clickSportPage(item)">
-          <img v-img="item.countryFlag" type="1" fit="contain" class="my-image icon" />
-          <div class="content">
-            <!-- <div class="top"><span v-game="item.gameType" class="sport">
-          </span></div> -->
-            <div class="name">
-              <div class="name-1">
-                {{ item.countryName || 'International' }}
-              </div>
-              <div>
-                {{ item.leagueName }}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </template>
-    <Loading v-if="isLoading" />
+
     <!-- </van-pull-refresh> -->
 
   </div>
@@ -146,7 +139,7 @@ const clickSportPage = (item: any) => {
     name: 'Sport',
     query: {
       leagueId: item.leagueId,
-      countryId:item.countryId,
+      countryId: item.countryId,
       ischampion: 'yes'
     },
     params: {
@@ -334,7 +327,8 @@ const clickSportPage = (item: any) => {
     }
   }
 }
-:deep(.van-tabs__line){
- display: none;
+
+:deep(.van-tabs__line) {
+  display: none;
 }
 </style>

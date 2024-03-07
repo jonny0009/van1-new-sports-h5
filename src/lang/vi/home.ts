@@ -51,4 +51,6 @@ export default {
    RBInfo: 'Chấp châu Á toàn bộ trận đấu',
    RBSize: 'Trên/Dưới toàn bộ trận đấu',
    RBRide: 'Toàn trận 1X2',
+   PDscore: 'Điểm số chính xác',
+   
 }

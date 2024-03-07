@@ -10,7 +10,7 @@
             <SvgIcon name="live-football" />
             <span>{{ matchInfo.leagueName }}</span>
           </div>
-          <div class="date">{{ formatToDate(matchInfo.gameDate, 'MM-DD HH:mm') }}</div>
+          <div class="date">{{ formatToDate(matchInfo.gameDate, 'MM/DD HH:mm A') }}</div>
         </div>
         <div class="team-box">
           <div class="team-player host">
@@ -39,22 +39,35 @@
     <!-- end -->
 
     <div class="bet-menu">
-      <div v-for="(item, index) in menuList" :key="index" class="bet-menu__nav"
-        :class="{ selected: menuType === item.type }" @click="onMenuClick(item)">
+      <div
+        v-for="(item, index) in menuList"
+        :key="index"
+        class="bet-menu__nav"
+        :class="{ selected: menuType === item.type }"
+        @click="onMenuClick(item)"
+      >
         <SvgIcon :name="item.iconName" />
         <span class="title">{{ item.title }}</span>
       </div>
     </div>
     <div class="bet-main">
-      <BettingCollapse v-show="menuType === 0" :match-info="matchInfo" :group-list="playGroupBetList"
-        :betting-list="playBettingList" :loading="apiLoading" @tab-change="findGroupById" />
+      <!-- <BettingCollapse v-show="menuType === 0" :match-info="matchInfo" :group-list="playGroupBetList"
+        :betting-list="playBettingList" :loading="apiLoading" @tab-change="findGroupById" /> -->
+      <BettingCollapse
+        v-show="menuType === 0"
+        :match-info="matchInfo"
+        :group-list="bettingInfo.playGroupBetList"
+        :betting-list="bettingInfo.playBettingList"
+        :loading="bettingInfo.apiLoading"
+        @tab-change="bettingInfo.findGroupById"
+      />
       <MatchDatabase v-show="menuType === 1" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Ref, computed, onBeforeMount, onUnmounted, ref } from 'vue'
+import { Ref, computed, onBeforeMount, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { matcheInfo } from '@/api/live'
@@ -65,13 +78,14 @@ import { formatToDate } from '@/utils/date'
 import BettingCollapse from '@/components/BettingCollapse/index.vue'
 import MatchDatabase from '@/components/Match/database/index.vue'
 import store from '@/store'
-const gameType = computed(() => route.query['gameType'])||'FT'
+const gameType = computed(() => route.query['gameType']) || 'FT'
 
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const setMatch = useMatch()
-const { findGroupById, playGroupBetList, playBettingList, apiLoading } = useBetting()
+// const { findGroupById, playGroupBetList, playBettingList, apiLoading }:any = useBetting()
+const bettingInfo: any = ref({})
 
 const paramsId = computed(() => route.params['id'])
 const showFixedBet = computed(() => store.state.app.showFixedBet)
@@ -101,6 +115,7 @@ const getMatcheInfo = async () => {
     const gameInfo = game.gameInfo || {}
     matchInfo.value.gameInfo = gameInfo
   }
+
   store.commit('match/SET_MATCH_INFO', matchInfo.value)
 }
 
@@ -126,7 +141,19 @@ const closeInterval = () => {
     store.commit('match/SET_NEED_TIMER', false)
   }
 }
-
+watch(
+  () => route.params['id'],
+  (newValue: any) => {
+    if (newValue) {
+      matchInfo.value = {}
+      getMatcheInfo()
+      bettingInfo.value = useBetting(1)
+    }
+  }
+)
+onMounted(() => {
+  bettingInfo.value = useBetting(1)
+})
 onBeforeMount(() => {
   getMatcheInfo()
   startInterval()
@@ -150,6 +177,7 @@ onUnmounted(() => {
     background-size: auto 100%;
     margin: 40px 36px 20px 36px;
     position: relative;
+
     .bannerBg-1 {
       position: absolute;
       top: 0;
@@ -186,13 +214,13 @@ onUnmounted(() => {
         display: flex;
         align-items: center;
 
-        >img {
+        > img {
           width: 24px;
           height: 24px;
           margin-right: 6px;
         }
 
-        >span {
+        > span {
           max-width: 320px;
           overflow: hidden;
           white-space: nowrap;
@@ -227,13 +255,13 @@ onUnmounted(() => {
         margin-bottom: 17px;
         width: 100%;
 
-        >img {
+        > img {
           display: block;
           width: 62px;
           height: 62px;
         }
 
-        >span {
+        > span {
           font-size: 28px;
         }
       }
@@ -249,7 +277,7 @@ onUnmounted(() => {
       &.host {
         align-items: flex-start;
 
-        .img-num>span {
+        .img-num > span {
           padding-right: 20px;
         }
       }
@@ -257,7 +285,7 @@ onUnmounted(() => {
       &.away {
         align-items: flex-end;
 
-        .img-num>span {
+        .img-num > span {
           padding-left: 20px;
         }
       }
@@ -313,7 +341,8 @@ onUnmounted(() => {
     }
 
     &.selected {
-      background-image: linear-gradient(180deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-2) 100%);
+      // background-image: linear-gradient(180deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-2) 100%);
+      background: var(--color-global-buttonPrimaryBg);
       color: #fff;
 
       .svg-icon {
@@ -325,4 +354,5 @@ onUnmounted(() => {
   &-main {
     padding: 30px 14px 0 14px;
   }
-}</style>
+}
+</style>

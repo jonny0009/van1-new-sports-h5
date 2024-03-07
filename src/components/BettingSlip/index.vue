@@ -269,7 +269,7 @@ defineExpose({
   left: 0;
   right: 0;
   margin: auto;
-  background: #fff;
+  background: rgb(244, 245, 250);
   z-index: 290;
   display: flex;
   flex-direction: column;
@@ -498,6 +498,8 @@ defineExpose({
         justify-content: space-between;
 
         .sport-icon {
+          font-size: 24px;
+          font-weight: 500;
           color: var(--color-bet-sportstext);
         }
       }

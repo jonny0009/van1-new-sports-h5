@@ -4,8 +4,12 @@
       <div class="title-left">
         <div>{{ item.parlayNum }}{{ $t('user.session') }}</div>
         <div>
-          <SportsIcon v-for="(item2, index1) in item.betDTOList" :key="index1" :icon-src="item2.gameType"
-            class="ball-img" />
+          <SportsIcon
+            v-for="(item2, index1) in item.betDTOList"
+            :key="index1"
+            :icon-src="item2.gameType"
+            class="ball-img"
+          />
         </div>
       </div>
       <div class="cur-odds">
@@ -40,8 +44,11 @@
               <!-- 平局图标找到了 -->
               <SvgIcon v-if="Number(item.cashoutType) === 2" name="user-ahead" class="icon-svg-1" />
               <SvgIcon v-if="item.state === 1" name="user-postpone" class="icon-svg-1" />
-              <SvgIcon v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
-                :name="`user-${item1.betResultDetail}`" class="icon-svg-1" />
+              <SvgIcon
+                v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
+                :name="`user-${item1.betResultDetail}`"
+                class="icon-svg-1"
+              />
               <img v-else class="img_1" src="@/assets/images/user/D1.png" alt="" />
 
             </span>
@@ -65,7 +72,7 @@
       <div class="money-num-1">
         <span>{{ $t('user.BettingAmount') }}:</span>
         <span class="money-num-money">
-          <CurrencyComp />
+          <CurrencyComp class-name="mr3" />
           <!-- 投注额 -->
           <span v-points="item.gold"></span>
         </span>
@@ -88,7 +95,7 @@
           </span>
 
           <span v-if="item.state !== 3 && item.state !== 5">
-            <CurrencyComp />
+            <CurrencyComp class-name="color1 mr3" />
           </span>
           <span v-if="item.state === 0 || item.state === -1 || item.state === 1" class="num">
             <span v-points="getProfit(item)"></span>
@@ -115,11 +122,11 @@
       </div>
     </div>
     <!-- 提前结算 -->
-    <div v-if="item.creditState === 0">
-      <div v-if="Number(item.cashoutType) === 2" class="ahead-btn">
+    <div v-if="item.creditState === 0 ">
+      <div v-if="Number(item.cashoutType)===2" class="ahead-btn">
         <span>{{ $t('user.affirmPend') }}...</span>
       </div>
-      <div v-else-if="!item.btnLogin && earlyMoney(item)" class="ahead-btn" @click="handleFinal(item)">
+      <div v-else-if="!item.btnLogin&& earlyMoney(item)" class="ahead-btn" @click="handleFinal(item)">
         <span>{{ $t('user.aheadFinal') }}</span>
         <CurrencyComp />
         <span v-points="earlyMoney(item)"></span>
@@ -140,9 +147,8 @@ import { formatToDateTime } from '@/utils/date'
 import { accMul } from '@/utils/math'
 import { computed } from 'vue'
 import store from '@/store'
-import CurrencyComp from './currency.vue'
+import CurrencyComp from '@/components/Currency'
 import { getBrowserLanguage } from '@/utils'
-
 
 const teamNameList = computed(() => store.state.user.teamNameList || [])
 const aheadOrderList = computed(() => store.state.user.aheadOrderList || [])

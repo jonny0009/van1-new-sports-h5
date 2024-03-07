@@ -37,6 +37,8 @@ declare interface User {
   currentWallet: any
   keepCache: any
   token: string | undefined | null
+  ifSearchDo:any
+  symbol: string | undefined | null
 }
 declare interface Betting {
   combos: {

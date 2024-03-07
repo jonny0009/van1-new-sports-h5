@@ -48,4 +48,6 @@ export default {
    RBInfo: 'Handicap Asiático Jogo Completo',
    RBSize: 'Mais/Menos Jogo Completo',
    RBRide: 'Resultado Final 1X2',
+   PDscore: 'Pontuação Correcta',
+   
 }

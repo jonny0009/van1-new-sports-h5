@@ -1,18 +1,4 @@
 .userInfo {
-  // .bg-title {
-  //   width: 100%;
-  //   height: 120px;
-  //   // background: url('@/assets/images/login/bg-tit@2x.png');
-  //   background-image: linear-gradient(180deg, var(--color-linear-gradient-user-info-1) 0%, var(--color-linear-gradient-user-info-2) 100%);
-  //   background-size: 100% 100%;
-
-  //   .img_1 {
-  //     width: 30px;
-  //     height: 30px;
-  //   }
-  // }
-
- 
   .user {
     // height: 220px;
     height: 423px;
@@ -101,7 +87,9 @@
           .img_1 {
             height: 32px;
             width: 32px;
-            margin-right: 34px;
+            // margin-right: 34px;
+            margin-right: 10px;
+            margin-top: 1px;
           }
         }
 
@@ -189,7 +177,7 @@
 
     // 数据框
     .circle {
-      margin-top: 11px;
+      margin-top: 20px;
       display: flex;
       align-items: center;
       justify-content: space-around;
@@ -248,10 +236,13 @@
       .right {
         border: 2px solid var(--color-search-box-text-2);
         border-radius: 32px;
-        padding: 5px 20px;
+        padding: 11px 22px;
         display: flex;
         align-items: center;
         // margin-left: 160px;
+        &-text{
+          font-weight: 500;
+        }
 
         span {
           margin-right: 15px;

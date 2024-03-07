@@ -10,9 +10,9 @@
       <van-tabs
         v-model:active="index"
         line-height="3px"
-        :color="ifBLue?'#0E3D66': '#1F2630'"
-        :title-inactive-color="ifBLue?'#88A6BB': '#96A5AA'"
-        :title-active-color="ifBLue?'#0E3D66': '#1F2630'"
+        :color="ifBLue ? '#0E3D66' : '#1F2630'"
+        :title-inactive-color="ifBLue ? '#88A6BB' : '#96A5AA'"
+        :title-active-color="ifBLue ? '#0E3D66' : '#1F2630'"
         line-width="40px"
         swipe-threshold="2"
         animated
@@ -22,7 +22,7 @@
           <dataList ref="childRefA" @valueChange="setStatus" @timeChange="setDate"></dataList>
         </van-tab>
         <van-tab :title="$t('user.FlowingHistory')">
-          <RunningHistory ref="childRefC" @valueChange="setStatus" @timeChange="setDate"></RunningHistory >
+          <RunningHistory ref="childRefC" @valueChange="setStatus" @timeChange="setDate"></RunningHistory>
         </van-tab>
         <van-tab :title="$t('user.matchResult')">
           <MatchResult ref="childRefB" @valueChange="setStatus" @timeChange="setDate"></MatchResult>
@@ -53,7 +53,7 @@
                 {{ item.value }}
               </span>
               <span v-if="way === 2">
-                {{ item.value  }}
+                {{ item.value }}
               </span>
               <span v-if="way === 3">
                 {{ item.name }}
@@ -85,7 +85,6 @@
         @confirm="onConfirm"
         @close="setDateBottom()"
       />
-
     </div>
   </div>
 </template>
@@ -128,10 +127,7 @@ const minDate = ref<any>(new Date(currentDate - oneDayDate * 90))
 const maxDateSingle = ref<any>(new Date())
 const minDateSingle = ref<any>(new Date(currentDate - oneDayDate * 15))
 
-const defaultDate = ref<any>([
-  new Date(currentDate - oneDayDate * 7),
-  new Date()
-])
+const defaultDate = ref<any>([new Date(currentDate - oneDayDate * 7), new Date()])
 const defaultDateSingle = ref<any>(new Date())
 
 const ifBLue = computed(() => {
@@ -141,7 +137,7 @@ const ifBLue = computed(() => {
   return false
 })
 
-onMounted(() => { })
+onMounted(() => {})
 const goBack = () => {
   $router.back()
 }
@@ -166,7 +162,7 @@ async function setPk(val: any) {
     childRefB.value.setPk(val)
   }
 }
-const setDate = (val: any, num: any, start:any, end:any) => {
+const setDate = (val: any, num: any, start: any, end: any) => {
   console.log(num)
   dateWay.value = num
   if (num === 1) {
@@ -223,7 +219,6 @@ const handleClose = (item: any) => {
 </script>
 
 <style lang="scss" scoped>
-
 :deep(.van-field__control) {
   height: 50px;
   font-size: 30px;
@@ -248,7 +243,6 @@ const handleClose = (item: any) => {
     padding: 20px 36px;
     height: 92.8vh;
   }
-
 }
 .popup-title {
   font-family: PingFangSC-Semibold;
@@ -307,7 +301,6 @@ const handleClose = (item: any) => {
 
 :deep(.van-tab__text--ellipsis) {
   font-size: 28px;
-  ;
   overflow: visible !important;
   white-space: nowrap;
 }
@@ -323,7 +316,7 @@ const handleClose = (item: any) => {
   background: var(--color-primary);
 }
 /* //弹窗关闭图标 */
-:deep(.van-popup__close-icon){
+:deep(.van-popup__close-icon) {
   color: var(--color-text-4);
 }
 </style>

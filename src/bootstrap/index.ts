@@ -1,18 +1,20 @@
 import store from '@/store'
 import { getURLSearchParams, setTheme } from '@/utils'
-import { getToken } from '@/utils/auth'
+import { getToken, setToken } from '@/utils/auth'
+
 import localStore from '@/utils/localStore'
 import { lib } from 'xcsport-lib'
 const { modifyRatioTypeListMapping } = lib
 export default async () => {
   const searchParams = getURLSearchParams()
   const plateMaskKey = localStore.getItem('plateMaskKey')
-
-  /** sharpsports演示需要，临时去掉url带入的token，走路由拦截试玩自动登录 */
-  // if (searchParams.token) {
-  //   store.commit('user/SET_TOKEN', searchParams.token)
-  //   store.commit('user/SET_ANONYMITY', false)
-  // }
+  console.log(searchParams, '--')
+  /** af 演示需要，临时去掉url带入的token，走路由拦截试玩自动登录 */
+  if (searchParams.token) {
+    setToken(searchParams.token)
+    store.commit('user/SET_TOKEN', searchParams.token)
+    store.commit('user/SET_ANONYMITY', false)
+  }
   // if (searchParams.theme) {
   //   store.commit('app/SET_THEME', searchParams.theme)
   // }

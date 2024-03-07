@@ -2,7 +2,9 @@
   <div class="panel-score">
     <div class="score">
       <div class="score-team">
-        <div class="score-team_head"></div>
+        <div class="score-team_head">
+          {{ playerName }}
+        </div>
         <div class="score-team_wrap">
           <img v-img="matchData.homeLogo" :type="4" alt="" />
           <span>{{ home }}</span>
@@ -14,9 +16,10 @@
       </div>
 
       <div class="score-main">
-        <div class="score-main__item" v-for="(item, i) in scoreListComputed" :key="i">
+        <div v-for="(item, i) in scoreListComputed" :key="i" class="score-main__item">
           <div class="head">
-            <strong>{{ i + 1 }} {{ matchData.gameType === 'FT' ? '盘' : '节' }}</strong>
+            <!-- {{ matchData.gameType === 'FT' ? '盘' : '节' }} -->
+            <strong>{{ i + 1 }} </strong>
           </div>
           <div class="nums">
             <span>{{ item.homeTeamScore }}</span>
@@ -27,8 +30,11 @@
         </div>
       </div>
 
+      <div class="score-line"/>
+
+
       <div class="score-result">
-        <div class="head"><strong>比赛</strong></div>
+        <div class="head"><strong>{{ $t('user.result') }}</strong></div>
         <div class="nums">
           <span>{{ scoreResult.homeTeamScore }}</span>
         </div>
@@ -40,12 +46,14 @@
       <div class="bot-bg"></div>
     </div>
 
-    <div class="footer"></div>
+    <!-- <div class="footer"></div> -->
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const props = defineProps({
   scoreList: {
@@ -70,6 +78,14 @@ const scoreListComputed = computed(() => {
 })
 const scoreResult = computed(() => {
   return props.scoreList.find((m: any) => m.type === 'Current') || {}
+})
+
+const playerName = computed(() => {
+  const obj :any = {
+    'FT': t('live.halfPlay'),
+    'BK': t('live.section')
+  }
+  return obj[props.matchData.gameType] || ''
 })
 </script>
 
@@ -164,6 +180,14 @@ const scoreResult = computed(() => {
     flex: 1;
     display: flex;
     overflow-x: auto;
+    justify-content: flex-end;
+  }
+  &-line{
+    width: 2px;
+    height: 90px;
+    background: var(--color-panel-score-score);
+    z-index: 10;
+    margin-top: 60px;
   }
 }
 

@@ -11,12 +11,13 @@
   </div> -->
    <!-- 使用切换栏组件 -->
    <div class="tabs-cut">
-    <van-tabs :duration="0.2" v-model:active="active" shrink line-height="0"  @change="onChangeTabs" :swipe-threshold="3">
+    <van-tabs :duration="0.2" v-model:active="active" shrink line-height="0" :animated="ifAnimated"  @change="onChangeTabs" :swipe-threshold="3" @click-tab="ifAnimated=true">
       <van-tab v-for="(item, index) in sportsList" :key="index" :name="item.text" >
         <template #title>
           <SportsButton class="tabs-cut-1"  :text="item.text" :active="active === item.text"
             :class="item.text" />
         </template>
+        <slot name="body"></slot>
       </van-tab>
     </van-tabs>
    </div>
@@ -32,6 +33,7 @@ const resetParams = () => {
   active.value = 'FT'
 }
 const active = ref('FT')
+const ifAnimated:any = ref(true)
 const emit = defineEmits(['returnSportsSuccess'])
 // const SportsClick = (item:any) => {
 //   const { text } = item
@@ -60,8 +62,9 @@ const sportsList = computed(() => {
 })
 defineExpose({
   active,
+  ifAnimated,
   resetParams,
-  setSports
+  setSports,
 })
 </script>
 <style lang="scss" scoped>

@@ -12,11 +12,17 @@
   <div class="action-bar">
     <div class="bet-golds">
       <span class="title">{{ $t('betting.betGolds') }} ：</span>
-      <span v-points="golds" class="value"></span>
+      <div>
+        <CurrencyComp class-name="mr3 fs24" />
+        <span v-points="golds" class="value"></span>
+      </div>
     </div>
     <div class="bet-profit">
       <span class="title">{{ $t('betting.betProfit') }} ：</span>
-      <span v-points="profit" class="value"></span>
+      <div>
+        <CurrencyComp class-name="mr3  color1" />
+        <span v-points="profit" class="value"></span>
+      </div>
     </div>
     <div v-if="errorTips" class="error-tips">
       {{ errorTips }}
@@ -37,6 +43,8 @@ import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 import store from '@/store'
+import CurrencyComp from '@/components/Currency'
+
 const errorTips = ref()
 const errorTimer = ref()
 const boardShow = computed(() => store.state.betting.boardShow)
@@ -216,7 +224,7 @@ const inputTouch = () => {
     .title {
       font-family: PingFangSC-Medium;
       font-size: 24px;
-      color: #546371;
+      color: var(--color-bet-iortexttitle);
       letter-spacing: 0;
       font-weight: 500;
     }
@@ -224,7 +232,7 @@ const inputTouch = () => {
     .value {
       font-family: PingFangSC-Medium;
       font-size: 24px;
-      color: #546371;
+      color: rgb(14, 61, 102);
       letter-spacing: 0;
       font-weight: 500;
     }
@@ -238,7 +246,7 @@ const inputTouch = () => {
     .title {
       font-family: PingFangSC-Medium;
       font-size: 28px;
-      color: #546371;
+      color: var(--color-bet-iortexttitle);
       letter-spacing: 0;
       font-weight: 500;
     }

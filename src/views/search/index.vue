@@ -21,7 +21,7 @@
         </p>
         <van-divider class="line-color" />
         <div class="historyList">
-          <div v-for="(item) in searchHistory.arr" :key="item" class="item">
+          <div v-for="item in searchHistory.arr" :key="item" class="item">
             <van-image class="itemImg" fit="contain" :src="time" />
             <span class="font_2" @click="keyWordsSearch(item)">{{ item }}</span>
           </div>
@@ -32,7 +32,7 @@
         <p class="font_1">{{ $t('user.hotSearch') }}</p>
         <van-divider class="line-color" />
         <div class="hot-list">
-          <span v-for="(item) in hotList.arr" :key="item" class="item" @click="keyWordsSearch(item.hotSearchName)">
+          <span v-for="item in hotList.arr" :key="item" class="item" @click="keyWordsSearch(item.hotSearchName)">
             {{ item.hotSearchName }}
           </span>
         </div>
@@ -69,7 +69,7 @@
 
 <script lang="ts" setup>
 import { ref, reactive, onMounted, computed } from 'vue'
-import {getBrowserLanguage } from '@/utils'
+import { getBrowserLanguage } from '@/utils'
 import { rightSearch, hotSearch } from '@/api/user'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 
@@ -116,9 +116,7 @@ const sportsList = computed(() => {
   const newSportsA = sports.filter((e: any) => {
     return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.gameCount
   })
-  let newSportsB: any = [
-
-  ]
+  let newSportsB: any = []
   if (newSportsA.length) {
     const newSportsC = newSportsA.map((e: any) => {
       return {
@@ -139,7 +137,7 @@ const getHotSearchList = async () => {
     lang: localStorage.getItem('locale') || getBrowserLanguage(),
     gameType: ''
   }
-  const res: any = await hotSearch(params) || {}
+  const res: any = (await hotSearch(params)) || {}
   if (res.code === 200) {
     hotList.arr = res.data
   }
@@ -187,10 +185,8 @@ const toUrlGame = (item: any) => {
   // store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
   $router.push({
     path: `/sport/${item.gameType}`
-
   })
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -214,7 +210,7 @@ const toUrlGame = (item: any) => {
       display: flex;
       align-items: center;
     }
-    :deep(.van-field__body){
+    :deep(.van-field__body) {
       margin-top: -8px;
     }
 
@@ -233,7 +229,7 @@ const toUrlGame = (item: any) => {
     }
   }
 
-  >.content {
+  > .content {
     height: calc(100vh - 126px);
     overflow-y: auto;
     margin-top: 31px;
@@ -241,7 +237,7 @@ const toUrlGame = (item: any) => {
     background-color: var(--color-background-color);
 
     .line-color {
-      background: #E5ECF3;
+      background: #e5ecf3;
       height: 2px;
       margin-top: 6px;
     }
@@ -249,7 +245,7 @@ const toUrlGame = (item: any) => {
     .font_1 {
       font-family: PingFangSC-Semibold;
       font-size: 24px;
-      color: #96A5AA;
+      color: #96a5aa;
       letter-spacing: 0;
       font-weight: 600;
     }
@@ -317,7 +313,6 @@ const toUrlGame = (item: any) => {
           background: var(--color-search-box-frame);
           border-radius: 10px;
         }
-
       }
     }
 
@@ -365,7 +360,6 @@ const toUrlGame = (item: any) => {
         text-align: right;
         font-weight: 500;
       }
-
     }
   }
 
@@ -400,9 +394,7 @@ const toUrlGame = (item: any) => {
         }
       }
     }
-
   }
-
 }
 
 :deep(.van-field__control) {
@@ -419,7 +411,7 @@ const toUrlGame = (item: any) => {
 }
 </style>
 
-<style >
+<style>
 :root {
   --van-field-placeholder-text-color: var(--color-text-4);
 }

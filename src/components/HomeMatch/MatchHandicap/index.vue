@@ -5,26 +5,49 @@
         <TimeView :time-send-params="sendParams" />
         <div class="play">
           <div class="flex-1"></div>
-          <span class="btn R" :class="[
-            {
-              active: RrefShow
-            }
-          ]" @click="Rclick">
+          <span
+            class="btn R"
+            :class="[
+              {
+                active: RrefShow
+              }
+            ]"
+            @click="Rclick"
+          >
             {{ $t('home.R') }}
           </span>
-          <span class="btn OU" :class="[
-            {
-              active: OUrefShow
-            }
-          ]" @click="OUclick">
+          <span
+            class="btn OU"
+            :class="[
+              {
+                active: OUrefShow
+              }
+            ]"
+            @click="OUclick"
+          >
             {{ $t('home.OU') }}
           </span>
-          <span class="btn M" :class="[
-            {
-              active: MrefShow
-            }
-          ]" @click="Mclick">
+          <span
+            class="btn M"
+            :class="[
+              {
+                active: MrefShow
+              }
+            ]"
+            @click="Mclick"
+          >
             {{ $t('home.M') }}
+          </span>
+          <span
+            class="btn PD"
+            :class="[
+              {
+                active: PDrefShow
+              }
+            ]"
+            @click="PDclick"
+          >
+            {{ $t('live.score') }}
           </span>
         </div>
       </div>
@@ -36,10 +59,20 @@
           <div class="up-match__header border-bottom">
             <div class="match-info">
               <div class="match-team-logo">
-                <img v-img="props.sendParams.homeLogo" class="my-image home" alt="" :type="4"
-                  style="object-fit: contain;">
-                <img v-img="props.sendParams.awayLogo" class="my-image away" alt="" :type="5"
-                  style="object-fit: contain;">
+                <img
+                  v-img="props.sendParams.homeLogo"
+                  class="my-image home"
+                  alt=""
+                  :type="4"
+                  style="object-fit: contain"
+                />
+                <img
+                  v-img="props.sendParams.awayLogo"
+                  class="my-image away"
+                  alt=""
+                  :type="5"
+                  style="object-fit: contain"
+                />
               </div>
               <div class="match-info__content">
                 <div class="team">
@@ -62,12 +95,6 @@
               <div class="match-betting-item__title">
                 <div class="flex-cross-center" :class="`flex-cross-center-${sendParams.gidm}${sendParams.systemId}`">
                   {{ $t('home.RInfo') }}
-                  <!-- <van-popover placement="top" theme="dark" trigger="click" class="newPopover" :to="`.flex-cross-center-${sendParams.gidm}${sendParams.systemId}`">
-                    <div class="popover-text">{{ $t('home.RInfo2') }}</div>
-                    <template #reference>
-                      <van-icon name="info" />
-                    </template>
-                  </van-popover> -->
                 </div>
               </div>
               <div class="match-betting-item__content">
@@ -102,17 +129,30 @@
                 </div>
               </div>
             </div>
+            <!-- 正确比分 -->
+            <div v-if="PDrefShow && sendParams.PD" ref="Mref" class="match-betting-item">
+              <div class="match-betting-item__title">
+                <div class="flex-cross-center">{{ $t('home.PDscore') }}</div>
+              </div>
+              <div class="match-betting-item__content">
+                <div class="betting-select">
+                  <div class="betting-select__list">
+                    <!-- 比分盘口-->
+                    <HandicapScore :send-params="sendParams" :type="'PD'" />
+                  </div>
+                </div>
+              </div>
+            </div>
             <!--
              -->
           </div>
         </div>
       </div>
-     
+
       <!--  @click="store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })"> -->
       <div class="up-match__footer">
         <div class="match-footer">
-          <div class="match-footer__item"
-            @click="betMoreShow">
+          <div class="match-footer__item" @click="betMoreShow">
             <span>{{ $t('home.morePlay') }}</span>
             <!-- <span class="num">149</span> -->
             <van-icon class="arrow" name="arrow" />
@@ -131,6 +171,7 @@
 import { matchDateFormat } from '@/utils/date'
 import { getHandicap } from '@/utils/home/getHandicap'
 import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
+import HandicapScore from '@/components/HomeMatch/public/HandicapScore/index.vue'
 import TimeView from '@/components/HomeMatch/public/time/index.vue'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 import { computed, ref } from 'vue'
@@ -199,6 +240,14 @@ const Mclick = () => {
     value: !MrefShow.value
   })
 }
+const PDrefShow = computed(() => store.state.home.PDrefShow)
+const PDclick = () => {
+  //
+  store.dispatch('home/setKeyValue', {
+    key: 'PDrefShow',
+    value: !PDrefShow.value
+  })
+}
 const betMoreShow = () => {
   store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })
   store.dispatch('user/getLocationHeight', false)
@@ -214,7 +263,6 @@ const betMoreShow = () => {
 
 const showFUTime = computed(() => {
   const { gameDate } = props.sendParams || {}
-  return matchDateFormat(gameDate, 'MM-DD HH:mm')
+  return matchDateFormat(gameDate, 'MM/DD HH:mm')
 })
-
 </script>

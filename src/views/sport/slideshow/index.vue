@@ -3,7 +3,6 @@
     <van-swipe class="my-swipe" :loop="true" indicator-color="white" :autoplay="30000">
       <van-swipe-item v-for="(item, index) in props.commonMatchesList" :key="index">
         <div class="bannerBg">
-          <!-- <van-image class="bannerBg-1" fit="contain" :src="getImgUrl(item)" /> -->
           <img class="bannerBg-1" fit="fill" :src="getImgUrl(item)" />
           <div class="team-dim">
             <!-- 头部 -->
@@ -15,7 +14,7 @@
               </div>
             </div>
             <span class="time">
-              {{ formatToDate(item.gameDate, 'MM-DD HH:mm') }}
+              {{ formatToDate(item.gameDate, 'MM/DD HH:mm A') }}
             </span>
             </p>
             <!-- 比赛 -->
@@ -135,7 +134,7 @@ const props = defineProps({
 
       .topName {
         display: inline-block;
-        width: 450px;
+        width: 400px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;

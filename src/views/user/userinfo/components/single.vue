@@ -74,11 +74,11 @@
         <div class="one">
           <span>{{ $t('user.BettingAmount') }}</span>
           <div class="money-num-money">
-            <CurrencyComp />
-             <!-- 投注额 -->
-            <span v-if="Number(item1.ioRatio)>0"  v-points="item.gold"></span>
-            <span v-if="Number(item1.ioRatio)<0"  v-points="ifBetNum(item,item1)"></span>
-            <span v-if="Number(item1.ioRatio)<0" >(<span  v-points="item.gold"/>)</span>
+            <CurrencyComp class-name="mr3" />
+            <!-- 投注额 -->
+            <span v-if="Number(item1.ioRatio)>0" v-points="item.gold"></span>
+            <span v-if="Number(item1.ioRatio)<0" v-points="ifBetNum(item,item1)"></span>
+            <span v-if="Number(item1.ioRatio)<0">(<span v-points="item.gold" />)</span>
           </div>
         </div>
         <div class="one two">
@@ -100,15 +100,15 @@
                 {{ $t('user.affirmPend') }}
               </span>
             </span>
-            
+
             <span v-if="ifPracticalMoneyNum(item,item1)">
-              <CurrencyComp />
+              <CurrencyComp class-name="mr3 color1" />
             </span>
             <span v-if="item.state === 0 || item.state === -1 || item.state === 1" class="num color-1">
-              <span  v-points="getProfit(item,item1)"></span>
+              <span v-points="getProfit(item,item1)"></span>
             </span>
             <span v-else-if="ifPracticalMoneyNum(item,item1)" class="color-1">
-              <span  v-points="item.winGold"></span>
+              <span v-points="item.winGold"></span>
             </span>
 
           </div>
@@ -140,12 +140,12 @@
 </template>
 
 <script lang="ts" setup>
-import { accDiv, accMul, accAdd } from '@/utils/math'
-import {getBrowserLanguage } from '@/utils'
-
 import { computed } from 'vue'
 import store from '@/store'
-import CurrencyComp from './currency.vue'
+import { getBrowserLanguage } from '@/utils'
+import { accDiv, accMul, accAdd } from '@/utils/math'
+import CurrencyComp from '@/components/Currency/index.vue'
+
 const teamNameList = computed(() => store.state.user.teamNameList || [])
 const championLangList = computed(() => store.state.user.championLangList || [])
 
@@ -157,33 +157,33 @@ const props = defineProps({
 })
 
 // 是否显示马尼,印尼括号金额
-const ifBetNum = (item:any,item1:any) => {
-  if (Number(item1.ioRatio)<0) {
-     // 马来绝对值都小于1,  印尼绝对值都大于1
-    let absNum: any = Math.abs(Number(item1.ioRatio))
-     return accDiv(item.gold,absNum)
-   }
+const ifBetNum = (item:any, item1:any) => {
+  if (Number(item1.ioRatio) < 0) {
+    // 马来绝对值都小于1,  印尼绝对值都大于1
+    const absNum: any = Math.abs(Number(item1.ioRatio))
+    return accDiv(item.gold, absNum)
+  }
 }
 // 可赔付金额
 const getProfit = (item: any, item1: any) => {
-   if (Number(item1.ioRatio)<0) {
-     // 马来绝对值都小于1,  印尼绝对值都大于1
-     let sumNum:any = 0
-     let absNum:any = Math.abs(Number(item1.ioRatio))
-     if (absNum>1) {
-       sumNum = accAdd(accDiv(item.gold,absNum),item.gold)
-     }
-     if (absNum<1) {
-       sumNum = accAdd(accDiv(item.gold,absNum),item.gold)
-     }
-     return sumNum
-   }
+  if (Number(item1.ioRatio) < 0) {
+    // 马来绝对值都小于1,  印尼绝对值都大于1
+    let sumNum:any = 0
+    const absNum:any = Math.abs(Number(item1.ioRatio))
+    if (absNum > 1) {
+      sumNum = accAdd(accDiv(item.gold, absNum), item.gold)
+    }
+    if (absNum < 1) {
+      sumNum = accAdd(accDiv(item.gold, absNum), item.gold)
+    }
+    return sumNum
+  }
   // return item.gold * item.sioRatio
-  return accMul(item.gold,item.sioRatio)
+  return accMul(item.gold, item.sioRatio)
 }
 // 是否显示实际金额
 const ifPracticalMoneyNum = (item: any, item1: any) => {
-  if (item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL'||Number(item.cashoutType) === 2) {
+  if (item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL' || Number(item.cashoutType) === 2) {
     return true
   }
   return false

@@ -13,7 +13,7 @@ export default {
         showBarTabsView: true,
         // showRefresh: true,
         KeepAlive: true,
-        index:2
+        index: 2
       }
     }
   ]

@@ -2,7 +2,7 @@
   <div class="app-main">
     <!-- :include="keepAlives" -->
     <router-view v-slot="{ Component, route }">
-      <transition :name="transitionName" mode="out-in">
+      <transition :name="transitionName" >
         <keep-alive>
           <component :is="getComponent(Component, route)" v-if="$route.meta.KeepAlive" :key="route.path" />
         </keep-alive>

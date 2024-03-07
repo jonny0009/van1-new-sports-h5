@@ -4,22 +4,16 @@
       <div class="top">
         <div class="left">
           <div class="top-img">
-
-            <img v-img="item1.homeLogo" class="img_1" alt="" :type="4" style="object-fit: contain;">
-            <img v-img="item1.awayLogo" class="img_2" alt="" :type="5" style="object-fit: contain;">
-
+            <img v-img="item1.homeLogo" class="img_1" alt="" :type="4" style="object-fit: contain" />
+            <img v-img="item1.awayLogo" class="img_2" alt="" :type="5" style="object-fit: contain" />
           </div>
         </div>
         <div class="right">
-
           <div class="font_1">
-
             <span v-if="item1.championType">
               {{ $t('betting.champion') }}
             </span>
-            <span v-else>
-              {{ getTeam(item1).homeTeam }} v {{ getTeam(item1).awayTeam }}
-            </span>
+            <span v-else> {{ getTeam(item1).homeTeam }} v {{ getTeam(item1).awayTeam }} </span>
 
             <span v-if="item1.resultScore" class="color-1"> [{{ item1.resultScore }}]</span>
           </div>
@@ -29,7 +23,6 @@
             <div v-if="item1.championType" class="font_2">{{ getChampionName(item1.systemId) }}</div>
             <div v-else class="font_2">{{ getTeam(item1).leagueShortName }}</div>
           </div>
-
         </div>
       </div>
       <!-- 2 -->
@@ -57,14 +50,15 @@
             <span v-else-if="item1.homeTeam && item1.awayTeam" v-play="item1" />
             <span v-else>?</span>
             <span>
-
               <!-- 平局图标找到了 -->
               <SvgIcon v-if="Number(item.cashoutType) === 2" name="user-ahead" class="icon-svg-1" />
               <SvgIcon v-if="item.state === 1" name="user-postpone" class="icon-svg-1" />
-              <SvgIcon v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
-                :name="`user-${item1.betResultDetail}`" class="icon-svg-1" />
+              <SvgIcon
+                v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
+                :name="`user-${item1.betResultDetail}`"
+                class="icon-svg-1"
+              />
               <img v-else class="img_1" src="@/assets/images/user/D1.png" alt="" />
-
             </span>
           </div>
         </div>
@@ -74,40 +68,37 @@
         <div class="one">
           <span>{{ $t('user.BettingAmount') }}</span>
           <div class="money-num-money">
-            <CurrencyComp />
+            <CurrencyComp class-name="mr3" />
 
             <!-- 投注额 -->
             <span v-if="Number(item1.ioRatio) > 0" v-points="item.gold"></span>
             <span v-if="Number(item1.ioRatio) < 0" v-points="ifBetNum(item, item1)"></span>
-            <span v-if="Number(item1.ioRatio) < 0">
-              (<span v-points="item.gold" />)
-            </span>
-
+            <span v-if="Number(item1.ioRatio) < 0"> (<span v-points="item.gold" />) </span>
           </div>
         </div>
         <div class="one two">
           <!-- state 1下单成功 2 赢 3输 4和 5取消  0 确认中-->
           <!-- 未结算的注单显示：可赔付额；取消/延期，输的注单不显示赔付额这一栏 -->
           <!-- creditState 0 未结算 1 已结算-->
-          <span v-if="item.state === 0 || item.state === -1 || item.state === 1">{{ $t('user.CompensableAmount')
-          }}:</span>
-          <span v-else-if="ifPracticalMoneyNum(item, item1)">{{ $t('user.practical')
-          }}:</span>
+          <span v-if="item.state === 0 || item.state === -1 || item.state === 1"
+            >{{ $t('user.CompensableAmount') }}:</span
+          >
+          <span v-else-if="ifPracticalMoneyNum(item, item1)">{{ $t('user.practical') }}:</span>
 
           <div>
             <!-- 受理状态 -->
             <span v-if="item.state !== 3 && item.state !== 5">
-              <span v-if="item.state === -1" style="color:#FF9A00 ;">
+              <span v-if="item.state === -1" style="color: #ff9a00">
                 {{ $t('user.editPend') }}
               </span>
-              <span v-if="item.state === 0" style="color:#FF9A00 ;">
+              <span v-if="item.state === 0" style="color: #ff9a00">
                 {{ $t('user.affirmPend') }}
               </span>
             </span>
 
             <!-- 币种 -->
             <span v-if="ifPracticalMoneyNum(item, item1)">
-              <CurrencyComp />
+              <CurrencyComp class-name="mr3 color1" />
             </span>
             <span v-if="item.state === 0 || item.state === -1 || item.state === 1" class="num color-1">
               <span v-points="getProfit(item, item1)"></span>
@@ -115,7 +106,6 @@
             <span v-else-if="ifPracticalMoneyNum(item, item1)" class="color-1">
               <span v-points="item.winGold"></span>
             </span>
-            
           </div>
         </div>
       </div>
@@ -143,13 +133,12 @@
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
 import { accDiv, accMul, accAdd } from '@/utils/math'
-import {getBrowserLanguage } from '@/utils'
-
+import { getBrowserLanguage } from '@/utils'
 
 import { computed } from 'vue'
 import store from '@/store'
 
-import CurrencyComp from './currency.vue'
+import CurrencyComp from '@/components/Currency/index.vue'
 
 const teamNameList = computed(() => store.state.user.teamNameList || [])
 const championLangList = computed(() => store.state.user.championLangList || [])
@@ -157,7 +146,7 @@ const championLangList = computed(() => store.state.user.championLangList || [])
 const props = defineProps({
   item: {
     type: Object,
-    default: () => { }
+    default: () => {}
   }
 })
 // 是否显示马尼,印尼括号金额
@@ -187,7 +176,7 @@ const getProfit = (item: any, item1: any) => {
 }
 // 是否显示实际金额
 const ifPracticalMoneyNum = (item: any, item1: any) => {
-  if (item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL' || Number(item.cashoutType) === 2) {
+  if ((item.state !== 3 && item.state !== 5) || item1.betResultDetail === 'LL' || Number(item.cashoutType) === 2) {
     return true
   }
   return false
@@ -250,7 +239,6 @@ const getLangBet = (item: any) => {
   const lang = localStorage.getItem('locale') || getBrowserLanguage()
   return itemA[lang]
 }
-
 </script>
 
 <style lang="scss" scoped>

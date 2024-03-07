@@ -4,8 +4,12 @@
       <div class="title-left">
         <div>{{ item.parlayNum }}{{ $t('user.session') }}</div>
         <div>
-          <SportsIcon v-for="(item2, index1) in item.betDTOList" :key="index1" :icon-src="item2.gameType"
-            class="ball-img" />
+          <SportsIcon
+            v-for="(item2, index1) in item.betDTOList"
+            :key="index1"
+            :icon-src="item2.gameType"
+            class="ball-img"
+          />
         </div>
       </div>
       <div class="cur-odds">
@@ -40,8 +44,11 @@
               <!-- 平局图标找到了 -->
               <SvgIcon v-if="Number(item.cashoutType) === 2" name="user-ahead" class="icon-svg-1" />
               <SvgIcon v-if="item.state === 1" name="user-postpone" class="icon-svg-1" />
-              <SvgIcon v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
-                :name="`user-${item1.betResultDetail}`" class="icon-svg-1" />
+              <SvgIcon
+                v-else-if="item.state !== 1 && battleStatus(item1.betResultDetail)"
+                :name="`user-${item1.betResultDetail}`"
+                class="icon-svg-1"
+              />
               <img v-else class="img_1" src="@/assets/images/user/D1.png" alt="" />
 
             </span>
@@ -65,7 +72,7 @@
       <div class="money-num-1">
         <span>{{ $t('user.BettingAmount') }}:</span>
         <span class="money-num-money">
-          <CurrencyComp />
+          <CurrencyComp class-name="mr3" />
           <!-- 投注额 -->
           <span v-points="item.gold"></span>
         </span>
@@ -87,7 +94,7 @@
           </span>
           <!-- 币种 -->
           <span v-if="ifPracticalMoneyNum(item)">
-            <CurrencyComp />
+            <CurrencyComp class-name="mr3 color1" />
           </span>
           <span v-if="item.state === 0 || item.state === -1 || item.state === 1" class="num">
             <span v-points="getProfit(item)"></span>
@@ -119,11 +126,11 @@
 <script lang="ts" setup>
 import { formatToDateTime } from '@/utils/date'
 import { accMul } from '@/utils/math'
-import {getBrowserLanguage } from '@/utils'
+import { getBrowserLanguage } from '@/utils'
 import { computed } from 'vue'
 import store from '@/store'
 
-import CurrencyComp from './currency.vue'
+import CurrencyComp from '@/components/Currency/index.vue'
 
 const teamNameList = computed(() => store.state.user.teamNameList || [])
 const props = defineProps({

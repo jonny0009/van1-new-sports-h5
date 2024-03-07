@@ -34,7 +34,9 @@ const userModule: Module<User, any> = {
     locationHeight: false,
     scrollNumY: 0,
     isAnonymity,
-    currentWallet: {}
+    currentWallet: {},
+    ifSearchDo: false,
+    symbol: ''
   },
   mutations: {
     SET_TOKEN: (state, token: string) => {
@@ -101,6 +103,7 @@ const userModule: Module<User, any> = {
       if (res.code === 200) {
         state.currencyData = res.data || {}
         state.currency = res.data[0].currency || {}
+        state.symbol = res.data[0].symbol || ''
         state.currentWallet = res.data[0]
         this.dispatch('user/getBalance', { wid: res.data[0].walletId || '' })
       } else {
@@ -164,8 +167,12 @@ const userModule: Module<User, any> = {
     async getLocationHeight({ state }, params) {
       state.locationHeight = params
     },
+    // 是否搜索操作
+    async getIfSearchInfo({ state }, params) {
+      state.ifSearchDo = params
+    },
     // 进行中的注单
-    async pendingOrder({ state,dispatch }, params = {}) {
+    async pendingOrder({ state, dispatch }, params = {}) {
       const res: any =
         (await betRecordTab({
           orderState: '0',
@@ -187,7 +194,7 @@ const userModule: Module<User, any> = {
           }
         })
         if (aheadOrderList.length) {
-         dispatch('getOrderList', JSON.stringify(aheadOrderList))
+          dispatch('getOrderList', JSON.stringify(aheadOrderList))
         }
       }
     },

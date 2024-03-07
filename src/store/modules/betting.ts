@@ -308,6 +308,7 @@ const bettingModule: Module<Betting, any> = {
           const oldShowType = bet.showType || bet.showtype
           // 旧的盘口ratio
           const oldRatio = bet.ratio
+          const ratioTag = bet.ratioTag
           // 旧的强弱队strong
           const oldStrong = bet.strong
           const oldGameDate = bet.gameDate
@@ -326,8 +327,8 @@ const bettingModule: Module<Betting, any> = {
               iorChange = 'down'
             }
           }
-          if (letBallMap.includes(playType) && Math.abs(oldRatio * 1) !== Math.abs(ratio * 1) && !autoOdd) {
-            if (oldRatio * 1 > ratio) {
+          if (letBallMap.includes(playType) && Math.abs(ratioTag * 1) !== Math.abs(ratio * 1) && !autoOdd) {
+            if (ratioTag * 1 > ratio) {
               ratioChange = 'up'
             } else {
               ratioChange = 'down'

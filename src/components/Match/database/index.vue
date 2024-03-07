@@ -22,6 +22,9 @@ import TabSummary from './Tabs/TabSummary.vue'
 import TabBattle from './Tabs/TabBattle.vue'
 import TabRecord from './Tabs/TabRecord.vue'
 import TabEvents from './Tabs/TabEvents.vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+
 const { t } = useI18n()
 
 const matchInfo = computed(() => store.state.match.matchInfo)
@@ -34,8 +37,18 @@ let gameType = ''
 watch(
   () => matchInfo.value,
   () => {
-    if (!gameType) {
-      gameType = matchInfo.value.gameType
+    // 首次进来不更新问题
+    // if (!gameType) {
+
+    // }
+    gameType = matchInfo.value.gameType
+    getData()
+  }
+)
+watch(
+  () => route.params['id'],
+  (newValue: any) => {
+    if (newValue) {
       getData()
     }
   }
@@ -47,18 +60,22 @@ const getData = () => {
     tabList.value.unshift({ name: 0, title: t('live.navSummary') })
 
     tabList.value.push({ name: 3, title: t('live.navEvents') })
-
-    nextTick(() => {
-      tabActive.value = 0
-    })
+    if (tabActive.value === -1) {
+      nextTick(() => {
+        tabActive.value = 0
+      })
+    }
   }
   if (gameType === 'BK') {
     tabList.value.push(...tabListOrg.value)
     tabList.value.unshift({ name: 0, title: t('live.navSummary') })
-    nextTick(() => {
-      tabActive.value = 0
-    })
+    if (tabActive.value === -1) {
+      nextTick(() => {
+        tabActive.value = 0
+      })
+    }
   }
+
   fetchData()
 }
 

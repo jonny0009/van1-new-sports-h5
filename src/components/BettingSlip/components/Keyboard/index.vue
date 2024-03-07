@@ -10,7 +10,7 @@
     </div>
     <div class="keyboard-input-body">
       <div v-for="key in keys" :key="key" class="input-item" @click="inputEntry(key)">
-        <span v-if="key === 'back'" class="back" :style="{backgroundImage:`url(${deleteBg})`}"></span>
+        <span v-if="key === 'back'" class="back" :style="{ backgroundImage: `url(${deleteBg})` }"></span>
         <span v-else>{{ key }}</span>
       </div>
     </div>
@@ -23,7 +23,6 @@
       <span class="tips">{{ $t('betting.oddChangTips') }}</span>
       <span class="tips-icon"></span>
     </div>
-
   </van-popup>
 </template>
 <script lang="ts" setup>
@@ -73,7 +72,7 @@ const close = () => {
 <style scoped lang="scss">
 .betting-slip-keyboard {
   box-shadow: 0px -3px 9px 0px rgba(55, 54, 54, 0.5);
-
+  background-color: var(--color-bet-keyboardbg);
   .keyboard-input-header {
     height: 108px;
     padding: 0 37px;
@@ -81,7 +80,8 @@ const close = () => {
     align-items: center;
   }
 
-  .seize {}
+  .seize {
+  }
 
   .quick-input-list {
     padding-left: 36px;
@@ -100,7 +100,7 @@ const close = () => {
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: rgba(150, 165, 170, .15);
+        background-color: var(--color-bet-keyboardtextbg);
         font-family: PingFangSC-Medium;
         font-size: 24px;
         color: #000000;
@@ -160,10 +160,10 @@ const close = () => {
     background-repeat: no-repeat;
     background-position: center;
 
-    &.checked{
+    &.checked {
       background-image: url('@/assets/images/betting/check-state.png');
     }
-    &.close{
+    &.close {
       background-image: url('@/assets/images/betting/closegray.png');
     }
   }

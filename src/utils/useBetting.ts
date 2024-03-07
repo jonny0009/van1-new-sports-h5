@@ -10,7 +10,7 @@ const FORMAT_TYPE: any = {
   2: 'novice',
   3: 'veteran'
 }
-export function useBetting(flag:any) {
+export function useBetting(flag: any) {
   const matchInfo = computed(() => store.state.match.matchInfo)
   const userConfig = computed(() => store.state.user.userConfig)
   const needTimer = computed(() => store.state.match.needTimer)
@@ -25,8 +25,8 @@ export function useBetting(flag:any) {
   onMounted(() => {
     // fetchGroup()
   })
-
-  // 1
+  const fistState = ref(true)
+  const selectId = ref('0')
   const playGroupBetList: Ref<any[]> = ref([])
   const fetchGroup = async () => {
     if (needTimer.value && !flag) {
@@ -35,19 +35,24 @@ export function useBetting(flag:any) {
 
     const { formatType } = userConfig.value
     const { gameType } = matchInfo.value
-    if (gameType) {
+    if (gameType && fistState.value) {
       const res: any = await playGroup({ gameType })
       const data = res.data || {}
       if (res.code === 200) {
         const patternList = data[FORMAT_TYPE[formatType]]
         playGroupBetList.value = patternList
+        fistState.value = false
       }
+    }
+    if (flag) {
+      findGroupById(selectId.value)
     }
   }
 
   const currentGroupPlay = ref([])
   const findGroupById = (id: string) => {
-    const currentGroup = playGroupBetList.value.find((m: any) => m.id?.toString() === id)
+    selectId.value = id
+    const currentGroup = playGroupBetList.value.find((m: any) => m.id?.toString() === selectId.value)
     currentGroupPlay.value = currentGroup.playData
     getBettingData()
   }

@@ -30,7 +30,6 @@
 
     <ChatRoom v-model:show="showChat" />
   </div>
-
 </template>
 
 <script setup lang="ts">
@@ -123,11 +122,11 @@ const closeInterval = () => {
 onBeforeMount(() => {
   getMatchInfo()
   getExtendInfo()
-  // startInterval()
+  startInterval()
 })
 
 onUnmounted(() => {
-  // closeInterval()
+  closeInterval()
   store.commit('match/SET_NEED_TIMER', false)
 })
 
