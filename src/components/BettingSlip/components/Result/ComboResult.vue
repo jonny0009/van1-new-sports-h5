@@ -67,7 +67,6 @@ const results = computed(() => store.state.betting.results)
 
         &.error {
           background-image: url('@/assets/images/betting/close-state.png');
-
         }
       }
     }
@@ -77,7 +76,7 @@ const results = computed(() => store.state.betting.results)
       align-items: center;
       width: 675px;
       height: 135px;
-      background: #EFF0F1;
+      background: #eff0f1;
       border-radius: 20px;
       overflow: hidden;
 
@@ -97,7 +96,6 @@ const results = computed(() => store.state.betting.results)
           align-items: center;
 
           .betting-name {
-            margin-left: 8px;
             font-family: PingFangSC-Medium;
             font-size: 28px;
             color: #000000;
@@ -108,6 +106,8 @@ const results = computed(() => store.state.betting.results)
 
         .details {
           .sport-icon {
+            font-size: 24px;
+            font-weight: 500;
             color: var(--color-bet-sportstext);
           }
 
@@ -144,11 +144,11 @@ const results = computed(() => store.state.betting.results)
         height: 100%;
 
         &.check {
-          background: #0BBA3E;
+          background: #0bba3e;
         }
 
         &.error {
-          background: #FB0738;
+          background: #fb0738;
         }
       }
     }

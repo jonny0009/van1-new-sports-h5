@@ -192,7 +192,7 @@ defineExpose({
     justify-content: space-between;
     position: relative;
     overflow: hidden;
-
+    background-color: var(--color-bet-contentbg);
     .title {
       display: flex;
       align-items: center;
@@ -220,7 +220,7 @@ defineExpose({
       .play-name {
         font-family: PingFangSC-Medium;
         font-size: 24px;
-        color: rgb(136, 166, 187);
+        color: var(--color-bet-title);
         letter-spacing: 0;
         font-weight: 500;
       }
@@ -228,7 +228,7 @@ defineExpose({
       .team-info {
         font-family: PingFangSC-Medium;
         font-size: 24px;
-        color: rgb(136, 166, 187);
+        color: var(--color-bet-title);
         letter-spacing: 0;
         font-weight: 500;
       }

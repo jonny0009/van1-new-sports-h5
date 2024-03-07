@@ -72,7 +72,7 @@ const close = () => {
 <style scoped lang="scss">
 .betting-slip-keyboard {
   box-shadow: 0px -3px 9px 0px rgba(55, 54, 54, 0.5);
-  background-color: rgb(244, 245, 250);
+  background-color: var(--color-bet-keyboardbg);
   .keyboard-input-header {
     height: 108px;
     padding: 0 37px;
@@ -100,7 +100,7 @@ const close = () => {
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #fff;
+        background-color: var(--color-bet-keyboardtextbg);
         font-family: PingFangSC-Medium;
         font-size: 24px;
         color: #000000;

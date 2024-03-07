@@ -86,7 +86,7 @@ const getAcceptOrderStateTask = async () => {
   align-items: center;
   width: 675px;
   height: 135px;
-  background: #eff0f1;
+  background-color: var(--color-bet-contentbg);
   border-radius: 20px;
   overflow: hidden;
   margin-bottom: 15px;
