@@ -224,7 +224,7 @@ const inputTouch = () => {
     .title {
       font-family: PingFangSC-Medium;
       font-size: 24px;
-      color: #88a6bb;
+      color: var(--color-bet-iortexttitle);
       letter-spacing: 0;
       font-weight: 500;
     }
@@ -246,7 +246,7 @@ const inputTouch = () => {
     .title {
       font-family: PingFangSC-Medium;
       font-size: 28px;
-      color: #88a6bb;
+      color: var(--color-bet-iortexttitle);
       letter-spacing: 0;
       font-weight: 500;
     }

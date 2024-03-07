@@ -1,8 +1,8 @@
 // 默认紫色版本
 :root {
   --color-primary: #7642fe;
-  --color-linear-gradient-1: #9d10ff;
-  --color-linear-gradient-2: rgb(118, 66, 254);
+  --color-linear-gradient-1: rgb(177, 85, 241);
+  --color-linear-gradient-2: rgb(118, 76, 223);
   --color-bg-1: #7642fd;
   --color-text-1: #080808;
   --color-text-2: #1f2630;
@@ -92,6 +92,7 @@
   --color-bet-text-1: #7642fd;
   --color-bet-tabtext-1: #919191;
   --color-bet-tabtext-2: #000000;
+  --color-bet-iortexttitle: rgb(84, 99, 113);
   --color-bet-iortext: #7642fd;
   --color-bet-keyboardbg: #fff;
   --color-bet-keyboardtext: #7642fd;
@@ -101,7 +102,7 @@
 
   --color-bet-iorbg-1: #7642fd;
   --color-bet-iorbg-2: #7642fd;
-  --color-bet-removebg: #c1c1c1;
+  --color-bet-removebg: rgb(226, 229, 234);
   --color-bet-contentbg: rgb(239, 240, 241);
   --color-bet-confirmbg: #7440fe;
   --color-bet-iorchangebg: #7642fe;
@@ -229,6 +230,7 @@
   --color-bet-text-1: #48a3ff;
   --color-bet-tabtext-1: #88a6bb;
   --color-bet-tabtext-2: #0e3d66;
+  --color-bet-iortexttitle: #88a6bb;
   --color-bet-iortext: #48a3ff;
   --color-bet-keyboardbg: rgb(244, 245, 250);
   --color-bet-keyboardtext: #48a3ff;
