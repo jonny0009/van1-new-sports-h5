@@ -290,7 +290,8 @@ const calcRatioPer = (num: any) => {
   width: 12px;
   height: 12px;
   border-radius: 12px;
-  background-color: #fff;
+  // background-color: #fff;
+  background-color: rgb(188, 174, 174);
 }
 
 :deep(.van-swipe__indicator--active) {
