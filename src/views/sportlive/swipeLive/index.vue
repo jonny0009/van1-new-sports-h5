@@ -102,10 +102,9 @@ onBeforeMount(() => {
       }
     }
   }
-
 }
 </style>
-<style lang="scss" >
+<style lang="scss">
 .swipeLive {
   .van-swipe__indicators {
     bottom: 18px;
