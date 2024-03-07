@@ -1,16 +1,19 @@
 <template>
-  <div class="ImageButton" :class="[
-    {
-      'greyBg':ifCount===0,
-      'active': active,
-      'ifShadow':!ifShadow
-    }
-  ]">
-    <img v-img="src" class="img" :class="ifCircle?'img-1':''" :type="type" style="object-fit: contain;"/>
+  <div
+    class="ImageButton"
+    :class="[
+      {
+        greyBg: ifCount === 0,
+        active: active,
+        ifShadow: !ifShadow
+      }
+    ]"
+  >
+    <img v-img="src" class="img" :class="ifCircle ? 'img-1' : ''" :type="type" style="object-fit: contain" />
     <span>
       {{ text }}
     </span>
-    <span v-if="count" class="count" :class="[{'count-2':ifCount===0, 'count-1': active }]">
+    <span v-if="count" class="count" :class="[{ 'count-2': ifCount === 0, 'count-1': active }]">
       {{ count }}
     </span>
   </div>
@@ -66,7 +69,6 @@ defineProps({
     }
   }
 })
-
 </script>
 <style lang="scss" scoped>
 .ImageButton {
@@ -80,7 +82,7 @@ defineProps({
   padding-right: 40px;
   background: var(--color-global-buttonBg);
   color: var(--color-text-5);
-  transition: all .3s;
+  transition: all 0.3s;
   font-size: 24px;
   font-weight: bold;
   box-shadow: var(--color-global-buttonShadow);
@@ -91,8 +93,8 @@ defineProps({
   }
 
   &.greyBg {
-    background: var( --color-grey-out-bg);
-    color: var( --color-grey-out-text);
+    background: var(--color-grey-out-bg);
+    color: var(--color-grey-out-text);
   }
   &.active {
     background: var(--color-global-buttonPrimaryBg);
@@ -104,7 +106,7 @@ defineProps({
     height: 32px;
     margin-right: 10px;
   }
-  .img-1{
+  .img-1 {
     width: 44px;
     height: 44px;
     border-radius: 50%;
@@ -116,13 +118,13 @@ defineProps({
     color: var(--color-text-5);
   }
   .count-2 {
-    color: var( --color-grey-out-text);
+    color: var(--color-grey-out-text);
   }
   .count-1 {
     color: #fff;
   }
 }
-.ifShadow{
+.ifShadow {
   box-shadow: none;
 }
 </style>
