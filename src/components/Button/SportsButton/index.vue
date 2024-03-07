@@ -7,7 +7,9 @@
       }
     ]"
   >
-    <i class="iconfont" :class="SportsName"></i>
+    <SvgIcon v-if="props.text === 'OP_DR'" name="ball-OP_DR" />
+    <SvgIcon v-else-if="props.text === 'OP_BV'" name="ball-OP_BV" />
+    <i v-else class="iconfont" :class="SportsName"></i>
     <span> {{ textVal }} </span>
     <span v-if="props.showCount && sportCount > 0"> {{ sportCount }}</span>
   </div>
@@ -76,13 +78,23 @@ const sportCount = computed(() => props.count)
     font-weight: 100;
     color: var(--color-global-minButtonicoCl);
   }
+  .svg-icon {
+    font-size: 38px;
+    color: var(--color-global-minButtonicoCl);
+    margin-right: 10px;
+    margin-top: -5px;
+  }
   &.active {
     background: var(--color-global-buttonPrimaryBg);
     color: #fff;
     .iconfont {
       color: #fff;
     }
+    .svg-icon {
+      color: #fff;
+    }
   }
+
   span {
     font-size: 24px;
     line-height: 24px;
