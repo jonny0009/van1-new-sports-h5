@@ -14,7 +14,7 @@
               </div>
             </div>
             <span class="time">
-              {{ formatToDate(item.gameDate, 'MM/DD') }}
+              {{ formatToDate(item.gameDate, 'MM/DD HH:mm') }}
             </span>
             </p>
             <!-- 比赛 -->
