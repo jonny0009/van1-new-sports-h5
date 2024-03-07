@@ -14,7 +14,7 @@
               </div>
             </div>
             <span class="time">
-              {{ formatToDate(item.gameDate, 'MM/DD HH:mm') }}
+              {{ formatToDate(item.gameDate, 'MM/DD HH:mm A') }}
             </span>
             </p>
             <!-- 比赛 -->
@@ -134,7 +134,7 @@ const props = defineProps({
 
       .topName {
         display: inline-block;
-        width: 450px;
+        width: 400px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
