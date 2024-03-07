@@ -263,6 +263,7 @@ const betMoreShow = () => {
 
 const showFUTime = computed(() => {
   const { gameDate } = props.sendParams || {}
-  return matchDateFormat(gameDate, 'MM-DD HH:mm')
+  // return matchDateFormat(gameDate, 'MM-DD HH:mm')
+  return matchDateFormat(gameDate, 'HH:mm')
 })
 </script>
