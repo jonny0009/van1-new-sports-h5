@@ -143,7 +143,7 @@ const getAcceptOrderStateTask = async () => {
     width: 220px;
     font-family: PingFangSC-Semibold;
     font-size: 30px;
-    color: #7642fd;
+    color: var(--color-bet-iortext);
     letter-spacing: 1px;
     text-align: center;
     font-weight: 600;

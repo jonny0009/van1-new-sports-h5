@@ -269,7 +269,7 @@ defineExpose({
   left: 0;
   right: 0;
   margin: auto;
-  background: #fff;
+  background: rgb(244, 245, 250);
   z-index: 290;
   display: flex;
   flex-direction: column;
