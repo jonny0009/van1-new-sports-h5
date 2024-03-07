@@ -138,7 +138,8 @@ const activeNames = ref(['1'])
   }
 
   &-main__wrapper {
-    background: #f4f5fa;
+    // background: #f4f5fa;
+    background-color: var(--color-background-color);
     // min-height: 300px;
     border-radius: 16px;
   }
