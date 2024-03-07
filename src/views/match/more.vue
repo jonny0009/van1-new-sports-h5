@@ -10,7 +10,7 @@
             <SvgIcon name="live-football" />
             <span>{{ matchInfo.leagueName }}</span>
           </div>
-          <div class="date">{{ formatToDate(matchInfo.gameDate, 'MM-DD HH:mm') }}</div>
+          <div class="date">{{ formatToDate(matchInfo.gameDate, 'MM/DD HH:mm A') }}</div>
         </div>
         <div class="team-box">
           <div class="team-player host">

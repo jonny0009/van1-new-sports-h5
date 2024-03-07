@@ -18,14 +18,16 @@ export function dateFormat(date: any, format = DATE_TIME_FORMAT) {
   return dateUtil(date).format(format)
 }
 export function matchDateFormat(date: any, format = DATE_TIME_FORMAT) {
-  const today = new Date()
-  const newToday: any = dateUtil(today).format('MM-DD')
-  const newTodayDate: any = dateUtil(date).format('MM-DD')
-  if (newToday === newTodayDate) {
-    return dateUtil(date).format('HH:mm A')
-  } else {
-    return dateUtil(date).format(format)
-  }
+  // const today = new Date()
+  // const newToday: any = dateUtil(today).format('MM-DD')
+  // const newTodayDate: any = dateUtil(date).format('MM-DD')
+  // if (newToday === newTodayDate) {
+  //   return dateUtil(date).format('HH:mm A')
+  // } else {
+  //   return dateUtil(date).format(format)
+  // }
+  // 只导出上下午时间
+  return dateUtil(date).format('HH:mm A')
 }
 
 export function formatWeekday(date: any) {

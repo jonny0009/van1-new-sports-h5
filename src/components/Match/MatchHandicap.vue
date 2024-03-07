@@ -227,6 +227,6 @@ const Mclick = () => {
 
 const showFUTime = computed(() => {
   const { gameDate } = props.sendParams || {}
-  return matchDateFormat(gameDate, 'MM-DD HH:mm')
+  return matchDateFormat(gameDate, 'MM/DD HH:mm')
 })
 </script>
