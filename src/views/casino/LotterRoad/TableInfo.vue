@@ -145,7 +145,7 @@ const goToGame = async () => {
   flex-direction: column;
   .table-cover {
     height: 165px;
-    background-color: #ccc;
+    background-image: linear-gradient(270deg, #d8def6 0%, #bbd0f7 100%);
   }
   .table-road-list {
     box-sizing: border-box;
@@ -154,7 +154,6 @@ const goToGame = async () => {
     overflow: auto;
     display: flex;
     background-color: rgb(221, 222, 232);
-    border: 1px solid rgb(221, 222, 232);
     background-image: linear-gradient(0deg, rgb(249, 249, 253), rgb(235, 236, 248) 100%);
     .road-col {
       box-sizing: border-box;

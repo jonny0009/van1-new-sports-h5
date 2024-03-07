@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import { getLotteryGoodRoads } from '@/api/home'
+import { realTableList } from '@/api/home'
 import { onBeforeMount, ref } from 'vue'
 import TableInfo from './TableInfo.vue'
 const list = ref([])
@@ -18,8 +18,8 @@ onBeforeMount(() => {
 })
 
 const getList = async () => {
-  const res = await getLotteryGoodRoads()
-  list.value = res?.data || {}
+  const res = await realTableList()
+  list.value = res?.data?.data || []
   console.log(res, 'res')
 }
 </script>

@@ -94,9 +94,9 @@ export const getBacGoodRoads = (params?: any) => {
   })
 }
 // 首页彩票好路列表
-export const getLotteryGoodRoads = (params?: any) => {
+export const realTableList = (params?: any) => {
   return request({
-    url: '/ai/mobile/game/lotteryGoodRoads',
+    url: '/ai/mobile/game/realTableList',
     method: 'get',
     params
   })

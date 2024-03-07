@@ -202,8 +202,9 @@ const goToGame = async () => {
       height: 162px;
       background-repeat: no-repeat;
       background-size: contain;
-      background-image: url(@/assets/images/casino/road-bg.png);
-      border: 1px solid #ddd;
+      background-image: linear-gradient(270deg, #d8def6 0%, #bbd0f7 100%);
+      border-radius: 10px;
+      overflow: hidden;
     }
 
     .table-road-list {
@@ -211,7 +212,6 @@ const goToGame = async () => {
       overflow: auto;
       display: flex;
       margin-left: 8px;
-      border: 1px solid rgb(221, 222, 232);
       background-image: linear-gradient(0deg, rgb(249, 249, 253), rgb(235, 236, 248) 100%);
       .road-col {
         display: flex;
