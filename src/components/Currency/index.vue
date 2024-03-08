@@ -1,7 +1,7 @@
 <template>
   <span v-if="currency==='CNY'" :class="props.className">{{ '¥' }} </span>
   <span v-else-if="currency==='VNDK'" :class="props.className">{{ '₫(K)' }} </span>
-  <span v-else-if="currency==='USDT'" :class="props.className">{{ 'T' }} </span>
+  <span v-else-if="currency==='USDT'" :class="props.className">{{ '₮' }} </span>
   <span v-else-if="currency==='THB'" :class="props.className">{{ '฿' }} </span>
   <span v-else :class="props.className">{{ symbol }} </span>
 
