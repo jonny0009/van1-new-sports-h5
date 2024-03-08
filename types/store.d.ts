@@ -6,6 +6,7 @@ declare interface App {
   showFixedBet: any
   theme: any
   globalBarHeaderHeight: any
+  liveBarHeaderHeight: any
   doubleLineInfo: any
   sports: any
   moduleConfig: any
@@ -37,7 +38,7 @@ declare interface User {
   currentWallet: any
   keepCache: any
   token: string | undefined | null
-  ifSearchDo:any
+  ifSearchDo: any
   symbol: string | undefined | null
 }
 declare interface Betting {

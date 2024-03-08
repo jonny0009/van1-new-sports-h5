@@ -92,14 +92,14 @@ const getExtendInfo = async () => {
     videoUrl.value = (liveali || {}).m3u8
     videoError.value = false
     store.dispatch('app/setKeyValue', {
-      key: 'globalBarHeaderHeight',
+      key: 'liveBarHeaderHeight',
       value: '69vw'
     })
   } else {
     videoUrl.value = ''
     videoError.value = true
     store.dispatch('app/setKeyValue', {
-      key: 'globalBarHeaderHeight',
+      key: 'liveBarHeaderHeight',
       value: '50.333vw'
     })
   }
@@ -107,7 +107,7 @@ const getExtendInfo = async () => {
 const onVideoError = () => {
   videoError.value = true
   store.dispatch('app/setKeyValue', {
-    key: 'globalBarHeaderHeight',
+    key: 'liveBarHeaderHeight',
     value: '50.333vw'
   })
 }
