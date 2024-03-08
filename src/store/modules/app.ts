@@ -18,6 +18,7 @@ const appModule: Module<App, any> = {
     doubleLineInfo: {},
     sports: [],
     globalBarHeaderHeight: 48,
+    liveBarHeaderHeight: '50.333vw',
     pictureinpictureGidm: null, // 画中画赛事id
     mantainMsg: null,
     systemTime: null,
@@ -91,7 +92,6 @@ const appModule: Module<App, any> = {
         }
       }
     }
-
   }
 }
 

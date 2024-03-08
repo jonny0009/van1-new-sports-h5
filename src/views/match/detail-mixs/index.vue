@@ -51,7 +51,7 @@ const MatchLive = defineAsyncComponent(() => import('@/components/HomeMatch/Matc
 
 import store from '@/store'
 const offsetTop = computed(() => {
-  const offsetTop = store.state.app.globalBarHeaderHeight || '50.333vw'
+  const offsetTop = store.state.app.liveBarHeaderHeight
   // var offsetTopval = 48
   // if (offsetTop > 60) {
   //   offsetTopval = 48
