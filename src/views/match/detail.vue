@@ -93,14 +93,14 @@ const getExtendInfo = async () => {
     videoError.value = false
     store.dispatch('app/setKeyValue', {
       key: 'globalBarHeaderHeight',
-      value: 260
+      value: '69vw'
     })
   } else {
     videoUrl.value = ''
     videoError.value = true
     store.dispatch('app/setKeyValue', {
       key: 'globalBarHeaderHeight',
-      value: 188
+      value: '50.333vw'
     })
   }
 }
@@ -108,7 +108,7 @@ const onVideoError = () => {
   videoError.value = true
   store.dispatch('app/setKeyValue', {
     key: 'globalBarHeaderHeight',
-    value: 188
+    value: '50.333vw'
   })
 }
 
