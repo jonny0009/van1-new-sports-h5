@@ -374,6 +374,7 @@ watch(
   () => ifSearchDo.value,
   (newValue: any) => {
     if (newValue) {
+      ifRouteId.value = ''
       store.dispatch('user/getIfSearchInfo', false)
       gameType.value = route.params?.type || 'FT'
       active.value = gameType.value
