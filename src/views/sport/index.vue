@@ -381,7 +381,7 @@ watch(
       ifLeagueNum.value = false
       closeSlideshow.value = false
       leagueId.value = newValue.leagueId
-      initData()
+      getFirstLeagues(true)
     }
   }
 )
@@ -546,27 +546,30 @@ const firstLeaguesList: any = ref([])
 // 联赛Ids
 const leagueIdArr: any = ref([])
 // 获取一级联赛 / 更换fuByGameType 接口
-const getFirstLeagues = async () => {
+const getFirstLeagues = async (ifSearch?: any) => {
   // firstLeaguesList.value = []
   if (gameType.value) {
     // showType：FT-今日 FU-早盘 RB-滚球
     const res: any = (await recommendLeague({ gameType: gameType.value, showType: 'FAST' })) || {}
     if (res.code === 200 && res.data) {
       firstLeaguesList.value = res.data.list || []
-      // 联赛ID
-      const leagueIdObj = firstLeaguesList.value.find((item: any) => {
-        return item.leagueId === leagueId.value
-      })
-      if (!leagueIdObj) {
-        leagueId.value = ''
-        closeSlideshow.value = true
-      }
-      leagueIdArr.value = []
-      firstLeaguesList.value.map((n: any) => {
-        if (n.leagueId) {
-          leagueIdArr.value.push(n.leagueId)
+      //搜索目前没有国家ID, 不匹配
+      if (!ifSearch) {
+        // 联赛ID
+        const leagueIdObj = firstLeaguesList.value.find((item: any) => {
+          return item.leagueId === leagueId.value
+        })
+        if (!leagueIdObj) {
+          leagueId.value = ''
+          closeSlideshow.value = true
         }
-      })
+        leagueIdArr.value = []
+        firstLeaguesList.value.map((n: any) => {
+          if (n.leagueId) {
+            leagueIdArr.value.push(n.leagueId)
+          }
+        })
+      }
       initData()
     } else {
       firstLeaguesList.value = []
