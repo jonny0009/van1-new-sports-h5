@@ -91,13 +91,25 @@ const getExtendInfo = async () => {
     const { liveali } = streamNa || {}
     videoUrl.value = (liveali || {}).m3u8
     videoError.value = false
+    store.dispatch('app/setKeyValue', {
+      key: 'globalBarHeaderHeight',
+      value: 260
+    })
   } else {
     videoUrl.value = ''
     videoError.value = true
+    store.dispatch('app/setKeyValue', {
+      key: 'globalBarHeaderHeight',
+      value: 188
+    })
   }
 }
 const onVideoError = () => {
   videoError.value = true
+  store.dispatch('app/setKeyValue', {
+    key: 'globalBarHeaderHeight',
+    value: 188
+  })
 }
 
 const showChat = ref(false)
