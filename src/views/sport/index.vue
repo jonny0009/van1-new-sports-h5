@@ -374,14 +374,15 @@ watch(
 watch(
   () => ifSearchDo.value,
   (newValue: any) => {
-    store.dispatch('user/getIfSearchInfo', false)
-    if (newValue.gameType !== gameType.value) return
-    ifRouteId.value = ''
-    championListLoading.value = true
-    ifLeagueNum.value = false
-    closeSlideshow.value = false
-    leagueId.value = newValue.leagueId
-    initData()
+    if (newValue) {
+      ifRouteId.value = ''
+      gameType.value = newValue.gameType
+      championListLoading.value = true
+      ifLeagueNum.value = false
+      closeSlideshow.value = false
+      leagueId.value = newValue.leagueId
+      initData()
+    }
   }
 )
 // 手风琴展开
