@@ -8,7 +8,7 @@
       <span class="icon"></span>
       <span class="tips">{{ $t('betting.noComboTips') }}</span>
     </span>
-    <div class="clear-btn" @click="clearBets">一鍵清除</div>
+    <div class="clear-btn" @click="clearBets">{{ $t('betting.OneClickClear') }}</div>
   </div>
 </template>
 <script lang="ts" setup>
