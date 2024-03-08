@@ -5,7 +5,7 @@
       <div class="mt10">
         <van-tabs
           :duration="0.2"
-          v-model:active="active"
+          v-model:active="gameType"
           shrink
           line-height="0"
           :animated="ifAnimated"
@@ -15,7 +15,7 @@
         >
           <van-tab v-for="(item, index) in sportsList" :key="index" :name="item.text">
             <template #title>
-              <SportsButton class="tabs-cut-7" :text="item.text" :active="active === item.text" :class="item.text" />
+              <SportsButton class="tabs-cut-7" :text="item.text" :active="gameType === item.text" :class="item.text" />
             </template>
             <!-- 公共联赛 -->
             <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
@@ -296,14 +296,15 @@ const onChangeTabs = (item: any) => {
   activeCollapseNames.value = ''
   commonMatchesList.value = []
   // end=====
-  gameType.value = item
+  console.log(item, '==')
+
+  // gameType.value = item
   store.dispatch('user/getLocationHeight', false)
   getRecommendEventsIsLoading.value = false
   initList()
 }
 
 const ifAnimated: any = ref(true)
-const active = ref('FT')
 const activeNames = ref('1')
 const activeNamesB = ref('b1')
 const activeNamesC = ref('c1')
@@ -373,17 +374,14 @@ watch(
 watch(
   () => ifSearchDo.value,
   (newValue: any) => {
-    if (newValue) {
-      ifRouteId.value = ''
-      store.dispatch('user/getIfSearchInfo', false)
-      gameType.value = route.params?.type || 'FT'
-      active.value = gameType.value
-      championListLoading.value = true
-      ifLeagueNum.value = false
-      closeSlideshow.value = false
-      leagueId.value = newValue
-      initData()
-    }
+    store.dispatch('user/getIfSearchInfo', false)
+    if (newValue.gameType !== gameType.value) return
+    ifRouteId.value = ''
+    championListLoading.value = true
+    ifLeagueNum.value = false
+    closeSlideshow.value = false
+    leagueId.value = newValue.leagueId
+    initData()
   }
 )
 // 手风琴展开
@@ -868,7 +866,6 @@ onActivated(async () => {
   }
   getSearchCountryInfo()
 
-  active.value = gameType.value
   // 是否冠军赛
   const isChampion = route.query?.ischampion || ''
   if (isChampion === 'yes') {

@@ -36,7 +36,7 @@ const props = defineProps({
   }
 })
 const toLeague = async (item: any) => {
-  store.dispatch('user/getIfSearchInfo', item.id)
+  store.dispatch('user/getIfSearchInfo', { leagueId: item.id, gameType: item.gameType })
   emit('showSearchValue', false)
   $router.push({
     path: `/sport/${item.gameType}`,
