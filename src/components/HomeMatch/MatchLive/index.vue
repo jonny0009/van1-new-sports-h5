@@ -160,7 +160,7 @@
                 <div class="betting-select">
                   <div class="betting-select__list">
                     <!-- 比分盘口-->
-                    <HandicapScore :send-params="sendParams" :type="'RPD'" />
+                    <HandicapScore :send-params="sendParams" :type="'RPD'" :ifMatchLive="ifMatchLive" />
                   </div>
                 </div>
               </div>
@@ -490,6 +490,12 @@ const props = defineProps({
     type: Boolean,
     default: function () {
       return true
+    }
+  },
+  ifMatchLive: {
+    type: Boolean,
+    default: function () {
+      return false
     }
   }
 })

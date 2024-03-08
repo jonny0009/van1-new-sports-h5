@@ -1,7 +1,7 @@
 <template>
   <div ref="container" class="homeMatchHandicap">
     <!-- <van-sticky v-if="playTitleToggle" :offset-top="offsetTop" :container="container" z-index="5"> -->
-    <div class="home-tabs-play">
+    <div class="home-tabs-play" v-if="playTitleToggle">
       <TimeView :time-send-params="sendParams" />
       <div class="play">
         <div class="flex-1"></div>
@@ -37,6 +37,17 @@
           @click="Mclick"
         >
           {{ $t('home.M') }}
+        </span>
+        <span
+          class="btn PD"
+          :class="[
+            {
+              active: PDrefShow
+            }
+          ]"
+          @click="PDclick"
+        >
+          {{ $t('live.score') }}
         </span>
       </div>
     </div>
@@ -118,6 +129,20 @@
                 </div>
               </div>
             </div>
+            <!-- 正确比分 -->
+            <div v-if="PDrefShow && sendParams.PD" ref="PDref" class="match-betting-item">
+              <div class="match-betting-item__title">
+                <div class="flex-cross-center">{{ $t('home.PDscore') }}</div>
+              </div>
+              <div class="match-betting-item__content">
+                <div class="betting-select">
+                  <div class="betting-select__list">
+                    <!-- 比分盘口-->
+                    <HandicapScore :send-params="sendParams" :type="'PD'" :ifMatchLive="ifMatchLive" />
+                  </div>
+                </div>
+              </div>
+            </div>
             <!--
              -->
           </div>
@@ -148,6 +173,7 @@
 import { matchDateFormat } from '@/utils/date'
 import { getHandicap } from '@/utils/home/getHandicap'
 import Handicap from '@/components/HomeMatch/public/Handicap/index.vue'
+import HandicapScore from '@/components/HomeMatch/public/HandicapScore/index.vue'
 import TimeView from '@/components/HomeMatch/public/time/index.vue'
 import SportsIcon from '@/components/Button/SportsIcon/index.vue'
 import { computed, ref } from 'vue'
@@ -164,6 +190,12 @@ const props = defineProps({
     type: Boolean,
     default: function () {
       return true
+    }
+  },
+  ifMatchLive: {
+    type: Boolean,
+    default: function () {
+      return false
     }
   }
 })
@@ -214,6 +246,14 @@ const Mclick = () => {
   store.dispatch('home/setKeyValue', {
     key: 'MrefShow',
     value: !MrefShow.value
+  })
+}
+const PDrefShow = computed(() => store.state.home.PDrefShow)
+const PDclick = () => {
+  //
+  store.dispatch('home/setKeyValue', {
+    key: 'PDrefShow',
+    value: !PDrefShow.value
   })
 }
 // const goClick = () => {

@@ -8,7 +8,7 @@
     <div class="content" v-if="contactInfoArr.length">
       <div v-for="(item, index) in contactInfoArr" :key="index">
         <div class="box">
-          <img v-img="item.icon" class="img_2" alt="" :type="1">
+          <img v-img="item.icon" class="img_2" alt="" :type="1" />
           <div class="right">
             <p>{{ item.type }}</p>
             <p>
@@ -30,7 +30,6 @@
         {{ $t('user.noData') }}
       </p>
     </div>
-
   </div>
 </template>
 
@@ -41,14 +40,13 @@ const $router = useRouter()
 import { contact } from '@/api/user'
 import { showToast } from 'vant'
 
-
-
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const title = ref(t('user.contactUs'))
 
-onMounted(() => { getInfo() })
-
+onMounted(() => {
+  getInfo()
+})
 
 const contactInfoArr = ref<any>([])
 const contactType1 = ref<any>([])
@@ -72,9 +70,6 @@ const getInfo = async () => {
   contactInfoArr.value = res.data.filter((item: any) => {
     return item.state === 1
   })
-
-  // console.log([...contactInfoArr.value], "=====");
-
 }
 const goBack = () => {
   $router.back()
@@ -88,7 +83,6 @@ const toUrl = (url: any, num: any) => {
     window.open(`mailto:${url}`, '_self')
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -101,11 +95,10 @@ const toUrl = (url: any, num: any) => {
       width: 36px;
       height: 36px;
       color: var(--title-text-font-color);
-
     }
   }
 
-  >.content {
+  > .content {
     height: calc(100vh - 96px);
     background-color: var(--color-background-color);
     overflow-y: auto;
@@ -149,7 +142,7 @@ const toUrl = (url: any, num: any) => {
     }
 
     .line-color {
-      background: #E5ECF3;;
+      background: #e5ecf3;
       height: 2px;
     }
 
@@ -177,7 +170,6 @@ const toUrl = (url: any, num: any) => {
         text-align: right;
         font-weight: 500;
       }
-
     }
   }
 
@@ -191,15 +183,13 @@ const toUrl = (url: any, num: any) => {
     font-weight: 500;
     height: 850px;
 
-    >.img_1 {
+    > .img_1 {
       margin-top: 331px;
       width: 102px;
       height: 121px;
       margin-bottom: 57px;
-
     }
   }
-
 }
 
 :deep(.van-field__control) {
@@ -232,7 +222,6 @@ const toUrl = (url: any, num: any) => {
   text-align: center;
   font-weight: 500;
   color: var(--title-text-font-color);
-
 }
 
 :deep(.van-icon) {

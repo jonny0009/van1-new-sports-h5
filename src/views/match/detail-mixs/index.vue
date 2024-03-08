@@ -1,5 +1,5 @@
 <template>
-  <div class="panel-mixs">
+  <div class="panel-mixs" ref="newContainer">
     <van-tabs v-model:active="tabActive" class="global-nav-vant-tabs" shrink line-height="0" @change="onChangeTabs">
       <van-tab v-for="tab in tabList" :key="tab.gameType" :name="tab.gameType">
         <template #title>
@@ -16,7 +16,25 @@
           :finished-text="matchList.length == 0 ? '' : $t('live.noMore')"
           @load="fetchMatchList"
         >
-          <MatchHandicap v-for="item in matchList" :key="item.gidm" :send-params="item" class="mb10" />
+          <!-- <template v-if="loading"> -->
+          <!-- <MatchHandicap v-for="item in matchList" :key="item.gidm" :send-params="item" class="mb10" /> -->
+          <div v-if="matchList.length">
+            <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="8">
+              <playTitle :send-params="matchList[0]" />
+            </van-sticky>
+            <div v-for="(item, idx) in matchList" :key="idx">
+              <MatchLive
+                v-if="item.showtype === 'RB'"
+                :play-title-toggle="false"
+                :send-params="item"
+                :tabType="'RB'"
+                :class="{ mt10: idx !== 0 }"
+                :ifMatchLive="true"
+              />
+              <MatchHandicap v-else :play-title-toggle="false" :send-params="item" class="mb10" :ifMatchLive="true" />
+            </div>
+          </div>
+          <!-- </template> -->
         </van-list>
       </van-tab>
     </van-tabs>
@@ -24,16 +42,31 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, defineAsyncComponent, onMounted, ref } from 'vue'
+import { Ref, defineAsyncComponent, onMounted, ref, computed } from 'vue'
 import { comBoByGameTypeApi, matchConditionApi, matchListApi } from '@/api/live'
 const DateTabs = defineAsyncComponent(() => import('./DateTabs.vue'))
 const MatchHandicap = defineAsyncComponent(() => import('@/components/Match/MatchHandicap.vue'))
+const playTitle = defineAsyncComponent(() => import('@/components/Title/playTitle/index.vue'))
+const MatchLive = defineAsyncComponent(() => import('@/components/HomeMatch/MatchLive/index.vue'))
+
+import store from '@/store'
+const offsetTop = computed(() => {
+  const offsetTop = store.state.app.globalBarHeaderHeight || 188
+  // var offsetTopval = 48
+  // if (offsetTop > 60) {
+  //   offsetTopval = 48
+  // } else {
+  //   offsetTopval = offsetTop
+  // }
+  return offsetTop
+})
 
 onMounted(() => {
   fetchMatchCondition()
 })
 
 const tabList: Ref<any[]> = ref([])
+const newContainer = ref(null)
 const tabActive = ref()
 const currentType = ref()
 const onChangeTabs = (type: string) => {
