@@ -51,13 +51,12 @@
         </div>
       </div>
     </van-popup>
-
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, computed, onMounted, reactive } from 'vue'
-import {getBrowserLanguage } from '@/utils'
+import { getBrowserLanguage } from '@/utils'
 // import { queryCMerLanguage } from '@/api/auth'
 
 import { useRouter } from 'vue-router'
@@ -124,7 +123,7 @@ onMounted(() => {
   plateMask.value = obj || defaultPlate
 })
 const languageList = computed(() => {
-  let LanguageB:any = []
+  let LanguageB: any = []
   const LanguageA = store.state.app.queryCMerLanguage.accessLanguage || []
   const LanguageType = store.state.app.queryCMerLanguage.translate || {}
   LanguageA.map((item: any) => {
@@ -169,7 +168,6 @@ async function setPk(val: any) {
   }
   showBottom.value = false
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -181,11 +179,10 @@ async function setPk(val: any) {
       width: 36px;
       height: 36px;
       color: var(--title-text-font-color);
-
     }
   }
 
-  >.content {
+  > .content {
     height: calc(100vh - 96px);
     background-color: var(--color-background-color);
     overflow-y: auto;
@@ -200,7 +197,7 @@ async function setPk(val: any) {
       border-radius: 20px;
       font-family: PingFangSC-Medium;
       font-size: 28px;
-      color: var( --color-search-box-text-1);
+      color: var(--color-search-box-text-1);
       letter-spacing: 0;
       font-weight: 500;
       display: flex;
@@ -214,6 +211,10 @@ async function setPk(val: any) {
         letter-spacing: 0;
         text-align: right;
         font-weight: 500;
+        width: 300px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
 
       .font3 {
@@ -259,7 +260,6 @@ async function setPk(val: any) {
       color: var(--color-user-pop-up-text-color-2);
     }
   }
-
 }
 
 :deep(.van-field__control) {
@@ -271,7 +271,7 @@ async function setPk(val: any) {
   font-size: 40px;
 }
 //弹窗关闭图标
-:deep(.van-popup__close-icon){
+:deep(.van-popup__close-icon) {
   color: var(--color-text-4);
 }
 </style>
@@ -291,7 +291,6 @@ async function setPk(val: any) {
   text-align: center;
   font-weight: 500;
   color: var(--title-text-font-color);
-
 }
 
 :deep(.van-icon) {
