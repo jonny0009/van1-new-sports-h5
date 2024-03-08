@@ -171,6 +171,7 @@ watch(
     background: #000;
     position: relative;
     overflow: hidden;
+    z-index: 10;
     &.no-video {
       height: 280px;
       min-height: 280px;
