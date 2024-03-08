@@ -286,6 +286,7 @@ const gameType1 = computed(() => {
 })
 const gameType = ref<any>(gameType1.value)
 const onChangeTabs = (item: any) => {
+  ifRouteId.value = ''
   // 新增
   activeNamesB.value = 'b1'
   activeNamesC.value = 'c1'
@@ -421,6 +422,7 @@ const getLeagueByCountryInfo = async (countryId: any, num: any) => {
 }
 
 const onRefresh = () => {
+  ifRouteId.value = ''
   closeSlideshow.value = false
   isRefreshLoading.value = false
   // ifLeagueNum.value = false
@@ -480,6 +482,10 @@ const getCommonMatches = async () => {
 }
 
 const initData = async () => {
+  if (ifRouteId.value) {
+    leagueId.value = ifRouteId.value
+    closeSlideshow.value = false
+  }
   if (leagueId.value) {
     // 按联赛查询
     ifLeagueNum.value = false
@@ -794,13 +800,12 @@ const getChampionpPlayTypes = async () => {
   }
 }
 const clickLeague = (item: any) => {
+  ifRouteId.value = ''
   if (!item.gameTypeCount) return
   activeCollapseNames.value = ''
   firstLeaguesList.value = []
   leagueArrowShow.value = false
-
   activeNames.value = '1'
-
   //  判断推荐联赛里面是否有地区联赛
   const leagueIdObj = LeagueByCountryInfoArr.value.find((e: any) => {
     return e.leagueId === item.leagueId
@@ -817,15 +822,18 @@ const clickLeague = (item: any) => {
 const closeSlideshow: any = ref(true)
 const ifLeagueNum: any = ref(false)
 const clickLeagueNum = () => {
+  ifRouteId.value = ''
   ifLeagueNum.value = !ifLeagueNum.value
   closeSlideshow.value = false
 }
 const handleRecommend = () => {
+  ifRouteId.value = ''
   leagueId.value = ''
   closeSlideshow.value = true
   getFirstLeagues()
 }
 const handleChangeLeagueId = (item: any) => {
+  ifRouteId.value = ''
   if (!item.gameTypeCount) return
   closeSlideshow.value = false
   activeNames.value = '1'
@@ -839,7 +847,7 @@ const handleChangeLeagueId = (item: any) => {
   }
   initData()
 }
-
+const ifRouteId = ref('')
 onActivated(async () => {
   if (locationHeight.value) return
   gameType.value = route.params?.type || 'FT'
@@ -851,6 +859,7 @@ onActivated(async () => {
   getCommonMatches()
   const countryId = route.query?.countryId || ''
   leagueId.value = route.query?.leagueId || ''
+  ifRouteId.value = route.query?.leagueId || ''
   if (countryId) {
     getLeagueByCountryInfo(countryId, 2)
   } else {
