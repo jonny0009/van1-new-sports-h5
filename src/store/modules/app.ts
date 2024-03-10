@@ -22,7 +22,8 @@ const appModule: Module<App, any> = {
     pictureinpictureGidm: null, // 画中画赛事id
     mantainMsg: null,
     systemTime: null,
-    customizeConfig: {}
+    customizeConfig: {},
+    matchLiveIndex: 0
   },
   mutations: {
     SET_THEME: (state, theme: string) => {
@@ -40,6 +41,10 @@ const appModule: Module<App, any> = {
   actions: {
     setKeyValue(state: any, { key, value }) {
       state.state[key] = value
+    },
+    // 结果tabIndex
+    async setMatchLiveIndex({ state }, params) {
+      state.matchLiveIndex = state.matchLiveIndex + params
     },
     async queryCMerLanguage({ state }) {
       const res: any = (await queryCMerLanguage()) || {}

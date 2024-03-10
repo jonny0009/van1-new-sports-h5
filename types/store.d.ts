@@ -18,6 +18,7 @@ declare interface App {
   mantainMsg: any
   systemTime: any
   customizeConfig: any
+  matchLiveIndex: any
 }
 
 declare interface User {
