@@ -501,9 +501,12 @@ const props = defineProps({
 })
 
 const showSportsIcon = (item: any) => {
-  const { live, merchantAnchor, merchantStreamNa } = item
+  const { live, live_status, merchantAnchor, merchantStreamNa } = item
 
-  if (live * 1 !== 1 || (merchantAnchor && merchantAnchor?.length && merchantStreamNa && merchantStreamNa?.length)) {
+  if (
+    live_status * 1 !== 1 ||
+    (merchantAnchor && merchantAnchor?.length && merchantStreamNa && merchantStreamNa?.length)
+  ) {
     return true
   }
   return false
