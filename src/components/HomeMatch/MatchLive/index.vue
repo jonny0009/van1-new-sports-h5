@@ -514,6 +514,7 @@ const showSportsIcon = (item: any) => {
 
 const goToDetail = (item: any) => {
   router.push(`/match/${item.gidm}/bets`)
+  store.dispatch('app/setMatchLiveIndex', 1)
 }
 const betMoreShow = () => {
   store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })

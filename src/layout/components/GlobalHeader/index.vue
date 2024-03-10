@@ -68,6 +68,8 @@ const currency = computed(() => store.state.user.currency)
 const currentWallet = computed(() => store.state.user.currentWallet)
 const theme = computed(() => store.state.app.theme)
 const isAnonymity = computed(() => store.state.user.isAnonymity)
+const matchLiveIndex = computed(() => store.state.app.matchLiveIndex)
+
 const childNav = ref()
 const searchNav = ref()
 
@@ -95,7 +97,15 @@ const showSearchInfo = () => {
 
 const goBackClick = () => {
   store.dispatch('user/getLocationHeight', true)
-  router.go(-1)
+  if (matchLiveIndex.value > 1) {
+    router.go(-matchLiveIndex.value)
+  } else {
+    router.go(-1)
+  }
+  store.dispatch('app/setKeyValue', {
+    key: 'matchLiveIndex',
+    value: 0
+  })
 }
 
 const betShow = () => {

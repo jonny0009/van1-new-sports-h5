@@ -8,9 +8,15 @@
     </GlobalRefresh>
     <!-- <GlobalFooter /> -->
     <BettingSlip v-if="betShowState && !$route.meta.hideGlobalBottomBet" ref="bettingSlip" />
-    <van-back-top v-if="backTopShow" bottom="100" right="20" class="GlobalTop" :class="{
-      showBettingSlip: betShowState
-    }">
+    <van-back-top
+      v-if="backTopShow"
+      bottom="100"
+      right="20"
+      class="GlobalTop"
+      :class="{
+        showBettingSlip: betShowState
+      }"
+    >
       <van-icon name="down" />
     </van-back-top>
   </div>
@@ -27,7 +33,6 @@ import { useRouter, useRoute } from 'vue-router'
 import { computed, ref, watch, onMounted, onActivated, onUpdated, nextTick } from 'vue'
 import store from '@/store'
 const appContent = ref()
-
 
 const route = useRoute()
 const { currentRoute } = useRouter()
@@ -46,7 +51,7 @@ const bettingSlip = ref()
 watch(
   () => route.path,
   (to) => {
-    console.log('path', to);
+    console.log('path', to)
     if (pageIndex.value > indexNum.value) {
       appContent.value.transitionName = 'fade-right'
       indexNum.value = pageIndex.value
@@ -55,7 +60,7 @@ watch(
       indexNum.value = pageIndex.value
     }
   }
-);
+)
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
@@ -71,7 +76,7 @@ onUpdated(() => {
 })
 
 // 缓存
-onActivated(() => { })
+onActivated(() => {})
 
 // 坐标
 const handleScroll = () => {
