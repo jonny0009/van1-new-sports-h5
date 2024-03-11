@@ -13,6 +13,7 @@
 import MatchItem from './main/MatchItem.vue'
 import { anchorLiveList, extendInfo } from '@/api/live'
 import { ref, onBeforeMount } from 'vue'
+import store from '@/store'
 import router from '@/router'
 
 const activeIndex = ref(0)
@@ -58,6 +59,7 @@ const goDetails = (item: any) => {
     }
   }
   router.push(params)
+  store.dispatch('app/setMatchLiveIndex', 1)
 }
 
 const swipeChange = (index: any) => {

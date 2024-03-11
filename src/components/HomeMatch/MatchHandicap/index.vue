@@ -130,7 +130,7 @@
               </div>
             </div>
             <!-- 正确比分 -->
-            <div v-if="PDrefShow && sendParams.PD" ref="Mref" class="match-betting-item">
+            <div v-if="PDrefShow && sendParams.PD" ref="PDref" class="match-betting-item">
               <div class="match-betting-item__title">
                 <div class="flex-cross-center">{{ $t('home.PDscore') }}</div>
               </div>
