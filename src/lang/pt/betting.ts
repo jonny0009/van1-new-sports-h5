@@ -30,9 +30,10 @@ export default {
     error1: 'Tempo Limite Excedido',
     error2: 'Aposta Falhada',
     error3:
-    'A Sua Conta Apresenta Informações Anormais, Foi Congelada. Para Desbloquear, Por Favor, Contacte o Atendimento ao Cliente',
+      'A Sua Conta Apresenta Informações Anormais, Foi Congelada. Para Desbloquear, Por Favor, Contacte o Atendimento ao Cliente',
     error4: 'Apenas 5 Inícios de Sessão Permitidos por Minuto',
     error5: 'A Linha Selecionada por Si Foi Encerrada',
     error6: 'Erro de Rede, Por Favor, Verifique a Sua Conexão!'
-  }
+  },
+  OneClickClear: 'Um clique limpo'
 }

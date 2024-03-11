@@ -4,21 +4,16 @@
       <div class="top">
         <div class="left">
           <div class="top-img">
-
-            <img v-img="item1.homeLogo" class="img_1" alt="" :type="4" style="object-fit: contain;">
-            <img v-img="item1.awayLogo" class="img_2" alt="" :type="5" style="object-fit: contain;">
-
+            <img v-img="item1.homeLogo" class="img_1" alt="" :type="4" style="object-fit: contain" />
+            <img v-img="item1.awayLogo" class="img_2" alt="" :type="5" style="object-fit: contain" />
           </div>
         </div>
         <div class="right">
           <div class="font_1">
-
             <span v-if="item1.championType">
               {{ $t('betting.champion') }}
             </span>
-            <span v-else>
-              {{ getTeam(item1).homeTeam }} v {{ getTeam(item1).awayTeam }}
-            </span>
+            <span v-else> {{ getTeam(item1).homeTeam }} v {{ getTeam(item1).awayTeam }} </span>
 
             <span v-if="item1.resultScore" class="color-1"> [{{ item1.resultScore }}]</span>
           </div>
@@ -28,7 +23,6 @@
             <div v-if="item1.championType" class="font_2">{{ getChampionName(item1.systemId) }}</div>
             <div v-else class="font_2">{{ getTeam(item1).leagueShortName }}</div>
           </div>
-
         </div>
       </div>
       <!-- 2 -->
@@ -55,7 +49,6 @@
             <span v-else-if="item1.homeTeam && item1.awayTeam" v-play="item1" />
             <span v-else>?</span>
             <span>
-
               <!-- 平局图标找到了 -->
               <SvgIcon v-if="Number(item.cashoutType) === 2" name="user-ahead" class="icon-svg-1" />
               <SvgIcon v-if="item.state === 1" name="user-postpone" class="icon-svg-1" />
@@ -65,7 +58,6 @@
                 class="icon-svg-1"
               />
               <img v-else class="img_1" src="@/assets/images/user/D1.png" alt="" />
-
             </span>
           </div>
         </div>
@@ -77,40 +69,41 @@
           <div class="money-num-money">
             <CurrencyComp class-name="mr3" />
             <!-- 投注额 -->
-            <span v-if="Number(item1.ioRatio)>0" v-points="item.gold"></span>
-            <span v-if="Number(item1.ioRatio)<0" v-points="ifBetNum(item,item1)"></span>
-            <span v-if="Number(item1.ioRatio)<0">(<span v-points="item.gold" />)</span>
+            <span v-if="Number(item1.ioRatio) > 0" v-points="item.gold"></span>
+            <span v-if="Number(item1.ioRatio) < 0" v-points="ifBetNum(item, item1)"></span>
+            <span v-if="Number(item1.ioRatio) < 0">(<span v-points="item.gold" />)</span>
           </div>
         </div>
         <div class="one two">
           <!-- state 1下单成功 2 赢 3输 4和 5取消  0 确认中-->
           <!-- 未结算的注单显示：可赔付额；取消/延期，输的注单不显示赔付额这一栏 -->
           <!-- creditState 0 未结算 1 已结算-->
-          <span v-if="item.state === 0 || item.state === -1 || item.state === 1">{{ $t('user.CompensableAmount')
-          }}:</span>
-          <span v-else-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL'">{{ $t('user.practical')
-          }}:</span>
+          <span v-if="item.state === 0 || item.state === -1 || item.state === 1"
+            >{{ $t('user.CompensableAmount') }}:</span
+          >
+          <span v-else-if="(item.state !== 3 && item.state !== 5) || item1.betResultDetail === 'LL'"
+            >{{ $t('user.practical') }}:</span
+          >
 
           <div>
-
             <!-- 受理状态 -->
             <span v-if="item.state !== 3 && item.state !== 5">
-              <span v-if="item.state === -1" style="color:#FF9A00 ;">
+              <span v-if="item.state === -1" style="color: #ff9a00">
                 {{ $t('user.editPend') }}
               </span>
-              <span v-if="item.state === 0" style="color:#FF9A00 ;">
+              <span v-if="item.state === 0" style="color: #ff9a00">
                 {{ $t('user.affirmPend') }}
               </span>
             </span>
 
             <!-- 币种 -->
-            <span v-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL'">
+            <span v-if="(item.state !== 3 && item.state !== 5) || item1.betResultDetail === 'LL'">
               <CurrencyComp class-name="mr3 color1" />
             </span>
             <span v-if="item.creditState === 0" class="num color-1">
               <span v-points="getProfit(item, item1)"></span>
             </span>
-            <span v-else-if="item.state !== 3 && item.state !== 5 || item1.betResultDetail === 'LL'" class="color-1">
+            <span v-else-if="(item.state !== 3 && item.state !== 5) || item1.betResultDetail === 'LL'" class="color-1">
               <span v-points="item.winGold"></span>
             </span>
           </div>
@@ -150,7 +143,6 @@
           <span class="loading-icon"></span>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -169,12 +161,12 @@ const aheadOrderList = computed(() => store.state.user.aheadOrderList || [])
 const props = defineProps({
   item: {
     type: Object,
-    default: () => { }
+    default: () => {}
   }
 })
 
 // 是否显示马尼,印尼括号金额
-const ifBetNum = (item:any, item1:any) => {
+const ifBetNum = (item: any, item1: any) => {
   if (Number(item1.ioRatio) < 0) {
     // 马来绝对值都小于1,  印尼绝对值都大于1
     const absNum: any = Math.abs(Number(item1.ioRatio))
@@ -185,8 +177,8 @@ const ifBetNum = (item:any, item1:any) => {
 const getProfit = (item: any, item1: any) => {
   if (Number(item1.ioRatio) < 0) {
     // 马来绝对值都小于1,  印尼绝对值都大于1
-    let sumNum:any = 0
-    const absNum:any = Math.abs(Number(item1.ioRatio))
+    let sumNum: any = 0
+    const absNum: any = Math.abs(Number(item1.ioRatio))
     if (absNum > 1) {
       sumNum = accAdd(accDiv(item.gold, absNum), item.gold)
     }
@@ -288,7 +280,7 @@ const getLangBet = (item: any) => {
 }
 
 .color-2 {
-  color: #1EBB52;
+  color: #1ebb52;
 }
 
 .color-3 {
@@ -296,7 +288,7 @@ const getLangBet = (item: any) => {
 }
 
 .color-4 {
-  color: #FF9A00;
+  color: #ff9a00;
 }
 
 .ball-img {
@@ -362,7 +354,7 @@ const getLangBet = (item: any) => {
 
 .top2 {
   margin-top: 20px;
-  background: #E2E6E8;
+  background: #e2e6e8;
   border-radius: 20px;
   padding: 20px 10px;
   display: flex;
@@ -449,7 +441,7 @@ const getLangBet = (item: any) => {
 }
 
 .line {
-  background: #E0E3E7;
+  background: #e0e3e7;
   height: 2px;
 }
 
@@ -481,7 +473,7 @@ const getLangBet = (item: any) => {
   justify-content: center;
   font-family: PingFangSC-Semibold;
   font-size: 24px;
-  color: #FFFFFF;
+  color: #ffffff;
   letter-spacing: 0;
   font-weight: 600;
   display: flex;
@@ -507,27 +499,27 @@ const getLangBet = (item: any) => {
   @keyframes bet-loading {
     0% {
       -webkit-transform: rotate(0deg);
-      transform: rotate(0deg)
+      transform: rotate(0deg);
     }
 
     25% {
       -webkit-transform: rotate(90deg);
-      transform: rotate(90deg)
+      transform: rotate(90deg);
     }
 
     50% {
       -webkit-transform: rotate(180deg);
-      transform: rotate(180deg)
+      transform: rotate(180deg);
     }
 
     75% {
       -webkit-transform: rotate(270deg);
-      transform: rotate(270deg)
+      transform: rotate(270deg);
     }
 
     to {
       -webkit-transform: rotate(1turn);
-      transform: rotate(1turn)
+      transform: rotate(1turn);
     }
   }
 }

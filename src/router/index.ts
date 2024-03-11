@@ -51,22 +51,6 @@ export const constantRoutes: Array<any> = [
     hidden: true
   },
   {
-    path: '/search',
-    component: () => import('@/layout/index.vue'),
-    redirect: '/search',
-    children: [
-      {
-        path: '/search',
-        component: () => import('@/views/search/index.vue'),
-        name: 'Search',
-        meta: {
-          hideGlobalHeaderView: true,
-          hideGlobalBottomBet: true
-        }
-      }
-    ]
-  },
-  {
     path: '/401',
     name: '401',
     component: () => import('@/views/error-page/401.vue'),
@@ -184,8 +168,7 @@ export const constantRoutes: Array<any> = [
     ]
   },
 
-  ...modules,
-
+  ...modules
 ]
 
 export const router = createRouter({

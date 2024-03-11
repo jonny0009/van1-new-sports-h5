@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="live-page"
-    :class="{ 'has-bet': showFixedBet }"
-  >
-
+  <div class="live-page" :class="{ 'has-bet': showFixedBet }">
     <van-tabs
       v-model:active="navActive"
       swipeable
@@ -13,36 +9,29 @@
       line-height="0"
       @change="onChangeTabs"
     >
-      <van-tab
-        v-for="(nav, index) in navList"
-        :key="index"
-        :name="nav.type"
-      >
+      <van-tab v-for="(nav, index) in navList" :key="index" :name="nav.type">
         <template #title>
           <div class="tab-title">
             <SvgIcon :name="nav.iconName" />
-            <span>{{ nav.title }}   </span>
+            <span>{{ nav.title }} </span>
           </div>
         </template>
 
         <div v-if="list.length === 0 && time > 0 && navActive === 'RB'" class="next">
           <div class="img">
-            <img
-              src="~@/assets/images/live/no_an_ma.png"
-              alt=""
-            >
+            <img src="~@/assets/images/live/no_an_ma.png" alt="" />
           </div>
-          <p v-html="$t('live.nextAM',{num: countTime})">
-          </p>
+          <p v-html="$t('live.nextAM', { num: countTime })"></p>
         </div>
 
         <div>
-          <van-pull-refresh
-            v-model="refreshing"
-            @refresh="onRefresh"
-          >
-
-            <EmptyData v-if="(finished && list.length === 0 && navActive !== 'RB') || (list.length === 0 && time < 0 && navActive === 'RB' && finished)" />
+          <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+            <EmptyData
+              v-if="
+                (finished && list.length === 0 && navActive !== 'RB') ||
+                (list.length === 0 && time < 0 && navActive === 'RB' && finished)
+              "
+            />
             <van-list
               v-model:loading="loading"
               :finished="finished"
@@ -50,21 +39,13 @@
               @load="onLoad"
             >
               <div class="grid-wrapper">
-                <div
-                  v-for="item in list"
-                  :key="item.gidm"
-                  class="flex-item"
-                >
-                  <ListItem
-                    :item="item"
-                    @click="onItemClick(item)"
-                  />
+                <div v-for="item in list" :key="item.gidm" class="flex-item">
+                  <ListItem :item="item" @click="onItemClick(item)" />
                 </div>
               </div>
             </van-list>
           </van-pull-refresh>
         </div>
-
       </van-tab>
     </van-tabs>
   </div>
@@ -168,6 +149,7 @@ const onChangeTabs = () => {
 
 const onItemClick = (item: any) => {
   router.push(`/match/${item.gidm}`)
+  store.dispatch('app/setMatchLiveIndex', 1)
 }
 
 const countDown = () => {
@@ -180,7 +162,7 @@ const countDown = () => {
   function addZero(i: any) {
     return i < 10 ? '0' + i : i
   }
-  const timeDiff:number = Math.round(time.value / 1000)
+  const timeDiff: number = Math.round(time.value / 1000)
 
   let hour = parseInt((timeDiff / 3600) % 24)
   // 获取还剩多少分钟
@@ -193,7 +175,6 @@ const countDown = () => {
   second = addZero(second)
   countTime.value = hour + ':' + minute + ':' + second
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -237,7 +218,7 @@ const countDown = () => {
     }
     .van-tab--active .tab-title {
       // background-image: linear-gradient(180deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-2) 100%);
-    background: var(--color-global-buttonPrimaryBg);
+      background: var(--color-global-buttonPrimaryBg);
 
       color: #fff;
       .svg-icon {

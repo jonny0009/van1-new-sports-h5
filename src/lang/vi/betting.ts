@@ -29,9 +29,11 @@ export default {
   errors1: {
     error1: 'Hết giờ kết nối',
     error2: 'Đặt cược thất bại',
-    error3: 'Tài khoản của bạn xuất hiện thông tin bất thường, đã bị đóng băng, nếu cần đóng băng, vui lòng liên hệ nhân viên hỗ trợ',
+    error3:
+      'Tài khoản của bạn xuất hiện thông tin bất thường, đã bị đóng băng, nếu cần đóng băng, vui lòng liên hệ nhân viên hỗ trợ',
     error4: 'Chỉ cho phép đăng nhập 5 lần trong một phút~',
     error5: 'Đĩa bạn chọn đã đóng',
     error6: 'Mạng bất thường, vui lòng kiểm tra mạng!'
-  }
+  },
+  OneClickClear: 'Xóa một nút'
 }

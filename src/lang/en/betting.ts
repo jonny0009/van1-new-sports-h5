@@ -29,9 +29,11 @@ export default {
   errors1: {
     error1: 'Network Timeout',
     error2: 'Bet Failed',
-    error3: 'Your account has encountered unusual activity and is frozen. To unfreeze, please contact customer support.',
+    error3:
+      'Your account has encountered unusual activity and is frozen. To unfreeze, please contact customer support.',
     error4: 'Maximum of 5 logins allowed in one minute',
     error5: 'The selected market is closed',
     error6: 'Network Error, please check your connection!'
-  }
+  },
+  OneClickClear: 'One click clear'
 }

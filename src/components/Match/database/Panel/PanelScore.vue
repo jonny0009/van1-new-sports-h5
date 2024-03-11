@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div class="score-main">
+      <div class="score-main" :class="scoreListComputed.length < 4 ? 'score-main-right' : ''">
         <div v-for="(item, i) in scoreListComputed" :key="i" class="score-main__item">
           <div class="head">
             <!-- {{ matchData.gameType === 'FT' ? '盘' : '节' }} -->
@@ -30,11 +30,12 @@
         </div>
       </div>
 
-      <div class="score-line"/>
-
+      <div class="score-line" />
 
       <div class="score-result">
-        <div class="head"><strong>{{ $t('user.result') }}</strong></div>
+        <div class="head">
+          <strong>{{ $t('user.result') }}</strong>
+        </div>
         <div class="nums">
           <span>{{ scoreResult.homeTeamScore }}</span>
         </div>
@@ -81,9 +82,9 @@ const scoreResult = computed(() => {
 })
 
 const playerName = computed(() => {
-  const obj :any = {
-    'FT': t('live.halfPlay'),
-    'BK': t('live.section')
+  const obj: any = {
+    FT: t('live.halfPlay'),
+    BK: t('live.section')
   }
   return obj[props.matchData.gameType] || ''
 })
@@ -180,9 +181,11 @@ const playerName = computed(() => {
     flex: 1;
     display: flex;
     overflow-x: auto;
+  }
+  &-main-right {
     justify-content: flex-end;
   }
-  &-line{
+  &-line {
     width: 2px;
     height: 90px;
     background: var(--color-panel-score-score);

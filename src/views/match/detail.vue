@@ -90,14 +90,36 @@ const getExtendInfo = async () => {
     const { streamNa } = res.data || {}
     const { liveali } = streamNa || {}
     videoUrl.value = (liveali || {}).m3u8
+    if (!videoUrl.value) {
+      videoUrl.value = ''
+      videoError.value = true
+      store.dispatch('app/setKeyValue', {
+        key: 'liveBarHeaderHeight',
+        value: '50.333vw'
+      })
+      return
+    }
+
     videoError.value = false
+    store.dispatch('app/setKeyValue', {
+      key: 'liveBarHeaderHeight',
+      value: '69vw'
+    })
   } else {
     videoUrl.value = ''
     videoError.value = true
+    store.dispatch('app/setKeyValue', {
+      key: 'liveBarHeaderHeight',
+      value: '50.333vw'
+    })
   }
 }
 const onVideoError = () => {
   videoError.value = true
+  store.dispatch('app/setKeyValue', {
+    key: 'liveBarHeaderHeight',
+    value: '50.333vw'
+  })
 }
 
 const showChat = ref(false)
@@ -159,6 +181,7 @@ watch(
     background: #000;
     position: relative;
     overflow: hidden;
+    z-index: 10;
     &.no-video {
       height: 280px;
       min-height: 280px;
