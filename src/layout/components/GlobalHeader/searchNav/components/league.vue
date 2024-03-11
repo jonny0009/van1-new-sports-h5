@@ -2,7 +2,7 @@
   <div class="matchList-1">
     <div v-for="(item, index) in props.leagueList" :key="index" class="left1" @click="toLeague(item)">
       <!-- <SportsIcon :icon-src="item.gameType" class="itemImg" /> -->
-      <img v-img="''" class="itemImg" :type="6" style="object-fit: contain" />
+      <img v-img="item?.icon" class="itemImg" :type="6" style="object-fit: contain" />
       <div class="font_2" v-html="highlightText(props.keyWords, item.name)"></div>
     </div>
     <div v-if="!props.leagueList.length" class="noData">
@@ -36,12 +36,13 @@ const props = defineProps({
   }
 })
 const toLeague = async (item: any) => {
-  store.dispatch('user/getIfSearchInfo', { leagueId: item.id, gameType: item.gameType })
+  store.dispatch('user/getIfSearchInfo', { leagueId: item.id, gameType: item.gameType, countryId: item?.countryId })
   emit('showSearchValue', false)
   $router.push({
     path: `/sport/${item.gameType}`,
     query: {
-      leagueId: item.id
+      leagueId: item.id,
+      countryId: item?.countryId
     }
   })
 }
