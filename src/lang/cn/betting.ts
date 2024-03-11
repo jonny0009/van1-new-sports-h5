@@ -33,5 +33,6 @@ export default {
     error4: '一分钟只允许登录5次~',
     error5: '您所选的盘口已关闭',
     error6: '网络异常，请检查网络！'
-  }
+  },
+  OneClickClear: '一鍵清除'
 }

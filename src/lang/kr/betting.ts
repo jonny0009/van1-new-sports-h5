@@ -33,5 +33,6 @@ export default {
     error4: '1분에 5회만 로그인이 허용됩니다.',
     error5: '선택한 핸디캡이 이미 닫혔습니다.',
     error6: '네트워크 오류, 네트워크를 확인하세요!'
-  }
+  },
+  OneClickClear: '원클릭 지우기'
 }

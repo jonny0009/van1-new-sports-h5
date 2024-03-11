@@ -160,7 +160,7 @@
                 <div class="betting-select">
                   <div class="betting-select__list">
                     <!-- 比分盘口-->
-                    <HandicapScore :send-params="sendParams" :type="'RPD'" />
+                    <HandicapScore :send-params="sendParams" :type="'RPD'" :ifMatchLive="ifMatchLive" />
                   </div>
                 </div>
               </div>
@@ -491,13 +491,22 @@ const props = defineProps({
     default: function () {
       return true
     }
+  },
+  ifMatchLive: {
+    type: Boolean,
+    default: function () {
+      return false
+    }
   }
 })
 
 const showSportsIcon = (item: any) => {
-  const { live, merchantAnchor, merchantStreamNa } = item
+  const { live, live_status, merchantAnchor, merchantStreamNa } = item
 
-  if (live * 1 !== 1 || (merchantAnchor && merchantAnchor?.length && merchantStreamNa && merchantStreamNa?.length)) {
+  if (
+    live_status * 1 !== 1 ||
+    (merchantAnchor && merchantAnchor?.length && merchantStreamNa && merchantStreamNa?.length)
+  ) {
     return true
   }
   return false
@@ -505,6 +514,7 @@ const showSportsIcon = (item: any) => {
 
 const goToDetail = (item: any) => {
   router.push(`/match/${item.gidm}/bets`)
+  store.dispatch('app/setMatchLiveIndex', 1)
 }
 const betMoreShow = () => {
   store.dispatch('betting/setMoreShow', { status: true, moreParams: props.sendParams })

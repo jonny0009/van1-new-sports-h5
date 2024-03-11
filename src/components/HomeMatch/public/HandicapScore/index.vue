@@ -1,26 +1,42 @@
 <template>
   <div class="HandicapScore">
     <div class="score-left">
-      <div class="box1">
+      <div class="box1" :class="{ box1Live: ifMatchLive }">
         <div class="box1-left">{{ sendParams.homeTeam }}</div>
         <div class="box1-right">
           <div @click="handleMinusHome" class="symbolNum">-</div>
-          <span><van-stepper v-model="scoreNumHome" min="0" :max="homeMaxNum" theme="round" :disable-input="true"
-              :show-plus="false" :show-minus="false" /></span>
+          <span
+            ><van-stepper
+              v-model="scoreNumHome"
+              min="0"
+              :max="homeMaxNum"
+              theme="round"
+              :disable-input="true"
+              :show-plus="false"
+              :show-minus="false"
+          /></span>
           <div @click="handlePlusHome" class="symbolNum">+</div>
         </div>
       </div>
-      <div class="box1 box2">
+      <div class="box1 box2" :class="{ box1Live: ifMatchLive }">
         <div class="box1-left">{{ sendParams.awayTeam }}</div>
         <div class="box1-right">
           <div @click="handleMinusAway" class="symbolNum">-</div>
-          <span><van-stepper v-model="scoreNumAway" min="0" :max="awayMaxNum" theme="round" :disable-input="true"
-              :show-plus="false" :show-minus="false" /></span>
+          <span
+            ><van-stepper
+              v-model="scoreNumAway"
+              min="0"
+              :max="awayMaxNum"
+              theme="round"
+              :disable-input="true"
+              :show-plus="false"
+              :show-minus="false"
+          /></span>
           <div @click="handlePlusAway" class="symbolNum">+</div>
         </div>
       </div>
     </div>
-    <div class="score-right">
+    <div class="score-right" :class="{ scoreLiveRight: ifMatchLive }">
       <Handicap :send-params="getHandicap(type, screenParamsArr)" />
     </div>
   </div>
@@ -41,6 +57,12 @@ const props = defineProps({
     default: function () {
       return 'RR'
     }
+  },
+  ifMatchLive: {
+    type: Boolean,
+    default: function () {
+      return false
+    }
   }
 })
 const scoreNumHome: any = ref(0)
@@ -58,7 +80,6 @@ const handleMinusHome = () => {
   if (scoreNumHome.value === 0) return
   scoreNumHome.value--
   getScoreArr()
-
 }
 const handlePlusHome = () => {
   if (scoreNumHome.value === homeMaxNum.value) return
@@ -105,8 +126,8 @@ const getScoreMaxNum = () => {
     numArrH.push(Number(item.ratioType[1]))
     numArrC.push(Number(item.ratioType[3]))
   })
-  homeMaxNum.value = Math.max(...numArrH);
-  awayMaxNum.value = Math.max(...numArrC);
+  homeMaxNum.value = Math.max(...numArrH)
+  awayMaxNum.value = Math.max(...numArrC)
 }
 </script>
 <style lang="scss" scoped>
@@ -157,19 +178,26 @@ const getScoreMaxNum = () => {
       border-bottom-left-radius: 20px;
       border-bottom-right-radius: 20px;
     }
+    // 比赛直播比分样式
+    .box1Live {
+      width: 385px;
+      .box1-left {
+        width: 218px;
+      }
+    }
   }
 
   .score-right {
     min-width: 208px;
     margin-left: 10px;
   }
-
+  .scoreLiveRight {
+    min-width: 198px;
+  }
 }
-
 
 :deep(.van-stepper__input) {
   font-size: 26px;
   color: var(--color-match-IorCl);
 }
 </style>
-
