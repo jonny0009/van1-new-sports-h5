@@ -98,8 +98,7 @@ const watchNumText = computed(() => {
     // return t('live.xLooks', { num })
     return num
   }
-  // return t('live.xReserve', { num })
-  return num
+  return t('live.xReserve', { num })
 })
 const leagueIcon = computed(() => {
   const icon: any = {
