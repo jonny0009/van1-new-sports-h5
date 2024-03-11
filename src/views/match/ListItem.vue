@@ -47,7 +47,8 @@
       <div class="name">{{ item.nickname || item.leagueShortName }}</div>
       <div class="hots">
         <img :src="hotIcon" alt="" />
-        <span>{{ watchNumText }}</span>
+        <!-- <span>{{ watchNumText }}</span> -->
+        <span>{{ props.item.watchTotal.toLocaleString() }}</span>
       </div>
     </div>
   </div>
@@ -95,8 +96,7 @@ const imgCover = computed(() => {
 const watchNumText = computed(() => {
   const num = props.item.watchTotal.toLocaleString()
   if (props.item.showType == 'RB') {
-    // return t('live.xLooks', { num })
-    return num
+    return t('live.xLooks', { num })
   }
   return t('live.xReserve', { num })
 })
