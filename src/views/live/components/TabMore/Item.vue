@@ -40,7 +40,8 @@
         <div class="name">{{ item.leagueShortName }}</div>
         <div class="hots">
           <img :src="hotIcon" alt="" />
-          <span>{{ watchNumText }}</span>
+          <!-- <span>{{ watchNumText }}</span> -->
+          <span>{{ props.item.watchTotal.toLocaleString() }}</span>
         </div>
       </div>
     </div>
