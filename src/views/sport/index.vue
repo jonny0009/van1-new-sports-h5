@@ -381,7 +381,12 @@ watch(
       ifLeagueNum.value = false
       closeSlideshow.value = false
       leagueId.value = newValue.leagueId
-      getFirstLeagues(true)
+      const countryId = newValue.countryId || ''
+      if (countryId) {
+        getLeagueByCountryInfo(countryId, 2)
+      } else {
+        getFirstLeagues(true)
+      }
     }
   }
 )
