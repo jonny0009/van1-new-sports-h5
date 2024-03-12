@@ -1,6 +1,8 @@
 <template>
   <div class="table-info-component" @click="goToGame">
-    <div class="table-cover"></div>
+    <div class="table-cover">
+      <img v-img="tableInfo.tableCover" style="object-fit: contain" />
+    </div>
     <div class="table-road-list">
       <div class="road-col" v-for="(item, index) in wins" :key="index">
         <div class="road-item" v-for="(win, index) in item" :key="index">
@@ -10,11 +12,14 @@
     </div>
     <div class="table-name">{{ tableInfo.tableName }}</div>
     <div class="bottom">
-      <span class="bet-money">￥10</span>
+      <span class="bet-money">
+        <CurrencyComp class-name="mr3 fs24" />
+        {{ tableInfo.tableLimitMin }}
+      </span>
       <span class="number">
         <SvgIcon name="home-users" class="users-icon"></SvgIcon>
-        256</span
-      >
+        {{ tableInfo.tablePlayers }}
+      </span>
     </div>
   </div>
 </template>
@@ -24,7 +29,7 @@ import { getBJGameUrl } from '@/api/home'
 import { createDaLu, daLuIsFirstZores } from '@/utils/RoadMapUtils'
 import { showLoadingToast } from 'vant'
 import { computed } from 'vue'
-
+import CurrencyComp from '@/components/Currency/index.vue'
 const props = defineProps({
   tableInfo: {
     type: Object,
@@ -146,6 +151,10 @@ const goToGame = async () => {
   .table-cover {
     height: 165px;
     background-image: linear-gradient(270deg, #d8def6 0%, #bbd0f7 100%);
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
   .table-road-list {
     box-sizing: border-box;
@@ -211,12 +220,15 @@ const goToGame = async () => {
   }
   .table-name {
     line-height: 30px;
-    margin: 0 5px;
     font-size: 22px;
     color: rgb(14, 61, 102);
   }
   .bottom {
+    display: flex;
+    align-items: center;
     .bet-money {
+      display: flex;
+      align-items: center;
       font-size: 22px;
       color: rgb(14, 61, 102);
     }

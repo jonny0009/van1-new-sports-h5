@@ -1,7 +1,9 @@
 <template>
   <div class="table-info-component" @click="goToGame">
     <div class="content">
-      <div class="table-cover"></div>
+      <div class="table-cover">
+        <img v-img="tableInfo.tableCover" style="object-fit: contain" />
+      </div>
       <div class="table-road-list">
         <div class="road-col" v-for="(item, index) in wins" :key="index">
           <div class="road-item" v-for="(win, index) in item" :key="index">
@@ -17,10 +19,13 @@
     <div class="bottom">
       <span class="table-name">{{ tableInfo.tableName }}</span>
       <div class="right">
-        <div class="bet-money">￥10</div>
+        <div class="bet-money">
+          <CurrencyComp class-name="mr3 fs24" />
+          {{ tableInfo.tableLimitMin }}
+        </div>
         <div class="number">
           <SvgIcon name="home-users" class="users-icon"></SvgIcon>
-          256
+          {{ tableInfo.tablePlayers }}
         </div>
       </div>
     </div>
@@ -31,7 +36,7 @@
 import { getBJGameUrl } from '@/api/home'
 import { createDaLu, daLuIsFirstZores } from '@/utils/RoadMapUtils'
 import { showLoadingToast } from 'vant'
-
+import CurrencyComp from '@/components/Currency/index.vue'
 import { computed } from 'vue'
 
 const props = defineProps({
@@ -205,6 +210,11 @@ const goToGame = async () => {
       background-image: linear-gradient(270deg, #d8def6 0%, #bbd0f7 100%);
       border-radius: 10px;
       overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
 
     .table-road-list {
@@ -280,6 +290,8 @@ const goToGame = async () => {
       display: flex;
       align-items: center;
       .bet-money {
+        display: flex;
+        align-items: center;
         margin-right: 66px;
         font-size: 20px;
         color: rgb(14, 61, 102);
@@ -292,6 +304,3 @@ const goToGame = async () => {
   }
 }
 </style>
-import { getBJGameUrl } from '@/api/home' import { showLoadingToast } from 'vant' import { getBJGameUrl } from
-'@/api/home' import { showLoadingToast } from 'vant' import { getBJGameUrl } from '@/api/home' import { showLoadingToast
-} from 'vant'
