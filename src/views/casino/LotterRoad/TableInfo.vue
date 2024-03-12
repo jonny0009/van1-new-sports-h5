@@ -222,6 +222,7 @@ const goToGame = async () => {
     line-height: 30px;
     font-size: 22px;
     color: rgb(14, 61, 102);
+    font-weight: 700;
   }
   .bottom {
     display: flex;
@@ -230,11 +231,13 @@ const goToGame = async () => {
       display: flex;
       align-items: center;
       font-size: 22px;
+      font-weight: 700;
       color: rgb(14, 61, 102);
     }
     .number {
       margin-left: 50px;
       font-size: 22px;
+      font-weight: 700;
       color: rgb(14, 61, 102);
 
       .users-icon {

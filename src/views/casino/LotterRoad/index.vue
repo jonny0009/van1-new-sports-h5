@@ -10,12 +10,20 @@
 
 <script lang="ts" setup>
 import { realTableList } from '@/api/home'
-import { onBeforeMount, ref } from 'vue'
+import { onBeforeMount, onUnmounted, ref } from 'vue'
 import TableInfo from './TableInfo.vue'
 const list = ref([])
+const timer: any = ref()
 onBeforeMount(() => {
   getList()
 })
+onUnmounted(() => {
+  clearInterval(timer.value)
+})
+clearInterval(timer.value)
+timer.value = setInterval(() => {
+  getList()
+}, 10 * 1000)
 
 const getList = async () => {
   const res = await realTableList()
@@ -25,7 +33,7 @@ const getList = async () => {
 </script>
 <style lang="scss" scoped>
 .good-road-view {
-  padding: 36px;
+  padding: 0 36px 36px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,6 +44,7 @@ const getList = async () => {
     margin-bottom: 36px;
     color: rgb(14, 61, 102);
     font-size: 32px;
+    font-weight: 600;
   }
   .list {
     width: 100%;

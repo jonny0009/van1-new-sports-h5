@@ -64,6 +64,7 @@ const wins = computed(() => {
     daluMatrix = matrixList
   }
   const list: any[] = []
+  daluMatrix = daluMatrix.splice(0, 15)
   for (let x = 0; x < daluMatrix.length; x++) {
     const yAxis = daluMatrix[x]
     for (let y = 0; y < yAxis.length; y++) {
@@ -181,7 +182,7 @@ const goToGame = async () => {
       bottom: 0;
       margin: auto;
       z-index: 99;
-      right: 22px;
+      right: 16px;
       width: 100px;
       height: 100px;
       background-repeat: no-repeat;
@@ -285,6 +286,7 @@ const goToGame = async () => {
     .table-name {
       font-size: 24px;
       color: rgb(14, 61, 102);
+      font-weight: 600;
     }
     .right {
       display: flex;
@@ -294,10 +296,12 @@ const goToGame = async () => {
         align-items: center;
         margin-right: 66px;
         font-size: 20px;
+        font-weight: bold;
         color: rgb(14, 61, 102);
       }
       .number {
         font-size: 22px;
+        font-weight: bold;
         color: rgb(14, 61, 102);
       }
     }
