@@ -64,7 +64,7 @@ const wins = computed(() => {
     daluMatrix = matrixList
   }
   const list: any[] = []
-  daluMatrix = daluMatrix.splice(0, 15)
+  daluMatrix = daluMatrix.splice(-15, 15)
   for (let x = 0; x < daluMatrix.length; x++) {
     const yAxis = daluMatrix[x]
     for (let y = 0; y < yAxis.length; y++) {
