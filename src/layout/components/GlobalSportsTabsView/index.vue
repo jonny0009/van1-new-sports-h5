@@ -103,10 +103,10 @@ const active: any = computed(() => {
       // margin-top: 7px;
       margin-top: 5px;
       font-weight: 600;
-      // overflow: hidden;
-      // text-overflow: ellipsis;
+      overflow: hidden;
+      text-overflow: ellipsis;
       white-space: nowrap;
-      width: 300%;
+      width: 200%;
       text-align: center;
       span {
         display: none;
