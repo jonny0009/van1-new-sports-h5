@@ -14,10 +14,8 @@
               {{ $t('betting.champion') }}
             </span>
             <span v-else> {{ getTeam(item1).homeTeam }} v {{ getTeam(item1).awayTeam }} </span>
-
             <span v-if="item1.resultScore" class="color-1"> [{{ item1.resultScore }}]</span>
           </div>
-
           <div class="league-name">
             <SportsIcon :icon-src="item1.gameType" class="ball-img" />
             <div v-if="item1.championType" class="font_2">{{ getChampionName(item1.systemId) }}</div>
@@ -26,7 +24,7 @@
         </div>
       </div>
       <!-- 2 -->
-      <div class="top2">
+      <div class="top2" :class="{ 'top-PenDing': isPenDing }">
         <div class="left">
           <img class="img_1" src="@/assets/images/user/plate.png" alt="" />
         </div>
@@ -35,18 +33,12 @@
             <span>
               {{ getLangBet(item1.betItemLang) }}
             </span>
-
-            <span :class="[getRatioColor(item1.betResultDetail)]">
-              <!-- @{{ item1.ioRatio }} -->
-              @<span v-points="item1.ioRatio"></span>
-            </span>
+            <span :class="[getRatioColor(item1.betResultDetail)]"> @<span v-points="item1.ioRatio"></span> </span>
           </div>
-
           <div class="one two">
             <span v-if="item1.championType">
               {{ getChampionName(item1.gameId) }}
             </span>
-
             <span v-else-if="item1.homeTeam && item1.awayTeam" v-play="item1" />
             <span v-else>?</span>
             <span>
@@ -69,7 +61,6 @@
           <span>{{ $t('user.BettingAmount') }}</span>
           <div class="money-num-money">
             <CurrencyComp class-name="mr3" />
-
             <!-- 投注额 -->
             <span v-if="Number(item1.ioRatio) > 0" v-points="item.gold"></span>
             <span v-if="Number(item1.ioRatio) < 0" v-points="ifBetNum(item, item1)"></span>
@@ -84,18 +75,16 @@
             >{{ $t('user.CompensableAmount') }}:</span
           >
           <span v-else-if="ifPracticalMoneyNum(item, item1)">{{ $t('user.practical') }}:</span>
-
           <div>
             <!-- 受理状态 -->
             <span v-if="item.state !== 3 && item.state !== 5">
-              <span v-if="item.state === -1" style="color: #ff9a00">
+              <span v-if="item.state === -1" class="color-4">
                 {{ $t('user.editPend') }}
               </span>
-              <span v-if="item.state === 0" style="color: #ff9a00">
+              <span v-if="item.state === 0" class="color-4">
                 {{ $t('user.affirmPend') }}
               </span>
             </span>
-
             <!-- 币种 -->
             <span v-if="ifPracticalMoneyNum(item, item1)">
               <CurrencyComp class-name="mr3 color1" />
@@ -110,9 +99,9 @@
         </div>
       </div>
       <!-- line -->
-      <div class="line" />
+      <div class="line" v-if="ifUserInfo" />
       <!-- num-->
-      <div class="top4">
+      <div class="top4" v-if="ifUserInfo">
         <div class="one">
           <span>{{ $t('user.OrderID') }}:</span>
           <span>{{ item.orderId }}</span>
@@ -126,6 +115,8 @@
           <span>{{ formatToDateTime(item.resultDate) }}</span>
         </div>
       </div>
+      <!-- 提前结算 -->
+      <BettingBtn v-if="isPenDing" :item="item" />
     </div>
   </div>
 </template>
@@ -134,19 +125,25 @@
 import { formatToDateTime } from '@/utils/date'
 import { accDiv, accMul, accAdd } from '@/utils/math'
 import { getBrowserLanguage } from '@/utils'
-
 import { computed } from 'vue'
 import store from '@/store'
-
 import CurrencyComp from '@/components/Currency/index.vue'
+import BettingBtn from '@/components/BettingRecord/components/BettingBtn.vue'
 
 const teamNameList = computed(() => store.state.user.teamNameList || [])
 const championLangList = computed(() => store.state.user.championLangList || [])
-
 const props = defineProps({
   item: {
     type: Object,
     default: () => {}
+  },
+  ifUserInfo: {
+    type: Boolean,
+    default: true
+  },
+  isPenDing: {
+    type: Boolean,
+    default: false
   }
 })
 // 是否显示马尼,印尼括号金额
@@ -366,6 +363,9 @@ const getLangBet = (item: any) => {
       }
     }
   }
+}
+.top-PenDing {
+  // background: #e2e6e8;
 }
 
 .top3 {
