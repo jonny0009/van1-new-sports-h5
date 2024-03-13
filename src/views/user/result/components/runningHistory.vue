@@ -236,8 +236,6 @@ const TradeTyp = async () => {
     return showToast(res.msg)
   }
   typeList.arr = res.data
-  console.log(typeList.arr, '====111')
-
   popupList.arr = [
     {
       value: t('user.whole'),
