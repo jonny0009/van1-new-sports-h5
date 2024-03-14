@@ -1,7 +1,8 @@
 <template>
   <section class="good-road-view">
     <div class="title">好路推荐</div>
-    <div class="list" v-if="list.length">
+    <Loading v-if="loading" />
+    <div class="list" v-else-if="list.length">
       <TableInfo v-for="(item, index) in list" :key="index" :tableInfo="item"></TableInfo>
     </div>
     <EmptyData v-else />
@@ -9,12 +10,15 @@
 </template>
 
 <script lang="ts" setup>
-
 import TableInfo from './TableInfo.vue'
 defineProps({
   list: {
     type: Object,
     default: () => {}
+  },
+  loading: {
+    type: Boolean,
+    default: true
   }
 })
 </script>

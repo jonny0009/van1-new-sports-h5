@@ -8,8 +8,8 @@
       <div class="go-btn" @click="goHome">去首页</div>
     </div>
     <template v-else>
-      <GoodRoad :list="list" />
-      <LotterRoad :list="list1" />
+      <GoodRoad :list="list" :loading="loading" />
+      <LotterRoad :list="list1" :loading="loading1" />
     </template>
   </div>
 </template>
@@ -39,6 +39,8 @@ const list: any = ref([])
 const list1: any = ref([])
 const timer: any = ref()
 const timerStr: any = ref('')
+const loading = ref(true)
+const loading1 = ref(true)
 onBeforeMount(() => {
   getList()
   getList1()
@@ -54,12 +56,16 @@ timer.value = setInterval(() => {
 
 const getList = async () => {
   const res = await getBacGoodRoads()
+  loading.value = false
+
   const datas: any[] = res?.data || []
   list.value = datas.slice(0, 2)
 }
 
 const getList1 = async () => {
   const res = await realTableList()
+  loading1.value = false
+
   if (res?.data?.code === 503) {
     maintenanceState.value = true
     maintenanceData.value = res?.data?.data

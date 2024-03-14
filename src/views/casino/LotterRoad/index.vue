@@ -1,9 +1,11 @@
 <template>
   <section class="good-road-view">
     <div class="title">真人百家乐</div>
-    <div class="list" v-if="list.length">
+    <Loading v-if="loading" />
+    <div class="list" v-else-if="list.length">
       <TableInfo v-for="(item, index) in list" :key="index" :tableInfo="item"></TableInfo>
     </div>
+
     <EmptyData v-else />
   </section>
 </template>
@@ -15,6 +17,10 @@ defineProps({
   list: {
     type: Object,
     default: () => {}
+  },
+  loading: {
+    type: Boolean,
+    default: true
   }
 })
 </script>
