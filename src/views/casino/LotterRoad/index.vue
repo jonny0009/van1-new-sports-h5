@@ -9,27 +9,14 @@
 </template>
 
 <script lang="ts" setup>
-import { realTableList } from '@/api/home'
-import { onBeforeMount, onUnmounted, ref } from 'vue'
 import TableInfo from './TableInfo.vue'
-const list = ref([])
-const timer: any = ref()
-onBeforeMount(() => {
-  getList()
-})
-onUnmounted(() => {
-  clearInterval(timer.value)
-})
-clearInterval(timer.value)
-timer.value = setInterval(() => {
-  getList()
-}, 10 * 1000)
 
-const getList = async () => {
-  const res = await realTableList()
-  list.value = res?.data?.data || []
-  console.log(res, 'res')
-}
+defineProps({
+  list: {
+    type: Object,
+    default: () => {}
+  }
+})
 </script>
 <style lang="scss" scoped>
 .good-road-view {

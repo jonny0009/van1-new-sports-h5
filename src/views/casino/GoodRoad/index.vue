@@ -9,28 +9,14 @@
 </template>
 
 <script lang="ts" setup>
-import { getBacGoodRoads } from '@/api/home'
-import { onBeforeMount, onUnmounted, ref } from 'vue'
-import TableInfo from './TableInfo.vue'
-const list: any = ref([])
-const timer: any = ref()
-onBeforeMount(() => {
-  getList()
-})
-onUnmounted(() => {
-  clearInterval(timer.value)
-})
-clearInterval(timer.value)
-timer.value = setInterval(() => {
-  getList()
-}, 10 * 1000)
 
-const getList = async () => {
-  const res = await getBacGoodRoads()
-  const datas: any[] = res?.data || []
-  list.value = datas.slice(0, 2)
-  console.log(res, 'res')
-}
+import TableInfo from './TableInfo.vue'
+defineProps({
+  list: {
+    type: Object,
+    default: () => {}
+  }
+})
 </script>
 <style lang="scss" scoped>
 .good-road-view {

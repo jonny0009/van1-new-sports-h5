@@ -36,7 +36,7 @@ const appContent = ref()
 
 const route = useRoute()
 const { currentRoute } = useRouter()
-const unShow: any = ref(['game'])
+const unShow: any = ref(['game', 'Casino'])
 const heightNumY: any = ref(0)
 const indexNum: any = ref(0)
 const betShowState: any = ref(!unShow.value.includes(route.name))

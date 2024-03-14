@@ -181,7 +181,7 @@ const goToGame = async () => {
       top: 0;
       bottom: 0;
       margin: auto;
-      z-index: 99;
+      z-index: 1;
       right: 16px;
       width: 100px;
       height: 100px;
