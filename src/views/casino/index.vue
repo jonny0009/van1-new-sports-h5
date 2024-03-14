@@ -3,8 +3,8 @@
     <div class="maintenance-view" v-if="maintenanceState">
       <div class="maintenance-icon" :style="{ backgroundImage: `url(${bg})` }"></div>
       <div class="maintenance-title">赌场维护中...</div>
-      <div class="maintenance-subtitle">预计维护倒计时</div>
-      <div class="maintenance-timer">{{ timerStr }}</div>
+      <div class="maintenance-subtitle" v-if="timerState">预计维护倒计时</div>
+      <div class="maintenance-timer" v-if="timerState">{{ timerStr }}</div>
       <div class="go-btn" @click="goHome">去首页</div>
     </div>
     <template v-else>
@@ -33,6 +33,7 @@ const bg = computed(() => {
   return purple
 })
 const maintenanceState: any = ref(false)
+const timerState: any = ref(false)
 const maintenanceData: any = ref({})
 const list: any = ref([])
 const list1: any = ref([])
@@ -82,8 +83,10 @@ const countdown = () => {
   const endTime = maintenanceData.value.endTime.replace(/-/g, '/')
   const end = new Date(endTime).getTime()
   if (Date.now() > end) {
+    timerState.value = false
     return false
   }
+  timerState.value = true
   // 获取当前时间
   const date = new Date()
   const now = date.getTime()
