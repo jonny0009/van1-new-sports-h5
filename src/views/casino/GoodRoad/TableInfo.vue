@@ -35,7 +35,7 @@
 <script lang="ts" setup>
 import { getBJGameUrl } from '@/api/home'
 import { createDaLu, daLuIsFirstZores } from '@/utils/RoadMapUtils'
-import { showLoadingToast } from 'vant'
+import { showLoadingToast, closeToast } from 'vant'
 import CurrencyComp from '@/components/Currency/index.vue'
 import { computed } from 'vue'
 
@@ -149,6 +149,7 @@ const goToGame = async () => {
   })
   const gres: any = await getBJGameUrl(params)
   if (gres?.code === 200) {
+    closeToast()
     const gameUrl = gres.data['url'].replace('&isAi=1', '')
     window.location.href =
       gameUrl +
@@ -224,6 +225,7 @@ const goToGame = async () => {
       display: flex;
       margin-left: 8px;
       background-image: linear-gradient(0deg, rgb(249, 249, 253), rgb(235, 236, 248) 100%);
+      overflow: hidden;
       .road-col {
         display: flex;
         flex-direction: column;

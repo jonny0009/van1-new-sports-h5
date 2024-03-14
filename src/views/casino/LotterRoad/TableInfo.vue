@@ -27,7 +27,7 @@
 <script lang="ts" setup>
 import { getBJGameUrl } from '@/api/home'
 import { createDaLu, daLuIsFirstZores } from '@/utils/RoadMapUtils'
-import { showLoadingToast } from 'vant'
+import { closeToast, showLoadingToast } from 'vant'
 import { computed } from 'vue'
 import CurrencyComp from '@/components/Currency/index.vue'
 const props = defineProps({
@@ -55,6 +55,7 @@ const wins = computed(() => {
     daluMatrix = matrixList
   }
   const list: any[] = []
+  daluMatrix = daluMatrix.splice(-22, 22)
   for (let x = 0; x < daluMatrix.length; x++) {
     const yAxis = daluMatrix[x]
     for (let y = 0; y < yAxis.length; y++) {
@@ -128,6 +129,7 @@ const goToGame = async () => {
   })
   const gres: any = await getBJGameUrl(params)
   if (gres?.code === 200) {
+    closeToast()
     const gameUrl = gres.data['url'].replace('&isAi=1', '')
     window.location.href =
       gameUrl +
@@ -164,6 +166,8 @@ const goToGame = async () => {
     display: flex;
     background-color: rgb(221, 222, 232);
     background-image: linear-gradient(0deg, rgb(249, 249, 253), rgb(235, 236, 248) 100%);
+    overflow: hidden;
+
     .road-col {
       box-sizing: border-box;
       display: flex;
