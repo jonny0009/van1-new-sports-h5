@@ -7,6 +7,7 @@ export default {
   close: '접기',
   more: '더 보기',
   sports: {
+    all: '전체',
     officeNumber: '게임 번호',
     FT: '축구',
     BK: '농구',

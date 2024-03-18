@@ -7,6 +7,7 @@ export default {
   close: 'Collapse',
   more: 'More',
   sports: {
+    all: 'All',
     officeNumber: 'Game Number',
     FT: 'Football',
     BK: 'Basketball',

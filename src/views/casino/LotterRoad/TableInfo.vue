@@ -138,7 +138,7 @@ const goToGame = async () => {
       '&tableId=' +
       tableId +
       '&sourceUrl=' +
-      encodeURIComponent(window.location.host)
+      encodeURIComponent(window.location.href)
   }
 }
 </script>

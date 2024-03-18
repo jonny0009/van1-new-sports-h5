@@ -109,3 +109,11 @@ export const getBJGameUrl = (params?: any) => {
     params
   })
 }
+// 获取早盘今日的比赛数据
+export const statistics = (params?: any) => {
+  return request({
+    url: '/ai/mobile/matches/statistics',
+    method: 'get',
+    params
+  })
+}
