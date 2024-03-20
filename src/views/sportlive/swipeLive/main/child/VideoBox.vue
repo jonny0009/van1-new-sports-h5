@@ -1,5 +1,5 @@
 <template>
-  <div class="video-box-wrap">
+  <div class="video-box-wrap" @click="touch">
     <video
       id="VideoRef"
       :style="{ 'object-fit': 'fill' }"
@@ -12,34 +12,30 @@
     <div v-if="videoErrorState" class="video-error">
       <span class="video-icon"></span>
       <div class="error-tips">{{ $t('live.videoFailure') }}</div>
-      <div class="error-btn" @click="refresh"> {{ $t('live.refreshVideo') }}</div>
+      <div class="error-btn" @click="refresh">{{ $t('live.refreshVideo') }}</div>
     </div>
 
     <div
       class="pop"
       :class="{
-        'popBg':popBgToggle
+        popBg: popBgToggle
       }"
     >
       <van-loading class="popBg-loading" />
     </div>
+    <div class="touch-pop" v-if="tocuhState">1234</div>
 
-    <div
-      class="sound-icon"
-      :class="{ muted: muted }"
-      @click.stop="soundHandle"
-    ></div>
-
+    <div class="sound-icon" :class="{ muted: muted }" @click.stop="soundHandle"></div>
   </div>
 </template>
 <script lang="ts" setup>
 import Video from 'video.js'
 import 'video.js/dist/video-js.css'
-import { ref,watch, onBeforeMount, onBeforeUnmount, nextTick, computed } from 'vue'
+import { ref, watch, onBeforeMount, onBeforeUnmount, nextTick, computed } from 'vue'
 import store from '@/store'
 const turnSound = computed(() => store.state.match.turnSound)
 
-const props:any = defineProps({
+const props: any = defineProps({
   liveUrl: {
     type: String,
     default: ''
@@ -50,12 +46,13 @@ const props:any = defineProps({
   }
 })
 
-const videoExample:any = ref(null)
-const videoErrorState:any = ref(false)
+const videoExample: any = ref(null)
+const videoErrorState: any = ref(false)
 const muted = ref(true)
+const tocuhState = ref(false)
 
 watch(turnSound, (newValue, oldValue) => {
-  console.log(`turnSound发生变化，新值为：${newValue}，旧值为：${oldValue}`);
+  console.log(`turnSound发生变化，新值为：${newValue}，旧值为：${oldValue}`)
   if (newValue) {
     videoExample.value.muted(false)
     muted.value = false
@@ -65,6 +62,10 @@ watch(turnSound, (newValue, oldValue) => {
   }
 })
 
+const touch = () => {
+  tocuhState.value = !tocuhState.value
+}
+
 const playVideo = () => {
   if (turnSound.value) {
     muted.value = false
@@ -73,14 +74,13 @@ const playVideo = () => {
     muted.value = true
     videoExample.value.muted(true)
   }
-  
 }
 const setTimeoutTime = ref()
 const initVideo = () => {
   clearTimeout(setTimeoutTime.value)
   setTimeoutTime.value = setTimeout(() => {
     videoErrorState.value = false
-    const videoRef:any = document.querySelector('#VideoRef')
+    const videoRef: any = document.querySelector('#VideoRef')
     if (!(videoRef && props.liveUrl)) {
       return
     }
@@ -135,7 +135,7 @@ const soundHandle = () => {
   if (videoExample.value.muted()) {
     videoExample.value.muted(false)
     muted.value = false
-    
+
     store.commit('match/SET_TURN_SOUND', false)
   } else {
     videoExample.value.muted(true)
@@ -196,7 +196,6 @@ onBeforeUnmount(() => {
     position: relative;
     z-index: 11;
   }
-
 }
 
 .sound-icon {
@@ -230,13 +229,13 @@ onBeforeUnmount(() => {
 }
 
 .video-icon {
-    display: block;
-    width: 120px;
-    height: 40px;
-    margin: 100px auto 20px;
-    background: url('@/assets/images/sportlive/video.svg') no-repeat center;
-    background-size: contain;
-  }
+  display: block;
+  width: 120px;
+  height: 40px;
+  margin: 100px auto 20px;
+  background: url('@/assets/images/sportlive/video.svg') no-repeat center;
+  background-size: contain;
+}
 .error-tips {
   font-size: 24px;
   color: #ffffff;
@@ -264,19 +263,28 @@ onBeforeUnmount(() => {
   width: 100%;
   height: 100%;
   z-index: 10;
-  .popBg-loading{
+  .popBg-loading {
     display: none;
   }
 }
-.popBg{
+.touch-pop {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 11;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.popBg {
   background: url('@/assets/images/sportlive/ft.jpg') no-repeat;
   background-size: cover;
-  .popBg-loading{
+  .popBg-loading {
     display: block;
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate3d(-50%,-50%,0);
+    transform: translate3d(-50%, -50%, 0);
   }
 }
 </style>

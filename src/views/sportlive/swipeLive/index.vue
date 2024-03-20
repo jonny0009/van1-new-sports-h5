@@ -48,18 +48,18 @@ const init = async () => {
 }
 
 const goDetails = (item: any) => {
-  if (!item) {
-    return
-  }
-  const { gidm } = item
-  const params = {
-    name: 'MatchDetail',
-    params: {
-      id: gidm
-    }
-  }
-  router.push(params)
-  store.dispatch('app/setMatchLiveIndex', 1)
+  // if (!item) {
+  //   return
+  // }
+  // const { gidm } = item
+  // const params = {
+  //   name: 'MatchDetail',
+  //   params: {
+  //     id: gidm
+  //   }
+  // }
+  // router.push(params)
+  // store.dispatch('app/setMatchLiveIndex', 1)
 }
 
 const swipeChange = (index: any) => {
