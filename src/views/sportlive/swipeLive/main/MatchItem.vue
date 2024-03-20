@@ -1,6 +1,6 @@
 <template>
   <div class="match-item-wrap" :style="{ backgroundImage: `url(${cover})` }">
-    <video-box v-if="showVideoBox" :live-url="liveInfo.m3u8 || liveInfo.url" :controls="false" @refresh="refresh" />
+    <video-box v-if="showVideoBox" :live-url="liveInfo.m3u8 || liveInfo.url" :liveInfo="liveInfo" :controls="false" @refresh="refresh" />
     <div class="video-footer">
       <SportsIcon class="SportsIcon" :icon-src="liveInfo.gameType" />
       <div class="leagueName text-overflow">
