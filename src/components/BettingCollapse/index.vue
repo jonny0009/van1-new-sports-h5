@@ -8,6 +8,7 @@
         <template #title>
           <div class="tab-title">
             <span>{{ tab.name }}</span>
+            <span class="num">{{ tab.playDataList.length }}</span>
           </div>
         </template>
         <!-- start -->
@@ -134,6 +135,9 @@ const activeNames = ref(['1'])
       font-size: 24px;
       font-weight: 800;
       transition: all 0.3s;
+      .num {
+        margin-left: 8px;
+      }
     }
     .van-tab--active .tab-title {
       // background-image: linear-gradient(180deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-2) 100%);

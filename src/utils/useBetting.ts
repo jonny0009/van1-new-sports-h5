@@ -52,7 +52,7 @@ export function useBetting(flag: any) {
   const currentGroupPlay = ref([])
   const findGroupById = (id: string) => {
     selectId.value = id
-    const currentGroup = playGroupBetList.value.find((m: any) => m.id?.toString() === selectId.value)
+    const currentGroup = playGroupBetList.value?.find((m: any) => m.id?.toString() === selectId.value)
     currentGroupPlay.value = currentGroup.playData
     getBettingData()
   }
