@@ -7,11 +7,11 @@
       }
     ]"
   >
-    <SvgIcon v-if="props.text === 'OP_DR'" name="ball-OP_DR" />
-    <SvgIcon v-else-if="props.text === 'OP_BV'" name="ball-OP_BV" />
+    <SvgIcon v-if="text === 'OP_DR'" name="ball-OP_DR" />
+    <SvgIcon v-else-if="text === 'OP_BV'" name="ball-OP_BV" />
     <i v-else class="iconfont" :class="SportsName"></i>
     <span> {{ textVal }} </span>
-    <span v-if="props.showCount && sportCount > 0"> {{ sportCount }}</span>
+    <span v-if="showCount && sportCount > 0"> {{ sportCount }}</span>
   </div>
 </template>
 <script lang="ts" setup>

@@ -3,8 +3,8 @@
   <Nothing v-if="!pendingData.length"></Nothing>
   <div v-if="pendingData.length" class="dataList">
     <div v-for="(item, index) in pendingData" :key="index">
-      <Single v-if="Number(item.parlayNum) ===1" :item="item" class="item"></Single>
-      <Bunch v-if="Number(item.parlayNum) !==1" :item="item" class="item"></Bunch>
+      <Single v-if="Number(item.parlayNum) === 1" :item="item" :isPenDing="true" class="item"></Single>
+      <Bunch v-if="Number(item.parlayNum) !== 1" :item="item" :isPenDing="true" class="item"></Bunch>
     </div>
   </div>
 </template>
@@ -12,8 +12,8 @@
 <script lang="ts" setup>
 import { onMounted, computed } from 'vue'
 import Nothing from '../../components/Nothing/Pending.vue'
-import Bunch from './bunch.vue'
-import Single from './single.vue'
+import Bunch from '@/components/BettingRecord/bunch/index.vue'
+import Single from '@/components/BettingRecord/single/index.vue'
 import store from '@/store'
 
 const pendingData = computed(() => store.state.user.pendingData)
@@ -29,9 +29,8 @@ const getTeamLang = () => {
   const championGidms: any = []
   // 提前结算信息
   // const aheadOrderList: any = []
-
-  pendingData.value.map((m:any) => {
-    m.betDTOList.map((n:any) => {
+  pendingData.value.map((m: any) => {
+    m.betDTOList.map((n: any) => {
       const { championType, systemId, gidm } = n
       if (championType) {
         championGidms.push(gidm)
@@ -60,7 +59,8 @@ const getTeamLang = () => {
   .item {
     margin: 0 auto;
     width: 695px;
-    background: #EFF1F2;
+    // background: #eff1f2;
+    background: var(--color-search-box-frame);
     border-radius: 22px;
     padding: 15px 20px;
     margin-bottom: 20px;

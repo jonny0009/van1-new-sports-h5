@@ -7,6 +7,7 @@ export default {
   close: '收起',
   more: '更多',
   sports: {
+    all: '全部',
     officeNumber: '局号',
     FT: '足球',
     BK: '篮球',

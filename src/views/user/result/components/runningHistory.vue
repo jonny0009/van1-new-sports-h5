@@ -42,11 +42,17 @@
     <div v-for="(outItem, outIndex) in dataList.arr" :key="outIndex" class="dataList-item">
       <div class="date-title">{{ outItem.date }}</div>
       <div v-for="(item, index) in outItem.list" :key="index" class="item">
-        <div class="title">
+        <div class="title" v-if="item.transferType === 'GAME'">
+          {{ $t('home.casino') }}
+        </div>
+        <div class="title" v-else>
           {{ getTitle(item.tradeType) }}
         </div>
         <div class="line">
           <div class="left">
+            <div class="title" v-if="item.transferType === 'GAME'">
+              {{ getTitle(item.tradeType) }}
+            </div>
             <div class="left-1">
               <div class="font">{{ $t('user.betId') }}:</div>
               <span>
@@ -151,7 +157,11 @@ const setDateTime = (values: any) => {
 }
 // 结算方式
 const getPayStatus = (item: any) => {
-  if (item.tradeType === 'SETTLEMENT' || item.tradeType === 'CASHOUT_ALL') {
+  if (
+    item.tradeType.includes('SETTLEMENT') ||
+    item.tradeType.includes('CASHOUT') ||
+    item.tradeType.includes('PAYMENT')
+  ) {
     return true
   }
   return false
@@ -379,6 +389,14 @@ defineExpose({
         color: var(--color-search-box-text-2);
         letter-spacing: 0;
         font-weight: 400;
+        > .title {
+          font-family: PingFangSC-Medium;
+          font-size: 24px;
+          color: var(--color-search-box-text-1);
+          letter-spacing: 0;
+          font-weight: 500;
+          margin-bottom: 10px;
+        }
 
         &-1 {
           display: flex;
@@ -412,6 +430,7 @@ defineExpose({
       }
 
       .right {
+        margin-top: -10px;
         font-family: PingFangSC-Regular;
         font-size: 22px;
         color: var(--color-search-box-text-2);
