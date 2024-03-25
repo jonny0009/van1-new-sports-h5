@@ -40,6 +40,7 @@
                   <img v-if="currency === 'CNY'" class="headImg_2" :src="CNY" style="object-fit: contain;" />
                   <img v-else-if="currency === 'VNDK'" class="headImg_2" :src="VNDK" style="object-fit: contain;" />
                   <img v-else-if="currency==='BRL'" class="headImg_2" :src="BRL" style="object-fit: contain;" />
+                  <img v-else-if="currency==='THB'" class="headImg_2" :src="THB" style="object-fit: contain;" />
                   <img v-else class="headImg_2" :src="USDTImg" style="object-fit: contain;" />
                 </template>
 
@@ -119,6 +120,7 @@ const config = computed(() => store.state.app.customizeConfig)
 import CNY from '@/assets/images/user/CNY.svg'
 import VNDK from '@/assets/images/user/VNDK.svg'
 import BRL from '@/assets/images/user/BRL.svg'
+import THB from '@/assets/images/user/thb.svg'
 
 import { useRouter } from 'vue-router'
 const $router = useRouter()
