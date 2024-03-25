@@ -1,6 +1,6 @@
 <template>
   <div class="match-item-wrap" :style="{ backgroundImage: `url(${cover})` }">
-    <video-box v-if="showVideoBox" :live-url="liveInfo.m3u8 || liveInfo.url" :controls="false" @refresh="refresh" />
+    <video-box v-if="showVideoBox" :live-url="liveInfo.m3u8 || liveInfo.url" :liveInfo="liveInfo" :controls="false" @refresh="refresh" />
     <div class="video-footer">
       <SportsIcon class="SportsIcon" :icon-src="liveInfo.gameType" />
       <div class="leagueName text-overflow">
@@ -14,7 +14,7 @@
 <script lang="ts" setup>
 import { useMatch } from '@/utils/useMatch'
 const setMatch: any = useMatch()
-import VideoBox from './child/VideoBox'
+import VideoBox from './child/VideoBox.vue'
 import coverFt from './child/assets/ft.jpg'
 import { ref, computed, watch, onBeforeMount, nextTick } from 'vue'
 

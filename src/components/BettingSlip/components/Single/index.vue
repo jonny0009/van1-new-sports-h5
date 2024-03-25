@@ -48,7 +48,7 @@
 </template>
 <script lang="ts" setup>
 import store from '@/store'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 const inputBtn = ref()
 const props = defineProps({
   marketInfo: {
@@ -82,6 +82,27 @@ const goldRule = computed(() => {
   }
   return false
 })
+
+watch(
+  () => props.marketInfo.iorChange,
+  () => {
+    if (props.marketInfo.iorChange) {
+      setTimeout(() => {
+        clearIorChange()
+      }, 5000)
+    }
+  }
+)
+watch(
+  () => props.marketInfo.ratioChange,
+  () => {
+    if (props.marketInfo.ratioChange) {
+      setTimeout(() => {
+        clearOddChange()
+      }, 5000)
+    }
+  }
+)
 
 const state = ref(false)
 const remove = () => {

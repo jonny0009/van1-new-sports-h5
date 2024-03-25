@@ -7,6 +7,7 @@ export default {
   close: 'fechar',
   more: 'Mais',
   sports: {
+    all: 'todos',
     officeNumber: 'Número da agência',
     FT: 'futebol',
     BK: 'basquetebol',

@@ -6,23 +6,21 @@
         <span>{{ $t('user.time') }}</span>
         <div class="round" @click.stop="setDate()">
           <span>{{ dateTimeVal.beginName }} </span> ~ <span>{{ dateTimeVal.endName }}</span>
-          <img class="img_1 " :class="[showBottom2 ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
+          <img class="img_1" :class="[showBottom2 ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
         </div>
       </div>
     </div>
-
     <!-- 状态 -->
     <div class="status">
       <div class="status_1">
         <span>{{ $t('user.state') }}</span>
         <div class="round" @click.stop="seStatus()">
           <span>{{ commonKey.value }}</span>
-          <img class="img_1 " :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
+          <img class="img_1" :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
         </div>
       </div>
     </div>
   </div>
-
   <!-- 列表 -->
   <div v-if="!list.arr.length && finished" class="noData">
     <img class="img_1" src="@/assets/images/user/noData.png" />
@@ -49,17 +47,15 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from 'vue'
 import moment from 'moment'
-import Bunch from './bunch.vue'
-import Single from './single.vue'
-
+import Bunch from '@/components/BettingRecord/bunch/index.vue'
+import Single from '@/components/BettingRecord/single/index.vue'
 import { betRecordTab } from '@/api/user'
-const list = reactive<{ arr: any }>({ arr: [] })
 import store from '@/store'
 import { showToast } from 'vant'
-
 import { useI18n } from 'vue-i18n'
-const { t } = useI18n()
 
+const { t } = useI18n()
+const list = reactive<{ arr: any }>({ arr: [] })
 const beginTime = ref<any>('')
 const endTime = ref<any>('')
 const popupTitle = ref(t('user.state'))
@@ -68,9 +64,7 @@ const showBottom = ref(false)
 const showBottom2 = ref(false)
 const loading = ref(false)
 const finished = ref(false)
-
 const emit = defineEmits(['valueChange', 'timeChange'])
-
 const popupList = reactive<{ arr: any[] }>({
   arr: [
     {
@@ -122,7 +116,6 @@ const setDateTime = (values: any) => {
   page = 0
   list.arr = []
   getNoAccount()
-
 }
 async function setPk(val: any) {
   commonKey.value = val
@@ -176,9 +169,11 @@ const getNoAccount = async () => {
   }
 }
 defineExpose({
-  setPk, setDateTime, showBottom, showBottom2
+  setPk,
+  setDateTime,
+  showBottom,
+  showBottom2
 })
-
 </script>
 
 <style lang="scss" scoped>
@@ -206,7 +201,7 @@ defineExpose({
     display: flex;
     align-items: center;
     margin-right: 30px;
-    white-space:nowrap;
+    white-space: nowrap;
     .round {
       white-space: nowrap;
       padding: 0 25px;
@@ -220,8 +215,8 @@ defineExpose({
       position: relative;
       font-size: 23px;
       color: #546371;
-      &-text{
-        white-space:nowrap;
+      &-text {
+        white-space: nowrap;
       }
 
       .img_1 {
@@ -246,23 +241,11 @@ defineExpose({
   margin-top: 20px;
   // padding: 0 36px;
 
-  .color-1 {
-    color: var(--color-bg-1);
-  }
-
-  .color-2 {
-    color: #1EBB52;
-  }
-  .color-3 {
-    color: red;
-  }
-
   .item {
     background: var(--color-search-box-frame);
     border-radius: 22px;
     padding: 15px 20px;
     margin-bottom: 20px;
-
   }
 }
 
@@ -281,7 +264,7 @@ defineExpose({
 
   .item {
     font-size: 26px;
-    color: #1F2630;
+    color: #1f2630;
     letter-spacing: 1px;
     padding: 40px;
     border-bottom: 2px solid #eaeaea;
@@ -308,12 +291,11 @@ defineExpose({
   font-weight: 500;
   height: 850px;
 
-  >.img_1 {
+  > .img_1 {
     margin-top: 331px;
     width: 102px;
     height: 121px;
     margin-bottom: 57px;
-
   }
 }
 </style>

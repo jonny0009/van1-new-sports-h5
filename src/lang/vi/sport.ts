@@ -7,6 +7,7 @@ export default {
   close: 'Thu lại',
   more: 'Hơn',
   sports: {
+    all: 'Chọn toàn bộ',
     officeNumber: 'Số trận',
     FT: 'Bóng đá',
     BK: 'Bóng rổ',

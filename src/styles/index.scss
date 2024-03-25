@@ -1,4 +1,9 @@
 @import './common.scss';
+@font-face {
+	font-family: JueJiangHei;
+	src:url("../assets/fonts/JueJiangHei.ttf");
+}
+
 #app {
   height: 100%;
 }

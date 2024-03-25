@@ -133,6 +133,13 @@
   --color-chat-room-bg: rgb(239 241 242 0.25);
   --color-chat-room-wrapper-bg: rgb(227 231 240);
 
+  // 赌场
+  --color-casino-maintenance-title: rgb(31, 38, 48);
+  --color-casino-maintenance-subtitle: rgba(84, 99, 113, 0.7);
+  --color-casino-maintenance-timer: rgb(118, 66, 253);
+  --color-casino-gohome-gradient-1: rgb(73, 29, 172);
+  --color-casino-gohome-gradient-2: rgb(118, 66, 253);
+
 }
 // 蓝色版本
 :root[data-theme='blue'] {
@@ -273,5 +280,10 @@
   --color-chat-room-bg: rgb(72, 163, 255, 0.25);
   --color-chat-room-wrapper-bg: rgb(255 255 255);
 
-
+  // 赌场
+  --color-casino-maintenance-title: rgb(14, 61, 102);
+  --color-casino-maintenance-subtitle: rgba(14, 61, 102, 0.7);
+  --color-casino-maintenance-timer: rgb(72, 163, 255);
+  --color-casino-gohome-gradient-1: rgb(44, 136, 229);
+  --color-casino-gohome-gradient-2: rgb(72, 163, 255);
 }
