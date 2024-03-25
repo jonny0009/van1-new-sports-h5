@@ -1,7 +1,7 @@
 <template>
   <div class="table-info-component" @click="goToGame">
     <div class="table-cover">
-      <img v-img="tableInfo.tableCover" style="object-fit: contain" />
+      <img :src="cover" @error="errorState = true" style="object-fit: contain" />
     </div>
     <div class="table-road-list">
       <div class="road-col" v-for="(item, index) in wins" :key="index">
@@ -28,14 +28,24 @@
 import { getBJGameUrl } from '@/api/home'
 import { createDaLu, daLuIsFirstZores } from '@/utils/RoadMapUtils'
 import { closeToast, showLoadingToast } from 'vant'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import CurrencyComp from '@/components/Currency/index.vue'
+import tableBg from '@/assets/images/casino/table-bg.jpg?url'
 const props = defineProps({
   tableInfo: {
     type: Object,
     default: () => {}
   }
 })
+const errorState = ref(false)
+const cover = computed(() => {
+  if (errorState.value) {
+    return tableBg
+  }
+
+  return props.tableInfo.tableCover
+})
+
 const classList = ['he', 'xian', 'zhuang', 'zhuang']
 const wins = computed(() => {
   let daluMatrix = createDaLu(props.tableInfo.wins)
