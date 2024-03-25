@@ -21,11 +21,11 @@
       <div class="right">
         <div class="bet-money">
           <CurrencyComp class-name="mr3 fs24" />
-          {{ tableInfo.tableLimitMin }}
+          {{ tableInfo.tableLimitMin || 0 }}
         </div>
         <div class="number">
           <SvgIcon name="home-users" class="users-icon"></SvgIcon>
-          {{ tableInfo.tablePlayers }}
+          {{ tableInfo.tablePlayers || 0 }}
         </div>
       </div>
     </div>
@@ -49,7 +49,7 @@ const props = defineProps({
 
 const errorState = ref(false)
 const cover = computed(() => {
-  if (errorState.value) {
+  if (errorState.value || !props.tableInfo.tableCover) {
     return user
   }
 
