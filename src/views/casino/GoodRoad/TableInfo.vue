@@ -220,7 +220,7 @@ const goToGame = async () => {
       height: 162px;
       background-repeat: no-repeat;
       background-size: contain;
-      background-image: linear-gradient(270deg, #d8def6 0%, #bbd0f7 100%);
+      background-image: url(@/assets/images/casino/user-bg.jpg);
       border-radius: 10px;
       overflow: hidden;
 
