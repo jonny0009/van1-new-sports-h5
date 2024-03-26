@@ -11,6 +11,7 @@ import enUS from 'vant/es/locale/lang/en-US'
 import viVN from 'vant/es/locale/lang/vi-VN'
 import koKR from 'vant/es/locale/lang/ko-KR'
 import ptBR from 'vant/es/locale/lang/pt-BR'
+import thTH from 'vant/es/locale/lang/th-TH'
 
 const lang = localStorage.getItem('locale') || getBrowserLanguage()
 
@@ -26,6 +27,11 @@ if (lang === 'ko-kr') {
 if (lang === 'pt-pt') {
   Locale.use('pt-BR', ptBR)
 }
+
+if (lang === 'th-th') {
+  Locale.use('th-TH', thTH)
+}
+
 const i18n: any = createI18n({
   legacy: false,
   globalInjection: true,
