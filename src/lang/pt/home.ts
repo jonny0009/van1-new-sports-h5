@@ -44,10 +44,16 @@ export default {
   numberDay: '{number} Dias',
   hot: 'Popular',
   todayUpcoming: 'Sessão Matinal',
-   // new
-   RBInfo: 'Handicap Asiático Jogo Completo',
-   RBSize: 'Mais/Menos Jogo Completo',
-   RBRide: 'Resultado Final 1X2',
-   PDscore: 'Pontuação Correcta',
-   
+  // new
+  RBInfo: 'Handicap Asiático Jogo Completo',
+  RBSize: 'Mais/Menos Jogo Completo',
+  RBRide: 'Resultado Final 1X2',
+  PDscore: 'Pontuação Correcta',
+  casinoTitleObj: {
+    title1: 'Boas recomendações de estradas',
+    title2: 'Baccarat ao Vivo',
+    title3: 'O cassino está em manutenção...',
+    title4: 'Contagem regressiva estimada para manutenção',
+    gohome: 'Ir para a página inicial'
+  }
 }

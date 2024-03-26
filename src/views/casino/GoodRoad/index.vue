@@ -1,7 +1,7 @@
 <template>
   <section class="good-road-view">
     <div class="title">
-      <span>好路推荐</span>
+      <span>{{ $t('home.casinoTitleObj.title1') }}</span>
       <!-- <div class="multiple-units" @click="goodRoadShow">
         <span class="units-icon"></span>
         <span class="units-title">多台下注</span>
