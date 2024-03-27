@@ -10,7 +10,7 @@ export default {
       name: 'Casino',
       meta: {
         showSportsTabsView: true,
-        showRefresh: true,
+        // showRefresh: true,
         KeepAlive: true,
         index: 8
       }
