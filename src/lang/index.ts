@@ -5,6 +5,7 @@ import cn from './cn/index'
 import vi from './vi/index'
 import kr from './kr/index'
 import pt from './pt/index'
+import th from './th/index'
 
 import { Locale } from 'vant'
 import enUS from 'vant/es/locale/lang/en-US'
@@ -42,7 +43,8 @@ const i18n: any = createI18n({
     'en-us': en,
     'vi-vn': vi,
     'ko-kr': kr,
-    'pt-pt': pt
+    'pt-pt': pt,
+    'th-th': th
   }
 })
 

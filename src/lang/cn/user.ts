@@ -23,7 +23,7 @@ export default {
   SettlementTime: '结算时间',
   userName: '用户名',
   Handicap: '盘口',
-  WelcomeToAI: '欢迎来到 7 Lucky！',
+  WelcomeToAI: '欢迎来到 {name}！',
   text1: '全球最领先的体育社交平台',
   register: '注册',
   logOn: '登录',
@@ -137,9 +137,9 @@ export default {
   // 新增7
   contactUs: '联系我们',
   type: '类型',
-  
-  homeName:'主 ',
-  awayName:'客 ',
+
+  homeName: '主 ',
+  awayName: '客 ',
 
   sports: {
     'officeNumber': '局号',

@@ -22,7 +22,7 @@ export default {
   SettlementTime: 'เวลาชำระบัญชี',
   userName: 'ชื่อผู้ใช้',
   Handicap: 'แต้มต่อ',
-  WelcomeToAI: 'ยินดีต้อนรับสู่เอไอ!',
+  WelcomeToAI: 'ยินดีต้อนรับสู่{name}',
   text1: 'แพลตฟอร์มโซเชียลกีฬาชั้นนำของโลก',
   register: 'ลงทะเบียน',
   logOn: 'เข้าสู่ระบบ',

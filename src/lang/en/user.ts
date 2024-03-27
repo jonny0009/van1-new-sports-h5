@@ -22,7 +22,7 @@ export default {
   SettlementTime: 'Settlement Time',
   userName: 'Username',
   Handicap: 'Handicap',
-  WelcomeToAI: 'Welcome To 7 Lucky!',
+  WelcomeToAI: 'Welcome To {name}!',
   text1: "The World'S Leading Sports Social Platform",
   register: 'Register',
   logOn: 'Log In',
@@ -130,8 +130,8 @@ export default {
   // 新增7
   contactUs: 'Contact Us',
   type: 'Type',
-  homeName:'host',
-  awayName:'visitor',
+  homeName: 'host',
+  awayName: 'visitor',
 
   sports: {
     officeNumber: 'Bureau Number',
