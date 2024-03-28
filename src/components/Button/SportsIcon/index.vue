@@ -20,8 +20,6 @@ classVal.value = `icon-${theme.value}-${props.iconSrc}`
 </script>
 <style lang="scss" scoped>
 .svg-icon {
-  font-size: 38px;
-  color: var(--color-global-minButtonicoCl);
-  // margin-right: 3px;
+  font-size: 40px;
 }
 </style>
