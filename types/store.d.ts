@@ -19,6 +19,7 @@ declare interface App {
   systemTime: any
   customizeConfig: any
   matchLiveIndex: any
+  homeStyle: any
 }
 
 declare interface User {

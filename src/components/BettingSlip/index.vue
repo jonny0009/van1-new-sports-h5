@@ -149,7 +149,7 @@ const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
 const combosIor = computed(() => store.getters['betting/combosIor'])
 const userConfig = computed(() => store.state.user.userConfig)
 const isAnonymity = computed(() => store.state.user.isAnonymity)
-const homeStyle = computed(() => store.state.app.merchantConfig.homeStyle || 2)
+const homeStyle = computed(() => store.state.app.homeStyle)
 
 store.dispatch('betting/setMode', 1)
 const emit = defineEmits(['close'])

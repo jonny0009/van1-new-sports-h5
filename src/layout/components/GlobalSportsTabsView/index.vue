@@ -39,12 +39,16 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import router from '@/router'
 import store from '@/store'
 import { useI18n } from 'vue-i18n'
 import { statistics } from '@/api/home'
-const homeStyle = computed(() => store.state.app.merchantConfig.homeStyle || 2)
+
+import { useRoute } from 'vue-router'
+const route = useRoute()
+
+const homeStyle = computed(() => store.state.app.homeStyle)
 const { t } = useI18n()
 const sports = ref([])
 const getStatistics = async () => {
@@ -159,15 +163,25 @@ const goClick = (val: any) => {
   }
   router.push(params)
 }
-
-const active1: any = computed(() => {
-  let active = router?.currentRoute?.value?.name || 'Home'
-  if (active === 'Sport' && router?.currentRoute?.value?.path.includes('/sport/')) {
-    active = router?.currentRoute?.value?.path || '/sport'
+const active = ref('Home')
+watch(
+  () => route.path,
+  (to) => {
+    let activeUrl: any = router?.currentRoute?.value?.name || 'Home'
+    if (activeUrl === 'Sport' && to.includes('/sport/')) {
+      activeUrl = router?.currentRoute?.value?.path || '/sport'
+    }
+    active.value = activeUrl
   }
-  return active
-})
-const active = ref(active1)
+)
+
+// const active1: any = computed(() => {
+//   let active = router?.currentRoute?.value?.name || 'Home'
+//   if (active === 'Sport' && router?.currentRoute?.value?.path.includes('/sport/')) {
+//     active = router?.currentRoute?.value?.path || '/sport'
+//   }
+//   return active
+// })
 </script>
 <style lang="scss" scoped>
 .sportsTabsView {

@@ -31,7 +31,7 @@ import { ref, computed } from 'vue'
 import store from '@/store'
 const transitionName: any = ref('fade-right')
 // const keepAlives = computed(() => [])
-const homeStyle = computed(() => store.state.app.merchantConfig.homeStyle || 2)
+const homeStyle = computed(() => store.state.app.homeStyle)
 const getComponent = (Component: any, route: any) => {
   if (!Component.type.name) {
     Component.type.name = route.name
