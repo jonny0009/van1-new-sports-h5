@@ -164,12 +164,17 @@ const goClick = (val: any) => {
   router.push(params)
 }
 const active = ref('Home')
+
 watch(
   () => route.path,
   (to) => {
     let activeUrl: any = router?.currentRoute?.value?.name || 'Home'
     if (activeUrl === 'Sport' && to.includes('/sport/')) {
-      activeUrl = router?.currentRoute?.value?.path || '/sport'
+      if (homeStyle.value !== 2) {
+        activeUrl = router?.currentRoute?.value?.path || '/sport'
+      } else {
+        activeUrl = 'Sport'
+      }
     }
     active.value = activeUrl
   }
