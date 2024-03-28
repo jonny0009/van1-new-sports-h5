@@ -6,15 +6,16 @@
       <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pb5 pt15" />
       <AppMain ref="appContent" />
     </GlobalRefresh>
-    <!-- <GlobalFooter /> -->
     <BettingSlip v-if="betShowState && !$route.meta.hideGlobalBottomBet" ref="bettingSlip" />
+    <GlobalFooter v-if="homeStyle === 1" @valueChange="betShow" />
     <van-back-top
       v-if="backTopShow"
       bottom="100"
       right="20"
       class="GlobalTop"
       :class="{
-        showBettingSlip: betShowState
+        showBettingSlip: betShowState,
+        showBettingSlipHomeStyle: homeStyle === 1
       }"
     >
       <van-icon name="down" />
@@ -27,7 +28,7 @@ import GlobalHeader from './components/GlobalHeader/index.vue'
 import GlobalSportsTabsView from './components/GlobalSportsTabsView/index.vue'
 import GlobalBarTabsView from './components/GlobalBarTabsView/index.vue'
 import AppMain from './components/AppMain.vue'
-// import GlobalFooter from './components/GlobalFooter/index.vue'
+import GlobalFooter from './components/GlobalFooter/index.vue'
 import BettingSlip from '@/components/BettingSlip/index.vue'
 import { useRouter, useRoute } from 'vue-router'
 import { computed, ref, watch, onMounted, onActivated, onUpdated, nextTick } from 'vue'
@@ -42,6 +43,7 @@ const indexNum: any = ref(0)
 const betShowState: any = ref(!unShow.value.includes(route.name))
 
 const scrollNum = computed(() => store.state.user.scrollNumY)
+const homeStyle = computed(() => store.state.app.merchantConfig.homeStyle || 2)
 const locationHeight = computed(() => store.state.user.locationHeight)
 const KeepAlive = computed(() => currentRoute.value.meta.KeepAlive)
 const pageIndex: any = computed(() => currentRoute.value.meta.index)
@@ -86,7 +88,13 @@ const handleScroll = () => {
   }
 }
 
-const betShow = () => {
+const betShow = (value: any) => {
+  if (value === 'bottomHome') {
+    if (bettingSlip.value) {
+      bettingSlip.value.open = false
+    }
+    return
+  }
   bettingSlip.value.open = true
 }
 
@@ -150,6 +158,9 @@ const backTopShow = computed(() => {
 
   &.showBettingSlip {
     bottom: 120px !important;
+  }
+  &.showBettingSlipHomeStyle {
+    bottom: 198px !important;
   }
 }
 </style>

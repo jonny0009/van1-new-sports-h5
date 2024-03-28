@@ -44,10 +44,10 @@ export default {
   numberDay: '{number} Dias',
   hot: 'Popular',
   todayUpcoming: 'Sessão Matinal',
-   // new
-   RBInfo: 'Handicap Asiático Jogo Completo',
-   RBSize: 'Mais/Menos Jogo Completo',
-   RBRide: 'Resultado Final 1X2',
-   PDscore: 'Pontuação Correcta',
-   
+  // new
+  RBInfo: 'Handicap Asiático Jogo Completo',
+  RBSize: 'Mais/Menos Jogo Completo',
+  RBRide: 'Resultado Final 1X2',
+  PDscore: 'Pontuação Correcta',
+  Community: 'Comunidade'
 }

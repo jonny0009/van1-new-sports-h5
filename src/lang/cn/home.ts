@@ -53,4 +53,5 @@ export default {
   RBSize: '滚球 大小盘',
   RBRide: '滚球 1X2',
   PDscore: '正确比分',
+  Community: '社群'
 }

@@ -1,6 +1,12 @@
 <template>
   <div class="homeTime-page" ref="newContainer">
-    <SportsTabs ref="refSportsTabs" class="pb10" :isCustom="true" :tabs="sports" @returnSportsSuccess="returnSportsSuccess">
+    <SportsTabs
+      ref="refSportsTabs"
+      class="pb10"
+      :isCustom="true"
+      :tabs="sports"
+      @returnSportsSuccess="returnSportsSuccess"
+    >
       <template #body>
         <div class="mt10">
           <tabsTime v-if="routerName === 'HomeTime'" @returnTimeSuccess="returnTimeSuccess" />
@@ -11,7 +17,7 @@
                   <van-sticky
                     :offset-top="offsetTop"
                     :container="newContainer"
-                    z-index="500"
+                    z-index="5"
                     :class="{ mt10: idx !== 0 }"
                   >
                     <playTitle :send-params="item" />
