@@ -24,18 +24,31 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, computed } from 'vue'
-import router from '@/router'
-import { useI18n } from 'vue-i18n'
+import { ref, reactive, computed, watch } from 'vue'
 import { showToast } from 'vant'
+
+import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
-import store from '@/store'
+import router from '@/router'
+import { useRoute } from 'vue-router'
+const route = useRoute()
 
+import store from '@/store'
 const ifThemeBlue = computed(() => {
   return store.state.app.theme === 'blue'
 })
+
 const active = ref(1)
+watch(
+  () => route.path,
+  (to) => {
+    const isSportRouterName = ['/match', '/casino'].includes(to)
+    if (!isSportRouterName) {
+      active.value = 1
+    }
+  }
+)
 
 const navList = reactive<{ arr: any[] }>({
   arr: [
@@ -59,6 +72,7 @@ const navList = reactive<{ arr: any[] }>({
 })
 // tab 点击
 const changeTab = (val: any) => {
+  console.log('val')
   if (val.name === 0) {
     showToast(t('home.stayTuned'))
     return

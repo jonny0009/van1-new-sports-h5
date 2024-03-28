@@ -45,7 +45,7 @@ const indexNum: any = ref(0)
 const betShowState: any = ref(!unShow.value.includes(route.name))
 
 const scrollNum = computed(() => store.state.user.scrollNumY)
-const homeStyle = computed(() => store.state.app.merchantConfig.homeStyle || 2)
+const homeStyle = computed(() => store.state.app.homeStyle)
 const locationHeight = computed(() => store.state.user.locationHeight)
 const KeepAlive = computed(() => currentRoute.value.meta.KeepAlive)
 const pageIndex: any = computed(() => currentRoute.value.meta.index)
