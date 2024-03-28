@@ -2,6 +2,7 @@
   <div id="main">
     <GlobalHeader v-if="!$route.meta.hideGlobalHeaderView" @betShow="betShow" />
     <GlobalRefresh>
+      <DoubleRowNav v-if="homeStyle === 3" />
       <GlobalSportsTabsView v-if="$route.meta.showSportsTabsView" />
       <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pb5 pt15" />
       <AppMain ref="appContent" />
@@ -24,6 +25,7 @@
 </template>
 <script lang="ts" setup>
 import GlobalRefresh from './components/GlobalRefresh/index.vue'
+import DoubleRowNav from './components/DoubleRowNav/index.vue'
 import GlobalHeader from './components/GlobalHeader/index.vue'
 import GlobalSportsTabsView from './components/GlobalSportsTabsView/index.vue'
 import GlobalBarTabsView from './components/GlobalBarTabsView/index.vue'
