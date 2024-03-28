@@ -56,5 +56,6 @@ export default {
     title3: 'The casino is under maintenance...',
     title4: 'Estimated maintenance countdown',
     gohome: 'Go to homepage'
-  }
+  },
+  Community: 'Community'
 }

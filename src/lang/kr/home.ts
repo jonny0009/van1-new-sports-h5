@@ -58,5 +58,6 @@ export default {
     title3: '카지노는 유지 관리 중입니다...',
     title4: '예상 유지보수 카운트다운',
     gohome: '홈페이지로 이동'
-  }
+  },
+  Community: '커뮤니티'
 }

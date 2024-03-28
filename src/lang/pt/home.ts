@@ -55,5 +55,6 @@ export default {
     title3: 'O cassino está em manutenção...',
     title4: 'Contagem regressiva estimada para manutenção',
     gohome: 'Ir para a página inicial'
-  }
+  },
+  Community: 'Comunidade'
 }

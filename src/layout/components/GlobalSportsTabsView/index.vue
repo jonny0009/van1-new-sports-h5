@@ -6,7 +6,8 @@
       class="item"
       :class="[
         {
-          active: item.routerName === active
+          active: item.routerName === active,
+          homeStyleItem: homeStyle === 3
         },
         item.routerName
       ]"
@@ -26,6 +27,8 @@ import { ref, computed } from 'vue'
 import router from '@/router'
 import store from '@/store'
 import { useI18n } from 'vue-i18n'
+const homeStyle = computed(() => store.state.app.merchantConfig.homeStyle || 2)
+
 const { t } = useI18n()
 
 // 热门 Live 直播  今日  早盘 赌场
@@ -154,6 +157,9 @@ const active: any = computed(() => {
         }
       }
     }
+  }
+  .homeStyleItem {
+    padding-top: 34px !important;
   }
 }
 </style>

@@ -59,5 +59,6 @@ export default {
     title3: '赌场维护中...',
     title4: '预计维护倒计时',
     gohome: '去首页'
-  }
+  },
+  Community: '社群'
 }
