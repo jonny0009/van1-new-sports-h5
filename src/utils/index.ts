@@ -159,13 +159,13 @@ export const getBrowserLanguage = () => {
       'zh-tw': 'zh-cn',
       'en-us': 'en-us',
       'vi-vn': 'vi-vn',
-      // 'th-th': 'th-th',
+      'th-th': 'th-th',
       'ko-kr': 'ko-kr',
       'pt-pt': 'pt-pt',
       cn: 'zh-cn',
       en: 'en-us',
       vi: 'vi-vn',
-      // th: 'th-th',
+      th: 'th-th',
       ko: 'ko-kr',
       pt: 'pt-pt'
     }

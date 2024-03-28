@@ -6,6 +6,7 @@ import vi from './vi/index'
 import kr from './kr/index'
 import pt from './pt/index'
 import th from './th/index'
+import jp from './jp/index'
 
 import { Locale } from 'vant'
 import enUS from 'vant/es/locale/lang/en-US'
@@ -13,6 +14,7 @@ import viVN from 'vant/es/locale/lang/vi-VN'
 import koKR from 'vant/es/locale/lang/ko-KR'
 import ptBR from 'vant/es/locale/lang/pt-BR'
 import thTH from 'vant/es/locale/lang/th-TH'
+import jaJP from 'vant/es/locale/lang/ja-JP'
 
 const lang = localStorage.getItem('locale') || getBrowserLanguage()
 
@@ -33,6 +35,10 @@ if (lang === 'th-th') {
   Locale.use('th-TH', thTH)
 }
 
+if (lang === 'ja-jp') {
+  Locale.use('ja-JP', jaJP)
+}
+
 const i18n: any = createI18n({
   legacy: false,
   globalInjection: true,
@@ -44,7 +50,8 @@ const i18n: any = createI18n({
     'vi-vn': vi,
     'ko-kr': kr,
     'pt-pt': pt,
-    'th-th': th
+    'th-th': th,
+    'ja-jp': jp
   }
 })
 
