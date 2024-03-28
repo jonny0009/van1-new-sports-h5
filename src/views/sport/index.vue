@@ -283,8 +283,8 @@ import {
   commonMatches,
   homeCommonMatches,
   searchCountryInfo,
-  searchLeagueByCountryInfo,
-  statistics
+  searchLeagueByCountryInfo
+  // statistics
 } from '@/api/home'
 import { MarketInfo } from '@/entitys/MarketInfo'
 import moment from 'moment'
@@ -335,7 +335,7 @@ const recommendLoadAll: any = ref(false)
 const isRefreshLoading = ref(false)
 const newContainer = ref(null)
 const newContainerRecommend = ref(null)
-const sports = ref([])
+// const sports = ref([])
 
 import store from '@/store'
 
@@ -351,8 +351,11 @@ const offsetTop = computed(() => {
   }
   return offsetTopval
 })
+
+const sportsListArr = computed(() => store.state.match.sportsListArr)
+
 const sportsList = computed(() => {
-  const newSportsA = sports.value.filter((e: any) => {
+  const newSportsA = sportsListArr.value.filter((e: any) => {
     return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.num * 1
   })
   let newSportsB: any = []
@@ -374,14 +377,14 @@ const sportsList = computed(() => {
   }
   return [allItem, ...newSportsB]
 })
-const getStatistics = async () => {
-  const res: any = await statistics({ showType: 'FU' })
-  if (res?.code === 200 && res?.data) {
-    const stResult = res.data?.stResult || []
-    sports.value = stResult
-  }
-}
-getStatistics()
+// const getStatistics = async () => {
+//   const res: any = await statistics({ showType: 'FU' })
+//   if (res?.code === 200 && res?.data) {
+//     const stResult = res.data?.stResult || []
+//     sports.value = stResult
+//   }
+// }
+// getStatistics()
 
 onMounted(() => {
   // 初始化

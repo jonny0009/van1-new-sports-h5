@@ -80,6 +80,7 @@ declare interface Match {
   matchData: any
   needTimer: boolean
   turnSound: boolean
+  sportsListArr: any
 }
 
 declare module '@vue/runtime-core' {

@@ -50,12 +50,46 @@ const locationHeight = computed(() => store.state.user.locationHeight)
 const KeepAlive = computed(() => currentRoute.value.meta.KeepAlive)
 const pageIndex: any = computed(() => currentRoute.value.meta.index)
 
+// 获取的体育项
+const sportsListArr = computed(() => store.state.match.sportsListArr)
+const sportsList = computed(() => {
+  const newSportsA = sportsListArr.value.filter((e: any) => {
+    return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.num * 1
+  })
+  let newSportsB: any = []
+  if (newSportsA.length) {
+    const newSportsC = newSportsA.map((e: any, index: any) => {
+      return {
+        routerPath: `/sport/${e.gameType}`,
+        indexNum: 8 + index
+      }
+    })
+    newSportsB = [...newSportsC]
+  }
+  return newSportsB
+})
+
 const bettingSlip = ref()
 
 watch(
   () => route.path,
   (to) => {
     console.log('path', to)
+    const obj = sportsList.value.find((item: any) => {
+      if (item.routerPath === to) {
+        return item
+      }
+    })
+    if (homeStyle.value !== 2 && obj) {
+      if (obj.indexNum > indexNum.value) {
+        appContent.value.transitionName = 'fade-right'
+        indexNum.value = obj.indexNum
+      } else {
+        appContent.value.transitionName = 'fade-left'
+        indexNum.value = obj.indexNum
+      }
+      return
+    }
     if (pageIndex.value > indexNum.value) {
       appContent.value.transitionName = 'fade-right'
       indexNum.value = pageIndex.value
