@@ -66,9 +66,9 @@ export default {
   tie: 'mengikat',
   lose: 'kehilangan',
   point: 'integral',
-  nextAM: 'La sekva viva elsendo komenciĝos je <span class="time-num">{num}</span>',
-  halfPlay: 'duontempo',
-  section: 'sekcio',
-  videoFailure: 'La ŝarĝo de video malsukcesis, bonvolu refreŝigi kaj provi denove',
-  refreshVideo: 'Refreŝigi videon'
+  nextAM: 'Siaran langsung berikutnya akan dimulai pada <span class="time-num">{num}</span>',
+  halfPlay: 'paruh waktu',
+  bagian: 'bagian',
+  videoFailure: 'Pemuatan video gagal, harap segarkan dan coba lagi',
+  refreshVideo: 'Segarkan video'
 }
