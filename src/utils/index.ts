@@ -162,12 +162,14 @@ export const getBrowserLanguage = () => {
       'th-th': 'th-th',
       'ko-kr': 'ko-kr',
       'pt-pt': 'pt-pt',
+      'ja-jp': 'ja-jp',
       cn: 'zh-cn',
       en: 'en-us',
       vi: 'vi-vn',
       th: 'th-th',
       ko: 'ko-kr',
-      pt: 'pt-pt'
+      pt: 'pt-pt',
+      jp: 'ja-jp'
     }
 
     let sysLanguage = ''
