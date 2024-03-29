@@ -99,8 +99,7 @@ const clickChangeActive = (item: any) => {
   background-color: #fff;
   z-index: 299;
   .global-bar-footer {
-    margin-left: 5%;
-    width: 90%;
+    padding: 0 5%;
     height: 90px;
     display: flex;
     background-color: #fff;
