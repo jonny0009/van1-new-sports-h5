@@ -2,7 +2,7 @@
   <div class="sportsTabsView">
     <div class="tabs-cut">
       <van-tabs
-        :duration="0.3"
+        :duration="0.2"
         v-model:active="active"
         shrink
         line-height="0"
