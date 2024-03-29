@@ -39,14 +39,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import router from '@/router'
 import store from '@/store'
 import { useI18n } from 'vue-i18n'
 import { statistics } from '@/api/home'
-
-import { useRoute } from 'vue-router'
-const route = useRoute()
 
 const homeStyle = computed(() => store.state.app.homeStyle)
 const { t } = useI18n()
@@ -145,13 +142,6 @@ const getBarList = () => {
   return [...homeBarList.value, ...sportsList.value]
 }
 
-// const goClick = ({ routerName }: any) => {
-//   store.dispatch('user/getLocationHeight', false)
-//   const params = {
-//     name: routerName
-//   }
-//   router.push(params)
-// }
 const goClick = (val: any) => {
   store.dispatch('user/getLocationHeight', false)
   if (val.name.includes('/sport/')) {
@@ -163,30 +153,30 @@ const goClick = (val: any) => {
   }
   router.push(params)
 }
-const active = ref('Home')
 
-watch(
-  () => route.path,
-  (to) => {
-    let activeUrl: any = router?.currentRoute?.value?.name || 'Home'
-    if (activeUrl === 'Sport' && to.includes('/sport/')) {
+const urlPathActive = ref<any>('')
+const activeUrlName = computed({
+  get() {
+    // 如果读取计算属性的值，默认调用get方法
+    urlPathActive.value = router?.currentRoute?.value?.name || 'Home'
+    if (urlPathActive.value === 'Sport' && router?.currentRoute?.value?.path.includes('/sport/')) {
       if (homeStyle.value !== 2) {
-        activeUrl = router?.currentRoute?.value?.path || '/sport'
+        urlPathActive.value = router?.currentRoute?.value?.path || '/sport'
       } else {
-        activeUrl = 'Sport'
+        urlPathActive.value = 'Sport'
       }
     }
-    active.value = activeUrl
-  }
-)
 
-// const active1: any = computed(() => {
-//   let active = router?.currentRoute?.value?.name || 'Home'
-//   if (active === 'Sport' && router?.currentRoute?.value?.path.includes('/sport/')) {
-//     active = router?.currentRoute?.value?.path || '/sport'
-//   }
-//   return active
-// })
+    return urlPathActive.value
+  },
+  set(v) {
+    // v是计算属性下传递的实参
+    // 如果要想修改计算属性的值，默认调用set方法
+    urlPathActive.value = v
+  }
+})
+
+const active = ref(activeUrlName)
 </script>
 <style lang="scss" scoped>
 .sportsTabsView {
