@@ -1,5 +1,4 @@
 export default {
-
   single: 'Un solo nivel',
   parlay: 'Colusión',
   pending: 'en curso',
