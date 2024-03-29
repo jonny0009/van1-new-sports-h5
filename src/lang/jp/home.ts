@@ -52,5 +52,5 @@ export default {
   RBInfo: '滚球 亚洲让分盘',
   RBSize: '滚球 大小盘',
   RBRide: '滚球 1X2',
-  PDscore: '正确比分',
+  PDscore: '正确比分'
 }
