@@ -65,14 +65,16 @@ service.interceptors.response.use(
         'vi-vn': 'Thông tin đăng nhập đã hết hạn, vui lòng đăng nhập lại',
         'ko-kr': '로그인 정보가 만료되었습니다. 다시 로그인해 주세요.',
         'pt-pt': 'As informações de login expiraram, faça login novamente.',
-        'en-us': 'Login Information Has Expired, Please Log In Again.'
+        'en-us': 'Login Information Has Expired, Please Log In Again.',
+        'ja-jp': 'ログイン情報の有効期限が切れています。再度ログインしてください.'
       }
       const informVisitor: any = {
         'zh-cn': '试玩时间已过期，请重新试玩',
         'vi-vn': 'Đã hết thời gian dùng thử, vui lòng thử lại',
         'ko-kr': '평가판 기간이 만료되었습니다. 다시 시도해 주세요.',
         'pt-pt': 'O tempo de teste expirou, tente novamente.',
-        'en-us': 'The trial time has expired, please try again.'
+        'en-us': 'The trial time has expired, please try again.',
+        'ja-jp': '試用期間が終了しました。もう一度お試しください.'
       }
       let message = inform[locale]
       let url = '/login'
