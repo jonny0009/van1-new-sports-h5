@@ -65,5 +65,10 @@ export default {
   win: 'menang',
   tie: 'mengikat',
   lose: 'kehilangan',
-  point: 'integral'
+  point: 'integral',
+  nextAM: 'La sekva viva elsendo komenciĝos je <span class="time-num">{num}</span>',
+  halfPlay: 'duontempo',
+  section: 'sekcio',
+  videoFailure: 'La ŝarĝo de video malsukcesis, bonvolu refreŝigi kaj provi denove',
+  refreshVideo: 'Refreŝigi videon'
 }
