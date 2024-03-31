@@ -156,7 +156,7 @@ export const getBrowserLanguage = () => {
   if (window.navigator && window.navigator.language) {
     const obj: any = {
       'zh-cn': 'zh-cn',
-      'zh-tw': 'zh-cn',
+      'zh-tw': 'zh-tw',
       'en-us': 'en-us',
       'vi-vn': 'vi-vn',
       'th-th': 'th-th',
@@ -164,6 +164,7 @@ export const getBrowserLanguage = () => {
       'pt-pt': 'pt-pt',
       'ja-jp': 'ja-jp',
       cn: 'zh-cn',
+      tw: 'zh-tw',
       en: 'en-us',
       vi: 'vi-vn',
       th: 'th-th',
