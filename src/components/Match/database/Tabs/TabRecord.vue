@@ -94,10 +94,10 @@ onMounted(() => {
   fetchIntegral()
 })
 const home = computed(() => {
-  return props.matchData.homeTeamShort || props.matchData.homeTeam
+  return props.matchData?.homeTeamShort || props.matchData?.homeTeam
 })
 const away = computed(() => {
-  return props.matchData.awayTeamShort || props.matchData.awayTeam
+  return props.matchData?.awayTeamShort || props.matchData?.awayTeam
 })
 const activeNames = ref(['1'])
 

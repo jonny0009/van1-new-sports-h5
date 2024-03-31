@@ -175,7 +175,7 @@
         <div class="match-footer">
           <div class="match-footer__item" @click="betMoreShow">
             <span>{{ $t('home.morePlay') }}</span>
-            <!-- <span class="num">149</span> -->
+            <span class="num">{{ sendParams.playNum }}</span>
             <van-icon class="arrow" name="arrow" />
           </div>
           <!-- <div class="match-footer__item" @click="goClick">

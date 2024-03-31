@@ -1,15 +1,15 @@
 <template>
   <div class="database">
-    <van-tabs v-model:active="tabActive" class="global-nav-vant-tabs" shrink line-height="0" @change="onChangeTabs">
-      <van-tab v-for="(tab, index) in tabList" :key="index" :name="tab.name">
+    <van-tabs v-model:active="tabActive" scrollspy shrink sticky offset-top="12.8vw" line-height="0">
+      <van-tab :disabled="!tab.active" v-for="(tab, index) in tabList" :key="index" :name="tab.name">
         <template #title>
-          <div class="tab-title">
+          <div class="tab-title" :class="{ active: tab.active }">
             <span>{{ tab.title }}</span>
           </div>
         </template>
+        <component :is="components[tab.name]" :match-data="matchData" v-if="tab.active" />
       </van-tab>
     </van-tabs>
-    <component :is="components[tabActive]" :key="tabActive" :match-data="matchData" />
   </div>
 </template>
 
@@ -28,10 +28,12 @@ const route = useRoute()
 const { t } = useI18n()
 
 const matchInfo = computed(() => store.state.match.matchInfo)
-const tabListOrg: any = ref([
-  { name: 1, title: t('live.navBattle') },
-  { name: 2, title: t('live.navRecent') }
-])
+const tabListOrg: any = [
+  { name: 0, title: t('live.navSummary'), active: true },
+  { name: 1, title: t('live.navBattle'), active: true },
+  { name: 2, title: t('live.navRecent'), active: false },
+  { name: 3, title: t('live.navEvents'), active: false }
+]
 const tabList: any = ref([])
 let gameType = ''
 watch(
@@ -56,19 +58,17 @@ watch(
 const getData = () => {
   tabList.value = []
   if (gameType === 'FT') {
-    tabList.value.push(...tabListOrg.value)
-    tabList.value.unshift({ name: 0, title: t('live.navSummary') })
-
-    tabList.value.push({ name: 3, title: t('live.navEvents') })
+    tabList.value.push(...tabListOrg)
+    tabList.value.find((i: any) => i.name === 0).active = true
+    tabList.value.find((i: any) => i.name === 3).active = true
     if (tabActive.value === -1) {
       nextTick(() => {
         tabActive.value = 0
       })
     }
-  }
-  if (gameType === 'BK') {
-    tabList.value.push(...tabListOrg.value)
-    tabList.value.unshift({ name: 0, title: t('live.navSummary') })
+  } else if (gameType === 'BK') {
+    tabList.value.push(...tabListOrg)
+    tabList.value.find((i: any) => i.name === 0).active = true
     if (tabActive.value === -1) {
       nextTick(() => {
         tabActive.value = 0
@@ -95,8 +95,55 @@ const fetchData = async () => {
 
 const tabActive = ref(-1)
 const components = [TabSummary, TabBattle, TabRecord, TabEvents]
-
-const onChangeTabs = () => {}
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.van-tabs {
+  :deep(.van-tabs__wrap) {
+    height: 110px;
+    .van-tabs__nav {
+      background: var(--color-background-color);
+    }
+  }
+
+  .tab-title {
+    margin-right: -14px;
+    height: 64px;
+    padding: 0 20px;
+    opacity: 0.5;
+    border-radius: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-2);
+    font-size: 24px;
+    font-family: PingFangSC-Semibold, SF-Pro-Bold, system-ui;
+    font-weight: 800;
+    transition: all 0.3s;
+
+    &:not(.active) {
+      background: #ccc;
+      pointer-events: none;
+    }
+    &.active {
+      opacity: 1;
+      background: var(--color-global-buttonBg);
+    }
+
+    .svg-icon {
+      font-size: 38px;
+      margin-right: 14px;
+      color: var(--color-global-minButtonicoCl);
+    }
+  }
+  .van-tab--active .tab-title {
+    // background-image: linear-gradient(180deg, var(--color-linear-gradient-1) 0%, var(--color-linear-gradient-2) 100%);
+    background: var(--color-global-buttonPrimaryBg);
+
+    color: #fff;
+    .svg-icon {
+      color: #fff;
+    }
+  }
+}
+</style>

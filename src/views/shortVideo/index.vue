@@ -1,0 +1,74 @@
+<template>
+  <div class="list-wrap">
+    <swiper
+      class="swiper-box"
+      :direction="'vertical'"
+      :loop="true"
+      :grabCursor="true"
+      :mousewheel="true"
+      :mousewheelControl="true"
+      :resistanceRatio="0"
+      :observeParents="true"
+      @slideChange="change"
+      :modules="[Controller]"
+      @swiper="setControlledSwiper"
+    >
+      <swiper-slide class="slide-box" v-for="(info, index) in shortVideos" :key="index">
+        <info :videoInfo="info" :active="curIndex === index"></info>
+      </swiper-slide>
+    </swiper>
+  </div>
+</template>
+<script lang="ts" setup>
+import { onMounted, ref } from 'vue'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { getVideoGreet } from '@/api/live'
+import info from './info.vue'
+import 'swiper/swiper-bundle.css'
+import { useRoute } from 'vue-router'
+import { Controller } from 'swiper/modules'
+
+const controlledSwiper = ref()
+const route = useRoute()
+const videoId = route.params.videoId
+const curIndex = ref(-1)
+const shortVideos: any = ref([])
+const getShortVideos = async () => {
+  const res: any = await getVideoGreet({
+    page: 1,
+    pageSize: 10
+  })
+  const vides: any[] = res?.data?.videoData || []
+  if (res.code === 200 && vides.length) {
+    shortVideos.value = vides
+    curIndex.value = vides.findIndex((i: any) => i.videoId === videoId)
+    controlledSwiper.value.slideTo(curIndex.value, 0, false)
+  }
+}
+
+onMounted(() => {
+  getShortVideos()
+})
+const setControlledSwiper = (swiper: any) => {
+  controlledSwiper.value = swiper
+}
+const change = ({ activeIndex }: any) => {
+  curIndex.value = activeIndex
+}
+</script>
+
+<style lang="scss" scoped>
+.list-wrap {
+  flex: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  .swiper-box {
+    height: 100%;
+  }
+}
+</style>
