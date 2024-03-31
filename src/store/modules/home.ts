@@ -7,12 +7,12 @@ const HomeModule: Module<Home, any> = {
     RrefShow: true,
     OUrefShow: true,
     MrefShow: true,
-    PDrefShow: true,
+    PDrefShow: true
   },
   mutations: {},
   getters: {},
   actions: {
-    setKeyValue(state:any, { key, value }) {
+    setKeyValue(state: any, { key, value }) {
       state.state[key] = value
     },
     setRefreshChangeTime({ state }, val) {

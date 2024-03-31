@@ -94,4 +94,7 @@ defineExpose({
 :deep(.van-tabs__nav--complete) {
   background-color: var(--color-background-color);
 }
+:deep(.van-tabs__line) {
+  display: none;
+}
 </style>

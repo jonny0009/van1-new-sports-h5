@@ -58,5 +58,6 @@ export default {
     title3: 'Sòng bạc đang được bảo trì...',
     title4: 'Đếm ngược thời gian bảo trì ước tính',
     gohome: 'Truy cập trang chủ'
-  }
+  },
+  Community: 'Vietname'
 }

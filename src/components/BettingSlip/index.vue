@@ -1,7 +1,7 @@
 <template>
   <div class="betting-slip-bg" :class="{ open }" @click="toogle"></div>
   <BallEffect></BallEffect>
-  <div class="betting-slip-popup" :class="{ open }">
+  <div class="betting-slip-popup" :class="{ open, bettingHomeStyle: homeStyle === 1 }">
     <div class="betting-slip-header" @click="toogle" :class="{ selected: userConfig.acceptAll === 1 }">
       <div class="bet-header-left">
         <span class="bet-icon"></span>
@@ -149,6 +149,8 @@ const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
 const combosIor = computed(() => store.getters['betting/combosIor'])
 const userConfig = computed(() => store.state.user.userConfig)
 const isAnonymity = computed(() => store.state.user.isAnonymity)
+const homeStyle = computed(() => store.state.app.homeStyle)
+
 store.dispatch('betting/setMode', 1)
 const emit = defineEmits(['close'])
 watch(
@@ -280,6 +282,10 @@ defineExpose({
   &.open {
     transform: translateY(0px);
   }
+}
+.bettingHomeStyle {
+  // 经典导航
+  margin-bottom: 90px;
 }
 
 .betting-slip-header {

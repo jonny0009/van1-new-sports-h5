@@ -8,7 +8,8 @@ const matchModule: Module<Match, any> = {
     matchInfo: {},
     matchData: {},
     needTimer: false,
-    turnSound: false
+    turnSound: false,
+    sportsListArr: []
   },
 
   mutations: {
@@ -23,6 +24,9 @@ const matchModule: Module<Match, any> = {
     },
     SET_TURN_SOUND: (state, flag: boolean) => {
       state.turnSound = !flag
+    },
+    SET_SPORTS_LIST(state, data: any) {
+      state.sportsListArr = data
     }
   },
 

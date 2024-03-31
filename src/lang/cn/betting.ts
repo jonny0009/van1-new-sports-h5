@@ -34,5 +34,5 @@ export default {
     error5: '您所选的盘口已关闭',
     error6: '网络异常，请检查网络！'
   },
-  OneClickClear: '一鍵清除'
+  OneClickClear: '一键清除'
 }
