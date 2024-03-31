@@ -47,7 +47,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, computed } from 'vue'
 import { playerInfo, updatePlayerInfo } from '@/api/user'
-import {getBrowserLanguage } from '@/utils'
+import { getBrowserLanguage } from '@/utils'
 
 import { useRouter } from 'vue-router'
 import store from '@/store'
@@ -114,7 +114,7 @@ const handleSave = async () => {
   }
   const params = {
     nickName: username.value,
-    lang: localStorage.getItem('locale')|| getBrowserLanguage()
+    lang: localStorage.getItem('locale') || getBrowserLanguage()
   }
   const res: any = await updatePlayerInfo(params)
   if (res.code !== 200) {
