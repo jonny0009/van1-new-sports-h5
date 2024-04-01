@@ -48,5 +48,14 @@ export default {
   RBSize: '滾球 大小盤',
   RBRide: '滾球 1X2',
   PDscore: '正確比分',
-  addTimeNumber: `加时<span>{number}</span>`
+  addTimeNumber: `加时<span>{number}</span>`,
+
+  casinoTitleObj: {
+    title1: '好路推薦',
+    title2: '真人百家樂',
+    title3: '賭場維護...',
+    title4: '預計維護倒數計時',
+    gohome: '去首頁'
+  },
+  Community: '社群'
 }
