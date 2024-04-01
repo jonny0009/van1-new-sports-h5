@@ -3,7 +3,7 @@
     <van-swipe class="my-swipe" indicator-color="white" @change="swipeChange">
       <van-swipe-item v-for="(match, idx) in swipeList" :key="idx">
         <div class="wrap">
-          <MatchItem :key="idx" :live-info="match" :match-index="idx" :active-index="activeIndex" />
+          <MatchItem :key="match.gidm" :live-info="match" :match-index="idx" :active-index="activeIndex" />
         </div>
       </van-swipe-item>
     </van-swipe>
@@ -11,9 +11,8 @@
 </template>
 <script lang="ts" setup>
 import MatchItem from './main/MatchItem.vue'
-import { anchorLiveList, extendInfo } from '@/api/live'
-import { ref, onBeforeMount } from 'vue'
-
+import { anchorLiveList } from '@/api/live'
+import { ref, onBeforeMount, onUnmounted, onActivated, onDeactivated } from 'vue'
 
 const activeIndex = ref(0)
 const swipeList: any = ref([])
@@ -27,22 +26,7 @@ const init = async () => {
   const res: any = await anchorLiveList(params)
   if (res.code === 200) {
     const dataArray = res?.data?.list || []
-    swipeList.value.length = 0
-    await dataArray.map(async (e: any) => {
-      const gidm = e.gidm
-      const extendInfoParams = {
-        gidm
-      }
-      const extendInfoRes: any = await extendInfo(extendInfoParams)
-      if (extendInfoRes.code === 200) {
-        const { streamNa }: any = extendInfoRes.data
-        const { liveali } = streamNa || {}
-        const { m3u8 } = liveali || {}
-        e.m3u8 = e.m3u8 || m3u8
-        e.streamNa = streamNa
-      }
-      swipeList.value.push(e)
-    })
+    swipeList.value = dataArray
   }
 }
 
@@ -50,9 +34,27 @@ const swipeChange = (index: any) => {
   activeIndex.value = index
 }
 
+const timer: any = ref()
+onUnmounted(() => {
+  clearInterval(timer.value)
+})
+onDeactivated(() => {
+  clearInterval(timer.value)
+})
+onActivated(() => {
+  clearInterval(timer.value)
+  console.log(1234)
+  timer.value = setInterval(() => {
+    init()
+  }, 15 * 1000)
+})
+
 onBeforeMount(() => {
   swipeList.value.length = 0
   init()
+  timer.value = setInterval(() => {
+    init()
+  }, 10 * 1000)
 })
 </script>
 <style lang="scss" scoped>
