@@ -85,8 +85,7 @@ const videoWaiting = ref(false)
 const videoIsInpicture = ref(false)
 let player: any = null
 const initVideo = () => {
-  // videoUrl.value = props.videoInfo.videoUrl
-  videoUrl.value = 'https://vdo.xwueg3.com/sv/d343b85-18e7f034e62/d343b85-18e7f034e62.mp4'
+  videoUrl.value = props.videoInfo.videoUrl
   const options = {
     preload: 'auto',
     width: '100%',
@@ -158,7 +157,7 @@ const disposePlayer = () => {
   position: relative;
   height: 100vh;
 
-  video {
+  .video-js {
     position: absolute;
     top: 0;
     left: 0;

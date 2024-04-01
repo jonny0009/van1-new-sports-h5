@@ -14,68 +14,103 @@
         <van-tab v-for="(nav, index) in navList" :key="index" :name="nav.type">
           <template #title>
             <div class="tab-title">
-              <SvgIcon :name="nav.iconName" />
+              <!-- <SvgIcon :name="nav.iconName" /> -->
               <span>{{ nav.title }} </span>
             </div>
           </template>
-          <div class="title-group">
-            <SvgIcon class="first-icon" name="home-hot-match" />
-            <span class="title">{{ $t('home.hotMatchTitle') }}</span>
-            <SvgIcon class="title-icon" name="home-triangle" />
-          </div>
-          <div v-if="list.length === 0 && time > 0 && navActive === 'RB'" class="next">
-            <div class="img">
-              <img src="~@/assets/images/live/no_an_ma.png" alt="" />
-            </div>
-            <p v-html="$t('live.nextAM', { num: countTime })"></p>
-          </div>
 
-          <div>
-            <EmptyData
-              v-if="
-                (finished && list.length === 0 && navActive !== 'RB') ||
-                (list.length === 0 && time < 0 && navActive === 'RB' && finished)
-              "
-            />
-            <van-list v-model:loading="loading" :finished="true">
+          <van-collapse v-model="activeNames">
+            <!-- 热门视频 -->
+            <van-collapse-item :is-link="false" class="collapse-item" name="HOT" v-if="navActive !== 'VIDEO'">
+              <template #title>
+                <div class="title-group">
+                  <SvgIcon class="first-icon" name="home-hot-match" />
+                  <span class="title">{{ $t('home.hotMatchTitle') }}</span>
+                  <SvgIcon class="title-icon" name="home-triangle" :class="{ open: activeNames.includes('HOT') }" />
+                </div>
+              </template>
+              <div v-if="list.length === 0 && time > 0 && navActive === 'RB'" class="next">
+                <div class="img">
+                  <img src="~@/assets/images/live/no_an_ma.png" alt="" />
+                </div>
+                <p v-html="$t('live.nextAM', { num: countTime })"></p>
+              </div>
+
+              <EmptyData v-if="(!loading && list.length === 0) || (list.length === 0 && time < 0 && !loading)" />
+              <van-list v-model:loading="loading" :finished="!loading">
+                <div class="grid-wrapper">
+                  <div v-for="item in list" :key="item.gidm" class="flex-item">
+                    <ListItem :item="item" @click="onItemClick(item)" />
+                  </div>
+                </div>
+              </van-list>
+            </van-collapse-item>
+
+            <!-- 即将播放 -->
+            <van-collapse-item :is-link="false" class="collapse-item" name="ComingSoon" v-if="comingSoonList.length">
+              <template #title>
+                <div class="title-group">
+                  <SvgIcon class="first-icon" name="home-coming" />
+                  <span class="title">{{ $t('home.comingSoonTitle') }}</span>
+                  <SvgIcon
+                    class="title-icon"
+                    name="home-triangle"
+                    :class="{ open: activeNames.includes('ComingSoon') }"
+                  />
+                </div>
+              </template>
+
               <div class="grid-wrapper">
-                <div v-for="item in list" :key="item.gidm" class="flex-item">
+                <div v-for="item in comingSoonList" :key="item.gidm" class="flex-item">
                   <ListItem :item="item" @click="onItemClick(item)" />
                 </div>
               </div>
-            </van-list>
-          </div>
+            </van-collapse-item>
+
+            <!-- 短视频 -->
+            <van-collapse-item
+              :is-link="false"
+              class="collapse-item"
+              name="VIDEO"
+              v-if="['RB', 'VIDEO'].includes(navActive)"
+            >
+              <template #title>
+                <div class="title-group">
+                  <SvgIcon class="first-icon" name="home-short-video" />
+                  <span class="title">{{ $t('home.shortVideoTitle') }}</span>
+                  <SvgIcon class="title-icon" :class="{ open: activeNames.includes('VIDEO') }" name="home-triangle" />
+                </div>
+              </template>
+
+              <van-list
+                v-model:loading="videoLoading"
+                :finished="params1.page * params1.pageSize >= videoTotol && !videoLoading"
+                :finished-text="shortVideos.length == 0 ? '' : $t('live.noMore')"
+                @load="getShortVideos"
+                class="list-group"
+                v-if="videoLoading || shortVideos.length"
+              >
+                <div
+                  class="group-item-box"
+                  v-for="(video, index) in shortVideos"
+                  :key="index"
+                  @click="goShortVideo(video)"
+                >
+                  <img v-img="video.videoImg" class="bg" :errorImg="liveBgError" type="1" alt="" />
+                  <div class="video-user-info">
+                    <img v-img="video.leagueIcon" type="1" alt="" />
+                    <span class="name text-overflow">{{ video.leagueName || video.leagueNameCn }}</span>
+                  </div>
+                  <div class="video-content text-overflow-2">
+                    {{ video.videoTitle }}
+                  </div>
+                </div>
+              </van-list>
+              <EmptyData v-else-if="!videoLoading" />
+            </van-collapse-item>
+          </van-collapse>
         </van-tab>
       </van-tabs>
-      <template v-if="comingSoonList.length">
-        <div class="title-group">
-          <SvgIcon class="first-icon" name="home-coming" />
-          <span class="title">{{ $t('home.comingSoonTitle') }}</span>
-          <SvgIcon class="title-icon" name="home-triangle" />
-        </div>
-        <div class="grid-wrapper">
-          <div v-for="item in comingSoonList" :key="item.gidm" class="flex-item">
-            <ListItem :item="item" @click="onItemClick(item)" />
-          </div>
-        </div>
-      </template>
-      <div class="title-group">
-        <SvgIcon class="first-icon" name="home-short-video" />
-        <span class="title">{{ $t('home.shortVideoTitle') }}</span>
-        <SvgIcon class="title-icon" name="home-triangle" />
-      </div>
-      <div class="list-group">
-        <div class="group-item-box" v-for="(video, index) in shortVideos" :key="index" @click="goShortVideo(video)">
-          <img v-img="video.videoImg" class="bg" :errorImg="liveBgError" type="1" alt="" />
-          <div class="video-user-info">
-            <img v-img="video.leagueIcon" type="1" alt="" />
-            <span class="name text-overflow">{{ video.leagueName || video.leagueNameCn }}</span>
-          </div>
-          <div class="video-content text-overflow-2">
-            {{ video.videoTitle }}
-          </div>
-        </div>
-      </div>
     </van-pull-refresh>
   </div>
 </template>
@@ -90,10 +125,8 @@ import store from '@/store'
 import liveBgError from '@/assets/images/empty/live-bg-error.svg?url'
 onBeforeMount(() => {
   onRefresh()
-  getShortVideos()
-  comingSoon()
 })
-
+const activeNames = ref(['HOT', 'ComingSoon', 'VIDEO'])
 const showFixedBet = computed(() => store.state.app.showFixedBet)
 const { t } = useI18n()
 const navList = reactive([
@@ -101,7 +134,8 @@ const navList = reactive([
   { type: 'FT', title: t('live.football'), iconName: 'live-football' },
   { type: 'BK', title: t('live.basketball'), iconName: 'live-basketball' },
   { type: 'TN', title: t('live.tennisball'), iconName: 'live-tennisball' },
-  { type: 'OP_BM', title: t('live.badminton'), iconName: 'live-badminton' }
+  { type: 'OP_BM', title: t('live.badminton'), iconName: 'live-badminton' },
+  { type: 'VIDEO', title: t('home.shortVideoTitle'), iconName: 'live-badminton' }
 ])
 const navActive = ref('RB')
 
@@ -110,34 +144,32 @@ const countTime = ref('')
 
 let timer: any = reactive({})
 
-let page: number = 0
 const list: Ref<any[]> = ref([])
-const loading = ref(false)
+const loading = ref(true)
 const finished = ref(false)
 const refreshing = ref(false)
 const onLoad = async () => {
+  list.value.length = 0
   if (refreshing.value) {
-    list.value = []
     refreshing.value = false
   }
-  if (time.value > 0 && navActive.value === 'RB') {
-    loading.value = false
-    return
-  }
+  loading.value = true
 
-  page++
   const params: any = {
-    page: page,
-    pageSize: 4
+    page: 1,
+    pageSize: 100
   }
   if (navActive.value === 'RB') {
     params.rbType = 1
+    params.gameType = void 0
   } else {
+    params.rbType = void 0
     params.gameType = navActive.value
   }
-  const res: any = await anchorLiveList(params)
+  const res: any = await anchorLiveList(params).finally(() => {
+    loading.value = false
+  })
   const data = res.data
-  loading.value = false
 
   if (res.code === 200) {
     if (navActive.value === 'RB' && data.list.length === 0) {
@@ -165,19 +197,28 @@ const onLoad = async () => {
     finished.value = true
   }
 }
-
-const onRefresh = () => {
-  page = 0
-  finished.value = false
-  // loading.value = true
-  onLoad()
-  getShortVideos()
-  comingSoon()
+const onChangeTabs = () => {
+  onRefresh()
 }
 
-const onChangeTabs = () => {
-  refreshing.value = true
-  onRefresh()
+const onRefresh = () => {
+  if (!['VIDEO'].includes(navActive.value)) {
+    onLoad()
+  } else {
+    list.value = []
+  }
+
+  if (['RB'].includes(navActive.value)) {
+    comingSoon()
+  } else {
+    comingSoonList.value = []
+  }
+  if (['RB', 'VIDEO'].includes(navActive.value)) {
+    params1.value.page = 0
+    getShortVideos()
+  } else {
+    shortVideos.value = []
+  }
 }
 
 const onItemClick = (item: any) => {
@@ -212,7 +253,7 @@ const countDown = () => {
 // 即将播放
 const comingSoonList: any = ref([])
 const comingSoon = async () => {
-  const res: any = await anchorLiveList({ page: 1, pageSize: 2, rbType: 2 })
+  const res: any = await anchorLiveList({ page: 1, pageSize: 100, rbType: 2 })
   const list: any[] = res?.data?.list || []
   if (res.code === 200 && list.length) {
     comingSoonList.value = list
@@ -220,14 +261,30 @@ const comingSoon = async () => {
 }
 // 短视频
 const shortVideos: any = ref([])
+const videoLoading = ref(true)
+const videoTotol = ref(0)
+const params1 = ref({
+  page: 0,
+  pageSize: 10
+})
 const getShortVideos = async () => {
+  videoLoading.value = true
+  if (videoTotol.value > 0 && params1.value.page * params1.value.pageSize >= videoTotol.value) {
+    return false
+  }
+  params1.value.page++
+  if (params1.value.page === 1) {
+    shortVideos.value.length = 0
+  }
   const res: any = await getVideoGreet({
-    page: 1,
-    pageSize: 4
+    ...params1.value
+  }).finally(() => {
+    videoLoading.value = false
   })
   const vides: any[] = res?.data?.videoData || []
+  videoTotol.value = res?.data?.total || 0
   if (res.code === 200 && vides.length) {
-    shortVideos.value = vides
+    shortVideos.value.push(...vides)
   }
 }
 
@@ -242,9 +299,15 @@ const goShortVideo = (video: any) => {
 </script>
 
 <style lang="scss" scoped>
+.collapse-item {
+  :deep(.van-cell),
+  :deep(.van-collapse-item__content) {
+    padding: 0;
+  }
+}
 .live-page {
   height: 100%;
-  padding-bottom: 88px;
+  padding-bottom: 100px;
   &.has-bet {
     padding-bottom: calc(88px + 96px);
   }
@@ -328,12 +391,17 @@ const goShortVideo = (video: any) => {
       display: inline-block;
       margin-left: 20px;
       font-size: 15px;
+
+      &.open {
+        transform: rotate(-180deg);
+      }
     }
   }
 
   .list-group {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     padding: 0 35px;
     .group-item-box {
       position: relative;
@@ -396,6 +464,7 @@ const goShortVideo = (video: any) => {
 .next {
   text-align: center;
   padding-top: 150px;
+  padding-bottom: 150px;
   img {
     width: 226px;
     height: 223px;
