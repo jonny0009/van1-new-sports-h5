@@ -90,6 +90,11 @@ watch(
       }
       return
     }
+    if (to === '/match') {
+      appContent.value.transitionName = 'fade-left'
+      indexNum.value = -1
+      return
+    }
     if (pageIndex.value > indexNum.value) {
       appContent.value.transitionName = 'fade-right'
       indexNum.value = pageIndex.value
