@@ -428,9 +428,16 @@ const goShortVideo = (video: any) => {
         bottom: 0;
         object-fit: cover;
         margin: auto;
+        width: 100%;
+        height: 100%;
+        &.v-img-error {
+          width: 200px;
+          height: 200px;
+        }
       }
 
       .video-user-info {
+        position: relative;
         padding: 0 15px;
         display: flex;
         align-items: center;
@@ -447,6 +454,7 @@ const goShortVideo = (video: any) => {
         }
       }
       .video-content {
+        position: relative;
         width: 298px;
         height: 90px;
         margin: 12px auto 15px;

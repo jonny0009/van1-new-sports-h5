@@ -193,7 +193,7 @@ export const getVideoGreet = (params: any) => {
 // 短视频
 export const mainMatches = (params: any) => {
   return request({
-    url: '/ai/detail/mainMatches',
+    url: '/ai/mobile/detail/mainMatches',
     method: 'get',
     params
   })

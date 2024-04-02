@@ -28,6 +28,10 @@ export default {
 }
 
 function _handleError(el: any, props: any) {
+  console.log(el.className)
+  if (!el.classList.contains('v-img-error')) {
+    el.classList.add('v-img-error')
+  }
   if (props.errorImg) {
     el.src = props.errorImg
     return false
@@ -65,6 +69,7 @@ function _handleLoad(el: any, { value = '' }: any, props: any) {
   const img = new Image()
   img.onload = function () {
     el.src = url
+    el.classList.remove('v-img-error')
   }
   img.onerror = function () {
     _handleError(el, props)

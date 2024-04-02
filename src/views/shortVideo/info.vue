@@ -16,9 +16,59 @@
       <SvgIcon class="close-icon" name="home-short-close" />
     </div>
 
-    <div class="match-wrap">
-      <div class="match-info"></div>
-      <div class="play-info"></div>
+    <div class="match-wrap" @click="goDetails" v-if="RPlay || OUPlay">
+      <div class="match-info">
+        <div class="match-lengua">
+          <SportsIcon class="sports-icon" :icon-src="matchInfo.gameType" />
+          {{ matchInfo.leagueShortName || matchInfo.leagueName }}
+        </div>
+        <div class="team-info">
+          <img v-img="matchInfo.homeLogo" class="team-icon" alt="" :type="4" style="object-fit: contain" />
+          {{ matchInfo.awayTeamAbbr || matchInfo.awayTeam }}
+        </div>
+        <div class="team-info">
+          <img v-img="matchInfo.awayLogo" class="team-icon" alt="" :type="5" style="object-fit: contain" />
+          {{ matchInfo.homeTeamAbbr || matchInfo.homeTeam }}
+        </div>
+      </div>
+      <div class="play-info-box">
+        <div class="play-item" v-if="RPlay">
+          <div class="play-name" v-play="RPlay"></div>
+
+          <BettingOption
+            v-for="(play, index) in RPlay.list"
+            :buyState="false"
+            :key="index"
+            :market-info="play.marketInfo"
+            class="betting-option"
+          >
+            <span class="ratio-name">
+              {{ play.marketInfo.ratioName }}
+            </span>
+            <span class="ratio-ior">
+              {{ play.marketInfo.vior }}
+            </span>
+          </BettingOption>
+        </div>
+        <div class="play-item" v-if="OUPlay">
+          <div class="play-name" v-play="OUPlay"></div>
+
+          <BettingOption
+            v-for="(play, index) in OUPlay.list"
+            :key="index"
+            :buyState="false"
+            :market-info="play.marketInfo"
+            class="betting-option"
+          >
+            <span class="ratio-name">
+              {{ play.marketInfo.ratioName }}
+            </span>
+            <span class="ratio-ior">
+              {{ play.marketInfo.vior }}
+            </span>
+          </BettingOption>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -28,6 +78,10 @@ import videojs from 'video.js'
 import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { mainMatches } from '@/api/live'
+import { computed } from 'vue'
+import { MarketInfo } from '@/entitys/MarketInfo'
+import router from '@/router'
+import store from '@/store'
 
 const props = defineProps({
   videoInfo: {
@@ -51,16 +105,79 @@ watch(
   }
 )
 
+const RPlay = computed(() => {
+  const { R } = matchInfo.value
+  if (R) {
+    const { game, ratioData } = R
+
+    const list: any = ratioData.map((ratio: any) => {
+      const obj = { ...ratio, ...game, ...matchInfo.value, playType: 'R' }
+      const marketInfo = new MarketInfo(obj)
+      return {
+        marketInfo
+      }
+    })
+
+    return {
+      ...game,
+      ...matchInfo.value,
+      playType: 'R',
+      list
+    }
+  }
+  return null
+})
+const OUPlay = computed(() => {
+  const { OU } = matchInfo.value
+  if (OU) {
+    const { game, ratioData } = OU
+
+    const list: any = ratioData.map((ratio: any) => {
+      const obj = { ...ratio, ...game, ...matchInfo.value, playType: 'OU' }
+      const marketInfo = new MarketInfo(obj)
+      return {
+        marketInfo
+      }
+    })
+
+    return {
+      ...game,
+      ...matchInfo.value,
+      playType: 'OU',
+      list
+    }
+  }
+  return null
+})
+
+const matchInfo: any = ref({})
 const getMainMatches = async () => {
   if (!props.videoInfo.gameList?.length) {
     return false
   }
-  const gidm = props.videoInfo.gameList[0]
+  const info = props.videoInfo.gameList[0]
+  const gidm = info?.gidm
   const res: any = await mainMatches({
     gidm
   })
-  // if (res.code === 200 && vides.length) {
-  // }
+  if (res?.code === 200 && res?.data) {
+    matchInfo.value = res?.data
+  }
+}
+
+const goDetails = () => {
+  if (!matchInfo.value) {
+    return
+  }
+  const { gidm } = matchInfo.value
+  const params = {
+    name: 'MatchDetail',
+    params: {
+      id: gidm
+    }
+  }
+  router.push(params)
+  store.dispatch('app/setMatchLiveIndex', 1)
 }
 
 onMounted(() => {
@@ -223,6 +340,96 @@ const disposePlayer = () => {
     top: 55px;
     right: 30px;
     font-size: 42px;
+  }
+  .match-wrap {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    z-index: 9;
+    bottom: 55px;
+    left: 30px;
+    right: 30px;
+    font-size: 42px;
+
+    .match-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .sports-icon {
+        font-size: 20px;
+        margin-right: 10px;
+      }
+      .team-icon {
+        display: inline-block;
+        height: 20px;
+        width: 20px;
+        margin-right: 10px;
+      }
+
+      .match-lengua {
+        color: #fff;
+        font-size: 20px;
+        font-weight: 500;
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+      .team-info {
+        display: flex;
+        align-items: center;
+        height: 40px;
+        color: #fff;
+        font-size: 22px;
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+    }
+
+    .play-info-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 30px;
+
+      .play-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        &:first-child {
+          margin-right: 20px;
+        }
+
+        .play-name {
+          color: #fff;
+          font-size: 20px;
+          font-weight: 500;
+          margin-bottom: 8px;
+        }
+        .betting-option {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 190px;
+          height: 48px;
+          background-color: rgba(105, 105, 105, 0.5);
+          border-radius: 16px;
+          padding: 0 15px;
+          margin-bottom: 10px;
+
+          .ratio-name {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 500;
+          }
+          .ratio-ior {
+            color: #fff;
+            font-size: 22px;
+            font-weight: 500;
+          }
+        }
+      }
+    }
   }
 }
 </style>

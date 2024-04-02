@@ -14,6 +14,10 @@ const props = defineProps({
   marketInfo: {
     type: Object,
     default: () => {}
+  },
+  buyState: {
+    type: Boolean,
+    default: true
   }
 })
 const markets = computed(() => store.state.betting.markets)
@@ -60,7 +64,7 @@ watch(
 )
 
 const touchMarket = (event: any) => {
-  if (lock.value) {
+  if (lock.value || !props.marketInfo.buyState) {
     return false
   }
   const target = event.target

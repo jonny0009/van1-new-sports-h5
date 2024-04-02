@@ -23,6 +23,7 @@ import { getBJGameUrl } from '@/api/home'
 import TableInfo from './TableInfo.vue'
 import { ref } from 'vue'
 import { closeToast, showLoadingToast } from 'vant'
+import { getBrowserLanguage } from '@/utils'
 defineProps({
   list: {
     type: Object,
@@ -53,8 +54,9 @@ const goodRoadShow = async () => {
     closeToast()
   })
   if (gres?.code === 200) {
+    const lang = localStorage.getItem('locale') || getBrowserLanguage()
     const gameUrl = gres.data['url'].replace('&isAi=1', '')
-    url.value = `${gameUrl}#/multiple`
+    url.value = `${gameUrl}&language=${lang}#/multiple`
   }
 }
 </script>
