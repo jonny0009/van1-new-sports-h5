@@ -30,7 +30,8 @@
               <div class="my-scroll__content">
                 <div class="tabs-cut tabs-cut-2">
                   <div class="league-num tabs-cut-1" :class="ifLeagueNum ? 'league-num-1' : ''" @click="clickLeagueNum">
-                    <span> {{ $t(`user.whole`) }}</span>
+                    <span v-if="homeStyle === 1"> {{ $t(`sport.sports.${gameType}`) }}</span>
+                    <span v-else> {{ $t(`user.whole`) }}</span>
                     <span class="league-match-num">{{ LeaguesInfo.total || 0 }}</span>
                     <SvgIcon name="user-down" class="icon-svg-1" />
                   </div>
@@ -272,11 +273,8 @@ import ChampionList from './champion/index.vue'
 import Slideshow from './slideshow/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
 import playTitle from '@/components/Title/playTitle/index.vue'
-// useRouter
 import { useRoute } from 'vue-router'
-// onBeforeMount, watch,
 import { ref, computed, onMounted, onActivated, watch } from 'vue'
-// import router from '@/router'
 import { apiChampionpPlayTypes } from '@/api/champion'
 import {
   recommendLeague,
@@ -284,12 +282,11 @@ import {
   homeCommonMatches,
   searchCountryInfo,
   searchLeagueByCountryInfo
-  // statistics
 } from '@/api/home'
 import { MarketInfo } from '@/entitys/MarketInfo'
 import moment from 'moment'
 
-// const { currentRoute } = useRouter()
+const homeStyle = computed(() => store.state.app.homeStyle)
 const route: any = useRoute()
 const scrollNum = computed(() => store.state.user.scrollNumY)
 const gameType1 = computed(() => {
