@@ -90,10 +90,12 @@ watch(
       }
       return
     }
-    if (to === '/match') {
-      appContent.value.transitionName = 'fade-left'
-      indexNum.value = -1
-      return
+    if (homeStyle.value === 2) {
+      if (to === '/match') {
+        indexNum.value = -1
+        appContent.value.transitionName = 'fade-left'
+        return
+      }
     }
     if (pageIndex.value > indexNum.value) {
       appContent.value.transitionName = 'fade-right'
