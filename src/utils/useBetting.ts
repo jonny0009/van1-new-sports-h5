@@ -118,12 +118,14 @@ export function useBetting(flag: any) {
     const groupRow = toRaw(playGroupBetList.value)
     let groupPlayList: any[] = []
     groupRow.forEach((row: any) => {
+      const playDataList = playTypeSort(dataList, row.playData)
       const rowResult = {
         id: row.id,
         name: row.name,
         groupType: row.groupType,
         playData: row.playData,
-        playDataList: playTypeSort(dataList, row.playData)
+        count: playTypeMerge(playDataList).length,
+        playDataList
       }
       groupPlayList.push(rowResult)
     })

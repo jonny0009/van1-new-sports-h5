@@ -28,7 +28,6 @@ export default {
 }
 
 function _handleError(el: any, props: any) {
-  console.log(el.className)
   if (!el.classList.contains('v-img-error')) {
     el.classList.add('v-img-error')
   }
