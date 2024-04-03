@@ -47,8 +47,6 @@ export default {
   numberDay: '{number}天',
   hot: '热门',
   todayUpcoming: '今日早盘',
-
-  // new
   RBInfo: '滚球 亚洲让分盘',
   RBSize: '滚球 大小盘',
   RBRide: '滚球 1X2',
