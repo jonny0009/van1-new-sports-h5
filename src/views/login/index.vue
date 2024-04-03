@@ -44,7 +44,7 @@
     <!-- 头部=== -->
     <div class="head-height" />
     <div class="content">
-      <p class="title">{{ $t('user.WelcomeToAI') }}</p>
+      <p class="title">{{ $t('user.WelcomeToAI',{name: config.iconSpan }) }}</p>
       <span class="desc">{{ $t('user.text1') }}</span>
       <div class="area-btn">
         <span @click="register">{{ $t('user.register') }}</span>
@@ -189,7 +189,7 @@ const onClickRight = () => {
 
 onMounted(() => {
   const obj = plateData.arr.find((item: any) => {
-    if (item.key === plateMaskKey ) {
+    if (item.key === plateMaskKey) {
       return item
     }
   })
