@@ -17,6 +17,7 @@
         v-for="(item, index) in navList.arr"
         :title="item.text"
         :key="index"
+        :name="item.value"
       >
       </van-tab>
     </van-tabs>
@@ -24,38 +25,30 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, computed, watch } from 'vue'
+import { reactive, computed } from 'vue'
 import { showToast } from 'vant'
-
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
 import router from '@/router'
-import { useRoute } from 'vue-router'
-const route = useRoute()
-
 import store from '@/store'
 const ifThemeBlue = computed(() => {
   return store.state.app.theme === 'blue'
 })
 
-const active = ref(1)
-watch(
-  () => route.path,
-  (to) => {
-    const isSportRouterName = ['/match', '/casino'].includes(to)
-    if (!isSportRouterName) {
-      active.value = 1
-    }
-  }
-)
+const active = computed(() => {
+  const routerName: any = router?.currentRoute?.value?.name || ''
+  const routerNameToLowerCase = routerName.toLowerCase()
+  const isrouterNameToLowerCase = ['match', 'casino'].includes(routerNameToLowerCase)
+  return isrouterNameToLowerCase ? routerNameToLowerCase : 'home'
+})
 
 const navList = reactive<{ arr: any[] }>({
   arr: [
-    {
-      text: t('home.Community'),
-      value: 'community'
-    },
+    // {
+    //   text: t('home.Community'),
+    //   value: 'community'
+    // },
     {
       text: t('home.sport'),
       value: 'home'
@@ -72,14 +65,13 @@ const navList = reactive<{ arr: any[] }>({
 })
 // tab 点击
 const changeTab = (val: any) => {
-  console.log('val')
-  if (val.name === 0) {
+  if (val.name === 'community') {
     showToast(t('home.stayTuned'))
     return
   }
-  let urlParams = navList.arr[active.value]
+  let urlParams = val.name
   store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
-  router.push(`/` + urlParams.value)
+  router.push(`/` + urlParams)
 }
 
 // 标签颜色
