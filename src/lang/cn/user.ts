@@ -133,7 +133,8 @@ export default {
   type: '类型',
   homeName: '主 ',
   awayName: '客 ',
-
+  // IDOdd: '印尼盘 [ID]',
+  // MYOdd: '马来盘 [MY]',
   sports: {
     'officeNumber': '局号',
     FT: '足球',
