@@ -27,7 +27,7 @@ export default {
   sending: '發送中',
   needLogin: '請先登入',
   needBet: '還需要{num}投注額才可以參與互動',
-  chatTip: '來來來，誰不會吹點屌',
+  chatTip: '來來來，誰不會吹點牛',
   chatSys: '聊天室開放了，球友快出來聊天啦',
   Q1: '第一節',
   Q2: '第二節',
@@ -70,5 +70,5 @@ export default {
   halfPlay: '半場',
   section: '小節',
   videoFailure: '影片載入失敗，請刷新重試',
-  refreshVideo: '刷新影片'
+  refreshVideo: '重新整理影片'
 }

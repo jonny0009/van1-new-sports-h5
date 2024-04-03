@@ -4,7 +4,8 @@
       <van-tabs
         :duration="0.2"
         v-model:active="active"
-        shrink
+        :shrink="homeStyle !== 2"
+        :ellipsis="false"
         line-height="0"
         swipe-threshold="6"
         :scrollable="false"
@@ -19,7 +20,8 @@
                   {
                     active: item.routerName === active,
                     homeStyleItem: homeStyle === 3,
-                    itemColor: item.routerName === 'Match' && homeStyle === 2
+                    itemColor: item.routerName === 'Match' && homeStyle === 2,
+                    itemWidth:homeStyle !== 2
                   },
                   item.routerName
                 ]"
@@ -204,7 +206,7 @@ const active = ref(activeUrlName)
     justify-content: center;
     align-items: center;
     color: var(--color-global-text);
-    min-width: 124px;
+    // min-width: 124px;
     padding-top: 40px;
     .name {
       // height: 20px;
@@ -272,8 +274,10 @@ const active = ref(activeUrlName)
     padding-top: 34px !important;
   }
   .itemColor {
-    // color: orange;
     color: rgba(255, 166, 0, 0.91);
+  }
+  .itemWidth {
+    min-width: 124px;
   }
 }
 </style>

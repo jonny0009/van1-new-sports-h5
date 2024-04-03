@@ -7,7 +7,7 @@ import kr from './kr/index'
 import pt from './pt/index'
 import th from './th/index'
 import jp from './jp/index'
-import eo from './eo/index'
+import es from './es/index'
 import id from './id/index'
 import tw from './tw/index'
 import hiInI from './in/index' // 印地
@@ -21,7 +21,7 @@ import thTH from 'vant/es/locale/lang/th-TH' // 泰语
 import jaJP from 'vant/es/locale/lang/ja-JP'
 import idID from 'vant/es/locale/lang/id-ID' // 印度尼西亚语
 import hiIN from 'vant/es/locale/lang/hi-IN' // 印地
-import eoEO from 'vant/es/locale/lang/eo-EO' // 世界语
+import esES from 'vant/es/locale/lang/es-ES' // 世界语
 import zhTW from 'vant/es/locale/lang/zh-TW'
 
 const lang = localStorage.getItem('locale') || getBrowserLanguage()
@@ -38,8 +38,8 @@ if (lang === 'en-us') {
   Locale.use('th-TH', thTH)
 } else if (lang === 'ja-jp') {
   Locale.use('ja-JP', jaJP)
-} else if (lang === 'eo-eo') {
-  Locale.use('eo-EO', eoEO)
+} else if (lang === 'es-es') {
+  Locale.use('es-ES', esES)
 } else if (lang === 'id-id') {
   Locale.use('id-ID', idID)
 } else if (lang === 'zh-tw') {
@@ -61,7 +61,7 @@ const i18n: any = createI18n({
     'pt-pt': pt,
     'th-th': th,
     'ja-jp': jp,
-    'eo-eo': eo,
+    'es-es': es,
     'id-id': id,
     'zh-tw': tw,
     'ih-in': hiInI
