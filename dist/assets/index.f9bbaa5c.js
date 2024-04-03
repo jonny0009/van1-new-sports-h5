@@ -1,0 +1,1 @@
+import{_ as s}from"./index.79f3fe2d.js";import{s as a,o as d,R as e,q as o}from"./vue.97c0c246.js";import"./index.8cc2d028.js";import"./index.0914b2ad.js";const t={class:"panel-data"};var i=a({setup:a=>(a,i)=>(d(),e("div",t,[o(s)]))});i.__scopeId="data-v-2e354294";export{i as default};
