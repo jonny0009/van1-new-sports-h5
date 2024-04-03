@@ -48,10 +48,10 @@ const ifThemeBlue = computed(() => {
 
 const barFooterArrayChange = (): Array<any> => {
   const barFooterArray = [
-    {
-      text: t('home.Community'),
-      value: 'community'
-    },
+    // {
+    //   text: t('home.Community'),
+    //   value: 'community'
+    // },
     {
       text: t('home.sport'),
       value: 'home'
