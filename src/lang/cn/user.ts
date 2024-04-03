@@ -118,26 +118,19 @@ export default {
   text15: '账号不存在 ',
   text16: '账号已禁用 ',
   account: '账号 ',
-
-  // 新增4
   hotSearch: '热门搜索 ',
   lookInfo: '查看完整讯息 ',
   betNum: '投注 ',
   noMoreMatch: '没有更多赛事了 ',
   news: '消息',
   loadingText: '加载中...',
-  // 新增5
   editPend: '受理中 ',
   affirmPend: '确认中 ',
   noDataRelated: '未查询到相关数据',
-  // 新增6
   fontNickName: '昵称只允许编辑一次，且不可与他人重复或含有非法字元',
   aheadFinal: '提前结算',
-
-  // 新增7
   contactUs: '联系我们',
   type: '类型',
-
   homeName: '主 ',
   awayName: '客 ',
 
