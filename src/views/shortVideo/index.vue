@@ -1,5 +1,5 @@
 <template>
-  <div class="list-wrap">
+  <div class="video-list-wrap">
     <swiper
       class="swiper-box"
       :direction="'vertical'"
@@ -41,7 +41,7 @@ const getShortVideos = async () => {
   const vides: any[] = res?.data?.videoData || []
   if (res.code === 200 && vides.length) {
     shortVideos.value = vides
-    curIndex.value = vides.findIndex((i: any) => i.videoId === videoId)
+    curIndex.value = vides.findIndex((i: any) => i.videoId === videoId) || 0
     controlledSwiper.value.slideTo(curIndex.value, 0, false)
   }
 }
@@ -58,11 +58,7 @@ const change = ({ activeIndex }: any) => {
 </script>
 
 <style lang="scss" scoped>
-.list-wrap {
-  flex: 1;
-  position: absolute;
-  left: 0;
-  top: 0;
+.video-list-wrap {
   width: 100%;
   height: 100%;
   overflow: hidden;

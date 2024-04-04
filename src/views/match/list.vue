@@ -401,8 +401,13 @@ const goShortVideo = (video: any) => {
   .list-group {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     padding: 0 35px;
+
+    :deep(.van-list__finished-text){
+      width: 100%;
+    }
+
     .group-item-box {
       position: relative;
       display: flex;

@@ -64,7 +64,7 @@ watch(
 )
 
 const touchMarket = (event: any) => {
-  if (lock.value || !props.marketInfo.buyState) {
+  if (lock.value || !props.buyState) {
     return false
   }
   const target = event.target

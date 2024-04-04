@@ -16,17 +16,17 @@
       <SvgIcon class="close-icon" name="home-short-close" />
     </div>
 
-    <div class="match-wrap" @click="goDetails" v-if="RPlay || OUPlay">
+    <div class="match-wrap" v-if="RPlay || OUPlay">
       <div class="match-info">
-        <div class="match-lengua">
+        <div class="match-lengua text-overflow">
           <SportsIcon class="sports-icon" :icon-src="matchInfo.gameType" />
           {{ matchInfo.leagueShortName || matchInfo.leagueName }}
         </div>
-        <div class="team-info">
+        <div class="team-info text-overflow">
           <img v-img="matchInfo.homeLogo" class="team-icon" alt="" :type="4" style="object-fit: contain" />
           {{ matchInfo.awayTeamAbbr || matchInfo.awayTeam }}
         </div>
-        <div class="team-info">
+        <div class="team-info text-overflow">
           <img v-img="matchInfo.awayLogo" class="team-icon" alt="" :type="5" style="object-fit: contain" />
           {{ matchInfo.homeTeamAbbr || matchInfo.homeTeam }}
         </div>
@@ -37,12 +37,11 @@
 
           <BettingOption
             v-for="(play, index) in RPlay.list"
-            :buyState="false"
             :key="index"
             :market-info="play.marketInfo"
             class="betting-option"
           >
-            <span class="ratio-name">
+            <span class="ratio-name text-overflow">
               {{ play.marketInfo.ratioName }}
             </span>
             <span class="ratio-ior">
@@ -56,11 +55,10 @@
           <BettingOption
             v-for="(play, index) in OUPlay.list"
             :key="index"
-            :buyState="false"
             :market-info="play.marketInfo"
             class="betting-option"
           >
-            <span class="ratio-name">
+            <span class="ratio-name text-overflow">
               {{ play.marketInfo.ratioName }}
             </span>
             <span class="ratio-ior">
@@ -80,8 +78,6 @@ import { useRouter } from 'vue-router'
 import { mainMatches } from '@/api/live'
 import { computed } from 'vue'
 import { MarketInfo } from '@/entitys/MarketInfo'
-import router from '@/router'
-import store from '@/store'
 
 const props = defineProps({
   videoInfo: {
@@ -111,7 +107,7 @@ const RPlay = computed(() => {
     const { game, ratioData } = R
 
     const list: any = ratioData.map((ratio: any) => {
-      const obj = { ...ratio, ...game, ...matchInfo.value, playType: 'R' }
+      const obj = { ...ratio, ...game, ...matchInfo.value, playType: 'R', systemId: gameInfo.value.systemId }
       const marketInfo = new MarketInfo(obj)
       return {
         marketInfo
@@ -133,7 +129,7 @@ const OUPlay = computed(() => {
     const { game, ratioData } = OU
 
     const list: any = ratioData.map((ratio: any) => {
-      const obj = { ...ratio, ...game, ...matchInfo.value, playType: 'OU' }
+      const obj = { ...ratio, ...game, ...matchInfo.value, playType: 'OU', systemId: gameInfo.value.systemId }
       const marketInfo = new MarketInfo(obj)
       return {
         marketInfo
@@ -150,34 +146,26 @@ const OUPlay = computed(() => {
   return null
 })
 
-const matchInfo: any = ref({})
-const getMainMatches = async () => {
-  if (!props.videoInfo.gameList?.length) {
+const gameInfo: any = computed(() => {
+  if (!props.videoInfo?.gameList?.length) {
     return false
   }
-  const info = props.videoInfo.gameList[0]
-  const gidm = info?.gidm
+  return props.videoInfo.gameList[0]
+})
+
+const matchInfo: any = ref({})
+const getMainMatches = async () => {
+  if (!gameInfo?.value) {
+    return false
+  }
+  const gidm = gameInfo?.value.gidm
+
   const res: any = await mainMatches({
     gidm
   })
   if (res?.code === 200 && res?.data) {
     matchInfo.value = res?.data
   }
-}
-
-const goDetails = () => {
-  if (!matchInfo.value) {
-    return
-  }
-  const { gidm } = matchInfo.value
-  const params = {
-    name: 'MatchDetail',
-    params: {
-      id: gidm
-    }
-  }
-  router.push(params)
-  store.dispatch('app/setMatchLiveIndex', 1)
 }
 
 onMounted(() => {
@@ -346,15 +334,18 @@ const disposePlayer = () => {
     justify-content: space-between;
     position: absolute;
     z-index: 9;
-    bottom: 55px;
+    bottom: 30px;
     left: 30px;
     right: 30px;
     font-size: 42px;
+    overflow: hidden;
 
     .match-info {
+      width: 180px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      overflow: hidden;
 
       .sports-icon {
         font-size: 20px;
@@ -375,9 +366,8 @@ const disposePlayer = () => {
         margin-bottom: 8px;
       }
       .team-info {
-        display: flex;
-        align-items: center;
         height: 40px;
+        line-height: 40px;
         color: #fff;
         font-size: 22px;
         font-weight: 500;
@@ -423,6 +413,7 @@ const disposePlayer = () => {
             font-weight: 500;
           }
           .ratio-ior {
+            margin-left: 6px;
             color: #fff;
             font-size: 22px;
             font-weight: 500;

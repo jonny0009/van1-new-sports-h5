@@ -2,7 +2,7 @@
   <div id="main">
     <GlobalHeader v-if="!$route.meta.hideGlobalHeaderView" @betShow="betShow" />
     <GlobalRefresh>
-      <DoubleRowNav v-if="homeStyle === 3" />
+      <DoubleRowNav v-if="homeStyle === 3 && !$route.meta.hideGlobalHeaderView" />
       <GlobalSportsTabsView v-if="$route.meta.showSportsTabsView" />
       <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pb5 pt15" />
       <AppMain ref="appContent" />

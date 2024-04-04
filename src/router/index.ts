@@ -69,12 +69,6 @@ export const constantRoutes: Array<any> = [
     hidden: true
   },
   {
-    path: '/shortVideo/:videoId',
-    name: 'ShortVideo',
-    component: () => import('@/views/shortVideo/index.vue'),
-    hidden: true
-  },
-  {
     path: '/',
     component: () => import('@/layout/index.vue'),
     redirect: '/home',
