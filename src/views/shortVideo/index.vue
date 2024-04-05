@@ -12,7 +12,6 @@
       @slideChange="change"
       :modules="[Controller]"
       @swiper="setControlledSwiper"
-      v-if="shortVideos.length"
     >
       <swiper-slide class="slide-box" v-for="(info, index) in shortVideos" :key="index">
         <info :videoInfo="info" :active="curIndex === index"></info>
