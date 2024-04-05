@@ -43,6 +43,8 @@ import { ref, computed, watch } from 'vue'
 import moment from 'moment'
 import store from '@/store'
 import router from '@/router'
+import { recommendEvents, recommendLeague } from '@/api/home'
+
 const scrollNum = computed(() => store.state.user.scrollNumY)
 const offsetTop = computed(() => {
   const offsetTop = store.state.app.globalBarHeaderHeight || 48
@@ -54,7 +56,6 @@ const offsetTop = computed(() => {
   }
   return offsetTopval
 })
-import { recommendEvents } from '@/api/home'
 const props = defineProps({
   leagueIdArr: {
     type: Array as any,
@@ -84,10 +85,13 @@ watch(refreshChangeTime, (val) => {
 })
 watch(
   () => props.leagueIdArr,
-  (val, old) => {
-    if (val.join() !== old.join()) {
-      getRecommendEvents()
-    }
+  () => {
+    // val, old
+    // if (val.join() !== old.join()) {
+    //   getRecommendEvents()
+    // }
+    getRecommendEvents()
+
   }
 )
 const recommendEventsList: any = ref([])
@@ -98,7 +102,8 @@ const getRecommendEvents = async (gameType: any = 'FT') => {
   const params = {
     gradeType: 2,
     gameType: gameType,
-    filterLeagueIds: props.leagueIdArr.join(),
+    // filterLeagueIds: props.leagueIdArr.join(),
+    leagueId: getLeagueIdArrIds(),
     page: 1,
     pageSize: 10
     // startDate: dateUtil().format('YYYY-MM-DD') + ' 00:00:00',
@@ -136,13 +141,46 @@ const getRecommendEvents = async (gameType: any = 'FT') => {
     recommendEventsList.value = listArr
   }
 }
+
 const goHomeTime = () => {
   const params: any = { name: 'HomeTime' }
   router.push(params)
 }
-const returnSportsSuccess = (val: any) => {
+
+const leagueIdArrType: any = ref([])
+const sportTypeChange: any = ref(false)
+const returnSportsSuccess = async (val: any) => {
+  isLoading.value = false
   recommendEventsList.value = []
-  getRecommendEvents(val)
+  const res: any = await recommendLeague({ gameType: val, showType: 'FAST' })
+  if (res.code === 200) {
+    sportTypeChange.value = true
+    leagueIdArrType.value = []
+    const list: any = res?.data.list || []
+    list.map((n: any) => {
+      if (n.leagueId) {
+        leagueIdArrType.value.push(n.leagueId)
+      }
+    })
+    if (!leagueIdArrType.value.length) {
+      leagueIdArrType.value = []
+    }
+    getRecommendEvents(val)
+  }
+}
+
+// 联赛id
+const getLeagueIdArrIds = () => {
+  if (sportTypeChange.value) {
+    if (leagueIdArrType.value.length) {
+      return leagueIdArrType.value.join()
+    }
+    return ''
+  }
+  if (props.leagueIdArr.length) {
+    return props.leagueIdArr.join()
+  }
+  return ''
 }
 
 </script>

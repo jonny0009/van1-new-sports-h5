@@ -2,22 +2,15 @@
   <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
     <van-collapse-item name="1">
       <template #title>
-        <ArrowTitle
-          class="mt10 mb10 hotArrowTitle"
-          :src="titleHot"
-          :text="$t('home.hotMatch')"
-        />
+        <ArrowTitle class="mt10 mb10 hotArrowTitle" :src="titleHot" :text="$t('home.hotMatch')" />
       </template>
       <div class="Hot-Match-Group-Warp">
-        <div
-          class="Hot-Match-Group"
-          :class="[{ 'noData': noDataToggle }]"
-        >
+        <div class="Hot-Match-Group" :class="[{ noData: noDataToggle }]">
           <Loading v-if="!isLoading" />
           <template v-else>
             <HomeEmpty v-if="noDataToggle"></HomeEmpty>
             <van-image
-              v-for="(item,idx) in firstLeaguesList"
+              v-for="(item, idx) in firstLeaguesList"
               v-else
               :key="idx"
               :src="imgUrlFormat(item.homeLeagueLogo)"
@@ -35,7 +28,7 @@
           </template>
         </div>
         <template v-if="!noDataToggle">
-          <div class="mask-left" style="display: none;"></div>
+          <div class="mask-left" style="display: none"></div>
           <div class="mask-right"></div>
         </template>
       </div>
@@ -44,7 +37,7 @@
 </template>
 <script lang="ts" setup>
 import titleHot from '@/assets/images/home/title-hot.png'
-import {  ref, computed,  } from 'vue'
+import { ref, computed } from 'vue'
 import { imgUrlFormat } from '@/utils/index'
 import router from '@/router'
 const props = defineProps({
@@ -56,8 +49,8 @@ const props = defineProps({
 const activeNames = ref('1')
 const isLoading = ref(false)
 const noDataToggle = computed(() => props.firstLeaguesList.length === 0)
-const goSportClick = (item:any) => {
-  const { leagueId, gameType,countryId } = item
+const goSportClick = (item: any) => {
+  const { leagueId, gameType, countryId } = item
   router.push({
     name: 'Sport',
     query: {
@@ -70,45 +63,44 @@ const goSportClick = (item:any) => {
   })
 }
 defineExpose({
-  isLoading, activeNames, 
+  isLoading,
+  activeNames
 })
-
-
 </script>
 <style lang="scss" scoped>
-  .onImgError{
-    width: 200px;
-    height: 176px;
-    display: inline-block;
-    background: url('@/assets/images/home/other/league.png') no-repeat center;
-    background-size: cover;
-    border-radius: 20px;
+.onImgError {
+  width: 200px;
+  height: 176px;
+  display: inline-block;
+  background: url('@/assets/images/home/other/league.png') no-repeat center;
+  background-size: cover;
+  border-radius: 20px;
+}
+.Hot-Match-Group-Warp {
+  position: relative;
+  .mask-left {
+    position: absolute;
+    left: -10px;
+    top: 0;
+    width: 30px;
+    height: 100%;
+    pointer-events: none;
+    background: var(--color-global-maskBg);
   }
-  .Hot-Match-Group-Warp{
-    position: relative;
-    .mask-left{
-      position: absolute;
-      left: -10px;
-      top: 0;
-      width: 30px;
-      height: 100%;
-      pointer-events: none;
-      background: var(--color-global-maskBg);
-    }
-    .mask-right{
-      position: absolute;
-      right: -10px;
-      top: 0;
-      width: 30px;
-      height: 100%;
-      pointer-events: none;
-      background: var(--color-global-maskBg);
-    }
+  .mask-right {
+    position: absolute;
+    right: -10px;
+    top: 0;
+    width: 30px;
+    height: 100%;
+    pointer-events: none;
+    background: var(--color-global-maskBg);
   }
+}
 </style>
 <style lang="scss">
-.hotArrowTitle{
-  .img{
+.hotArrowTitle {
+  .img {
     width: 24px !important;
     height: 30px !important;
   }
