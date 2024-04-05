@@ -3,7 +3,7 @@
     <swiper
       class="swiper-box"
       :direction="'vertical'"
-      :loop="true"
+      :loop="shortVideos.length >= 2"
       :grabCursor="true"
       :mousewheel="true"
       :mousewheelControl="true"
@@ -12,6 +12,7 @@
       @slideChange="change"
       :modules="[Controller]"
       @swiper="setControlledSwiper"
+      v-if="shortVideos.length"
     >
       <swiper-slide class="slide-box" v-for="(info, index) in shortVideos" :key="index">
         <info :videoInfo="info" :active="curIndex === index"></info>
