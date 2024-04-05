@@ -266,7 +266,7 @@ const disposePlayer = () => {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100% !important;
     height: 100%;
     object-fit: contain;
     margin: auto;
