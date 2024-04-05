@@ -52,5 +52,12 @@ export default {
   RBSize: '라이브 크기',
   RBRide: '라이브 1X2',
   PDscore: '정확한 점수',
-  Community: '커뮤니티'
+  Community: '커뮤니티',
+  casinoTitleObj: {
+    title1: '좋은 추세',
+    title2: '라이브 바카라',
+    title3: '카지노는 현재 보수 중입니다...',
+    title4: '예상 점검 종료까지의 카운트다운',
+    gohome: '홈페이지로 돌아가기'
+  },
 }

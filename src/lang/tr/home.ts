@@ -45,12 +45,20 @@ export default {
   Saturday: '周六',
   numberHour: '{number}小时',
   numberDay: '{number}天',
-  hot: '热门',
-  todayUpcoming: '今日早盘',
+  hot: 'Popüler',
+  todayUpcoming: 'Bugünün Yaklaşanı',
 
   // new
-  RBInfo: '滚球 亚洲让分盘',
-  RBSize: '滚球 大小盘',
-  RBRide: '滚球 1X2',
-  PDscore: '正确比分',
+  RBInfo: 'Canlı Bahis Asya Handikap',
+  RBSize: 'Canlı Bahis O/U',
+  RBRide: 'Canlı Bahis 1X2',
+  PDscore: 'Doğru Puan',
+  casinoTitleObj: {
+    title1: 'İyi Eğilim',
+    title2: 'Canlı Bakara',
+    title3: 'Kumarhane bakımda...',
+    title4: 'Beklenen bakımın sonuna doğru geri sayım',
+    gohome: 'Ana sayfaya dön'
+  },
+  Community: 'Toplum'
 }

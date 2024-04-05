@@ -109,7 +109,8 @@ const setDateTime = (values: any) => {
   dateTimeVal.value.endName = moment(end).format('MM/DD')
 
   beginTime.value = moment(start).valueOf()
-  endTime.value = moment(end).valueOf()
+  const oneDayDate = 24 * 60 * 60 * 1000
+  endTime.value = moment(end).valueOf() + (oneDayDate-1000)
   loading.value = true
   finished.value = false
   showBottom2.value = false

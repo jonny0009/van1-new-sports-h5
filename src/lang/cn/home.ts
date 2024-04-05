@@ -53,5 +53,12 @@ export default {
   RBSize: '滚球 大小盘',
   RBRide: '滚球 1X2',
   PDscore: '正确比分',
+  casinoTitleObj: {
+    title1: '好路推荐',
+    title2: '真人百家乐',
+    title3: '赌场维护中...',
+    title4: '预计维护倒计时',
+    gohome: '去首页'
+  },
   Community: '社群'
 }

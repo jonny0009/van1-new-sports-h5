@@ -50,5 +50,12 @@ export default {
   RBSize: 'RB O/U',
   RBRide: 'RB 1X2',
   PDscore: 'Correct Score',
+  casinoTitleObj: {
+    title1: 'Good Trend',
+    title2: 'Live Baccarat',
+    title3: 'The casino is under maintenance...',
+    title4: 'Countdown to the end of expected maintenance',
+    gohome: 'Return to home page'
+  },
   Community: 'Community'
 }

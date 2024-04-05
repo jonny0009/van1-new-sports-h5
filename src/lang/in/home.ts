@@ -41,5 +41,22 @@ export default {
   Friday: '金曜日',
   Saturday: '土曜日',
   numberHour: '{number} 時間',
-  numberDay: '{number} 日'
+  numberDay: '{number} 日',
+  
+  hot: 'लोकप्रिय',
+  todayUpcoming: 'आज का आगामी',
+
+  // new
+  RBInfo: 'लाइव बेटिंग एशिया हैंडीकैप',
+  RBSize: 'लाइव बेटिंग ओ/यू',
+  RBRide: 'लाइव बेटिंग 1X2',
+  PDscore: 'सही स्कोर',
+  casinoTitleObj: {
+    title1: 'अच्छा चलन',
+    title2: 'लाइव बैकारेट',
+    title3: 'कैसीनो रखरखाव के अधीन है...',
+    title4: 'अपेक्षित रखरखाव के अंत की उलटी गिनती',
+    gohome: 'होमपेज पर वापस आएं'
+  },
+  Community: 'समुदाय'
 }

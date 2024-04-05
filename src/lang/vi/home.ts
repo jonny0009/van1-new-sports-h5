@@ -52,5 +52,12 @@ export default {
   RBSize: 'Trên/Dưới toàn bộ trận đấu',
   RBRide: 'Toàn trận 1X2',
   PDscore: 'Điểm số chính xác',
-  Community: 'Vietname'
+  Community: 'Vietname',
+  casinoTitleObj: {
+    title1: 'Xu hướng tốt',
+    title2: 'Baccarat trực tiếp',
+    title3: 'Sòng bạc đang được bảo trì...',
+    title4: 'Đếm ngược thời gian kết thúc bảo trì dự kiến',
+    gohome: 'Trở về trang chủ'
+  },
 }

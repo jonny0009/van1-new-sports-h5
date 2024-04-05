@@ -49,5 +49,12 @@ export default {
   RBSize: 'Mais/Menos Jogo Completo',
   RBRide: 'Resultado Final 1X2',
   PDscore: 'Pontuação Correcta',
-  Community: 'Comunidade'
+  Community: 'Comunidade',
+  casinoTitleObj: {
+    title1: 'Boa tendência',
+    title2: 'Bacará ao vivo',
+    title3: 'O cassino está em manutenção...',
+    title4: 'Contagem regressiva para o fim da manutenção esperada',
+    gohome: 'Retornar a página inicial'
+  },
 }

@@ -45,20 +45,20 @@ export default {
   Saturday: '周六',
   numberHour: '{number}小时',
   numberDay: '{number}天',
-  hot: '热门',
-  todayUpcoming: '今日早盘',
+  hot: 'Popular',
+  todayUpcoming: 'Lo próximo de hoy',
 
   // new
-  RBInfo: '滚球 亚洲让分盘',
-  RBSize: '滚球 大小盘',
-  RBRide: '滚球 1X2',
-  PDscore: '正确比分',
+  RBInfo: 'Apuestas en vivo Hándicap asiático',
+  RBSize: 'Apuestas en vivo O/U',
+  RBRide: 'Apuestas en vivo 1X2',
+  PDscore: 'Puntuación correcta',
   casinoTitleObj: {
-    title1: '好路推荐',
-    title2: '真人百家乐',
-    title3: '赌场维护中...',
-    title4: '预计维护倒计时',
-    gohome: '去首页'
+    title1: 'Good Trend',
+    title2: 'Live Baccarat',
+    title3: 'The casino is under maintenance...',
+    title4: 'Countdown to the end of expected maintenance',
+    gohome: 'Return to home page'
   },
-  Community: '社群'
+  Community: 'Comunidad'
 }
