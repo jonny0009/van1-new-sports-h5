@@ -1,9 +1,17 @@
 <template>
   <div class="room-wrap">
     <video ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
+    <div class="video-pause" @click="pauseHandle" v-if="!videoWaiting && !videoError && videoPause">
+      <SvgIcon class="first-icon" name="live-pause" />
+    </div>
+
     <div class="mask-loading" v-if="videoWaiting">
       <div class="icon"></div>
       <div class="text">{{ $t('live.effLoading') }}...</div>
+    </div>
+    <div class="video-error" v-else-if="videoError">
+      <img :src="liveBgError" class="bg" />
+      <div class="error-title">播放异常</div>
     </div>
     <div class="video-header-info">
       <img v-img="videoInfo.leagueIcon" type="1" alt="" />
@@ -15,8 +23,7 @@
     <div class="close-btn" @click="callback">
       <SvgIcon class="close-icon" name="home-short-close" />
     </div>
-
-    <div class="match-wrap" v-if="RPlay || OUPlay">
+    <div class="match-wrap" v-if="RPlay || OUPlay" @click.stop>
       <div class="match-info">
         <div class="match-lengua text-overflow">
           <SportsIcon class="sports-icon" :icon-src="matchInfo.gameType" />
@@ -78,6 +85,7 @@ import { useRouter } from 'vue-router'
 import { mainMatches } from '@/api/live'
 import { computed } from 'vue'
 import { MarketInfo } from '@/entitys/MarketInfo'
+import liveBgError from '@/assets/images/empty/live-bg-error.svg?url'
 
 const props = defineProps({
   videoInfo: {
@@ -91,10 +99,14 @@ const props = defineProps({
 })
 watch(
   () => props.active,
-  () => {
+  async () => {
     if (props.active) {
-      getMainMatches()
-      initVideo()
+      if (player) {
+        player && player.play()
+      } else {
+        getMainMatches()
+        initVideo()
+      }
     } else {
       player && player.pause()
     }
@@ -186,11 +198,14 @@ const callback = () => {
 const videoRef = ref<HTMLDivElement | string>('')
 const videoUrl: any = ref(null)
 const videoError = ref(false)
+const videoPause = ref(false)
 const videoWaiting = ref(false)
-const videoIsInpicture = ref(false)
 let player: any = null
 const initVideo = () => {
   videoUrl.value = props.videoInfo.videoUrl
+  videoError.value = false
+  videoPause.value = false
+  videoWaiting.value = false
   const options = {
     preload: 'auto',
     width: '100%',
@@ -213,15 +228,7 @@ const initVideo = () => {
   }
   nextTick(() => {
     if (!player) {
-      player = videojs(videoRef.value, options, () => {
-        player.log('onPlayerReady')
-        const videoPip = document.pictureInPictureElement
-        if (videoPip) {
-          player.exitPictureInPicture().then(() => {
-            player.log('画中画模式已关闭')
-          })
-        }
-      })
+      player = videojs(videoRef.value, options)
     }
 
     player.muted(false)
@@ -229,30 +236,41 @@ const initVideo = () => {
 
     player.on('waiting', () => {
       videoWaiting.value = true
+      videoError.value = false
+      videoPause.value = false
     })
 
     player.on('playing', () => {
       videoWaiting.value = false
+      videoError.value = false
+      videoPause.value = false
     })
 
     player.on('error', () => {
       videoError.value = true
       videoWaiting.value = false
     })
-
-    player.on('enterpictureinpicture', () => {
-      videoIsInpicture.value = true
+    player.on('pause', () => {
+      videoPause.value = true
     })
-
-    player.on('leavepictureinpicture', () => {
-      videoIsInpicture.value = false
+    player.on('click', () => {
+      pauseHandle()
     })
   })
 }
 const disposePlayer = () => {
-  if (!videoIsInpicture.value) {
-    player && player.dispose()
-    player = null
+  player && player.dispose()
+  player = null
+}
+
+const pauseHandle = () => {
+  if (videoError.value) {
+    return false
+  }
+  if (player.paused()) {
+    player.play()
+  } else {
+    player.pause()
   }
 }
 </script>
@@ -263,17 +281,36 @@ const disposePlayer = () => {
   height: 100vh;
 
   .video-js {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
+    z-index: 8;
     width: 100% !important;
-    height: 100%;
+    height: 100% !important;
     object-fit: contain;
     margin: auto;
+    padding: 0 !important;
+
+    video {
+      position: relative;
+      z-index: -1;
+    }
+  }
+
+  .video-pause {
+    position: absolute;
+    z-index: 11;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    font-size: 100px;
   }
 
   .mask-loading {
     position: absolute;
+    z-index: 11;
     left: 0;
     top: 0;
     width: 100%;
@@ -295,10 +332,35 @@ const disposePlayer = () => {
     }
   }
 
+  .video-error {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    img {
+      width: 108px;
+      height: 100px;
+      object-fit: cover;
+    }
+    .error-title {
+      margin-top: 30px;
+      color: #fff;
+      font-size: 26px;
+      font-weight: 600;
+    }
+  }
+
   .video-header-info {
     display: flex;
     align-items: center;
     position: absolute;
+    z-index: 9;
     top: 55px;
     left: 30px;
     right: 30px;
@@ -324,7 +386,7 @@ const disposePlayer = () => {
   }
   .close-btn {
     position: absolute;
-    z-index: 9;
+    z-index: 20;
     top: 55px;
     right: 30px;
     font-size: 42px;

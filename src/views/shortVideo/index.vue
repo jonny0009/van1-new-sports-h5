@@ -16,17 +16,23 @@
         <video-info :videoInfo="video" :active="curIndex === index"></video-info>
       </swiper-slide>
     </swiper>
+    <BettingSlip v-if="bettingSlipState" ref="bettingSlipRef" @close="betClose" />
   </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import BettingSlip from '@/components/BettingSlip/index.vue'
+import { onMounted, ref, computed, watch, nextTick } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { getVideoGreet } from '@/api/live'
 import videoInfo from './videoInfo.vue'
 import 'swiper/swiper-bundle.css'
 import { useRoute } from 'vue-router'
 import { Controller } from 'swiper/modules'
+import store from '@/store'
 
+const bettingSlipRef: any = ref(null)
+const bettingSlipState: any = ref(false)
+const markets = computed(() => store.state.betting.markets)
 const controlledSwiper = ref()
 const route = useRoute()
 const videoId = route.query.videoId
@@ -44,6 +50,21 @@ const getShortVideos = async () => {
     controlledSwiper.value.slideTo(curIndex.value, 0, false)
   }
 }
+watch(
+  () => markets.value.length,
+  async (newVal, oldVal) => {
+    if (newVal > oldVal) {
+      bettingSlipState.value = true
+      await nextTick()
+      bettingSlipRef.value.open = true
+    }
+  }
+)
+const betClose = (state: boolean) => {
+  if (!state) {
+    bettingSlipState.value = false
+  }
+}
 
 onMounted(() => {
   getShortVideos()
@@ -51,7 +72,8 @@ onMounted(() => {
 const setControlledSwiper = (swiper: any) => {
   controlledSwiper.value = swiper
 }
-const change = ({ activeIndex }: any) => {
+
+const change = async ({ activeIndex }: any) => {
   curIndex.value = activeIndex
 }
 </script>
