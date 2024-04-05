@@ -291,7 +291,7 @@ const getShortVideos = async () => {
 const goShortVideo = (video: any) => {
   router.push({
     name: 'Svideo',
-    params: {
+    query: {
       videoId: video.videoId
     }
   })

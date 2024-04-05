@@ -1,5 +1,5 @@
 export default {
-  path: '/svideo/:videoId',
+  path: '/svideo',
   name: 'Svideo',
   component: () => import('@/views/shortVideo/index.vue')
 }

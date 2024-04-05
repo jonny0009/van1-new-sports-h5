@@ -30,7 +30,7 @@ import { Controller } from 'swiper/modules'
 
 const controlledSwiper = ref()
 const route = useRoute()
-const videoId = route.params.videoId
+const videoId = route.query.videoId
 const curIndex = ref(-1)
 const shortVideos: any = ref([])
 const getShortVideos = async () => {
