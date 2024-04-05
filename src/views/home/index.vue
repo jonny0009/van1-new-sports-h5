@@ -66,7 +66,7 @@ const getFirstLeaguesGameType = async () => {
       }
     })
     if (!leagueIdArr.value.length) {
-      leagueIdArr.value = []
+      leagueIdArr.value = ['']
     }
   }
 }
