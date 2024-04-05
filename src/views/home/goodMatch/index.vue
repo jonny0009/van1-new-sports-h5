@@ -96,10 +96,11 @@ watch(refreshChangeTime, (val) => {
 })
 watch(
   () => props.leagueIdArr,
-  (val, old) => {
-    if (val.join() !== old.join()) {
-      getRecommendEvents()
-    }
+  () => {
+    // val, old
+    // if (val.join() !== old.join()) {
+    // }
+    getRecommendEvents()
   }
 )
 const recommendEventsList: any = ref([])
@@ -179,7 +180,7 @@ const getLeagueIdArrIds = () => {
     }
     return ''
   }
-  if (props.leagueIdArr.length) {
+  if (props.leagueIdArr) {
     return props.leagueIdArr.join()
   }
   return ''
