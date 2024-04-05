@@ -3,7 +3,6 @@
     <swiper
       class="swiper-box"
       :direction="'vertical'"
-      :loop="shortVideos.length >= 2"
       :grabCursor="true"
       :mousewheel="true"
       :mousewheelControl="true"
@@ -13,8 +12,8 @@
       :modules="[Controller]"
       @swiper="setControlledSwiper"
     >
-      <swiper-slide class="slide-box" v-for="(info, index) in shortVideos" :key="index">
-        <info :videoInfo="info" :active="curIndex === index"></info>
+      <swiper-slide class="slide-box" v-for="(video, index) in shortVideos" :key="video.videoId">
+        <video-info :videoInfo="video" :active="curIndex === index"></video-info>
       </swiper-slide>
     </swiper>
   </div>
@@ -23,7 +22,7 @@
 import { onMounted, ref } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { getVideoGreet } from '@/api/live'
-import info from './info.vue'
+import videoInfo from './videoInfo.vue'
 import 'swiper/swiper-bundle.css'
 import { useRoute } from 'vue-router'
 import { Controller } from 'swiper/modules'
