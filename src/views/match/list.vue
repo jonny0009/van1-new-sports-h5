@@ -290,7 +290,7 @@ const getShortVideos = async () => {
 
 const goShortVideo = (video: any) => {
   router.push({
-    name: 'ShortVideo',
+    name: 'Svideo',
     params: {
       videoId: video.videoId
     }
@@ -404,7 +404,7 @@ const goShortVideo = (video: any) => {
     justify-content: space-between;
     padding: 0 35px;
 
-    :deep(.van-list__finished-text){
+    :deep(.van-list__finished-text) {
       width: 100%;
     }
 
