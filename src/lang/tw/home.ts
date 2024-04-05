@@ -49,13 +49,12 @@ export default {
   RBRide: '滾球 1X2',
   PDscore: '正確比分',
   addTimeNumber: `加时<span>{number}</span>`,
-
   casinoTitleObj: {
     title1: '好路推薦',
     title2: '真人百家樂',
-    title3: '賭場維護...',
-    title4: '預計維護倒數計時',
-    gohome: '去首頁'
+    title3: '賭場維護中...',
+    title4: '預計維修結束倒數計時',
+    gohome: '回首頁'
   },
   Community: '社群'
 }

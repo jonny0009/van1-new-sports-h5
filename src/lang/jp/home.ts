@@ -41,5 +41,22 @@ export default {
   Friday: '金曜日',
   Saturday: '土曜日',
   numberHour: '{number} 時間',
-  numberDay: '{number} 日'
+  numberDay: '{number} 日',
+  
+  hot: '人気のある',
+  todayUpcoming: '今日の予定',
+
+  // new
+  RBInfo: 'ライブベッティング アジア ハンディキャップ',
+  RBSize: 'ライブベッティング O/U',
+  RBRide: 'ライブベッティング 1X2',
+  PDscore: '正しいスコア',
+  casinoTitleObj: {
+    title1: '良い傾向',
+    title2: 'ライブバカラ',
+    title3: 'カジノはメンテナンス中です...',
+    title4: '予定されているメンテナンス終了までのカウントダウン',
+    gohome: 'ホームページに戻る'
+  },
+  Community: 'コミュニティ'
 }

@@ -84,9 +84,11 @@ export const hitParams = (bets: any) => {
 export const buyParams = (markets: any, s: any, t: any) => {
   const { userConfig } = store.state.user || {}
   const oddChangesState = store.state.betting.oddChangesState || false
-  const autoOdd = oddChangesState ? 'S' : 'N'
+  // const autoOdd = oddChangesState ? 'S' : 'N'
+  const autoRatio = oddChangesState ? 'S' : 'Y'
   const { handicapType } = userConfig || {}
-  const autoRatio = userConfig.acceptAll === 1 ? 'S' : 'N'
+  // const autoRatio = userConfig.acceptAll === 1 ? 'S' : 'N'
+  const autoOdd = userConfig.acceptAll === 1 ? 'S' : 'N'
   // 当前选择的盘口 欧洲盘/香港盘
   const oddfType = !handicapType ? 'H' : handicapType
   const betSubList: Array<any> = []
@@ -202,9 +204,13 @@ export const combosHitParams = (combosMarkets: any) => {
 // 筛选串关投注参数
 export const buyCombosParams = (markets: Array<MarketInfo>, combos: any, { s, t, gold }: any) => {
   const { userConfig } = store.state.user || {}
-  const autoRatio = userConfig.acceptAll === 1 ? 'S' : 'N'
+  // const autoRatio = userConfig.acceptAll === 1 ? 'S' : 'N'
+  const autoOdd = userConfig.acceptAll === 1 ? 'S' : 'N'
+  
   const oddChangesState = store.state.betting.oddChangesState || false
-  const autoOdd = oddChangesState ? 'S' : 'N'
+  // const autoOdd = oddChangesState ? 'S' : 'N'
+  const autoRatio = oddChangesState ? 'S' : 'Y'
+
   const betSubList = markets.map((bet: any) => {
     const {
       gidm,

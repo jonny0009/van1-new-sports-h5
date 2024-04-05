@@ -47,5 +47,13 @@ export default {
   RBInfo: 'Yuvarlanan Asya Handikapı',
   RBSize: 'Topun yukarı/aşağı yuvarlanması',
   RBRide: 'Yuvarlanan Top 1X2',
-  PDscore: 'doğru puan'
+  PDscore: 'doğru puan',
+  casinoTitleObj: {
+    title1: 'İyi Eğilim',
+    title2: 'Canlı Bakara',
+    title3: 'Kumarhane bakımda...',
+    title4: 'Beklenen bakımın sonuna doğru geri sayım',
+    gohome: 'Ana sayfaya dön'
+  },
+  Community: 'Toplum'
 }
