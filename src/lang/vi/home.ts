@@ -35,7 +35,7 @@ export default {
   img: 'trong tiến trình',
   PenaltyKickWar: 'Đá luân lưu',
   addTimeNumber: `Tăng ca<span>{number}</span>`,
-  live: 'Live streaming',
+  live: 'Cư trú',
   Sunday: 'Chủ nhật',
   Monday: 'vào thứ Hai',
   Tuesday: 'Thứ ba',
