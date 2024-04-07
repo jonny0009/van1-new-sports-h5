@@ -135,7 +135,7 @@ export function useBetting(flag: any) {
     return groupPlayList
   }
 
-  const playTypeSort = (targerArray: any[], ruleArray: any[]) => {
+  const playTypeSort = (targerArray: any[], ruleArray: any[] = []) => {
     const sortMap: any = {}
     const sortArray: any[] = []
     const otherArray: any[] = []

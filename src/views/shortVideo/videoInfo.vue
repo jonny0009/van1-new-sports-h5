@@ -372,6 +372,7 @@ const pauseHandle = () => {
       overflow: hidden;
       flex: 1;
       margin-left: 12px;
+      padding-right: 30px;
     }
     .name {
       font-size: 24px;
@@ -396,7 +397,7 @@ const pauseHandle = () => {
     justify-content: space-between;
     position: absolute;
     z-index: 9;
-    bottom: 30px;
+    bottom: 3%;
     left: 30px;
     right: 30px;
     font-size: 42px;

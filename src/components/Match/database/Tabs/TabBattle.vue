@@ -50,6 +50,22 @@ const props = defineProps({
   matchData: {
     type: Object,
     default: () => {}
+  },
+  firstHomeList: {
+    type: Array,
+    default: () => []
+  },
+  firstAwayList: {
+    type: Array,
+    default: () => []
+  },
+  backupHomeList: {
+    type: Array,
+    default: () => []
+  },
+  backupAwayList: {
+    type: Array,
+    default: () => []
   }
 })
 const matchData = computed(() => props.matchData || {})

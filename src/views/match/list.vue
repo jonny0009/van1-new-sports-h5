@@ -23,7 +23,7 @@
             <!-- 热门视频 -->
             <van-collapse-item :is-link="false" class="collapse-item" name="HOT" v-if="navActive !== 'VIDEO'">
               <template #title>
-                <div class="title-group">
+                <div class="title-group" v-if="nav.type === 'RB'">
                   <SvgIcon class="first-icon" name="home-hot-match" />
                   <span class="title">{{ $t('home.hotMatchTitle') }}</span>
                   <SvgIcon class="title-icon" name="home-triangle" :class="{ open: activeNames.includes('HOT') }" />
@@ -303,6 +303,10 @@ const goShortVideo = (video: any) => {
   :deep(.van-cell),
   :deep(.van-collapse-item__content) {
     padding: 0;
+
+    .van-list__loading {
+      margin: auto;
+    }
   }
 }
 .live-page {
