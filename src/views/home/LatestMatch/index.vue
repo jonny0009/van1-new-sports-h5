@@ -103,11 +103,14 @@ const getRecommendEvents = async (gameType: any = 'FT') => {
     gradeType: 2,
     gameType: gameType,
     // filterLeagueIds: props.leagueIdArr.join(),
-    leagueId: getLeagueIdArrIds(),
+    filterLeagueIds: getLeagueIdArrIds(),
     page: 1,
     pageSize: 10
     // startDate: dateUtil().format('YYYY-MM-DD') + ' 00:00:00',
     // endDate: dateUtil().add(1, 'day').format('YYYY-MM-DD') + ' 23:59:59'
+  }
+  if (getLeagueIdArrIds()) {
+     delete params.gradeType
   }
   const res: any = await recommendEvents(params)
   isLoading.value = true
