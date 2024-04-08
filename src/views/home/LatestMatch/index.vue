@@ -99,7 +99,7 @@ const recommendEventsListArr: any = ref([])
 const isLoading = ref(false)
 const getRecommendEvents = async (gameType: any = 'FT') => {
   isLoading.value = false
-  const params = {
+  const params:any = {
     gradeType: 2,
     gameType: gameType,
     // filterLeagueIds: props.leagueIdArr.join(),
@@ -153,6 +153,7 @@ const goHomeTime = () => {
 const leagueIdArrType: any = ref([])
 const sportTypeChange: any = ref(false)
 const returnSportsSuccess = async (val: any) => {
+  store.dispatch('user/getScrollNumY', window.scrollY)
   isLoading.value = false
   recommendEventsList.value = []
   const res: any = await recommendLeague({ gameType: val, showType: 'FAST' })
@@ -165,7 +166,7 @@ const returnSportsSuccess = async (val: any) => {
         leagueIdArrType.value.push(n.leagueId)
       }
     })
-    if (!leagueIdArrType.value.length) {
+    if (!leagueIdArrType.value.length || res?.data.total === 0) {
       leagueIdArrType.value = []
     }
     getRecommendEvents(val)
