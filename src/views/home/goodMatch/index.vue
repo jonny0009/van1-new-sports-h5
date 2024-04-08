@@ -6,7 +6,7 @@
           <ArrowTitle class="mt10 goodArrowTitle" :src="titleRecommend" :text="$t('home.goofMatch')" />
         </template>
         <div class="goodMatch">
-          <SportsTabs ref="refSportsTabs" class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess">
+          <SportsTabs ref="refSportsTabs" class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess" :ifCapstan="true">
             <template #body>
               <div class="mt10">
                 <Loading v-if="!isLoading" />
@@ -79,7 +79,7 @@ const refSportsTabs = ref()
 watch(
   () => scrollNum.value,
   (newValue) => {
-    if (newValue > 88) {
+    if (newValue) {
       refSportsTabs.value.ifAnimated = false
     }
   }
@@ -97,9 +97,6 @@ watch(refreshChangeTime, (val) => {
 watch(
   () => props.leagueIdArr,
   () => {
-    // val, old
-    // if (val.join() !== old.join()) {
-    // }
     getRecommendEvents()
   }
 )

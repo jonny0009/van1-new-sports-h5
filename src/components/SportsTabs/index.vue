@@ -9,7 +9,7 @@
       :animated="ifAnimated"
       @change="onChangeTabs"
       :swipe-threshold="3"
-      @click-tab="ifAnimated = true"
+      @click-tab="handleTabAnimated"
     >
       <van-tab v-for="(item, index) in sportsList" :key="index" :name="item.text">
         <template #title>
@@ -38,6 +38,10 @@ const props = defineProps({
   isCustom: {
     type: Boolean,
     default: () => false
+  },
+  ifCapstan: {
+    type: Boolean,
+    default: () => false
   }
 })
 
@@ -51,6 +55,13 @@ const active = ref('FT')
 const ifAnimated: any = ref(true)
 const emit = defineEmits(['returnSportsSuccess'])
 
+const handleTabAnimated = () => {
+  if (props.ifCapstan) {
+    ifAnimated.value = false
+  } else {
+    ifAnimated.value = true
+  }
+}
 const onChangeTabs = () => {
   emit('returnSportsSuccess', active.value)
 }

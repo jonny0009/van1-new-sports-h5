@@ -6,10 +6,10 @@
           <ArrowTitle :src="titleTime" :text="$t('home.latestMatch')" class="mt10 latestArrowTitle" />
         </template>
         <div class="LatestMatch">
-          <SportsTabs ref="refSportsTabs" class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess">
+          <SportsTabs ref="refSportsTabs" class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess" :ifCapstan="true">
             <template #body>
               <div class="mt10">
-                <Loading v-if="!isLoading" />
+                <Loading v-if="!isLoading" class="loadMarginTop"/>
                 <template v-else>
                   <HomeEmpty v-if="!recommendEventsList.length" class="marginAuto"></HomeEmpty>
                   <template v-for="(item, idx) in recommendEventsList" :key="idx">
@@ -69,7 +69,7 @@ const activeNames = ref('1')
 const refSportsTabs = ref()
 
 watch(() => scrollNum.value, (newValue) => {
-  if (newValue > 88) {
+  if (newValue) {
     refSportsTabs.value.ifAnimated = false
   }
 })
@@ -188,3 +188,9 @@ const getLeagueIdArrIds = () => {
 }
 
 </script>
+
+<style lang="scss" scoped>
+.loadMarginTop{
+  margin-bottom: 1000px;
+}
+</style>
