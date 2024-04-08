@@ -64,7 +64,7 @@ const i18n: any = createI18n({
     'es-es': es,
     'id-id': id,
     'zh-tw': tw,
-    'ih-in': hiInI
+    'hi-in': hiInI
   }
 })
 
