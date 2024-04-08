@@ -57,7 +57,7 @@ service.interceptors.response.use(
   (response: any) => {
     if (authCode.includes(response.data.code)) {
       // removeToken()
-      const locale: any = localStorage.getItem('locale') || getBrowserLanguage()
+      const locale: any = (localStorage.getItem('locale') || getBrowserLanguage()).toLocaleLowerCase()
       const visitor = localStorage.getItem('visitor')
 
       const inform: any = {
@@ -65,16 +65,42 @@ service.interceptors.response.use(
         'vi-vn': 'Thông tin đăng nhập đã hết hạn, vui lòng đăng nhập lại',
         'ko-kr': '로그인 정보가 만료되었습니다. 다시 로그인해 주세요.',
         'pt-pt': 'As informações de login expiraram, faça login novamente.',
+        'pt-br': 'As informações de login expiraram, faça login novamente.',
         'en-us': 'Login Information Has Expired, Please Log In Again.',
-        'ja-jp': 'ログイン情報の有効期限が切れています。再度ログインしてください.'
+        'ja-jp': 'ログイン情報の有効期限が切れています。再度ログインしてください.',
+        'ja': 'ログイン情報の有効期限が切れています。再度ログインしてください.',
+        'zh-tw': '登入資訊已失效,請重新登入',
+        'es-es': 'La información de inicio de sesión ha caducado, inicie sesión nuevamente',
+        'es': 'La información de inicio de sesión ha caducado, inicie sesión nuevamente',
+        'id-id': 'Informasi login telah habis masa berlakunya, silakan login kembali',
+        'id': 'Informasi login telah habis masa berlakunya, silakan login kembali',
+        'hi-in': 'लॉगिन जानकारी समाप्त हो गई है, कृपया दोबारा लॉग इन करें',
+        'hi': 'लॉगिन जानकारी समाप्त हो गई है, कृपया दोबारा लॉग इन करें',
+        'tr-tr': 'Giriş bilgilerinin süresi doldu, lütfen tekrar giriş yapın',
+        'tr': 'Giriş bilgilerinin süresi doldu, lütfen tekrar giriş yapın',
+        'th-th': 'ข้อมูลการเข้าสู่ระบบหมดอายุแล้ว กรุณาเข้าสู่ระบบอีกครั้ง',
+        'th': 'ข้อมูลการเข้าสู่ระบบหมดอายุแล้ว กรุณาเข้าสู่ระบบอีกครั้ง'
       }
       const informVisitor: any = {
         'zh-cn': '试玩时间已过期，请重新试玩',
         'vi-vn': 'Đã hết thời gian dùng thử, vui lòng thử lại',
         'ko-kr': '평가판 기간이 만료되었습니다. 다시 시도해 주세요.',
         'pt-pt': 'O tempo de teste expirou, tente novamente.',
+        'pt-br': 'O tempo de teste expirou, tente novamente.',
         'en-us': 'The trial time has expired, please try again.',
-        'ja-jp': '試用期間が終了しました。もう一度お試しください.'
+        'ja-jp': '試用期間が終了しました。もう一度お試しください.',
+        'ja': '試用期間が終了しました。もう一度お試しください.',
+        'zh-tw': '試玩時間已過期，請重新試玩',
+        'es-es': 'El tiempo de prueba ha expirado, inténtalo de nuevo.',
+        'es': 'El tiempo de prueba ha expirado, inténtalo de nuevo.',
+        'id-id': 'Masa uji coba telah habis, silakan coba lagi',
+        'id': 'Masa uji coba telah habis, silakan coba lagi',
+        'hi-in': 'परीक्षण का समय समाप्त हो गया है, कृपया पुनः प्रयास करें',
+        'hi': 'परीक्षण का समय समाप्त हो गया है, कृपया पुनः प्रयास करें',
+        'tr-tr': 'Deneme süresi doldu, lütfen tekrar deneyin',
+        'tr': 'Deneme süresi doldu, lütfen tekrar deneyin',
+        'th-th': 'เวลาทดลองใช้หมดลงแล้ว โปรดลองอีกครั้ง',
+        'th': 'เวลาทดลองใช้หมดลงแล้ว โปรดลองอีกครั้ง'
       }
       let message = inform[locale]
       let url = '/login'

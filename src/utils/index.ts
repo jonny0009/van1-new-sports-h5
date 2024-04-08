@@ -162,7 +162,12 @@ export const getBrowserLanguage = () => {
       'th-th': 'th-th',
       'ko-kr': 'ko-kr',
       'pt-pt': 'pt-pt',
+      'pt-br': 'pt-pt',
       'ja-jp': 'ja-jp',
+      'hi-in': 'hi-in',
+      'tr-tr': 'tr-tr',
+      'id-id': 'id-id',
+      'es-es': 'es-es',
       cn: 'zh-cn',
       tw: 'zh-tw',
       en: 'en-us',
@@ -170,7 +175,11 @@ export const getBrowserLanguage = () => {
       th: 'th-th',
       ko: 'ko-kr',
       pt: 'pt-pt',
-      jp: 'ja-jp'
+      ja: 'ja-jp',
+      hi: 'hi-in',
+      tr: 'tr-tr',
+      id: 'id-id',
+      es: 'es-es'
     }
 
     let sysLanguage = ''
