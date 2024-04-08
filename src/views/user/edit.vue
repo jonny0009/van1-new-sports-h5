@@ -18,7 +18,7 @@
       <div class="top1" @click="showPk(1)">
         <span>{{ $t('user.lang') }}</span>
         <div class="font3">
-          <span class="font2">{{ lang?.value || '简体中文' }}</span>
+          <span class="font2">{{ lang?.value }}</span>
           <img class="arrow" src="@/assets/images/login/go@2x.png" />
         </div>
       </div>
@@ -57,33 +57,36 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, reactive } from 'vue'
 import { getBrowserLanguage } from '@/utils'
-// import { queryCMerLanguage } from '@/api/auth'
-
 import { useRouter } from 'vue-router'
-// import { getCMerAccessWallet } from '@/api/user'
-const $router = useRouter()
 import localStore from '@/utils/localStore'
 import store from '@/store'
-// import { showToast } from 'vant'
-
+import { useI18n } from 'vue-i18n'
 const language: any = localStore.getItem('language')
 const lang = ref<any>(language || {})
 
+const languageList = computed(() => {
+  let LanguageB: any = []
+  const LanguageA = store.state.app.queryCMerLanguage.accessLanguage || []
+  const LanguageType = store.state.app.queryCMerLanguage.translate || {}
+  LanguageA.map((item: any) => {
+    item.value = LanguageType[item.key][item.key]
+  })
+  LanguageB = [...LanguageA]
+  return LanguageB
+})
+
 const userInfo = computed(() => store.state.user.userInfo)
 const currency = computed(() => store.state.user.currency)
-// const balance = computed(() => store.state.user.balance)
 const commonKey = reactive({ key: '' })
-// const current = ref('')
 const showBottom = ref(false)
-
 const popupTitle = ref('')
 const popupIndex = ref(0)
 
 const popupList = reactive<{ arr: any[] }>({ arr: [] })
 
-import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const title = ref(t('user.account'))
+const $router = useRouter()
 
 const plateMaskKey: any = localStore.getItem('plateMaskKey') || ''
 const plateMask = ref<any>({})
@@ -112,25 +115,17 @@ const defaultPlate = {
   value: t('user.hk'),
   key: 'H'
 }
+
 onMounted(() => {
   store.dispatch('app/queryCMerLanguage')
-  // getCurrent()
   const obj = plateData.arr.find((item: any) => {
     if (item.key === plateMaskKey || '') {
       return item
     }
   })
   plateMask.value = obj || defaultPlate
-})
-const languageList = computed(() => {
-  let LanguageB: any = []
-  const LanguageA = store.state.app.queryCMerLanguage.accessLanguage || []
-  const LanguageType = store.state.app.queryCMerLanguage.translate || {}
-  LanguageA.map((item: any) => {
-    item.value = LanguageType[item.key][item.key]
-  })
-  LanguageB = [...LanguageA]
-  return LanguageB
+
+  getLangs()
 })
 
 const goBack = () => {
@@ -167,6 +162,15 @@ async function setPk(val: any) {
     store.dispatch('user/configSettingNew', { handicapType: val.key })
   }
   showBottom.value = false
+}
+
+// 默认选中以及获取设置语言
+function getLangs() {
+  if (!lang.value?.value) {
+    const selectLang = localStorage.getItem('locale') || getBrowserLanguage()
+    const obj = languageList.value.find((item:any) => item.key === selectLang)
+    lang.value = obj
+  }
 }
 </script>
 
