@@ -107,6 +107,7 @@ const recommendEventsList: any = ref([])
 const recommendEventsListArr: any = ref([])
 const isLoading = ref(false)
 const getRecommendEvents = async (gameType: any = 'FT') => {
+  isLoading.value = false
   const params = {
     gradeType: 1,
     gameType: gameType,
@@ -117,7 +118,9 @@ const getRecommendEvents = async (gameType: any = 'FT') => {
     // startDate: dateUtil().format('YYYY-MM-DD') + ' 00:00:00',
     // endDate: dateUtil().add(1, 'day').format('YYYY-MM-DD') + ' 23:59:59'
   }
-  isLoading.value = false
+  if (getLeagueIdArrIds()) {
+    delete params.gradeType
+  }
   const res: any = await recommendEvents(params)
   isLoading.value = true
   if (res.code === 200) {
