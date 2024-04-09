@@ -2,7 +2,7 @@ import { Module } from 'vuex'
 import { App } from '#/store'
 import localStore from '@/utils/localStore'
 import { businessConfig, merchantConfig, moduleConfig, queryCMerLanguage } from '@/api/auth'
-import { getAllSports, getDoubleLineInfo, getConfig } from '@/api/common'
+import { getAllSports, getDoubleLineInfo, getConfig, getHomeTabsSports } from '@/api/common'
 import { getTheme, setTheme } from '@/utils/auth'
 
 const appModule: Module<App, any> = {
@@ -18,6 +18,7 @@ const appModule: Module<App, any> = {
     moduleConfig: {},
     doubleLineInfo: {},
     sports: [],
+    homeTabsSports: [],
     globalBarHeaderHeight: 48,
     liveBarHeaderHeight: '50.333vw',
     pictureinpictureGidm: null, // 画中画赛事id
@@ -76,6 +77,13 @@ const appModule: Module<App, any> = {
       if (res.code === 200) {
         localStore.setItem('sports', res.data)
         state.sports = localStore.getItem('sports')
+      }
+    },
+    async getHomeTabsSports({ state }) {
+      const res: any = (await getHomeTabsSports({ showType: 'FAST' })) || {}
+      if (res.code === 200) {
+        localStore.setItem('homeTabsSports', res.data)
+        state.homeTabsSports = localStore.getItem('homeTabsSports')
       }
     },
     // 获取单双线数据

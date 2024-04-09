@@ -42,6 +42,10 @@ const props = defineProps({
   ifCapstan: {
     type: Boolean,
     default: () => false
+  },
+  ifGoodMatch: {
+    type: Boolean,
+    default: () => false
   }
 })
 
@@ -66,7 +70,12 @@ const onChangeTabs = () => {
   emit('returnSportsSuccess', active.value)
 }
 const sportsList = computed(() => {
-  let sports = store.state.app.sports || []
+  let sports: any = ''
+  if (props.ifGoodMatch) {
+    sports = store.state.app.homeTabsSports || []
+  } else {
+    sports = store.state.app.sports || []
+  }
 
   if (props.isCustom) {
     sports = props.tabs
