@@ -20,6 +20,7 @@ declare interface App {
   customizeConfig: any
   matchLiveIndex: any
   homeStyle: any
+  homeTabsSports: any
 }
 
 declare interface User {

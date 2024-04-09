@@ -6,7 +6,13 @@
           <ArrowTitle class="mt10 goodArrowTitle" :src="titleRecommend" :text="$t('home.goofMatch')" />
         </template>
         <div class="goodMatch">
-          <SportsTabs ref="refSportsTabs" class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess" :ifCapstan="true">
+          <SportsTabs
+            ref="refSportsTabs"
+            class="pb10 pt10"
+            @returnSportsSuccess="returnSportsSuccess"
+            :ifCapstan="true"
+            :ifGoodMatch="true"
+          >
             <template #body>
               <div class="mt10">
                 <Loading v-if="!isLoading" />
@@ -105,7 +111,7 @@ const recommendEventsListArr: any = ref([])
 const isLoading = ref(false)
 const getRecommendEvents = async (gameType: any = 'FT') => {
   isLoading.value = false
-  const params:any = {
+  const params: any = {
     gradeType: 1,
     gameType: gameType,
     // leagueId: props.leagueIdArr.join(),

@@ -53,6 +53,8 @@ export default async () => {
     await store.dispatch('user/getCurrency')
     // 获取全部体育项
     store.dispatch('app/getAllSports')
+    // 获取首页tab体育项数量
+    store.dispatch('app/getHomeTabsSports')
     // 商户语言
     store.dispatch('app/queryCMerLanguage')
     // 获取账号信息
