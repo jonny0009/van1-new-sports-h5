@@ -2,13 +2,13 @@
   <!-- 使用切换栏组件 -->
   <div class="tabs-cut">
     <van-tabs
-      :duration="0.2"
       v-model:active="active"
+      :duration="0.2"
       shrink
       line-height="0"
       :animated="ifAnimated"
-      @change="onChangeTabs"
       :swipe-threshold="3"
+      @change="onChangeTabs"
       @click-tab="ifAnimated = true"
     >
       <van-tab v-for="(item, index) in sportsList" :key="index" :name="item.text">
@@ -17,7 +17,7 @@
             class="tabs-cut-1"
             :text="item.text"
             :active="active === item.text"
-            :showCount="true"
+            :show-count="false"
             :count="item.gameCount"
             :class="item.text"
           />
