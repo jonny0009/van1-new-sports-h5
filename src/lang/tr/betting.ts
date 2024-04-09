@@ -30,7 +30,8 @@ export default {
   errors1: {
     error1: 'Ağ zaman aşımı',
     error2: 'Bahis başarısız oldu',
-    error3: 'Hesabınızda anormal bir mesaj var ve donduruldu, eğer dondurmayı çözmek isterseniz lütfen müşteri hizmetleri personeliyle iletişime geçin.',
+    error3:
+      'Hesabınızda anormal bir mesaj var ve donduruldu, eğer dondurmayı çözmek isterseniz lütfen müşteri hizmetleri personeliyle iletişime geçin.',
     error4: 'Dakikada yalnızca 5 oturum açmaya izin veriliyor~',
     error5: 'Seçtiğiniz pazar kapatıldı',
     error6: 'Ağda anormallik, lütfen ağı kontrol edin!'
