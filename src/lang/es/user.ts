@@ -1,6 +1,6 @@
 
 export default {
-  lang: 'idioma',
+  lang: 'Language',
   search: 'buscar',
   cancellation: 'Cancelar',
   recommend: 'recomendar',

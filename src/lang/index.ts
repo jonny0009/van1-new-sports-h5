@@ -11,6 +11,7 @@ import es from './es/index'
 import id from './id/index'
 import tw from './tw/index'
 import hiInI from './in/index' // 印地
+import sg from './sg/index' // 印地
 
 import { Locale } from 'vant'
 import enUS from 'vant/es/locale/lang/en-US'
@@ -46,6 +47,8 @@ if (lang === 'en-us') {
   Locale.use('zh-TW', zhTW)
 } else if (lang === 'hi-in') {
   Locale.use('hi-IN', hiIN)
+} else if (lang === 'zh-sg') {
+  Locale.use('zh-TW', zhTW)
 }
 
 const i18n: any = createI18n({
@@ -64,6 +67,7 @@ const i18n: any = createI18n({
     'es-es': es,
     'id-id': id,
     'zh-tw': tw,
+    'zh-sg': sg,
     'hi-in': hiInI
   }
 })

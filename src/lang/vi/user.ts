@@ -1,5 +1,5 @@
 export default {
-  lang: 'Ngôn ngữ',
+  lang: 'Language',
   search: 'Tìm kiếm',
   cancellation: 'Hủy bỏ',
   recommend: 'Được đề xuất',
@@ -123,7 +123,6 @@ export default {
   text16: 'Tài khoản bị cấm',
   account: 'Số tài khoản',
 
-
   // 新增4
   hotSearch: 'Tìm kiếm phổ biến',
   lookInfo: 'Xem tin nhắn đầy đủ',
@@ -139,11 +138,8 @@ export default {
   // 新增7
   contactUs: 'Liên hệ',
   type: 'Loại',
-  homeName:'Đội nhà',
-  awayName:'Đội khách',
- 
-
-
+  homeName: 'Đội nhà',
+  awayName: 'Đội khách',
 
   sports: {
     'officeNumber': 'số trò chơi',

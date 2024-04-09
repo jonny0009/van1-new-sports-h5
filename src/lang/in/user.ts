@@ -1,6 +1,6 @@
 
 export default {
-  lang: 'भाषा',
+  lang: 'Language',
   search: 'खोज',
   cancellation: 'रद्द करना',
   recommend: 'अनुशंसा करना',

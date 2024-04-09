@@ -1,5 +1,5 @@
 export default {
-  lang: '언어',
+  lang: 'Language',
   search: '찾다',
   cancellation: '취소',
   recommend: '추천하다',

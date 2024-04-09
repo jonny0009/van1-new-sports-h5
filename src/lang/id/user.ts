@@ -1,6 +1,6 @@
 
 export default {
-  'lang': 'bahasa',
+  lang: 'Language',
   'search': 'mencari',
   'cancellation': 'Membatalkan',
   'recommend': 'menyarankan',
