@@ -1,6 +1,6 @@
 
 export default {
-  lang: 'dil',
+  lang: 'Language',
   search: 'aramak',
   cancellation: 'İptal etmek',
   recommend: 'tavsiye etmek',

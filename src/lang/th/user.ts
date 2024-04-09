@@ -1,5 +1,5 @@
 export default {
-  lang: 'ภาษา',
+  lang: 'Language',
   search: 'ค้นหา',
   cancellation: 'ยกเลิก',
   recommend: 'แนะนำ',

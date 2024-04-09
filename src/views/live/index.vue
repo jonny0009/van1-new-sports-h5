@@ -71,7 +71,8 @@ const onLoad = async () => {
   page++
   const params: any = {
     page: page,
-    pageSize: 20
+    pageSize: 20,
+    videoType: 2
   }
   if (navActive.value === 'RB') {
     params.rbType = 1

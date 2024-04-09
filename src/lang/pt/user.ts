@@ -1,5 +1,5 @@
 export default {
-  lang: 'linguagem',
+  lang: 'Language',
   search: 'procurar',
   cancellation: 'Cancelar',
   recommend: 'recomendar',
