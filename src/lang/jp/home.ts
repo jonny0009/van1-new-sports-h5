@@ -41,5 +41,23 @@ export default {
   Friday: '金曜日',
   Saturday: '土曜日',
   numberHour: '{number} 時間',
-  numberDay: '{number} 日'
+  numberDay: '{number} 日',
+  hot: '熱い',
+  todayUpcoming: '今日の午前中の取引',
+  RBInfo: 'ローリング アジアン ハンディキャップ',
+  RBSize: 'ボールを上/下に転がす',
+  RBRide: 'ローリング ボール 1X2',
+  PDscore: '正しいスコア',
+
+  hotMatchTitle: 'ホット',
+  comingSoonTitle: '遊びに来ます',
+  shortVideoTitle: 'ショートビデオ',
+  casinoTitleObj: {
+    title1: '良い道路の推奨事項',
+    title2: 'ライブバカラ',
+    title3: 'カジノはメンテナンス中です...',
+    title4: '推定メンテナンスカウントダウン',
+    gohome: 'ホームページに移動'
+  },
+  Community: 'コミュニティ'
 }

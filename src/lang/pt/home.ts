@@ -49,11 +49,17 @@ export default {
   RBSize: 'Mais/Menos Jogo Completo',
   RBRide: 'Resultado Final 1X2',
   PDscore: 'Pontuação Correcta',
+
+  hotMatchTitle: 'Quente',
+  comingSoonTitle: 'Vindo para jogar',
+  shortVideoTitle: 'Vídeo curto',
   casinoTitleObj: {
     title1: 'Boas recomendações de estradas',
     title2: 'Baccarat ao Vivo',
     title3: 'O cassino está em manutenção...',
     title4: 'Contagem regressiva estimada para manutenção',
     gohome: 'Ir para a página inicial'
-  }
+  },
+  Community: 'comunidade'
+
 }

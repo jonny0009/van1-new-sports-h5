@@ -57,12 +57,12 @@ const homeBarList = ref([
     meta: {
       showSportsTabsView: true
     }
-  },
-  {
-    icon: 'casino',
-    text: t('home.casino'),
-    routerName: 'Casino'
   }
+  // {
+  //   icon: 'casino',
+  //   text: t('home.casino'),
+  //   routerName: 'Casino'
+  // }
 ])
 
 const goClick = ({ routerName }: any) => {

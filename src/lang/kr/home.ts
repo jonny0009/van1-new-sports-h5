@@ -52,11 +52,15 @@ export default {
   RBSize: '라이브 크기',
   RBRide: '라이브 1X2',
   PDscore: '정확한 점수',
-  casinoTitleObj: {
+  hotMatchTitle: '핫',
+  comingSoonTitle: '놀러 갑니다',
+  shortVideoTitle: '짧은 동영상',
+  CasinoTitleObj: {
     title1: '좋은 도로 추천',
     title2: '라이브 바카라',
     title3: '카지노는 유지 관리 중입니다...',
     title4: '예상 유지보수 카운트다운',
     gohome: '홈페이지로 이동'
-  }
+  },
+  Community: '커뮤니티'
 }

@@ -26,37 +26,43 @@ export default {
 
   // 机翻译
   stayTuned: 'Giữ nguyên',
-  HNumber1: `nửa đầu<span class='time-h-Up'>{number}</span>`,
-  HNumber2: `một nửa thứ hai<span class='time-h-d'>{number}</span>`,
-  bout: 'Đĩa {number}',
-  set: 'Trò chơi {number}',
-  down: 'Xuống',
-  up: 'thượng đẳng',
-  img: 'trong tiến trình',
-  PenaltyKickWar: 'Đá luân lưu',
-  addTimeNumber: `Tăng ca<span>{number}</span>`,
-  live: 'Live streaming',
-  Sunday: 'Chủ nhật',
-  Monday: 'vào thứ Hai',
-  Tuesday: 'Thứ ba',
-  Wednesday: 'Thứ Tư',
-  Thursday: 'Thứ năm',
-  Friday: 'Thứ sáu',
-  Saturday: 'Thứ bảy',
-  numberHour: '{number}tiếng',
-  numberDay: '{number}ngày',
-  hot: 'nóng',
-  todayUpcoming: 'hôm naySắp tới',
-  // new
+  'HNumber1': `nửa đầu<span class='time-h-Up'>{number}</span>`,
+  'HNumber2': `một nửa thứ hai<span class='time-h-d'>{number}</span>`,
+  'bout': 'Đĩa {number}',
+  'set': 'Trò chơi {number}',
+  'down': 'Xuống',
+  'up': 'thượng đẳng',
+  'img': 'trong tiến trình',
+  'PenaltyKickWar': 'Đá luân lưu',
+  'addTimeNumber': `Tăng ca<span>{number}</span>`,
+  'live': 'Live streaming',
+  'Sunday': 'Chủ nhật',
+  'Monday': 'vào thứ Hai',
+  'Tuesday': 'Thứ ba',
+  'Wednesday': 'Thứ Tư',
+  'Thursday': 'Thứ năm',
+  'Friday': 'Thứ sáu',
+  'Saturday': 'Thứ bảy',
+  'numberHour': '{number}tiếng',
+  'numberDay': '{number}ngày',
+  'hot': 'nóng',
+  'todayUpcoming': 'hôm naySắp tới',
+
   RBInfo: 'Chấp châu Á toàn bộ trận đấu',
   RBSize: 'Trên/Dưới toàn bộ trận đấu',
   RBRide: 'Toàn trận 1X2',
   PDscore: 'Điểm số chính xác',
+
+  hotMatchTitle: 'Nóng',
+  comingSoonTitle: 'Sắp chơi',
+  shortVideoTitle: 'Video ngắn',
   casinoTitleObj: {
     title1: 'Khuyến nghị đường tốt',
     title2: 'Baccarat trực tiếp',
     title3: 'Sòng bạc đang được bảo trì...',
     title4: 'Đếm ngược thời gian bảo trì ước tính',
-    gohome: 'Truy cập trang chủ'
-  }
+    gohome: 'Vào trang chủ'
+  },
+  Community: 'cộng đồng'
+
 }
