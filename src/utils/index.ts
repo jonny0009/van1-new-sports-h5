@@ -168,7 +168,7 @@ export const getBrowserLanguage = () => {
       'tr-tr': 'tr-tr',
       'id-id': 'id-id',
       'es-es': 'es-es',
-      cn: 'zh-cn',
+      zh: 'zh-cn',
       tw: 'zh-tw',
       en: 'en-us',
       vi: 'vi-vn',
