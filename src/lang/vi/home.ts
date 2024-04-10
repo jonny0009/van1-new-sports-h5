@@ -47,10 +47,22 @@ export default {
   'numberDay': '{number}ngày',
   'hot': 'nóng',
   'todayUpcoming': 'hôm naySắp tới',
-   // new
-   RBInfo: 'Chấp châu Á toàn bộ trận đấu',
-   RBSize: 'Trên/Dưới toàn bộ trận đấu',
-   RBRide: 'Toàn trận 1X2',
-   PDscore: 'Điểm số chính xác',
-   
+
+  RBInfo: 'Chấp châu Á toàn bộ trận đấu',
+  RBSize: 'Trên/Dưới toàn bộ trận đấu',
+  RBRide: 'Toàn trận 1X2',
+  PDscore: 'Điểm số chính xác',
+
+  hotMatchTitle: 'Nóng',
+  comingSoonTitle: 'Sắp chơi',
+  shortVideoTitle: 'Video ngắn',
+  casinoTitleObj: {
+    title1: 'Khuyến nghị đường tốt',
+    title2: 'Baccarat trực tiếp',
+    title3: 'Sòng bạc đang được bảo trì...',
+    title4: 'Đếm ngược thời gian bảo trì ước tính',
+    gohome: 'Vào trang chủ'
+  },
+  Community: 'cộng đồng'
+
 }
