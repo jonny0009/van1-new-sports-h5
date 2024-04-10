@@ -14,7 +14,7 @@
     <EmptyData v-else />
   </section>
   <van-popup round v-model:show="show" position="bottom" teleport="body" :style="{ height: '84%' }">
-    <iframe width="100%" height="100%" style="border: none" :src="url" frameborder="0"></iframe>
+    <iframe width="100%" ref="iframeRef" height="100%" style="border: none" :src="url" frameborder="0"></iframe>
   </van-popup>
 </template>
 
@@ -24,6 +24,7 @@ import TableInfo from './TableInfo.vue'
 import { ref } from 'vue'
 import { closeToast, showLoadingToast } from 'vant'
 import { getBrowserLanguage } from '@/utils'
+import { BaccaratUtils } from '@/utils/BaccaratUtils'
 defineProps({
   list: {
     type: Object,
@@ -35,8 +36,9 @@ defineProps({
   }
 })
 const show = ref(false)
+const iframeRef = ref()
+const baccaratUtils = ref()
 const url = ref('')
-
 const goodRoadShow = async () => {
   show.value = !show.value
   const params = {
@@ -53,6 +55,13 @@ const goodRoadShow = async () => {
   const gres: any = await getBJGameUrl(params).finally(() => {
     closeToast()
   })
+
+  if (!baccaratUtils.value) {
+    baccaratUtils.value = new BaccaratUtils(iframeRef.value, () => {
+      show.value = false
+    })
+  }
+
   if (gres?.code === 200) {
     const lang = localStorage.getItem('locale') || getBrowserLanguage()
     const gameUrl = gres.data['url'].replace('&isAi=1', '')
