@@ -48,11 +48,11 @@ export default {
   hot: 'เป็นที่นิยม',
   todayUpcoming: 'การซื้อขายช่วงเช้าของวันนี้',
 
-  // new
   RBInfo: 'โรลลิ่งเอเชียนแฮนดิแคป',
   RBSize: 'การกลิ้งบอลสูง/ต่ำ',
   RBRide: 'ลูกบอลกลิ้ง 1X2',
   PDscore: 'คะแนนที่ถูกต้อง',
+<<<<<<< HEAD
   casinoTitleObj: {
     title1: 'เทรนด์ดี',
     title2: 'บาคาร่าสด',
@@ -62,4 +62,18 @@ export default {
   },
   Community: 'ชุมชน'
 
+=======
+
+  hotMatchTitle: 'ร้อนแรง',
+  comingSoonTitle: 'กำลังมาเล่น',
+  shortVideoTitle: 'วิดีโอสั้น',
+  casinoTitleObj: {
+    title1: 'คำแนะนำถนนที่ดี',
+    title2: 'บาคาร่าสด',
+    title3: 'คาสิโนอยู่ระหว่างการบำรุงรักษา...',
+    title4: 'การนับถอยหลังการบำรุงรักษาโดยประมาณ',
+    gohome: 'ไปที่หน้าแรก'
+  },
+  Community: 'ชุมชน'
+>>>>>>> feature/duchang
 }

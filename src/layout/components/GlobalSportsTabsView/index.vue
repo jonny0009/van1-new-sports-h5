@@ -134,6 +134,11 @@ const homeStyleBarList = ref([
     text: t('home.casino'),
     routerName: 'Casino'
   }
+  // {
+  //   icon: 'casino',
+  //   text: t('home.casino'),
+  //   routerName: 'Casino'
+  // }
 ])
 
 // 获取bar

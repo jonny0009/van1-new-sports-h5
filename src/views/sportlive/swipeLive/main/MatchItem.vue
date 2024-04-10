@@ -20,7 +20,7 @@
 <script lang="ts" setup>
 import { useMatch } from '@/utils/useMatch'
 const setMatch: any = useMatch()
-import VideoBox from './child/VideoBox.vue'
+import VideoBox from './child/VideoBox'
 import coverFt from './child/assets/ft.jpg'
 import { ref, computed, watch, onBeforeMount, nextTick } from 'vue'
 import { extendInfo } from '@/api/live'

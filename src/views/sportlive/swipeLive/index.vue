@@ -1,7 +1,7 @@
 <template>
   <div v-if="swipeList.length" class="swipeLive">
     <van-swipe class="my-swipe" indicator-color="white" @change="swipeChange">
-      <van-swipe-item v-for="(match, idx) in swipeList" :key="idx">
+      <van-swipe-item v-for="(match, idx) in swipeList" :key="idx" @click="goDetails(match)">
         <div class="wrap">
           <MatchItem :key="match.gidm" :live-info="match" :match-index="idx" :active-index="activeIndex" />
         </div>
@@ -28,6 +28,21 @@ const init = async () => {
     const dataArray = res?.data?.list || []
     swipeList.value = dataArray
   }
+}
+
+const goDetails = (item: any) => {
+  if (!item) {
+    return
+  }
+  const { gidm } = item
+  const params = {
+    name: 'MatchDetail',
+    params: {
+      id: gidm
+    }
+  }
+  router.push(params)
+  store.dispatch('app/setMatchLiveIndex', 1)
 }
 
 const swipeChange = (index: any) => {

@@ -50,6 +50,12 @@ export default {
   RBSize: 'RB O/U',
   RBRide: 'RB 1X2',
   PDscore: 'Correct Score',
+<<<<<<< HEAD
+=======
+  hotMatchTitle: 'Hot',
+  comingSoonTitle: 'Coming to play',
+  shortVideoTitle: 'Short video',
+>>>>>>> feature/duchang
   casinoTitleObj: {
     title1: 'Good road recommendations',
     title2: 'Live Baccarat',
@@ -57,5 +63,9 @@ export default {
     title4: 'Estimated maintenance countdown',
     gohome: 'Go to homepage'
   },
+<<<<<<< HEAD
   Community: 'Community'
+=======
+  Community: 'community'
+>>>>>>> feature/duchang
 }

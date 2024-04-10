@@ -41,5 +41,23 @@ export default {
   'Friday': 'शुक्रवार',
   'Saturday': 'शनिवार',
   'numberHour': '{number} घंटे',
-  'numberDay': '{number} दिन'
+  'numberDay': '{number} दिन',
+  hot: 'कामुक',
+  todayUpcoming: 'आज की सुबह की ट्रेडिंग',
+  RBInfo: 'रोलिंग एशियन हैंडीकैप',
+  RBSize: 'रोलिंग बॉल ओवर/अंडर',
+  RBRide: 'रोलिंग बॉल 1X2',
+  PDscore: 'सही स्कोर',
+
+  hotMatchTitle: 'हॉट',
+  comingSoonTitle: 'खेलने आ रहा हूं',
+  shortVideoTitle: 'लघुवीडियो',
+  casinoTitleObj: {
+    title1: 'अच्छी सड़क अनुशंसाएँ',
+    title2: 'लाइव बैकारेट',
+    title3: 'कैसीनो रखरखाव के अधीन है...',
+    title4: 'अनुमानित रखरखाव उलटी गिनती',
+    gohome: 'होमपेज पर जाएं'
+  },
+  Community: 'समुदाय'
 }

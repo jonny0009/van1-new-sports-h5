@@ -42,6 +42,7 @@ export default {
   Saturday: '土曜日',
   numberHour: '{number} 時間',
   numberDay: '{number} 日',
+<<<<<<< HEAD
   
   hot: '人気のある',
   todayUpcoming: '今日の予定',
@@ -57,6 +58,24 @@ export default {
     title3: 'カジノはメンテナンス中です...',
     title4: '予定されているメンテナンス終了までのカウントダウン',
     gohome: 'ホームページに戻る'
+=======
+  hot: '熱い',
+  todayUpcoming: '今日の午前中の取引',
+  RBInfo: 'ローリング アジアン ハンディキャップ',
+  RBSize: 'ボールを上/下に転がす',
+  RBRide: 'ローリング ボール 1X2',
+  PDscore: '正しいスコア',
+
+  hotMatchTitle: 'ホット',
+  comingSoonTitle: '遊びに来ます',
+  shortVideoTitle: 'ショートビデオ',
+  casinoTitleObj: {
+    title1: '良い道路の推奨事項',
+    title2: 'ライブバカラ',
+    title3: 'カジノはメンテナンス中です...',
+    title4: '推定メンテナンスカウントダウン',
+    gohome: 'ホームページに移動'
+>>>>>>> feature/duchang
   },
   Community: 'コミュニティ'
 }

@@ -43,6 +43,7 @@ export default {
   numberHour: '{number} Jam',
   numberDay: '{number} Hari',
 
+<<<<<<< HEAD
   hot: 'Populer',
   todayUpcoming: 'Yang Akan Datang Hari Ini',
 
@@ -59,4 +60,24 @@ export default {
     gohome: 'Kembali ke halaman beranda'
   },
   Community: 'Masyarakat'
+=======
+  hot: 'panas',
+  todayUpcoming: 'Perdagangan pagi hari ini',
+  RBInfo: 'Handicap Asia yang Bergulir',
+  RBSize: 'Menggulirkan bola ke atas/bawah',
+  RBRide: 'Bola Bergulir 1X2',
+  PDscore: 'skor benar',
+  hotMatchTitle: 'Panas',
+  comingSoonTitle: 'Akan dimainkan',
+  shortVideoTitle: 'Video pendek',
+  casinoTitleObj: {
+    title1: 'Rekomendasi jalan yang bagus',
+    title2: 'Baccarat Langsung',
+    title3: 'Kasino sedang dalam pemeliharaan...',
+    title4: 'Perkiraan hitungan mundur pemeliharaan',
+    gohome: 'Buka beranda'
+  },
+  Community: 'komunitas'
+
+>>>>>>> feature/duchang
 }
