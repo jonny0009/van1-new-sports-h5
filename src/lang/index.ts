@@ -12,6 +12,7 @@ import es from './es/index'
 import id from './id/index'
 import tw from './tw/index'
 import hiInI from './in/index' // 印地
+import tr from './tr/index' // 印地
 
 import { Locale } from 'vant'
 import enUS from 'vant/es/locale/lang/en-US'
@@ -24,6 +25,7 @@ import idID from 'vant/es/locale/lang/id-ID' // 印度尼西亚语
 import hiIN from 'vant/es/locale/lang/hi-IN' // 印地
 import esES from 'vant/es/locale/lang/es-ES' // 世界语
 import zhTW from 'vant/es/locale/lang/zh-TW'
+import trTR from 'vant/es/locale/lang/tr-TR'
 
 if (getURLSearchParams().lang) {
   localStorage.setItem('locale', getURLSearchParams().lang)
@@ -50,6 +52,8 @@ if (lang === 'en-us') {
   Locale.use('zh-TW', zhTW)
 } else if (lang === 'hi-in') {
   Locale.use('hi-IN', hiIN)
+} else if (lang === 'tr-tr') {
+  Locale.use('tr-TR', trTR)
 }
 
 const i18n: any = createI18n({
@@ -68,7 +72,8 @@ const i18n: any = createI18n({
     'es-es': es,
     'id-id': id,
     'zh-tw': tw,
-    'hi-in': hiInI
+    'hi-in': hiInI,
+    'tr-tr': tr
   }
 })
 
