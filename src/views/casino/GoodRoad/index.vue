@@ -14,12 +14,13 @@
     <EmptyData v-else />
   </section>
   <van-popup round v-model:show="show" position="bottom" teleport="body" :style="{ height: '84%' }">
-    <iframe width="100%" height="100%" style="border: none" :src="url" frameborder="0"></iframe>
+    <iframe width="100%" ref="iframeRef" height="100%" style="border: none" :src="url" frameborder="0"></iframe>
   </van-popup>
 </template>
 
 <script lang="ts" setup>
 // import { getBJGameUrl } from '@/api/home'
+// import { BaccaratUtils } from '@/utils/BaccaratUtils'
 import TableInfo from './TableInfo.vue'
 import { ref } from 'vue'
 // import { closeToast, showLoadingToast } from 'vant'
@@ -35,6 +36,8 @@ defineProps({
 })
 const show = ref(false)
 const url = ref('')
+const iframeRef = ref()
+// const baccaratUtils = ref()
 
 // const goodRoadShow = async () => {
 //   show.value = !show.value
@@ -52,6 +55,13 @@ const url = ref('')
 //   const gres: any = await getBJGameUrl(params).finally(() => {
 //     closeToast()
 //   })
+
+//   if (!baccaratUtils.value) {
+//     baccaratUtils.value = new BaccaratUtils(iframeRef.value, () => {
+//       show.value = false
+//     })
+//   }
+
 //   if (gres?.code === 200) {
 //     const gameUrl = gres.data['url'].replace('&isAi=1', '')
 //     url.value = `${gameUrl}#/multiple`
