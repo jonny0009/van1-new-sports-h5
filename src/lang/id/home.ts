@@ -43,20 +43,22 @@ export default {
   numberHour: '{number} Jam',
   numberDay: '{number} Hari',
 
-  hot: '热门',
-  todayUpcoming: '今日早盘',
-
-  // new
-  RBInfo: '滚球 亚洲让分盘',
-  RBSize: '滚球 大小盘',
-  RBRide: '滚球 1X2',
-  PDscore: '正确比分',
+  hot: 'panas',
+  todayUpcoming: 'Perdagangan pagi hari ini',
+  RBInfo: 'Handicap Asia yang Bergulir',
+  RBSize: 'Menggulirkan bola ke atas/bawah',
+  RBRide: 'Bola Bergulir 1X2',
+  PDscore: 'skor benar',
+  hotMatchTitle: 'Panas',
+  comingSoonTitle: 'Akan dimainkan',
+  shortVideoTitle: 'Video pendek',
   casinoTitleObj: {
-    title1: '好路推荐',
-    title2: '真人百家乐',
-    title3: '赌场维护中...',
-    title4: '预计维护倒计时',
-    gohome: '去首页'
+    title1: 'Rekomendasi jalan yang bagus',
+    title2: 'Baccarat Langsung',
+    title3: 'Kasino sedang dalam pemeliharaan...',
+    title4: 'Perkiraan hitungan mundur pemeliharaan',
+    gohome: 'Buka beranda'
   },
-  Community: '社群'
+  Community: 'komunitas'
+
 }
