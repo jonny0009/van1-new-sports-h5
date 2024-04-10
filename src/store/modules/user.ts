@@ -14,7 +14,8 @@ import { getToken, setToken, removeToken, getAnonymity, setAnonymity } from '@/u
 import { configSettingNew } from '@/api/auth'
 import localStore from '@/utils/localStore'
 import { anonyToken } from '@/api/common'
-const isAnonymity = getAnonymity()
+// const isAnonymity = getAnonymity()
+const isAnonymity = false
 const userModule: Module<User, any> = {
   namespaced: true,
   state: {
@@ -44,8 +45,8 @@ const userModule: Module<User, any> = {
       setToken(token)
     },
     SET_ANONYMITY: (state, status) => {
-      state.isAnonymity = status
-      setAnonymity(status)
+      // state.isAnonymity = status
+      // setAnonymity(status)
     }
   },
   actions: {
@@ -185,7 +186,7 @@ const userModule: Module<User, any> = {
         state.pendingData = res.data || []
         // 提前结算信息
         const aheadOrderList: any = []
-        res.data.map((m:any) => {
+        res.data.map((m: any) => {
           if (m.creditState === 0) {
             const orderObj = {
               orderId: m.orderId
