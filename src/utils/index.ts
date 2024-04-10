@@ -168,10 +168,7 @@ export const getBrowserLanguage = () => {
       'tr-tr': 'tr-tr',
       'id-id': 'id-id',
       'es-es': 'es-es',
-<<<<<<< HEAD
       'zh-sg': 'zh-sg',
-=======
->>>>>>> feature/setloca
       zh: 'zh-cn',
       tw: 'zh-tw',
       en: 'en-us',
