@@ -15,6 +15,8 @@ export default async () => {
     store.commit('user/SET_TOKEN', searchParams.token)
     store.commit('user/SET_ANONYMITY', false)
   }
+
+  searchParams.lang && localStore.setItem('locale', searchParams.lang)
   // if (searchParams.theme) {
   //   store.commit('app/SET_THEME', searchParams.theme)
   // }
