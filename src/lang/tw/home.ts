@@ -48,11 +48,7 @@ export default {
   RBSize: '滾球 大小盤',
   RBRide: '滾球 1X2',
   PDscore: '正確比分',
-<<<<<<< HEAD
-  addTimeNumber: `加时<span>{number}</span>`,
-=======
 
->>>>>>> feature/duchang
   casinoTitleObj: {
     title1: '好路推薦',
     title2: '真人百家樂',

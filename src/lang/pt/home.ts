@@ -49,13 +49,10 @@ export default {
   RBSize: 'Mais/Menos Jogo Completo',
   RBRide: 'Resultado Final 1X2',
   PDscore: 'Pontuação Correcta',
-<<<<<<< HEAD
-=======
 
   hotMatchTitle: 'Quente',
   comingSoonTitle: 'Vindo para jogar',
   shortVideoTitle: 'Vídeo curto',
->>>>>>> feature/duchang
   casinoTitleObj: {
     title1: 'Boas recomendações de estradas',
     title2: 'Baccarat ao Vivo',
@@ -63,10 +60,6 @@ export default {
     title4: 'Contagem regressiva estimada para manutenção',
     gohome: 'Ir para a página inicial'
   },
-<<<<<<< HEAD
   Community: 'Comunidade'
-=======
-  Community: 'comunidade'
 
->>>>>>> feature/duchang
 }
