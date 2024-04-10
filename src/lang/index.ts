@@ -1,5 +1,6 @@
 import { createI18n } from 'vue-i18n'
-import { getBrowserLanguage } from '@/utils'
+import { getBrowserLanguage, getURLSearchParams } from '@/utils'
+
 import en from './en/index'
 import cn from './cn/index'
 import vi from './vi/index'
@@ -24,6 +25,9 @@ import hiIN from 'vant/es/locale/lang/hi-IN' // 印地
 import esES from 'vant/es/locale/lang/es-ES' // 世界语
 import zhTW from 'vant/es/locale/lang/zh-TW'
 
+if (getURLSearchParams().lang) {
+  localStorage.setItem('locale', getURLSearchParams().lang)
+}
 const lang = localStorage.getItem('locale') || getBrowserLanguage()
 
 if (lang === 'en-us') {
