@@ -59,7 +59,7 @@ const cover = computed(() => {
 
 const classList = ['he', 'xian', 'zhuang', 'zhuang']
 const wins = computed(() => {
-  let daluMatrix = createDaLu(props.tableInfo.wins)
+  let daluMatrix = createDaLu(props.tableInfo.wins || [])
   if (daLuIsFirstZores(daluMatrix)) {
     const matrixList: any[] = []
     let heCount = 0
