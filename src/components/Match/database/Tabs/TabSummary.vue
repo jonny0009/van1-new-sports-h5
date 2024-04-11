@@ -60,7 +60,7 @@ defineProps({
   }
 })
 
-const activeNames = ref(['1'])
+const activeNames = ref(['1', '2', '3'])
 </script>
 
 <style lang="scss" scoped>

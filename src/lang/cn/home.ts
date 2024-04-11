@@ -63,5 +63,6 @@ export default {
     title4: '预计维护倒计时',
     gohome: '去首页'
   },
-  Community: '社群'
+  Community: '社群',
+  multipleBetting: '多台下注'
 }

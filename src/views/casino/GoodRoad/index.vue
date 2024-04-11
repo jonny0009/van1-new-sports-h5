@@ -4,7 +4,7 @@
       <span>{{ $t('home.casinoTitleObj.title1') }}</span>
       <div class="multiple-units" @click="goodRoadShow">
         <span class="units-icon"></span>
-        <span class="units-title">多台下注</span>
+        <span class="units-title">{{ $t('home.multipleBetting') }}</span>
       </div>
     </div>
     <Loading v-if="loading" />
@@ -25,6 +25,9 @@ import { ref } from 'vue'
 import { closeToast, showLoadingToast } from 'vant'
 import { getBrowserLanguage } from '@/utils'
 import { BaccaratUtils } from '@/utils/BaccaratUtils'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
 defineProps({
   list: {
     type: Object,
@@ -50,7 +53,7 @@ const goodRoadShow = async () => {
   }
   showLoadingToast({
     duration: 20000,
-    message: '加载中...'
+    message: t('home.loading')
   })
   const gres: any = await getBJGameUrl(params).finally(() => {
     closeToast()
