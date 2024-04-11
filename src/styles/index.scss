@@ -6,6 +6,7 @@
 
 #app {
   height: 100%;
+  overflow-x: hidden;
 }
 .video-box-wrap{
   .video-js .vjs-tech {
@@ -53,10 +54,10 @@
   background: var(--color-primary) !important;
   border: 1px solid var(--color-primary) !important;
 }
-.van-calendar__day--end, 
+.van-calendar__day--end,
 .van-calendar__day--start,
 .van-calendar__day--start-end,
-.van-calendar__day--multiple-middle, 
+.van-calendar__day--multiple-middle,
 .van-calendar__day--multiple-selected{
   background: var(--color-primary) !important;
 }
@@ -404,14 +405,14 @@
           line-height: 24px;
           font-size: 24px;
           color: var(--color-text-3);
-          white-space: nowrap; 
+          white-space: nowrap;
           overflow: hidden;
           text-overflow:ellipsis;
           display: inline-flex;
           max-width: 100%;
           .team{
             flex: 1;
-            white-space: nowrap; 
+            white-space: nowrap;
             overflow: hidden;
             text-overflow:ellipsis;
             display: inline-block;
@@ -577,7 +578,7 @@
         }
       }
     }
-    
+
   }
 }
 .home-tabs-play{
