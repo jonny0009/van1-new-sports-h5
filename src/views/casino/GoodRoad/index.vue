@@ -4,7 +4,7 @@
       <span>{{ $t('home.casinoTitleObj.title1') }}</span>
       <div class="multiple-units" @click="goodRoadShow">
         <span class="units-icon"></span>
-        <span class="units-title">{{ "home.mulBet" }}</span>
+        <span class="units-title">{{ $t("home.mulBet") }}</span>
       </div>
     </div>
     <Loading v-if="loading" />
