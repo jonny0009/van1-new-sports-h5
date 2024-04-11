@@ -104,7 +104,7 @@ const home = computed(() => {
 const away = computed(() => {
   return props.matchData?.awayTeamShort || props.matchData?.awayTeam
 })
-const activeNames = ref(['1'])
+const activeNames = ref(['1', '2'])
 
 const teamType = ref(1)
 const fetchRecent = async (state: number = 1) => {

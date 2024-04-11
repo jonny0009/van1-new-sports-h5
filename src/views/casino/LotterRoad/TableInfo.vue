@@ -31,6 +31,7 @@ import { closeToast, showLoadingToast } from 'vant'
 import { computed, ref } from 'vue'
 import CurrencyComp from '@/components/Currency/index.vue'
 import tableBg from '@/assets/images/casino/table-bg.jpg?url'
+import { getBrowserLanguage } from '@/utils'
 const props = defineProps({
   tableInfo: {
     type: Object,
@@ -141,14 +142,11 @@ const goToGame = async () => {
   if (gres?.code === 200) {
     closeToast()
     const gameUrl = gres.data['url'].replace('&isAi=1', '')
-    window.location.href =
-      gameUrl +
-      '&source=7lucky&hasLive=1&brandType=' +
-      brandType +
-      '&tableId=' +
-      tableId +
-      '&sourceUrl=' +
-      encodeURIComponent(window.location.href)
+    const lang = localStorage.getItem('locale') || getBrowserLanguage()
+    const herf = `${gameUrl}&source=7lucky&hasLive=1&language=${lang}&brandType=${brandType}&tableId=${tableId}&sourceUrl=${encodeURIComponent(
+      window.location.href
+    )}`
+    window.location.href = herf
   }
 }
 </script>

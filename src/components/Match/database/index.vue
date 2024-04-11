@@ -1,6 +1,14 @@
 <template>
   <div class="database">
-    <van-tabs v-model:active="tabActive" scrollspy shrink sticky offset-top="12.8vw" :border="false" line-height="0">
+    <van-tabs
+      v-model:active="tabActive"
+      scrollspy
+      shrink
+      :sticky="sticky"
+      offset-top="12.8vw"
+      :border="false"
+      line-height="0"
+    >
       <van-tab :disabled="!tab.active" v-for="(tab, index) in tabList" :key="index" :name="tab.name">
         <template #title>
           <div class="tab-title" :class="{ active: tab.active }">
@@ -47,7 +55,12 @@ import TabRecord from './Tabs/TabRecord.vue'
 import TabEvents from './Tabs/TabEvents.vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
-
+defineProps({
+  sticky: {
+    type: Boolean,
+    default: false
+  }
+})
 const { t } = useI18n()
 
 const allNothing = computed(() => {
