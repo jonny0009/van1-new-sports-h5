@@ -13,8 +13,8 @@
     </div>
     <EmptyData v-else />
   </section>
-  <van-popup v-model:show="show" round position="bottom" teleport="body" :style="{ height: '84%' }">
-    <iframe ref="iframeRef" width="100%" height="100%" style="border: none" :src="url" frameborder="0"></iframe>
+  <van-popup round v-model:show="show" position="bottom" teleport="body" :style="{ height: '84%' }">
+    <iframe width="100%" ref="iframeRef" height="100%" style="border: none" :src="url" frameborder="0"></iframe>
   </van-popup>
 </template>
 
@@ -25,6 +25,9 @@ import { ref } from 'vue'
 import { closeToast, showLoadingToast } from 'vant'
 import { getBrowserLanguage } from '@/utils'
 import { BaccaratUtils } from '@/utils/BaccaratUtils'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
 defineProps({
   list: {
     type: Object,
@@ -50,7 +53,7 @@ const goodRoadShow = async () => {
   }
   showLoadingToast({
     duration: 20000,
-    message: '加载中...'
+    message: t('home.loading')
   })
   const gres: any = await getBJGameUrl(params).finally(() => {
     closeToast()
