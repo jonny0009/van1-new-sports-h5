@@ -1,6 +1,6 @@
 <template>
   <section class="good-road-view">
-    <div class="title">真人百家乐</div>
+    <div class="title">{{ $t('home.casinoTitleObj.title2') }}</div>
     <Loading v-if="loading" />
     <div class="list" v-else-if="list.length">
       <TableInfo v-for="(item, index) in list" :key="index" :tableInfo="item"></TableInfo>

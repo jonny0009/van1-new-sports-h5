@@ -2,10 +2,10 @@
   <div class="casino-page" :class="{ 'has-bet': showFixedBet }">
     <div class="maintenance-view" v-if="maintenanceState">
       <div class="maintenance-icon" :style="{ backgroundImage: `url(${bg})` }"></div>
-      <div class="maintenance-title">赌场维护中...</div>
-      <div class="maintenance-subtitle" v-if="timerState">预计维护倒计时</div>
+      <div class="maintenance-title">{{ $t('home.casinoTitleObj.title3') }}</div>
+      <div class="maintenance-subtitle" v-if="timerState">{{ $t('home.casinoTitleObj.title4') }}</div>
       <div class="maintenance-timer" v-if="timerState">{{ timerStr }}</div>
-      <div class="go-btn" @click="goHome">去首页</div>
+      <div class="go-btn" @click="goHome">{{ $t('home.casinoTitleObj.gohome') }}</div>
     </div>
     <template v-else>
       <GoodRoad :list="list" :loading="loading" />
