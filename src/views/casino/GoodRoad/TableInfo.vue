@@ -39,6 +39,7 @@ import { showLoadingToast, closeToast } from 'vant'
 import CurrencyComp from '@/components/Currency/index.vue'
 import { computed, ref } from 'vue'
 import user from '@/assets/images/casino/user.jpg?url'
+import { getBrowserLanguage } from '@/utils'
 
 const props = defineProps({
   tableInfo: {
@@ -58,7 +59,7 @@ const cover = computed(() => {
 
 const classList = ['he', 'xian', 'zhuang', 'zhuang']
 const wins = computed(() => {
-  let daluMatrix = createDaLu(props.tableInfo.wins)
+  let daluMatrix = createDaLu(props.tableInfo.wins || [])
   if (daLuIsFirstZores(daluMatrix)) {
     const matrixList: any[] = []
     let heCount = 0
@@ -162,14 +163,11 @@ const goToGame = async () => {
   if (gres?.code === 200) {
     closeToast()
     const gameUrl = gres.data['url'].replace('&isAi=1', '')
-    window.location.href =
-      gameUrl +
-      '&source=7lucky&hasLive=1&brandType=' +
-      brandType +
-      '&tableId=' +
-      tableId +
-      '&sourceUrl=' +
-      encodeURIComponent(window.location.href)
+    const lang = localStorage.getItem('locale') || getBrowserLanguage()
+    const herf = `${gameUrl}&source=7lucky&hasLive=1&language=${lang}&brandType=${brandType}&tableId=${tableId}&sourceUrl=${encodeURIComponent(
+      window.location.href
+    )}`
+    window.location.href = herf
   }
 }
 </script>

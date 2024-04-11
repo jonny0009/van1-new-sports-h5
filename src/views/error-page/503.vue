@@ -15,8 +15,8 @@
       <div class="img-warp">
         <img src="@/assets/images/page404/maintain.png" />
       </div>
-      <div class="tips">网站维护中</div>
-      <div class="tips2">重新开放倒数</div>
+      <div class="tips">{{ $t('home.errorTips.tips3') }}</div>
+      <div class="tips2">{{ $t('home.errorTips.tips4') }}</div>
       <div class="time">
         <van-count-down
           :time="timeDate"

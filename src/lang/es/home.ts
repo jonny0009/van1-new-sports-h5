@@ -33,6 +33,7 @@ export default {
   img: 'en curso',
   PenaltyKickWar: 'Penalfallado',
   live: 'transmisión en vivo',
+  addTimeNumber: `Horas extras<span>{number}</span>`,
   Sunday: 'Domingo',
   Monday: 'los lunes',
   Tuesday: 'Martes',
@@ -57,5 +58,14 @@ export default {
     title4: 'Cuenta regresiva de mantenimiento estimado',
     gohome: 'Ir a la página de inicio'
   },
-  Community: 'comunidad'
+  Community: 'comunidad',
+
+  errorTips: {
+    tips1: '¡Ups! Algo esta mal aqui',
+    tips2: 'Lo sentimos, tu área está restringida',
+    tips3: 'Sitio web en mantenimiento',
+    tips4: 'Cuenta atrás para la reapertura'
+  },
+  mulBet: 'Apuesta múltiple'
+
 }

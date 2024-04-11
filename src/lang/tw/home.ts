@@ -32,6 +32,7 @@ export default {
   up: '上',
   img: '進行中',
   PenaltyKickWar: '點球大戰',
+  addTimeNumber: `加時<span>{number}</span>`,
   live: '直播',
   Sunday: '週日',
   Monday: '週一',
@@ -57,7 +58,12 @@ export default {
     gohome: '去首頁'
   },
   Community: '社群',
-
-  addTimeNumber: `加时<span>{number}</span>`
+  errorTips: {
+    tips1: '糟了！ 這裡出了點問題',
+    tips2: '抱歉，您的所在地區受到限制',
+    tips3: '網站維護',
+    tips4: '重新開放倒數'
+  },
+  mulBet: '多台投注'
 
 }
