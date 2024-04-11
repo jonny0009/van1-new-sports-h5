@@ -81,7 +81,7 @@ const active: any = computed(() => {
 <style lang="scss" scoped>
 .sportsTabsView {
   display: flex;
-  overflow: auto;
+  overflow-x: hidden;
   &::-webkit-scrollbar {
     height: 0;
     display: none;
