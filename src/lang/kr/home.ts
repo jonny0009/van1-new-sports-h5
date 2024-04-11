@@ -59,5 +59,14 @@ export default {
     title4: '예상 유지보수 카운트다운',
     gohome: '홈페이지로 이동'
   },
-  Community: '커뮤니티'
+  Community: '커뮤니티',
+
+  errorTips: {
+    tips1: '앗! 뭔가 잘못됐어',
+    tips2: '죄송합니다. 귀하의 지역은 제한되어 있습니다.',
+    tips3: '웹사이트 유지보수 중',
+    tips4: '재개장 카운트다운'
+  },
+  mulBet: '다중 베팅'
+
 }

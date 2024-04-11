@@ -19,7 +19,8 @@
           src="@/assets/images/page404/403Img.png"
         />
       </div>
-      <div class="tips">抱歉，您的所在地区受到限制</div>
+
+      <div class="tips">{{ $t('home.errorTips.tips2') }}</div>
     </div>
 
   </div>

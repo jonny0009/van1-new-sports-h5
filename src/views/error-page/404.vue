@@ -15,7 +15,7 @@
       <div class="img-warp">
         <img src="@/assets/images/page404/404Img.png" />
       </div>
-      <div class="tips">糟了！这里出了点问题</div>
+      <div class="tips">{{$t('home.errorTips.tips1') }}</div>
     </div>
 
   </div>
