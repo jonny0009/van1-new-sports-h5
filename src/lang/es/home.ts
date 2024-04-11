@@ -33,6 +33,7 @@ export default {
   img: 'en curso',
   PenaltyKickWar: 'Penalfallado',
   live: 'transmisión en vivo',
+  addTimeNumber: `Horas extras<span>{number}</span>`,
   Sunday: 'Domingo',
   Monday: 'los lunes',
   Tuesday: 'Martes',
@@ -57,5 +58,7 @@ export default {
     title4: 'Cuenta regresiva de mantenimiento estimado',
     gohome: 'Ir a la página de inicio'
   },
-  Community: 'comunidad'
+  Community: 'comunidad',
+  addTimeNumber: `加时<span>{number}</span>`
+
 }

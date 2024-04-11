@@ -160,7 +160,7 @@
                 <div class="betting-select">
                   <div class="betting-select__list">
                     <!-- 比分盘口-->
-                    <HandicapScore :send-params="sendParams" :type="'RPD'" :ifMatchLive="ifMatchLive" />
+                    <HandicapScore :send-params="sendParams" :type="'RPD'" :if-match-live="ifMatchLive" />
                   </div>
                 </div>
               </div>
@@ -347,7 +347,7 @@ const showRBTime = (raceinfo: any = {}) => {
           return secssion === '1H'
             ? t('home.HNumber1', { number: newRaceTimeVal })
             : //  `上半场<span class='time-h-Up'>${newRaceTimeVal}</span>`
-              t('home.HNumber2', { number: newRaceTimeVal })
+            t('home.HNumber2', { number: newRaceTimeVal })
           // `下半场<span class='time-h-d'>${newRaceTimeVal}</span>`
         } else if (gameInfo?.re_time) {
           // 比赛时间容错
@@ -384,8 +384,8 @@ const showRBTime = (raceinfo: any = {}) => {
           const inningNum = gameInfo.inningNum
             ? gameInfo?.inningNum
             : bsScoreObj.se_now > 0
-            ? bsScoreObj.se_now
-            : bsScoreObj.score.num
+              ? bsScoreObj.se_now
+              : bsScoreObj.score.num
           const juCount = t('home.set', {
             number: inningNum
           })
@@ -407,8 +407,8 @@ const showRBTime = (raceinfo: any = {}) => {
         return seNow && currBkTime
           ? `${BKSection(gameInfo?.se_now)}<span>${dateFormat(currBkTime.value * 1000, 'mm:ss')}</span>`
           : !currBkTime.value && seNow
-          ? `${BKSection(gameInfo.se_now)}<span>00:00</span>`
-          : ''
+            ? `${BKSection(gameInfo.se_now)}<span>00:00</span>`
+            : ''
       //
       // 美式足球
       case 'BK_AFT':
@@ -449,8 +449,8 @@ const showRBTime = (raceinfo: any = {}) => {
       case 'OP_VB': // 排球
         return Obj
           ? t('home.set', {
-              number: Obj.scorePan.num
-            })
+            number: Obj.scorePan.num
+          })
           : ''
       //
       // 电竞

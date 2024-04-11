@@ -33,6 +33,7 @@ export default {
   img: 'Em Andamento',
   PenaltyKickWar: 'Desempate por Penáltis',
   live: 'Ao Vivo',
+  addTimeNumber: `Hora extra<span>{number}</span>`,
   Sunday: 'Domingo',
   Monday: 'Segunda-feira',
   Tuesday: 'Terça-feira',

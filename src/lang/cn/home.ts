@@ -62,5 +62,13 @@ export default {
     title4: '预计维护倒计时',
     gohome: '去首页'
   },
-  Community: '社群'
+  Community: '社群',
+
+  errorTips: {
+    tips1: '糟了！这里出了点问题',
+    tips2: '抱歉，您的所在地区受到限制',
+    tips3: '网站维护中',
+    tips4: '重新开放倒数'
+  },
+  mulBet: '多台投注'
 }

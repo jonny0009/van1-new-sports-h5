@@ -32,6 +32,7 @@ export default {
   up: '上',
   img: '進行中',
   PenaltyKickWar: '點球大戰',
+  addTimeNumber: `加時<span>{number}</span>`,
   live: '直播',
   Sunday: '週日',
   Monday: '週一',
@@ -56,8 +57,6 @@ export default {
     title4: '預計維護倒數計時',
     gohome: '去首頁'
   },
-  Community: '社群',
-
-  addTimeNumber: `加时<span>{number}</span>`
+  Community: '社群'
 
 }

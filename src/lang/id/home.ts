@@ -33,6 +33,7 @@ export default {
   img: 'Sedang Berlangsung',
   PenaltyKickWar: 'Adu Penalti',
   live: 'Siaran Langsung',
+  addTimeNumber: `Lembur<span>{number}</span>`,
   Sunday: 'Minggu',
   Monday: 'Senin',
   Tuesday: 'Selasa',

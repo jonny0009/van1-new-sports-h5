@@ -33,6 +33,7 @@ export default {
   img: '進行中',
   PenaltyKickWar: 'PK戦',
   live: 'ストリーミング',
+  addTimeNumber: `残業<span>{number}</span>`,
   Sunday: '日曜日',
   Monday: '月曜日',
   Tuesday: '火曜日',

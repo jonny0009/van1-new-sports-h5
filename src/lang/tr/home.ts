@@ -33,6 +33,7 @@ export default {
   img: 'Devam Ediyor',
   PenaltyKickWar: 'Penaltı Atışları',
   live: 'Canlı Yayın',
+  addTimeNumber: `Mesai<span>{number}</span>`,
   Sunday: 'Pazar',
   Monday: 'Pazartesi',
   Tuesday: 'Salı',

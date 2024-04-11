@@ -32,6 +32,7 @@ export default {
   up: 'Bet Above',
   img: 'In Progress',
   PenaltyKickWar: 'Penalty Shootout',
+  addTimeNumber: `Overtime<span>{number}</span>`,
   live: 'streaming',
   Sunday: 'Sunday',
   Monday: 'Monday',
@@ -60,5 +61,7 @@ export default {
     title4: 'Estimated maintenance countdown',
     gohome: 'Go to homepage'
   },
-  Community: 'community'
+  Community: 'community',
+  mulBet: 'Multiple betting'
+
 }

@@ -33,6 +33,7 @@ export default {
   'img': 'प्रगति पर है',
   'PenaltyKickWar': 'पेनाल्टी लेना',
   'live': 'सीधा आ रहा है',
+  addTimeNumber: `ओवरटाइम<span>{number}</span>`,
   'Sunday': 'रविवार',
   'Monday': 'सोमवार को',
   'Tuesday': 'मंगलवार',
