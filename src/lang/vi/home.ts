@@ -63,5 +63,12 @@ export default {
     title4: 'Đếm ngược thời gian bảo trì ước tính',
     gohome: 'Truy cập trang chủ'
   },
-  Community: 'Vietname'
+  Community: 'Vietname',
+  errorTips: {
+    tips1: 'Rất tiếc! Cái gì đó sai ở đây',
+    tips2: 'Xin lỗi, khu vực của bạn bị hạn chế',
+    tips3: 'Trang web đang được bảo trì',
+    tips4: 'Đếm ngược đến ngày mở cửa trở lại'
+  },
+  mulBet: 'Cược nhiều'
 }

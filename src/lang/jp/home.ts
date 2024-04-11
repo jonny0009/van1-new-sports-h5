@@ -33,6 +33,7 @@ export default {
   img: '進行中',
   PenaltyKickWar: 'PK戦',
   live: 'ストリーミング',
+  addTimeNumber: `残業<span>{number}</span>`,
   Sunday: '日曜日',
   Monday: '月曜日',
   Tuesday: '火曜日',
@@ -58,5 +59,14 @@ export default {
     title4: '予定されているメンテナンス終了までのカウントダウン',
     gohome: 'ホームページに戻る'
   },
-  Community: 'コミュニティ'
+  Community: 'コミュニティ',
+
+  errorTips: {
+    tips1: 'おっと!」 ここで何かが間違っています',
+    tips2: '申し訳ありませんが、お住まいの地域は制限されています',
+    tips3: 'ウェブサイトはメンテナンス中です',
+    tips4: '再開までのカウントダウン'
+  },
+  mulBet: '複数ベット'
+
 }

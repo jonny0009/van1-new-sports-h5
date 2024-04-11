@@ -64,5 +64,11 @@ export default {
     gohome: '去首页'
   },
   Community: '社群',
-  multipleBetting: '多台下注'
+  errorTips: {
+    tips1: '糟了！这里出了点问题',
+    tips2: '抱歉，您的所在地区受到限制',
+    tips3: '网站维护中',
+    tips4: '重新开放倒数'
+  },
+  mulBet: '多台投注'
 }

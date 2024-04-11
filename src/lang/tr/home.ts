@@ -33,6 +33,7 @@ export default {
   img: 'Devam Ediyor',
   PenaltyKickWar: 'Penaltı Atışları',
   live: 'Canlı Yayın',
+  addTimeNumber: `Mesai<span>{number}</span>`,
   Sunday: 'Pazar',
   Monday: 'Pazartesi',
   Tuesday: 'Salı',
@@ -59,6 +60,12 @@ export default {
     title4: 'Beklenen bakımın sonuna doğru geri sayım',
     gohome: 'Ana sayfaya dön'
   },
-  Community: 'Toplum'
-
+  Community: 'Toplum',
+  errorTips: {
+    tips1: 'Hata! Burada bir şeyler yanlış',
+    tips2: 'Üzgünüm, bölgeniz kısıtlı',
+    tips3: 'Web sitesi bakımda',
+    tips4: 'Yeniden açılmak için geri sayım'
+  },
+  mulBet: 'Çoklu Bahis'
 }

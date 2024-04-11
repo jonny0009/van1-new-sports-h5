@@ -33,6 +33,7 @@ export default {
   img: 'Sedang Berlangsung',
   PenaltyKickWar: 'Adu Penalti',
   live: 'Siaran Langsung',
+  addTimeNumber: `Lembur<span>{number}</span>`,
   Sunday: 'Minggu',
   Monday: 'Senin',
   Tuesday: 'Selasa',
@@ -45,8 +46,6 @@ export default {
 
   hot: 'Populer',
   todayUpcoming: 'Yang Akan Datang Hari Ini',
-
-  // new
   RBInfo: 'Handicap Taruhan Langsung Asia',
   RBSize: 'O/U Taruhan Langsung',
   RBRide: 'Taruhan Langsung 1X2',
@@ -58,5 +57,13 @@ export default {
     title4: 'Hitung mundur hingga akhir pemeliharaan yang diharapkan',
     gohome: 'Kembali ke halaman beranda'
   },
-  Community: 'Masyarakat'
+  Community: 'Masyarakat',
+
+  errorTips: {
+    tips1: 'Ups! Ada yang tidak beres di sini',
+    tips2: 'Maaf, area Anda dibatasi',
+    tips3: 'Situs web sedang dalam pemeliharaan',
+    tips4: 'Hitung mundur menuju pembukaan kembali'
+  },
+  mulBet: 'Taruhan Berganda'
 }

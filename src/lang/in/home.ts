@@ -33,6 +33,7 @@ export default {
   'img': 'प्रगति पर है',
   'PenaltyKickWar': 'पेनाल्टी लेना',
   'live': 'सीधा आ रहा है',
+  addTimeNumber: `ओवरटाइम<span>{number}</span>`,
   'Sunday': 'रविवार',
   'Monday': 'सोमवार को',
   'Tuesday': 'मंगलवार',
@@ -59,5 +60,14 @@ export default {
     title4: 'अनुमानित रखरखाव उलटी गिनती',
     gohome: 'होमपेज पर जाएं'
   },
-  Community: 'समुदाय'
+  Community: 'समुदाय',
+
+  errorTips: {
+    tips1: 'उफ़! यहाँ कुछ गड़बड़ है',
+    tips2: 'क्षमा करें, आपका क्षेत्र प्रतिबंधित है',
+    tips3: 'वेबसाइट रखरखाव के अधीन',
+    tips4: 'फिर से खुलने की उलटी गिनती'
+  },
+  mulBet: 'मल्टीपल बेट'
+
 }
