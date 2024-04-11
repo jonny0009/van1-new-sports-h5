@@ -4,12 +4,12 @@
       <span>{{ $t('home.casinoTitleObj.title1') }}</span>
       <div class="multiple-units" @click="goodRoadShow">
         <span class="units-icon"></span>
-        <span class="units-title">{{ $t('home.mulBet') }}</span>
+        <span class="units-title">{{ $t("home.mulBet") }}</span>
       </div>
     </div>
     <Loading v-if="loading" />
-    <div class="list" v-else-if="list.length">
-      <TableInfo v-for="(item, index) in list" :key="index" :tableInfo="item"></TableInfo>
+    <div v-else-if="list.length" class="list">
+      <TableInfo v-for="(item, index) in list" :key="index" :table-info="item"></TableInfo>
     </div>
     <EmptyData v-else />
   </section>
