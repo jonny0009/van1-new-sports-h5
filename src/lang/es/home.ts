@@ -59,6 +59,13 @@ export default {
     gohome: 'Ir a la página de inicio'
   },
   Community: 'comunidad',
-  addTimeNumber: `加时<span>{number}</span>`
+
+  errorTips: {
+    tips1: '¡Ups! Algo esta mal aqui',
+    tips2: 'Lo sentimos, tu área está restringida',
+    tips3: 'Sitio web en mantenimiento',
+    tips4: 'Cuenta atrás para la reapertura'
+  },
+  mulBet: 'Apuesta múltiple'
 
 }

@@ -60,5 +60,13 @@ export default {
     title4: 'Tahmini bakım geri sayımı',
     gohome: 'Ana sayfaya git'
   },
-  Community: 'toplum'
+  Community: 'toplum',
+
+  errorTips: {
+    Tips1: 'Hata! Burada bir şeyler yanlış',
+    Tips2: 'Üzgünüm, bölgeniz kısıtlı',
+    Tips3: 'Web sitesi bakımda',
+    Tips4: 'Yeniden açılmak için geri sayım'
+  },
+  mulBet: 'Çoklu Bahis'
 }

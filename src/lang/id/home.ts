@@ -60,6 +60,14 @@ export default {
     title4: 'Perkiraan hitungan mundur pemeliharaan',
     gohome: 'Buka beranda'
   },
-  Community: 'komunitas'
+  Community: 'komunitas',
+
+  errorTips: {
+    tips1: 'Ups! Ada yang tidak beres di sini',
+    tips2: 'Maaf, area Anda dibatasi',
+    tips3: 'Situs web sedang dalam pemeliharaan',
+    tips4: 'Hitung mundur menuju pembukaan kembali'
+  },
+  mulBet: 'Taruhan Berganda'
 
 }

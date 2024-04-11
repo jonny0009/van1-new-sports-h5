@@ -62,6 +62,13 @@ export default {
     gohome: 'Go to homepage'
   },
   Community: 'community',
+
+  errorTips: {
+    tips1: "Oops! Something's wrong here",
+    tips2: 'Sorry, your area is restricted',
+    tips3: 'Website under maintenance',
+    tips4: 'Countdown to reopening'
+  },
   mulBet: 'Multiple betting'
 
 }

@@ -61,6 +61,14 @@ export default {
     title4: 'Contagem regressiva estimada para manutenção',
     gohome: 'Ir para a página inicial'
   },
-  Community: 'comunidade'
+  Community: 'comunidade',
+
+  errorTips: {
+    tips1: 'Opa! Algo está errado aqui',
+    tips2: 'Desculpe, sua área é restrita',
+    tips3: 'Site em manutenção',
+    tips4: 'Contagem regressiva para reabertura'
+  },
+  mulBet: 'Aposta Múltipla'
 
 }

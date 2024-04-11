@@ -63,6 +63,12 @@ export default {
     title4: 'Đếm ngược thời gian bảo trì ước tính',
     gohome: 'Vào trang chủ'
   },
-  Community: 'cộng đồng'
-
+  Community: 'Cộng đồng',
+  errorTips: {
+    tips1: 'Rất tiếc! Cái gì đó sai ở đây',
+    tips2: 'Xin lỗi, khu vực của bạn bị hạn chế',
+    tips3: 'Trang web đang được bảo trì',
+    tips4: 'Đếm ngược đến ngày mở cửa trở lại'
+  },
+  mulBet: 'Cược nhiều'
 }

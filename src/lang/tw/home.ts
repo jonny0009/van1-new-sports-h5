@@ -57,6 +57,13 @@ export default {
     title4: '預計維護倒數計時',
     gohome: '去首頁'
   },
-  Community: '社群'
+  Community: '社群',
+  errorTips: {
+    tips1: '糟了！ 這裡出了點問題',
+    tips2: '抱歉，您的所在地區受到限制',
+    tips3: '網站維護',
+    tips4: '重新開放倒數'
+  },
+  mulBet: '多台投注'
 
 }
