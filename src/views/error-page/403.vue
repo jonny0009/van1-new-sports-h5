@@ -19,7 +19,8 @@
           src="@/assets/images/page404/403Img.png"
         />
       </div>
-      <div class="tips">{{ $t('home.errorTips.tips1') }}</div>
+
+      <div class="tips">{{ $t('home.errorTips.tips2') }}</div>
     </div>
 
   </div>

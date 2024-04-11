@@ -63,10 +63,10 @@ export default {
   Community: 'toplum',
 
   errorTips: {
-    Tips1: 'Hata! Burada bir şeyler yanlış',
-    Tips2: 'Üzgünüm, bölgeniz kısıtlı',
-    Tips3: 'Web sitesi bakımda',
-    Tips4: 'Yeniden açılmak için geri sayım'
+    tips1: 'Hata! Burada bir şeyler yanlış',
+    tips2: 'Üzgünüm, bölgeniz kısıtlı',
+    tips3: 'Web sitesi bakımda',
+    tips4: 'Yeniden açılmak için geri sayım'
   },
   mulBet: 'Çoklu Bahis'
 }
