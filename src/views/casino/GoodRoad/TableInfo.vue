@@ -38,7 +38,6 @@ import { createDaLu, daLuIsFirstZores } from '@/utils/RoadMapUtils'
 import { showLoadingToast, closeToast } from 'vant'
 import CurrencyComp from '@/components/Currency/index.vue'
 import { computed, ref } from 'vue'
-import user from '@/assets/images/casino/user.jpg?url'
 import { getBrowserLanguage } from '@/utils'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
@@ -53,9 +52,9 @@ const props = defineProps({
 const errorState = ref(false)
 const cover = computed(() => {
   if (errorState.value || !props.tableInfo.tableCover) {
-    return user
+    const index = Math.round(Math.random() * (89 - 1) + 1)
+    return new URL(`/casino/user/${index}.png`, import.meta.url).href
   }
-
   return props.tableInfo.tableCover
 })
 

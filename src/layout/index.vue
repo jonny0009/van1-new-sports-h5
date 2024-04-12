@@ -134,6 +134,9 @@ const handleScroll = () => {
 }
 
 const betShow = (value: any) => {
+  if (bettingSlip.value === void 0) {
+    return false
+  }
   if (value === 'bottomHome') {
     if (bettingSlip.value) {
       bettingSlip.value.open = false
