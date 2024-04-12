@@ -45,7 +45,7 @@ export default {
   numberDay: '{number} días',
 
   hot: 'caliente',
-  TodayUpcoming: 'Negociación de la mañana de hoy',
+  todayUpcoming: 'Negociación de la mañana de hoy',
   RBInfo: 'Hándicap asiático rodante',
   RBSize: 'Bola rodante por encima/por debajo',
   RBRide: 'Bola rodante 1X2',
@@ -67,5 +67,4 @@ export default {
     tips4: 'Cuenta atrás para la reapertura'
   },
   mulBet: 'Apuesta múltiple'
-
 }

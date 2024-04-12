@@ -44,7 +44,7 @@ export default {
   numberHour: '{number} Saat',
   numberDay: '{number} Gün',
   hot: 'sıcak',
-  TodayUpcoming: 'Bugünün sabah ticareti',
+  todayUpcoming: 'Bugünün sabah ticareti',
   RBInfo: 'Yuvarlanan Asya Handikapı',
   RBSize: 'Topun yukarı/aşağı yuvarlanması',
   RBRide: 'Yuvarlanan Top 1X2',
