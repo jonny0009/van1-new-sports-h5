@@ -18,7 +18,7 @@
             :text="item.text"
             :active="active === item.text"
             :showCount="true"
-            :count="item.gameCount"
+            :count="ifCountNum && item.gameCount"
             :class="item.text"
           />
         </template>
@@ -46,6 +46,14 @@ const props = defineProps({
   ifGoodMatch: {
     type: Boolean,
     default: () => false
+  },
+  ifSportToday: {
+    type: Boolean,
+    default: () => false
+  },
+  ifCountNum: {
+    type: Boolean,
+    default: () => true
   }
 })
 
@@ -93,6 +101,16 @@ const sportsList = computed(() => {
       }
     })
     newSportsB = [...newSportsC]
+  }
+  const count = newSportsB.reduce((gameCount: number, item: any) => {
+    return gameCount + item.gameCount * 1
+  }, 0)
+  const allItem = {
+    text: 'all',
+    gameCount: count
+  }
+  if (props.ifSportToday) {
+    return [allItem, ...newSportsB]
   }
   return newSportsB
 })

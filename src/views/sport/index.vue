@@ -365,14 +365,15 @@ const sportsList = computed(() => {
     })
     newSportsB = [...newSportsC]
   }
-  const count = newSportsB.reduce((gameCount: number, item: any) => {
-    return gameCount + item.gameCount * 1
-  }, 0)
-  const allItem = {
-    text: 'all',
-    gameCount: count
-  }
-  return [allItem, ...newSportsB]
+  // const count = newSportsB.reduce((gameCount: number, item: any) => {
+  //   return gameCount + item.gameCount * 1
+  // }, 0)
+  // const allItem = {
+  //   text: 'all',
+  //   gameCount: count
+  // }
+  // return [allItem, ...newSportsB]
+  return [...newSportsB]
 })
 // const getStatistics = async () => {
 //   const res: any = await statistics({ showType: 'FU' })

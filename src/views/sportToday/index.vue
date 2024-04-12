@@ -6,6 +6,7 @@
       :isCustom="true"
       :tabs="sports"
       @returnSportsSuccess="returnSportsSuccess"
+      :ifSportToday="true"
     >
       <template #body>
         <div class="mt10">
@@ -234,6 +235,9 @@ const returnTimeSuccess = (val: any) => {
 const returnSportsSuccess = (val: any) => {
   isLoading.value = true
   params.gameType = val
+  if (val === 'all') {
+    params.gameType = ''
+  }
   finished.value = false
   params.page = 1
   getRecommendEvents()

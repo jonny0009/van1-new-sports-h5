@@ -1,25 +1,41 @@
 <template>
   <div class="homeTime-page" ref="newContainer">
     <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
-      <SportsTabs ref="refSportsTabs" class="pb10" @returnSportsSuccess="returnSportsSuccess">
+      <SportsTabs ref="refSportsTabs" class="pb10" @returnSportsSuccess="returnSportsSuccess" :ifCountNum="false">
         <template #body>
           <div class="mt10">
-            <tabsTime v-if="routerName === 'HomeTime'" ref="refTimeTabs" @returnTimeSuccess="returnTimeSuccess"  @DateShow="DateShow"/>
+            <tabsTime
+              v-if="routerName === 'HomeTime'"
+              ref="refTimeTabs"
+              @returnTimeSuccess="returnTimeSuccess"
+              @DateShow="DateShow"
+            />
             <van-list v-model="loading" :finished="finished" :finished-text="$t('live.noMore')" @load="onLoad">
               <template v-if="isLoading">
                 <template v-for="(item, idx) in recommendEventsList" :key="idx">
-                  <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="8"
-                    :class="{ 'mt10': idx !== 0 }">
+                  <van-sticky
+                    :offset-top="offsetTop"
+                    :container="newContainer"
+                    z-index="8"
+                    :class="{ mt10: idx !== 0 }"
+                  >
                     <playTitle :send-params="item" />
                   </van-sticky>
-                  <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
-                    :class="{ 'mt10': idx !== 0 }" />
+                  <HomeMatchHandicap
+                    v-for="(item1, idx) in item.list"
+                    :play-title-toggle="false"
+                    :send-params="item1"
+                    :class="{ mt10: idx !== 0 }"
+                  />
                 </template>
                 <HomeEmpty v-if="!recommendEventsList.length"></HomeEmpty>
               </template>
-              <Loading v-if="!isLoading || loading" :class="{
-                'new_loading mt10': loading
-              }" />
+              <Loading
+                v-if="!isLoading || loading"
+                :class="{
+                  'new_loading mt10': loading
+                }"
+              />
             </van-list>
           </div>
         </template>
@@ -60,11 +76,14 @@ const timeout: any = ref('')
 const refSportsTabs = ref()
 const refTimeTabs = ref()
 
-watch(() => scrollNum.value, (newValue) => {
-  if (newValue > 88) {
-    refSportsTabs.value.ifAnimated = false
+watch(
+  () => scrollNum.value,
+  (newValue) => {
+    if (newValue > 88) {
+      refSportsTabs.value.ifAnimated = false
+    }
   }
-})
+)
 watch(refreshChangeTime, (val) => {
   if (val) {
     refSportsTabs.value?.resetParams()
@@ -138,7 +157,7 @@ const getRecommendEvents = async (nextToggle: any = '') => {
         }
       }
     })
-    Object.keys(listObj).map(item => {
+    Object.keys(listObj).map((item) => {
       listArr.push(JSON.parse(JSON.stringify(listObj[item])))
     })
 
@@ -165,7 +184,7 @@ const onLoad = () => {
     onLoadToggle.value = true
   }
 }
-const DateShow = (val:any) => {
+const DateShow = (val: any) => {
   show.value = val
 }
 const onConfirm = (value: any) => {
@@ -226,6 +245,6 @@ onBeforeMount(() => {
 }
 
 .van-calendar__day--middle {
-  color: var(--color-primary)
+  color: var(--color-primary);
 }
 </style>
