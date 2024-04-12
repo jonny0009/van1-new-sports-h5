@@ -64,6 +64,5 @@ export default {
     tips3: '網站維護',
     tips4: '重新開放倒數'
   },
-  mulBet: '多台投注'
-
+  mulBet: '多台下注'
 }
