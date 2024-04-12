@@ -1,1 +1,0 @@
-import"./index.739c8877.js";import{s,d as a,M as e,o as c,R as o}from"./vue.97c0c246.js";const t={class:"game-page"};var d=s({setup:s=>(a(""),e((async()=>{})),(s,a)=>(c(),o("div",t)))});d.__scopeId="data-v-8e32e3ee";export{d as default};
