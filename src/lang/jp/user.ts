@@ -1,6 +1,6 @@
 
 export default {
-  lang: 'Language',
+  lang: '言語',
   search: '検索',
   cancellation: 'キャンセル',
   recommend: 'おすすめ',
