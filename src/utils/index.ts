@@ -1,4 +1,5 @@
 import { getTheme } from './auth'
+import { ImageSource } from '@/config'
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -194,4 +195,55 @@ export const getBrowserLanguage = () => {
     return obj[sysLanguage] ? obj[sysLanguage] : 'en-us'
   }
   return 'en-us'
+}
+
+export const _checkImgUrl = (url: any) => {
+  // console.log(url)
+  if (!url) return
+  //本地图片
+  if (
+    url.includes('assets/img') ||
+    url.includes('file://') ||
+    url.includes('data:image') ||
+    url.includes('http') ||
+    url.includes('https')
+  ) {
+    return url
+  }
+  return ImageSource + url
+}
+
+export const _duration = (num: any) => {
+  if (!num) return '00:00'
+  let m: any = Math.floor(num / 60)
+  // let s = num % 60
+  let s = Math.round(num % 60)
+  let str: string = ''
+  if (m === 0) {
+    str = '00'
+  } else if (m > 0 && m < 10) {
+    str = '0' + m
+  } else {
+    str = m
+  }
+  str += ':'
+  if (s === 0) {
+    str += '00'
+  } else if (s > 0 && s < 10) {
+    str += '0' + s
+  } else {
+    str += s
+  }
+  return str
+}
+
+export const _formatNumber = (num: any) => {
+  if (!num) return
+  if (num > 100000000) {
+    return (num / 100000000).toFixed(1) + '亿'
+  } else if (num > 10000) {
+    return (num / 10000).toFixed(1) + '万'
+  } else {
+    return num
+  }
 }
