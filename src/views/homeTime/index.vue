@@ -47,11 +47,11 @@
 </template>
 <script lang="ts" setup>
 import Dayjs from 'dayjs'
-import tabsTime from './tabsTime/index.vue'
 import playTitle from '@/components/Title/playTitle/index.vue'
 import { recommendEvents } from '@/api/home'
 import store from '@/store'
-import { onBeforeMount, ref, reactive, computed, watch } from 'vue'
+import { onBeforeMount, ref, reactive, computed, watch, defineAsyncComponent } from 'vue'
+const tabsTime = defineAsyncComponent(() => import('./tabsTime/index.vue'))
 import moment from 'moment'
 import router from '@/router'
 const scrollNum = computed(() => store.state.user.scrollNumY)
@@ -74,7 +74,22 @@ const routerName: any = computed(() => {
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout: any = ref('')
 const refSportsTabs = ref()
-const refTimeTabs = ref()
+const refTimeTabs = ref<any>(null)
+const timeInfoParams: any = {
+  //  --8小时的请求开始时间
+  beginDate: Dayjs().format('YYYY-MM-DD HH:mm:ss'),
+  // --8小时的请求结束时间
+  endDate: Dayjs().add(8, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+  // ,--24小时的请求结束时间
+  dayBeginDate: Dayjs().format('YYYY-MM-DD HH:mm:ss'),
+  // --24小时的请求结束时间
+  dayEndDate: Dayjs().add(24, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+  // --7天的请求结束时间
+  weekBeginDate: Dayjs().format('YYYY-MM-DD HH:mm:ss'),
+  // --7天的请求结束时间
+  weekEndDate: Dayjs().add(168, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+  gameType: 'FT'
+}
 
 watch(
   () => scrollNum.value,
@@ -216,6 +231,8 @@ const returnSportsSuccess = (val: any) => {
   params.gameType = val
   finished.value = false
   params.page = 1
+  timeInfoParams.gameType = val
+  store.dispatch('home/initTimeDataInfo', timeInfoParams)
   getRecommendEvents()
 }
 const initData = () => {
@@ -227,6 +244,7 @@ const init = () => {
 }
 onBeforeMount(() => {
   init()
+  store.dispatch('home/initTimeDataInfo', timeInfoParams)
 })
 </script>
 <style lang="scss" scoped>

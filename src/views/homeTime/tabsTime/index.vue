@@ -9,6 +9,7 @@
         @click="TimeClick(item)"
       >
         {{ item.text }}
+        <span v-if="item.itemCount" class="itemCount">{{ item.itemCount }}</span>
       </div>
       <div class="more" @click="moreTimeClick">
         <i class="iconfont icon-timeMore"></i>
@@ -20,32 +21,59 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, onMounted, computed, watch } from 'vue'
 import Dayjs from 'dayjs' // YYYY-MM-DD HH:mm:ss
+import store from '@/store'
+const initTimeData = computed(() => store.state.home.initTimeData)
+
 const homeTimeArray = ref([
-  { text: t('sport.all'), defaultToggle: true, values: '' },
+  { text: t('sport.all'), defaultToggle: true, values: '', itemCount: 0 },
   {
     text: t('home.numberHour', {
       number: '8'
     }),
     defaultToggle: true,
-    values: '8'
+    values: '8',
+    itemCount: 0
   },
   {
     text: t('home.numberHour', {
       number: '24'
     }),
     defaultToggle: true,
-    values: '24'
+    values: '24',
+    itemCount: 0
   },
   {
     text: t('home.numberDay', {
       number: '7'
     }),
     defaultToggle: true,
-    values: '168'
+    values: '168',
+    itemCount: 0
   }
 ])
+watch(
+  () => initTimeData.value,
+  (newValue) => {
+    if (newValue) {
+      initTimeDataNum()
+    }
+  }
+)
+
+const initTimeDataNum = async () => {
+  let { day, hour, week } = initTimeData.value
+  let allNum = day + hour + week
+  homeTimeArray.value[0].itemCount = allNum
+  homeTimeArray.value[1].itemCount = hour
+  homeTimeArray.value[2].itemCount = day
+  homeTimeArray.value[3].itemCount = week
+}
+
+onMounted(() => {
+  initTimeDataNum()
+})
 
 const active = ref('')
 const emit = defineEmits(['returnTimeSuccess', 'DateShow'])
@@ -81,7 +109,8 @@ const moreTimeClick = () => {
 }
 defineExpose({
   active,
-  onConfirm
+  onConfirm,
+  initTimeDataNum
 })
 const refHomeTime = ref()
 const refHomeTimePage = ref()
@@ -120,7 +149,9 @@ const refHomeTimePage = ref()
     min-width: 150px;
     white-space: nowrap;
     flex-shrink: 0;
-    color: black;
+    // color: black;
+    color: var(--color-global-minButtonCl);
+    font-weight: 600;
     &:last-child {
       margin-right: 0;
     }
@@ -133,6 +164,9 @@ const refHomeTimePage = ref()
       // background: var(--color-primary);
       background: var(--color-global-buttonPrimaryBg);
       color: #fff;
+    }
+    .itemCount {
+      margin-left: 10px;
     }
   }
   .more {
