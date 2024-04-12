@@ -104,7 +104,7 @@ export function useBetting(flag: any) {
 
       const noExist = ['HDNB2', 'HDNB', 'HTS2', 'HW3', 'W3', 'W3_conner', 'PD_conner', 'HT_conner', 'T_conner']
       const playDataListNew = playDataList.filter((item) => !noExist.includes(item.playType))
-      const betPlayTypeSort = playTypeSort(playDataListNew, currentGroupPlay.value)
+      const betPlayTypeSort = playTypeSort(playDataListNew, currentGroupPlay.value || [])
       const betPlayRatioSort = playRatioSort(betPlayTypeSort)
       const betPlayMergeList = playTypeMerge(betPlayRatioSort, 'typeTemp')
 
@@ -123,7 +123,7 @@ export function useBetting(flag: any) {
         name: row.name,
         groupType: row.groupType,
         playData: row.playData,
-        playDataList: playTypeSort(dataList, row.playData)
+        playDataList: playTypeSort(dataList, row.playData || [])
       }
       groupPlayList.push(rowResult)
     })
