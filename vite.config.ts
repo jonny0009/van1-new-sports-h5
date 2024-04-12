@@ -71,6 +71,7 @@ export default () => {
     },
     build: {
       // sourcemap: true,
+      target: 'es2020',
       manifest: true,
       rollupOptions: {
         output: {
