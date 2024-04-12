@@ -9,7 +9,7 @@
     </div>
     <Loading v-if="loading" />
     <div class="list" v-else-if="list.length">
-      <TableInfo v-for="(item, index) in list" :key="index" :tableInfo="item"></TableInfo>
+      <TableInfo v-for="(item, index) in list" :key="index" :idx="index" :tableInfo="item"></TableInfo>
     </div>
     <EmptyData v-else />
   </section>
@@ -30,8 +30,8 @@ const { t } = useI18n()
 
 defineProps({
   list: {
-    type: Object,
-    default: () => {}
+    type: Array as any,
+    default: () => []
   },
   loading: {
     type: Boolean,
