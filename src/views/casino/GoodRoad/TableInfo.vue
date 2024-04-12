@@ -46,19 +46,15 @@ const props = defineProps({
   tableInfo: {
     type: Object,
     default: () => {}
-  },
-  idx: {
-    type: Number,
-    default: 1
   }
 })
 
 const errorState = ref(false)
 const cover = computed(() => {
   if (errorState.value || !props.tableInfo.tableCover) {
-    return new URL(`/public/casino/user/${props.idx + 1}.png`, import.meta.url).href
+    const index = Math.round(Math.random() * (89 - 1) + 1)
+    return new URL(`/casino/user/${index}.png`, import.meta.url).href
   }
-
   return props.tableInfo.tableCover
 })
 
