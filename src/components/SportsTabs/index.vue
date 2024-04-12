@@ -7,6 +7,7 @@
       shrink
       line-height="0"
       :animated="ifAnimated"
+      @change="onChangeTabs"
       :swipe-threshold="3"
       @click-tab="handleTabAnimated"
     >
