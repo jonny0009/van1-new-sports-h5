@@ -21,7 +21,12 @@
 
           <van-collapse v-model="activeNames">
             <!-- 热门视频 -->
-            <van-collapse-item :is-link="false" class="collapse-item" name="HOT" v-if="navActive !== 'VIDEO'">
+            <van-collapse-item
+              :is-link="false"
+              class="collapse-item"
+              name="HOT"
+              v-if="!['SORTVIDEO'].includes(navActive)"
+            >
               <template #title>
                 <div class="title-group" v-if="nav.type === 'RB'">
                   <SvgIcon class="first-icon" name="home-hot-match" />
@@ -68,12 +73,7 @@
             </van-collapse-item>
 
             <!-- 短视频 -->
-            <van-collapse-item
-              :is-link="false"
-              class="collapse-item"
-              name="VIDEO"
-              v-if="['RB', 'VIDEO'].includes(navActive)"
-            >
+            <van-collapse-item :is-link="false" class="collapse-item" name="VIDEO" v-if="['RB'].includes(navActive)">
               <template #title>
                 <div class="title-group">
                   <SvgIcon class="first-icon" name="home-short-video" />
@@ -108,6 +108,9 @@
               </van-list>
               <EmptyData v-else-if="!videoLoading" />
             </van-collapse-item>
+
+            <!-- 短视频 -->
+            <ShortVideo v-if="['SORTVIDEO'].includes(navActive)"></ShortVideo>
           </van-collapse>
         </van-tab>
       </van-tabs>
@@ -118,6 +121,7 @@
 <script lang="ts" setup>
 import { reactive, ref, Ref, onBeforeMount, computed } from 'vue'
 import ListItem from './ListItem.vue'
+import ShortVideo from './short-video/index.vue'
 import { anchorLiveList, getVideoGreet, nextAnchorMatchDate } from '@/api/live'
 import router from '@/router'
 import { useI18n } from 'vue-i18n'
@@ -135,7 +139,7 @@ const navList = reactive([
   { type: 'BK', title: t('live.basketball'), iconName: 'live-basketball' },
   { type: 'TN', title: t('live.tennisball'), iconName: 'live-tennisball' },
   { type: 'OP_BM', title: t('live.badminton'), iconName: 'live-badminton' },
-  { type: 'VIDEO', title: t('home.shortVideoTitle'), iconName: 'live-badminton' }
+  { type: 'SORTVIDEO', title: t('home.shortVideoTitle'), iconName: 'live-badminton' }
 ])
 const navActive = ref('RB')
 
@@ -202,21 +206,18 @@ const onChangeTabs = () => {
 }
 
 const onRefresh = () => {
-  if (!['VIDEO'].includes(navActive.value)) {
+  if (!['SORTVIDEO'].includes(navActive.value)) {
     onLoad()
   } else {
     list.value = []
   }
 
   if (['RB'].includes(navActive.value)) {
+    params1.value.page = 0
+    getShortVideos()
     comingSoon()
   } else {
     comingSoonList.value = []
-  }
-  if (['RB', 'VIDEO'].includes(navActive.value)) {
-    params1.value.page = 0
-    getShortVideos()
-  } else {
     shortVideos.value = []
   }
 }
