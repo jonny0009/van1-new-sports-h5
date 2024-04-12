@@ -96,7 +96,7 @@ watch(
 )
 const isLoading = ref(false)
 const isRefreshLoading = ref(false)
-const sports = ref([])
+const sports: any = ref([])
 const getStatistics = async () => {
   const res: any = await statistics({ showType: 'FT' })
   if (res?.code === 200 && res?.data) {
