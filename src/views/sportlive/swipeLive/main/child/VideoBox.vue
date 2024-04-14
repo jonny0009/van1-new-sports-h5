@@ -1,6 +1,10 @@
 <template>
   <div class="video-box-wrap">
+    <div v-if="liveUrl?.endsWith('html')" class="video-iframe">
+      <iframe :src="liveUrl" width="100%" height="100%" frameborder="0"></iframe>
+    </div>
     <video
+      v-show="!liveUrl?.endsWith('html')"
       id="VideoRef"
       :style="{ 'object-fit': 'fill' }"
       class="video-js vjs-default-skin"
@@ -35,7 +39,7 @@
 <script lang="ts" setup>
 import Video from 'video.js'
 import 'video.js/dist/video-js.css'
-import { ref,watch, onBeforeMount, onBeforeUnmount, nextTick, computed } from 'vue'
+import { ref, watch, onBeforeMount, onBeforeUnmount, nextTick, computed } from 'vue'
 import store from '@/store'
 const turnSound = computed(() => store.state.match.turnSound)
 
@@ -55,7 +59,7 @@ const videoErrorState:any = ref(false)
 const muted = ref(true)
 
 watch(turnSound, (newValue, oldValue) => {
-  console.log(`turnSound发生变化，新值为：${newValue}，旧值为：${oldValue}`);
+  console.log(`turnSound发生变化，新值为：${newValue}，旧值为：${oldValue}`)
   if (newValue) {
     videoExample.value.muted(false)
     muted.value = false
@@ -73,7 +77,6 @@ const playVideo = () => {
     muted.value = true
     videoExample.value.muted(true)
   }
-  
 }
 const setTimeoutTime = ref()
 const initVideo = () => {
@@ -82,6 +85,9 @@ const initVideo = () => {
     videoErrorState.value = false
     const videoRef:any = document.querySelector('#VideoRef')
     if (!(videoRef && props.liveUrl)) {
+      return
+    }
+    if (props.liveUrl?.endsWith('html')) {
       return
     }
     try {
@@ -135,7 +141,7 @@ const soundHandle = () => {
   if (videoExample.value.muted()) {
     videoExample.value.muted(false)
     muted.value = false
-    
+
     store.commit('match/SET_TURN_SOUND', false)
   } else {
     videoExample.value.muted(true)
@@ -195,6 +201,11 @@ onBeforeUnmount(() => {
     border-radius: 20px;
     position: relative;
     z-index: 11;
+  }
+
+  .video-iframe {
+    width: 100%;
+    height: 100%;
   }
 
 }

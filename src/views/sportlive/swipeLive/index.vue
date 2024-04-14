@@ -15,6 +15,7 @@ import { anchorLiveList, extendInfo } from '@/api/live'
 import { ref, onBeforeMount } from 'vue'
 import store from '@/store'
 import router from '@/router'
+import { liveVideo } from '@/utils'
 
 const activeIndex = ref(0)
 const swipeList: any = ref([])
@@ -37,8 +38,7 @@ const init = async () => {
       const extendInfoRes: any = await extendInfo(extendInfoParams)
       if (extendInfoRes.code === 200) {
         const { streamNa }: any = extendInfoRes.data
-        const { liveali } = streamNa || {}
-        const { m3u8 } = liveali || {}
+        const m3u8 = liveVideo(streamNa)
         e.m3u8 = e.m3u8 || m3u8
         e.streamNa = streamNa
       }

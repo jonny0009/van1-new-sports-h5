@@ -193,3 +193,15 @@ export const getBrowserLanguage = () => {
   }
   return 'en-us'
 }
+
+// 处理视频
+export const liveVideo = (streamNa: any) => {
+  const { live, stream, videoLive, liveali } = streamNa || {}
+  const m3u8 =
+          (videoLive && videoLive.status && videoLive.m3u8) ||
+          (liveali && liveali.status && liveali.m3u8) ||
+          (stream && stream.status && stream.m3u8) ||
+          (live && live.status && live.m3u8) ||
+          {}
+  return m3u8
+}
