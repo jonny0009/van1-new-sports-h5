@@ -39,6 +39,8 @@ import { showLoadingToast, closeToast } from 'vant'
 import CurrencyComp from '@/components/Currency/index.vue'
 import { computed, ref } from 'vue'
 import { getBrowserLanguage } from '@/utils'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const props = defineProps({
   tableInfo: {
@@ -156,7 +158,7 @@ const goToGame = async () => {
   }
   showLoadingToast({
     duration: 20000,
-    message: '加载中...'
+    message: t('home.loading')
   })
   const gres: any = await getBJGameUrl(params)
   if (gres?.code === 200) {
