@@ -71,6 +71,5 @@ export default {
   section: 'sekcio',
   videoFailure: 'La ŝarĝo de video malsukcesis, bonvolu refreŝigi kaj provi denove',
   refreshVideo: 'Refreŝigi videon',
-  goLive: '前往直播厅',
-
+  goLive: 'Iru al la viva elsenda ĉambro'
 }
