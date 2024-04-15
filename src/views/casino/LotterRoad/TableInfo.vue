@@ -47,7 +47,7 @@ const cover = computed(() => {
     if (index > 30) {
       index = index % 30
     }
-    return new URL(`/casino/bg/${index}.jpg`, import.meta.url).href
+    return new URL(`/casinoBg/bg/${index}.jpg`, import.meta.url).href
   }
 
   return props.tableInfo.tableCover
