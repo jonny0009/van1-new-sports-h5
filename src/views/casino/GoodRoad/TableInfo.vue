@@ -53,7 +53,7 @@ const errorState = ref(false)
 const cover = computed(() => {
   if (errorState.value || !props.tableInfo.tableCover) {
     const index = Math.round(Math.random() * (89 - 1) + 1)
-    return new URL(`/casino/user/${index}.png`, import.meta.url).href
+    return new URL(`/casinoBg/user/${index}.png`, import.meta.url).href
   }
   return props.tableInfo.tableCover
 })
