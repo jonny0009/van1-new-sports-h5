@@ -69,6 +69,22 @@ export default {
     tips3: 'ウェブサイトはメンテナンス中です',
     tips4: '再開までのカウントダウン'
   },
-  mulBet: '複数ベット'
+  mulBet: '複数ベット',
+  baccarat: {
+    连庄: 'B Dragon',
+    单跳: 'PingPong',
+    '{n1}房{n2}厅': '{n1}P{n2}B',
+    双龙汇: '2Dragon',
+    上坡路: 'Uphill',
+    下坡路: 'Downhill',
+    排排连: 'VRow',
+    逢庄连: 'RowB',
+    逢闲连: 'RowP',
+    逢庄跳: 'BHop',
+    逢闲跳: 'PHop',
+    隔连庄: 'Separate B',
+    隔连闲: 'Separate P',
+    双跳: '2PingPong'
+  }
 
 }
