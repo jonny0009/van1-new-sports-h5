@@ -59,7 +59,9 @@ const getList = async () => {
   loading.value = false
 
   const datas: any[] = res?.data || []
-  list.value = datas.slice(0, 2)
+  if (datas && datas.length) {
+    list.value = datas.slice(0, 2)
+  }
 }
 
 const getList1 = async () => {

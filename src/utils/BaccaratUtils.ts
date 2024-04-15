@@ -95,9 +95,9 @@ export enum GoodRoadType {
 export const getGoodRoadStr = (type: number, goodRoadTypeParam1: number, goodRoadTypeParam2: number) => {
   switch (type) {
     case 1:
-      return lang.global.t('连庄')
+      return lang.global.t('home.baccarat.连庄')
     case 2:
-      return lang.global.t('单跳')
+      return lang.global.t('home.baccarat.单跳')
     case 3:
       const hZH = goodRoadTypeParam1 >> 16
       let n1 = 1
@@ -110,28 +110,28 @@ export const getGoodRoadStr = (type: number, goodRoadTypeParam1: number, goodRoa
         n2 = goodRoadTypeParam2 >> 16
         n1 = goodRoadTypeParam2 & 0xffff
       }
-      return lang.global.t(`${n1}房${n2}厅`)
+      return lang.global.t(`home.baccarat.{n1}房{n2}厅`, { n1, n2 })
     case 6:
-      return lang.global.t('双龙汇')
+      return lang.global.t('home.baccarat.双龙汇')
     case 7:
-      return lang.global.t('上坡路')
+      return lang.global.t('home.baccarat.上坡路')
     case 8:
-      return lang.global.t('下坡路')
+      return lang.global.t('home.baccarat.下坡路')
     case 9:
-      return lang.global.t('排排连')
+      return lang.global.t('home.baccarat.排排连')
     case 10:
-      return lang.global.t('逢庄连')
+      return lang.global.t('home.baccarat.逢庄连')
     case 11:
-      return lang.global.t('逢闲连')
+      return lang.global.t('home.baccarat.逢闲连')
     case 12:
-      return lang.global.t('逢庄跳')
+      return lang.global.t('home.baccarat.逢庄跳')
     case 13:
-      return lang.global.t('逢闲跳')
+      return lang.global.t('home.baccarat.逢闲跳')
     case 14:
-      return lang.global.t('隔连庄')
+      return lang.global.t('home.baccarat.隔连庄')
     case 15:
-      return lang.global.t('隔连闲')
+      return lang.global.t('home.baccarat.隔连闲')
     case 16:
-      return lang.global.t('双跳')
+      return lang.global.t('home.baccarat.双跳')
   }
 }
