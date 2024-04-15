@@ -72,4 +72,5 @@ export default {
   section: 'section',
   videoFailure: 'Please refresh and try again',
   refreshVideo: 'Refresh Video',
+  goLive: 'Go to live broadcast room'
 }

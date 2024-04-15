@@ -321,13 +321,17 @@ const bettingModule: Module<Betting, any> = {
           const newIor = newBetData.ior * 1 || ior * 1
 
           if (oldIor * 1 !== newIor && !autoRatio) {
-            if (oldIor * 1 > newIor) {
+            console.log('oldIor', oldIor)
+            console.log('newIor', newIor)
+            if (oldIor * 1 < newIor) {
               iorChange = 'up'
             } else {
               iorChange = 'down'
             }
           }
           if (letBallMap.includes(playType) && Math.abs(ratioTag * 1) !== Math.abs(ratio * 1) && !autoOdd) {
+            console.log('old', ratioTag)
+            console.log('new', ratio)
             if (ratioTag * 1 < ratio) {
               ratioChange = 'up'
             } else {

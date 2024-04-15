@@ -70,5 +70,6 @@ export default {
   halfPlay: 'yarı zamanlı',
   section: 'Bölüm',
   videoFailure: 'Video yüklenemedi, lütfen yenileyip tekrar deneyin',
-  refreshVideo: 'videoyu yenile'
+  refreshVideo: 'videoyu yenile',
+  goLive: 'Canlı yayın odasına gidin'
 }

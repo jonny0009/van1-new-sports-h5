@@ -8,7 +8,7 @@
         <div class="title">
           <SportsIcon class="sport-icon" :icon-src="marketInfo.gameType" />
           <div class="betting-name text-overflow">
-            {{ marketInfo.ratioMatch }}
+            {{ marketInfo.ratioMatch || marketInfo.ratioName }}
             <span class="ratio-tag" :class="marketInfo.ratioChange">{{ marketInfo.ratioTag }}</span>
             <span class="ratio-change" :class="marketInfo.ratioChange"></span>
           </div>
@@ -240,11 +240,11 @@ defineExpose({
         font-weight: 500;
         .ratio-tag {
           &.up {
-            color: #fb0738;
+            color: #0bba3e;
           }
 
           &.down {
-            color: #0bba3e;
+            color: #fb0738;
           }
         }
         .ratio-change {
@@ -255,7 +255,6 @@ defineExpose({
           background-size: contain;
           background-repeat: no-repeat;
           background-position: center;
-          transform: rotate(180deg);
 
           &.up {
             background-image: url('@/assets/images/betting/up.png');
@@ -298,11 +297,11 @@ defineExpose({
       font-weight: 600;
 
       &.up {
-        color: #fb0738;
+        color: #0bba3e;
       }
 
       &.down {
-        color: #0bba3e;
+        color: #fb0738;
       }
 
       .ior-change {
@@ -313,7 +312,6 @@ defineExpose({
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
-        transform: rotate(180deg);
 
         &.up {
           background-image: url('@/assets/images/betting/up.png');

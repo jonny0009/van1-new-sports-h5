@@ -70,6 +70,7 @@ export default {
   halfPlay: 'duontempo',
   section: 'sekcio',
   videoFailure: 'La ŝarĝo de video malsukcesis, bonvolu refreŝigi kaj provi denove',
-  refreshVideo: 'Refreŝigi videon'
+  refreshVideo: 'Refreŝigi videon',
+  goLive: '前往直播厅',
 
 }

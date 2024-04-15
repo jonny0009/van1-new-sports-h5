@@ -301,9 +301,13 @@ const goShortVideo = (video: any) => {
 
 const videos: any = ref([])
 const getVideos = async () => {
+  refreshing.value = false
+
   const res: any = await getVideoGreet({
     page: 1,
     pageSize: 10
+  }).catch(() => {
+    refreshing.value = true
   })
   const vides: any[] = res?.data?.videoData || []
   if (res.code === 200 && vides.length) {

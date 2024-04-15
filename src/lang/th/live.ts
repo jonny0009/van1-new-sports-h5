@@ -71,5 +71,6 @@ export default {
   halfPlay: 'พักครึ่ง',
   section: 'ส่วน',
   videoFailure: 'การโหลดวิดีโอล้มเหลว โปรดรีเฟรชและลองอีกครั้ง',
-  refreshVideo: 'รีเฟรชวิดีโอ'
+  refreshVideo: 'รีเฟรชวิดีโอ',
+  goLive: 'ไปที่ห้องถ่ายทอดสด'
 }

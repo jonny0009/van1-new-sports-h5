@@ -292,7 +292,7 @@ defineExpose({
     position: relative;
     z-index: 8;
     width: 100% !important;
-    height: 632px;
+    height: 632px !important;
     object-fit: contain;
     margin: auto;
     padding: 0 !important;
