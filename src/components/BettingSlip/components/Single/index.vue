@@ -7,7 +7,11 @@
       <div class="content">
         <div class="title">
           <SportsIcon class="sport-icon" :icon-src="marketInfo.gameType" />
-          <div class="betting-name text-overflow">{{ marketInfo.ratioName }}</div>
+          <div class="betting-name text-overflow">
+            {{ marketInfo.ratioMatch }}
+            <span class="ratio-tag" :class="marketInfo.ratioChange">{{ marketInfo.ratioTag }}</span>
+            <span class="ratio-change" :class="marketInfo.ratioChange"></span>
+          </div>
         </div>
         <div class="details">
           <div v-if="marketInfo.isChampion" class="play-name text-overflow">{{ marketInfo.championType }}</div>
@@ -226,12 +230,41 @@ defineExpose({
       }
 
       .betting-name {
+        display: flex;
+        align-items: center;
         margin-left: 8px;
         font-family: PingFangSC-Medium;
         font-size: 28px;
         color: rgb(14, 61, 102);
         letter-spacing: 0;
         font-weight: 500;
+        .ratio-tag {
+          &.up {
+            color: #fb0738;
+          }
+
+          &.down {
+            color: #0bba3e;
+          }
+        }
+        .ratio-change {
+          width: 22px;
+          height: 11px;
+          margin-left: 5px;
+          display: inline-block;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          transform: rotate(180deg);
+
+          &.up {
+            background-image: url('@/assets/images/betting/up.png');
+          }
+
+          &.down {
+            background-image: url('@/assets/images/betting/down.png');
+          }
+        }
       }
     }
 

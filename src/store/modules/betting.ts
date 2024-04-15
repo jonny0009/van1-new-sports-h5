@@ -319,7 +319,7 @@ const bettingModule: Module<Betting, any> = {
             newBetData.ior = eoIor
           }
           const newIor = newBetData.ior * 1 || ior * 1
-          console.log(autoRatio, userConfig.acceptAll, acceptAll, 'autoRatio')
+
           if (oldIor * 1 !== newIor && !autoRatio) {
             if (oldIor * 1 > newIor) {
               iorChange = 'up'
@@ -328,7 +328,7 @@ const bettingModule: Module<Betting, any> = {
             }
           }
           if (letBallMap.includes(playType) && Math.abs(ratioTag * 1) !== Math.abs(ratio * 1) && !autoOdd) {
-            if (ratioTag * 1 > ratio) {
+            if (ratioTag * 1 < ratio) {
               ratioChange = 'up'
             } else {
               ratioChange = 'down'
@@ -385,7 +385,20 @@ const bettingModule: Module<Betting, any> = {
            * 需要克隆新的对象,防止createBetItem污染原来的字段,因为createBetItem不是一个纯函数
            */
           const copyBet = JSON.parse(JSON.stringify(replaceBet))
-          replaceBet.betItem = createBetItem(copyBet, 2)
+          replaceBet.betItem = createBetItem(copyBet)
+
+          if (replaceBet.betItem?.includes(' ') && letBallMap.includes(playType)) {
+            const [ratioMatch, ratioTag, ...special] = replaceBet.betItem.split(' ')
+            if (special.length) {
+              replaceBet.ratioTag = special.pop() || ''
+              const lastSpaceIndex = replaceBet.betItem.lastIndexOf(' ')
+              replaceBet.ratioMatch = replaceBet.betItem.substr(0, lastSpaceIndex)
+            } else {
+              replaceBet.ratioMatch = ratioMatch
+              replaceBet.ratioTag = ratioTag
+            }
+          }
+
           return replaceBet
         }
         return bet

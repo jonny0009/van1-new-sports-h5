@@ -22,7 +22,7 @@ export const betParams = (bet: any) => {
     newBet.ratio1 = ratio || ratio1
   }
   newBet.type = 1
-  newBet.betItem = createBetItem(newBet, 2)
+  newBet.betItem = createBetItem(newBet)
   return newBet
 }
 
@@ -206,7 +206,7 @@ export const buyCombosParams = (markets: Array<MarketInfo>, combos: any, { s, t,
   const { userConfig } = store.state.user || {}
   // const autoRatio = userConfig.acceptAll === 1 ? 'S' : 'N'
   const autoOdd = userConfig.acceptAll === 1 ? 'S' : 'N'
-  
+
   const oddChangesState = store.state.betting.oddChangesState || false
   // const autoOdd = oddChangesState ? 'S' : 'N'
   const autoRatio = oddChangesState ? 'S' : 'Y'
@@ -267,7 +267,6 @@ export const buyCombosParams = (markets: Array<MarketInfo>, combos: any, { s, t,
     autoOdd,
     isCredit: 'N',
     orderSource: 'AI'
-
   }
 }
 
@@ -326,7 +325,7 @@ export const chaiCombos = (betArray: Array<any>, goldDetails = {}) => {
   return chaiComboArray
 }
 
-export const getComboMarkets = (markets:Array<MarketInfo>) => {
+export const getComboMarkets = (markets: Array<MarketInfo>) => {
   const combosMarkets: Array<any> = []
   // 获取不同比赛的投注项
   const onlyBetGidms: Array<any> = []
