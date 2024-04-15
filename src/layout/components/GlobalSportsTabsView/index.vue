@@ -21,7 +21,7 @@
                     active: item.routerName === active,
                     homeStyleItem: homeStyle === 3,
                     itemColor: item.routerName === 'Match' && homeStyle === 2,
-                    itemWidth:homeStyle !== 2
+                    itemWidth: homeStyle !== 2
                   },
                   item.routerName
                 ]"
@@ -51,7 +51,7 @@ const homeStyle = computed(() => store.state.app.homeStyle)
 const { t } = useI18n()
 const sports = ref([])
 const getStatistics = async () => {
-  const res: any = await statistics({ showType: 'FU' })
+  const res: any = await statistics({ showType: 'FAST' })
   if (res?.code === 200 && res?.data) {
     const stResult = res.data?.stResult || []
     sports.value = stResult

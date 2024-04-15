@@ -376,7 +376,7 @@ const sportsList = computed(() => {
   return [...newSportsB]
 })
 // const getStatistics = async () => {
-//   const res: any = await statistics({ showType: 'FU' })
+//   const res: any = await statistics({ showType: 'FAST' })
 //   if (res?.code === 200 && res?.data) {
 //     const stResult = res.data?.stResult || []
 //     sports.value = stResult
