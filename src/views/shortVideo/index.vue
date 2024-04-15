@@ -81,8 +81,9 @@ const change = async ({ activeIndex }: any) => {
 <style lang="scss" scoped>
 .video-list-wrap {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   overflow: hidden;
+  position: relative;
 
   .swiper-box {
     height: 100%;

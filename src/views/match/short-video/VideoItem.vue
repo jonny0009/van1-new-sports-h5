@@ -83,7 +83,7 @@ import { mainMatches } from '@/api/live'
 import { computed } from 'vue'
 import { MarketInfo } from '@/entitys/MarketInfo'
 import liveBgError from '@/assets/images/empty/live-bg-error.svg?url'
-
+import router from '@/router'
 const videoTarget = ref()
 const props = defineProps({
   videoInfo: {
@@ -237,7 +237,7 @@ const initVideo = () => {
       videoPause.value = true
     })
     player.on('click', () => {
-      pauseHandle()
+      goShortVideo()
     })
   })
 }
@@ -250,13 +250,22 @@ const pauseHandle = () => {
   if (videoError.value) {
     return false
   }
-  if (player.paused()) {
+  if (!player) {
+    initVideo()
+  } else if (player.paused()) {
     player.play()
   } else {
     player.pause()
   }
 }
-
+const goShortVideo = () => {
+  router.push({
+    name: 'Svideo',
+    query: {
+      videoId: props.videoInfo.videoId
+    }
+  })
+}
 defineExpose({
   videoTarget,
   play,
