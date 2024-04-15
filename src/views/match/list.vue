@@ -110,7 +110,7 @@
             </van-collapse-item>
 
             <!-- 短视频 -->
-            <ShortVideo v-if="['SORTVIDEO'].includes(navActive)"></ShortVideo>
+            <ShortVideo v-if="['SORTVIDEO'].includes(navActive)" :videos="videos"></ShortVideo>
           </van-collapse>
         </van-tab>
       </van-tabs>
@@ -206,10 +206,11 @@ const onChangeTabs = () => {
 }
 
 const onRefresh = () => {
-  if (!['SORTVIDEO'].includes(navActive.value)) {
-    onLoad()
-  } else {
+  if (['SORTVIDEO'].includes(navActive.value)) {
     list.value = []
+    getVideos()
+  } else {
+    onLoad()
   }
 
   if (['RB'].includes(navActive.value)) {
@@ -296,6 +297,18 @@ const goShortVideo = (video: any) => {
       videoId: video.videoId
     }
   })
+}
+
+const videos: any = ref([])
+const getVideos = async () => {
+  const res: any = await getVideoGreet({
+    page: 1,
+    pageSize: 10
+  })
+  const vides: any[] = res?.data?.videoData || []
+  if (res.code === 200 && vides.length) {
+    videos.value = vides
+  }
 }
 </script>
 

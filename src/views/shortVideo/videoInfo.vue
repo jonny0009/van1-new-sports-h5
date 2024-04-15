@@ -397,7 +397,7 @@ const pauseHandle = () => {
     justify-content: space-between;
     position: absolute;
     z-index: 9;
-    bottom: 3%;
+    bottom: 8%;
     left: 30px;
     right: 30px;
     font-size: 42px;
