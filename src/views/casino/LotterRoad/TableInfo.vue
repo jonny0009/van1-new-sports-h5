@@ -40,7 +40,10 @@ const props = defineProps({
 const errorState = ref(false)
 const cover = computed(() => {
   if (errorState.value || !props.tableInfo.tableCover) {
-    const index = Math.round(Math.random() * (30 - 1) + 1)
+    let index = Math.round(Math.random() * (30 - 1) + 1)
+    if (index > 30) {
+      index = index % 30
+    }
     return new URL(`/casino/bg/${index}.jpg`, import.meta.url).href
   }
 
