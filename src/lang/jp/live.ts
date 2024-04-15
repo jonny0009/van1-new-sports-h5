@@ -71,5 +71,6 @@ export default {
   section: 'セクション',
   videoFailure: 'ビデオの読み込みに失敗しました。更新してもう一度お試しください',
   refreshVideo: 'ビデオを更新',
-  goLive: '生放送ルームに行く'
+  goLive: '生放送ルームに行く',
+  playbackFailed: 'プレイに失敗しました'
 }

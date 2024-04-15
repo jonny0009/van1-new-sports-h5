@@ -11,7 +11,7 @@
     </div>
     <div class="video-error" v-else-if="videoError">
       <img :src="liveBgError" class="bg" />
-      <div class="error-title">播放异常</div>
+      <div class="error-title">{{ $t('live.playbackFailed') }}</div>
     </div>
     <div class="video-header-info">
       <img v-img="videoInfo.leagueIcon" type="1" alt="" />

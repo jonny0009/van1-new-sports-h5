@@ -71,5 +71,6 @@ export default {
   section: 'Bölüm',
   videoFailure: 'Video yüklenemedi, lütfen yenileyip tekrar deneyin',
   refreshVideo: 'videoyu yenile',
-  goLive: 'Canlı yayın odasına gidin'
+  goLive: 'Canlı yayın odasına gidin',
+  playbackFailed: 'Oynatma başarısız oldu'
 }

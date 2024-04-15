@@ -18,7 +18,7 @@
     </div>
     <div class="video-error" v-else-if="videoError">
       <img :src="liveBgError" class="bg" />
-      <div class="error-title">播放异常</div>
+      <div class="error-title">{{ $t('live.playbackFailed') }}</div>
     </div>
 
     <div class="match-wrap" v-if="RPlay || OUPlay" @click.stop>
@@ -78,7 +78,7 @@
 <script lang="ts" setup>
 import 'video.js/dist/video-js.min.css'
 import videojs from 'video.js'
-import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { nextTick, onBeforeMount, onUnmounted, ref } from 'vue'
 import { mainMatches } from '@/api/live'
 import { computed } from 'vue'
 import { MarketInfo } from '@/entitys/MarketInfo'
@@ -89,37 +89,20 @@ const props = defineProps({
   videoInfo: {
     type: Object,
     default: () => {}
-  },
-  active: {
-    type: Boolean,
-    default: false
   }
 })
-watch(
-  () => props.active,
-  async () => {
-    if (props.active) {
-      if (player) {
-        player && player.play()
-      } else {
-        getMainMatches()
-        initVideo()
-      }
-    } else {
-      player && player.pause()
-    }
-  }
-)
+
 const play = () => {
-  if (player) {
-    player && player.play()
-  } else {
-    getMainMatches()
+  if (player?.paused()) {
+    player.play()
+  } else if (!player) {
     initVideo()
   }
 }
 const pause = () => {
-  player && player.pause()
+  if (player && !player.paused()) {
+    player.pause()
+  }
 }
 const RPlay = computed(() => {
   const { R } = matchInfo.value
@@ -188,11 +171,8 @@ const getMainMatches = async () => {
   }
 }
 
-onMounted(() => {
-  if (props.active) {
-    initVideo()
-    getMainMatches()
-  }
+onBeforeMount(() => {
+  getMainMatches()
 })
 onUnmounted(() => {
   disposePlayer()
@@ -321,8 +301,10 @@ defineExpose({
     z-index: 11;
     left: 0;
     top: 0;
+    bottom: 0;
+    margin: auto;
     width: 100%;
-    height: 100%;
+    height: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;

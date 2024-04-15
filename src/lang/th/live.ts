@@ -72,5 +72,6 @@ export default {
   section: 'ส่วน',
   videoFailure: 'การโหลดวิดีโอล้มเหลว โปรดรีเฟรชและลองอีกครั้ง',
   refreshVideo: 'รีเฟรชวิดีโอ',
-  goLive: 'ไปที่ห้องถ่ายทอดสด'
+  goLive: 'ไปที่ห้องถ่ายทอดสด',
+  playbackFailed: 'การเล่นล้มเหลว'
 }

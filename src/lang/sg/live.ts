@@ -71,5 +71,6 @@ export default {
   section: '小節',
   videoFailure: '影片載入失敗，請刷新重試',
   refreshVideo: '重新整理影片',
-  goLive: '前往直播廳'
+  goLive: '前往直播廳',
+  playbackFailed: '播放失敗'
 }

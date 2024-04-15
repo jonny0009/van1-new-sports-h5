@@ -71,5 +71,6 @@ export default {
   bagian: 'bagian',
   videoFailure: 'Pemuatan video gagal, harap segarkan dan coba lagi',
   refreshVideo: 'Segarkan video',
-  goLive: 'Pergi ke ruang siaran langsung'
+  goLive: 'Pergi ke ruang siaran langsung',
+  playbackFailed: 'Pemutaran gagal'
 }

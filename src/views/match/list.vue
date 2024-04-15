@@ -110,7 +110,9 @@
             </van-collapse-item>
 
             <!-- 短视频 -->
-            <ShortVideo v-if="['SORTVIDEO'].includes(navActive)" :videos="videos"></ShortVideo>
+            <ShortVideo
+              v-if="['SORTVIDEO'].includes(navActive) && nav.type === 'SORTVIDEO' && !refreshing"
+            ></ShortVideo>
           </van-collapse>
         </van-tab>
       </van-tabs>
@@ -208,7 +210,7 @@ const onChangeTabs = () => {
 const onRefresh = () => {
   if (['SORTVIDEO'].includes(navActive.value)) {
     list.value = []
-    getVideos()
+    refreshing.value = false
   } else {
     onLoad()
   }
@@ -297,22 +299,6 @@ const goShortVideo = (video: any) => {
       videoId: video.videoId
     }
   })
-}
-
-const videos: any = ref([])
-const getVideos = async () => {
-  refreshing.value = false
-
-  const res: any = await getVideoGreet({
-    page: 1,
-    pageSize: 10
-  }).catch(() => {
-    refreshing.value = true
-  })
-  const vides: any[] = res?.data?.videoData || []
-  if (res.code === 200 && vides.length) {
-    videos.value = vides
-  }
 }
 </script>
 
