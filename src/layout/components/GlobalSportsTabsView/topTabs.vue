@@ -7,7 +7,7 @@
       :class="[
         {
           active: item.routerName === active,
-          itemColor: item.routerName === 'Match' 
+          itemColor: item.routerName === 'Match'
         },
         item.routerName
       ]"
@@ -68,7 +68,7 @@ const homeBarList = ref([
 ])
 
 const getStatistics = async () => {
-  const res: any = await statistics({ showType: 'FU' })
+  const res: any = await statistics({ showType: 'FAST' })
   if (res?.code === 200 && res?.data) {
     const stResult = res.data?.stResult || []
     store.commit('match/SET_SPORTS_LIST', stResult)
