@@ -50,7 +50,9 @@ export default {
   RBSize: 'Bola rodante por encima/por debajo',
   RBRide: 'Bola rodante 1X2',
   PDscore: 'puntuación correcta',
-
+  hotMatchTitle: 'Caliente',
+  comingSoonTitle: 'Viniendo a jugar',
+  shortVideoTitle: 'Video corto',
   casinoTitleObj: {
     title1: 'Buenas recomendaciones de carreteras',
     title2: 'Baccarat en vivo',
