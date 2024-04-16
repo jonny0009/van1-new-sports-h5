@@ -50,6 +50,9 @@ export default {
   RBSize: 'O/U Taruhan Langsung',
   RBRide: 'Taruhan Langsung 1X2',
   PDscore: 'Skor Benar',
+  hotMatchTitle: 'Panas',
+  comingSoonTitle: 'Akan dimainkan',
+  shortVideoTitle: 'Video pendek',
   casinoTitleObj: {
     title1: 'Tren Bagus',
     title2: 'Bakarat Langsung',
