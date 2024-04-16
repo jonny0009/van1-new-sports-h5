@@ -2,8 +2,8 @@
   <div class="sportsTabsView">
     <div class="tabs-cut">
       <van-tabs
-        :duration="0.2"
         v-model:active="active"
+        :duration="0.2"
         :shrink="homeStyle !== 2"
         :ellipsis="false"
         line-height="0"
@@ -124,12 +124,12 @@ const homeStyleBarList = ref([
     icon: 'casino',
     text: t('home.casino'),
     routerName: 'Casino'
+  },
+  {
+    icon: 'casino',
+    text: t('home.casino'),
+    routerName: 'Casino'
   }
-  // {
-  //   icon: 'casino',
-  //   text: t('home.casino'),
-  //   routerName: 'Casino'
-  // }
 ])
 
 // 获取bar
