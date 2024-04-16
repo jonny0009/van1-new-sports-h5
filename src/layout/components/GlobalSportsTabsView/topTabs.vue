@@ -27,7 +27,6 @@ import { ref, computed } from 'vue'
 import router from '@/router'
 import store from '@/store'
 import { useI18n } from 'vue-i18n'
-import { statistics } from '@/api/home'
 const { t } = useI18n()
 
 // 热门 Live 直播  今日  早盘 赌场
@@ -66,15 +65,6 @@ const homeBarList = ref([
     routerName: 'Casino'
   }
 ])
-
-const getStatistics = async () => {
-  const res: any = await statistics({ showType: 'FAST' })
-  if (res?.code === 200 && res?.data) {
-    const stResult = res.data?.stResult || []
-    store.commit('match/SET_SPORTS_LIST', stResult)
-  }
-}
-getStatistics()
 
 const goClick = ({ routerName }: any) => {
   store.dispatch('user/getLocationHeight', false)
