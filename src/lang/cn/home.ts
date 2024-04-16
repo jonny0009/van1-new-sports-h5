@@ -45,7 +45,6 @@ export default {
   Saturday: '周六',
   numberHour: '{number}小时',
   numberDay: '{number}天',
-
   hot: '热门',
   todayUpcoming: '今日早盘',
   RBInfo: '滚球 亚洲让分盘',
@@ -53,9 +52,9 @@ export default {
   RBRide: '滚球 1X2',
   PDscore: '正确比分',
 
-  hotMatchTitle: '熱播中',
-  comingSoonTitle: '即將播放',
-  shortVideoTitle: '短影片',
+  hotMatchTitle: '热播中',
+  comingSoonTitle: '即将播放',
+  shortVideoTitle: '短视频',
   casinoTitleObj: {
     title1: '好路推荐',
     title2: '真人百家乐',
@@ -85,6 +84,6 @@ export default {
     逢闲跳: '逢闲跳',
     隔连庄: '隔连庄',
     隔连闲: '隔连闲',
-    双跳: '双跳',
+    双跳: '双跳'
   }
 }
