@@ -45,20 +45,11 @@ import { ref, computed } from 'vue'
 import router from '@/router'
 import store from '@/store'
 import { useI18n } from 'vue-i18n'
-import { statistics } from '@/api/home'
 
 const homeStyle = computed(() => store.state.app.homeStyle)
 const { t } = useI18n()
 const sports = ref([])
-const getStatistics = async () => {
-  const res: any = await statistics({ showType: 'FAST' })
-  if (res?.code === 200 && res?.data) {
-    const stResult = res.data?.stResult || []
-    sports.value = stResult
-    store.commit('match/SET_SPORTS_LIST', stResult)
-  }
-}
-getStatistics()
+
 // 经典 nav 去掉早盘 , 加入体育项
 const sportsList = computed(() => {
   // const sports = store.state.app.sports || []

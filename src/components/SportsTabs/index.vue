@@ -81,6 +81,12 @@ const sportsList = computed(() => {
   let sports: any = ''
   if (props.ifGoodMatch) {
     sports = store.state.app.homeTabsSports || []
+  } else if (props.ifCapstan) {
+    let sportsListArr = store.state.match.sportsListArr || []
+    sportsListArr.map((e: any) => {
+      e.gameCount = Number(e.num)
+    })
+    sports = sportsListArr
   } else {
     sports = store.state.app.sports || []
   }
