@@ -52,6 +52,9 @@ export default {
   RBSize: '라이브 크기',
   RBRide: '라이브 1X2',
   PDscore: '정확한 점수',
+  hotMatchTitle: '핫',
+  comingSoonTitle: '놀러 갑니다',
+  shortVideoTitle: '짧은 동영상',
   casinoTitleObj: {
     title1: '좋은 도로 추천',
     title2: '라이브 바카라',
