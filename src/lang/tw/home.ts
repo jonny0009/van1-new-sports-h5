@@ -49,7 +49,9 @@ export default {
   RBSize: '滾球 大小盤',
   RBRide: '滾球 1X2',
   PDscore: '正確比分',
-
+  hotMatchTitle: '熱播中',
+  comingSoonTitle: '即將播放',
+  shortVideoTitle: '短影片',
   casinoTitleObj: {
     title1: '好路推薦',
     title2: '真人百家樂',
