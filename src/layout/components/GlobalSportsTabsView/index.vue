@@ -48,12 +48,12 @@ import { useI18n } from 'vue-i18n'
 
 const homeStyle = computed(() => store.state.app.homeStyle)
 const { t } = useI18n()
-const sports = ref([])
 
 // 经典 nav 去掉早盘 , 加入体育项
 const sportsList = computed(() => {
   // const sports = store.state.app.sports || []
-  const newSportsA = sports.value.filter((e: any) => {
+  const sports = store.state.match.sportsListArr || []
+  const newSportsA = sports.filter((e: any) => {
     return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.num * 1
   })
   let newSportsB: any = []

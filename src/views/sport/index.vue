@@ -760,6 +760,11 @@ const getRecommendEvents = async (params: any) => {
           listArr.push(JSON.parse(JSON.stringify(listObj[item])))
         })
         recommendList.value = listArr
+        if (recommendListArr.value.length < recommendPage.value * recommendPageSize.value) {
+          recommendLoadAll.value = true
+        } else {
+          recommendLoadAll.value = false
+        }
       } else {
         leagueLogo.value = ''
         leagueName.value = ''
@@ -789,6 +794,11 @@ const getRecommendEvents = async (params: any) => {
           listArr.push(JSON.parse(JSON.stringify(listObj[item])))
         })
         earlyList.value = listArr
+        if (earlyListArr.value.length < earlyPage.value * earlyPageSize.value) {
+          earlyLoadAll.value = true
+        } else {
+          earlyLoadAll.value = false
+        }
       } else {
         earlyList.value = []
       }
