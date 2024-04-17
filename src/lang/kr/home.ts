@@ -56,7 +56,7 @@ export default {
   hotMatchTitle: '핫',
   comingSoonTitle: '놀러 갑니다',
   shortVideoTitle: '짧은 동영상',
-  CasinoTitleObj: {
+  casinoTitleObj: {
     title1: '좋은 도로 추천',
     title2: '라이브 바카라',
     title3: '카지노는 유지 관리 중입니다...',
