@@ -2,7 +2,7 @@
   <div id="main">
     <GlobalHeader v-if="!$route.meta.hideGlobalHeaderView" @betShow="betShow" />
     <GlobalRefresh>
-      <DoubleRowNav v-if="homeStyle === 3" />
+      <DoubleRowNav v-if="homeStyle === 3 && !$route.meta.hideSportsTabsView" />
       <GlobalSportsTabsView v-if="$route.meta.showSportsTabsView && homeStyle !== 2" />
       <TopSportsTabs v-if="$route.meta.showSportsTabsView && homeStyle === 2" />
       <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pb5 pt15" />
@@ -41,7 +41,7 @@ const appContent = ref()
 
 const route = useRoute()
 const { currentRoute } = useRouter()
-const unShow: any = ref(['game', 'Casino'])
+const unShow: any = ref(['game', 'Casino', 'Svideo'])
 const heightNumY: any = ref(0)
 const indexNum: any = ref(0)
 const betShowState: any = ref(!unShow.value.includes(route.name))

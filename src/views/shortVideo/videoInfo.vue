@@ -49,7 +49,7 @@
             class="betting-option"
           >
             <span class="ratio-name text-overflow">
-              {{ play.marketInfo.ratioName }}
+              {{ play.marketInfo.ratioTag }}
             </span>
             <span class="ratio-ior">
               {{ play.marketInfo.vior }}

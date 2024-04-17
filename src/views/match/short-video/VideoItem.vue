@@ -47,7 +47,7 @@
             class="betting-option"
           >
             <span class="ratio-name text-overflow">
-              {{ play.marketInfo.ratioName }}
+              {{ play.marketInfo.ratioTag }}
             </span>
             <span class="ratio-ior">
               {{ play.marketInfo.vior }}
@@ -361,7 +361,7 @@ defineExpose({
     .title {
       font-size: 22px;
       color: rgb(14, 61, 102);
-      font-weight: 500;
+      font-weight: 700;
     }
 
     .info {
@@ -379,7 +379,7 @@ defineExpose({
         margin-left: 15px;
         font-size: 24px;
         color: rgb(14, 61, 102);
-        font-weight: 600;
+        font-weight: 500;
       }
     }
   }
@@ -454,7 +454,7 @@ defineExpose({
           justify-content: space-between;
           width: 190px;
           height: 48px;
-          background-color: rgb(244, 245, 250);
+          background-color: rgba(255, 255, 255, 0.5);
           border-radius: 16px;
           padding: 0 15px;
           margin-bottom: 10px;
