@@ -3,7 +3,7 @@
     <GlobalHeader v-if="!$route.meta.hideGlobalHeaderView" @betShow="betShow" />
     <GlobalRefresh>
       <DoubleRowNav v-if="homeStyle === 3" />
-      <GlobalSportsTabsView v-if="$route.meta.showSportsTabsView && homeStyle !== 2" />
+      <GlobalSportsTabsView v-if="$route.meta.showSportsTabsView && homeStyle !== 2 && showSportsTop" />
       <TopSportsTabs v-if="$route.meta.showSportsTabsView && homeStyle === 2" />
       <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pb5 pt15" />
       <AppMain ref="appContent" />
@@ -40,6 +40,7 @@ import store from '@/store'
 const appContent = ref()
 
 const route = useRoute()
+import router from '@/router'
 const { currentRoute } = useRouter()
 const unShow: any = ref(['game', 'Casino'])
 const heightNumY: any = ref(0)
@@ -48,6 +49,7 @@ const betShowState: any = ref(!unShow.value.includes(route.name))
 
 const scrollNum = computed(() => store.state.user.scrollNumY)
 const homeStyle = computed(() => store.state.app.homeStyle)
+const showSportsTop = computed(() => store.state.app.showSportsTop)
 const locationHeight = computed(() => store.state.user.locationHeight)
 const KeepAlive = computed(() => currentRoute.value.meta.KeepAlive)
 const pageIndex: any = computed(() => currentRoute.value.meta.index)
@@ -73,6 +75,13 @@ const sportsList = computed(() => {
 
 const bettingSlip = ref()
 
+const activeUrl = computed(() => {
+  const routerName: any = router?.currentRoute?.value?.name || ''
+  const routerNameToLowerCase = routerName.toLowerCase()
+  const isrouterNameToLowerCase = ['casino'].includes(routerNameToLowerCase)
+  return isrouterNameToLowerCase
+})
+
 watch(
   () => route.path,
   (to) => {
@@ -89,6 +98,23 @@ watch(
       } else {
         appContent.value.transitionName = 'fade-left'
         indexNum.value = obj.indexNum
+      }
+      return
+    }
+    if ((homeStyle.value !== 2 && to === '/match') || to === '/casino') {
+      let noSportsNum = 0
+      if (to === '/match') {
+        noSportsNum = 65
+      }
+      if (to === '/casino') {
+        noSportsNum = 66
+      }
+      if (noSportsNum > indexNum.value) {
+        appContent.value.transitionName = 'fade-right'
+        indexNum.value = noSportsNum
+      } else {
+        appContent.value.transitionName = 'fade-left'
+        indexNum.value = noSportsNum
       }
       return
     }
@@ -111,6 +137,9 @@ watch(
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  if (homeStyle.value !== 2 && activeUrl.value) {
+    indexNum.value = 66
+  }
 })
 
 onUpdated(() => {
