@@ -40,9 +40,19 @@ const active = computed(() => {
   const routerName: any = router?.currentRoute?.value?.name || ''
   const routerNameToLowerCase = routerName.toLowerCase()
   const isrouterNameToLowerCase = ['match', 'casino'].includes(routerNameToLowerCase)
+  if (!isrouterNameToLowerCase) {
+    store.dispatch('app/setKeyValue', {
+      key: 'showSportsTop',
+      value: true
+    })
+  } else {
+    store.dispatch('app/setKeyValue', {
+      key: 'showSportsTop',
+      value: false
+    })
+  }
   return isrouterNameToLowerCase ? routerNameToLowerCase : 'home'
 })
-
 const navList = reactive<{ arr: any[] }>({
   arr: [
     // {
@@ -72,6 +82,19 @@ const changeTab = (val: any) => {
   let urlParams = val.name
   store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
   router.push(`/` + urlParams)
+  setTimeout(() => {
+    if (val.name === 'home') {
+      store.dispatch('app/setKeyValue', {
+        key: 'showSportsTop',
+        value: true
+      })
+    } else {
+      store.dispatch('app/setKeyValue', {
+        key: 'showSportsTop',
+        value: false
+      })
+    }
+  }, 200)
 }
 
 // 标签颜色

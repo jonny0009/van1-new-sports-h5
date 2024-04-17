@@ -21,6 +21,7 @@ declare interface App {
   matchLiveIndex: any
   homeStyle: any
   homeTabsSports: any
+  showSportsTop: any
 }
 
 declare interface User {
