@@ -45,17 +45,18 @@ export default {
   Saturday: '토요일',
   numberHour: '{number}시간',
   numberDay: '{number}일',
-  hot: '더운',
-  todayUpcoming: '오늘예정',
-  // new
+  'hot': '더운',
+  'todayUpcoming': '오늘예정',
+
   RBInfo: '라이브 아시안 핸디캡',
   RBSize: '라이브 크기',
   RBRide: '라이브 1X2',
   PDscore: '정확한 점수',
+
   hotMatchTitle: '핫',
   comingSoonTitle: '놀러 갑니다',
   shortVideoTitle: '짧은 동영상',
-  CasinoTitleObj: {
+  casinoTitleObj: {
     title1: '좋은 도로 추천',
     title2: '라이브 바카라',
     title3: '카지노는 유지 관리 중입니다...',
