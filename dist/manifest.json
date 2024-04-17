@@ -1,6 +1,6 @@
 {
   "index.html": {
-    "file": "assets/index.17db925e.js",
+    "file": "assets/index.e49a47fe.js",
     "src": "index.html",
     "isEntry": true,
     "imports": [
@@ -52,7 +52,7 @@
       "src/views/home/index.vue"
     ],
     "css": [
-      "assets/index.48c73a7d.css"
+      "assets/index.24f83dca.css"
     ],
     "assets": [
       "assets/CNY.23ccc0b4.svg",
@@ -88,7 +88,7 @@
     "file": "assets/vue.d6a430ba.js"
   },
   "src/views/error-page/404.vue": {
-    "file": "assets/404.fee9dd78.js",
+    "file": "assets/404.70bd0108.js",
     "src": "src/views/error-page/404.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -110,7 +110,7 @@
     ]
   },
   "src/views/login/index.vue": {
-    "file": "assets/index.aab0ee17.js",
+    "file": "assets/index.0e8a47db.js",
     "src": "src/views/login/index.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -129,7 +129,7 @@
     ]
   },
   "src/views/login/sign-in.vue": {
-    "file": "assets/sign-in.8691a49b.js",
+    "file": "assets/sign-in.809fa7ae.js",
     "src": "src/views/login/sign-in.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -164,7 +164,7 @@
     ]
   },
   "src/views/error-page/403.vue": {
-    "file": "assets/403.d19e8618.js",
+    "file": "assets/403.28f5402b.js",
     "src": "src/views/error-page/403.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -180,7 +180,7 @@
     ]
   },
   "src/views/error-page/503.vue": {
-    "file": "assets/503.32c9d3b8.js",
+    "file": "assets/503.abbb7514.js",
     "src": "src/views/error-page/503.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -196,7 +196,7 @@
     ]
   },
   "src/layout/index.vue": {
-    "file": "assets/index.9646be67.js",
+    "file": "assets/index.c4adebde.js",
     "src": "src/layout/index.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -205,14 +205,14 @@
     ]
   },
   "src/views/home/index.vue": {
-    "file": "assets/index.2ef3fcb0.js",
+    "file": "assets/index.1e36dc88.js",
     "src": "src/views/home/index.vue",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
       "_vue.d6a430ba.js",
       "_title-recommend.e2b9b6c8.js",
-      "_index.vue_vue_type_script_setup_true_lang.bbeaf3ec.js"
+      "_index.vue_vue_type_script_setup_true_lang.9108f39d.js"
     ],
     "css": [
       "assets/index.714b422a.css"
@@ -224,15 +224,15 @@
   "_title-recommend.e2b9b6c8.js": {
     "file": "assets/title-recommend.e2b9b6c8.js"
   },
-  "_index.vue_vue_type_script_setup_true_lang.bbeaf3ec.js": {
-    "file": "assets/index.vue_vue_type_script_setup_true_lang.bbeaf3ec.js",
+  "_index.vue_vue_type_script_setup_true_lang.9108f39d.js": {
+    "file": "assets/index.vue_vue_type_script_setup_true_lang.9108f39d.js",
     "imports": [
       "index.html",
       "_vue.d6a430ba.js"
     ]
   },
   "src/views/casino/index.vue": {
-    "file": "assets/index.6bce4114.js",
+    "file": "assets/index.ffe07645.js",
     "src": "src/views/casino/index.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -248,11 +248,11 @@
     ]
   },
   "src/views/champion/index.vue": {
-    "file": "assets/index.6cff5f7c.js",
+    "file": "assets/index.b656817f.js",
     "src": "src/views/champion/index.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_index.87689647.js",
+      "_index.07b744bd.js",
       "index.html",
       "_vue.d6a430ba.js"
     ],
@@ -260,8 +260,8 @@
       "assets/index.8e890364.css"
     ]
   },
-  "_index.87689647.js": {
-    "file": "assets/index.87689647.js",
+  "_index.07b744bd.js": {
+    "file": "assets/index.07b744bd.js",
     "imports": [
       "index.html"
     ]
@@ -288,7 +288,7 @@
     ]
   },
   "src/views/game/index.vue": {
-    "file": "assets/index.f88cea4c.js",
+    "file": "assets/index.997e0509.js",
     "src": "src/views/game/index.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -300,12 +300,12 @@
     ]
   },
   "src/views/homeTime/index.vue": {
-    "file": "assets/index.e9a051e8.js",
+    "file": "assets/index.dc06d860.js",
     "src": "src/views/homeTime/index.vue",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_index.vue_vue_type_script_setup_true_lang.bbeaf3ec.js",
+      "_index.vue_vue_type_script_setup_true_lang.9108f39d.js",
       "_vue.d6a430ba.js"
     ],
     "dynamicImports": [
@@ -316,72 +316,72 @@
     ]
   },
   "src/views/sportToday/index.vue": {
-    "file": "assets/index.d3e1ec7c.js",
+    "file": "assets/index.bd4a6f00.js",
     "src": "src/views/sportToday/index.vue",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
       "_vue.d6a430ba.js",
-      "_index.vue_vue_type_script_setup_true_lang.bbeaf3ec.js"
+      "_index.vue_vue_type_script_setup_true_lang.9108f39d.js"
     ],
     "css": [
       "assets/index.9dd1e6d1.css"
     ]
   },
   "src/views/live/index.vue": {
-    "file": "assets/index.568b7e68.js",
+    "file": "assets/index.b1a0e66b.js",
     "src": "src/views/live/index.vue",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_useMatch.fca76b95.js",
+      "_useMatch.a6ccffd8.js",
       "_s_hot2.bba3cb3a.js",
       "_vue.d6a430ba.js",
-      "_index.d85bf776.js",
-      "_getScore.7bccd184.js"
+      "_index.8820f63b.js",
+      "_getScore.a99f5825.js"
     ],
     "css": [
       "assets/index.d7090e82.css"
     ]
   },
-  "_index.d85bf776.js": {
-    "file": "assets/index.d85bf776.js",
+  "_index.8820f63b.js": {
+    "file": "assets/index.8820f63b.js",
     "imports": [
       "index.html"
     ]
   },
-  "_useMatch.fca76b95.js": {
-    "file": "assets/useMatch.fca76b95.js",
+  "_useMatch.a6ccffd8.js": {
+    "file": "assets/useMatch.a6ccffd8.js",
     "imports": [
       "index.html",
-      "_getScore.7bccd184.js",
+      "_getScore.a99f5825.js",
       "_vue.d6a430ba.js"
     ]
   },
   "_s_hot2.bba3cb3a.js": {
     "file": "assets/s_hot2.bba3cb3a.js"
   },
-  "_getScore.7bccd184.js": {
-    "file": "assets/getScore.7bccd184.js",
+  "_getScore.a99f5825.js": {
+    "file": "assets/getScore.a99f5825.js",
     "imports": [
       "index.html"
     ]
   },
   "src/views/live/id.vue": {
-    "file": "assets/id.17f8dd86.js",
+    "file": "assets/id.16ec0635.js",
     "src": "src/views/live/id.vue",
     "isDynamicEntry": true,
     "imports": [
       "_vue.d6a430ba.js",
-      "_video.es.b7f8d1f8.js",
-      "_index.d85bf776.js",
-      "_websocket.6cdd2ed3.js",
+      "_video.es.dfcd7488.js",
+      "_index.8820f63b.js",
+      "_websocket.09efdcb9.js",
       "index.html",
-      "_index.d3b78542.js",
+      "_index.62bd7e5d.js",
       "_live_white_r.4c6985c7.js",
-      "_useMatch.fca76b95.js",
+      "_useMatch.a6ccffd8.js",
       "_s_hot2.bba3cb3a.js",
-      "_getScore.7bccd184.js"
+      "_getScore.a99f5825.js"
     ],
     "css": [
       "assets/id.a2f677bd.css",
@@ -391,23 +391,23 @@
       "assets/v_loading.bcd1f625.png"
     ]
   },
-  "_video.es.b7f8d1f8.js": {
-    "file": "assets/video.es.b7f8d1f8.js",
+  "_video.es.dfcd7488.js": {
+    "file": "assets/video.es.dfcd7488.js",
     "imports": [
       "index.html"
     ]
   },
-  "_websocket.6cdd2ed3.js": {
-    "file": "assets/websocket.6cdd2ed3.js",
+  "_websocket.09efdcb9.js": {
+    "file": "assets/websocket.09efdcb9.js",
     "imports": [
       "index.html"
     ]
   },
-  "_index.d3b78542.js": {
-    "file": "assets/index.d3b78542.js",
+  "_index.62bd7e5d.js": {
+    "file": "assets/index.62bd7e5d.js",
     "imports": [
       "index.html",
-      "_index.d85bf776.js",
+      "_index.8820f63b.js",
       "_vue.d6a430ba.js"
     ],
     "css": [
@@ -422,16 +422,16 @@
     ]
   },
   "src/views/live/bet.vue": {
-    "file": "assets/bet.f62120f9.js",
+    "file": "assets/bet.b182585f.js",
     "src": "src/views/live/bet.vue",
     "isDynamicEntry": true,
     "imports": [
       "_vue.d6a430ba.js",
-      "_index.d85bf776.js",
-      "_useMatch.fca76b95.js",
-      "_index.d3b78542.js",
+      "_index.8820f63b.js",
+      "_useMatch.a6ccffd8.js",
+      "_index.62bd7e5d.js",
       "index.html",
-      "_getScore.7bccd184.js"
+      "_getScore.a99f5825.js"
     ],
     "css": [
       "assets/bet.d9d5a5c2.css"
@@ -441,18 +441,18 @@
     ]
   },
   "src/views/match/list.vue": {
-    "file": "assets/list.0eff9ce7.js",
+    "file": "assets/list.c50caeff.js",
     "src": "src/views/match/list.vue",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_useMatch.fca76b95.js",
+      "_useMatch.a6ccffd8.js",
       "_s_hot2.bba3cb3a.js",
       "_vue.d6a430ba.js",
-      "_index.d85bf776.js",
-      "_video.es.b7f8d1f8.js",
+      "_index.8820f63b.js",
+      "_video.es.dfcd7488.js",
       "_live-bg-error.28d01b38.js",
-      "_getScore.7bccd184.js"
+      "_getScore.a99f5825.js"
     ],
     "css": [
       "assets/list.420bba4b.css",
@@ -470,16 +470,16 @@
     ]
   },
   "src/views/match/detail.vue": {
-    "file": "assets/detail.0deb007c.js",
+    "file": "assets/detail.72891388.js",
     "src": "src/views/match/detail.vue",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
       "_vue.d6a430ba.js",
-      "_index.d85bf776.js",
-      "_video.es.b7f8d1f8.js",
-      "_useMatch.fca76b95.js",
-      "_getScore.7bccd184.js"
+      "_index.8820f63b.js",
+      "_video.es.dfcd7488.js",
+      "_useMatch.a6ccffd8.js",
+      "_getScore.a99f5825.js"
     ],
     "dynamicImports": [
       "src/views/match/ChatRoom.vue"
@@ -493,42 +493,42 @@
     ]
   },
   "src/views/match/detail-bets/index.vue": {
-    "file": "assets/index.245a156d.js",
+    "file": "assets/index.31837f53.js",
     "src": "src/views/match/detail-bets/index.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_index.d3b78542.js",
+      "_index.62bd7e5d.js",
       "index.html",
       "_vue.d6a430ba.js",
-      "_index.d85bf776.js"
+      "_index.8820f63b.js"
     ],
     "css": [
       "assets/index.49167cf4.css"
     ]
   },
   "src/views/match/detail-with/index.vue": {
-    "file": "assets/index.212fa4b3.js",
+    "file": "assets/index.48e8052e.js",
     "src": "src/views/match/detail-with/index.vue",
     "isDynamicEntry": true,
     "imports": [
       "_live_white_r.4c6985c7.js",
-      "_index.d85bf776.js",
+      "_index.8820f63b.js",
       "index.html",
-      "_useMatch.fca76b95.js",
+      "_useMatch.a6ccffd8.js",
       "_vue.d6a430ba.js",
-      "_getScore.7bccd184.js"
+      "_getScore.a99f5825.js"
     ],
     "css": [
       "assets/index.ae6aa041.css"
     ]
   },
   "src/views/match/detail-mixs/index.vue": {
-    "file": "assets/index.d588dc8c.js",
+    "file": "assets/index.c6aed13b.js",
     "src": "src/views/match/detail-mixs/index.vue",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_index.d85bf776.js",
+      "_index.8820f63b.js",
       "_vue.d6a430ba.js"
     ],
     "dynamicImports": [
@@ -542,23 +542,23 @@
     ]
   },
   "src/views/match/detail-data/index.vue": {
-    "file": "assets/index.f2d698ce.js",
+    "file": "assets/index.b1543d25.js",
     "src": "src/views/match/detail-data/index.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_index.9bb7883c.js",
+      "_index.2131b16e.js",
       "_vue.d6a430ba.js",
-      "_index.d85bf776.js",
+      "_index.8820f63b.js",
       "index.html"
     ],
     "css": [
       "assets/index.026bef05.css"
     ]
   },
-  "_index.9bb7883c.js": {
-    "file": "assets/index.9bb7883c.js",
+  "_index.2131b16e.js": {
+    "file": "assets/index.2131b16e.js",
     "imports": [
-      "_index.d85bf776.js",
+      "_index.8820f63b.js",
       "index.html",
       "_vue.d6a430ba.js"
     ],
@@ -573,12 +573,12 @@
     ]
   },
   "src/views/match/detail-other/index.vue": {
-    "file": "assets/index.3a699432.js",
+    "file": "assets/index.dbb296c8.js",
     "src": "src/views/match/detail-other/index.vue",
     "isDynamicEntry": true,
     "imports": [
       "_vue.d6a430ba.js",
-      "_index.d85bf776.js",
+      "_index.8820f63b.js",
       "index.html",
       "_s_hot2.bba3cb3a.js"
     ],
@@ -587,18 +587,18 @@
     ]
   },
   "src/views/match/more.vue": {
-    "file": "assets/more.fd0250ac.js",
+    "file": "assets/more.a0d64225.js",
     "src": "src/views/match/more.vue",
     "isDynamicEntry": true,
     "imports": [
       "_vue.d6a430ba.js",
       "index.html",
-      "_index.d85bf776.js",
-      "_useMatch.fca76b95.js",
+      "_index.8820f63b.js",
+      "_useMatch.a6ccffd8.js",
       "_sportBg.b662bc9a.js",
-      "_index.d3b78542.js",
-      "_index.9bb7883c.js",
-      "_getScore.7bccd184.js"
+      "_index.62bd7e5d.js",
+      "_index.2131b16e.js",
+      "_getScore.a99f5825.js"
     ],
     "css": [
       "assets/more.7710b614.css"
@@ -628,36 +628,36 @@
     ]
   },
   "src/views/sport/index.vue": {
-    "file": "assets/index.bf667a6b.js",
+    "file": "assets/index.94cbbea7.js",
     "src": "src/views/sport/index.vue",
     "isDynamicEntry": true,
     "imports": [
       "_title-recommend.e2b9b6c8.js",
       "_vue.d6a430ba.js",
-      "_index.87689647.js",
+      "_index.07b744bd.js",
       "index.html",
       "_sportBg.b662bc9a.js",
       "_index.13a7003e.js",
-      "_index.vue_vue_type_script_setup_true_lang.bbeaf3ec.js"
+      "_index.vue_vue_type_script_setup_true_lang.9108f39d.js"
     ],
     "css": [
-      "assets/index.f0f57f8c.css"
+      "assets/index.7e7353bd.css"
     ]
   },
   "src/views/sportlive/index.vue": {
-    "file": "assets/index.b6c0cc83.js",
+    "file": "assets/index.2c134126.js",
     "src": "src/views/sportlive/index.vue",
     "isDynamicEntry": true,
     "imports": [
       "_index.13a7003e.js",
       "src/components/HomeMatch/MatchLive/index.vue",
-      "_index.vue_vue_type_script_setup_true_lang.bbeaf3ec.js",
-      "_useMatch.fca76b95.js",
+      "_index.vue_vue_type_script_setup_true_lang.9108f39d.js",
+      "_useMatch.a6ccffd8.js",
       "_vue.d6a430ba.js",
-      "_video.es.b7f8d1f8.js",
+      "_video.es.dfcd7488.js",
       "index.html",
-      "_getScore.7bccd184.js",
-      "_index.d85bf776.js"
+      "_getScore.a99f5825.js",
+      "_index.8820f63b.js"
     ],
     "css": [
       "assets/index.e04612cf.css"
@@ -671,12 +671,12 @@
     ]
   },
   "src/components/HomeMatch/MatchLive/index.vue": {
-    "file": "assets/index.9919b494.js",
+    "file": "assets/index.ce9860c0.js",
     "src": "src/components/HomeMatch/MatchLive/index.vue",
     "isDynamicEntry": true,
     "imports": [
       "_vue.d6a430ba.js",
-      "_getScore.7bccd184.js",
+      "_getScore.a99f5825.js",
       "index.html"
     ],
     "css": [
@@ -706,7 +706,7 @@
     ]
   },
   "src/views/user/notice/index.vue": {
-    "file": "assets/index.c22bc04b.js",
+    "file": "assets/index.34a10a5c.js",
     "src": "src/views/user/notice/index.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -718,7 +718,7 @@
     ]
   },
   "src/views/user/notice/noticeDetail.vue": {
-    "file": "assets/noticeDetail.88e6294c.js",
+    "file": "assets/noticeDetail.b2c4dfa5.js",
     "src": "src/views/user/notice/noticeDetail.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -730,7 +730,7 @@
     ]
   },
   "src/views/user/edit.vue": {
-    "file": "assets/edit.cdb0d10f.js",
+    "file": "assets/edit.8eda4ba5.js",
     "src": "src/views/user/edit.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -742,7 +742,7 @@
     ]
   },
   "src/views/user/contactUs.vue": {
-    "file": "assets/contactUs.216b4513.js",
+    "file": "assets/contactUs.8e6e80e7.js",
     "src": "src/views/user/contactUs.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -754,7 +754,7 @@
     ]
   },
   "src/views/user/result/index.vue": {
-    "file": "assets/index.8fb3ab53.js",
+    "file": "assets/index.4b67626d.js",
     "src": "src/views/user/result/index.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -769,7 +769,7 @@
     ]
   },
   "src/views/user/userinfo/index.vue": {
-    "file": "assets/index.5f1be391.js",
+    "file": "assets/index.256887df.js",
     "src": "src/views/user/userinfo/index.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -803,7 +803,7 @@
     ]
   },
   "src/views/user/userCenter/editUser.vue": {
-    "file": "assets/editUser.22390092.js",
+    "file": "assets/editUser.b5482496.js",
     "src": "src/views/user/userCenter/editUser.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -815,7 +815,7 @@
     ]
   },
   "src/views/user/userCenter/editName.vue": {
-    "file": "assets/editName.d2405d3f.js",
+    "file": "assets/editName.535d2cc8.js",
     "src": "src/views/user/userCenter/editName.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -828,7 +828,7 @@
     ]
   },
   "src/views/user/elseFocus/index.vue": {
-    "file": "assets/index.b126a36d.js",
+    "file": "assets/index.45a081a3.js",
     "src": "src/views/user/elseFocus/index.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -848,7 +848,7 @@
     ]
   },
   "src/views/user/selfFocus/index.vue": {
-    "file": "assets/index.159344dd.js",
+    "file": "assets/index.724d30e1.js",
     "src": "src/views/user/selfFocus/index.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -862,7 +862,7 @@
     ]
   },
   "src/views/user/userCenter/elseInfo.vue": {
-    "file": "assets/elseInfo.5ac20a81.js",
+    "file": "assets/elseInfo.f1e425ba.js",
     "src": "src/views/user/userCenter/elseInfo.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -882,7 +882,7 @@
     ]
   },
   "src/views/user/userCenter/editImg.vue": {
-    "file": "assets/editImg.271efcc0.js",
+    "file": "assets/editImg.f42f38c0.js",
     "src": "src/views/user/userCenter/editImg.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -894,14 +894,14 @@
     ]
   },
   "src/views/shortVideo/index.vue": {
-    "file": "assets/index.bafdde97.js",
+    "file": "assets/index.d6ef199e.js",
     "src": "src/views/shortVideo/index.vue",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
       "_vue.d6a430ba.js",
-      "_index.d85bf776.js",
-      "_video.es.b7f8d1f8.js",
+      "_index.8820f63b.js",
+      "_video.es.dfcd7488.js",
       "_live-bg-error.28d01b38.js"
     ],
     "css": [
@@ -913,7 +913,7 @@
     ]
   },
   "src/views/homeTime/tabsTime/index.vue": {
-    "file": "assets/index.b709f26d.js",
+    "file": "assets/index.171ef272.js",
     "src": "src/views/homeTime/tabsTime/index.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -925,12 +925,12 @@
     ]
   },
   "src/views/match/ChatRoom.vue": {
-    "file": "assets/ChatRoom.bfec8a44.js",
+    "file": "assets/ChatRoom.04c1e4e8.js",
     "src": "src/views/match/ChatRoom.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_websocket.6cdd2ed3.js",
-      "_index.d85bf776.js",
+      "_websocket.09efdcb9.js",
+      "_index.8820f63b.js",
       "index.html",
       "_vue.d6a430ba.js"
     ],
@@ -942,7 +942,7 @@
     ]
   },
   "src/views/match/detail-mixs/DateTabs.vue": {
-    "file": "assets/DateTabs.c9b8e6ef.js",
+    "file": "assets/DateTabs.7733c3dd.js",
     "src": "src/views/match/detail-mixs/DateTabs.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -954,7 +954,7 @@
     ]
   },
   "src/components/Match/MatchHandicap.vue": {
-    "file": "assets/MatchHandicap.8c224be6.js",
+    "file": "assets/MatchHandicap.dfe84129.js",
     "src": "src/components/Match/MatchHandicap.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -963,17 +963,17 @@
     ]
   },
   "src/components/Title/playTitle/index.vue": {
-    "file": "assets/index.a0b87429.js",
+    "file": "assets/index.a437c0b8.js",
     "src": "src/components/Title/playTitle/index.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_index.vue_vue_type_script_setup_true_lang.bbeaf3ec.js",
+      "_index.vue_vue_type_script_setup_true_lang.9108f39d.js",
       "index.html",
       "_vue.d6a430ba.js"
     ]
   },
   "src/components/Match/database/Panel/PanelAnalyze.vue": {
-    "file": "assets/PanelAnalyze.428e684d.js",
+    "file": "assets/PanelAnalyze.07ef81c1.js",
     "src": "src/components/Match/database/Panel/PanelAnalyze.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -985,7 +985,7 @@
     ]
   },
   "src/components/Match/database/Panel/PanelScore.vue": {
-    "file": "assets/PanelScore.68c3f5c2.js",
+    "file": "assets/PanelScore.db47b978.js",
     "src": "src/components/Match/database/Panel/PanelScore.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -1008,7 +1008,7 @@
     ]
   },
   "src/components/Match/database/Panel/PanelBattle.vue": {
-    "file": "assets/PanelBattle.4f4bb07b.js",
+    "file": "assets/PanelBattle.56c99873.js",
     "src": "src/components/Match/database/Panel/PanelBattle.vue",
     "isDynamicEntry": true,
     "imports": [
