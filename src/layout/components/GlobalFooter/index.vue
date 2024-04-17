@@ -73,6 +73,17 @@ const active = computed(() => {
   const routerName: any = router?.currentRoute?.value?.name || ''
   const routerNameToLowerCase = routerName.toLowerCase()
   const isrouterNameToLowerCase = ['match', 'casino'].includes(routerNameToLowerCase)
+  if (!isrouterNameToLowerCase) {
+    store.dispatch('app/setKeyValue', {
+      key: 'showSportsTop',
+      value: true
+    })
+  } else {
+    store.dispatch('app/setKeyValue', {
+      key: 'showSportsTop',
+      value: false
+    })
+  }
   return isrouterNameToLowerCase ? routerNameToLowerCase : 'home'
 })
 
@@ -82,6 +93,17 @@ const clickChangeActive = (item: any) => {
   if (item.value === 'community') {
     showToast(lang.global.t('home.stayTuned'))
     return
+  }
+  if (item.value === 'home') {
+    store.dispatch('app/setKeyValue', {
+      key: 'showSportsTop',
+      value: true
+    })
+  } else {
+    store.dispatch('app/setKeyValue', {
+      key: 'showSportsTop',
+      value: false
+    })
   }
   barFooterArr.length = 0
   barFooterArr.push(...barFooterArrayChange())

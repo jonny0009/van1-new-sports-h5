@@ -25,7 +25,8 @@ const appModule: Module<App, any> = {
     mantainMsg: null,
     systemTime: null,
     customizeConfig: {},
-    matchLiveIndex: 0
+    matchLiveIndex: 0,
+    showSportsTop: true
   },
   mutations: {
     SET_THEME: (state, theme: string) => {
