@@ -4,7 +4,7 @@ export default {
   championBetting: '冠軍競猜',
   hotMatch: '熱門賽事',
   goofMatch: '推薦比賽',
-  latestMatch: '早期硬碟',
+  latestMatch: '早盤',
   sport: '體育',
   casino: '賭場',
   lookMoreMatch: '看更多比賽',
