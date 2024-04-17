@@ -885,7 +885,8 @@ const handleChangeLeagueId = (item: any) => {
 const ifRouteId = ref('')
 onActivated(async () => {
   if (locationHeight.value) return
-  gameType.value = route.params?.type || 'all'
+  // gameType.value = route.params?.type || 'all'
+  gameType.value = route.params?.type || 'FT'
   groupedArrays.value = []
   firstLeaguesList.value = []
   championListLoading.value = true
