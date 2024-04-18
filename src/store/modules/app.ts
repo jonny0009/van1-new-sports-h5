@@ -14,7 +14,7 @@ const appModule: Module<App, any> = {
     queryCMerLanguage: {},
     businessConfig: {},
     merchantConfig: {},
-    homeStyle: 2,
+    homeStyle: 2, // 2经典 1上导航  3双排上导航
     moduleConfig: {},
     doubleLineInfo: {},
     sports: [],
