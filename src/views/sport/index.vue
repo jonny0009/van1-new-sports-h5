@@ -34,8 +34,8 @@
               <div class="my-scroll__content">
                 <div class="tabs-cut tabs-cut-2">
                   <div class="league-num tabs-cut-1" :class="ifLeagueNum ? 'league-num-1' : ''" @click="clickLeagueNum">
-                    <span v-if="homeStyle === 1"> {{ $t(`sport.sports.${gameType}`) }}</span>
-                    <span v-else> {{ $t(`user.whole`) }}</span>
+                    <!-- <span v-if="homeStyle === 1"> {{ $t(`sport.sports.${gameType}`) }}</span> -->
+                    <span> {{ $t(`user.whole`) }}</span>
                     <span class="league-match-num">{{ LeaguesInfo.total || 0 }}</span>
                     <SvgIcon name="user-down" class="icon-svg-1" />
                   </div>
