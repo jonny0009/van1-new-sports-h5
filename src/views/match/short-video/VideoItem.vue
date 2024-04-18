@@ -112,7 +112,8 @@ const isHGTW = computed(() => {
 })
 
 const play = () => {
-  if (player?.paused()) {
+  if (player) {
+    player.play()
   } else if (!player) {
     initVideo()
   }
@@ -227,13 +228,17 @@ const initVideo = () => {
       }
     ]
   }
-  nextTick(() => {
+  nextTick(async () => {
     if (!player) {
       player = videojs(videoRef.value, options)
     }
 
     player.muted(false)
-    player?.play()
+    player?.play().catch((error: any) => {
+      console.log(error, 'error')
+      player.muted(true)
+      player?.play()
+    })
 
     player.on('waiting', () => {
       videoWaiting.value = true

@@ -247,3 +247,47 @@ export const _formatNumber = (num: any) => {
     return num
   }
 }
+
+/**
+ * @description: 防抖
+ * @param {type}
+ * @return: 1
+ */
+
+export const debounce = (fn = (...args: any) => {}, ms: number, immediate: boolean = false) => {
+  let timeout: any = null
+  return function (this: unknown, ...args: any) {
+    if (timeout) window.clearTimeout(timeout)
+
+    if (immediate) {
+      const callNow = !timeout
+      timeout = setTimeout(() => {
+        timeout = null
+      }, ms)
+      if (callNow) {
+        fn.apply(this, args)
+      }
+    } else {
+      timeout = window.setTimeout(() => {
+        fn.apply(this, args)
+      }, ms)
+    }
+  }
+}
+
+/**
+ * @description: 节流函数，单一时间只触发一次
+ * @param {type} ms fn
+ * @return:
+ */
+
+export const throttle = (fn = () => {}, ms: number) => {
+  let last = 0
+  return function (this: unknown, ...args: any) {
+    const nowTime = Date.now()
+    if (nowTime - last > ms) {
+      fn.apply(this, args)
+      last = nowTime
+    }
+  }
+}

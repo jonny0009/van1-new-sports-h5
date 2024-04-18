@@ -62,8 +62,8 @@ watch(
     })
 
     if (fullState.value) {
-      const body = document.body
-      screenfull.toggle(body)
+      const html = document.documentElement
+      screenfull.toggle(html)
     }
   }
 )
@@ -91,11 +91,14 @@ const open = async () => {
   await nextTick()
   curIndex.value = props.shortVideos.findIndex((i: any) => i.videoId === videoId.value) || 0
   controlledSwiper.value.slideTo(curIndex.value, 0, false)
-  console.log(curIndex.value, 'curIndex.value')
 }
 
-const close = () => {
-  screenfull.exit()
+const close = async () => {
+  try {
+    await screenfull.exit()
+  } catch (error) {
+    console.log(error)
+  }
   fullState.value = false
 }
 

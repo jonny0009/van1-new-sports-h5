@@ -52,7 +52,12 @@
             </van-collapse-item>
 
             <!-- 即将播放 -->
-            <van-collapse-item :is-link="false" class="collapse-item" name="ComingSoon" v-if="comingSoonList.length">
+            <van-collapse-item
+              :is-link="false"
+              class="collapse-item"
+              name="ComingSoon"
+              v-if="comingSoonList.length && nav.type === 'RB'"
+            >
               <template #title>
                 <div class="title-group">
                   <SvgIcon class="first-icon" name="home-coming" />
@@ -73,7 +78,12 @@
             </van-collapse-item>
 
             <!-- 短视频 -->
-            <van-collapse-item :is-link="false" class="collapse-item" name="VIDEO" v-if="['RB'].includes(navActive)">
+            <van-collapse-item
+              :is-link="false"
+              class="collapse-item"
+              name="VIDEO"
+              v-if="['RB'].includes(navActive) && nav.type === 'RB'"
+            >
               <template #title>
                 <div class="title-group">
                   <SvgIcon class="first-icon" name="home-short-video" />
@@ -217,19 +227,22 @@ const onChangeTabs = () => {
 const onRefresh = () => {
   if (['SORTVIDEO'].includes(navActive.value)) {
     list.value = []
-    comingSoonList.value = []
     refreshing.value = false
+    if (!shortVideos.value.length) {
+      getShortVideos()
+    }
   } else {
     onLoad()
   }
 
   if (['RB'].includes(navActive.value)) {
     params1.value.page = 0
-    getShortVideos()
-    comingSoon()
-  } else if (!['RB', 'SORTVIDEO'].includes(navActive.value)) {
-    comingSoonList.value = []
-    shortVideos.value = []
+    if (!shortVideos.value.length) {
+      getShortVideos()
+    }
+    if (!comingSoonList.value.length) {
+      comingSoon()
+    }
   }
 }
 
