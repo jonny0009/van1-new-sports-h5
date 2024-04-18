@@ -7,7 +7,14 @@
         <div class="name text-overflow">{{ videoInfo.leagueName || videoInfo.leagueNameCn }}</div>
       </div>
     </div>
-    <video ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
+    <video
+      ref="videoRef"
+      class="video-js"
+      :class="{ 'height-screen': isHGTW }"
+      playsinline
+      webkit-playsinline
+      x5-video-player-type
+    ></video>
     <div class="video-pause" @click="pauseHandle" v-if="!videoWaiting && !videoError && videoPause">
       <SvgIcon class="first-icon" name="live-pause" />
     </div>
@@ -83,7 +90,6 @@ import { mainMatches } from '@/api/live'
 import { computed } from 'vue'
 import { MarketInfo } from '@/entitys/MarketInfo'
 import liveBgError from '@/assets/images/empty/live-bg-error.svg?url'
-import router from '@/router'
 const emit = defineEmits(['selectVideo'])
 
 const videoTarget = ref()
@@ -94,9 +100,19 @@ const props = defineProps({
   }
 })
 
+const isHGTW = computed(() => {
+  if (props.videoInfo && props.videoInfo.aspect) {
+    const aspect = props.videoInfo.aspect
+    const split = aspect.split('*')
+    const w = split[1] * 1
+    const h = split[0] * 1
+    return h > w
+  }
+  return false
+})
+
 const play = () => {
   if (player?.paused()) {
-    player.play()
   } else if (!player) {
     initVideo()
   }
@@ -278,10 +294,14 @@ defineExpose({
     position: relative;
     z-index: 8;
     width: 100% !important;
-    height: 632px !important;
+    height: auto !important;
     object-fit: contain;
     margin: auto;
     padding: 0 !important;
+
+    &.height-screen {
+      height: 632px !important;
+    }
 
     video {
       position: relative;
@@ -317,8 +337,8 @@ defineExpose({
     justify-content: center;
     .icon {
       width: 300px;
-      height: 100px;
-      background: url('@/assets/images/live/v_loading.png') no-repeat;
+      height: 165px;
+      background: url('@/assets/images/live/v_loading.gif') no-repeat;
       background-size: 100% auto;
     }
     .text {

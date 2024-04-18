@@ -1,7 +1,7 @@
 <template>
   <div class="betting-slip-bg" :class="{ open }" @click="toogle"></div>
   <BallEffect></BallEffect>
-  <div class="betting-slip-popup" :class="{ open, bettingHomeStyle: homeStyle === 1 }">
+  <div class="betting-slip-popup" :class="{ open, bettingHomeStyle: bettingHomeStyleState && homeStyle === 1 }">
     <div class="betting-slip-header" @click="toogle" :class="{ selected: userConfig.acceptAll === 1 }">
       <div class="bet-header-left">
         <span class="bet-icon"></span>
@@ -105,6 +105,7 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 import store from '@/store'
 const open = ref(false)
+const bettingHomeStyleState = ref(true)
 const type = ref(1)
 const tabs = ref([
   {
@@ -240,7 +241,8 @@ const hitTimer = () => {
 }
 hitTimer()
 defineExpose({
-  open
+  open,
+  bettingHomeStyleState
 })
 </script>
 <style lang="scss" scoped>

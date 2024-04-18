@@ -22,7 +22,12 @@
           ></video-info>
         </swiper-slide>
       </swiper>
-      <BettingSlip v-if="bettingSlipState" ref="bettingSlipRef" @close="betClose" />
+      <BettingSlip
+        v-if="bettingSlipState"
+        :class="{ bettingHomeStyle: homeStyle === 1 }"
+        ref="bettingSlipRef"
+        @close="betClose"
+      />
     </div>
   </van-popup>
 </template>
@@ -42,11 +47,14 @@ const props = defineProps({
     default: () => []
   }
 })
+
+const markets = computed(() => store.state.betting.markets)
+const homeStyle: any = computed(() => store.state.app.homeStyle)
+
 const fullState: any = ref(false)
 const videoId: any = ref(-1)
 const bettingSlipRef: any = ref(null)
 const bettingSlipState: any = ref(false)
-const markets = computed(() => store.state.betting.markets)
 const controlledSwiper = ref()
 const curIndex = ref(-1)
 watch(
@@ -65,6 +73,7 @@ watch(
       bettingSlipState.value = true
       await nextTick()
       bettingSlipRef.value.open = true
+      bettingSlipRef.value.bettingHomeStyleState = false
     }
   }
 )
@@ -100,16 +109,17 @@ defineExpose({
 .full-screen-videos {
   width: 100%;
   height: 100%;
-  z-index: 200 !important;
+  z-index: 300 !important;
 }
 .video-list-wrap {
   width: 100%;
   height: 100vh;
   overflow: hidden;
   position: relative;
-
+  background: #000;
   .swiper-box {
     height: 100%;
   }
 }
+
 </style>
