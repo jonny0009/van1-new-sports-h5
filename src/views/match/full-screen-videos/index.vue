@@ -14,12 +14,7 @@
         @swiper="setControlledSwiper"
       >
         <swiper-slide class="slide-box" v-for="(video, index) in shortVideos" :key="video.videoId">
-          <video-info
-            v-if="fullState"
-            :videoInfo="video"
-            :active="curIndex === index"
-            @close="fullState = false"
-          ></video-info>
+          <video-info v-if="fullState" :videoInfo="video" :active="curIndex === index" @close="close"></video-info>
         </swiper-slide>
       </swiper>
       <BettingSlip
@@ -33,13 +28,14 @@
 </template>
 <script lang="ts" setup>
 import BettingSlip from '@/components/BettingSlip/index.vue'
-import { onMounted, ref, computed, watch, nextTick } from 'vue'
+import { ref, computed, watch, nextTick } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 // import { getVideoGreet } from '@/api/live'
 import videoInfo from './videoInfo.vue'
 import 'swiper/swiper-bundle.css'
 import { Controller } from 'swiper/modules'
 import store from '@/store'
+import screenfull from 'screenfull'
 
 const props = defineProps({
   shortVideos: {
@@ -64,6 +60,11 @@ watch(
       key: 'bettingSlipState',
       value: !fullState.value
     })
+
+    if (fullState.value) {
+      const body = document.body
+      screenfull.toggle(body)
+    }
   }
 )
 watch(
@@ -83,9 +84,6 @@ const betClose = (state: boolean) => {
   }
 }
 
-onMounted(() => {
-  // getShortVideos()
-})
 const setControlledSwiper = (swiper: any) => {
   controlledSwiper.value = swiper
 }
@@ -95,6 +93,12 @@ const open = async () => {
   controlledSwiper.value.slideTo(curIndex.value, 0, false)
   console.log(curIndex.value, 'curIndex.value')
 }
+
+const close = () => {
+  screenfull.exit()
+  fullState.value = false
+}
+
 const change = async ({ activeIndex }: any) => {
   curIndex.value = activeIndex
 }
@@ -121,5 +125,4 @@ defineExpose({
     height: 100%;
   }
 }
-
 </style>
