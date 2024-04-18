@@ -1,26 +1,30 @@
 <template>
-  <div class="sport-page" ref="newContainerRecommend">
+  <div ref="newContainerRecommend" class="sport-page">
     <div ref="newContainer">
       <!--公共 体育项-->
+
       <div class="mt10">
         <van-tabs
-          :duration="0.2"
           v-model:active="gameType"
+          :duration="0.2"
           shrink
           line-height="0"
           :animated="ifAnimated"
-          @change="onChangeTabs"
           :swipe-threshold="3"
+          :show-header="homeStyle == 2"
+          @change="onChangeTabs"
           @click-tab="ifAnimated = true"
         >
           <van-tab v-for="(item, index) in sportsList" :key="index" :name="item.text">
+
             <template #title>
               <SportsButton
+
                 class="tabs-cut-7"
                 :text="item.text"
                 :active="gameType === item.text"
                 :class="item.text"
-                :showCount="true"
+                :show-count="true"
                 :count="item.gameCount"
               />
             </template>
@@ -54,13 +58,13 @@
                     :active="leagueId === item.leagueId"
                     type="6"
                     :count="item.gameTypeCount || '0'"
-                    :ifCount="Number(item.gameTypeCount) || 0"
+                    :if-count="Number(item.gameTypeCount) || 0"
                     :if-circle="true"
-                    @click="handleChangeLeagueId(item)"
                     :if-shadow="false"
+                    @click="handleChangeLeagueId(item)"
                   />
                 </div>
-                <div class="tabs-cut tabs-cut-3" v-if="firstLeaguesList.length > 1">
+                <div v-if="firstLeaguesList.length > 1" class="tabs-cut tabs-cut-3">
                   <ImageButton
                     v-for="(item, index) in firstLeaguesList.slice(Math.floor(firstLeaguesList.length / 2))"
                     :key="index"
@@ -70,10 +74,10 @@
                     :active="leagueId === item.leagueId"
                     type="6"
                     :count="item.gameTypeCount || '0'"
-                    :ifCount="Number(item.gameTypeCount) || 0"
+                    :if-count="Number(item.gameTypeCount) || 0"
                     :if-circle="true"
-                    @click="handleChangeLeagueId(item)"
                     :if-shadow="false"
+                    @click="handleChangeLeagueId(item)"
                   />
                 </div>
               </div>
@@ -224,8 +228,8 @@
                         :src="leagueLogo"
                         type="6"
                         :text="leagueName"
-                        :arrowShow="leagueArrowShow"
-                        :showOther="true"
+                        :arrow-show="leagueArrowShow"
+                        :show-other="true"
                       />
                     </template>
                     <Loading v-if="!getRecommendEventsIsLoading" />
@@ -585,7 +589,7 @@ const getFirstLeagues = async (ifSearch?: any) => {
       (await recommendLeague({ gameType: gameType.value === 'all' ? '' : gameType.value, showType: 'FAST' })) || {}
     if (res.code === 200 && res.data) {
       firstLeaguesList.value = res.data.list || []
-      //搜索目前没有国家ID, 不匹配
+      // 搜索目前没有国家ID, 不匹配
       if (!ifSearch) {
         // 联赛ID
         const leagueIdObj = firstLeaguesList.value.find((item: any) => {
