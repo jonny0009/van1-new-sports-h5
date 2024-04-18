@@ -22,6 +22,7 @@ declare interface App {
   homeStyle: any
   homeTabsSports: any
   showSportsTop: any
+  bettingSlipState: any
 }
 
 declare interface User {

@@ -19,20 +19,6 @@ export default {
         index: 7
       }
     },
-    // 短视频全屏
-    {
-      path: '/svideo',
-      name: 'Svideo',
-      component: () => import('@/views/shortVideo/index.vue'),
-      meta: {
-        hideSportsTabsView: true,
-        hideGlobalHeaderView: true,
-        showSportsTabsView: false,
-        KeepAlive: false,
-        key: 'matchId',
-        index: 99
-      }
-    },
     // 直播详情
     {
       name: 'MatchDetail',

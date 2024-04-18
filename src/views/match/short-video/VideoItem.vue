@@ -84,6 +84,8 @@ import { computed } from 'vue'
 import { MarketInfo } from '@/entitys/MarketInfo'
 import liveBgError from '@/assets/images/empty/live-bg-error.svg?url'
 import router from '@/router'
+const emit = defineEmits(['selectVideo'])
+
 const videoTarget = ref()
 const props = defineProps({
   videoInfo: {
@@ -259,12 +261,7 @@ const pauseHandle = () => {
   }
 }
 const goShortVideo = () => {
-  router.push({
-    name: 'Svideo',
-    query: {
-      videoId: props.videoInfo.videoId
-    }
-  })
+  emit('selectVideo', props.videoInfo)
 }
 defineExpose({
   videoTarget,

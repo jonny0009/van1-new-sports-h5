@@ -94,7 +94,7 @@
                   class="group-item-box"
                   v-for="(video, index) in shortVideos"
                   :key="index"
-                  @click="goShortVideo(video)"
+                  @click="selectVideo(video)"
                 >
                   <img v-img="video.videoImg" class="bg" :errorImg="liveBgError" type="1" alt="" />
                   <div class="video-user-info">
@@ -112,11 +112,15 @@
             <!-- 短视频 -->
             <ShortVideo
               v-if="['SORTVIDEO'].includes(navActive) && nav.type === 'SORTVIDEO' && !refreshing"
+              :shortVideos="shortVideos"
+              @selectVideo="selectVideo"
             ></ShortVideo>
           </van-collapse>
         </van-tab>
       </van-tabs>
     </van-pull-refresh>
+
+    <full-screen-videos ref="FullScreenVideosRef" :shortVideos="shortVideos"></full-screen-videos>
   </div>
 </template>
 
@@ -129,9 +133,12 @@ import router from '@/router'
 import { useI18n } from 'vue-i18n'
 import store from '@/store'
 import liveBgError from '@/assets/images/empty/live-bg-error.svg?url'
+import FullScreenVideos from './full-screen-videos/index.vue'
 onBeforeMount(() => {
   onRefresh()
 })
+
+const FullScreenVideosRef = ref()
 const activeNames = ref(['HOT', 'ComingSoon', 'VIDEO'])
 const showFixedBet = computed(() => store.state.app.showFixedBet)
 const { t } = useI18n()
@@ -210,6 +217,7 @@ const onChangeTabs = () => {
 const onRefresh = () => {
   if (['SORTVIDEO'].includes(navActive.value)) {
     list.value = []
+    comingSoonList.value = []
     refreshing.value = false
   } else {
     onLoad()
@@ -219,7 +227,7 @@ const onRefresh = () => {
     params1.value.page = 0
     getShortVideos()
     comingSoon()
-  } else {
+  } else if (!['RB', 'SORTVIDEO'].includes(navActive.value)) {
     comingSoonList.value = []
     shortVideos.value = []
   }
@@ -292,13 +300,9 @@ const getShortVideos = async () => {
   }
 }
 
-const goShortVideo = (video: any) => {
-  router.push({
-    name: 'Svideo',
-    query: {
-      videoId: video.videoId
-    }
-  })
+const selectVideo = (video: any) => {
+  FullScreenVideosRef.value.fullState = true
+  FullScreenVideosRef.value.videoId = video.videoId
 }
 </script>
 

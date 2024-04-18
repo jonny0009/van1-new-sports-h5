@@ -2,13 +2,13 @@
   <div id="main">
     <GlobalHeader v-if="!$route.meta.hideGlobalHeaderView" @betShow="betShow" />
     <GlobalRefresh>
-      <DoubleRowNav v-if="homeStyle === 3 && !$route.meta.hideSportsTabsView" />
+      <DoubleRowNav v-if="homeStyle === 3" />
       <GlobalSportsTabsView v-if="$route.meta.showSportsTabsView && homeStyle !== 2 && showSportsTop" />
       <TopSportsTabs v-if="$route.meta.showSportsTabsView && homeStyle === 2" />
       <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pb5 pt15" />
       <AppMain ref="appContent" />
     </GlobalRefresh>
-    <BettingSlip v-if="betShowState && !$route.meta.hideGlobalBottomBet" ref="bettingSlip" />
+    <BettingSlip v-if="betShowState && !$route.meta.hideGlobalBottomBet && bettingSlipState" ref="bettingSlip" />
     <GlobalFooter v-if="homeStyle === 1" @valueChange="betShow" />
     <van-back-top
       v-if="backTopShow"
@@ -42,13 +42,14 @@ const appContent = ref()
 const route = useRoute()
 import router from '@/router'
 const { currentRoute } = useRouter()
-const unShow: any = ref(['game', 'Casino', 'Svideo'])
+const unShow: any = ref(['game', 'Casino'])
 const heightNumY: any = ref(0)
 const indexNum: any = ref(0)
 const betShowState: any = ref(!unShow.value.includes(route.name))
 
 const scrollNum = computed(() => store.state.user.scrollNumY)
 const homeStyle = computed(() => store.state.app.homeStyle)
+const bettingSlipState = computed(() => store.state.app.bettingSlipState)
 const showSportsTop = computed(() => store.state.app.showSportsTop)
 const locationHeight = computed(() => store.state.user.locationHeight)
 const KeepAlive = computed(() => currentRoute.value.meta.KeepAlive)

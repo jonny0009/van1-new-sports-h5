@@ -81,12 +81,11 @@
 import 'video.js/dist/video-js.min.css'
 import videojs from 'video.js'
 import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
 import { mainMatches } from '@/api/live'
 import { computed } from 'vue'
 import { MarketInfo } from '@/entitys/MarketInfo'
 import liveBgError from '@/assets/images/empty/live-bg-error.svg?url'
-
+const emit = defineEmits(['close'])
 const props = defineProps({
   videoInfo: {
     type: Object,
@@ -190,9 +189,8 @@ onUnmounted(() => {
   disposePlayer()
 })
 
-const $router = useRouter()
 const callback = () => {
-  $router.back()
+  emit('close')
 }
 
 const videoRef = ref<HTMLDivElement | string>('')
