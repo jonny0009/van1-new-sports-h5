@@ -14,7 +14,7 @@ const appModule: Module<App, any> = {
     queryCMerLanguage: {},
     businessConfig: {},
     merchantConfig: {},
-    homeStyle: 2,
+    homeStyle: 2, // 2经典 1上导航  3双排上导航
     moduleConfig: {},
     doubleLineInfo: {},
     sports: [],
@@ -64,7 +64,7 @@ const appModule: Module<App, any> = {
       const res: any = (await merchantConfig()) || {}
       if (res.code === 200) {
         state.merchantConfig = res.data || {}
-        state.homeStyle = res.data?.homeStyle || 2
+        state.homeStyle = 1 || res.data?.homeStyle || 2
       }
     },
     async moduleConfig({ state }) {
