@@ -5,7 +5,7 @@
       <DoubleRowNav v-if="homeStyle === 3" />
       <GlobalSportsTabsView v-if="$route.meta.showSportsTabsView && homeStyle !== 2 && showSportsTop" />
       <TopSportsTabs v-if="$route.meta.showSportsTabsView && homeStyle === 2" />
-      <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pb5 pt15" />
+      <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pb5 pt10" />
       <AppMain ref="appContent" />
     </GlobalRefresh>
     <BettingSlip v-if="betShowState && !$route.meta.hideGlobalBottomBet && bettingSlipState" ref="bettingSlip" />

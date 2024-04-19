@@ -1,12 +1,12 @@
 <template>
-  <div class="homeTime-page" ref="newContainer">
+  <div ref="newContainer" class="homeTime-page">
     <SportsTabs
       ref="refSportsTabs"
       class="pb10"
-      :isCustom="true"
+      :is-custom="true"
       :tabs="sports"
+      :if-sport-today="true"
       @returnSportsSuccess="returnSportsSuccess"
-      :ifSportToday="true"
     >
       <template #body>
         <div class="mt10">
@@ -254,7 +254,7 @@ onBeforeMount(() => {
 </script>
 <style lang="scss" scoped>
 .homeTime-page {
-  padding: 30px 40px 0;
+  padding: 10px 40px 0;
 }
 
 .earlyArrowTitle {
