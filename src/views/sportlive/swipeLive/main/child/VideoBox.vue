@@ -1,5 +1,5 @@
 <template>
-  <div class="video-box-wrap">
+  <div class="video-box-wrap" @click="touch">
     <div v-if="liveUrl?.endsWith('html')" class="video-iframe">
       <iframe :src="liveUrl" width="100%" height="100%" frameborder="0"></iframe>
     </div>
