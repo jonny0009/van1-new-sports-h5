@@ -23,7 +23,7 @@
     >
       <van-loading class="popBg-loading" />
     </div>
-    <div class="touch-pop" v-if="tocuhState">
+    <div v-if="tocuhState" class="touch-pop">
       <div class="team-info">
         <div class="team-item">
           <img v-img="liveInfo.homeLogo" :type="4" style="object-fit: contain" alt="" />
