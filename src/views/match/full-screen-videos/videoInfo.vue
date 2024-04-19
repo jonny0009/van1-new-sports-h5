@@ -190,6 +190,7 @@ onUnmounted(() => {
 })
 
 const callback = () => {
+  player && player.pause()
   emit('close')
 }
 
@@ -232,7 +233,7 @@ const initVideo = () => {
     player.muted(false)
     player?.play().catch((error: any) => {
       console.log(error, 'error')
-      player.muted(true)
+      player?.muted(true)
       player?.play()
     })
 

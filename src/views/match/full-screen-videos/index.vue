@@ -1,5 +1,12 @@
 <template>
-  <van-popup :show="fullState" class="full-screen-videos" position="bottom" @open="open" :overlay="false">
+  <van-popup
+    :show="fullState"
+    class="full-screen-videos"
+    teleport="body"
+    position="bottom"
+    @open="open"
+    :overlay="false"
+  >
     <div class="video-list-wrap">
       <swiper
         class="swiper-box"
