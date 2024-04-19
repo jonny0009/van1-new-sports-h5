@@ -121,16 +121,23 @@ export function useBetting(flag: any) {
     const groupRow = toRaw(playGroupBetList.value)
     console.log(groupRow.length)
     let groupPlayList: any[] = []
-    groupRow.forEach((row: any) => {
-      const rowResult = {
-        id: row.id,
-        name: row.name,
-        groupType: row.groupType,
-        playData: row.playData,
-        playDataList: playTypeSort(dataList, row.playData)
-      }
-      groupPlayList.push(rowResult)
-    })
+    if (groupRow.length) {
+      groupRow.forEach((row: any) => {
+        const playDataList = playTypeSort(dataList, row.playData)
+        const playDataListPlays = playDataList.map((playInfo: any) => playInfo.playType)
+        const uniqueArray = [...new Set(playDataListPlays)]
+        const rowResult = {
+          id: row.id,
+          name: row.name,
+          groupType: row.groupType,
+          playData: row.playData,
+          count: uniqueArray.length,
+          playDataList
+        }
+        groupPlayList.push(rowResult)
+      })
+    }
+
     groupPlayList = groupPlayList.filter((m: any) => m.playDataList.length > 0)
     return groupPlayList
   }
