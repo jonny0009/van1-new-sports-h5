@@ -1017,7 +1017,7 @@ onActivated(async () => {
   }
 
   .tabs-cut-2 {
-    margin-top: 20px;
+    // margin-top: 20px;
     display: flex;
     margin-bottom: 2px;
   }

@@ -202,7 +202,7 @@ export const getBrowserLanguage = () => {
 export const _checkImgUrl = (url: any) => {
   // console.log(url)
   if (!url) return
-  //本地图片
+  // 本地图片
   if (
     url.includes('assets/img') ||
     url.includes('file://') ||
@@ -217,9 +217,9 @@ export const _checkImgUrl = (url: any) => {
 
 export const _duration = (num: any) => {
   if (!num) return '00:00'
-  let m: any = Math.floor(num / 60)
+  const m: any = Math.floor(num / 60)
   // let s = num % 60
-  let s = Math.round(num % 60)
+  const s = Math.round(num % 60)
   let str: string = ''
   if (m === 0) {
     str = '00'
@@ -347,4 +347,15 @@ export const getRatioPlay = (betInfo: any) => {
   }
 
   return false
+}
+// 处理视频
+export const liveVideo = (streamNa: any) => {
+  const { live, stream, videoLive, liveali } = streamNa || {}
+  const m3u8 =
+    (videoLive && videoLive.status && videoLive.m3u8) ||
+    (liveali && liveali.status && liveali.m3u8) ||
+    (stream && stream.status && stream.m3u8) ||
+    (live && live.status && live.m3u8) ||
+    {}
+  return m3u8
 }

@@ -1,6 +1,10 @@
 <template>
-  <div class="video-box-wrap" @click="touch">
+  <div class="video-box-wrap">
+    <div v-if="liveUrl?.endsWith('html')" class="video-iframe">
+      <iframe :src="liveUrl" width="100%" height="100%" frameborder="0"></iframe>
+    </div>
     <video
+      v-show="!liveUrl?.endsWith('html')"
       id="VideoRef"
       :style="{ 'object-fit': 'fill' }"
       class="video-js vjs-default-skin"
@@ -23,7 +27,7 @@
     >
       <van-loading class="popBg-loading" />
     </div>
-    <div class="touch-pop" v-if="tocuhState">
+    <div v-if="tocuhState" class="touch-pop">
       <div class="team-info">
         <div class="team-item">
           <img v-img="liveInfo.homeLogo" :type="4" style="object-fit: contain" alt="" />
@@ -115,6 +119,9 @@ const initVideo = () => {
     videoErrorState.value = false
     const videoRef: any = document.querySelector('#VideoRef')
     if (!(videoRef && props.liveUrl)) {
+      return
+    }
+    if (props.liveUrl?.endsWith('html')) {
       return
     }
     try {
@@ -229,6 +236,12 @@ onBeforeUnmount(() => {
     position: relative;
     z-index: 11;
   }
+
+  .video-iframe {
+    width: 100%;
+    height: 100%;
+  }
+
 }
 
 .sound-icon {
