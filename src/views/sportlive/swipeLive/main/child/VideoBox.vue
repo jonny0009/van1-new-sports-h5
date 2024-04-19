@@ -1,6 +1,10 @@
 <template>
-  <div class="video-box-wrap" @click="touch">
+  <div class="video-box-wrap">
+    <div v-if="liveUrl?.endsWith('html')" class="video-iframe">
+      <iframe :src="liveUrl" width="100%" height="100%" frameborder="0"></iframe>
+    </div>
     <video
+      v-show="!liveUrl?.endsWith('html')"
       id="VideoRef"
       :style="{ 'object-fit': 'fill' }"
       class="video-js vjs-default-skin"
@@ -117,6 +121,9 @@ const initVideo = () => {
     if (!(videoRef && props.liveUrl)) {
       return
     }
+    if (props.liveUrl?.endsWith('html')) {
+      return
+    }
     try {
       videoExample.value = Video(
         'VideoRef',
@@ -229,6 +236,12 @@ onBeforeUnmount(() => {
     position: relative;
     z-index: 11;
   }
+
+  .video-iframe {
+    width: 100%;
+    height: 100%;
+  }
+
 }
 
 .sound-icon {
