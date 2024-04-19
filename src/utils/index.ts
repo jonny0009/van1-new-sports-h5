@@ -1,5 +1,7 @@
 import { getTheme } from './auth'
 import { ImageSource } from '@/config'
+import { lib } from 'xcsport-lib'
+const { getGamePlayData, isStrong } = lib
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -290,4 +292,59 @@ export const throttle = (fn = () => {}, ms: number) => {
       last = nowTime
     }
   }
+}
+
+const replaceStrFilter = (regStr: string, obj: any, specifiers: any) => {
+  return regStr.replace(/{(.*?)}/g, (match: any, key: any) => {
+    const specialKey = key.trim()
+
+    return obj[specialKey] || specifiers[specialKey] || ''
+  })
+}
+
+export const getRatioPlay = (betInfo: any) => {
+  const { showtype, playType, ratio, ratio1, rt, teamSuffix } = betInfo
+  // 判断是否是冠军杯
+  if (showtype === 'CP' || playType === 'CHAMPION') {
+    return ratio1 || ratio
+  }
+  // 判断玩法是否有ratioType
+  const isRatioType = !(rt * 1)
+  let obj = JSON.parse(JSON.stringify(betInfo))
+  const { gameType, gameTypeSon, specifiers } = obj
+  // 新增体育项兼容
+  let ratioTypeData = getGamePlayData({ gameType, gameTypeSon, playType, teamSuffix })
+  let regStr = ''
+  if (isRatioType) {
+    if (ratioTypeData) {
+      regStr = ratioTypeData.text[obj.ratioType]
+    } else {
+      console.log('不存在玩法', playType)
+    }
+  } else {
+    regStr = ratio1 || ratio
+  }
+
+  const regStrSplit = regStr.split('{ratio}')
+
+  if (regStrSplit.length > 1) {
+    const [params1, params2] = regStrSplit
+    const ratioTag = isStrong(betInfo)
+    let ratioParams1 = ''
+    let ratioParams2 = ''
+    if (ratioParams2) {
+      ratioParams1 = replaceStrFilter(params1, obj, specifiers)
+      ratioParams2 = replaceStrFilter(params2, obj, specifiers)
+    } else {
+      ratioParams1 = replaceStrFilter(params1, obj, specifiers)
+    }
+
+    return {
+      ratioTag,
+      ratioParams1,
+      ratioParams2
+    }
+  }
+
+  return false
 }

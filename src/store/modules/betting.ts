@@ -16,9 +16,10 @@ import {
 import { MarketInfo } from '@/entitys/MarketInfo'
 import { betComboOrder, comboBetting, moreBetting, morePW } from '@/api/betting'
 import lang from '@/lang'
-import { createBetItem, config } from 'xcsport-lib'
+import { createBetItem, lib } from 'xcsport-lib'
 import { accMul, accSubtr, moneyFormat } from '@/utils/math'
-const { letBallMap } = config
+import { getRatioPlay } from '@/utils'
+const { isStrong } = lib
 
 // 投注单store
 const MarketListKey = '_MarketList_'
@@ -308,7 +309,6 @@ const bettingModule: Module<Betting, any> = {
           const oldShowType = bet.showType || bet.showtype
           // 旧的盘口ratio
           const oldRatio = bet.ratio
-          const ratioTag = bet.ratioTag
           // 旧的强弱队strong
           const oldStrong = bet.strong
           const oldGameDate = bet.gameDate
@@ -329,10 +329,11 @@ const bettingModule: Module<Betting, any> = {
               iorChange = 'down'
             }
           }
-          if (letBallMap.includes(playType) && Math.abs(ratioTag * 1) !== Math.abs(ratio * 1) && !autoOdd) {
-            console.log('old', ratioTag)
+          const isRatioPlay = getRatioPlay(bet)
+          if (isRatioPlay && Math.abs(bet.ratio * 1) !== Math.abs(ratio * 1) && !autoOdd) {
+            console.log('old', bet.ratio)
             console.log('new', ratio)
-            if (ratioTag * 1 < ratio) {
+            if (bet.ratio * 1 < ratio) {
               ratioChange = 'up'
             } else {
               ratioChange = 'down'
@@ -390,17 +391,12 @@ const bettingModule: Module<Betting, any> = {
            */
           const copyBet = JSON.parse(JSON.stringify(replaceBet))
           replaceBet.betItem = createBetItem(copyBet)
-
-          if (replaceBet.betItem?.includes(' ') && letBallMap.includes(playType)) {
-            const [ratioMatch, ratioTag, ...special] = replaceBet.betItem.split(' ')
-            if (special.length) {
-              replaceBet.ratioTag = special.pop() || ''
-              const lastSpaceIndex = replaceBet.betItem.lastIndexOf(' ')
-              replaceBet.ratioMatch = replaceBet.betItem.substr(0, lastSpaceIndex)
-            } else {
-              replaceBet.ratioMatch = ratioMatch
-              replaceBet.ratioTag = ratioTag
-            }
+          const getRatioPlayInfo = getRatioPlay(copyBet)
+          if (getRatioPlayInfo) {
+            const { ratioParams1, ratioParams2, ratioTag } = getRatioPlayInfo
+            replaceBet.ratioTag = ratioTag
+            replaceBet.ratioParams1 = ratioParams1
+            replaceBet.ratioParams2 = ratioParams2
           }
 
           return replaceBet

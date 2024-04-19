@@ -115,11 +115,11 @@ export function useBetting(flag: any) {
   }
 
   const getGroupListCombo = (dataList: any[]) => {
-    const groupRow = toRaw(playGroupBetList.value)
+    const groupRow = toRaw(playGroupBetList.value) || []
     let groupPlayList: any[] = []
     groupRow.forEach((row: any) => {
       const playDataList = playTypeSort(dataList, row.playData)
-      const playDataListPlays = playDataList.map((playInfo: any) => playInfo.playType)
+      const playDataListPlays = playDataList.map((playInfo: any) => playInfo.typeTemp)
       const uniqueArray = [...new Set(playDataListPlays)]
       const rowResult = {
         id: row.id,

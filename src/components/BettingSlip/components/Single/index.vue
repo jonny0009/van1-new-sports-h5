@@ -8,9 +8,14 @@
         <div class="title">
           <SportsIcon class="sport-icon" :icon-src="marketInfo.gameType" />
           <div class="betting-name text-overflow">
-            {{ marketInfo.ratioMatch || marketInfo.ratioName }}
-            <span class="ratio-tag" :class="marketInfo.ratioChange">{{ marketInfo.ratioTag }}</span>
-            <span class="ratio-change" :class="marketInfo.ratioChange"></span>
+            {{ marketInfo.ratioParams1 || marketInfo.ratioName }}
+            <template v-if="marketInfo.ratioTag">
+              <span class="ratio-tag" :class="marketInfo.ratioChange">
+                {{ marketInfo.ratioTag }}
+              </span>
+              <span class="ratio-change" :class="marketInfo.ratioChange"></span>
+            </template>
+            {{ marketInfo.ratioParams2 }}
           </div>
         </div>
         <div class="details">
@@ -239,6 +244,7 @@ defineExpose({
         letter-spacing: 0;
         font-weight: 500;
         .ratio-tag {
+          margin: 0 8px;
           &.up {
             color: #0bba3e;
           }

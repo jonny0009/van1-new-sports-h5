@@ -282,6 +282,7 @@ const pauseHandle = () => {
   }
 }
 const goShortVideo = () => {
+  pause()
   emit('selectVideo', props.videoInfo)
 }
 defineExpose({
