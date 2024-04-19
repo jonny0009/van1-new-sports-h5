@@ -398,7 +398,7 @@ const pauseHandle = () => {
   .match-wrap {
     display: flex;
     justify-content: space-between;
-    position: absolute;
+    position: fixed;
     z-index: 9;
     bottom: 8%;
     left: 30px;
