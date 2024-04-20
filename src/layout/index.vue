@@ -3,9 +3,22 @@
     <GlobalHeader v-if="!$route.meta.hideGlobalHeaderView" @betShow="betShow" />
     <GlobalRefresh>
       <DoubleRowNav v-if="homeStyle === 3" />
-      <GlobalSportsTabsView v-if="$route.meta.showSportsTabsView && homeStyle !== 2 && showSportsTop" />
+      <GlobalSportsTabsView
+        v-if="$route.meta.showSportsTabsView && homeStyle !== 2 && showSportsTop"
+        :class="{
+          slideRight: slideValue === 1,
+          slideLeft: slideValue === 2
+        }"
+      />
       <TopSportsTabs v-if="$route.meta.showSportsTabsView && homeStyle === 2" />
-      <GlobalBarTabsView v-if="$route.meta.showBarTabsView" class="pb5 pt15" />
+      <GlobalBarTabsView
+        v-if="$route.meta.showBarTabsView"
+        class="pb5 pt15"
+        :class="{
+          slideRight: slideValue === 1,
+          slideLeft: slideValue === 2
+        }"
+      />
       <AppMain ref="appContent" />
     </GlobalRefresh>
     <BettingSlip v-if="betShowState && !$route.meta.hideGlobalBottomBet" ref="bettingSlip" />
@@ -53,6 +66,7 @@ const showSportsTop = computed(() => store.state.app.showSportsTop)
 const locationHeight = computed(() => store.state.user.locationHeight)
 const KeepAlive = computed(() => currentRoute.value.meta.KeepAlive)
 const pageIndex: any = computed(() => currentRoute.value.meta.index)
+const slideValue: any = ref(0)
 
 // 获取的体育项
 const sportsListArr = computed(() => store.state.match.sportsListArr)
@@ -95,9 +109,11 @@ watch(
       if (obj.indexNum > indexNum.value) {
         appContent.value.transitionName = 'fade-right'
         indexNum.value = obj.indexNum
+        slideValue.value = 0
       } else {
         appContent.value.transitionName = 'fade-left'
         indexNum.value = obj.indexNum
+        slideValue.value = 0
       }
       return
     }
@@ -112,9 +128,11 @@ watch(
       if (noSportsNum > indexNum.value) {
         appContent.value.transitionName = 'fade-right'
         indexNum.value = noSportsNum
+        slideValue.value = 1
       } else {
         appContent.value.transitionName = 'fade-left'
         indexNum.value = noSportsNum
+        slideValue.value = 2
       }
       return
     }
@@ -122,13 +140,26 @@ watch(
       if (to === '/match') {
         indexNum.value = -1
         appContent.value.transitionName = 'fade-left'
+        slideValue.value = 2
         return
       }
     }
     if (pageIndex.value > indexNum.value) {
       appContent.value.transitionName = 'fade-right'
       indexNum.value = pageIndex.value
+      if (homeStyle.value !== 2) {
+        slideValue.value = 0
+      } else {
+        slideValue.value = 1
+      }
     } else {
+      if (indexNum.value === 65 || indexNum.value === 66) {
+        slideValue.value = 2
+      } else if (homeStyle.value !== 2) {
+        slideValue.value = 0
+      } else {
+        slideValue.value = 2
+      }
       appContent.value.transitionName = 'fade-left'
       indexNum.value = pageIndex.value
     }
@@ -235,6 +266,35 @@ const backTopShow = computed(() => {
   }
   &.showBettingSlipHomeStyle {
     bottom: 198px !important;
+  }
+}
+// 首页导航动画
+.slideRight {
+  animation-name: slideInFromRight;
+  animation-duration: 0.2s;
+  animation-delay: 0s;
+  animation-fill-mode: forwards;
+}
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.slideLeft {
+  animation-name: slideInFromLeft;
+  animation-duration: 0.2s;
+  animation-delay: 0s;
+  animation-fill-mode: forwards;
+}
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
 </style>
