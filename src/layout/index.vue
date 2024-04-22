@@ -23,7 +23,7 @@
       />
       <AppMain ref="appContent" />
     </GlobalRefresh>
-    <BettingSlip v-if="betShowState && !$route.meta.hideGlobalBottomBet" ref="bettingSlip" />
+    <BettingSlip v-if="betShowState && !$route.meta.hideGlobalBottomBet && bettingSlipState" ref="bettingSlip" />
     <GlobalFooter v-if="homeStyle === 1" @valueChange="betShow" @tabChangeValue="tabChangeValue" />
     <van-back-top
       v-if="backTopShow"
@@ -64,6 +64,7 @@ const betShowState: any = ref(!unShow.value.includes(route.name))
 
 const scrollNum = computed(() => store.state.user.scrollNumY)
 const homeStyle = computed(() => store.state.app.homeStyle)
+const bettingSlipState = computed(() => store.state.app.bettingSlipState)
 // const showSportsTop = computed(() => store.state.app.showSportsTop)
 const locationHeight = computed(() => store.state.user.locationHeight)
 const KeepAlive = computed(() => currentRoute.value.meta.KeepAlive)
@@ -151,7 +152,11 @@ watch(
       }
       return
     }
-    if ((homeStyle.value !== 2 && to === '/match') || to === '/casino' || to === '/home') {
+    if (
+      (homeStyle.value !== 2 && to === '/match') ||
+      (to === '/casino' && homeStyle.value !== 2) ||
+      (to === '/home' && homeStyle.value !== 2)
+    ) {
       let noSportsNum = 0
       if (to === '/home') {
         if (indexNum.value === 65 || indexNum.value === 66) {
@@ -239,6 +244,9 @@ const handleScroll = () => {
 }
 
 const betShow = (value: any) => {
+  if (bettingSlip.value === void 0) {
+    return false
+  }
   if (value === 'bottomHome') {
     if (bettingSlip.value) {
       bettingSlip.value.open = false
