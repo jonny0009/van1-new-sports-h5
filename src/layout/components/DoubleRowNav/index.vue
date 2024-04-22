@@ -82,19 +82,19 @@ const changeTab = (val: any) => {
   let urlParams = val.name
   store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
   router.push(`/` + urlParams)
-  setTimeout(() => {
-    if (val.name === 'home') {
-      store.dispatch('app/setKeyValue', {
-        key: 'showSportsTop',
-        value: true
-      })
-    } else {
-      store.dispatch('app/setKeyValue', {
-        key: 'showSportsTop',
-        value: false
-      })
-    }
-  }, 200)
+  // setTimeout(() => {
+  if (val.name === 'home') {
+    store.dispatch('app/setKeyValue', {
+      key: 'showSportsTop',
+      value: true
+    })
+  } else {
+    store.dispatch('app/setKeyValue', {
+      key: 'showSportsTop',
+      value: false
+    })
+  }
+  // }, 200)
 }
 
 // 标签颜色

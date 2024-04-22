@@ -98,19 +98,19 @@ const clickChangeActive = (item: any) => {
   barFooterArr.push(...barFooterArrayChange())
   store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
   router.push(`/` + item.value)
-  setTimeout(() => {
-    if (item.value === 'home') {
-      store.dispatch('app/setKeyValue', {
-        key: 'showSportsTop',
-        value: true
-      })
-    } else {
-      store.dispatch('app/setKeyValue', {
-        key: 'showSportsTop',
-        value: false
-      })
-    }
-  }, 200)
+  // setTimeout(() => {
+  if (item.value === 'home') {
+    store.dispatch('app/setKeyValue', {
+      key: 'showSportsTop',
+      value: true
+    })
+  } else {
+    store.dispatch('app/setKeyValue', {
+      key: 'showSportsTop',
+      value: false
+    })
+  }
+  // }, 200)
 }
 </script>
 <style lang="scss" scoped>
