@@ -87,7 +87,7 @@ const active = computed(() => {
   return isrouterNameToLowerCase ? routerNameToLowerCase : 'home'
 })
 
-const emit = defineEmits(['valueChange'])
+const emit = defineEmits(['valueChange', 'tabChangeValue'])
 const clickChangeActive = (item: any) => {
   emit('valueChange', 'bottomHome')
   if (item.value === 'community') {
@@ -96,20 +96,21 @@ const clickChangeActive = (item: any) => {
   }
   barFooterArr.length = 0
   barFooterArr.push(...barFooterArrayChange())
-  store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
-  router.push(`/` + item.value)
+  emit('tabChangeValue', item.value)
+  // store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
+  // router.push(`/` + item.value)
   // setTimeout(() => {
-  if (item.value === 'home') {
-    store.dispatch('app/setKeyValue', {
-      key: 'showSportsTop',
-      value: true
-    })
-  } else {
-    store.dispatch('app/setKeyValue', {
-      key: 'showSportsTop',
-      value: false
-    })
-  }
+  // if (item.value === 'home') {
+  //   store.dispatch('app/setKeyValue', {
+  //     key: 'showSportsTop',
+  //     value: true
+  //   })
+  // } else {
+  //   store.dispatch('app/setKeyValue', {
+  //     key: 'showSportsTop',
+  //     value: false
+  //   })
+  // }
   // }, 200)
 }
 </script>

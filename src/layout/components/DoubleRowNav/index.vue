@@ -73,27 +73,31 @@ const navList = reactive<{ arr: any[] }>({
     }
   ]
 })
+
+// 更换点击触发
+const emit = defineEmits(['tabChangeValue'])
 // tab 点击
 const changeTab = (val: any) => {
   if (val.name === 'community') {
     showToast(t('home.stayTuned'))
     return
   }
-  let urlParams = val.name
-  store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
-  router.push(`/` + urlParams)
+  // store.dispatch('betting/setMoreShow', { status: false, moreParams: {} })
+  emit('tabChangeValue', val.name)
+  // let urlParams = val.name
+  // router.push(`/` + urlParams)
   // setTimeout(() => {
-  if (val.name === 'home') {
-    store.dispatch('app/setKeyValue', {
-      key: 'showSportsTop',
-      value: true
-    })
-  } else {
-    store.dispatch('app/setKeyValue', {
-      key: 'showSportsTop',
-      value: false
-    })
-  }
+  // if (val.name === 'home') {
+  //   store.dispatch('app/setKeyValue', {
+  //     key: 'showSportsTop',
+  //     value: true
+  //   })
+  // } else {
+  //   store.dispatch('app/setKeyValue', {
+  //     key: 'showSportsTop',
+  //     value: false
+  //   })
+  // }
   // }, 200)
 }
 
