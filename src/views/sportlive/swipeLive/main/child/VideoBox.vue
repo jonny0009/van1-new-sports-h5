@@ -121,7 +121,7 @@ const initVideo = () => {
       videoExample.value = Video(
         'VideoRef',
         {
-          muted: true,
+          muted: false,
           controls: props.controls,
           width: '100%',
           height: '100%',
@@ -136,7 +136,7 @@ const initVideo = () => {
         },
         () => {
           try {
-            videoRef.muted = true
+            videoRef.muted = false
             videoRef.play()
             videoExample.value.on('error', () => {
               videoErrorState.value = true
