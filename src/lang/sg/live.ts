@@ -73,4 +73,5 @@ export default {
   refreshVideo: '重新整理影片',
   goLive: '前往直播廳',
   playbackFailed: '播放失敗'
+
 }

@@ -32,6 +32,7 @@ export default {
   up: '上',
   img: '進行中',
   PenaltyKickWar: '點球大戰',
+  addTimeNumber: `加時<span>{number}</span>`,
   live: '直播',
   Sunday: '週日',
   Monday: '週一',
@@ -48,8 +49,10 @@ export default {
   RBSize: '滾球 大小盤',
   RBRide: '滾球 1X2',
   PDscore: '正確比分',
-  addTimeNumber: `加时<span>{number}</span>`,
 
+  hotMatchTitle: '熱播中',
+  comingSoonTitle: '即將播放',
+  shortVideoTitle: '短影片',
   casinoTitleObj: {
     title1: '好路推薦',
     title2: '真人百家樂',
@@ -58,6 +61,13 @@ export default {
     gohome: '去首頁'
   },
   Community: '社群',
+  errorTips: {
+    tips1: '糟了！ 這裡出了點問題',
+    tips2: '抱歉，您的所在地區受到限制',
+    tips3: '網站維護',
+    tips4: '重新開放倒數'
+  },
+  mulBet: '多台下注',
   baccarat: {
     连庄: 'B Dragon',
     单跳: 'PingPong',
@@ -74,4 +84,5 @@ export default {
     隔连闲: 'Separate P',
     双跳: '2PingPong'
   }
+
 }

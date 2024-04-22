@@ -56,7 +56,7 @@ export default {
   comingSoonTitle: '놀러 갑니다',
   shortVideoTitle: '짧은 동영상',
   casinoTitleObj: {
-    title1: '좋은 도로 추천',
+    title1: '굿 로드 추천',
     title2: '라이브 바카라',
     title3: '카지노는 유지 관리 중입니다...',
     title4: '예상 유지보수 카운트다운',
@@ -70,7 +70,7 @@ export default {
     tips3: '웹사이트 유지보수 중',
     tips4: '재개장 카운트다운'
   },
-  mulBet: '다중 베팅',
+  mulBet: '멀티배팅',
   baccarat: {
     连庄: 'B Dragon',
     单跳: 'PingPong',
@@ -87,4 +87,5 @@ export default {
     隔连闲: 'Separate P',
     双跳: '2PingPong'
   }
+
 }
