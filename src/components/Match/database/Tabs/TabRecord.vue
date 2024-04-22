@@ -79,29 +79,33 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, computed, onMounted, ref } from 'vue'
-import { teamRecentApi, homeAwayIntegralApi } from '@/api/live'
+import { computed, ref } from 'vue'
 import { formatToDate } from '@/utils/date'
+const emit = defineEmits(['fetchRecentEmit'])
+
 const props = defineProps({
   matchData: {
     type: Object,
     default: () => {}
+  },
+  recentList: {
+    type: Array as any,
+    default: () => []
+  },
+  integralList: {
+    type: Array as any,
+    default: () => []
   }
 })
 
-onMounted(() => {
-  fetchRecent()
-  fetchIntegral()
-})
 const home = computed(() => {
-  return props.matchData.homeTeamShort || props.matchData.homeTeam
+  return props.matchData?.homeTeamShort || props.matchData?.homeTeam
 })
 const away = computed(() => {
-  return props.matchData.awayTeamShort || props.matchData.awayTeam
+  return props.matchData?.awayTeamShort || props.matchData?.awayTeam
 })
-const activeNames = ref(['1'])
+const activeNames = ref(['1', '2'])
 
-const recentList: Ref<any[]> = ref([])
 const teamType = ref(1)
 const fetchRecent = async (state: number = 1) => {
   teamType.value = state
@@ -110,26 +114,9 @@ const fetchRecent = async (state: number = 1) => {
     teamId: teamType.value === 1 ? homeTeamId : awayTeamId,
     limit: 5
   }
-  const res: any = await teamRecentApi(params)
-  if (res.code === 200) {
-    const data = res.data || {}
-    recentList.value = data.list || []
-  }
+  emit('fetchRecentEmit', params)
 }
 
-const integralList: Ref<any[]> = ref([])
-const fetchIntegral = async () => {
-  const { icGidm, homeTeamId, awayTeamId } = props.matchData || {}
-  const params = {
-    gidm: icGidm,
-    teamId: homeTeamId,
-    awayId: awayTeamId
-  }
-  const res: any = await homeAwayIntegralApi(params)
-  if (res.code === 200) {
-    integralList.value = res.data || []
-  }
-}
 const barScoreColor = (item: any, type: string) => {
   const homeScore = parseFloat(item.homeTeamScore)
   const awayScore = parseFloat(item.awayTeamScore)

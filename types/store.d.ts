@@ -19,6 +19,10 @@ declare interface App {
   systemTime: any
   customizeConfig: any
   matchLiveIndex: any
+  homeStyle: any
+  homeTabsSports: any
+  showSportsTop: any
+  bettingSlipState: any
 }
 
 declare interface User {
@@ -80,6 +84,7 @@ declare interface Match {
   matchData: any
   needTimer: boolean
   turnSound: boolean
+  sportsListArr: any
 }
 
 declare module '@vue/runtime-core' {

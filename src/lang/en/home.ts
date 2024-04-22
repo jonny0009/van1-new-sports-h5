@@ -45,8 +45,6 @@ export default {
   numberDay: '{number} days',
   hot: 'Hot',
   todayUpcoming: 'TodayUpComing',
-
-  // new
   RBInfo: 'RB Asian Handicap',
   RBSize: 'RB O/U',
   RBRide: 'RB 1X2',
@@ -61,7 +59,7 @@ export default {
     title4: 'Estimated maintenance countdown',
     gohome: 'Go to homepage'
   },
-  Community: 'community',
+  Community: 'Community',
 
   errorTips: {
     tips1: "Oops! Something's wrong here",
@@ -69,6 +67,21 @@ export default {
     tips3: 'Website under maintenance',
     tips4: 'Countdown to reopening'
   },
-  mulBet: 'Multiple betting'
-
+  mulBet: 'Multiple betting',
+  baccarat: {
+    连庄: '连庄',
+    单跳: '单跳',
+    '{n1}房{n2}厅': '{n1}P{n2}B',
+    双龙汇: '双龙汇',
+    上坡路: '上坡路',
+    下坡路: '下坡路',
+    排排连: '排排连',
+    逢庄连: '逢庄连',
+    逢闲连: '逢闲连',
+    逢庄跳: '逢庄跳',
+    逢闲跳: '逢闲跳',
+    隔连庄: '隔连庄',
+    隔连闲: '隔连闲',
+    双跳: '双跳',
+  }
 }

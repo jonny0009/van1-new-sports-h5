@@ -72,4 +72,6 @@ export default {
   section: '섹션',
   videoFailure: '새로 고침 다시 시도하십시오.',
   refreshVideo: '비디오 새로 고침',
+  goLive: '생방송실로 이동',
+  playbackFailed: '플레이 실패'
 }

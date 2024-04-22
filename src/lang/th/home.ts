@@ -57,11 +57,11 @@ export default {
   comingSoonTitle: 'กำลังมาเล่น',
   shortVideoTitle: 'วิดีโอสั้น',
   casinoTitleObj: {
-    title1: 'คำแนะนำถนนที่ดี',
+    title1: 'เทรนด์ดี',
     title2: 'บาคาร่าสด',
     title3: 'คาสิโนอยู่ระหว่างการบำรุงรักษา...',
-    title4: 'การนับถอยหลังการบำรุงรักษาโดยประมาณ',
-    gohome: 'ไปที่หน้าแรก'
+    title4: 'นับถอยหลังสู่การสิ้นสุดการบำรุงรักษาที่คาดหวัง',
+    gohome: 'กลับไปที่หน้าแรก'
   },
   Community: 'ชุมชน',
   errorTips: {
@@ -70,5 +70,21 @@ export default {
     tips3: 'เว็บไซต์อยู่ระหว่างการบำรุงรักษา',
     tips4: 'นับถอยหลังสู่การเปิดอีกครั้ง'
   },
-  mulBet: 'เดิมพันหลายรายการ'
+  mulBet: 'เดิมพันหลายรายการ',
+  baccarat: {
+    连庄: 'B Dragon',
+    单跳: 'PingPong',
+    '{n1}房{n2}厅': '{n1}P{n2}B',
+    双龙汇: '2Dragon',
+    上坡路: 'Uphill',
+    下坡路: 'Downhill',
+    排排连: 'VRow',
+    逢庄连: 'RowB',
+    逢闲连: 'RowP',
+    逢庄跳: 'BHop',
+    逢闲跳: 'PHop',
+    隔连庄: 'Separate B',
+    隔连闲: 'Separate P',
+    双跳: '2PingPong'
+  }
 }

@@ -14,7 +14,7 @@ export default {
   orderPending: '受理中註單',
   orderError: '未受理注單',
   finish: '完成',
-  oddChangTips: '接受所有盤口變化',
+  oddChangTips: '接受本单后续所有盤口變化',
   notPendingOrders: '沒有進行中的注單',
   notBets: '您的選擇將出現在此',
   combos: '{num}場串關',

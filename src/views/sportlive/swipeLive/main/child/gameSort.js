@@ -201,7 +201,7 @@ export const ratioFormat = ratioDetail => {
   // betItem/ratioName 一个意思
   let ratioName = ''
   try {
-    ratioName = createBetItem({ ...ratioDetail, type }, 2)
+    ratioName = createBetItem({ ...ratioDetail, type })
     sleep(10)
   } catch (error) {
     console.error(error)

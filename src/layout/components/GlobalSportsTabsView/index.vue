@@ -1,23 +1,42 @@
 <template>
   <div class="sportsTabsView">
-    <div
-      v-for="(item, idx) in homeBarList"
-      :key="idx"
-      class="item"
-      :class="[
-        {
-          active: item.routerName === active
-        },
-        item.routerName
-      ]"
-      @click="goClick(item)"
-    >
-      <SportsIcon :icon-src="item.icon" />
-      <div class="name">
-        <span>
-          {{ item.text }}
-        </span>
-      </div>
+    <div class="tabs-cut">
+      <van-tabs
+        v-model:active="active"
+        :duration="0.2"
+        :shrink="homeStyle !== 2"
+        :ellipsis="false"
+        line-height="0"
+        swipe-threshold="6"
+        :scrollable="false"
+        @click-tab="goClick"
+      >
+        <van-tab v-for="(item, index) in getBarList()" :key="index" :name="item.routerName">
+          <template #title>
+            <div class="tabs-cut-1">
+              <div
+                class="item"
+                :class="[
+                  {
+                    active: item.routerName === active,
+                    homeStyleItem: homeStyle === 3,
+                    itemColor: item.routerName === 'Match' && homeStyle === 2,
+                    itemWidth: homeStyle !== 2
+                  },
+                  item.routerName
+                ]"
+              >
+                <SportsIcon :icon-src="item.icon" />
+                <div class="name">
+                  <span>
+                    {{ item.text }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </template>
+        </van-tab>
+      </van-tabs>
     </div>
   </div>
 </template>
@@ -26,10 +45,60 @@ import { ref, computed } from 'vue'
 import router from '@/router'
 import store from '@/store'
 import { useI18n } from 'vue-i18n'
+
+const homeStyle = computed(() => store.state.app.homeStyle)
 const { t } = useI18n()
+
+// 经典 nav 去掉早盘 , 加入体育项
+const sportsList = computed(() => {
+  // const sports = store.state.app.sports || []
+  const sports = store.state.match.sportsListArr || []
+  const newSportsA = sports.filter((e: any) => {
+    return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.num * 1
+  })
+  let newSportsB: any = []
+  if (newSportsA.length) {
+    const newSportsC = newSportsA.map((e: any) => {
+      return {
+        icon: e.gameType,
+        text: t(`user.sports.${e.gameType}`),
+        routerName: `/sport/${e.gameType}`,
+        routerPath: `/sport/${e.gameType}`
+      }
+    })
+    newSportsB = [...newSportsC]
+  }
+
+  return newSportsB
+})
 
 // 热门 Live 直播  今日  早盘 赌场
 const homeBarList = ref([
+  {
+    icon: 'home',
+    text: t('home.hot'),
+    routerName: 'Home'
+  },
+  {
+    icon: 'sportlive',
+    text: t('sport.sports.RB'),
+    routerName: 'Sportlive'
+  },
+  {
+    icon: 'today',
+    text: t('home.todayUpcoming'),
+    routerName: 'sportToday'
+  }
+])
+const homeStyleBarList = ref([
+  {
+    icon: 'live',
+    text: t('home.live'),
+    routerName: 'Match',
+    meta: {
+      showSportsTabsView: true
+    }
+  },
   {
     icon: 'home',
     text: t('home.hot'),
@@ -50,41 +119,81 @@ const homeBarList = ref([
     text: t('home.latestMatch'),
     routerName: 'Sport'
   },
+
   {
-    icon: 'live',
-    text: t('home.live'),
-    routerName: 'Match',
-    meta: {
-      showSportsTabsView: true
-    }
+    icon: 'casino',
+    text: t('home.casino'),
+    routerName: 'Casino'
+  },
+  {
+    icon: 'casino',
+    text: t('home.casino'),
+    routerName: 'Casino'
   }
-  // {
-  //   icon: 'casino',
-  //   text: t('home.casino'),
-  //   routerName: 'Casino'
-  // }
 ])
 
-const goClick = ({ routerName }: any) => {
+// 获取bar
+const getBarList = () => {
+  if (homeStyle.value === 2) {
+    return homeStyleBarList.value
+  }
+  return [...homeBarList.value, ...sportsList.value]
+}
+
+const goClick = (val: any) => {
   store.dispatch('user/getLocationHeight', false)
+  if (val.name.includes('/sport/')) {
+    router.push(val.name)
+    return
+  }
   const params = {
-    name: routerName
+    name: val.name
   }
   router.push(params)
 }
 
-const active: any = computed(() => {
-  const active = router?.currentRoute?.value?.name || 'Home'
-  return active
+const urlPathActive = ref<any>('')
+const activeUrlName = computed({
+  get() {
+    // 如果读取计算属性的值，默认调用get方法
+    urlPathActive.value = router?.currentRoute?.value?.name || 'Home'
+    if (urlPathActive.value === 'Sport' && router?.currentRoute?.value?.path.includes('/sport/')) {
+      if (homeStyle.value !== 2) {
+        urlPathActive.value = router?.currentRoute?.value?.path || '/sport'
+      } else {
+        urlPathActive.value = 'Sport'
+      }
+    }
+
+    return urlPathActive.value
+  },
+  set(v) {
+    // v是计算属性下传递的实参
+    // 如果要想修改计算属性的值，默认调用set方法
+    urlPathActive.value = v
+  }
 })
+
+const active = ref(activeUrlName)
 </script>
 <style lang="scss" scoped>
 .sportsTabsView {
-  display: flex;
-  overflow-x: hidden;
-  &::-webkit-scrollbar {
-    height: 0;
-    display: none;
+  // display: flex;
+  // overflow: auto;
+  // &::-webkit-scrollbar {
+  //   height: 0;
+  //   display: none;
+  // }
+  // margin-left: 3%;
+  // width: 95%;
+  // padding: 0 40px;
+  // overflow: hidden !important;
+  .tabs-cut {
+    margin-left: 30px;
+    .tabs-cut-1 {
+      margin-left: -30px;
+      margin-right: 25px;
+    }
   }
   .item {
     flex: 1;
@@ -93,11 +202,12 @@ const active: any = computed(() => {
     justify-content: center;
     align-items: center;
     color: var(--color-global-text);
-    min-width: 124px;
+    // min-width: 124px;
     padding-top: 40px;
     .name {
       // height: 20px;
-      height: 22px;
+      // height: 22px;
+      height: 34px;
       line-height: 20px;
       font-size: 20px;
       // margin-top: 7px;
@@ -106,7 +216,7 @@ const active: any = computed(() => {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      width: 200%;
+      width: 100%;
       text-align: center;
       span {
         display: none;
@@ -118,6 +228,7 @@ const active: any = computed(() => {
         height: 20px;
         line-height: 20px;
         font-size: 20px;
+        margin-top: 5px;
       }
     }
     .iconfont {
@@ -155,6 +266,15 @@ const active: any = computed(() => {
       }
     }
   }
+  .homeStyleItem {
+    padding-top: 34px !important;
+  }
+  .itemColor {
+    color: rgba(255, 166, 0, 0.91);
+  }
+  .itemWidth {
+    min-width: 124px;
+  }
 }
 </style>
 
@@ -171,3 +291,18 @@ const active: any = computed(() => {
   background-clip: text;
   -webkit-text-fill-color: transparent;
 -->
+<style scoped>
+:deep(.van-tabs--line .van-tabs__wrap) {
+  height: 115px;
+}
+:deep(.van-tab__text) {
+  /* font-size: 26px; */
+  /* font-weight: 600; */
+}
+:deep(.van-tabs__nav--line) {
+  background-color: var(--color-background-color);
+}
+:deep(.van-tab--shrink) {
+  padding: 0 0 !important;
+}
+</style>

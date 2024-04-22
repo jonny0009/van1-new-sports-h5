@@ -8,7 +8,7 @@
         <template #title>
           <div class="tab-title">
             <span>{{ tab.name }}</span>
-            <span class="num">{{ tab.playDataList.length }}</span>
+            <span class="num">{{ tab.count }}</span>
           </div>
         </template>
         <!-- start -->

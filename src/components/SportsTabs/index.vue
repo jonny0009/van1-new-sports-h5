@@ -7,9 +7,9 @@
       shrink
       line-height="0"
       :animated="ifAnimated"
-      :swipe-threshold="3"
       @change="onChangeTabs"
-      @click-tab="ifAnimated = true"
+      :swipe-threshold="3"
+      @click-tab="handleTabAnimated"
     >
       <van-tab v-for="(item, index) in sportsList" :key="index" :name="item.text">
         <template #title>
@@ -17,7 +17,7 @@
             class="tabs-cut-1"
             :text="item.text"
             :active="active === item.text"
-            :show-count="false"
+            :showCount="ifCountNum"
             :count="item.gameCount"
             :class="item.text"
           />
@@ -38,6 +38,22 @@ const props = defineProps({
   isCustom: {
     type: Boolean,
     default: () => false
+  },
+  ifCapstan: {
+    type: Boolean,
+    default: () => false
+  },
+  ifGoodMatch: {
+    type: Boolean,
+    default: () => false
+  },
+  ifSportToday: {
+    type: Boolean,
+    default: () => false
+  },
+  ifCountNum: {
+    type: Boolean,
+    default: () => true
   }
 })
 
@@ -51,11 +67,29 @@ const active = ref('FT')
 const ifAnimated: any = ref(true)
 const emit = defineEmits(['returnSportsSuccess'])
 
+const handleTabAnimated = () => {
+  if (props.ifCapstan) {
+    ifAnimated.value = false
+  } else {
+    ifAnimated.value = true
+  }
+}
 const onChangeTabs = () => {
   emit('returnSportsSuccess', active.value)
 }
 const sportsList = computed(() => {
-  let sports = store.state.app.sports || []
+  let sports: any = ''
+  if (props.ifGoodMatch) {
+    sports = store.state.app.homeTabsSports || []
+  } else if (props.ifCapstan) {
+    let sportsListArr = store.state.match.sportsListArr || []
+    sportsListArr.map((e: any) => {
+      e.gameCount = Number(e.num)
+    })
+    sports = sportsListArr
+  } else {
+    sports = store.state.app.sports || []
+  }
 
   if (props.isCustom) {
     sports = props.tabs
@@ -73,6 +107,16 @@ const sportsList = computed(() => {
       }
     })
     newSportsB = [...newSportsC]
+  }
+  const count = newSportsB.reduce((gameCount: number, item: any) => {
+    return gameCount + item.gameCount * 1
+  }, 0)
+  const allItem = {
+    text: 'all',
+    gameCount: count
+  }
+  if (props.ifSportToday) {
+    return [allItem, ...newSportsB]
   }
   return newSportsB
 })
@@ -93,5 +137,8 @@ defineExpose({
 }
 :deep(.van-tabs__nav--complete) {
   background-color: var(--color-background-color);
+}
+:deep(.van-tabs__line) {
+  display: none;
 }
 </style>

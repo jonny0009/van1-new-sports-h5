@@ -55,9 +55,9 @@ export default {
   casinoTitleObj: {
     title1: '好路推薦',
     title2: '真人百家樂',
-    title3: '賭場維護...',
-    title4: '預計維護倒數計時',
-    gohome: '去首頁'
+    title3: '賭場維護中...',
+    title4: '預計維修結束倒數計時',
+    gohome: '回首頁'
   },
   Community: '社群',
   errorTips: {
@@ -66,5 +66,21 @@ export default {
     tips3: '網站維護',
     tips4: '重新開放倒數'
   },
-  mulBet: '多台下注'
+  mulBet: '多台下注',
+  baccarat: {
+    连庄: 'B Dragon',
+    单跳: 'PingPong',
+    '{n1}房{n2}厅': '{n1}P{n2}B',
+    双龙汇: '2Dragon',
+    上坡路: 'Uphill',
+    下坡路: 'Downhill',
+    排排连: 'VRow',
+    逢庄连: 'RowB',
+    逢闲连: 'RowP',
+    逢庄跳: 'BHop',
+    逢闲跳: 'PHop',
+    隔连庄: 'Separate B',
+    隔连闲: 'Separate P',
+    双跳: '2PingPong'
+  }
 }

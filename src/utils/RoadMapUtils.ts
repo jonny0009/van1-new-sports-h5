@@ -100,7 +100,7 @@ export const daLuList = (wins: any) => {
   }
   return daLuList
 }
-export const createDaLu = (wins: any) => {
+export const createDaLu = (wins: any = []) => {
   wins = wins.map((i: any) => {
     if (i % 10 === 0) {
       return 0

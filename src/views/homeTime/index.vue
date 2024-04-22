@@ -1,25 +1,41 @@
 <template>
   <div class="homeTime-page" ref="newContainer">
     <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
-      <SportsTabs ref="refSportsTabs" class="pb10" @returnSportsSuccess="returnSportsSuccess">
+      <SportsTabs ref="refSportsTabs" class="pb10" @returnSportsSuccess="returnSportsSuccess" :ifCountNum="false">
         <template #body>
           <div class="mt10">
-            <tabsTime v-if="routerName === 'HomeTime'" ref="refTimeTabs" @returnTimeSuccess="returnTimeSuccess"  @DateShow="DateShow"/>
+            <tabsTime
+              v-if="routerName === 'HomeTime'"
+              ref="refTimeTabs"
+              @returnTimeSuccess="returnTimeSuccess"
+              @DateShow="DateShow"
+            />
             <van-list v-model="loading" :finished="finished" :finished-text="$t('live.noMore')" @load="onLoad">
               <template v-if="isLoading">
                 <template v-for="(item, idx) in recommendEventsList" :key="idx">
-                  <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="8"
-                    :class="{ 'mt10': idx !== 0 }">
+                  <van-sticky
+                    :offset-top="offsetTop"
+                    :container="newContainer"
+                    z-index="8"
+                    :class="{ mt10: idx !== 0 }"
+                  >
                     <playTitle :send-params="item" />
                   </van-sticky>
-                  <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
-                    :class="{ 'mt10': idx !== 0 }" />
+                  <HomeMatchHandicap
+                    v-for="(item1, idx) in item.list"
+                    :play-title-toggle="false"
+                    :send-params="item1"
+                    :class="{ mt10: idx !== 0 }"
+                  />
                 </template>
                 <HomeEmpty v-if="!recommendEventsList.length"></HomeEmpty>
               </template>
-              <Loading v-if="!isLoading || loading" :class="{
-                'new_loading mt10': loading
-              }" />
+              <Loading
+                v-if="!isLoading || loading"
+                :class="{
+                  'new_loading mt10': loading
+                }"
+              />
             </van-list>
           </div>
         </template>
@@ -31,11 +47,11 @@
 </template>
 <script lang="ts" setup>
 import Dayjs from 'dayjs'
-import tabsTime from './tabsTime/index.vue'
 import playTitle from '@/components/Title/playTitle/index.vue'
 import { recommendEvents } from '@/api/home'
 import store from '@/store'
-import { onBeforeMount, ref, reactive, computed, watch } from 'vue'
+import { onBeforeMount, ref, reactive, computed, watch, defineAsyncComponent } from 'vue'
+const tabsTime = defineAsyncComponent(() => import('./tabsTime/index.vue'))
 import moment from 'moment'
 import router from '@/router'
 const scrollNum = computed(() => store.state.user.scrollNumY)
@@ -58,13 +74,31 @@ const routerName: any = computed(() => {
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout: any = ref('')
 const refSportsTabs = ref()
-const refTimeTabs = ref()
+const refTimeTabs = ref<any>(null)
+const timeInfoParams: any = {
+  //  --8小时的请求开始时间
+  beginDate: Dayjs().format('YYYY-MM-DD HH:mm:ss'),
+  // --8小时的请求结束时间
+  endDate: Dayjs().add(8, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+  // ,--24小时的请求结束时间
+  dayBeginDate: Dayjs().format('YYYY-MM-DD HH:mm:ss'),
+  // --24小时的请求结束时间
+  dayEndDate: Dayjs().add(24, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+  // --7天的请求结束时间
+  weekBeginDate: Dayjs().format('YYYY-MM-DD HH:mm:ss'),
+  // --7天的请求结束时间
+  weekEndDate: Dayjs().add(168, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+  gameType: 'FT'
+}
 
-watch(() => scrollNum.value, (newValue) => {
-  if (newValue > 88) {
-    refSportsTabs.value.ifAnimated = false
+watch(
+  () => scrollNum.value,
+  (newValue) => {
+    if (newValue > 88) {
+      refSportsTabs.value.ifAnimated = false
+    }
   }
-})
+)
 watch(refreshChangeTime, (val) => {
   if (val) {
     refSportsTabs.value?.resetParams()
@@ -138,7 +172,7 @@ const getRecommendEvents = async (nextToggle: any = '') => {
         }
       }
     })
-    Object.keys(listObj).map(item => {
+    Object.keys(listObj).map((item) => {
       listArr.push(JSON.parse(JSON.stringify(listObj[item])))
     })
 
@@ -165,7 +199,7 @@ const onLoad = () => {
     onLoadToggle.value = true
   }
 }
-const DateShow = (val:any) => {
+const DateShow = (val: any) => {
   show.value = val
 }
 const onConfirm = (value: any) => {
@@ -197,6 +231,8 @@ const returnSportsSuccess = (val: any) => {
   params.gameType = val
   finished.value = false
   params.page = 1
+  timeInfoParams.gameType = val
+  store.dispatch('home/initTimeDataInfo', timeInfoParams)
   getRecommendEvents()
 }
 const initData = () => {
@@ -208,6 +244,7 @@ const init = () => {
 }
 onBeforeMount(() => {
   init()
+  store.dispatch('home/initTimeDataInfo', timeInfoParams)
 })
 </script>
 <style lang="scss" scoped>
@@ -226,6 +263,6 @@ onBeforeMount(() => {
 }
 
 .van-calendar__day--middle {
-  color: var(--color-primary)
+  color: var(--color-primary);
 }
 </style>

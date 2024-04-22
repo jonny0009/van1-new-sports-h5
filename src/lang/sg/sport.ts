@@ -2,7 +2,7 @@ export default {
   'chooseLeague': '選擇聯賽',
   'all': '全部',
   'recommend': '推薦',
-  'early': '早期硬碟',
+  'early': '早盤',
   'champion': '冠軍競猜',
   'close': '收起',
   'more': '更多',

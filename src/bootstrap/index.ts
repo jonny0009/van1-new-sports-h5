@@ -8,7 +8,6 @@ const { modifyRatioTypeListMapping } = lib
 export default async () => {
   const searchParams = getURLSearchParams()
   const plateMaskKey = localStore.getItem('plateMaskKey')
-  console.log(searchParams, '--')
   /** af 演示需要，临时去掉url带入的token，走路由拦截试玩自动登录 */
   if (searchParams.token) {
     setToken(searchParams.token)
@@ -54,6 +53,10 @@ export default async () => {
     await store.dispatch('user/getCurrency')
     // 获取全部体育项
     store.dispatch('app/getAllSports')
+    // 获取首页tab体育项数量
+    store.dispatch('app/getHomeTabsSports')
+    // 获取早盘tab数量
+    store.dispatch('match/getSportsList')
     // 商户语言
     store.dispatch('app/queryCMerLanguage')
     // 获取账号信息

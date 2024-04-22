@@ -22,7 +22,7 @@ export const betParams = (bet: any) => {
     newBet.ratio1 = ratio || ratio1
   }
   newBet.type = 1
-  newBet.betItem = createBetItem(newBet, 2)
+  newBet.betItem = createBetItem(newBet)
   return newBet
 }
 
@@ -84,9 +84,11 @@ export const hitParams = (bets: any) => {
 export const buyParams = (markets: any, s: any, t: any) => {
   const { userConfig } = store.state.user || {}
   const oddChangesState = store.state.betting.oddChangesState || false
-  const autoOdd = oddChangesState ? 'S' : 'N'
+  // const autoOdd = oddChangesState ? 'S' : 'N'
+  const autoRatio = oddChangesState ? 'S' : 'Y'
   const { handicapType } = userConfig || {}
-  const autoRatio = userConfig.acceptAll === 1 ? 'S' : 'N'
+  // const autoRatio = userConfig.acceptAll === 1 ? 'S' : 'N'
+  const autoOdd = userConfig.acceptAll === 1 ? 'S' : 'N'
   // 当前选择的盘口 欧洲盘/香港盘
   const oddfType = !handicapType ? 'H' : handicapType
   const betSubList: Array<any> = []
@@ -202,9 +204,13 @@ export const combosHitParams = (combosMarkets: any) => {
 // 筛选串关投注参数
 export const buyCombosParams = (markets: Array<MarketInfo>, combos: any, { s, t, gold }: any) => {
   const { userConfig } = store.state.user || {}
-  const autoRatio = userConfig.acceptAll === 1 ? 'S' : 'N'
+  // const autoRatio = userConfig.acceptAll === 1 ? 'S' : 'N'
+  const autoOdd = userConfig.acceptAll === 1 ? 'S' : 'N'
+
   const oddChangesState = store.state.betting.oddChangesState || false
-  const autoOdd = oddChangesState ? 'S' : 'N'
+  // const autoOdd = oddChangesState ? 'S' : 'N'
+  const autoRatio = oddChangesState ? 'S' : 'Y'
+
   const betSubList = markets.map((bet: any) => {
     const {
       gidm,
@@ -261,7 +267,6 @@ export const buyCombosParams = (markets: Array<MarketInfo>, combos: any, { s, t,
     autoOdd,
     isCredit: 'N',
     orderSource: 'AI'
-
   }
 }
 
@@ -320,7 +325,7 @@ export const chaiCombos = (betArray: Array<any>, goldDetails = {}) => {
   return chaiComboArray
 }
 
-export const getComboMarkets = (markets:Array<MarketInfo>) => {
+export const getComboMarkets = (markets: Array<MarketInfo>) => {
   const combosMarkets: Array<any> = []
   // 获取不同比赛的投注项
   const onlyBetGidms: Array<any> = []

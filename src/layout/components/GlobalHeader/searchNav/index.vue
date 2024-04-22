@@ -135,9 +135,10 @@ onMounted(async () => {
 })
 
 const sportsList = computed(() => {
-  const sports = store.state.app.sports || []
+  // const sports = store.state.app.sports || []
+  const sports = store.state.match.sportsListArr || []
   const newSportsA = sports.filter((e: any) => {
-    return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.gameCount
+    return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.num * 1
   })
   let newSportsB: any = []
   if (newSportsA.length) {
@@ -145,7 +146,7 @@ const sportsList = computed(() => {
       return {
         value: e.gameType,
         gameType: e.gameType,
-        gameCount: e.gameCount,
+        gameCount: e.num * 1,
         name: 'Sport'
       }
     })

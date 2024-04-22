@@ -7,7 +7,16 @@
       <div class="content">
         <div class="title">
           <SportsIcon class="sport-icon" :icon-src="marketInfo.gameType" />
-          <div class="betting-name text-overflow">{{ marketInfo.ratioName }}</div>
+          <div class="betting-name text-overflow">
+            {{ marketInfo.ratioParams1 || marketInfo.ratioName }}
+            <template v-if="marketInfo.ratioTag">
+              <span class="ratio-tag" :class="marketInfo.ratioChange">
+                {{ marketInfo.ratioTag }}
+              </span>
+              <span class="ratio-change" :class="marketInfo.ratioChange"></span>
+            </template>
+            {{ marketInfo.ratioParams2 }}
+          </div>
         </div>
         <div class="details">
           <div v-if="marketInfo.isChampion" class="play-name text-overflow">{{ marketInfo.championType }}</div>
@@ -226,12 +235,41 @@ defineExpose({
       }
 
       .betting-name {
+        display: flex;
+        align-items: center;
         margin-left: 8px;
         font-family: PingFangSC-Medium;
         font-size: 28px;
         color: rgb(14, 61, 102);
         letter-spacing: 0;
         font-weight: 500;
+        .ratio-tag {
+          margin: 0 8px;
+          &.up {
+            color: #0bba3e;
+          }
+
+          &.down {
+            color: #fb0738;
+          }
+        }
+        .ratio-change {
+          width: 22px;
+          height: 11px;
+          margin-left: 5px;
+          display: inline-block;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+
+          &.up {
+            background-image: url('@/assets/images/betting/up.png');
+          }
+
+          &.down {
+            background-image: url('@/assets/images/betting/down.png');
+          }
+        }
       }
     }
 
@@ -265,11 +303,11 @@ defineExpose({
       font-weight: 600;
 
       &.up {
-        color: #fb0738;
+        color: #0bba3e;
       }
 
       &.down {
-        color: #0bba3e;
+        color: #fb0738;
       }
 
       .ior-change {
@@ -280,7 +318,6 @@ defineExpose({
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
-        transform: rotate(180deg);
 
         &.up {
           background-image: url('@/assets/images/betting/up.png');

@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="good-bg">
-        <div class="title-1">{{ titleX(tableInfo.goodRoadTitle).str1 }}</div>
+        <div class="title-1">{{ getTypeStr }}</div>
         <div class="title-2">x{{ titleX(tableInfo.goodRoadTitle).str2 }}</div>
       </div>
     </div>
@@ -40,6 +40,7 @@ import CurrencyComp from '@/components/Currency/index.vue'
 import { computed, ref } from 'vue'
 import { getBrowserLanguage } from '@/utils'
 import { useI18n } from 'vue-i18n'
+import { getGoodRoadStr } from '@/utils/BaccaratUtils'
 const { t } = useI18n()
 
 const props = defineProps({
@@ -145,6 +146,14 @@ const titleX = (titleX: string) => {
   }
   return titleObj
 }
+
+const getTypeStr = computed(() => {
+  return getGoodRoadStr(
+    props.tableInfo.goodRoadType,
+    props.tableInfo.goodRoadTypeParam1,
+    props.tableInfo.goodRoadTypeParam2
+  )
+})
 
 const brandType = 1
 const goToGame = async () => {

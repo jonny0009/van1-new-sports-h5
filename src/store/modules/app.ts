@@ -2,7 +2,7 @@ import { Module } from 'vuex'
 import { App } from '#/store'
 import localStore from '@/utils/localStore'
 import { businessConfig, merchantConfig, moduleConfig, queryCMerLanguage } from '@/api/auth'
-import { getAllSports, getDoubleLineInfo, getConfig } from '@/api/common'
+import { getAllSports, getDoubleLineInfo, getConfig, getHomeTabsSports } from '@/api/common'
 import { getTheme, setTheme } from '@/utils/auth'
 
 const appModule: Module<App, any> = {
@@ -14,16 +14,20 @@ const appModule: Module<App, any> = {
     queryCMerLanguage: {},
     businessConfig: {},
     merchantConfig: {},
+    homeStyle: 2, // 2经典 1上导航  3双排上导航
     moduleConfig: {},
     doubleLineInfo: {},
     sports: [],
+    homeTabsSports: [],
     globalBarHeaderHeight: 48,
     liveBarHeaderHeight: '50.333vw',
     pictureinpictureGidm: null, // 画中画赛事id
     mantainMsg: null,
     systemTime: null,
     customizeConfig: {},
-    matchLiveIndex: 0
+    matchLiveIndex: 0,
+    showSportsTop: true,
+    bettingSlipState: true
   },
   mutations: {
     SET_THEME: (state, theme: string) => {
@@ -61,6 +65,7 @@ const appModule: Module<App, any> = {
       const res: any = (await merchantConfig()) || {}
       if (res.code === 200) {
         state.merchantConfig = res.data || {}
+        state.homeStyle = res.data?.homeStyle || 2
       }
     },
     async moduleConfig({ state }) {
@@ -74,6 +79,13 @@ const appModule: Module<App, any> = {
       if (res.code === 200) {
         localStore.setItem('sports', res.data)
         state.sports = localStore.getItem('sports')
+      }
+    },
+    async getHomeTabsSports({ state }) {
+      const res: any = (await getHomeTabsSports({ showType: 'FAST' })) || {}
+      if (res.code === 200) {
+        localStore.setItem('homeTabsSports', res.data)
+        state.homeTabsSports = localStore.getItem('homeTabsSports')
       }
     },
     // 获取单双线数据

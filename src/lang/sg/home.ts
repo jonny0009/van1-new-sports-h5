@@ -4,7 +4,7 @@ export default {
   championBetting: '冠軍競猜',
   hotMatch: '熱門賽事',
   goofMatch: '推薦比賽',
-  latestMatch: '早期硬碟',
+  latestMatch: '早盤',
   sport: '體育',
   casino: '賭場',
   lookMoreMatch: '看更多比賽',
@@ -32,6 +32,7 @@ export default {
   up: '上',
   img: '進行中',
   PenaltyKickWar: '點球大戰',
+  addTimeNumber: `加時<span>{number}</span>`,
   live: '直播',
   Sunday: '週日',
   Monday: '週一',
@@ -48,8 +49,10 @@ export default {
   RBSize: '滾球 大小盤',
   RBRide: '滾球 1X2',
   PDscore: '正確比分',
-  addTimeNumber: `加时<span>{number}</span>`,
 
+  hotMatchTitle: '熱播中',
+  comingSoonTitle: '即將播放',
+  shortVideoTitle: '短影片',
   casinoTitleObj: {
     title1: '好路推薦',
     title2: '真人百家樂',
@@ -57,5 +60,29 @@ export default {
     title4: '預計維護倒數計時',
     gohome: '去首頁'
   },
-  Community: '社群'
+  Community: '社群',
+  errorTips: {
+    tips1: '糟了！ 這裡出了點問題',
+    tips2: '抱歉，您的所在地區受到限制',
+    tips3: '網站維護',
+    tips4: '重新開放倒數'
+  },
+  mulBet: '多台下注',
+  baccarat: {
+    连庄: 'B Dragon',
+    单跳: 'PingPong',
+    '{n1}房{n2}厅': '{n1}P{n2}B',
+    双龙汇: '2Dragon',
+    上坡路: 'Uphill',
+    下坡路: 'Downhill',
+    排排连: 'VRow',
+    逢庄连: 'RowB',
+    逢闲连: 'RowP',
+    逢庄跳: 'BHop',
+    逢闲跳: 'PHop',
+    隔连庄: 'Separate B',
+    隔连闲: 'Separate P',
+    双跳: '2PingPong'
+  }
+
 }

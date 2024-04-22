@@ -16,9 +16,10 @@ import {
 import { MarketInfo } from '@/entitys/MarketInfo'
 import { betComboOrder, comboBetting, moreBetting, morePW } from '@/api/betting'
 import lang from '@/lang'
-import { createBetItem, config } from 'xcsport-lib'
+import { createBetItem, lib } from 'xcsport-lib'
 import { accMul, accSubtr, moneyFormat } from '@/utils/math'
-const { letBallMap } = config
+import { getRatioPlay } from '@/utils'
+const { isStrong } = lib
 
 // 投注单store
 const MarketListKey = '_MarketList_'
@@ -308,7 +309,6 @@ const bettingModule: Module<Betting, any> = {
           const oldShowType = bet.showType || bet.showtype
           // 旧的盘口ratio
           const oldRatio = bet.ratio
-          const ratioTag = bet.ratioTag
           // 旧的强弱队strong
           const oldStrong = bet.strong
           const oldGameDate = bet.gameDate
@@ -319,16 +319,21 @@ const bettingModule: Module<Betting, any> = {
             newBetData.ior = eoIor
           }
           const newIor = newBetData.ior * 1 || ior * 1
-          console.log(autoRatio, userConfig.acceptAll, acceptAll, 'autoRatio')
+
           if (oldIor * 1 !== newIor && !autoRatio) {
-            if (oldIor * 1 > newIor) {
+            console.log('oldIor', oldIor)
+            console.log('newIor', newIor)
+            if (oldIor * 1 < newIor) {
               iorChange = 'up'
             } else {
               iorChange = 'down'
             }
           }
-          if (letBallMap.includes(playType) && Math.abs(ratioTag * 1) !== Math.abs(ratio * 1) && !autoOdd) {
-            if (ratioTag * 1 > ratio) {
+          const isRatioPlay = getRatioPlay(bet)
+          if (isRatioPlay && Math.abs(bet.ratio * 1) !== Math.abs(ratio * 1) && !autoOdd) {
+            console.log('old', bet.ratio)
+            console.log('new', ratio)
+            if (bet.ratio * 1 < ratio) {
               ratioChange = 'up'
             } else {
               ratioChange = 'down'
@@ -385,7 +390,15 @@ const bettingModule: Module<Betting, any> = {
            * 需要克隆新的对象,防止createBetItem污染原来的字段,因为createBetItem不是一个纯函数
            */
           const copyBet = JSON.parse(JSON.stringify(replaceBet))
-          replaceBet.betItem = createBetItem(copyBet, 2)
+          replaceBet.betItem = createBetItem(copyBet)
+          const getRatioPlayInfo = getRatioPlay(copyBet)
+          if (getRatioPlayInfo) {
+            const { ratioParams1, ratioParams2, ratioTag } = getRatioPlayInfo
+            replaceBet.ratioTag = ratioTag
+            replaceBet.ratioParams1 = ratioParams1
+            replaceBet.ratioParams2 = ratioParams2
+          }
+
           return replaceBet
         }
         return bet

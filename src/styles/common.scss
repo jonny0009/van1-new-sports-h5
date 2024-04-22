@@ -183,6 +183,15 @@ img:not([src]) {
   word-wrap: normal;
   word-break: normal;
 }
+.text-overflow-2 {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: normal;
+  word-break: normal;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
 
 .animate__animated {
   animation-duration: 1s;

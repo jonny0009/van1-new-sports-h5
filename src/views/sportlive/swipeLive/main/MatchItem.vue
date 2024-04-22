@@ -1,6 +1,12 @@
 <template>
   <div class="match-item-wrap" :style="{ backgroundImage: `url(${cover})` }">
-    <video-box v-if="showVideoBox" :live-url="liveInfo.m3u8 || liveInfo.url" :controls="false" @refresh="refresh" />
+    <video-box
+      v-if="showVideoBox"
+      :live-url="m3u8Str || liveInfo.url"
+      :live-info="liveInfo"
+      :controls="false"
+      @refresh="refresh"
+    />
     <div class="video-footer">
       <SportsIcon class="SportsIcon" :icon-src="liveInfo.gameType" />
       <div class="leagueName text-overflow">
@@ -14,9 +20,10 @@
 <script lang="ts" setup>
 import { useMatch } from '@/utils/useMatch'
 const setMatch: any = useMatch()
-import VideoBox from './child/VideoBox'
+import VideoBox from './child/VideoBox.vue'
 import coverFt from './child/assets/ft.jpg'
 import { ref, computed, watch, onBeforeMount, nextTick } from 'vue'
+import { extendInfo } from '@/api/live'
 
 const props = defineProps({
   liveInfo: {
@@ -47,6 +54,28 @@ watch(
     }
   }
 )
+watch(
+  () => props.liveInfo.gidm,
+  () => {
+    getVideoInfo()
+  }
+)
+
+onBeforeMount(() => {
+  getVideoInfo()
+})
+const m3u8Str = ref('')
+const getVideoInfo = async () => {
+  const gidm = props.liveInfo.gidm
+  const extendInfoRes: any = await extendInfo({ gidm })
+  if (extendInfoRes.code === 200) {
+    const { streamNa }: any = extendInfoRes.data
+    const { liveali, live } = streamNa || {}
+    const { m3u8 } = liveali || live || {}
+    m3u8Str.value = props.liveInfo.m3u8 || m3u8
+  }
+}
+
 const showVideoBox = ref(false)
 const refresh = () => {
   showVideoBox.value = false
