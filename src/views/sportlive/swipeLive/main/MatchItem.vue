@@ -3,7 +3,7 @@
     <video-box
       v-if="showVideoBox"
       :live-url="m3u8Str || liveInfo.url"
-      :liveInfo="liveInfo"
+      :live-info="liveInfo"
       :controls="false"
       @refresh="refresh"
     />

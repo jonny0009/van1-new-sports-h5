@@ -54,27 +54,9 @@ const swipeChange = (index: any) => {
   activeIndex.value = index
 }
 
-const timer: any = ref()
-onUnmounted(() => {
-  clearInterval(timer.value)
-})
-onDeactivated(() => {
-  clearInterval(timer.value)
-})
-onActivated(() => {
-  clearInterval(timer.value)
-  console.log(1234)
-  timer.value = setInterval(() => {
-    init()
-  }, 15 * 1000)
-})
-
 onBeforeMount(() => {
   swipeList.value.length = 0
   init()
-  timer.value = setInterval(() => {
-    init()
-  }, 10 * 1000)
 })
 </script>
 <style lang="scss" scoped>

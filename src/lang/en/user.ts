@@ -16,7 +16,7 @@ export default {
   Balls: 'Balls',
   whole: 'All',
   BettingAmount: 'Bet Amount',
-  CompensableAmount: 'Compensable Amount',
+  CompensableAmount: 'Pay out',
   OrderID: 'Bet Id',
   BettingTime: 'Betting Time',
   SettlementTime: 'Settlement Time',
@@ -126,7 +126,7 @@ export default {
   noDataRelated: 'No Relevant Data Found',
   // 新增6
   fontNickName: 'Nicknames can only be edited once and cannot be duplicated or contain illegal characters with others',
-  aheadFinal: 'Advance settlement',
+  aheadFinal: 'Cash out',
   // 新增7
   contactUs: 'Contact Us',
   type: 'Type',
