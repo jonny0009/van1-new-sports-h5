@@ -2,9 +2,9 @@
   <div id="main">
     <GlobalHeader v-if="!$route.meta.hideGlobalHeaderView" @betShow="betShow" />
     <GlobalRefresh>
-      <DoubleRowNav v-if="homeStyle === 3" />
+      <DoubleRowNav v-if="homeStyle === 3" @tabChangeValue="tabChangeValue" />
       <GlobalSportsTabsView
-        v-if="$route.meta.showSportsTabsView && homeStyle !== 2 && showSportsTop"
+        v-if="$route.meta.showSportsTabsView && homeStyle !== 2 && tabValue"
         :class="{
           slideRight: slideValue === 1,
           slideLeft: slideValue === 2,
@@ -13,7 +13,7 @@
       />
       <TopSportsTabs v-if="$route.meta.showSportsTabsView && homeStyle === 2" />
       <GlobalBarTabsView
-        v-if="$route.meta.showBarTabsView"
+        v-if="$route.meta.showBarTabsView && tabValue"
         class="pb5 pt15"
         :class="{
           slideRight: slideValue === 1,
@@ -24,7 +24,7 @@
       <AppMain ref="appContent" />
     </GlobalRefresh>
     <BettingSlip v-if="betShowState && !$route.meta.hideGlobalBottomBet" ref="bettingSlip" />
-    <GlobalFooter v-if="homeStyle === 1" @valueChange="betShow" />
+    <GlobalFooter v-if="homeStyle === 1" @valueChange="betShow" @tabChangeValue="tabChangeValue" />
     <van-back-top
       v-if="backTopShow"
       bottom="100"
@@ -64,11 +64,12 @@ const betShowState: any = ref(!unShow.value.includes(route.name))
 
 const scrollNum = computed(() => store.state.user.scrollNumY)
 const homeStyle = computed(() => store.state.app.homeStyle)
-const showSportsTop = computed(() => store.state.app.showSportsTop)
+// const showSportsTop = computed(() => store.state.app.showSportsTop)
 const locationHeight = computed(() => store.state.user.locationHeight)
 const KeepAlive = computed(() => currentRoute.value.meta.KeepAlive)
 const pageIndex: any = computed(() => currentRoute.value.meta.index)
 const slideValue: any = ref(0)
+const tabValue: any = ref(true)
 
 // 获取的体育项
 const sportsListArr = computed(() => store.state.match.sportsListArr)
@@ -94,9 +95,40 @@ const bettingSlip = ref()
 const activeUrl = computed(() => {
   const routerName: any = router?.currentRoute?.value?.name || ''
   const routerNameToLowerCase = routerName.toLowerCase()
+  if (routerNameToLowerCase === 'home') {
+    tabValue.value = true
+  } else {
+    tabValue.value = false
+  }
   const isrouterNameToLowerCase = ['casino'].includes(routerNameToLowerCase)
   return isrouterNameToLowerCase
 })
+
+// 监听tab变化
+const tabChangeValue = (val?: any) => {
+  router.push(`/` + val)
+  let noSportsNum = 0
+  if (val === 'match') {
+    noSportsNum = 65
+  }
+  if (val === 'casino') {
+    noSportsNum = 66
+  }
+  if (noSportsNum > indexNum.value) {
+    appContent.value.transitionName = 'fade-right'
+    indexNum.value = noSportsNum
+    slideValue.value = 1
+  } else {
+    appContent.value.transitionName = 'fade-left'
+    indexNum.value = noSportsNum
+    slideValue.value = 2
+  }
+  if (val === 'home') {
+    tabValue.value = true
+  } else {
+    tabValue.value = false
+  }
+}
 
 watch(
   () => route.path,
@@ -119,13 +151,23 @@ watch(
       }
       return
     }
-    if ((homeStyle.value !== 2 && to === '/match') || to === '/casino') {
+    if ((homeStyle.value !== 2 && to === '/match') || to === '/casino' || to === '/home') {
       let noSportsNum = 0
+      if (to === '/home') {
+        if (indexNum.value === 65 || indexNum.value === 66) {
+          slideValue.value = 2
+        }
+        appContent.value.transitionName = 'fade-left'
+        indexNum.value = pageIndex.value
+        return
+      }
       if (to === '/match') {
-        noSportsNum = 65
+        // noSportsNum = 65
+        return
       }
       if (to === '/casino') {
-        noSportsNum = 66
+        // noSportsNum = 66
+        return
       }
       if (noSportsNum > indexNum.value) {
         appContent.value.transitionName = 'fade-right'
