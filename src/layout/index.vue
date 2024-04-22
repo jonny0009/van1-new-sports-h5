@@ -118,23 +118,28 @@ const tabChangeValue = (val?: any) => {
   if (noSportsNum > indexNum.value) {
     appContent.value.transitionName = 'fade-right'
     indexNum.value = noSportsNum
-    slideValue.value = 1
   } else {
     appContent.value.transitionName = 'fade-left'
     indexNum.value = noSportsNum
     slideValue.value = 2
   }
-  if (val === 'home') {
-    tabValue.value = true
-  } else {
-    tabValue.value = false
-  }
+  // if (val === 'home') {
+  //   tabValue.value = true
+  // } else {
+  //   tabValue.value = false
+  // }
 }
 
 watch(
   () => route.path,
   (to) => {
     console.log('path', to)
+    if ((homeStyle.value !== 2 && to === '/match') || (to === '/casino' && homeStyle.value !== 2)) {
+      tabValue.value = false
+      slideValue.value = 1
+    } else {
+      tabValue.value = true
+    }
     const obj = sportsList.value.find((item: any) => {
       if (item.routerPath === to) {
         return item
