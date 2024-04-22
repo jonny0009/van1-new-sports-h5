@@ -152,7 +152,11 @@ watch(
       }
       return
     }
-    if ((homeStyle.value !== 2 && to === '/match') || to === '/casino' || to === '/home') {
+    if (
+      (homeStyle.value !== 2 && to === '/match') ||
+      (to === '/casino' && homeStyle.value !== 2) ||
+      (to === '/home' && homeStyle.value !== 2)
+    ) {
       let noSportsNum = 0
       if (to === '/home') {
         if (indexNum.value === 65 || indexNum.value === 66) {
