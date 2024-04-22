@@ -262,6 +262,8 @@ const initVideo = () => {
   })
 }
 const disposePlayer = () => {
+  console.log(13)
+  player && player.paused()
   player && player.dispose()
   player = null
 }
