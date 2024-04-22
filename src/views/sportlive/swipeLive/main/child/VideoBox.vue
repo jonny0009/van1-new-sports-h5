@@ -72,7 +72,7 @@ const props: any = defineProps({
 
 const videoExample: any = ref(null)
 const videoErrorState: any = ref(false)
-const muted = ref(true)
+const muted = ref(false)
 const tocuhState = ref(false)
 
 watch(turnSound, (newValue, oldValue) => {
