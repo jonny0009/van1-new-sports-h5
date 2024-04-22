@@ -169,6 +169,7 @@ watch(
 )
 
 onMounted(() => {
+  indexNum.value = 0
   window.addEventListener('scroll', handleScroll)
   if (homeStyle.value !== 2 && activeUrl.value) {
     indexNum.value = 66
