@@ -7,7 +7,8 @@
         v-if="$route.meta.showSportsTabsView && homeStyle !== 2 && showSportsTop"
         :class="{
           slideRight: slideValue === 1,
-          slideLeft: slideValue === 2
+          slideLeft: slideValue === 2,
+          slideCenterShow: slideValue === 0
         }"
       />
       <TopSportsTabs v-if="$route.meta.showSportsTabsView && homeStyle === 2" />
@@ -16,7 +17,8 @@
         class="pb5 pt15"
         :class="{
           slideRight: slideValue === 1,
-          slideLeft: slideValue === 2
+          slideLeft: slideValue === 2,
+          slideCenterShow: slideValue === 0
         }"
       />
       <AppMain ref="appContent" />
@@ -273,6 +275,9 @@ const backTopShow = computed(() => {
   }
 }
 // 首页导航动画
+.slideCenterShow {
+  transform: translateX(0);
+}
 .slideRight {
   animation-name: slideInFromRight;
   animation-duration: 0.2s;
