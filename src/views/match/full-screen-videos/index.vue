@@ -21,7 +21,7 @@
         @swiper="setControlledSwiper"
       >
         <swiper-slide class="slide-box" v-for="(video, index) in shortVideos" :key="video.videoId">
-          <video-info :videoInfo="video" :active="curIndex === index" @close="close"></video-info>
+          <video-info :show="fullState" :videoInfo="video" :active="curIndex === index" @close="close"></video-info>
         </swiper-slide>
       </swiper>
       <BettingSlip

@@ -94,12 +94,16 @@ const props = defineProps({
   active: {
     type: Boolean,
     default: false
+  },
+  show: {
+    type: Boolean,
+    default: false
   }
 })
 watch(
   () => props.active,
   async () => {
-    if (props.active) {
+    if (props.active && props.show) {
       if (player) {
         player && player.play()
       } else {
@@ -180,7 +184,7 @@ const getMainMatches = async () => {
 }
 
 onMounted(() => {
-  if (props.active) {
+  if (props.active && props.show) {
     initVideo()
     getMainMatches()
   }

@@ -221,6 +221,11 @@ const onLoad = async () => {
   }
 }
 const onChangeTabs = () => {
+  if (navActive.value.includes('RB')) {
+    activeNames.value = ['HOT', 'ComingSoon', 'VIDEO']
+  } else {
+    activeNames.value = ['HOT']
+  }
   onRefresh()
 }
 
@@ -290,7 +295,7 @@ const videoLoading = ref(true)
 const videoTotol = ref(0)
 const params1 = ref({
   page: 0,
-  pageSize: 10
+  pageSize: 20
 })
 const getShortVideos = async () => {
   videoLoading.value = true
