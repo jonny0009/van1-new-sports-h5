@@ -14,7 +14,6 @@ import MatchItem from './main/MatchItem.vue'
 import { anchorLiveList, extendInfo } from '@/api/live'
 import { ref, onBeforeMount } from 'vue'
 
-
 const activeIndex = ref(0)
 const swipeList: any = ref([])
 
@@ -22,7 +21,8 @@ const init = async () => {
   const params = {
     page: 1,
     pageSize: 5,
-    rbType: 1
+    rbType: 1,
+    filterFlag: 2
   }
   const res: any = await anchorLiveList(params)
   if (res.code === 200) {
