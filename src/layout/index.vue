@@ -96,10 +96,10 @@ const bettingSlip = ref()
 const activeUrl = computed(() => {
   const routerName: any = router?.currentRoute?.value?.name || ''
   const routerNameToLowerCase = routerName.toLowerCase()
-  if (routerNameToLowerCase === 'home') {
-    tabValue.value = true
-  } else {
+  if (routerNameToLowerCase === 'match' || routerNameToLowerCase === 'casino') {
     tabValue.value = false
+  } else {
+    tabValue.value = true
   }
   const isrouterNameToLowerCase = ['casino'].includes(routerNameToLowerCase)
   return isrouterNameToLowerCase
