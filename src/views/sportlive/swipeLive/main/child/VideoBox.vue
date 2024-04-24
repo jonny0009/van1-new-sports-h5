@@ -27,7 +27,7 @@
     >
       <van-loading class="popBg-loading" />
     </div>
-    <div v-if="tocuhState" class="touch-pop">
+    <div v-if="touchState" class="touch-pop">
       <div class="team-info">
         <div class="team-item">
           <img v-img="liveInfo.homeLogo" :type="4" style="object-fit: contain" alt="" />
@@ -73,7 +73,7 @@ const props: any = defineProps({
 const videoExample: any = ref(null)
 const videoErrorState: any = ref(false)
 const muted = ref(false)
-const tocuhState = ref(false)
+const touchState = ref(false)
 
 watch(turnSound, (newValue, oldValue) => {
   console.log(`turnSound发生变化，新值为：${newValue}，旧值为：${oldValue}`)
@@ -87,7 +87,7 @@ watch(turnSound, (newValue, oldValue) => {
 })
 
 const touch = () => {
-  tocuhState.value = !tocuhState.value
+  touchState.value = !touchState.value
 }
 const goDetails = () => {
   if (!props.liveInfo) {
