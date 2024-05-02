@@ -241,7 +241,8 @@ async function setPk(val: any) {
 
   .pk-list {
     padding-top: 30px;
-
+    max-height: 600px;
+    overflow: auto;
     .item {
       font-size: 26px;
       color: var(--color-user-pop-up-text-color);
