@@ -39,7 +39,8 @@ export function useBetting(flag: any) {
       const res: any = await playGroup({ gameType })
       const data = res.data || {}
       if (res.code === 200) {
-        const patternList = data[FORMAT_TYPE[formatType]]
+        const patternList = data[FORMAT_TYPE[formatType || 1]]
+        console.log('patternList值是否为空为空会出错', patternList)
         playGroupBetList.value = patternList
 
         firstState.value = false
@@ -53,8 +54,11 @@ export function useBetting(flag: any) {
   const currentGroupPlay = ref([])
   const findGroupById = (id: string) => {
     selectId.value = id
+    console.log(playGroupBetList.value, '----', id)
     const currentGroup = playGroupBetList.value?.find((m: any) => m.id?.toString() === selectId.value)
-    currentGroupPlay.value = currentGroup?.playData
+    console.log(currentGroup, 'currentGroup')
+    currentGroupPlay.value = currentGroup?.playData || []
+    console.log(currentGroupPlay.value)
     getBettingData()
   }
 
@@ -105,9 +109,7 @@ export function useBetting(flag: any) {
 
       const noExist = ['HDNB2', 'HDNB', 'HTS2', 'HW3', 'W3', 'W3_conner', 'PD_conner', 'HT_conner', 'T_conner']
       const playDataListNew = playDataList.filter((item) => !noExist.includes(item.playType))
-
       const betPlayTypeSort = playTypeSort(playDataListNew, currentGroupPlay.value || [])
-
       const betPlayRatioSort = playRatioSort(betPlayTypeSort)
       const betPlayMergeList = playTypeMerge(betPlayRatioSort, 'typeTemp')
 
@@ -129,8 +131,7 @@ export function useBetting(flag: any) {
         name: row.name,
         groupType: row.groupType,
         playData: row.playData,
-        count: uniqueArray.length,
-        playDataList
+        playDataList: playTypeSort(dataList, row.playData || [])
       }
       groupPlayList.push(rowResult)
     })

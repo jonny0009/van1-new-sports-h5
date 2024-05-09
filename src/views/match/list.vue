@@ -22,13 +22,13 @@
           <van-collapse v-model="activeNames">
             <!-- 热门视频 -->
             <van-collapse-item
+              v-if="!['SORTVIDEO'].includes(navActive)"
               :is-link="false"
               class="collapse-item"
               name="HOT"
-              v-if="!['SORTVIDEO'].includes(navActive)"
             >
               <template #title>
-                <div class="title-group" v-if="nav.type === 'RB'">
+                <div v-if="nav.type === 'RB'" class="title-group">
                   <SvgIcon class="first-icon" name="home-hot-match" />
                   <span class="title">{{ $t('home.hotMatchTitle') }}</span>
                   <SvgIcon class="title-icon" name="home-triangle" :class="{ open: activeNames.includes('HOT') }" />
@@ -53,10 +53,10 @@
 
             <!-- 即将播放 -->
             <van-collapse-item
+              v-if="comingSoonList.length && nav.type === 'RB'"
               :is-link="false"
               class="collapse-item"
               name="ComingSoon"
-              v-if="comingSoonList.length && nav.type === 'RB'"
             >
               <template #title>
                 <div class="title-group">
@@ -79,10 +79,10 @@
 
             <!-- 短视频 -->
             <van-collapse-item
+              v-if="['RB'].includes(navActive) && nav.type === 'RB'"
               :is-link="false"
               class="collapse-item"
               name="VIDEO"
-              v-if="['RB'].includes(navActive) && nav.type === 'RB'"
             >
               <template #title>
                 <div class="title-group">
@@ -93,17 +93,17 @@
               </template>
 
               <van-list
+                v-if="videoLoading || shortVideos.length"
                 v-model:loading="videoLoading"
                 :finished="params1.page * params1.pageSize >= videoTotol && !videoLoading"
                 :finished-text="shortVideos.length == 0 ? '' : $t('live.noMore')"
-                @load="getShortVideos"
                 class="list-group"
-                v-if="videoLoading || shortVideos.length"
+                @load="getShortVideos"
               >
                 <div
-                  class="group-item-box"
                   v-for="(video, index) in shortVideos"
                   :key="index"
+                  class="group-item-box"
                   @click="selectVideo(video)"
                 >
                   <img v-img="video.videoImg" class="bg" :errorImg="liveBgError" type="1" alt="" />
@@ -122,7 +122,7 @@
             <!-- 短视频 -->
             <ShortVideo
               v-if="['SORTVIDEO'].includes(navActive) && nav.type === 'SORTVIDEO' && !refreshing"
-              :shortVideos="shortVideos"
+              :short-videos="shortVideos"
               @selectVideo="selectVideo"
             ></ShortVideo>
           </van-collapse>
@@ -130,7 +130,7 @@
       </van-tabs>
     </van-pull-refresh>
 
-    <full-screen-videos ref="FullScreenVideosRef" :shortVideos="shortVideos"></full-screen-videos>
+    <full-screen-videos ref="FullScreenVideosRef" :short-videos="shortVideos"></full-screen-videos>
   </div>
 </template>
 
@@ -144,10 +144,12 @@ import { useI18n } from 'vue-i18n'
 import store from '@/store'
 import liveBgError from '@/assets/images/empty/live-bg-error.svg?url'
 import FullScreenVideos from './full-screen-videos/index.vue'
+
 onBeforeMount(() => {
   onRefresh()
 })
 
+const controller = new AbortController()
 const FullScreenVideosRef = ref()
 const activeNames = ref(['HOT', 'ComingSoon', 'VIDEO'])
 const showFixedBet = computed(() => store.state.app.showFixedBet)
@@ -156,6 +158,7 @@ const navList = reactive([
   { type: 'RB', title: t('live.hot'), iconName: 'live-hot' },
   { type: 'FT', title: t('live.football'), iconName: 'live-football' },
   { type: 'BK', title: t('live.basketball'), iconName: 'live-basketball' },
+  { type: 'BS', title: t('sport.sports.BS'), iconName: 'live-basketball' },
   { type: 'TN', title: t('live.tennisball'), iconName: 'live-tennisball' },
   { type: 'OP_BM', title: t('live.badminton'), iconName: 'live-badminton' },
   { type: 'SORTVIDEO', title: t('home.shortVideoTitle'), iconName: 'live-badminton' }
@@ -221,6 +224,7 @@ const onLoad = async () => {
   }
 }
 const onChangeTabs = () => {
+  controller.abort()
   if (navActive.value.includes('RB')) {
     activeNames.value = ['HOT', 'ComingSoon', 'VIDEO']
   } else {

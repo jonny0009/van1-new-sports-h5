@@ -24,7 +24,8 @@ const init = async () => {
   const params = {
     page: 1,
     pageSize: 5,
-    rbType: 1
+    rbType: 1,
+    filterFlag: 2
   }
   const res: any = await anchorLiveList(params)
   if (res.code === 200) {
