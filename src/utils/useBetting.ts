@@ -106,7 +106,7 @@ export function useBetting(flag: any) {
       const noExist = ['HDNB2', 'HDNB', 'HTS2', 'HW3', 'W3', 'W3_conner', 'PD_conner', 'HT_conner', 'T_conner']
       const playDataListNew = playDataList.filter((item) => !noExist.includes(item.playType))
 
-      const betPlayTypeSort = playTypeSort(playDataListNew, currentGroupPlay.value)
+      const betPlayTypeSort = playTypeSort(playDataListNew, currentGroupPlay.value || [])
 
       const betPlayRatioSort = playRatioSort(betPlayTypeSort)
       const betPlayMergeList = playTypeMerge(betPlayRatioSort, 'typeTemp')
@@ -121,7 +121,7 @@ export function useBetting(flag: any) {
     const groupRow = toRaw(playGroupBetList.value) || []
     let groupPlayList: any[] = []
     groupRow.forEach((row: any) => {
-      const playDataList = playTypeSort(dataList, row.playData)
+      const playDataList = playTypeSort(dataList, row.playData || [])
       const playDataListPlays = playDataList.map((playInfo: any) => playInfo.typeTemp)
       const uniqueArray = [...new Set(playDataListPlays)]
       const rowResult = {

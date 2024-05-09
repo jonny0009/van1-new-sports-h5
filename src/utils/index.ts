@@ -325,9 +325,9 @@ export const getRatioPlay = (betInfo: any) => {
     regStr = ratio1 || ratio
   }
 
-  const regStrSplit = regStr.split('{ratio}')
+  const regStrSplit = regStr?.split('{ratio}')
 
-  if (regStrSplit.length > 1) {
+  if (regStrSplit?.length > 1) {
     const [params1, params2] = regStrSplit
     const ratioTag = isStrong(betInfo)
     let ratioParams1 = ''

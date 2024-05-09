@@ -8,7 +8,7 @@
         <div class="title">
           <SportsIcon class="sport-icon" :icon-src="marketInfo.gameType" />
           <div class="betting-name text-overflow">
-            {{ marketInfo.ratioParams1 || marketInfo.ratioName }}
+            {{ marketInfo.ratioParams1 || marketInfo.betItem }}
             <template v-if="marketInfo.ratioTag">
               <span class="ratio-tag" :class="marketInfo.ratioChange">
                 {{ marketInfo.ratioTag }}

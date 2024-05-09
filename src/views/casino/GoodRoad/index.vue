@@ -2,9 +2,16 @@
   <section class="good-road-view">
     <div class="title">
       <span>{{ $t('home.casinoTitleObj.title1') }}</span>
-      <div class="multiple-units" @click="goodRoadShow">
-        <span class="units-icon"></span>
-        <span class="units-title">{{ $t("home.mulBet") }}</span>
+
+      <div class="btns">
+        <div class="multiple-units" @click="miTablesShow">
+          <span class="units-icon"></span>
+          <span class="units-title">{{ $t('home.miBet') }}</span>
+        </div>
+        <div class="multiple-units" @click="goodRoadShow">
+          <span class="units-icon"></span>
+          <span class="units-title">{{ $t('home.mulBet') }}</span>
+        </div>
       </div>
     </div>
     <Loading v-if="loading" />
@@ -71,6 +78,35 @@ const goodRoadShow = async () => {
     url.value = `${gameUrl}&language=${lang}#/multiple`
   }
 }
+const miTablesShow = async () => {
+  show.value = !show.value
+  const params = {
+    supplierId: 'aigame',
+    gameKey: 'VIR_BAC',
+    openType: 2,
+    dirType: 1,
+    appType: 2
+  }
+  showLoadingToast({
+    duration: 20000,
+    message: t('home.loading')
+  })
+  const gres: any = await getBJGameUrl(params).finally(() => {
+    closeToast()
+  })
+
+  if (!baccaratUtils.value) {
+    baccaratUtils.value = new BaccaratUtils(iframeRef.value, () => {
+      show.value = false
+    })
+  }
+
+  if (gres?.code === 200) {
+    const lang = localStorage.getItem('locale') || getBrowserLanguage()
+    const gameUrl = gres.data['url'].replace('&isAi=1', '')
+    url.value = `${gameUrl}&language=${lang}#/multiple`
+  }
+}
 </script>
 <style lang="scss" scoped>
 .good-road-view {
@@ -84,15 +120,22 @@ const goodRoadShow = async () => {
     font-size: 32px;
     font-weight: 600;
   }
-
+  .btns {
+    display: flex;
+    align-items: center;
+  }
   .multiple-units {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 300px;
+    width: 200px;
     height: 68px;
     background-color: rgb(72, 141, 210);
     border-radius: 8px;
+
+    &:first-child {
+      margin-right: 20px;
+    }
 
     .units-icon {
       display: inline-block;

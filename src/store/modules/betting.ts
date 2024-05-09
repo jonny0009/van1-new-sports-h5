@@ -391,6 +391,7 @@ const bettingModule: Module<Betting, any> = {
            */
           const copyBet = JSON.parse(JSON.stringify(replaceBet))
           replaceBet.betItem = createBetItem(copyBet)
+          replaceBet.ratioName = replaceBet.betItem
           const getRatioPlayInfo = getRatioPlay(copyBet)
           if (getRatioPlayInfo) {
             const { ratioParams1, ratioParams2, ratioTag } = getRatioPlayInfo
