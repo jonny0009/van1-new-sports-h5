@@ -70,6 +70,7 @@ export default {
     tips3: 'Trang web đang được bảo trì',
     tips4: 'Đếm ngược đến ngày mở cửa trở lại'
   },
+  miBet: '私人咪牌桌',
   mulBet: 'Cược nhiều',
   baccarat: {
     连庄: 'B Dragon',

@@ -68,6 +68,7 @@ export default {
     tips3: 'Site em manutenção',
     tips4: 'Contagem regressiva para reabertura'
   },
+  miBet: '私人咪牌桌',
   mulBet: 'Aposta Múltipla',
   baccarat: {
     连庄: 'B Dragon',

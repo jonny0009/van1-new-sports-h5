@@ -104,7 +104,7 @@ const miTablesShow = async () => {
   if (gres?.code === 200) {
     const lang = localStorage.getItem('locale') || getBrowserLanguage()
     const gameUrl = gres.data['url'].replace('&isAi=1', '')
-    url.value = `${gameUrl}&language=${lang}#/multiple`
+    url.value = `${gameUrl}&language=${lang}`
   }
 }
 </script>
@@ -139,17 +139,18 @@ const miTablesShow = async () => {
 
     .units-icon {
       display: inline-block;
-      width: 42px;
+      width: 28px;
       height: 28px;
       background-repeat: no-repeat;
       background-size: contain;
+      background-position: center;
       background-image: url(@/assets/images/home/casino/multiple.png);
     }
 
     .units-title {
       margin-left: 5px;
       margin-bottom: 4px;
-      font-size: 28px;
+      font-size: 25px;
       color: #fff;
     }
   }

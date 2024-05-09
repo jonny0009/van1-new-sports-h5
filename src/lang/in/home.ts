@@ -68,6 +68,7 @@ export default {
     tips3: 'वेबसाइट रखरखाव के अधीन',
     tips4: 'फिर से खुलने की उलटी गिनती'
   },
+  miBet: '私人咪牌桌',
   mulBet: 'मल्टीपल बेट',
   baccarat: {
     连庄: 'B Dragon',

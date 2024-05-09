@@ -69,6 +69,7 @@ export default {
     tips3: 'ウェブサイトはメンテナンス中です',
     tips4: '再開までのカウントダウン'
   },
+  miBet: '私人咪牌桌',
   mulBet: '複数ベット',
   baccarat: {
     连庄: 'B Dragon',

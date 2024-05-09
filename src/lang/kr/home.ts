@@ -70,6 +70,7 @@ export default {
     tips3: '웹사이트 유지보수 중',
     tips4: '재개장 카운트다운'
   },
+  miBet: '私人咪牌桌',
   mulBet: '멀티배팅',
   baccarat: {
     连庄: 'B Dragon',
@@ -87,5 +88,4 @@ export default {
     隔连闲: 'Separate P',
     双跳: '2PingPong'
   }
-
 }

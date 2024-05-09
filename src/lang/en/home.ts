@@ -67,6 +67,7 @@ export default {
     tips3: 'Website under maintenance',
     tips4: 'Countdown to reopening'
   },
+  miBet: '私人咪牌桌',
   mulBet: 'Multiple betting',
   baccarat: {
     连庄: '连庄',
@@ -82,6 +83,6 @@ export default {
     逢闲跳: '逢闲跳',
     隔连庄: '隔连庄',
     隔连闲: '隔连闲',
-    双跳: '双跳',
+    双跳: '双跳'
   }
 }
