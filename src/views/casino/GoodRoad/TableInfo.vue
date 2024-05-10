@@ -209,8 +209,8 @@ const getLang = () => {
       margin: auto;
       z-index: 1;
       right: 16px;
-      width: 120px;
-      height: 120px;
+      width: 112.5px;
+      height: 112.5px;
       background-repeat: no-repeat;
       background-size: contain;
       background-image: url(@/assets/images/casino/road-bg.png);

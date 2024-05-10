@@ -69,7 +69,7 @@ export default {
     tips3: '网站维护中',
     tips4: '重新开放倒数'
   },
-  miBet: 'Private table',
+  miBet: '私人咪牌桌',
   mulBet: '多台下注',
   baccarat: {
     连庄: '连庄',
