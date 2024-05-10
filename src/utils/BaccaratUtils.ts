@@ -1,7 +1,14 @@
 import lang from '@/lang'
+
+export interface BaccaratUtilsOptions {
+  handleClose: Function
+  handleUpdateBalance: (balance: number) => void
+}
+
 export class BaccaratUtils {
   iframe?: HTMLIFrameElement | any
-  constructor(dom: HTMLIFrameElement, handleClose: Function) {
+  constructor(dom: HTMLIFrameElement, options: BaccaratUtilsOptions) {
+    const { handleClose, handleUpdateBalance } = options
     if (dom) {
       this.iframe = dom
     }
@@ -12,6 +19,8 @@ export class BaccaratUtils {
         // 关闭游戏
         if (type == 'close') {
           handleClose?.()
+        } else if (type == 'updateBalance') {
+          handleUpdateBalance?.(data)
         }
       },
       false

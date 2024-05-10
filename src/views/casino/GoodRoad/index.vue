@@ -5,7 +5,7 @@
 
       <div class="btns">
         <div class="multiple-units" @click="miTablesShow">
-          <span class="units-icon"></span>
+          <span class="units-icon mi-bet"></span>
           <span class="units-title">{{ $t('home.miBet') }}</span>
         </div>
         <div class="multiple-units" @click="goodRoadShow">
@@ -33,6 +33,7 @@ import { closeToast, showLoadingToast } from 'vant'
 import { getBrowserLanguage } from '@/utils'
 import { BaccaratUtils } from '@/utils/BaccaratUtils'
 import { useI18n } from 'vue-i18n'
+import store from '@/store'
 const { t } = useI18n()
 
 defineProps({
@@ -49,6 +50,12 @@ const show = ref(false)
 const iframeRef = ref()
 const baccaratUtils = ref()
 const url = ref('')
+const handleClose: any = () => {
+  show.value = false
+}
+const handleUpdateBalance = () => {
+  store.dispatch('user/getCurrency')
+}
 const goodRoadShow = async () => {
   show.value = !show.value
   const params = {
@@ -67,9 +74,7 @@ const goodRoadShow = async () => {
   })
 
   if (!baccaratUtils.value) {
-    baccaratUtils.value = new BaccaratUtils(iframeRef.value, () => {
-      show.value = false
-    })
+    baccaratUtils.value = new BaccaratUtils(iframeRef.value, { handleClose, handleUpdateBalance })
   }
 
   if (gres?.code === 200) {
@@ -96,9 +101,7 @@ const miTablesShow = async () => {
   })
 
   if (!baccaratUtils.value) {
-    baccaratUtils.value = new BaccaratUtils(iframeRef.value, () => {
-      show.value = false
-    })
+    baccaratUtils.value = new BaccaratUtils(iframeRef.value, { handleClose, handleUpdateBalance })
   }
 
   if (gres?.code === 200) {
@@ -145,11 +148,14 @@ const miTablesShow = async () => {
       background-size: contain;
       background-position: center;
       background-image: url(@/assets/images/home/casino/multiple.png);
+
+      &.mi-bet {
+        background-image: url(@/assets/images/home/casino/mi.svg);
+      }
     }
 
     .units-title {
       margin-left: 5px;
-      margin-bottom: 4px;
       font-size: 25px;
       color: #fff;
     }

@@ -60,7 +60,8 @@ const getList = async () => {
 
   const datas: any[] = res?.data || []
   if (datas && datas.length) {
-    list.value = datas.slice(0, 2)
+    const listArg = datas.filter((i: any) => i.goodRoadType !== 4)
+    list.value = listArg.slice(0, 2)
   }
 }
 

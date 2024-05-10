@@ -68,8 +68,8 @@ export default {
     tips3: 'Situs web sedang dalam pemeliharaan',
     tips4: 'Hitung mundur menuju pembukaan kembali'
   },
-  miBet: '私人咪牌桌',
-  mulBet: 'Taruhan Berganda',
+  miBet: 'Private table',
+  mulBet: 'Multi betting',
   baccarat: {
     连庄: 'B Dragon',
     单跳: 'PingPong',

@@ -66,7 +66,7 @@ export default {
     tips3: '網站維護',
     tips4: '重新開放倒數'
   },
-  miBet: '私人咪牌桌',
+  miBet: 'Private table',
   mulBet: '多台下注',
   baccarat: {
     连庄: 'B Dragon',

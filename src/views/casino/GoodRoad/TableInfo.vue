@@ -209,15 +209,16 @@ const getLang = () => {
       margin: auto;
       z-index: 1;
       right: 16px;
-      width: 100px;
-      height: 100px;
+      width: 120px;
+      height: 120px;
       background-repeat: no-repeat;
       background-size: contain;
       background-image: url(@/assets/images/casino/road-bg.png);
+      text-align: center;
 
       .title-1 {
-        line-height: 24px;
-        font-size: 24px;
+        line-height: 22px;
+        font-size: 22px;
         font-family: JueJiangHei;
         color: rgb(254, 55, 101);
       }

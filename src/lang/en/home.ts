@@ -67,22 +67,22 @@ export default {
     tips3: 'Website under maintenance',
     tips4: 'Countdown to reopening'
   },
-  miBet: '私人咪牌桌',
-  mulBet: 'Multiple betting',
+  miBet: 'Private table',
+  mulBet: 'Multi betting',
   baccarat: {
-    连庄: '连庄',
-    单跳: '单跳',
+    连庄: 'B Dragon',
+    单跳: 'PingPong',
     '{n1}房{n2}厅': '{n1}P{n2}B',
-    双龙汇: '双龙汇',
-    上坡路: '上坡路',
-    下坡路: '下坡路',
-    排排连: '排排连',
-    逢庄连: '逢庄连',
-    逢闲连: '逢闲连',
-    逢庄跳: '逢庄跳',
-    逢闲跳: '逢闲跳',
-    隔连庄: '隔连庄',
-    隔连闲: '隔连闲',
-    双跳: '双跳'
+    双龙汇: '2Dragon',
+    上坡路: 'Uphill',
+    下坡路: 'Downhill',
+    排排连: 'VRow',
+    逢庄连: 'RowB',
+    逢闲连: 'RowP',
+    逢庄跳: 'BHop',
+    逢闲跳: 'PHop',
+    隔连庄: 'Separate B',
+    隔连闲: 'Separate P',
+    双跳: '2PingPong'
   }
 }
