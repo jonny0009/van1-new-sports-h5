@@ -8,7 +8,7 @@ export default {
   more: 'もっと見る',
   sports: {
     all: '全部',
-    'officeNumber': 'ゲーム番号',
+    officeNumber: 'ゲーム番号',
     FT: 'フットボール',
     BK: 'バスケットボール',
     TN: 'テニス',
@@ -54,6 +54,9 @@ export default {
     OP_BS: 'ビーチサッカー',
     OP_WS: 'ウィンタースポーツ',
     OP_BD: 'バンディ',
-    AH: 'アンカー'
+    AH: 'アンカー',
+    // 新增
+    XNFT: 'バーチャルサッカー',
+    XNBK: 'バーチャルバスケットボール'
   }
 }

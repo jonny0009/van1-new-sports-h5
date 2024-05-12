@@ -54,6 +54,9 @@ export default {
     OP_BS: 'Bóng đá cát',
     OP_WS: 'Thể thao mùa đông',
     OP_BD: 'Bandy',
-    AH: 'MC'
+    AH: 'MC',
+    // 新增
+    XNFT: 'bóng đá ảo',
+    XNBK: 'bóng rổ ảo'
   }
 }

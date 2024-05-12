@@ -104,7 +104,8 @@ export default {
   fortyEight: 'Gần 48 giờ',
   sevenDay: '7 ngày',
   // 新增6
-  fontNickName: 'Biệt danh chỉ được phép chỉnh sửa một lần và không được lặp lại với người khác hoặc chứa ký tự bất hợp pháp.',
+  fontNickName:
+    'Biệt danh chỉ được phép chỉnh sửa một lần và không được lặp lại với người khác hoặc chứa ký tự bất hợp pháp.',
 
   // 新增3
   compensate: 'Thanh toán',
@@ -142,7 +143,7 @@ export default {
   awayName: 'Đội khách',
 
   sports: {
-    'officeNumber': 'số trò chơi',
+    officeNumber: 'số trò chơi',
     FT: 'Bóng đá',
     BK: 'Bóng rổ',
     TN: 'Quần vợt',
@@ -187,6 +188,9 @@ export default {
     OP_SW: 'Bơi lội',
     OP_BS: 'Bóng đá bãi biển',
     OP_WS: 'Thể thao mùa đông',
-    OP_BD: 'Bandy'
+    OP_BD: 'Bandy',
+    // 新增
+    XNFT: 'bóng đá ảo',
+    XNBK: 'bóng rổ ảo'
   }
 }

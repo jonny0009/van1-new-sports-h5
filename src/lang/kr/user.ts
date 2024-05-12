@@ -179,6 +179,9 @@ export default {
     OP_SW: '수영',
     OP_BS: '해변 축구',
     OP_WS: '동계 스포츠',
-    OP_BD: '밴디 볼'
+    OP_BD: '밴디 볼',
+    // 新增
+    XNFT: '가상 축구',
+    XNBK: '가상 농구'
   }
 }

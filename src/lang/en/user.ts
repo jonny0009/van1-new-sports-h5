@@ -179,6 +179,9 @@ export default {
     OP_SW: 'Swim',
     OP_BS: 'Beach Soccer',
     OP_WS: 'Winter Sports',
-    OP_BD: 'Bandy Ball'
+    OP_BD: 'Bandy Ball',
+    // 新增
+    XNFT: 'virtual football',
+    XNBK: 'virtual basketball'
   }
 }

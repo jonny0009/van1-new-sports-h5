@@ -125,7 +125,8 @@ export default {
   affirmPend: 'confirmando',
   noDataRelated: 'Nenhum dado relevante encontrado',
   // 新增6
-  fontNickName: 'Os apelidos só podem ser editados uma vez e não podem ser duplicados ou conter caracteres ilegais com outros',
+  fontNickName:
+    'Os apelidos só podem ser editados uma vez e não podem ser duplicados ou conter caracteres ilegais com outros',
   aheadFinal: 'Liquidação antecipada',
   // 新增7
   contactUs: 'entre em contato conosco',
@@ -179,6 +180,9 @@ export default {
     OP_SW: 'nadar',
     OP_BS: 'Futebol de areia',
     OP_WS: 'Esportes de inverno',
-    OP_BD: 'bola arqueada'
+    OP_BD: 'bola arqueada',
+    // 新增
+    XNFT: 'futebol virtual',
+    XNBK: 'basquete virtual'
   }
 }
