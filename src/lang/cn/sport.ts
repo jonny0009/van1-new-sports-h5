@@ -54,6 +54,9 @@ export default {
     OP_BS: '沙滩足球',
     OP_WS: '冬季运动',
     OP_BD: '班迪球',
-    AH: '主播'
+    AH: '主播',
+    // 新增
+    XNFT: '虚拟足球',
+    XNBK: '虚拟篮球'
   }
 }

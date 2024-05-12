@@ -1,4 +1,3 @@
-
 export default {
   lang: '语言',
   search: '搜索',
@@ -142,7 +141,7 @@ export default {
   awayName: '客 ',
 
   sports: {
-    'officeNumber': '局号',
+    officeNumber: '局号',
     FT: '足球',
     BK: '篮球',
     TN: '网球',
@@ -187,7 +186,9 @@ export default {
     OP_SW: '游泳',
     OP_BS: '沙滩足球',
     OP_WS: '冬季运动',
-    OP_BD: '班迪球'
+    OP_BD: '班迪球',
+    // 新增
+    XNFT: '虚拟足球',
+    XNBK: '虚拟篮球'
   }
-
 }
