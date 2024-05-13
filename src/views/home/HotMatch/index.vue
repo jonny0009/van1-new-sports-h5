@@ -2,7 +2,7 @@
   <van-collapse v-model="activeNames" accordion :border="false" class="GlobalCollapse">
     <van-collapse-item name="1">
       <template #title>
-        <ArrowTitle class="mt10 mb10 hotArrowTitle" :src="titleHot" :text="$t('home.hotMatch')" />
+        <ArrowTitle class="mt10 hotArrowTitle" :src="titleHot" :text="$t('home.hotMatch')" />
       </template>
       <div class="Hot-Match-Group-Warp">
         <div class="Hot-Match-Group" :class="[{ noData: noDataToggle }]">
