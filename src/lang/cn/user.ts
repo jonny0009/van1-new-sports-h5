@@ -84,7 +84,7 @@ export default {
   betId: '投注ID',
   bet: '投注ID',
   balance: '余额',
-  currency: '货币',
+  currency: '币种',
   save: '保存',
   nickname: '输入昵称',
   font7: '7天可以修改一次昵称，请认真修改哦!',
