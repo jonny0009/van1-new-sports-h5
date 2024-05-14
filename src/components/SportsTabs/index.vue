@@ -118,7 +118,7 @@ const sportsList = computed(() => {
   if (props.ifSportToday) {
     return [allItem, ...newSportsB]
   }
-  return newSportsB
+  return newSportsB.filter((i: any) => i.gameCount)
 })
 defineExpose({
   active,

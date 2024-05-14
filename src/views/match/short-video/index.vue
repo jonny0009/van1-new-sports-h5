@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { nextTick, onMounted, ref } from 'vue'
 import VideoItem from './VideoItem.vue'
 const emit = defineEmits(['selectVideo'])
 defineProps({
@@ -23,22 +23,27 @@ defineProps({
   }
 })
 
-onMounted(() => {
+onMounted(async () => {
   initScrollEvent()
+  await nextTick()
+  videosPlay()
 })
 const videoRefs: any = ref()
 
 const initScrollEvent = () => {
   window.onscroll = () => {
-    videoRefs.value?.forEach((videoExp: any) => {
-      const rect = videoExp.videoTarget.getBoundingClientRect()
-      if (rect.y > 50 && rect.y < 300) {
-        videoExp.play()
-      } else {
-        videoExp.pause()
-      }
-    })
+    videosPlay()
   }
+}
+const videosPlay = () => {
+  videoRefs.value?.forEach((videoExp: any) => {
+    const rect = videoExp.videoTarget.getBoundingClientRect()
+    if (rect.y > 50 && rect.y < 300) {
+      videoExp.play()
+    } else {
+      videoExp.pause()
+    }
+  })
 }
 
 const selectVideo = (videoInfo: any) => {
