@@ -1,7 +1,7 @@
 <template>
   <!-- 球类型 -->
   <div class="ball-type">
-    <sports-tabs @returnSportsSuccess="setBallSelect"></sports-tabs>
+    <sports-tabs :if-count-num="false" @returnSportsSuccess="setBallSelect"></sports-tabs>
   </div>
   <!-- 时间 -->
   <div class="status">
@@ -21,8 +21,15 @@
     </p>
   </div>
   <!-- 列表 -->
-  <van-list v-if="list.arr.length || !finished" v-model:loading="loading" :finished="finished"
-    :finished-text="$t('user.noMoreMatch')" :loading-text="$t('user.loadingText')" class="dataList" @load="onLoad">
+  <van-list
+    v-if="list.arr.length || !finished"
+    v-model:loading="loading"
+    :finished="finished"
+    :finished-text="$t('user.noMoreMatch')"
+    :loading-text="$t('user.loadingText')"
+    class="dataList"
+    @load="onLoad"
+  >
     <div v-for="(item, index) in list.arr" :key="index" class="item">
       <div class="title">
         <div class="left  title-left">
