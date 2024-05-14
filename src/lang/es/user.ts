@@ -39,7 +39,7 @@ export default {
   text5: 'No se permiten caracteres especiales',
   text6: 'No hay espacios',
   ExistingAccount: 'Ya tienes una cuenta',
-  PersonalProfile: 'Perfil',
+  personalProfile: 'Perfil',
   RegistrationTime: 'Hora de registro',
   follow: 'concentrarse en',
   fans: 'admirador',
@@ -125,6 +125,14 @@ export default {
   officeNumber: 'número de oficina',
   IDOdd: 'Disco indonesio [ID]',
   MYOdd: 'plato malayo [MY]',
+
+  fontNickName: 'El apodo solo se puede editar una vez dentro de 7 días y no se puede repetir con otros ni contener caracteres ilegales',
+  aheadFinal: 'liquidación anticipada',
+  contactUs: 'Contáctenos',
+  type: 'tipo',
+  homeName: 'casa',
+  awayName: 'Invitado',
+
   sports: {
     FT: 'fútbol americano',
     BK: 'baloncesto',

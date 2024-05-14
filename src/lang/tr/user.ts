@@ -39,7 +39,7 @@ export default {
   text5: 'Özel karakterlere izin verilmez',
   text6: 'boşluksuz',
   ExistingAccount: 'Zaten hesabınız var mı',
-  PersonalProfile: 'Profil',
+  personalProfile: 'Profil',
   RegistrationTime: 'Kayıt zamanı',
   follow: 'odaklan',
   fans: 'fan',
@@ -122,8 +122,7 @@ export default {
   editPend: 'Kabul ediyorum',
   affirmPend: 'onaylıyor',
   noDataRelated: 'İlgili veri bulunamadı',
-  fontNickName:
-    'Takma ad yalnızca bir kez düzenlenebilir, başkalarıyla tekrarlanamaz veya yasa dışı karakterler içeremez',
+  fontNickName: 'Rumuz 7 gün içinde yalnızca bir kez düzenlenebilir, başkalarıyla tekrarlanamaz veya yasa dışı karakterler içeremez',
   aheadFinal: 'zamanından önce uzlaşma',
   contactUs: 'Bize ulaşın',
   type: 'tür',

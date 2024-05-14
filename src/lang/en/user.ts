@@ -39,7 +39,7 @@ export default {
   text5: 'No Special Characters Allowed',
   text6: 'No Spaces',
   ExistingAccount: 'Already Have An Account',
-  PersonalProfile: 'Profile',
+  personalProfile: 'Profile',
   RegistrationTime: 'Registration Time',
   follow: 'Focus On',
   fans: 'Fan',
@@ -125,7 +125,7 @@ export default {
   affirmPend: 'Confirming ',
   noDataRelated: 'No Relevant Data Found',
   // 新增6
-  fontNickName: 'Nicknames can only be edited once and cannot be duplicated or contain illegal characters with others',
+  fontNickName: 'The nickname can only be edited once within 7 days, and cannot be repeated with others or contain illegal characters',
   aheadFinal: 'Cash out',
   // 新增7
   contactUs: 'Contact Us',

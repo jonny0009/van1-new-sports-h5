@@ -39,7 +39,7 @@ export default {
   text5: '不能有特殊字符',
   text6: '不能有空格',
   ExistingAccount: '已有帳號',
-  PersonalProfile: '個人檔案',
+  personalProfile: '個人檔案',
   RegistrationTime: '註冊時間',
   follow: '關注',
   fans: '粉絲',
@@ -124,7 +124,8 @@ export default {
   affirmPend: '確認中',
   noDataRelated: '未查詢到相關數據',
 
-  fontNickName: '昵稱只允許編輯一次，且不可與他人重複或含有非法字元',
+  fontNickName: '暱稱7天內只允許編輯一次，且不可與他人重複或含有非法字符',
+
   aheadFinal: '提前結算',
   contactUs: '聯繫我們',
   type: '類型',

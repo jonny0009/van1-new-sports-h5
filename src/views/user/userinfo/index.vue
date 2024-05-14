@@ -91,7 +91,6 @@ const peopleInfo = computed(() => store.state.user.peopleInfo)
 const theme = computed(() => store.state.app.theme)
 const ifBlueTheme = computed(() => store.state.app.theme === 'blue')
 
-
 const userStandInfo = ref<any>({})
 const currentNumber = ref<any>('')
 
@@ -114,7 +113,7 @@ const goUrl = (url: string) => {
   }
   $router.push('/user' + url)
 }
-const title = ref(t('user.PersonalProfile'))
+const title = ref(t('user.personalProfile'))
 const dataList = reactive<{ arr: any }>({
   arr: [
     {
@@ -148,7 +147,7 @@ onMounted(() => {
 const getStandings = async () => {
   const params = {
     type: '3',
-    lastDayCount:90
+    lastDayCount: 90
   }
   const res: any = await standings(params)
   if (res.code !== 200) {

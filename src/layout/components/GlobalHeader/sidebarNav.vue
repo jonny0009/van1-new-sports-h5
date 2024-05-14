@@ -16,7 +16,7 @@
             </div>
             <div class="right">
               <div class="head">
-                <div class="head_1" @click.self="toUser('/userInfo')"> {{ $t('user.ViewProfile') }} </div>
+                <div class="head_1" @click.self="toUser('/userInfo')"> {{ $t('user.personalProfile') }} </div>
                 <img
                   v-if="ifBLue"
                   class="headImg_1"

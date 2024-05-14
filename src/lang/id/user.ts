@@ -39,7 +39,7 @@ export default {
   text5: 'Tidak ada karakter khusus yang diperbolehkan',
   text6: 'tidak ada ruang',
   ExistingAccount: 'Sudah memiliki akun',
-  PersonalProfile: 'Profil',
+  personalProfile: 'Profil',
   RegistrationTime: 'Waktu pendaftaran',
   follow: 'fokus pada',
   fans: 'penggemar',
@@ -122,10 +122,9 @@ export default {
   editPend: 'Menerima',
   affirmPend: 'mengkonfirmasikan',
   noDataRelated: 'Tidak ada data relevan yang ditemukan',
+  fontNickName: 'Nama panggilan hanya dapat diedit satu kali dalam 7 hari, dan tidak dapat diulangi dengan orang lain atau mengandung karakter ilegal',
 
-  fontNickName:
-    'Nama panggilan hanya dapat diedit satu kali, dan tidak dapat diulangi dengan orang lain atau mengandung karakter ilegal',
-  forwardFinal: 'penyelesaian sebelumnya',
+  aheadFinal: 'penyelesaian sebelumnya',
   contactUs: 'Hubungi kami',
   type: 'ketik',
   homeName: 'rumah',

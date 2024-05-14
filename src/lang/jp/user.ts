@@ -39,7 +39,7 @@ export default {
   text5: '特殊文字は使用できません',
   text6: '空白なし',
   ExistingAccount: 'すでにアカウントをお持ちです。',
-  PersonalProfile: 'プロフィール',
+  personalProfile: 'プロフィール',
   RegistrationTime: '登録時間',
   follow: 'フォロワー',
   fans: 'ファン',
@@ -132,8 +132,7 @@ export default {
   awayName: 'ゲスト ',
   IDOdd: 'インドネシアのディスク [ID]',
   MYOdd: 'マレー料理 [MY]',
-  fontNickName:
-    'ニックネームは 1 回のみ編集でき、他のニックネームで繰り返したり、不正な文字を含めたりすることはできません',
+  fontNickName: 'ニックネームは 7 日以内に 1 回のみ編集でき、他のニックネームと繰り返したり、不正な文字を含めたりすることはできません',
 
   sports: {
     officeNumber: 'ゲーム番号',
