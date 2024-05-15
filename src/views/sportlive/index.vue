@@ -54,6 +54,9 @@ import MatchLive from '@/components/HomeMatch/MatchLive/index.vue'
 import playTitle from '@/components/Title/playTitle/index.vue'
 import swipeLive from './swipeLive/index.vue'
 import store from '@/store'
+
+// const controller = new AbortController()
+
 const offsetTop = computed(() => {
   const offsetTop = store.state.app.globalBarHeaderHeight || 48
   var offsetTopval = 48
@@ -125,15 +128,15 @@ const getApiCommonMatches = async (toggleLoading: any = true) => {
     isLoading.value = false
     finished.value = commonMatchesList.value.length === res.data?.matchList?.total
   } else {
-    debugger
     isLoading.value = false
     commonMatchesList.value = []
   }
 }
 
 const onChangeTabs = (item: any) => {
-  finished.value = false
   isLoading.value = true
+  // controller.abort()
+  finished.value = false
   page = 1
   commonMatchesList.value = []
   gameType.value = item
