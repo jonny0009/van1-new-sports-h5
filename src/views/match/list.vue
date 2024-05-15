@@ -41,7 +41,7 @@
                 <p v-html="$t('live.nextAM', { num: countTime })"></p>
               </div>
 
-              <EmptyData v-if="(!loading && list.length === 0) || (list.length === 0 && time < 0 && !loading)" />
+              <EmptyData v-else-if="(!loading && list.length === 0) || (list.length === 0 && time < 0 && !loading)" />
               <van-list v-model:loading="loading" :finished="!loading">
                 <div class="grid-wrapper">
                   <div v-for="item in list" :key="item.gidm" class="flex-item">
