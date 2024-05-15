@@ -115,6 +115,21 @@ watch(
     }
   }
 )
+watch(
+  () => props.show,
+  async () => {
+    if (props.active && props.show) {
+      if (player) {
+        player && player.play()
+      } else {
+        getMainMatches()
+        initVideo()
+      }
+    } else {
+      player && player.pause()
+    }
+  }
+)
 
 const RPlay = computed(() => {
   const { R } = matchInfo.value
