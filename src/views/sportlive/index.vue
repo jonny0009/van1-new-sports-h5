@@ -13,7 +13,7 @@
         @change="onChangeTabs"
         @click-tab="ifAnimated = true"
       >
-        <van-tab v-for="(item, index) in gameTypeList" :key="index" :name="item.gameType">
+        <van-tab v-for="(item, index) in gameTypeList" :key="index" :immediate-check="false" :name="item.gameType">
           <template #title>
             <TextButton v-if="index === 0" :text="$t('sport.all')" :active="!gameType" class="tabs-cut-1" />
             <SportsButton
@@ -72,9 +72,11 @@ import { apiRBCondition, apiCommonMatches } from '@/api/home'
 const gameType: any = ref()
 const isLoading = ref(true)
 const newContainer = ref(null)
+let page: number = 1
+
 const init = async (toggleLoading: any = true) => {
   await getApiRBCondition()
-  // await getApiCommonMatches(toggleLoading)
+  await getApiCommonMatches()
 }
 const active = ref('')
 const ifAnimated: any = ref(true)
@@ -84,11 +86,10 @@ const gameTypeList: any = ref([])
 
 const loading = ref(false)
 const finished = ref(false)
-let page: number = 0
 
 const onLoad = () => {
-  page++
-  getApiCommonMatches()
+  // page++
+  // getApiCommonMatches()
 }
 
 const getApiRBCondition = async () => {
@@ -112,21 +113,21 @@ const getApiCommonMatches = async (toggleLoading: any = true) => {
     leagueIds: '',
     gameTypeSon: '',
     page,
-    pageSize: 20
+    pageSize: 200
   }
 
   const res: any = (await apiCommonMatches(params)) || {}
 
   if (res.code === 200 && res.data?.matchList?.baseData) {
     const dataList = res.data?.matchList?.baseData || []
-    const data = dataList.filter((t: any) => !showGameTypeList.value.includes(t.gameType))
-    if (data && data.length) {
-      data.forEach((item: any) => {
-        commonMatchesList.value.push(item)
-      })
-    }
+    commonMatchesList.value = dataList.filter((t: any) => !showGameTypeList.value.includes(t.gameType))
+    // if (data && data.length) {
+    //   data.forEach((item: any) => {
+    //     commonMatchesList.value.push(item)
+    //   })
+    // }
     isLoading.value = false
-    finished.value = commonMatchesList.value.length === res.data?.matchList?.total
+    finished.value = true
   } else {
     isLoading.value = false
     commonMatchesList.value = []
