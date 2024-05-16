@@ -1,6 +1,8 @@
+
 <template>
   <div ref="newContainer">
     <swipeLive class="mt10" />
+
     <div class="tabs-cut">
       <van-tabs
         v-model:active="active"
@@ -12,7 +14,7 @@
         @change="onChangeTabs"
         @click-tab="ifAnimated = true"
       >
-        <van-tab v-for="(item, index) in gameTypeList" :key="index" :name="item.gameType">
+        <van-tab v-for="(item, index) in gameTypeList" :key="index" :immediate-check="false" :name="item.gameType">
           <template #title>
             <TextButton v-if="index === 0" :text="$t('sport.all')" :active="!gameType" class="tabs-cut-1" />
             <SportsButton
@@ -26,32 +28,25 @@
             />
           </template>
           <div class="sportlive">
-            <Loading v-if="!isLoading" />
-            <template v-else>
-              <template v-for="(item, idx) in commonMatchesList" :key="idx">
+            <van-list v-model:loading="isLoading" :finished="finished" :finished-text="$t('live.noMore')" @load="onLoad">
+              <template v-for="(ele, idx) in commonMatchesList" :key="idx">
                 <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
-                  <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
+                  <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="ele" />
                 </van-sticky>
                 <MatchLive
                   :play-title-toggle="false"
-                  :send-params="item"
+                  :send-params="ele"
                   :tab-type="'RB'"
                   :class="{ 'mt10': idx !== 0 }"
                 />
               </template>
-              <HomeEmpty v-if="!commonMatchesList.length"></HomeEmpty>
-            </template>
-            <div v-if="commonMatchesList.length" class="Button-MatchMore mt10" @click="noMoreclick">
-              <span>
-                {{ $t('live.noMore') }}
-              </span>
-            </div>
-            <FooterHeight />
+              <HomeEmpty v-if="!commonMatchesList.length && !isLoading"></HomeEmpty>
+            </van-list>
           </div>
+          <FooterHeight />
         </van-tab>
       </van-tabs>
     </div>
-
   </div>
 </template>
 <script lang="ts" setup>
@@ -60,6 +55,9 @@ import MatchLive from '@/components/HomeMatch/MatchLive/index.vue'
 import playTitle from '@/components/Title/playTitle/index.vue'
 import swipeLive from './swipeLive/index.vue'
 import store from '@/store'
+
+// const controller = new AbortController()
+
 const offsetTop = computed(() => {
   const offsetTop = store.state.app.globalBarHeaderHeight || 48
   var offsetTopval = 48
@@ -73,17 +71,28 @@ const offsetTop = computed(() => {
 import { ref, onBeforeMount, onActivated, onDeactivated, onBeforeUnmount, computed, watch } from 'vue'
 import { apiRBCondition, apiCommonMatches } from '@/api/home'
 const gameType: any = ref()
-const isLoading = ref(false)
+const isLoading = ref(true)
 const newContainer = ref(null)
+let page: number = 1
+
 const init = async (toggleLoading: any = true) => {
   await getApiRBCondition()
-  await getApiCommonMatches(toggleLoading)
+  await getApiCommonMatches()
 }
 const active = ref('')
 const ifAnimated: any = ref(true)
 
 const showGameTypeList: any = ref([''])
 const gameTypeList: any = ref([])
+
+const loading = ref(false)
+const finished = ref(false)
+
+const onLoad = () => {
+  // page++
+  // getApiCommonMatches()
+}
+
 const getApiRBCondition = async () => {
   const res: any = (await apiRBCondition({})) || {}
   if (res.code === 200 && res.data) {
@@ -104,28 +113,33 @@ const getApiCommonMatches = async (toggleLoading: any = true) => {
     onlyFavorite: 0,
     leagueIds: '',
     gameTypeSon: '',
-    page: 1,
+    page,
     pageSize: 200
   }
-  if (toggleLoading) {
-    isLoading.value = false
-  }
+
   const res: any = (await apiCommonMatches(params)) || {}
-  if (toggleLoading) {
-    isLoading.value = true
-  }
+
   if (res.code === 200 && res.data?.matchList?.baseData) {
     const dataList = res.data?.matchList?.baseData || []
     commonMatchesList.value = dataList.filter((t: any) => !showGameTypeList.value.includes(t.gameType))
+    // if (data && data.length) {
+    //   data.forEach((item: any) => {
+    //     commonMatchesList.value.push(item)
+    //   })
+    // }
+    isLoading.value = false
+    finished.value = true
   } else {
+    isLoading.value = false
     commonMatchesList.value = []
   }
 }
-const noMoreclick = () => {
-  return
-}
+
 const onChangeTabs = (item: any) => {
-  // gameType.value = item.gameType
+  isLoading.value = true
+  // controller.abort()
+  finished.value = false
+  page = 1
   commonMatchesList.value = []
   gameType.value = item
   getApiCommonMatches()
