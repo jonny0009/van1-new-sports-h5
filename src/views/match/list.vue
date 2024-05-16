@@ -98,7 +98,6 @@
                 :finished="params1.page * params1.pageSize >= videoTotol && !videoLoading"
                 :finished-text="shortVideos.length == 0 ? '' : $t('live.noMore')"
                 class="list-group"
-                @load="getShortVideos"
               >
                 <div
                   v-for="(video, index) in shortVideos"
