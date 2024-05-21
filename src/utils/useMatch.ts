@@ -1,4 +1,4 @@
-import { Ref, ref } from 'vue'
+import { Ref, ref, queuePostFlushCb } from 'vue'
 import i18n from '@/lang/index'
 import { dateFormat } from '@/utils/date'
 import { getScore } from '@/utils/home/getScore'
@@ -31,17 +31,23 @@ const sectionMap: any = {
 }
 
 export function useMatch() {
-  const currBkTime: Ref<any> = ref('')
+  let currBkTime = ref<any>(0)
 
+  let seNowBK = ref<any>('')
+  let bkTimer = ref<any>(null)
+  stopTimer()
   const BKSection = (section: any) => {
     return sectionMap[section]
   }
-
   function showRBTime(raceinfo: any = {}) {
     const { showtype, gameType, gameInfo, showType, homeTeamSuffix, gidm } = raceinfo
     const Obj = opScoreObj(gameInfo, 5)
     const seNow: any = gameInfo && gameInfo.se_now
     if (showtype === 'RB' || showType === 'RB') {
+      queuePostFlushCb(() => {
+        // 在此处放置需要异步执行的代码
+        showBkTime(raceinfo)
+      })
       switch (gameType) {
         // 足球
         case 'FT':
@@ -197,9 +203,43 @@ export function useMatch() {
       // 原本data显示空
       return t('live.inprogress')
     } else {
+      stopTimer()
       // 原本data显示空
       return t('live.notstarted')
     }
+  }
+  // 篮球时间
+  function showBkTime(raceinfo: any = {}) {
+    const { gameType, gameInfo } = raceinfo
+    if (gameType === 'BK' && gameInfo) {
+      if (+gameInfo.t_count) {
+        if (seNowBK.value !== gameInfo.se_now) {
+          seNowBK.value = gameInfo.se_now
+          currBkTime.value = +gameInfo.t_count
+        }
+        if (currBkTime.value >= +gameInfo.t_count && currBkTime.value > 0) {
+          currBkTime.value = +gameInfo.t_count
+          stopTimer()
+          bkTimer.value = setInterval(() => {
+            currBkTime.value = currBkTime.value - 1
+            if (currBkTime.value <= 0) {
+              currBkTime.value = 0
+              stopTimer()
+            }
+          }, 1000)
+        }
+      } else {
+        currBkTime.value = 0
+        stopTimer()
+      }
+    } else {
+      stopTimer()
+    }
+  }
+  // 清除定时器
+  function stopTimer() {
+    clearInterval(bkTimer.value)
+    bkTimer.value = null
   }
 
   return { BKSection, showRBTime, getScore }
