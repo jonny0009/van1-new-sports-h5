@@ -7,8 +7,12 @@
             <!-- start -->
             <div class="panel-recent">
               <div class="recent-header">
-                <div class="header-item" :class="{ active: teamType === 1 }" @click="fetchRecent(1)">{{ home }}</div>
-                <div class="header-item" :class="{ active: teamType === 2 }" @click="fetchRecent(2)">{{ away }}</div>
+                <div class="header-item home" :class="{ active: teamType === 1 }" @click="fetchRecent(1)">
+                  {{ home }}
+                </div>
+                <div class="header-item away" :class="{ active: teamType === 2 }" @click="fetchRecent(2)">
+                  {{ away }}
+                </div>
               </div>
               <div class="panel-recent__item" v-if="recentList.length" v-for="item in recentList" :key="item.matchId">
                 <div :class="['bar', 'host', barScoreColor(item, 'home')]"></div>
@@ -189,9 +193,15 @@ const barScoreColor = (item: any, type: string) => {
       color: #fff;
       font-family: PingFangSC-Medium;
       border-radius: 25px;
-      background-color: rgba(72, 163, 255, 0.24);
+      opacity: 0.5;
+      &.home {
+        background-color: #0688f9;
+      }
+      &.away {
+        background-color: #f80563;
+      }
       &.active {
-        background-color: rgb(255, 92, 36);
+        opacity: 1;
       }
     }
   }
