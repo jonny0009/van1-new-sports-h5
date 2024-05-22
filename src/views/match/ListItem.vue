@@ -83,14 +83,12 @@ const setMatch: any = useMatch()
 const gameInfo = computed(() => props.item?.gameInfo)
 const imgCover = computed(() => {
   const item = props.item
-  if (!item.anchorId) {
-    if (item.gameType == 'BK') {
-      return ImageSource + 'FE/common/live/img_video_bg_BK.jpg'
-    } else {
-      return ImageSource + 'FE/common/live/img_video_bg_FT.jpg'
-    }
+  if (item.cover) {
+    return ImageSource + item.cover
   }
-  return ImageSource + item.cover
+  const gameType = item.gameType || 'FT'
+  const mask = item.showType !== 'RB' ? '_mask' : ''
+  return ImageSource + `FE/common/live/VIDEO_BG_${gameType}${mask}.jpg`
 })
 
 const watchNumText = computed(() => {
