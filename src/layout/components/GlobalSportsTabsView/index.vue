@@ -119,12 +119,6 @@ const homeStyleBarList = ref([
     text: t('home.latestMatch'),
     routerName: 'Sport'
   },
-
-  {
-    icon: 'casino',
-    text: t('home.casino'),
-    routerName: 'Casino'
-  },
   {
     icon: 'casino',
     text: t('home.casino'),
