@@ -29,7 +29,8 @@ const getRbLiveList = async () => {
   const params = {
     page: page,
     pageSize: 20,
-    videoType: 2
+    // videoType: 2
+    videoType: ''
   }
   const res: any = await rbLiveList(params)
   const data = res.data || {}
