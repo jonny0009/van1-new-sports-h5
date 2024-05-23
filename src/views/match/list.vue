@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, Ref, onMounted, computed } from 'vue'
+import { reactive, ref, Ref, onMounted, computed, queuePostFlushCb } from 'vue'
 import ListItem from './ListItem.vue'
 import { anchorLiveList, nextAnchorMatchDate } from '@/api/live'
 import router from '@/router'
@@ -77,7 +77,7 @@ const navActive = ref('RB')
 const time = ref(-1)
 const countTime = ref('')
 
-let timer: any = reactive({})
+let timer: any = ref(null)
 
 let page: number = 0
 const list: Ref<any[]> = ref([])
@@ -115,11 +115,10 @@ const onLoad = async () => {
       if (res1.code === 200 && res1.data) {
         if (res1.data > res1.systemTime) {
           time.value = res1.data - res1.systemTime
-          timer = setInterval(() => {
-            time.value -= 1000
-            time.value === 0 && clearInterval(timer)
-            countDown()
-          }, 1000)
+          stopTimer()
+          queuePostFlushCb(() => {
+            countDownTimeNum()
+          })
           return
         }
       }
@@ -133,6 +132,13 @@ const onLoad = async () => {
   } else {
     finished.value = true
   }
+}
+const countDownTimeNum = () => {
+  timer.value = setInterval(() => {
+    time.value -= 1000
+    time.value === 0 && clearInterval(timer.value)
+    countDown()
+  }, 1000)
 }
 
 const onRefresh = () => {
@@ -154,7 +160,7 @@ const onItemClick = (item: any) => {
 
 const countDown = () => {
   if (time.value < 0) {
-    clearInterval(timer)
+    stopTimer()
     onRefresh()
     return
   }
@@ -174,6 +180,11 @@ const countDown = () => {
   minute = addZero(minute)
   second = addZero(second)
   countTime.value = hour + ':' + minute + ':' + second
+}
+
+const stopTimer = () => {
+  clearInterval(timer.value)
+  timer.value = null
 }
 </script>
 
