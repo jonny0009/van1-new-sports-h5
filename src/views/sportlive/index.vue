@@ -162,7 +162,7 @@ watch(pushSwitch, () => {
 })
 const scrollNum = computed(() => store.state.user.scrollNumY)
 watch(() => scrollNum.value, (newValue) => {
-  if (newValue > 88) {
+  if (newValue) {
     ifAnimated.value = false
   }
 })

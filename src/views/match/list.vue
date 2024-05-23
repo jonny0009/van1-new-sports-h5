@@ -134,7 +134,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, Ref, onBeforeMount, computed } from 'vue'
+import { reactive, ref, Ref, onBeforeMount, computed,queuePostFlushCb } from 'vue'
 import ListItem from './ListItem.vue'
 import ShortVideo from './short-video/index.vue'
 import { anchorLiveList, getVideoGreet, nextAnchorMatchDate } from '@/api/live'
@@ -167,7 +167,7 @@ const navActive = ref('RB')
 const time = ref(-1)
 const countTime = ref('')
 
-let timer: any = reactive({})
+let timer: any = ref(null)
 
 const list: Ref<any[]> = ref([])
 const loading = ref(true)
@@ -203,11 +203,10 @@ const onLoad = async () => {
       if (res1.code === 200 && res1.data) {
         if (res1.data > res1.systemTime) {
           time.value = res1.data - res1.systemTime
-          timer = setInterval(() => {
-            time.value -= 1000
-            time.value === 0 && clearInterval(timer)
-            countDown()
-          }, 1000)
+          stopTimer()
+          queuePostFlushCb(() => {
+            countDownTimeNum()
+          })
           return
         }
       }
@@ -230,6 +229,14 @@ const onChangeTabs = () => {
     activeNames.value = ['HOT']
   }
   onRefresh()
+}
+
+const countDownTimeNum = () => {
+  timer.value = setInterval(() => {
+    time.value -= 1000
+    time.value === 0 && clearInterval(timer.value)
+    countDown()
+  }, 1000)
 }
 
 const onRefresh = () => {
@@ -261,7 +268,7 @@ const onItemClick = (item: any) => {
 
 const countDown = () => {
   if (time.value < 0) {
-    clearInterval(timer)
+    stopTimer()
     onRefresh()
     return
   }
@@ -324,6 +331,10 @@ const getShortVideos = async () => {
 const selectVideo = (video: any) => {
   FullScreenVideosRef.value.fullState = true
   FullScreenVideosRef.value.videoId = video.videoId
+}
+const stopTimer = () => {
+  clearInterval(timer.value)
+  timer.value = null
 }
 </script>
 

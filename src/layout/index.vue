@@ -242,7 +242,7 @@ onActivated(() => {})
 
 // 坐标
 const handleScroll = () => {
-  if (currentRoute.value.meta.KeepAlive) {
+  if (currentRoute.value.meta.KeepAlive||currentRoute.value.name==='Sportlive') {
     // 触发保存
     store.dispatch('user/getScrollNumY', window.scrollY)
   }
