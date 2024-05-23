@@ -67,7 +67,7 @@
             <div class="flex-cross-center">
               <div class="up-match-time">
                 <SportsIcon v-show="showSportsIcon(sendParams)" :icon-src="'sportlive'" class="live-img" />
-                <div class="up-match-time-html" :class="sendParams.gameType" v-html="showRBTime(sendParams)"></div>
+                <div class="up-match-time-html" :class="sendParams.gameType" v-html="setMatch.showRBTime(sendParams)"></div>
               </div>
             </div>
           </div>
@@ -202,6 +202,8 @@ import TimeView from '@/components/HomeMatch/public/time/index.vue'
 import router from '@/router'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
+import { useMatch } from '@/utils/useMatch'
+const setMatch = useMatch()
 // script
 // import { showDialog } from 'vant'
 import store from '@/store'
