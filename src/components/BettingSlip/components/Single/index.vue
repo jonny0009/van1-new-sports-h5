@@ -386,6 +386,7 @@ defineExpose({
         letter-spacing: 0.8px;
         text-align: justify;
         font-weight: 600;
+        overflow: hidden;
 
         &.error {
           border: 2px solid rgba(251, 7, 56, 1);

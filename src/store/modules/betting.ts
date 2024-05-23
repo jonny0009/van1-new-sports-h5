@@ -18,7 +18,7 @@ import { betComboOrder, comboBetting, moreBetting, morePW } from '@/api/betting'
 import lang from '@/lang'
 import { createBetItem, lib } from 'xcsport-lib'
 import { accMul, accSubtr, moneyFormat } from '@/utils/math'
-import { getRatioPlay } from '@/utils'
+import { getBetRatioToNumber, getRatioPlay } from '@/utils'
 const { isStrong } = lib
 
 // 投注单store
@@ -329,10 +329,14 @@ const bettingModule: Module<Betting, any> = {
               iorChange = 'down'
             }
           }
+          const newRatioQuite = getBetRatioToNumber(ratio)
+          const oldRatioQuite = getBetRatioToNumber(bet.ratio)
+
           const isRatioPlay = getRatioPlay(bet)
-          if (isRatioPlay && Math.abs(bet.ratio * 1) !== Math.abs(ratio * 1) && !autoOdd) {
-            console.log('old', bet.ratio)
-            console.log('new', ratio)
+          if (isRatioPlay && newRatioQuite * 1 !== oldRatioQuite * 1 && !autoOdd) {
+            console.log('old', oldRatioQuite)
+            console.log('new', newRatioQuite)
+            console.log('cur', ratio)
             if (bet.ratio * 1 < ratio) {
               ratioChange = 'up'
             } else {
