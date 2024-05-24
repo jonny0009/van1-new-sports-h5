@@ -27,6 +27,7 @@
           :anlyzeList="anlyzeList"
           :recentList="recentList"
           :integralList="integralList"
+          :eventsList ="eventsList"
           @fetchRecentEmit="fetchRecentEmit"
           v-if="tab.active"
         />
@@ -133,6 +134,12 @@ const getData = async () => {
   } else {
     tabList.value.find((i: any) => i.name === 2).active = true
   }
+  // 文字概况
+  if (eventsList.value.length && gameType === 'FT') {
+    tabList.value.find((i: any) => i.name === 3).active = true
+  } else {
+    tabList.value.find((i: any) => i.name === 3).active = false
+  }
 }
 
 const matchData: any = ref()
@@ -189,6 +196,8 @@ const fetchLineup = async () => {
 const anlyzeList: any = ref({})
 const staticsList = ref([])
 const scoreList = ref([])
+// 文字概况
+const eventsList: any= ref([])
 const fetchStaticsEvents = async () => {
   if (!matchData.value.icGidm) {
     return
@@ -206,6 +215,7 @@ const fetchStaticsEvents = async () => {
     const data = res.data || {}
     staticsList.value = data.statics || []
     scoreList.value = data.scores || []
+    eventsList.value = data.events || []
   }
 }
 
