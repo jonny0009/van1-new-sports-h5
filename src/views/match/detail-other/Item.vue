@@ -7,6 +7,15 @@
         </template>
       </van-image>
       <span class="state" v-if="item.showType == 'RB'">{{ $t('live.hotNow') }}</span>
+      <div class="state-right-icon" v-if="(item.showType == 'RB') && (item.anchorId || item.nickname || item.anchorAvatar)">
+        <div class="avatar">
+          <img v-if="item.anchorAvatar" :src="imgUrlFormat(item.anchorAvatar)" alt="anchor avatar">
+          <img v-else src="@/assets/images/user/color1/head.png" alt="anchor avatar">
+        </div>
+        <span>
+          {{ item.nickname }}
+        </span>
+      </div>
     </div>
 
     <div class="main">
@@ -54,6 +63,8 @@ import { ImageSource } from '@/config'
 import store from '@/store'
 import sHot1 from '@/assets/images/live/s_hot.png'
 import sHot2 from '@/assets/images/live/s_hot2.png'
+import { imgUrlFormat } from '@/utils/index'
+
 
 const props = defineProps({
   item: {
@@ -135,6 +146,28 @@ const leagueIcon = computed(() => {
         var(--color-linear-gradient-tag-2) 100%
       );
       border-radius: 10px 0px 10px 0px;
+    }
+    // 右边图标
+    .state-right-icon {
+      position: absolute;
+      right: 0;
+      top: 0;
+      min-width: 84px;
+      background-color: rgba(0, 0, 0, 0.5);
+      font-size: 16px;
+      color: #fff;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      .avatar {
+        width: 22px;
+        height: 25.4px;
+        border-radius: 50%;
+        margin-right: 4px;
+        img {
+          width: 100%;
+        }
+      }
     }
   }
 
