@@ -47,6 +47,9 @@ watch(
 onMounted(() => {
   // message 该事件通过或者从对象(WebSocket, Web Worker, Event Source 或者子 frame 或父窗口)接收到消息时触发
   window.addEventListener('message', payEvent)
+  if (!player && props.url) {
+    getUrl(props.url)
+  }
 })
 const payEvent = (event:any) => {
   console.log(event, '监听frame消息====')
@@ -83,7 +86,7 @@ const initVideo = (url: string) => {
     width: '100%',
     height: '100%',
     autoplay: true,
-    muted: false,
+    muted: true,
     controls: true,
     fluid: true,
     bigPlayButton: false,

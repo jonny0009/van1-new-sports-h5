@@ -262,7 +262,15 @@ const onRefresh = () => {
 }
 
 const onItemClick = (item: any) => {
-  router.push(`/match/${item.gidm}`)
+  const query: any = {}
+  if (item.anchorId) {
+    query.anchorId = item.anchorId
+  }
+  if (item.m3u8) {
+    query.m3u8 = item.m3u8
+  }
+
+  router.push({ name: 'MatchDetail', params: { id: item.gidm }, query })
   store.dispatch('app/setMatchLiveIndex', 1)
 }
 

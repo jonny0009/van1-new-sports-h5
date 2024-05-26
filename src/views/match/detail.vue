@@ -143,7 +143,12 @@ const closeInterval = () => {
 
 onBeforeMount(() => {
   getMatchInfo()
-  getExtendInfo()
+  if (route.query?.m3u8) {
+    videoUrl.value = `${route.query.m3u8}`
+  }
+  else {
+    getExtendInfo()
+  }
   startInterval()
 })
 
@@ -156,7 +161,12 @@ watch(
   () => paramsId.value,
   () => {
     getMatchInfo()
-    getExtendInfo()
+    if (route.query?.m3u8) {
+    videoUrl.value = `${route.query.m3u8}`
+    }
+    else {
+      getExtendInfo()
+    }
   }
 )
 </script>
