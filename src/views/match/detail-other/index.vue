@@ -18,6 +18,7 @@ import { onMounted, Ref, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { rbLiveList } from '@/api/live'
 import Item from './Item.vue'
+import store from '@/store'
 
 const router = useRouter()
 let page = 0
@@ -45,7 +46,15 @@ const getRbLiveList = async () => {
   }
 }
 const onItemClick = (item: any) => {
-  router.replace(`/match/${item.gidm}/bets`)
+  const query: any = {}
+  if (item.anchorId) {
+    query.anchorId = item.anchorId
+  }
+  if (item.m3u8) {
+    query.m3u8 = item.m3u8
+  }
+  router.push({ name: 'MatchDetail', params: { id: item.gidm }, query })
+  store.dispatch('app/setMatchLiveIndex', 1)
 }
 
 onMounted(() => {

@@ -169,6 +169,13 @@ watch(
     }
   }
 )
+
+watch(() => route.query.m3u8, (val) => {
+  if (val) {
+    videoUrl.value = `${val}`
+  }
+})
+
 </script>
 
 <style lang="scss" scoped>
