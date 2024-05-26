@@ -32,7 +32,7 @@ service.interceptors.request.use(
     config.headers.terType = '16'
     config.headers.wid = store.state.user.currentWallet?.walletId || 1
     config.headers.lang = localStorage.getItem('locale') || getBrowserLanguage()
-    config.headers.apiVer = '4.06'
+    config.headers.apiVer = '4.11'
     config.headers.groupId = groupId
     if (config.method === 'post') {
       if (noGroupId.indexOf(config.url) < 0) {
