@@ -97,8 +97,12 @@ import { watch, Ref, ref, computed, nextTick, onMounted, onUnmounted } from 'vue
 import { intoRoom, lastMessageByPage } from '@/api/live'
 import { getToken } from '@/utils/auth'
 import { useI18n } from 'vue-i18n'
-const { t } = useI18n()
+import { useRoute } from 'vue-router'
+
 import store from '@/store'
+
+const { t } = useI18n()
+const route = useRoute()
 
 const props = defineProps({
   show: Boolean
@@ -158,11 +162,11 @@ const getIntoRoom = async () => {
   if (needTimer.value) {
     return
   }
-
+  const anchorId = route?.query?.anchorId || undefined
   const params = {
     gidm: matchInfo.value.gidm,
     systemId: matchInfo.value.systemId,
-    anchorId: undefined,
+    anchorId,
     version: '3.9.0'
   }
   const res: any = await intoRoom(params)
