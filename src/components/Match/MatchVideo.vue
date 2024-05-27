@@ -120,7 +120,7 @@ const initVideo = (url: string) => {
 
     player.on('waiting', () => {
       console.log('waiting', new Date().getTime())
-      // videoWaiting.value = true
+      videoWaiting.value = true
     })
 
     player.on('volumechange', (event: any) => {
