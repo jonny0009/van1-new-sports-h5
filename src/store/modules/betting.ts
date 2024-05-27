@@ -394,11 +394,12 @@ const bettingModule: Module<Betting, any> = {
            * 需要克隆新的对象,防止createBetItem污染原来的字段,因为createBetItem不是一个纯函数
            */
           const copyBet = JSON.parse(JSON.stringify(replaceBet))
-          replaceBet.betItem = createBetItem(copyBet)
+          replaceBet.betItem = createBetItem(copyBet, 2)
           replaceBet.ratioName = replaceBet.betItem
           const getRatioPlayInfo = getRatioPlay(copyBet)
           if (getRatioPlayInfo) {
             const { ratioParams1, ratioParams2, ratioTag } = getRatioPlayInfo
+            replaceBet.ratioTagState = !!ratioTag
             replaceBet.ratioTag = ratioTag
             replaceBet.ratioParams1 = ratioParams1
             replaceBet.ratioParams2 = ratioParams2

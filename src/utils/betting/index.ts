@@ -22,7 +22,7 @@ export const betParams = (bet: any) => {
     newBet.ratio1 = ratio || ratio1
   }
   newBet.type = 1
-  newBet.betItem = createBetItem(newBet)
+  newBet.betItem = createBetItem(newBet, 2)
   return newBet
 }
 
