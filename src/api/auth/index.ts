@@ -35,10 +35,10 @@ export const merchantConfig = () => {
  * @returns
  */
 export const moduleConfig = (params:any) => {
+  console.log(params)
   return request({
     url: '/ai/merchant/moduleConfig',
-    method: 'get',
-    params
+    method: 'get'
   })
 }
 /**
