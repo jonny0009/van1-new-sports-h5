@@ -91,13 +91,13 @@
                   <SvgIcon class="title-icon" :class="{ open: activeNames.includes('VIDEO') }" name="home-triangle" />
                 </div>
               </template>
-
               <van-list
                 v-if="videoLoading || shortVideos.length"
                 v-model:loading="videoLoading"
+                @load="videoLoad"
                 :finished="params1.page * params1.pageSize >= videoTotol && !videoLoading"
                 :finished-text="shortVideos.length == 0 ? '' : $t('live.noMore')"
-                class="list-group"
+                class="list-group video-list"
               >
                 <div
                   v-for="(video, index) in shortVideos"
@@ -134,7 +134,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, Ref, onBeforeMount, computed,queuePostFlushCb } from 'vue'
+import { reactive, ref, Ref, onBeforeMount, computed, queuePostFlushCb, nextTick } from 'vue'
 import ListItem from './ListItem.vue'
 import ShortVideo from './short-video/index.vue'
 import { anchorLiveList, getVideoGreet, nextAnchorMatchDate } from '@/api/live'
@@ -251,7 +251,7 @@ const onRefresh = () => {
   }
 
   if (['RB'].includes(navActive.value)) {
-    params1.value.page = 0
+    params1.value.page = 1
     if (!shortVideos.value.length) {
       getShortVideos()
     }
@@ -309,10 +309,10 @@ const comingSoon = async () => {
 }
 // 短视频
 const shortVideos: any = ref([])
-const videoLoading = ref(true)
+const videoLoading = ref(false)
 const videoTotol = ref(0)
 const params1 = ref({
-  page: 0,
+  page: 1,
   pageSize: 20
 })
 const getShortVideos = async () => {
@@ -320,7 +320,6 @@ const getShortVideos = async () => {
   if (videoTotol.value > 0 && params1.value.page * params1.value.pageSize >= videoTotol.value) {
     return false
   }
-  params1.value.page++
   if (params1.value.page === 1) {
     shortVideos.value.length = 0
   }
@@ -335,7 +334,9 @@ const getShortVideos = async () => {
     shortVideos.value.push(...vides)
   }
 }
-
+const videoLoad = () => {
+  videoLoading.value = false
+}
 const selectVideo = (video: any) => {
   FullScreenVideosRef.value.fullState = true
   FullScreenVideosRef.value.videoId = video.videoId
@@ -456,7 +457,8 @@ const stopTimer = () => {
     justify-content: space-between;
     padding: 0 35px;
 
-    :deep(.van-list__finished-text) {
+    :deep(.van-list__finished-text),
+    :deep(.van-list__loading) {
       width: 100%;
     }
 

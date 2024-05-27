@@ -56,6 +56,7 @@ const payEvent = (event:any) => {
 }
 
 const getUrl = (url: string) => {
+  store.commit('match/SET_LIVE_ROOM_PLAYING_URL', url)
   //  加载视频网页 不全是 m3u8
   urlHtml.value = ''
   if (url.indexOf('.html') > -1) {
@@ -120,7 +121,7 @@ const initVideo = (url: string) => {
 
     player.on('waiting', () => {
       console.log('waiting', new Date().getTime())
-      // videoWaiting.value = true
+      videoWaiting.value = true
     })
 
     player.on('volumechange', (event: any) => {

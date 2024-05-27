@@ -11,7 +11,8 @@ const matchModule: Module<Match, any> = {
     matchData: {},
     needTimer: false,
     turnSound: true,
-    sportsListArr: []
+    sportsListArr: [],
+    liveRoomPlayingUrl: ''
   },
 
   mutations: {
@@ -26,6 +27,9 @@ const matchModule: Module<Match, any> = {
     },
     SET_TURN_SOUND: (state, flag: boolean) => {
       state.turnSound = !flag
+    },
+    SET_LIVE_ROOM_PLAYING_URL: (state, url: string) => {
+      state.liveRoomPlayingUrl = url || ''
     }
   },
   actions: {

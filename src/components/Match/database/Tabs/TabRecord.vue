@@ -19,13 +19,13 @@
                 <section class="team">
                   <div class="team-host">
                     <span>{{ item.homeTeamAlias }}</span>
-                    <img v-img="item.homeLogo" :type="4" alt="" />
+                    <img v-img="item.homeIcon" :type="4" alt="" />
                   </div>
                   <div class="team-score">
                     <span>{{ `${item.homeTeamScore}:${item.awayTeamScore}` }}</span>
                   </div>
                   <div class="team-away">
-                    <img v-img="item.awayLogo" :type="5" alt="" />
+                    <img v-img="item.awayIcon" :type="5" alt="" />
                     <span>{{ item.awayTeamAlias }}</span>
                   </div>
                 </section>
