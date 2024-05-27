@@ -48,6 +48,16 @@ import { useI18n } from 'vue-i18n'
 
 const homeStyle = computed(() => store.state.app.homeStyle)
 const { t } = useI18n()
+const isShowCasino = computed(() => {
+  const moduleArr = store.state.app.moduleConfig.moduleList || []
+
+  const obj = moduleArr.find((item: any) => item.code === 'lucky7_casino')
+  if (obj) {
+    return obj.enable === 2
+  } else {
+    return true
+  }
+})
 
 // 经典 nav 去掉早盘 , 加入体育项
 const sportsList = computed(() => {
@@ -118,24 +128,21 @@ const homeStyleBarList = ref([
     icon: 'homeTime',
     text: t('home.latestMatch'),
     routerName: 'Sport'
-  },
-
-  {
-    icon: 'casino',
-    text: t('home.casino'),
-    routerName: 'Casino'
-  },
-  {
-    icon: 'casino',
-    text: t('home.casino'),
-    routerName: 'Casino'
   }
+
 ])
 
 // 获取bar
 const getBarList = () => {
   if (homeStyle.value === 2) {
     return homeStyleBarList.value
+  }
+  if (isShowCasino.value) {
+    homeBarList.value.push({
+      icon: 'casino',
+      text: t('home.casino'),
+      routerName: 'Casino'
+    })
   }
   return [...homeBarList.value, ...sportsList.value]
 }
