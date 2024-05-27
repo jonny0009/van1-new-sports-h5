@@ -33,7 +33,7 @@ const isShowCasino = computed(() => {
   const moduleArr = store.state.app.moduleConfig.moduleList || []
   const obj = moduleArr.find((item: any) => item.code === 'lucky7_casino')
   if (obj) {
-    return obj.enable === 2
+    return obj.enable === 1
   } else {
     return true
   }
