@@ -56,6 +56,7 @@ const payEvent = (event:any) => {
 }
 
 const getUrl = (url: string) => {
+  store.commit('match/SET_LIVE_ROOM_PLAYING_URL', url)
   //  加载视频网页 不全是 m3u8
   urlHtml.value = ''
   if (url.indexOf('.html') > -1) {
