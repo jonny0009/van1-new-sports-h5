@@ -34,6 +34,7 @@ service.interceptors.request.use(
     config.headers.lang = localStorage.getItem('locale') || getBrowserLanguage()
     config.headers.apiVer = '4.11'
     config.headers.groupId = groupId
+
     if (config.method === 'post') {
       if (noGroupId.indexOf(config.url) < 0) {
         config.data = config.data || {}
@@ -42,10 +43,9 @@ service.interceptors.request.use(
     } else if (config.method === 'get') {
       if (noGroupId.indexOf(config.url) < 0) {
         config.params = config.params || {}
-        config.params = Object.assign({}, { groupId }, config.params)
+        config.params = Object.assign({}, { groupId, date: new Date().getTime() }, config.params)
       }
     }
-
     return config
   },
   (error: any) => Promise.reject(error)
