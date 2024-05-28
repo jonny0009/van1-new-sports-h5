@@ -29,15 +29,17 @@ import store from '@/store'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
-const isShowCasino = computed(() => {
-  const moduleArr = store.state.app.moduleConfig.moduleList || []
-  const obj = moduleArr.find((item: any) => item.code === 'lucky7_casino')
-  if (obj) {
-    return obj.enable === 1
-  } else {
-    return true
-  }
+const moduleList = computed(() => {
+  return store.state.app.moduleConfig.moduleList || []
 })
+const isShowCasino = ref(false)
+
+if (moduleList.value.length) {
+  const obj = moduleList.value.find((item: any) => item.code === 'lucky7_casino')
+  if (obj.code) {
+    isShowCasino.value = obj.enable === 1
+  }
+}
 
 // 热门 Live 直播  今日  早盘 赌场
 
@@ -81,7 +83,6 @@ const homeBarList = computed(() => {
   }
   return arr
 })
-// const homeBarList = ref()
 
 const goClick = ({ routerName }: any) => {
   store.dispatch('user/getLocationHeight', false)
