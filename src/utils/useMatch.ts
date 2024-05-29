@@ -1,4 +1,4 @@
-import { Ref, ref } from 'vue'
+import { ref, reactive, queuePostFlushCb } from 'vue'
 import i18n from '@/lang/index'
 import { dateFormat } from '@/utils/date'
 import { getScore } from '@/utils/home/getScore'
@@ -31,17 +31,36 @@ const sectionMap: any = {
 }
 
 export function useMatch() {
-  const currBkTime: Ref<any> = ref('')
-
+  interface TimeDataItem {
+    currTime: number;
+    seNow: string;
+    timer: any;
+  }
+  const timeData = reactive<{ [key: string]: TimeDataItem }> ({
+    FT: {
+      currTime: 0,
+      seNow: '',
+      timer: null
+    },
+    BK: {
+      currTime: 0,
+      seNow: '',
+      timer: null
+    }
+  })
+  stopTimer()
   const BKSection = (section: any) => {
     return sectionMap[section]
   }
-
   function showRBTime(raceinfo: any = {}) {
     const { showtype, gameType, gameInfo, showType, homeTeamSuffix, gidm } = raceinfo
     const Obj = opScoreObj(gameInfo, 5)
     const seNow: any = gameInfo && gameInfo.se_now
     if (showtype === 'RB' || showType === 'RB') {
+      queuePostFlushCb(() => {
+        // 在此处放置需要异步执行的代码
+        showSportTime(raceinfo)
+      })
       switch (gameType) {
         // 足球
         case 'FT':
@@ -86,10 +105,9 @@ export function useMatch() {
             const [secssion, raceTime] = gameInfo.re_time.split('^')
             let newRaceTimeVal = ''
             if (raceTime.indexOf("'") > -1) {
-              const [newRaceTime] = raceTime.split("'")
-              newRaceTimeVal = `${newRaceTime}<span class="time-h-dot">'</span>`
+              newRaceTimeVal = `${convertToMinAndSec(timeData.FT.currTime)}<span class="time-h-dot">'</span>`
             } else {
-              newRaceTimeVal = raceTime
+              newRaceTimeVal = `${convertToMinAndSec(timeData.FT.currTime)}`
             }
             // 上半场and下半场
             return secssion === '1H'
@@ -143,11 +161,11 @@ export function useMatch() {
           }
           if (gameInfo?.se_now.indexOf('OT') > -1 || gameInfo?.se_now.indexOf('ot') > -1) {
             // 加时
-            return `加时<span>${dateFormat(currBkTime.value * 1000, 'mm:ss')}</span>`
+            return `加时<span>${dateFormat(timeData.BK.currTime * 1000, 'mm:ss')}</span>`
           }
-          return seNow && currBkTime
-            ? `${BKSection(gameInfo?.se_now)}&nbsp;<span>${dateFormat(currBkTime.value * 1000, 'mm:ss')}</span>`
-            : !currBkTime.value && seNow
+          return seNow && timeData.BK.currTime
+            ? `${BKSection(gameInfo?.se_now)}&nbsp;<span>${dateFormat(timeData.BK.currTime * 1000, 'mm:ss')}</span>`
+            : !timeData.BK.currTime && seNow
             ? `${BKSection(gameInfo.se_now)}&nbsp;<span>00:00</span>`
             : ''
         //
@@ -197,8 +215,68 @@ export function useMatch() {
       // 原本data显示空
       return t('live.inprogress')
     } else {
+      stopTimer()
       // 原本data显示空
       return t('live.notstarted')
+    }
+  }
+
+  function convertToMinAndSec(seconds: number) {
+    if (!seconds) return
+    const min = Math.floor(seconds / 60)
+    const sec = seconds % 60
+
+    return `${min}:${String(sec).padStart(2, '0')}`
+  }
+
+  interface RaceInfo {
+    gameType?: string
+    gameInfo?: any
+  }
+
+  function showSportTime(raceinfo: RaceInfo = {}) {
+    const { gameType, gameInfo } = raceinfo
+    const validGameTypes = ['BK', 'FT']
+    if (!gameInfo || !gameType || !validGameTypes.includes(gameType)) {
+      stopTimer()
+      return
+    }
+    if (!+gameInfo.t_count) {
+      timeData[gameType].currTime = 0
+      stopTimer(gameType)
+      return
+    }
+    if (timeData[gameType].seNow !== gameInfo.se_now) {
+      timeData[gameType].seNow = gameInfo.se_now
+      timeData[gameType].currTime = +gameInfo.t_count
+    }
+    if (timeData[gameType].currTime >= +gameInfo.t_count && timeData[gameType].currTime > 0) {
+      timeData[gameType].currTime = +gameInfo.t_count
+      stopTimer(gameType)
+      timeData[gameType].timer = setInterval(() => {
+        timeData[gameType].currTime = timeData[gameType].currTime - 1
+        if (timeData[gameType].currTime <= 0) {
+          timeData[gameType].currTime = 0
+          stopTimer(gameType)
+        }
+      }, 1000)
+    }
+  }
+
+  // 清除定时器
+  function stopTimer(type?: string) {
+    if (type) {
+      clearInterval(timeData[type].timer)
+      timeData[type].timer = null
+    }
+    else {
+      for (const key in timeData) {
+        if (Object.prototype.hasOwnProperty.call(timeData, key)) {
+          const { timer } = timeData[key]
+          clearInterval(timer)
+          timeData[key].timer = null
+        }
+      }
     }
   }
 

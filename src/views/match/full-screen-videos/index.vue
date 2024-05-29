@@ -21,7 +21,7 @@
         @swiper="setControlledSwiper"
       >
         <swiper-slide class="slide-box" v-for="(video, index) in shortVideos" :key="video.videoId">
-          <video-info v-if="fullState" :videoInfo="video" :active="curIndex === index" @close="close"></video-info>
+          <video-info :show="fullState" :videoInfo="video" :active="curIndex === index" @close="close"></video-info>
         </swiper-slide>
       </swiper>
       <BettingSlip
@@ -42,7 +42,6 @@ import videoInfo from './videoInfo.vue'
 import 'swiper/swiper-bundle.css'
 import { Controller } from 'swiper/modules'
 import store from '@/store'
-import screenfull from 'screenfull'
 
 const props = defineProps({
   shortVideos: {
@@ -67,11 +66,6 @@ watch(
       key: 'bettingSlipState',
       value: !fullState.value
     })
-
-    if (fullState.value) {
-      const html = document.documentElement
-      screenfull.toggle(html)
-    }
   }
 )
 watch(
@@ -101,11 +95,6 @@ const open = async () => {
 }
 
 const close = async () => {
-  try {
-    await screenfull.exit()
-  } catch (error) {
-    console.log(error)
-  }
   fullState.value = false
 }
 

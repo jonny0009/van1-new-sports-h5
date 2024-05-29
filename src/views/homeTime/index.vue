@@ -1,7 +1,7 @@
 <template>
-  <div class="homeTime-page" ref="newContainer">
+  <div ref="newContainer" class="homeTime-page">
     <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
-      <SportsTabs ref="refSportsTabs" class="pb10" @returnSportsSuccess="returnSportsSuccess" :ifCountNum="false">
+      <SportsTabs ref="refSportsTabs" class="pb10" :if-count-num="false" @returnSportsSuccess="returnSportsSuccess">
         <template #body>
           <div class="mt10">
             <tabsTime

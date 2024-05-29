@@ -2,11 +2,11 @@
   <div class="table-info-component" @click="goToGame">
     <div class="content">
       <div class="table-cover">
-        <img :src="cover" @error="errorState = true" style="object-fit: contain" />
+        <img :src="cover" style="object-fit: contain" @error="errorState = true" />
       </div>
       <div class="table-road-list">
-        <div class="road-col" v-for="(item, index) in wins" :key="index">
-          <div class="road-item" v-for="(win, index) in item" :key="index">
+        <div v-for="(item, index) in wins" :key="index" class="road-col">
+          <div v-for="(win, index) in item" :key="index" class="road-item">
             <span class="round" :class="win"></span>
           </div>
         </div>
@@ -173,12 +173,18 @@ const goToGame = async () => {
   if (gres?.code === 200) {
     closeToast()
     const gameUrl = gres.data['url'].replace('&isAi=1', '')
-    const lang = localStorage.getItem('locale') || getBrowserLanguage()
+    const lang = getLang()
     const herf = `${gameUrl}&source=7lucky&hasLive=1&language=${lang}&brandType=${brandType}&tableId=${tableId}&sourceUrl=${encodeURIComponent(
       window.location.href
     )}`
     window.location.href = herf
   }
+}
+
+const getLang = () => {
+  const lang = localStorage.getItem('locale') || getBrowserLanguage()
+  if (lang === 'zh-sg') return 'zh-tw'
+  return lang
 }
 </script>
 <style lang="scss" scoped>
@@ -203,15 +209,16 @@ const goToGame = async () => {
       margin: auto;
       z-index: 1;
       right: 16px;
-      width: 100px;
-      height: 100px;
+      width: 112.5px;
+      height: 112.5px;
       background-repeat: no-repeat;
       background-size: contain;
       background-image: url(@/assets/images/casino/road-bg.png);
+      text-align: center;
 
       .title-1 {
-        line-height: 24px;
-        font-size: 24px;
+        line-height: 22px;
+        font-size: 22px;
         font-family: JueJiangHei;
         color: rgb(254, 55, 101);
       }

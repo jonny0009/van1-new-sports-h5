@@ -29,42 +29,60 @@ import store from '@/store'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
-// 热门 Live 直播  今日  早盘 赌场
-const homeBarList = ref([
-  {
-    icon: 'live',
-    text: t('home.live'),
-    routerName: 'Match',
-    meta: {
-      showSportsTabsView: true
-    }
-  },
-  {
-    icon: 'home',
-    text: t('home.hot'),
-    routerName: 'Home'
-  },
-  {
-    icon: 'sportlive',
-    text: t('sport.sports.RB'),
-    routerName: 'Sportlive'
-  },
-  {
-    icon: 'today',
-    text: t('home.todayUpcoming'),
-    routerName: 'sportToday'
-  },
-  {
-    icon: 'homeTime',
-    text: t('home.latestMatch'),
-    routerName: 'Sport'
-  },
-  {
-    icon: 'casino',
-    text: t('home.casino'),
-    routerName: 'Casino'
+const moduleList = computed(() => {
+  return store.state.app.moduleConfig.moduleList || []
+})
+const isShowCasino = ref(false)
+
+if (moduleList.value.length) {
+  const obj = moduleList.value.find((item: any) => item.code === 'lucky7_casino')
+  if (obj.code) {
+    isShowCasino.value = obj.enable === 1
   }
-])
+}
+
+// 热门 Live 直播  今日  早盘 赌场
+
+const homeBarList = computed(() => {
+  const arr = [
+    {
+      icon: 'live',
+      text: t('home.live'),
+      routerName: 'Match',
+      meta: {
+        showSportsTabsView: true
+      }
+    },
+    {
+      icon: 'home',
+      text: t('home.hot'),
+      routerName: 'Home'
+    },
+    {
+      icon: 'sportlive',
+      text: t('sport.sports.RB'),
+      routerName: 'Sportlive'
+    },
+    {
+      icon: 'today',
+      text: t('home.todayUpcoming'),
+      routerName: 'sportToday'
+    },
+    {
+      icon: 'homeTime',
+      text: t('home.latestMatch'),
+      routerName: 'Sport'
+    }
+  ]
+  if (isShowCasino.value) {
+    arr.push({
+      icon: 'casino',
+      text: t('home.casino'),
+      routerName: 'Casino'
+    })
+  }
+  return arr
+})
 
 const goClick = ({ routerName }: any) => {
   store.dispatch('user/getLocationHeight', false)

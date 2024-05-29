@@ -22,13 +22,13 @@
           <van-collapse v-model="activeNames">
             <!-- 热门视频 -->
             <van-collapse-item
+              v-if="!['SORTVIDEO'].includes(navActive)"
               :is-link="false"
               class="collapse-item"
               name="HOT"
-              v-if="!['SORTVIDEO'].includes(navActive)"
             >
               <template #title>
-                <div class="title-group" v-if="nav.type === 'RB'">
+                <div v-if="nav.type === 'RB'" class="title-group">
                   <SvgIcon class="first-icon" name="home-hot-match" />
                   <span class="title">{{ $t('home.hotMatchTitle') }}</span>
                   <SvgIcon class="title-icon" name="home-triangle" :class="{ open: activeNames.includes('HOT') }" />
@@ -41,7 +41,7 @@
                 <p v-html="$t('live.nextAM', { num: countTime })"></p>
               </div>
 
-              <EmptyData v-if="(!loading && list.length === 0) || (list.length === 0 && time < 0 && !loading)" />
+              <EmptyData v-else-if="(!loading && list.length === 0) || (list.length === 0 && time < 0 && !loading)" />
               <van-list v-model:loading="loading" :finished="!loading">
                 <div class="grid-wrapper">
                   <div v-for="item in list" :key="item.gidm" class="flex-item">
@@ -53,10 +53,10 @@
 
             <!-- 即将播放 -->
             <van-collapse-item
+              v-if="comingSoonList.length && nav.type === 'RB'"
               :is-link="false"
               class="collapse-item"
               name="ComingSoon"
-              v-if="comingSoonList.length && nav.type === 'RB'"
             >
               <template #title>
                 <div class="title-group">
@@ -79,10 +79,10 @@
 
             <!-- 短视频 -->
             <van-collapse-item
+              v-if="['RB'].includes(navActive) && nav.type === 'RB'"
               :is-link="false"
               class="collapse-item"
               name="VIDEO"
-              v-if="['RB'].includes(navActive) && nav.type === 'RB'"
             >
               <template #title>
                 <div class="title-group">
@@ -91,19 +91,18 @@
                   <SvgIcon class="title-icon" :class="{ open: activeNames.includes('VIDEO') }" name="home-triangle" />
                 </div>
               </template>
-
               <van-list
+                v-if="videoLoading || shortVideos.length"
                 v-model:loading="videoLoading"
+                @load="videoLoad"
                 :finished="params1.page * params1.pageSize >= videoTotol && !videoLoading"
                 :finished-text="shortVideos.length == 0 ? '' : $t('live.noMore')"
-                @load="getShortVideos"
-                class="list-group"
-                v-if="videoLoading || shortVideos.length"
+                class="list-group video-list"
               >
                 <div
-                  class="group-item-box"
                   v-for="(video, index) in shortVideos"
                   :key="index"
+                  class="group-item-box"
                   @click="selectVideo(video)"
                 >
                   <img v-img="video.videoImg" class="bg" :errorImg="liveBgError" type="1" alt="" />
@@ -122,7 +121,7 @@
             <!-- 短视频 -->
             <ShortVideo
               v-if="['SORTVIDEO'].includes(navActive) && nav.type === 'SORTVIDEO' && !refreshing"
-              :shortVideos="shortVideos"
+              :short-videos="shortVideos"
               @selectVideo="selectVideo"
             ></ShortVideo>
           </van-collapse>
@@ -130,12 +129,12 @@
       </van-tabs>
     </van-pull-refresh>
 
-    <full-screen-videos ref="FullScreenVideosRef" :shortVideos="shortVideos"></full-screen-videos>
+    <full-screen-videos ref="FullScreenVideosRef" :short-videos="shortVideos"></full-screen-videos>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, Ref, onBeforeMount, computed } from 'vue'
+import { reactive, ref, Ref, onBeforeMount, computed, queuePostFlushCb, nextTick } from 'vue'
 import ListItem from './ListItem.vue'
 import ShortVideo from './short-video/index.vue'
 import { anchorLiveList, getVideoGreet, nextAnchorMatchDate } from '@/api/live'
@@ -144,10 +143,12 @@ import { useI18n } from 'vue-i18n'
 import store from '@/store'
 import liveBgError from '@/assets/images/empty/live-bg-error.svg?url'
 import FullScreenVideos from './full-screen-videos/index.vue'
+
 onBeforeMount(() => {
   onRefresh()
 })
 
+const controller = new AbortController()
 const FullScreenVideosRef = ref()
 const activeNames = ref(['HOT', 'ComingSoon', 'VIDEO'])
 const showFixedBet = computed(() => store.state.app.showFixedBet)
@@ -156,6 +157,7 @@ const navList = reactive([
   { type: 'RB', title: t('live.hot'), iconName: 'live-hot' },
   { type: 'FT', title: t('live.football'), iconName: 'live-football' },
   { type: 'BK', title: t('live.basketball'), iconName: 'live-basketball' },
+  { type: 'BS', title: t('sport.sports.BS'), iconName: 'live-basketball' },
   { type: 'TN', title: t('live.tennisball'), iconName: 'live-tennisball' },
   { type: 'OP_BM', title: t('live.badminton'), iconName: 'live-badminton' },
   { type: 'SORTVIDEO', title: t('home.shortVideoTitle'), iconName: 'live-badminton' }
@@ -165,7 +167,7 @@ const navActive = ref('RB')
 const time = ref(-1)
 const countTime = ref('')
 
-let timer: any = reactive({})
+let timer: any = ref(null)
 
 const list: Ref<any[]> = ref([])
 const loading = ref(true)
@@ -201,11 +203,10 @@ const onLoad = async () => {
       if (res1.code === 200 && res1.data) {
         if (res1.data > res1.systemTime) {
           time.value = res1.data - res1.systemTime
-          timer = setInterval(() => {
-            time.value -= 1000
-            time.value === 0 && clearInterval(timer)
-            countDown()
-          }, 1000)
+          stopTimer()
+          queuePostFlushCb(() => {
+            countDownTimeNum()
+          })
           return
         }
       }
@@ -221,7 +222,21 @@ const onLoad = async () => {
   }
 }
 const onChangeTabs = () => {
+  controller.abort()
+  if (navActive.value.includes('RB')) {
+    activeNames.value = ['HOT', 'ComingSoon', 'VIDEO']
+  } else {
+    activeNames.value = ['HOT']
+  }
   onRefresh()
+}
+
+const countDownTimeNum = () => {
+  timer.value = setInterval(() => {
+    time.value -= 1000
+    time.value === 0 && clearInterval(timer.value)
+    countDown()
+  }, 1000)
 }
 
 const onRefresh = () => {
@@ -236,7 +251,7 @@ const onRefresh = () => {
   }
 
   if (['RB'].includes(navActive.value)) {
-    params1.value.page = 0
+    params1.value.page = 1
     if (!shortVideos.value.length) {
       getShortVideos()
     }
@@ -247,13 +262,21 @@ const onRefresh = () => {
 }
 
 const onItemClick = (item: any) => {
-  router.push(`/match/${item.gidm}`)
+  const query: any = {}
+  if (item.anchorId) {
+    query.anchorId = item.anchorId
+  }
+  if (item.m3u8) {
+    query.m3u8 = item.m3u8
+  }
+
+  router.push({ name: 'MatchDetail', params: { id: item.gidm }, query })
   store.dispatch('app/setMatchLiveIndex', 1)
 }
 
 const countDown = () => {
   if (time.value < 0) {
-    clearInterval(timer)
+    stopTimer()
     onRefresh()
     return
   }
@@ -286,18 +309,17 @@ const comingSoon = async () => {
 }
 // 短视频
 const shortVideos: any = ref([])
-const videoLoading = ref(true)
+const videoLoading = ref(false)
 const videoTotol = ref(0)
 const params1 = ref({
-  page: 0,
-  pageSize: 10
+  page: 1,
+  pageSize: 20
 })
 const getShortVideos = async () => {
   videoLoading.value = true
   if (videoTotol.value > 0 && params1.value.page * params1.value.pageSize >= videoTotol.value) {
     return false
   }
-  params1.value.page++
   if (params1.value.page === 1) {
     shortVideos.value.length = 0
   }
@@ -312,10 +334,16 @@ const getShortVideos = async () => {
     shortVideos.value.push(...vides)
   }
 }
-
+const videoLoad = () => {
+  videoLoading.value = false
+}
 const selectVideo = (video: any) => {
   FullScreenVideosRef.value.fullState = true
   FullScreenVideosRef.value.videoId = video.videoId
+}
+const stopTimer = () => {
+  clearInterval(timer.value)
+  timer.value = null
 }
 </script>
 
@@ -429,7 +457,8 @@ const selectVideo = (video: any) => {
     justify-content: space-between;
     padding: 0 35px;
 
-    :deep(.van-list__finished-text) {
+    :deep(.van-list__finished-text),
+    :deep(.van-list__loading) {
       width: 100%;
     }
 

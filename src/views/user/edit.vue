@@ -8,7 +8,7 @@
     </van-nav-bar>
     <div class="content">
       <div class="top1">
-        <span>{{ $t('user.userName') }}</span>
+        <span>{{ $t('user.account') }}</span>
         <span class="font2">{{ userInfo.nickName }}</span>
       </div>
       <div class="top1">
@@ -85,7 +85,7 @@ const popupIndex = ref(0)
 const popupList = reactive<{ arr: any[] }>({ arr: [] })
 
 const { t } = useI18n()
-const title = ref(t('user.account'))
+const title = ref(t('user.edit'))
 const $router = useRouter()
 
 const plateMaskKey: any = localStore.getItem('plateMaskKey') || ''
@@ -245,7 +245,8 @@ function getLangs() {
 
   .pk-list {
     padding-top: 30px;
-
+    max-height: 600px;
+    overflow: auto;
     .item {
       font-size: 26px;
       color: var(--color-user-pop-up-text-color);

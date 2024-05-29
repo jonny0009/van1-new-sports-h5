@@ -69,7 +69,7 @@ const appModule: Module<App, any> = {
       }
     },
     async moduleConfig({ state }) {
-      const res: any = (await moduleConfig()) || {}
+      const res: any = (await moduleConfig({modeType: 4})) || {}
       if (res.code === 200) {
         state.moduleConfig = res.data || {}
       }

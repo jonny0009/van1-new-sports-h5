@@ -94,12 +94,31 @@ const props = defineProps({
   active: {
     type: Boolean,
     default: false
+  },
+  show: {
+    type: Boolean,
+    default: false
   }
 })
 watch(
   () => props.active,
   async () => {
-    if (props.active) {
+    if (props.active && props.show) {
+      if (player) {
+        player && player.play()
+      } else {
+        getMainMatches()
+        initVideo()
+      }
+    } else {
+      player && player.pause()
+    }
+  }
+)
+watch(
+  () => props.show,
+  async () => {
+    if (props.active && props.show) {
       if (player) {
         player && player.play()
       } else {
@@ -180,7 +199,7 @@ const getMainMatches = async () => {
 }
 
 onMounted(() => {
-  if (props.active) {
+  if (props.active && props.show) {
     initVideo()
     getMainMatches()
   }
@@ -262,6 +281,8 @@ const initVideo = () => {
   })
 }
 const disposePlayer = () => {
+  console.log(13)
+  player && player.paused()
   player && player.dispose()
   player = null
 }

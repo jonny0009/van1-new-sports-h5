@@ -11,7 +11,7 @@
         :scrollable="false"
         @click-tab="goClick"
       >
-        <van-tab v-for="(item, index) in getBarList()" :key="index" :name="item.routerName">
+        <van-tab v-for="(item, index) in getBarList" :key="index" :name="item.routerName">
           <template #title>
             <div class="tabs-cut-1">
               <div
@@ -47,6 +47,18 @@ import store from '@/store'
 import { useI18n } from 'vue-i18n'
 
 const homeStyle = computed(() => store.state.app.homeStyle)
+const moduleList = computed(() => {
+  return store.state.app.moduleConfig.moduleList || []
+})
+const isShowCasino = ref(false)
+
+if (moduleList.value.length) {
+  const obj = moduleList.value.find((item: any) => item.code === 'lucky7_casino')
+  if (obj.code) {
+    isShowCasino.value = obj.enable === 1
+  }
+}
+
 const { t } = useI18n()
 
 // 经典 nav 去掉早盘 , 加入体育项
@@ -71,6 +83,19 @@ const sportsList = computed(() => {
 
   return newSportsB
 })
+
+// const isShowCasino = computed(() => {
+//   const moduleArr = store.state.app.moduleConfig.moduleList || []
+//   if (moduleArr.length) {
+//     const obj = moduleArr.find((item: any) => item.code === 'lucky7_casino')
+//     console.log(obj, '---')
+//     if (obj) {
+//       return obj.enable === 1
+//     }
+//   }
+
+//   return false
+// })
 
 // 热门 Live 直播  今日  早盘 赌场
 const homeBarList = ref([
@@ -118,21 +143,26 @@ const homeStyleBarList = ref([
     icon: 'homeTime',
     text: t('home.latestMatch'),
     routerName: 'Sport'
-  },
-  {
-    icon: 'casino',
-    text: t('home.casino'),
-    routerName: 'Casino'
   }
+
 ])
 
 // 获取bar
-const getBarList = () => {
+const getBarList = computed(() => {
   if (homeStyle.value === 2) {
     return homeStyleBarList.value
   }
-  return [...homeBarList.value, ...sportsList.value]
+  if (isShowCasino.value) {
+    return [...homeBarList.value, {
+      icon: 'casino',
+      text: t('home.casino'),
+      routerName: 'Casino'
+    }, ...sportsList.value]
+  } else {
+    return [...homeBarList.value, ...sportsList.value]
+  }
 }
+)
 
 const goClick = (val: any) => {
   store.dispatch('user/getLocationHeight', false)

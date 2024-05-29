@@ -7,21 +7,25 @@
             <!-- start -->
             <div class="panel-recent">
               <div class="recent-header">
-                <div class="header-item" :class="{ active: teamType === 1 }" @click="fetchRecent(1)">{{ home }}</div>
-                <div class="header-item" :class="{ active: teamType === 2 }" @click="fetchRecent(2)">{{ away }}</div>
+                <div class="header-item home" :class="{ active: teamType === 1 }" @click="fetchRecent(1)">
+                  {{ home }}
+                </div>
+                <div class="header-item away" :class="{ active: teamType === 2 }" @click="fetchRecent(2)">
+                  {{ away }}
+                </div>
               </div>
               <div class="panel-recent__item" v-if="recentList.length" v-for="item in recentList" :key="item.matchId">
                 <div :class="['bar', 'host', barScoreColor(item, 'home')]"></div>
                 <section class="team">
                   <div class="team-host">
                     <span>{{ item.homeTeamAlias }}</span>
-                    <img v-img="item.homeLogo" :type="4" alt="" />
+                    <img v-img="item.homeIcon" :type="4" alt="" />
                   </div>
                   <div class="team-score">
                     <span>{{ `${item.homeTeamScore}:${item.awayTeamScore}` }}</span>
                   </div>
                   <div class="team-away">
-                    <img v-img="item.awayLogo" :type="5" alt="" />
+                    <img v-img="item.awayIcon" :type="5" alt="" />
                     <span>{{ item.awayTeamAlias }}</span>
                   </div>
                 </section>
@@ -189,9 +193,15 @@ const barScoreColor = (item: any, type: string) => {
       color: #fff;
       font-family: PingFangSC-Medium;
       border-radius: 25px;
-      background-color: rgba(72, 163, 255, 0.24);
+      opacity: 0.5;
+      &.home {
+        background-color: #0688f9;
+      }
+      &.away {
+        background-color: #f80563;
+      }
       &.active {
-        background-color: rgb(255, 92, 36);
+        opacity: 1;
       }
     }
   }

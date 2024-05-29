@@ -55,7 +55,7 @@ export default {
   comingSoonTitle: '遊びに来ます',
   shortVideoTitle: 'ショートビデオ',
   casinoTitleObj: {
-    title1: '良い道路の推奨事項',
+    title1: 'Good road',
     title2: 'ライブバカラ',
     title3: 'カジノはメンテナンス中です...',
     title4: '推定メンテナンスカウントダウン',
@@ -69,10 +69,11 @@ export default {
     tips3: 'ウェブサイトはメンテナンス中です',
     tips4: '再開までのカウントダウン'
   },
+  miBet: 'Private table',
   mulBet: '複数ベット',
   baccarat: {
     连庄: 'B Dragon',
-    单跳: 'PingPong',
+    单跳: 'Ping Pong',
     '{n1}房{n2}厅': '{n1}P{n2}B',
     双龙汇: '2Dragon',
     上坡路: 'Uphill',
@@ -82,9 +83,8 @@ export default {
     逢闲连: 'RowP',
     逢庄跳: 'BHop',
     逢闲跳: 'PHop',
-    隔连庄: 'Separate B',
-    隔连闲: 'Separate P',
-    双跳: '2PingPong'
+    隔连庄: 'SEP B',
+    隔连闲: 'SEP P',
+    双跳: '2Ping Pong'
   }
-
 }

@@ -16,7 +16,7 @@
             </div>
             <div class="right">
               <div class="head">
-                <div class="head_1" @click.self="toUser('/userInfo')"> {{ $t('user.ViewProfile') }} </div>
+                <div class="head_1" @click.self="toUser('/userInfo')"> {{ $t('user.personalProfile') }} </div>
                 <img
                   v-if="ifBLue"
                   class="headImg_1"
@@ -81,7 +81,7 @@
           <div class="menu" @click="toUser('/contactUs')">
             <img v-if="ifBLue" class="menu_1" fit="contain" src="@/assets/images/user/blue/sever.png" />
             <img v-else class="menu_1" fit="contain" src="@/assets/images/user/icon2.svg" />
-            <div class="menu_2">{{ $t('user.customer') }}</div>
+            <div class="menu_2">{{ $t('user.contactUs') }}</div>
           </div>
         </div>
         <!-- logo -->

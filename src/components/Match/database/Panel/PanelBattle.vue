@@ -23,7 +23,7 @@
         :class="[`col-${i + 1}`, 'flex', i === 0 ? 'flex-around' : 'flex-between']"
       >
         <div class="col-team" v-for="item in awayTeams[i]" :key="item.playerId">
-          <div class="nums">
+          <div class="nums nums--away">
             <span>{{ item.shirtNumber }}</span>
           </div>
           <div class="name">{{ item.playerName }}</div>
@@ -36,8 +36,8 @@
 <script setup lang="ts">
 // import FtBg from '@/assets/images/live/ft_bg.svg'
 // import BkBg from '@/assets/images/live/bk_bg.svg'
-import FtBg from '@/assets/images/live/ft_bg.png';
-import BkBg from '@/assets/images/live/bk_bg.png';
+import FtBg from '@/assets/images/live/ft_bg.png'
+import BkBg from '@/assets/images/live/bk_bg.png'
 import { computed } from 'vue'
 import store from '@/store'
 
@@ -109,6 +109,9 @@ const chunkCell = (data: any[], size: number) => {
         text-align: center;
         color: #fff;
         line-height: 46px;
+      }
+      &--away {
+        background-image: url('@/assets/images/live/ball_red.png');
       }
     }
     .name {

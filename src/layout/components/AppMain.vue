@@ -21,7 +21,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onActivated } from 'vue'
+import { defineComponent, onActivated, onMounted } from 'vue'
 export default defineComponent({
   name: 'AppMain'
 })
@@ -38,6 +38,9 @@ const getComponent = (Component: any, route: any) => {
   }
   return Component
 }
+onMounted(() => {
+  transitionName.value = 'fade-right'
+})
 // 缓存触发组件
 onActivated(() => {})
 defineExpose({

@@ -54,6 +54,11 @@ const props = defineProps({
   ifCountNum: {
     type: Boolean,
     default: () => true
+  },
+  // 赛果
+  ifMatchResult: {
+    type: Boolean,
+    default: () => false
   }
 })
 
@@ -96,6 +101,9 @@ const sportsList = computed(() => {
   }
 
   const newSportsA = sports.filter((e: any) => {
+    if (props.ifMatchResult) {
+      return !['SY', 'RB', 'COMBO', 'JC', 'XNFT', 'XNBK'].includes(e.gameType) && e.gameCount
+    }
     return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.gameCount
   })
   let newSportsB: any = []
@@ -118,7 +126,7 @@ const sportsList = computed(() => {
   if (props.ifSportToday) {
     return [allItem, ...newSportsB]
   }
-  return newSportsB
+  return newSportsB.filter((i: any) => i.gameCount)
 })
 defineExpose({
   active,

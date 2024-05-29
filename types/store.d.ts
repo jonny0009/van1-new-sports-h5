@@ -85,6 +85,7 @@ declare interface Match {
   needTimer: boolean
   turnSound: boolean
   sportsListArr: any
+  liveRoomPlayingUrl: string
 }
 
 declare module '@vue/runtime-core' {

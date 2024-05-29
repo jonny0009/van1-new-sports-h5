@@ -325,11 +325,17 @@ export const getRatioPlay = (betInfo: any) => {
     regStr = ratio1 || ratio
   }
 
-  const regStrSplit = regStr.split('{ratio}')
+  const regStrSplit = regStr?.split('{ratio}')
 
-  if (regStrSplit.length > 1) {
+  if (regStrSplit?.length > 1) {
     const [params1, params2] = regStrSplit
-    const ratioTag = isStrong(betInfo)
+
+    let retioStr = ratio + ''
+    // 判断球头是否已经有强弱队标识并且有/的未完全转换盘口
+    if (retioStr.includes('+') || retioStr.includes('-')) {
+      retioStr = retioStr.replace(/(\+)|(-)/g, '')
+    }
+    const ratioTag = isStrong({ ...betInfo, ratio: retioStr }, 2)
     let ratioParams1 = ''
     let ratioParams2 = ''
     if (ratioParams2) {
@@ -347,6 +353,27 @@ export const getRatioPlay = (betInfo: any) => {
   }
 
   return false
+}
+export const getBetRatioToNumber = (ratio: any) => {
+  if (!ratio) {
+    return ratio
+  }
+  let retioStr = ratio.toString()
+
+  // 判断球头是否已经有强弱队标识并且有/的未完全转换盘口
+  if (retioStr.includes('+') || retioStr.includes('-')) {
+    retioStr = retioStr.replace(/(\+)|(-)/g, '')
+  }
+
+  if (typeof retioStr === 'string') {
+    retioStr = retioStr.replace(/O|U/g, '')
+    // 判断盘口是否有/，有的话拆分相加除以2
+    if (retioStr.indexOf('/') > -1) {
+      const [m, n] = retioStr.split('/')
+      retioStr = (m * 1 + n * 1) / 2
+    }
+  }
+  return retioStr
 }
 // 处理视频
 export const liveVideo = (streamNa: any) => {

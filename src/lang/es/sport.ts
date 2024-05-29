@@ -1,11 +1,11 @@
 export default {
-  'chooseLeague': 'Seleccionar liga',
-  'all': 'todo',
-  'recommend': 'recomendar',
-  'early': 'Comercio matutino',
-  'champion': 'Apuestas de campeones',
-  'close': 'cerca',
-  'more': 'Más',
+  chooseLeague: 'Seleccionar liga',
+  all: 'todo',
+  recommend: 'recomendar',
+  early: 'Comercio matutino',
+  champion: 'Apuestas de campeones',
+  close: 'cerca',
+  more: 'Más',
   sports: {
     all: 'todo',
     officeNumber: 'número de oficina',
@@ -55,6 +55,9 @@ export default {
     OP_BS: 'futbol playa',
     OP_WS: 'Deportes de invierno',
     OP_BD: 'pelota de hockey',
-    AH: 'Ancla'
+    AH: 'Ancla',
+    // 新增
+    XNFT: 'Sanal futbol',
+    XNBK: 'Sanal Basketbol'
   }
 }

@@ -18,7 +18,7 @@ import { betComboOrder, comboBetting, moreBetting, morePW } from '@/api/betting'
 import lang from '@/lang'
 import { createBetItem, lib } from 'xcsport-lib'
 import { accMul, accSubtr, moneyFormat } from '@/utils/math'
-import { getRatioPlay } from '@/utils'
+import { getBetRatioToNumber, getRatioPlay } from '@/utils'
 const { isStrong } = lib
 
 // 投注单store
@@ -329,10 +329,14 @@ const bettingModule: Module<Betting, any> = {
               iorChange = 'down'
             }
           }
+          const newRatioQuite = getBetRatioToNumber(ratio)
+          const oldRatioQuite = getBetRatioToNumber(bet.ratio)
+
           const isRatioPlay = getRatioPlay(bet)
-          if (isRatioPlay && Math.abs(bet.ratio * 1) !== Math.abs(ratio * 1) && !autoOdd) {
-            console.log('old', bet.ratio)
-            console.log('new', ratio)
+          if (isRatioPlay && newRatioQuite * 1 !== oldRatioQuite * 1 && !autoOdd) {
+            console.log('old', oldRatioQuite)
+            console.log('new', newRatioQuite)
+            console.log('cur', ratio)
             if (bet.ratio * 1 < ratio) {
               ratioChange = 'up'
             } else {
@@ -390,10 +394,12 @@ const bettingModule: Module<Betting, any> = {
            * 需要克隆新的对象,防止createBetItem污染原来的字段,因为createBetItem不是一个纯函数
            */
           const copyBet = JSON.parse(JSON.stringify(replaceBet))
-          replaceBet.betItem = createBetItem(copyBet)
+          replaceBet.betItem = createBetItem(copyBet, 2)
+          replaceBet.ratioName = replaceBet.betItem
           const getRatioPlayInfo = getRatioPlay(copyBet)
           if (getRatioPlayInfo) {
             const { ratioParams1, ratioParams2, ratioTag } = getRatioPlayInfo
+            replaceBet.ratioTagState = !!ratioTag
             replaceBet.ratioTag = ratioTag
             replaceBet.ratioParams1 = ratioParams1
             replaceBet.ratioParams2 = ratioParams2

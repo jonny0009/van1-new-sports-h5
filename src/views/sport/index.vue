@@ -16,10 +16,8 @@
           @click-tab="ifAnimated = true"
         >
           <van-tab v-for="(item, index) in sportsList" :key="index" :name="item.text">
-
             <template #title>
               <SportsButton
-
                 class="tabs-cut-7"
                 :text="item.text"
                 :active="gameType === item.text"
@@ -446,7 +444,7 @@ const getLeagueByCountryInfo = async (countryId: any, num: any) => {
         return e.leagueId === leagueId.value
       })
       firstLeaguesList.value = res.data.filter((item: any) => {
-        return item.leagueId !== leagueId.value
+        return item.leagueId !== leagueId.value && item.gameTypeCount > 0
       })
       firstLeaguesList.value.unshift(leagueIdObj)
       initData()
@@ -588,7 +586,7 @@ const getFirstLeagues = async (ifSearch?: any) => {
     const res: any =
       (await recommendLeague({ gameType: gameType.value === 'all' ? '' : gameType.value, showType: 'FAST' })) || {}
     if (res.code === 200 && res.data) {
-      firstLeaguesList.value = res.data.list || []
+      firstLeaguesList.value = (res.data.list || []).filter((i: any) => i.gameTypeCount > 0)
       // 搜索目前没有国家ID, 不匹配
       if (!ifSearch) {
         // 联赛ID
@@ -601,7 +599,7 @@ const getFirstLeagues = async (ifSearch?: any) => {
         }
         leagueIdArr.value = []
         firstLeaguesList.value.map((n: any) => {
-          if (n.leagueId) {
+          if (n.leagueId && n.gameTypeCount > 0) {
             leagueIdArr.value.push(n.leagueId)
           }
         })
@@ -861,7 +859,7 @@ const clickLeague = (item: any) => {
   })
   leagueId.value = item.leagueId
   firstLeaguesList.value = LeagueByCountryInfoArr.value.filter((i: any) => {
-    return i.leagueId !== item.leagueId
+    return i.leagueId !== item.leagueId && i.gameTypeCount > 0
   })
   firstLeaguesList.value.unshift(leagueIdObj)
 
