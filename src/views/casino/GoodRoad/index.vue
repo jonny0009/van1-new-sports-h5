@@ -2,17 +2,6 @@
   <section class="good-road-view">
     <div class="title">
       <span>{{ $t('home.casinoTitleObj.title1') }}</span>
-
-      <div class="btns">
-        <div class="multiple-units" @click="miTablesShow">
-          <span class="units-icon mi-bet"></span>
-          <span class="units-title">{{ $t('home.miBet') }}</span>
-        </div>
-        <div class="multiple-units" @click="goodRoadShow">
-          <span class="units-icon"></span>
-          <span class="units-title">{{ $t('home.mulBet') }}</span>
-        </div>
-      </div>
     </div>
     <Loading v-if="loading" />
     <div v-else-if="list.length" class="list">
@@ -20,8 +9,8 @@
     </div>
     <EmptyData v-else />
   </section>
-  <van-popup round v-model:show="show" position="bottom" teleport="body" :style="{ height: '84%' }">
-    <iframe width="100%" ref="iframeRef" height="100%" style="border: none" :src="url" frameborder="0"></iframe>
+  <van-popup v-model:show="show" round position="bottom" teleport="body" :style="{ height: '84%' }">
+    <iframe ref="iframeRef" width="100%" height="100%" style="border: none" :src="url" frameborder="0"></iframe>
   </van-popup>
 </template>
 
@@ -113,7 +102,8 @@ const miTablesShow = async () => {
 </script>
 <style lang="scss" scoped>
 .good-road-view {
-  padding: 36px;
+  padding: 35px;
+  padding-bottom: 0px;
   .title {
     display: flex;
     align-items: center;
@@ -123,42 +113,6 @@ const miTablesShow = async () => {
     font-size: 32px;
     font-weight: 600;
   }
-  .btns {
-    display: flex;
-    align-items: center;
-  }
-  .multiple-units {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 200px;
-    height: 68px;
-    background-color: rgb(72, 141, 210);
-    border-radius: 8px;
 
-    &:first-child {
-      margin-right: 20px;
-    }
-
-    .units-icon {
-      display: inline-block;
-      width: 28px;
-      height: 28px;
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: center;
-      background-image: url(@/assets/images/home/casino/multiple.png);
-
-      &.mi-bet {
-        background-image: url(@/assets/images/home/casino/mi.svg);
-      }
-    }
-
-    .units-title {
-      margin-left: 5px;
-      font-size: 25px;
-      color: #fff;
-    }
-  }
 }
 </style>
