@@ -25,7 +25,7 @@
       <LotterRoad :list="list1" :loading="loading1" />
 
       <van-popup v-model:show="show" round position="bottom" teleport="body" :style="{ height: '84%' }">
-        <iframe ref="iframeRef" width="100%" height="100%" style="border: none" :src="url" frameborder="0"></iframe>
+        <iframe v-if="url" ref="iframeRef" width="100%" height="100%" style="border: none" :src="url" frameborder="0"></iframe>
       </van-popup>
     </template>
   </div>
@@ -152,6 +152,7 @@ const goHome = () => {
 
 const handleClose: any = () => {
   show.value = false
+  url.value = ''
 }
 const handleUpdateBalance = () => {
   store.dispatch('user/getCurrency')
