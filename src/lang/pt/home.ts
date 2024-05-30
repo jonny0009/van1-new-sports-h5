@@ -55,7 +55,7 @@ export default {
   comingSoonTitle: 'Vindo para jogar',
   shortVideoTitle: 'Vídeo curto',
   casinoTitleObj: {
-    title1: 'Boas recomendações de estradas',
+    title1: 'Recomendación de ruta',
     title2: 'Baccarat ao Vivo',
     title3: 'O cassino está em manutenção...',
     title4: 'Contagem regressiva estimada para manutenção',
