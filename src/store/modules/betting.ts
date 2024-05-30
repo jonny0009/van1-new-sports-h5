@@ -566,7 +566,9 @@ const bettingModule: Module<Betting, any> = {
         store.dispatch('user/getCurrency')
       } else {
         let errorStr: string = ''
-        if (errorCodes.netErrorCodes.indexOf(code) > -1) {
+        if (code === 301) {
+          errorStr = lang.global.t('betting.insufficientBalance')
+        } else if (errorCodes.netErrorCodes.indexOf(code) > -1) {
           errorStr = lang.global.t('betting.errors1.error1')
         } else if (errorCodes.betFailCodes.indexOf(code) > -1) {
           errorStr = lang.global.t('betting.errors1.error2')
@@ -615,6 +617,8 @@ const bettingModule: Module<Betting, any> = {
         dispatch('clearMarkets')
         store.dispatch('user/pendingOrder')
         store.dispatch('user/getCurrency')
+      } else if (res?.code === 301) {
+        return Promise.reject(lang.global.t('betting.insufficientBalance'))
       } else {
         return Promise.reject(lang.global.t('betting.errorTips'))
       }

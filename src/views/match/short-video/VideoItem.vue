@@ -30,10 +30,7 @@
 
     <div class="match-wrap" v-if="RPlay || OUPlay" @click.stop>
       <div class="match-info">
-        <div class="match-lengua text-overflow">
-          <SportsIcon class="sports-icon" :icon-src="matchInfo.gameType" />
-          {{ matchInfo.leagueShortName || matchInfo.leagueName }}
-        </div>
+        <div class="match-lengua text-overflow"></div>
         <div class="team-info text-overflow">
           <img v-img="matchInfo.homeLogo" class="team-icon" alt="" :type="4" style="object-fit: contain" />
           {{ matchInfo.awayTeamAbbr || matchInfo.awayTeam }}
