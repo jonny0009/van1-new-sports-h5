@@ -23,7 +23,7 @@ const langArr = ['tr-tr', 'id-id', 'hi-in', 'ja-jp', 'es-es']
 if (langArr.includes(lang)) {
   langType = 'en-us'
 }
-const playtypeScript = `${window.AIConfig.static_url}files/base/playtype/js/${langArr}.js`
+const playtypeScript = `${window.AIConfig.static_url}files/base/playtype/js/${langType}.js`
 const ratiotypeScript = `${window.AIConfig.static_url}app/lang/ratiotype-${lang}-min.js`
 
 const app = createApp(App)
