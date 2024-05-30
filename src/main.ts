@@ -18,7 +18,12 @@ import i18n from './lang'
 
 // 玩法名称，玩法球头表引入
 const lang = localStorage.getItem('locale') || getBrowserLanguage()
-const playtypeScript = `${window.AIConfig.static_url}files/base/playtype/js/${lang}.js`
+let langType = lang
+const langArr = ['tr-tr', 'id-id', 'hi-in', 'ja-jp', 'es-es']
+if (langArr.includes(lang)) {
+  langType = 'en-us'
+}
+const playtypeScript = `${window.AIConfig.static_url}files/base/playtype/js/${langArr}.js`
 const ratiotypeScript = `${window.AIConfig.static_url}app/lang/ratiotype-${lang}-min.js`
 
 const app = createApp(App)

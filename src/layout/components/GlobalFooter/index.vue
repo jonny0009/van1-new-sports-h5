@@ -45,6 +45,9 @@ const { t } = useI18n()
 const ifThemeBlue = computed(() => {
   return store.state.app.theme === 'blue'
 })
+const isShowCasino = computed(() => {
+  return store.state.app.isShowCasino
+})
 
 const barFooterArrayChange = (): Array<any> => {
   const barFooterArray = [
@@ -59,12 +62,15 @@ const barFooterArrayChange = (): Array<any> => {
     {
       text: t('home.live'),
       value: 'match'
-    },
-    {
+    }
+
+  ]
+  if (isShowCasino.value) {
+    barFooterArray.push({
       text: t('home.casino'),
       value: 'casino'
-    }
-  ]
+    })
+  }
   return barFooterArray
 }
 const barFooterArr: any = reactive(barFooterArrayChange())

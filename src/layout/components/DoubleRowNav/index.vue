@@ -13,10 +13,10 @@
       @click-tab="changeTab"
     >
       <van-tab
-        :disabled="item.value === 'community'"
-        v-for="(item, index) in navList.arr"
-        :title="item.text"
+        v-for="(item, index) in navList"
         :key="index"
+        :disabled="item.value === 'community'"
+        :title="item.text"
         :name="item.value"
       >
       </van-tab>
@@ -36,6 +36,10 @@ const ifThemeBlue = computed(() => {
   return store.state.app.theme === 'blue'
 })
 
+const isShowCasino = computed(() => {
+  return store.state.app.isShowCasino
+})
+
 const active = computed(() => {
   const routerName: any = router?.currentRoute?.value?.name || ''
   const routerNameToLowerCase = routerName.toLowerCase()
@@ -53,25 +57,24 @@ const active = computed(() => {
   }
   return isrouterNameToLowerCase ? routerNameToLowerCase : 'home'
 })
-const navList = reactive<{ arr: any[] }>({
-  arr: [
-    // {
-    //   text: t('home.Community'),
-    //   value: 'community'
-    // },
-    {
-      text: t('home.sport'),
-      value: 'home'
-    },
-    {
-      text: t('home.live'),
-      value: 'match'
-    },
-    {
+
+const navList = computed(() => {
+  const arr = [{
+    text: t('home.sport'),
+    value: 'home'
+  },
+  {
+    text: t('home.live'),
+    value: 'match'
+  }
+  ]
+  if (isShowCasino.value) {
+    arr.push({
       text: t('home.casino'),
       value: 'casino'
-    }
-  ]
+    })
+  }
+  return arr
 })
 
 // 更换点击触发
@@ -104,13 +107,13 @@ const changeTab = (val: any) => {
 // 标签颜色
 const tabColor = (num: any) => {
   if (num === 1) {
-    if (ifThemeBlue) {
+    if (ifThemeBlue.value) {
       return '#0E3D66'
     }
     return '1F2630'
   }
   if (num === 2) {
-    if (ifThemeBlue) {
+    if (ifThemeBlue.value) {
       return '#88A6BB'
     }
     return '96A5AA'

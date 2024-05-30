@@ -16,6 +16,7 @@ const appModule: Module<App, any> = {
     merchantConfig: {},
     homeStyle: 2, // 2经典 1上导航  3双排上导航
     moduleConfig: {},
+    isShowCasino: false,
     doubleLineInfo: {},
     sports: [],
     homeTabsSports: [],
@@ -69,9 +70,16 @@ const appModule: Module<App, any> = {
       }
     },
     async moduleConfig({ state }) {
-      const res: any = (await moduleConfig({modeType: 4})) || {}
+      const res: any = (await moduleConfig({ modeType: 4 })) || {}
       if (res.code === 200) {
         state.moduleConfig = res.data || {}
+        const moduleList = res.data.moduleList || []
+        if (moduleList && moduleList.length) {
+          const obj = moduleList.find((item: any) => item.code === 'lucky7_casino')
+          if (obj.code) {
+            state.isShowCasino = obj.enable === 1
+          }
+        }
       }
     },
     async getAllSports({ state }) {
