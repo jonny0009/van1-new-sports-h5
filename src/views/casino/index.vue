@@ -23,20 +23,30 @@
 
       <GoodRoad v-if="list.length" :list="list" :loading="loading" />
       <LotterRoad :list="list1" :loading="loading1" />
+
+      <van-popup v-model:show="show" round position="bottom" teleport="body" :style="{ height: '84%' }">
+        <iframe ref="iframeRef" width="100%" height="100%" style="border: none" :src="url" frameborder="0"></iframe>
+      </van-popup>
     </template>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, watch } from 'vue'
-import GoodRoad from './GoodRoad/index.vue'
-import LotterRoad from './LotterRoad/index.vue'
-import store from '@/store'
-import { getBacGoodRoads, realTableList } from '@/api/home'
-import { onBeforeMount, onUnmounted, ref } from 'vue'
+import { computed, watch, onBeforeMount, onUnmounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import store from '@/store'
+import { closeToast, showLoadingToast } from 'vant'
+import { getBacGoodRoads, realTableList, getBJGameUrl } from '@/api/home'
+import { getBrowserLanguage } from '@/utils'
+import { BaccaratUtils } from '@/utils/BaccaratUtils'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
 import bule from '@/assets/images/home/casino/maintenance-1.png'
 import purple from '@/assets/images/home/casino/maintenance-2.png'
+import GoodRoad from './GoodRoad/index.vue'
+import LotterRoad from './LotterRoad/index.vue'
+
 const showFixedBet = computed(() => store.state.app.showFixedBet)
 const theme = computed(() => store.state.app.theme)
 const bg = computed(() => {
@@ -54,6 +64,12 @@ const timer: any = ref()
 const timerStr: any = ref('')
 const loading = ref(true)
 const loading1 = ref(true)
+
+const show = ref(false)
+const iframeRef = ref()
+const baccaratUtils = ref()
+const url = ref('')
+
 onBeforeMount(() => {
   getList()
   getList1()
@@ -132,6 +148,69 @@ const countdown = () => {
 const $router = useRouter()
 const goHome = () => {
   $router.push('/home')
+}
+
+const handleClose: any = () => {
+  show.value = false
+}
+const handleUpdateBalance = () => {
+  store.dispatch('user/getCurrency')
+}
+
+const miTablesShow = async () => {
+  show.value = !show.value
+  const params = {
+    supplierId: 'aigame',
+    gameKey: 'VIR_BAC',
+    openType: 2,
+    dirType: 1,
+    appType: 2
+  }
+  showLoadingToast({
+    duration: 20000,
+    message: t('home.loading')
+  })
+  const gres: any = await getBJGameUrl(params).finally(() => {
+    closeToast()
+  })
+
+  if (!baccaratUtils.value) {
+    baccaratUtils.value = new BaccaratUtils(iframeRef.value, { handleClose, handleUpdateBalance })
+  }
+
+  if (gres?.code === 200) {
+    const lang = localStorage.getItem('locale') || getBrowserLanguage()
+    const gameUrl = gres.data['url'].replace('&isAi=1', '')
+    url.value = `${gameUrl}&language=${lang}`
+  }
+}
+
+const goodRoadShow = async () => {
+  show.value = !show.value
+  const params = {
+    supplierId: 'aigame',
+    gameKey: 'BAC-V2.0',
+    openType: 2,
+    dirType: 1,
+    terType: 2
+  }
+  showLoadingToast({
+    duration: 20000,
+    message: t('home.loading')
+  })
+  const gres: any = await getBJGameUrl(params).finally(() => {
+    closeToast()
+  })
+
+  if (!baccaratUtils.value) {
+    baccaratUtils.value = new BaccaratUtils(iframeRef.value, { handleClose, handleUpdateBalance })
+  }
+
+  if (gres?.code === 200) {
+    const lang = localStorage.getItem('locale') || getBrowserLanguage()
+    const gameUrl = gres.data['url'].replace('&isAi=1', '')
+    url.value = `${gameUrl}&language=${lang}#/multiple`
+  }
 }
 </script>
 <style lang="scss" scoped>
