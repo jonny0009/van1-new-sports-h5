@@ -1,14 +1,27 @@
 <template>
   <div class="casino-page" :class="{ 'has-bet': showFixedBet }">
-    <div class="maintenance-view" v-if="maintenanceState">
+    <div v-if="maintenanceState" class="maintenance-view">
       <div class="maintenance-icon" :style="{ backgroundImage: `url(${bg})` }"></div>
       <div class="maintenance-title">{{ $t('home.casinoTitleObj.title3') }}</div>
-      <div class="maintenance-subtitle" v-if="timerState">{{ $t('home.casinoTitleObj.title4') }}</div>
-      <div class="maintenance-timer" v-if="timerState">{{ timerStr }}</div>
+      <div v-if="timerState" class="maintenance-subtitle">{{ $t('home.casinoTitleObj.title4') }}</div>
+      <div v-if="timerState" class="maintenance-timer">{{ timerStr }}</div>
       <div class="go-btn" @click="goHome">{{ $t('home.casinoTitleObj.gohome') }}</div>
     </div>
     <template v-else>
-      <GoodRoad :list="list" :loading="loading" />
+      <div class="header-area">
+        <div class="btns">
+          <div class="multiple-units" @click="miTablesShow">
+            <span class="units-icon mi-bet"></span>
+            <span class="units-title">{{ $t('home.miBet') }}</span>
+          </div>
+          <div class="multiple-units" @click="goodRoadShow">
+            <span class="units-icon"></span>
+            <span class="units-title">{{ $t('home.mulBet') }}</span>
+          </div>
+        </div>
+      </div>
+
+      <GoodRoad v-if="list.length" :list="list" :loading="loading" />
       <LotterRoad :list="list1" :loading="loading1" />
     </template>
   </div>
@@ -177,4 +190,47 @@ const goHome = () => {
     }
   }
 }
+  .header-area {
+   position: relative;
+  }
+  .btns {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 35px;
+    top: 30px;
+  }
+  .multiple-units {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 68px;
+    background-color: rgb(72, 141, 210);
+    border-radius: 8px;
+
+    &:first-child {
+      margin-right: 20px;
+    }
+
+    .units-icon {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      background-image: url(@/assets/images/home/casino/multiple.png);
+
+      &.mi-bet {
+        background-image: url(@/assets/images/home/casino/mi.svg);
+      }
+    }
+
+    .units-title {
+      margin-left: 5px;
+      font-size: 25px;
+      color: #fff;
+    }
+  }
 </style>
