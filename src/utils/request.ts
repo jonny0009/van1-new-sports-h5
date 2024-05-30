@@ -43,7 +43,7 @@ service.interceptors.request.use(
     } else if (config.method === 'get') {
       if (noGroupId.indexOf(config.url) < 0) {
         config.params = config.params || {}
-        config.params = Object.assign({}, { groupId, date: new Date().getTime() }, config.params)
+        config.params = Object.assign({}, { groupId }, config.params)
       }
     }
     return config

@@ -79,7 +79,7 @@
 
             <!-- 短视频 -->
             <van-collapse-item
-              v-if="['RB'].includes(navActive) && nav.type === 'RB'"
+              v-if="['RB'].includes(navActive) && nav.type === 'RB' && shortVideos.length"
               :is-link="false"
               class="collapse-item"
               name="VIDEO"
@@ -153,15 +153,20 @@ const FullScreenVideosRef = ref()
 const activeNames = ref(['HOT', 'ComingSoon', 'VIDEO'])
 const showFixedBet = computed(() => store.state.app.showFixedBet)
 const { t } = useI18n()
-const navList = reactive([
-  { type: 'RB', title: t('live.hot'), iconName: 'live-hot' },
-  { type: 'FT', title: t('live.football'), iconName: 'live-football' },
-  { type: 'BK', title: t('live.basketball'), iconName: 'live-basketball' },
-  { type: 'BS', title: t('sport.sports.BS'), iconName: 'live-basketball' },
-  { type: 'TN', title: t('live.tennisball'), iconName: 'live-tennisball' },
-  { type: 'OP_BM', title: t('live.badminton'), iconName: 'live-badminton' },
-  { type: 'SORTVIDEO', title: t('home.shortVideoTitle'), iconName: 'live-badminton' }
-])
+const navList = computed(() => {
+  const baseNavList = [
+    { type: 'RB', title: t('live.hot'), iconName: 'live-hot' },
+    { type: 'FT', title: t('live.football'), iconName: 'live-football' },
+    { type: 'BK', title: t('live.basketball'), iconName: 'live-basketball' },
+    { type: 'BS', title: t('sport.sports.BS'), iconName: 'live-basketball' },
+    // { type: 'TN', title: t('live.tennisball'), iconName: 'live-tennisball' },
+    // { type: 'OP_BM', title: t('live.badminton'), iconName: 'live-badminton' },
+  ]
+  if (shortVideos.value.length) {
+    baseNavList.push({ type: 'SORTVIDEO', title: t('home.shortVideoTitle'), iconName: 'live-badminton' })
+  }
+  return baseNavList
+})
 const navActive = ref('RB')
 
 const time = ref(-1)
