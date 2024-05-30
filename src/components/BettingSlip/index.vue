@@ -490,6 +490,7 @@ defineExpose({
     flex: 1;
     padding: 20px 0;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
     transition: height 0.3s;
     overscroll-behavior: contain;
 

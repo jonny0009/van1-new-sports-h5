@@ -1,5 +1,5 @@
 export default {
-  lang: '言語',
+  lang: 'Language',
   search: '検索',
   cancellation: 'キャンセル',
   recommend: 'おすすめ',
