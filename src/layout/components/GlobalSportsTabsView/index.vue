@@ -47,17 +47,9 @@ import store from '@/store'
 import { useI18n } from 'vue-i18n'
 
 const homeStyle = computed(() => store.state.app.homeStyle)
-const moduleList = computed(() => {
-  return store.state.app.moduleConfig.moduleList || []
+const isShowCasino = computed(() => {
+  return store.state.app.isShowCasino
 })
-const isShowCasino = ref(false)
-
-if (moduleList.value.length) {
-  const obj = moduleList.value.find((item: any) => item.code === 'lucky7_casino')
-  if (obj.code) {
-    isShowCasino.value = obj.enable === 1
-  }
-}
 
 const { t } = useI18n()
 
@@ -83,19 +75,6 @@ const sportsList = computed(() => {
 
   return newSportsB
 })
-
-// const isShowCasino = computed(() => {
-//   const moduleArr = store.state.app.moduleConfig.moduleList || []
-//   if (moduleArr.length) {
-//     const obj = moduleArr.find((item: any) => item.code === 'lucky7_casino')
-//     console.log(obj, '---')
-//     if (obj) {
-//       return obj.enable === 1
-//     }
-//   }
-
-//   return false
-// })
 
 // 热门 Live 直播  今日  早盘 赌场
 const homeBarList = ref([

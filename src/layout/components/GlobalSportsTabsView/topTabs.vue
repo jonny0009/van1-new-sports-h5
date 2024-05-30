@@ -29,20 +29,11 @@ import store from '@/store'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
-const moduleList = computed(() => {
-  return store.state.app.moduleConfig.moduleList || []
+const isShowCasino = computed(() => {
+  return store.state.app.isShowCasino
 })
-const isShowCasino = ref(false)
-
-if (moduleList.value.length) {
-  const obj = moduleList.value.find((item: any) => item.code === 'lucky7_casino')
-  if (obj.code) {
-    isShowCasino.value = obj.enable === 1
-  }
-}
 
 // 热门 Live 直播  今日  早盘 赌场
-
 const homeBarList = computed(() => {
   const arr = [
     {
