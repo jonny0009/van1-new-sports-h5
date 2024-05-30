@@ -108,10 +108,16 @@ const miTablesShow = async () => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 36px;
+    margin-bottom: 35px;
     color: rgb(14, 61, 102);
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 600;
+    span {
+      display: inline-block;
+      width: 245px;
+      word-wrap: break-word;
+      word-break: break-all;
+    }
   }
 
 }
