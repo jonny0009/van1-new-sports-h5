@@ -66,7 +66,7 @@ const appModule: Module<App, any> = {
       const res: any = (await merchantConfig()) || {}
       if (res.code === 200) {
         state.merchantConfig = res.data || {}
-        state.homeStyle = 1 || res.data?.homeStyle || 2
+        state.homeStyle = res.data?.homeStyle || 2
       }
     },
     async moduleConfig({ state }) {
