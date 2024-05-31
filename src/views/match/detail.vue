@@ -180,6 +180,7 @@ watch(() => route.query.m3u8, (val) => {
 
 <style lang="scss" scoped>
 .detail {
+  z-index: 6;
   display: flex;
   flex-direction: column;
   position: fixed;
