@@ -1,7 +1,7 @@
 <template>
   <div class="result-page">
     <div v-for="(result, index) in results" :key="index" class="result-item">
-      <div class="title" v-if="result.status * 1 === 3">
+      <div class="title" v-if="isPending">
         <span class="state-icon accepting"></span>
         {{ $t('betting.orderPending') }}
       </div>
@@ -24,17 +24,68 @@
           </div>
         </div>
         <div class="betting-odds">@<span v-points="result.ior"></span></div>
-        <div class="order-state accepting" v-if="result.status * 1 === 3"></div>
+        <div class="order-state accepting" v-if="isPending"></div>
         <div class="order-state" :class="`${result.errorCode ? 'error' : 'check'}`" v-else></div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+import { getOrderState } from '@/api/betting'
 import store from '@/store'
-import { computed } from 'vue'
+import { computed, onBeforeMount, ref } from 'vue'
 
 const results = computed(() => store.state.betting.results)
+const result: any = computed(() => {
+  if (results.value && results.value.length) {
+    return results.value[0]
+  }
+  return {}
+})
+
+const isPending = computed(() => {
+  return result.value.status * 1 === 3
+})
+
+const stateMap: any = {
+  PRE_HAND: -1,
+  CONFIRM: 0,
+  PROCESS: 1,
+  WIN: 2,
+  LOSE: 3,
+  TIE: 4,
+  CANCEL: 5,
+  REFUND: 6,
+  FAIL: 7
+}
+const timer: any = ref()
+onBeforeMount(() => {
+  getAcceptOrderStateTask()
+  timer.value = setInterval(() => {
+    getAcceptOrderStateTask()
+  }, 3 * 1000)
+})
+const getAcceptOrderStateTask = async () => {
+  if (!(![1, 2].includes(+result.status) && !result.errorCode)) {
+    clearInterval(timer.value)
+    return false
+  }
+  const res: any = await getOrderState({
+    orderIds: [result.betNo]
+  })
+  const { code, data } = res
+  if (code === 200 && Array.isArray(data) && data.length) {
+    const resultItem: any = data[0]
+    let status = stateMap[resultItem.state]
+    let errorCode = resultItem.errorCode
+    if ([5, 6, 7].includes(status)) {
+      errorCode = 'errorCode'
+      status = '2'
+    }
+    result.value.status = status
+    result.value.errorCode = errorCode
+  }
+}
 </script>
 <style scoped lang="scss">
 .result-page {

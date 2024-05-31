@@ -608,12 +608,14 @@ const bettingModule: Module<Betting, any> = {
         const { errorCode, comboInfo } = res?.data || {}
         const betInfo = comboInfo && comboInfo.length && comboInfo[0]
         const status = betInfo?.status || 1
+        const betNo = betInfo?.betNo
         state.results = [
           {
             errorCode,
             ior: getters.combosIor,
             count: state.comboMarkets.length,
             status,
+            betNo,
             list: JSON.parse(JSON.stringify(state.comboMarkets))
           }
         ]
