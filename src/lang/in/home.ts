@@ -68,7 +68,7 @@ export default {
     tips3: 'वेबसाइट रखरखाव के अधीन',
     tips4: 'फिर से खुलने की उलटी गिनती'
   },
-  miBet: 'Private table',
+  miBet: 'निजी स्क्वीज़ मेज़',
   mulBet: 'मल्टीपल बेट',
   baccarat: {
     连庄: 'B Dragon',

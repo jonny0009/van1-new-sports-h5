@@ -55,7 +55,7 @@ export default {
   comingSoonTitle: '遊びに来ます',
   shortVideoTitle: 'ショートビデオ',
   casinoTitleObj: {
-    title1: 'Good road',
+    title1: '良い道推荐',
     title2: 'ライブバカラ',
     title3: 'カジノはメンテナンス中です...',
     title4: '推定メンテナンスカウントダウン',
@@ -69,7 +69,7 @@ export default {
     tips3: 'ウェブサイトはメンテナンス中です',
     tips4: '再開までのカウントダウン'
   },
-  miBet: 'Private table',
+  miBet: 'プライベート絞り',
   mulBet: '複数ベット',
   baccarat: {
     连庄: 'B Dragon',

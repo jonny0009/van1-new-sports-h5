@@ -53,7 +53,7 @@ export default {
   comingSoonTitle: 'Coming to play',
   shortVideoTitle: 'Short video',
   casinoTitleObj: {
-    title1: 'Good road recommendations',
+    title1: 'Good trend',
     title2: 'Live Baccarat',
     title3: 'The casino is under maintenance...',
     title4: 'Estimated maintenance countdown',
@@ -67,7 +67,7 @@ export default {
     tips3: 'Website under maintenance',
     tips4: 'Countdown to reopening'
   },
-  miBet: 'Private table',
+  miBet: 'Private Squeeze',
   mulBet: 'Multi betting',
   baccarat: {
     连庄: 'B Dragon',

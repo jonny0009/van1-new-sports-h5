@@ -55,7 +55,7 @@ export default {
   comingSoonTitle: 'Vindo para jogar',
   shortVideoTitle: 'Vídeo curto',
   casinoTitleObj: {
-    title1: 'Recomendación de ruta',
+    title1: 'Boa dica',
     title2: 'Baccarat ao Vivo',
     title3: 'O cassino está em manutenção...',
     title4: 'Contagem regressiva estimada para manutenção',
@@ -68,7 +68,7 @@ export default {
     tips3: 'Site em manutenção',
     tips4: 'Contagem regressiva para reabertura'
   },
-  miBet: 'Private table',
+  miBet: 'Squeeze Privado',
   mulBet: 'Aposta Múltipla',
   baccarat: {
     连庄: 'B Dragon',
