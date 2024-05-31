@@ -66,12 +66,12 @@ onBeforeMount(() => {
   }, 3 * 1000)
 })
 const getAcceptOrderStateTask = async () => {
-  if (!(![1, 2].includes(+result.status) && !result.errorCode)) {
+  if (!(![1, 2].includes(+result.value.status) && !result.value.errorCode)) {
     clearInterval(timer.value)
     return false
   }
   const res: any = await getOrderState({
-    orderIds: [result.betNo]
+    orderIds: [result.value.betNo]
   })
   const { code, data } = res
   if (code === 200 && Array.isArray(data) && data.length) {
