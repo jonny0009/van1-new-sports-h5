@@ -581,10 +581,25 @@
   }
 }
 .home-tabs-play{
+  position: relative;
   height: 68px;
   display: flex;
   align-items: center;
+
+  .home-tabs-play-bg{
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, .7);
+    backdrop-filter: blur(11px);
+  }
+
   .time{
+    position: relative;
+    z-index: 1;
     font-size: 24px;
     color: var(--color-text-5);
     font-weight: 500;
@@ -593,6 +608,8 @@
     font-weight: 600;
   }
   .play{
+    position: relative;
+    z-index: 2;
     flex:1;
     display: flex;
     align-items: center;
@@ -732,8 +749,7 @@
 }
 .van-sticky--fixed{
   .home-tabs-play{
-    background: rgba(255, 255, 255, .7);
-    backdrop-filter: blur(11px);
+   
   }
 }
 .GlobalCollapse{
