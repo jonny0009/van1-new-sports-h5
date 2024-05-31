@@ -67,7 +67,7 @@ export default {
     tips3: 'Web sitesi bakımda',
     tips4: 'Yeniden açılmak için geri sayım'
   },
-  miBet: 'Private table',
+  miBet: 'Özel Sıkıştırma Masa',
   mulBet: 'Çoklu Bahis',
   baccarat: {
     连庄: 'B Dragon',
