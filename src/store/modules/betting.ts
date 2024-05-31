@@ -465,7 +465,7 @@ const bettingModule: Module<Betting, any> = {
         state.comboS = s
         state.comboT = t
         if (errorIds.length) {
-          state.combosErrorIds = errorIds
+          state.combosErrorIds.push(...errorIds)
         }
         // 有异常的情况,全部锁盘
         if (errorCode || (Array.isArray(errorIds) && errorIds.length)) {
