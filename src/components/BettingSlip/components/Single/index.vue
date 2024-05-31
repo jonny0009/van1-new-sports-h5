@@ -40,7 +40,7 @@
             {{ $t('betting.acceptOdds') }}
           </div>
           <div v-else ref="inputBtn" class="betting-slip-input" :class="{ error: goldRule }" @click="inputTouch">
-            <span class="currency"><van-icon name="balance-o" /></span>
+            <span class="currency"> <CurrencyComp class-name="mr3" /></span>
             <div style="flex: 1 1 0%"></div>
             <span class="amount" :class="{ selected: marketInfo.playOnlyId === editId }">{{ marketInfo.gold }}</span>
             <span v-show="marketInfo.playOnlyId === editId" class="cursor">|</span>
@@ -58,6 +58,7 @@
 <script lang="ts" setup>
 import store from '@/store'
 import { computed, ref, watch } from 'vue'
+import CurrencyComp from '@/components/Currency/index.vue'
 const inputBtn = ref()
 const props = defineProps({
   marketInfo: {
