@@ -47,9 +47,9 @@ import store from '@/store'
 import { useI18n } from 'vue-i18n'
 
 const homeStyle = computed(() => store.state.app.homeStyle)
-const isShowCasino = computed(() => {
-  return store.state.app.isShowCasino
-})
+// const isShowCasino = computed(() => {
+//   return store.state.app.isShowCasino
+// })
 
 const { t } = useI18n()
 
@@ -131,15 +131,17 @@ const getBarList = computed(() => {
   if (homeStyle.value === 2) {
     return homeStyleBarList.value
   }
-  if (isShowCasino.value) {
-    return [...homeBarList.value, {
-      icon: 'casino',
-      text: t('home.casino'),
-      routerName: 'Casino'
-    }, ...sportsList.value]
-  } else {
-    return [...homeBarList.value, ...sportsList.value]
-  }
+  // 底下适用于 homeStyle[1,3], 与上面tab或者底下bar重复,先隐藏
+  // if (isShowCasino.value) {
+  //   return [...homeBarList.value, {
+  //     icon: 'casino',
+  //     text: t('home.casino'),
+  //     routerName: 'Casino'
+  //   }, ...sportsList.value]
+  // } else {
+  //   return [...homeBarList.value, ...sportsList.value]
+  // }
+  return [...homeBarList.value, ...sportsList.value]
 }
 )
 
