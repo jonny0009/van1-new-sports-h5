@@ -24,7 +24,7 @@
       <GoodRoad v-if="list.length" :list="list" :loading="loading" />
       <LotterRoad :list="list1" :loading="loading1" />
 
-      <van-popup v-model:show="show" round position="bottom" teleport="body" :style="{ height: '84%' }">
+      <van-popup v-model:show="show" round position="bottom" teleport="body" :style="{ height: '84%' }" @close="url = ''">
         <iframe ref="iframeRef" width="100%" height="100%" style="border: none" :src="url" frameborder="0"></iframe>
       </van-popup>
     </template>
@@ -152,6 +152,7 @@ const goHome = () => {
 
 const handleClose: any = () => {
   show.value = false
+  url.value = ''
 }
 const handleUpdateBalance = () => {
   store.dispatch('user/getCurrency')
