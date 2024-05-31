@@ -432,7 +432,7 @@ const bettingModule: Module<Betting, any> = {
       }
     },
     // 串关批量点水,更新投注项
-    async comboMarketHit({ state, getters }, betting: boolean = false) {
+    async comboMarketHit({ state, getters, rootState }, betting: boolean = false) {
       if (state.comboMarkets.length === 0) {
         const markets = JSON.parse(JSON.stringify(state.markets))
         state.comboMarkets = markets.map((market: MarketInfo) => {
@@ -513,12 +513,43 @@ const bettingModule: Module<Betting, any> = {
             state.comboMarkets = state.comboMarkets.map((marketInfo: MarketInfo) => {
               const playOnlyId = MarketInfo.getPlayOnlyId(marketInfo)
               const { awayTeam, homeTeam } = marketInfo
+              const userConfig = rootState.user.userConfig
+              const { acceptAll } = userConfig || {}
+              const autoRatio = acceptAll === 1
+              const autoOdd = state.oddChangesState || false
               const find = orderData.find((info: MarketInfo) => {
                 return MarketInfo.getPlayOnlyId(info) === playOnlyId
               })
               if (find) {
+                const oldIor = marketInfo.ior * 1
+                const newIor = find.ior * 1
+                let iorChange = ''
+                let ratioChange = ''
+                if (oldIor * 1 !== newIor && !autoRatio) {
+                  console.log('oldIor', oldIor)
+                  console.log('newIor', newIor)
+                  if (oldIor * 1 < newIor) {
+                    iorChange = 'up'
+                  } else {
+                    iorChange = 'down'
+                  }
+                }
+                const newRatioQuite = getBetRatioToNumber(find.ratio)
+                const oldRatioQuite = getBetRatioToNumber(marketInfo.ratio)
+
+                const isRatioPlay = getRatioPlay(marketInfo)
+                if (isRatioPlay && newRatioQuite * 1 !== oldRatioQuite * 1 && !autoOdd) {
+                  console.log('old', oldRatioQuite)
+                  console.log('new', newRatioQuite)
+                  if (marketInfo.ratio * 1 < find.ratio) {
+                    ratioChange = 'up'
+                  } else {
+                    ratioChange = 'down'
+                  }
+                }
+
                 const gameType = find.gameType || marketInfo.gameType
-                return { ...marketInfo, ...find, gameType, awayTeam, homeTeam }
+                return { ...marketInfo, ...find, gameType, awayTeam, homeTeam, iorChange, ratioChange }
               }
               return marketInfo
             })

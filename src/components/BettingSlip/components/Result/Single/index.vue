@@ -16,7 +16,7 @@ const results = computed(() => store.state.betting.results)
 
 const checkResults = computed(() => {
   const list = results.value?.filter((result: any) => {
-    return !(![1, 2].includes(+result.status) || result.errorCode)
+    return !(![1, 2].includes(+result.status) || result.errorCode || +result.status === 2)
   })
   if (list.length) {
     return {
@@ -42,7 +42,7 @@ const pendingResults = computed(() => {
 })
 const errorResults = computed(() => {
   const list = results.value?.filter((result: any) => {
-    return result.errorCode
+    return result.errorCode || +result.status === 2
   })
   if (list.length) {
     return {
@@ -53,7 +53,6 @@ const errorResults = computed(() => {
   }
   return null
 })
-
 </script>
 <style scoped lang="scss">
 .result-page {
