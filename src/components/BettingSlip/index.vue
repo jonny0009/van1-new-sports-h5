@@ -177,7 +177,7 @@ watch(
   () => combosErrorIds.value.length,
   () => {
     if (combosErrorIds.value.length && mode.value === 2) {
-      store.dispatch('betting/comboMarketHit')
+      hitTimer()
     }
   }
 )
