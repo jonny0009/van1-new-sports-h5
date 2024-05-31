@@ -24,8 +24,8 @@
       <GoodRoad v-if="list.length" :list="list" :loading="loading" />
       <LotterRoad :list="list1" :loading="loading1" />
 
-      <van-popup v-model:show="show" round position="bottom" teleport="body" :style="{ height: '84%' }">
-        <iframe v-if="url" ref="iframeRef" width="100%" height="100%" style="border: none" :src="url" frameborder="0"></iframe>
+      <van-popup v-model:show="show" round position="bottom" teleport="body" :style="{ height: '84%' }" @close="url = ''">
+        <iframe ref="iframeRef" width="100%" height="100%" style="border: none" :src="url" frameborder="0"></iframe>
       </van-popup>
     </template>
   </div>
