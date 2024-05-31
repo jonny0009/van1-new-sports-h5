@@ -10,10 +10,10 @@
     <template v-else>
       <div class="header-area">
         <div class="btns">
-          <div class="multiple-units" @click="miTablesShow">
+          <!-- <div class="multiple-units" @click="miTablesShow">
             <span class="units-icon mi-bet"></span>
             <span class="units-title">{{ $t('home.miBet') }}</span>
-          </div>
+          </div> -->
           <div class="multiple-units" @click="goodRoadShow">
             <span class="units-icon"></span>
             <span class="units-title">{{ $t('home.mulBet') }}</span>
