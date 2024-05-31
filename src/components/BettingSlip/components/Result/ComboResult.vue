@@ -1,7 +1,11 @@
 <template>
   <div class="result-page">
     <div v-for="(result, index) in results" :key="index" class="result-item">
-      <div class="title">
+      <div class="title" v-if="result.status * 1 === 3">
+        <span class="state-icon accepting"></span>
+        {{ $t('betting.orderPending') }}
+      </div>
+      <div class="title" v-else>
         <span class="state-icon" :class="`${result.errorCode ? 'error' : 'check'}`"></span>
         {{ result.errorCode ? $t('betting.orderError') : $t('betting.orderCheck') }}
       </div>
@@ -20,7 +24,8 @@
           </div>
         </div>
         <div class="betting-odds">@<span v-points="result.ior"></span></div>
-        <div class="order-state" :class="`${result.errorCode ? 'error' : 'check'}`"></div>
+        <div class="order-state accepting" v-if="result.status * 1 === 3"></div>
+        <div class="order-state" :class="`${result.errorCode ? 'error' : 'check'}`" v-else></div>
       </div>
     </div>
   </div>
@@ -64,7 +69,9 @@ const results = computed(() => store.state.betting.results)
         &.check {
           background-image: url('@/assets/images/betting/check-state.png');
         }
-
+        &.accepting {
+          background-image: url('@/assets/images/betting/accepting-state.png');
+        }
         &.error {
           background-image: url('@/assets/images/betting/close-state.png');
         }
@@ -145,6 +152,9 @@ const results = computed(() => store.state.betting.results)
 
         &.check {
           background: #0bba3e;
+        }
+        &.accepting {
+          background: #ff9a00;
         }
 
         &.error {
