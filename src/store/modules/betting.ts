@@ -152,11 +152,15 @@ const bettingModule: Module<Betting, any> = {
     },
     // 有效投注注数
     comboMarkets(state) {
-      return getComboMarkets(state.markets)
+      const comboMakets = getComboMarkets(state.comboMarkets)
+      console.log(comboMakets, 'comboMakets')
+      const noErrorMarkets = comboMakets.filter((i: MarketInfo) => !state.combosErrorIds.includes(i.optionId))
+      return noErrorMarkets
     },
     comboMarketPlayOnlyIds(state) {
       const markets = getComboMarkets(state.markets)
-      const getPlayOnlyIds = markets.map((i: MarketInfo) => i.playOnlyId)
+      const noErrorMarkets = markets.filter((i: MarketInfo) => !state.combosErrorIds.includes(i.optionId))
+      const getPlayOnlyIds = noErrorMarkets.map((i: MarketInfo) => i.playOnlyId)
       return getPlayOnlyIds
     }
   },
@@ -446,7 +450,7 @@ const bettingModule: Module<Betting, any> = {
         return false
       }
 
-      const params: any = combosHitParams(state.comboMarkets)
+      const params: any = combosHitParams(getters.comboMarkets)
       const res: any = await betComboOrder(params).catch(() => {})
       if (res?.code === 200 && res?.data && res?.data?.length) {
         const data: any = res?.data[0] || {}
@@ -455,21 +459,16 @@ const bettingModule: Module<Betting, any> = {
         const goldGmin = data.goldGmin
         const goldGmax = data.goldGmax
         const bodyVOS = data.bodyVOS
-        const errorIds = data.errorIds
+        const errorIds = data.errorIds || []
         const s = data.s
         const t = data.t
         state.comboS = s
         state.comboT = t
-        state.combosErrorIds = errorIds || []
+        if (errorIds.length) {
+          state.combosErrorIds = errorIds
+        }
         // 有异常的情况,全部锁盘
         if (errorCode || (Array.isArray(errorIds) && errorIds.length)) {
-          // if (['1X034'].includes(errorCode)) {
-          //   // 根据返回出异常的errorIds标出有异常的玩法
-          //   if (Array.isArray(errorIds) && errorIds.length) {
-          //     // dispatch('bet/updateComboBets', errorIds, { root: true })
-          //     // dispatch('setCombosStructure', [])
-          //   }
-          // }
         } else {
           const comboCount = state.comboMarkets.length
           const comboList = chaiCombo(comboCount, orderData)
@@ -658,6 +657,10 @@ const bettingModule: Module<Betting, any> = {
       } else {
         return Promise.reject(lang.global.t('betting.errorTips'))
       }
+    },
+    // 清空
+    clearCombosErrorIds({ state }) {
+      state.combosErrorIds = []
     },
     // 清空
     clearMarkets({ state }) {

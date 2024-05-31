@@ -144,6 +144,7 @@ const mode = computed(() => store.state.betting.mode)
 const boardShow = computed(() => store.state.betting.boardShow)
 const markets = computed(() => store.state.betting.markets)
 const parlayMarkets = computed(() => store.state.betting.comboMarkets)
+const combosErrorIds = computed(() => store.state.betting.combosErrorIds)
 const results = computed(() => store.state.betting.results)
 const betsProfit = computed(() => store.getters['betting/betsProfit'])
 const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
@@ -169,8 +170,18 @@ watch(
     if (!isOne.value) {
       hitTimer()
     }
+    store.dispatch('betting/clearCombosErrorIds')
   }
 )
+watch(
+  () => combosErrorIds.value.length,
+  () => {
+    if (combosErrorIds.value.length && mode.value === 2) {
+      store.dispatch('betting/comboMarketHit')
+    }
+  }
+)
+
 watch(
   () => open.value,
   () => {
@@ -206,6 +217,7 @@ const changeType = (mode: any) => {
   store.dispatch('betting/setMode', mode)
   store.dispatch('betting/setHitState', 1)
   store.dispatch('betting/clearResult')
+  store.dispatch('betting/clearCombosErrorIds')
   hitTimer()
 }
 const radioChange = (acceptAll: number) => {
