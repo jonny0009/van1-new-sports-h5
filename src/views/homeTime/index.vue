@@ -114,7 +114,6 @@ const isRefreshLoading = ref(false)
 const params: any = reactive({
   page: 1,
   pageSize: 5,
-  gradeType: 2,
   gameType: 'FT'
 })
 if (routerName.value === 'sportToday') {
