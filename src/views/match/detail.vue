@@ -145,8 +145,7 @@ onBeforeMount(() => {
   getMatchInfo()
   if (route.query?.m3u8) {
     videoUrl.value = `${route.query.m3u8}`
-  }
-  else {
+  } else {
     getExtendInfo()
   }
   startInterval()
@@ -162,9 +161,8 @@ watch(
   () => {
     getMatchInfo()
     if (route.query?.m3u8) {
-    videoUrl.value = `${route.query.m3u8}`
-    }
-    else {
+      videoUrl.value = `${route.query.m3u8}`
+    } else {
       getExtendInfo()
     }
   }
