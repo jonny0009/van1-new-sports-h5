@@ -116,7 +116,7 @@ defineExpose({
 }
 .video-list-wrap {
   width: 100%;
-  height: 100svh;
+  height: 100dvh;
   overflow: hidden;
   position: relative;
   background: #000;
