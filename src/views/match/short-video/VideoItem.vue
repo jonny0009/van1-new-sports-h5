@@ -363,7 +363,7 @@ defineExpose({
 
   .video-pause {
     position: absolute;
-    z-index: 11;
+    z-index: 103;
     left: 0;
     top: 0;
     right: 0;
@@ -376,7 +376,7 @@ defineExpose({
 
   .mask-loading {
     position: absolute;
-    z-index: 11;
+    z-index: 102;
     left: 0;
     top: 0;
     bottom: 0;
