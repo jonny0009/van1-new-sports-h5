@@ -1,6 +1,9 @@
 <template>
   <div class="room-wrap">
-    <video ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
+    <div class="video-wrap">
+      <div class="video-bg" @click="pauseHandle"></div>
+      <video ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
+    </div>
     <div class="video-pause" @click="pauseHandle" v-if="!videoWaiting && !videoError && videoPause">
       <SvgIcon class="first-icon" name="live-pause" />
     </div>
@@ -23,6 +26,20 @@
     <div class="close-btn" @click="callback">
       <SvgIcon class="close-icon" name="home-short-close" />
     </div>
+    <SvgIcon
+      v-if="!mute"
+      class="mute-icon"
+      :class="{ fixed: RPlay || OUPlay }"
+      name="live-mute"
+      @click="muteHandle(true)"
+    />
+    <SvgIcon
+      v-else
+      class="mute-icon"
+      :class="{ fixed: RPlay || OUPlay }"
+      name="live-unmute"
+      @click="muteHandle(false)"
+    />
     <div class="match-wrap" v-if="RPlay || OUPlay" @click.stop>
       <div class="match-info">
         <div class="match-lengua text-overflow"></div>
@@ -82,6 +99,7 @@ import { mainMatches } from '@/api/live'
 import { computed } from 'vue'
 import { MarketInfo } from '@/entitys/MarketInfo'
 import liveBgError from '@/assets/images/empty/live-bg-error.svg?url'
+import store from '@/store'
 const emit = defineEmits(['close'])
 const props = defineProps({
   videoInfo: {
@@ -180,6 +198,13 @@ const gameInfo: any = computed(() => {
   return props.videoInfo.gameList[0]
 })
 
+const mute = computed(() => store.state.app.videoMute)
+watch(
+  () => mute.value,
+  () => {
+    player?.muted(mute.value)
+  }
+)
 const matchInfo: any = ref({})
 const getMainMatches = async () => {
   if (!gameInfo?.value) {
@@ -208,6 +233,14 @@ onUnmounted(() => {
 const callback = () => {
   player && player.pause()
   emit('close')
+}
+
+const muteHandle = (state: boolean) => {
+  player?.muted(state)
+  store.dispatch('app/setKeyValue', {
+    key: 'videoMute',
+    value: state
+  })
 }
 
 const videoRef = ref<HTMLDivElement | string>('')
@@ -246,13 +279,12 @@ const initVideo = () => {
       player = videojs(videoRef.value, options)
     }
 
-    player.muted(false)
+    player.muted(mute.value)
     player?.play().catch((error: any) => {
       console.log(error, 'error')
       player?.muted(true)
       player?.play()
     })
-
     player.on('waiting', () => {
       videoWaiting.value = true
       videoError.value = false
@@ -263,6 +295,10 @@ const initVideo = () => {
       videoWaiting.value = false
       videoError.value = false
       videoPause.value = false
+      store.dispatch('app/setKeyValue', {
+        key: 'videoMute',
+        value: player?.muted()
+      })
     })
 
     player.on('error', () => {
@@ -272,9 +308,9 @@ const initVideo = () => {
     player.on('pause', () => {
       videoPause.value = true
     })
-    player.on('click', () => {
-      pauseHandle()
-    })
+    // player.on('click', () => {
+    //   pauseHandle()
+    // })
   })
 }
 const disposePlayer = () => {
@@ -285,6 +321,7 @@ const disposePlayer = () => {
 }
 
 const pauseHandle = () => {
+  console.log('111')
   if (videoError.value) {
     return false
   }
@@ -300,6 +337,22 @@ const pauseHandle = () => {
 .room-wrap {
   position: relative;
   height: 100vh;
+
+  .video-wrap {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    .video-bg {
+      position: absolute;
+      z-index: 10;
+      background-color: transparent;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
 
   .video-js {
     position: relative;
@@ -413,12 +466,23 @@ const pauseHandle = () => {
     right: 30px;
     font-size: 42px;
   }
+  .mute-icon {
+    position: fixed;
+    z-index: 99;
+    right: 42px;
+    bottom: 50px;
+    font-size: 42px;
+    overflow: hidden;
+    &.fixed {
+      bottom: 300px;
+    }
+  }
   .match-wrap {
     display: flex;
     justify-content: space-between;
     position: fixed;
     z-index: 9;
-    bottom: 8%;
+    bottom: 120px;
     left: 30px;
     right: 30px;
     font-size: 42px;

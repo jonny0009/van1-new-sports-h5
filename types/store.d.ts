@@ -24,6 +24,7 @@ declare interface App {
   showSportsTop: any
   bettingSlipState: any
   isShowCasino: any
+  videoMute: any
 }
 
 declare interface User {

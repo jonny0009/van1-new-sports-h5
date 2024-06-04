@@ -7,7 +7,7 @@
     @open="open"
     :overlay="false"
   >
-    <div class="video-list-wrap">
+    <div class="video-list-wrap" :style="{ height: containerHeight }">
       <swiper
         class="swiper-box"
         :direction="'vertical'"
@@ -35,7 +35,7 @@
 </template>
 <script lang="ts" setup>
 import BettingSlip from '@/components/BettingSlip/index.vue'
-import { ref, computed, watch, nextTick } from 'vue'
+import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 // import { getVideoGreet } from '@/api/live'
 import videoInfo from './videoInfo.vue'
@@ -102,6 +102,22 @@ const change = async ({ activeIndex }: any) => {
   curIndex.value = activeIndex
 }
 
+const containerHeight = ref('100vh')
+
+const updateViewportHeight = () => {
+  const vh = window.innerHeight * 0.01;
+  containerHeight.value = `${vh * 100}px`;
+}
+
+onMounted(() => {
+  updateViewportHeight()
+  window.addEventListener('resize', updateViewportHeight)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateViewportHeight)
+})
+
 defineExpose({
   fullState,
   videoId
@@ -116,7 +132,7 @@ defineExpose({
 }
 .video-list-wrap {
   width: 100%;
-  height: 100vh;
+  // height: 100vh;
   overflow: hidden;
   position: relative;
   background: #000;

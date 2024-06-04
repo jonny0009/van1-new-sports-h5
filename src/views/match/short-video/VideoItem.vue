@@ -7,14 +7,31 @@
         <div class="name text-overflow">{{ videoInfo.leagueName || videoInfo.leagueNameCn }}</div>
       </div>
     </div>
-    <video
-      ref="videoRef"
-      class="video-js"
-      :class="{ 'height-screen': isHGTW }"
-      playsinline
-      webkit-playsinline
-      x5-video-player-type
-    ></video>
+    <div class="video-wrap" @click="goShortVideo">
+      <div class="video-bg" @click="goShortVideo"></div>
+      <video
+        ref="videoRef"
+        class="video-js"
+        :class="{ 'height-screen': isHGTW }"
+        playsinline
+        webkit-playsinline
+        x5-video-player-type
+      ></video>
+    </div>
+    <SvgIcon
+      v-if="!mute"
+      class="mute-icon"
+      :class="{ fixed: RPlay || OUPlay }"
+      name="live-mute"
+      @click="muteHandle(true)"
+    />
+    <SvgIcon
+      v-else
+      class="mute-icon"
+      :class="{ fixed: RPlay || OUPlay }"
+      name="live-unmute"
+      @click="muteHandle(false)"
+    />
     <div class="video-pause" @click="pauseHandle" v-if="!videoWaiting && !videoError && videoPause">
       <SvgIcon class="first-icon" name="live-pause" />
     </div>
@@ -82,11 +99,12 @@
 <script lang="ts" setup>
 import 'video.js/dist/video-js.min.css'
 import videojs from 'video.js'
-import { nextTick, onBeforeMount, onUnmounted, ref } from 'vue'
+import { nextTick, onBeforeMount, onUnmounted, ref, watch } from 'vue'
 import { mainMatches } from '@/api/live'
 import { computed } from 'vue'
 import { MarketInfo } from '@/entitys/MarketInfo'
 import liveBgError from '@/assets/images/empty/live-bg-error.svg?url'
+import store from '@/store'
 const emit = defineEmits(['selectVideo'])
 
 const videoTarget = ref()
@@ -186,7 +204,13 @@ const getMainMatches = async () => {
     matchInfo.value = res?.data
   }
 }
-
+const mute = computed(() => store.state.app.videoMute)
+watch(
+  () => mute.value,
+  () => {
+    player?.muted(mute.value)
+  }
+)
 onBeforeMount(() => {
   getMainMatches()
 })
@@ -247,6 +271,10 @@ const initVideo = () => {
       videoWaiting.value = false
       videoError.value = false
       videoPause.value = false
+      store.dispatch('app/setKeyValue', {
+        key: 'videoMute',
+        value: player?.muted()
+      })
     })
 
     player.on('error', () => {
@@ -256,11 +284,17 @@ const initVideo = () => {
     player.on('pause', () => {
       videoPause.value = true
     })
-    player.on('click', () => {
-      goShortVideo()
-    })
   })
 }
+
+const muteHandle = (state: boolean) => {
+  player?.muted(state)
+  store.dispatch('app/setKeyValue', {
+    key: 'videoMute',
+    value: state
+  })
+}
+
 const disposePlayer = () => {
   player && player.dispose()
   player = null
@@ -293,9 +327,24 @@ defineExpose({
 .room-wrap {
   position: relative;
   border-bottom: 1px solid rgb(227, 231, 240);
+
+  .video-wrap {
+    position: relative;
+
+    .video-bg {
+      position: absolute;
+      z-index: 100;
+      background-color: transparent;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
   .video-js {
     position: relative;
-    z-index: 8;
+    z-index: 99;
     width: 100% !important;
     height: auto !important;
     object-fit: contain;
@@ -314,7 +363,7 @@ defineExpose({
 
   .video-pause {
     position: absolute;
-    z-index: 11;
+    z-index: 103;
     left: 0;
     top: 0;
     right: 0;
@@ -327,7 +376,7 @@ defineExpose({
 
   .mask-loading {
     position: absolute;
-    z-index: 11;
+    z-index: 102;
     left: 0;
     top: 0;
     bottom: 0;
@@ -403,7 +452,17 @@ defineExpose({
       }
     }
   }
-
+  .mute-icon {
+    position: absolute;
+    z-index: 101;
+    right: 26px;
+    bottom: 13px;
+    font-size: 30px;
+    overflow: hidden;
+    &.fixed {
+      bottom: 200px;
+    }
+  }
   .match-wrap {
     display: flex;
     justify-content: space-between;
