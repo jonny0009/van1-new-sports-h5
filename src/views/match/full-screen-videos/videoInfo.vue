@@ -96,6 +96,7 @@ import { mainMatches } from '@/api/live'
 import { computed } from 'vue'
 import { MarketInfo } from '@/entitys/MarketInfo'
 import liveBgError from '@/assets/images/empty/live-bg-error.svg?url'
+import store from '@/store'
 const emit = defineEmits(['close'])
 const props = defineProps({
   videoInfo: {
@@ -194,8 +195,13 @@ const gameInfo: any = computed(() => {
   return props.videoInfo.gameList[0]
 })
 
-const mute = ref(true)
-
+const mute = computed(() => store.state.app.videoMute)
+watch(
+  () => mute.value,
+  () => {
+    player?.muted(mute.value)
+  }
+)
 const matchInfo: any = ref({})
 const getMainMatches = async () => {
   if (!gameInfo?.value) {
@@ -228,7 +234,10 @@ const callback = () => {
 
 const muteHandle = (state: boolean) => {
   player?.muted(state)
-  mute.value = state
+  store.dispatch('app/setKeyValue', {
+    key: 'videoMute',
+    value: state
+  })
 }
 
 const videoRef = ref<HTMLDivElement | string>('')
@@ -267,7 +276,7 @@ const initVideo = () => {
       player = videojs(videoRef.value, options)
     }
 
-    player.muted(false)
+    player.muted(mute.value)
     player?.play().catch((error: any) => {
       console.log(error, 'error')
       player?.muted(true)
@@ -283,7 +292,10 @@ const initVideo = () => {
       videoWaiting.value = false
       videoError.value = false
       videoPause.value = false
-      mute.value = player?.muted()
+      store.dispatch('app/setKeyValue', {
+        key: 'videoMute',
+        value: player?.muted()
+      })
     })
 
     player.on('error', () => {

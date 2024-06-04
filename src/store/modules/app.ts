@@ -28,7 +28,8 @@ const appModule: Module<App, any> = {
     customizeConfig: {},
     matchLiveIndex: 0,
     showSportsTop: true,
-    bettingSlipState: true
+    bettingSlipState: true,
+    videoMute: false
   },
   mutations: {
     SET_THEME: (state, theme: string) => {

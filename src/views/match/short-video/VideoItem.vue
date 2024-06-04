@@ -11,6 +11,7 @@
       ref="videoRef"
       class="video-js"
       :class="{ 'height-screen': isHGTW }"
+      @click="goShortVideo"
       playsinline
       webkit-playsinline
       x5-video-player-type
@@ -96,11 +97,12 @@
 <script lang="ts" setup>
 import 'video.js/dist/video-js.min.css'
 import videojs from 'video.js'
-import { nextTick, onBeforeMount, onUnmounted, ref } from 'vue'
+import { nextTick, onBeforeMount, onUnmounted, ref, watch } from 'vue'
 import { mainMatches } from '@/api/live'
 import { computed } from 'vue'
 import { MarketInfo } from '@/entitys/MarketInfo'
 import liveBgError from '@/assets/images/empty/live-bg-error.svg?url'
+import store from '@/store'
 const emit = defineEmits(['selectVideo'])
 
 const videoTarget = ref()
@@ -200,7 +202,13 @@ const getMainMatches = async () => {
     matchInfo.value = res?.data
   }
 }
-const mute = ref(true)
+const mute = computed(() => store.state.app.videoMute)
+watch(
+  () => mute.value,
+  () => {
+    player?.muted(mute.value)
+  }
+)
 onBeforeMount(() => {
   getMainMatches()
 })
@@ -261,7 +269,10 @@ const initVideo = () => {
       videoWaiting.value = false
       videoError.value = false
       videoPause.value = false
-      mute.value = player?.muted()
+      store.dispatch('app/setKeyValue', {
+        key: 'videoMute',
+        value: player?.muted()
+      })
     })
 
     player.on('error', () => {
@@ -279,7 +290,10 @@ const initVideo = () => {
 
 const muteHandle = (state: boolean) => {
   player?.muted(state)
-  mute.value = state
+  store.dispatch('app/setKeyValue', {
+    key: 'videoMute',
+    value: state
+  })
 }
 
 const disposePlayer = () => {
