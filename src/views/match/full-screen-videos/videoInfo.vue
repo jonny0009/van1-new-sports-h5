@@ -1,6 +1,9 @@
 <template>
   <div class="room-wrap">
-    <video ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
+    <div class="video-wrap">
+      <div class="video-bg" @click="pauseHandle"></div>
+      <video ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
+    </div>
     <div class="video-pause" @click="pauseHandle" v-if="!videoWaiting && !videoError && videoPause">
       <SvgIcon class="first-icon" name="live-pause" />
     </div>
@@ -305,9 +308,9 @@ const initVideo = () => {
     player.on('pause', () => {
       videoPause.value = true
     })
-    player.on('click', () => {
-      pauseHandle()
-    })
+    // player.on('click', () => {
+    //   pauseHandle()
+    // })
   })
 }
 const disposePlayer = () => {
@@ -318,6 +321,7 @@ const disposePlayer = () => {
 }
 
 const pauseHandle = () => {
+  console.log('111')
   if (videoError.value) {
     return false
   }
@@ -333,6 +337,20 @@ const pauseHandle = () => {
 .room-wrap {
   position: relative;
   height: 100vh;
+
+  .video-wrap {
+    position: relative;
+
+    .video-bg {
+      position: absolute;
+      z-index: 10;
+      background-color: transparent;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
 
   .video-js {
     position: relative;
