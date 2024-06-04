@@ -23,6 +23,20 @@
     <div class="close-btn" @click="callback">
       <SvgIcon class="close-icon" name="home-short-close" />
     </div>
+    <SvgIcon
+      v-if="!mute"
+      class="mute-icon"
+      :class="{ fixed: RPlay || OUPlay }"
+      name="live-mute"
+      @click="muteHandle(true)"
+    />
+    <SvgIcon
+      v-else
+      class="mute-icon"
+      :class="{ fixed: RPlay || OUPlay }"
+      name="live-unmute"
+      @click="muteHandle(false)"
+    />
     <div class="match-wrap" v-if="RPlay || OUPlay" @click.stop>
       <div class="match-info">
         <div class="match-lengua text-overflow"></div>
@@ -180,6 +194,8 @@ const gameInfo: any = computed(() => {
   return props.videoInfo.gameList[0]
 })
 
+const mute = ref(true)
+
 const matchInfo: any = ref({})
 const getMainMatches = async () => {
   if (!gameInfo?.value) {
@@ -208,6 +224,11 @@ onUnmounted(() => {
 const callback = () => {
   player && player.pause()
   emit('close')
+}
+
+const muteHandle = (state: boolean) => {
+  player?.muted(state)
+  mute.value = state
 }
 
 const videoRef = ref<HTMLDivElement | string>('')
@@ -252,7 +273,6 @@ const initVideo = () => {
       player?.muted(true)
       player?.play()
     })
-
     player.on('waiting', () => {
       videoWaiting.value = true
       videoError.value = false
@@ -263,6 +283,7 @@ const initVideo = () => {
       videoWaiting.value = false
       videoError.value = false
       videoPause.value = false
+      mute.value = player?.muted()
     })
 
     player.on('error', () => {
@@ -413,12 +434,23 @@ const pauseHandle = () => {
     right: 30px;
     font-size: 42px;
   }
+  .mute-icon {
+    position: fixed;
+    z-index: 99;
+    right: 42px;
+    bottom: 50px;
+    font-size: 42px;
+    overflow: hidden;
+    &.fixed {
+      bottom: 300px;
+    }
+  }
   .match-wrap {
     display: flex;
     justify-content: space-between;
     position: fixed;
     z-index: 9;
-    bottom: 8%;
+    bottom: 120px;
     left: 30px;
     right: 30px;
     font-size: 42px;

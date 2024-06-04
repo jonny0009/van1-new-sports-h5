@@ -15,6 +15,20 @@
       webkit-playsinline
       x5-video-player-type
     ></video>
+    <SvgIcon
+      v-if="!mute"
+      class="mute-icon"
+      :class="{ fixed: RPlay || OUPlay }"
+      name="live-mute"
+      @click="muteHandle(true)"
+    />
+    <SvgIcon
+      v-else
+      class="mute-icon"
+      :class="{ fixed: RPlay || OUPlay }"
+      name="live-unmute"
+      @click="muteHandle(false)"
+    />
     <div class="video-pause" @click="pauseHandle" v-if="!videoWaiting && !videoError && videoPause">
       <SvgIcon class="first-icon" name="live-pause" />
     </div>
@@ -186,7 +200,7 @@ const getMainMatches = async () => {
     matchInfo.value = res?.data
   }
 }
-
+const mute = ref(true)
 onBeforeMount(() => {
   getMainMatches()
 })
@@ -247,6 +261,7 @@ const initVideo = () => {
       videoWaiting.value = false
       videoError.value = false
       videoPause.value = false
+      mute.value = player?.muted()
     })
 
     player.on('error', () => {
@@ -261,6 +276,12 @@ const initVideo = () => {
     })
   })
 }
+
+const muteHandle = (state: boolean) => {
+  player?.muted(state)
+  mute.value = state
+}
+
 const disposePlayer = () => {
   player && player.dispose()
   player = null
@@ -403,7 +424,17 @@ defineExpose({
       }
     }
   }
-
+  .mute-icon {
+    position: absolute;
+    z-index: 99;
+    right: 26px;
+    bottom: 13px;
+    font-size: 30px;
+    overflow: hidden;
+    &.fixed {
+      bottom: 200px;
+    }
+  }
   .match-wrap {
     display: flex;
     justify-content: space-between;
