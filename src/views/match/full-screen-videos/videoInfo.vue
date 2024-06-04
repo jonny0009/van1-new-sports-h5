@@ -1,10 +1,9 @@
 <template>
   <div class="room-wrap">
-    <!-- <div class="video-wrap">
+    <div class="video-wrap">
       <div class="video-bg" @click="pauseHandle"></div>
       <video ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
-    </div> -->
-    <video ref="videoRef" class="video-js" playsinline webkit-playsinline x5-video-player-type></video>
+    </div>
     <div class="video-pause" @click="pauseHandle" v-if="!videoWaiting && !videoError && videoPause">
       <SvgIcon class="first-icon" name="live-pause" />
     </div>
@@ -309,9 +308,9 @@ const initVideo = () => {
     player.on('pause', () => {
       videoPause.value = true
     })
-    player.on('click', () => {
-      pauseHandle()
-    })
+    // player.on('click', () => {
+    //   pauseHandle()
+    // })
   })
 }
 const disposePlayer = () => {
