@@ -7,15 +7,16 @@
         <div class="name text-overflow">{{ videoInfo.leagueName || videoInfo.leagueNameCn }}</div>
       </div>
     </div>
-    <video
-      ref="videoRef"
-      class="video-js"
-      :class="{ 'height-screen': isHGTW }"
-      @click="goShortVideo"
-      playsinline
-      webkit-playsinline
-      x5-video-player-type
-    ></video>
+    <div @click="goShortVideo">
+      <video
+        ref="videoRef"
+        class="video-js"
+        :class="{ 'height-screen': isHGTW }"
+        playsinline
+        webkit-playsinline
+        x5-video-player-type
+      ></video>
+    </div>
     <SvgIcon
       v-if="!mute"
       class="mute-icon"
@@ -282,9 +283,6 @@ const initVideo = () => {
     player.on('pause', () => {
       videoPause.value = true
     })
-    player.on('click', () => {
-      goShortVideo()
-    })
   })
 }
 
@@ -330,7 +328,7 @@ defineExpose({
   border-bottom: 1px solid rgb(227, 231, 240);
   .video-js {
     position: relative;
-    z-index: 9999;
+    z-index: 99;
     width: 100% !important;
     height: auto !important;
     object-fit: contain;
