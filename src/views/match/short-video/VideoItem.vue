@@ -7,7 +7,8 @@
         <div class="name text-overflow">{{ videoInfo.leagueName || videoInfo.leagueNameCn }}</div>
       </div>
     </div>
-    <div @click="goShortVideo">
+    <div class="video-wrap" @click="goShortVideo">
+      <div class="video-bg" @click="goShortVideo"></div>
       <video
         ref="videoRef"
         class="video-js"
@@ -326,6 +327,21 @@ defineExpose({
 .room-wrap {
   position: relative;
   border-bottom: 1px solid rgb(227, 231, 240);
+
+  .video-wrap {
+    position: relative;
+
+    .video-bg {
+      position: absolute;
+      z-index: 100;
+      background-color: transparent;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
   .video-js {
     position: relative;
     z-index: 99;
@@ -438,7 +454,7 @@ defineExpose({
   }
   .mute-icon {
     position: absolute;
-    z-index: 99;
+    z-index: 101;
     right: 26px;
     bottom: 13px;
     font-size: 30px;
