@@ -481,7 +481,7 @@ const pauseHandle = () => {
     display: flex;
     justify-content: space-between;
     position: fixed;
-    z-index: 9;
+    z-index: 11;
     bottom: 120px;
     left: 30px;
     right: 30px;
