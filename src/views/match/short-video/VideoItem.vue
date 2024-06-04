@@ -330,7 +330,7 @@ defineExpose({
   border-bottom: 1px solid rgb(227, 231, 240);
   .video-js {
     position: relative;
-    z-index: 8;
+    z-index: 9999;
     width: 100% !important;
     height: auto !important;
     object-fit: contain;
