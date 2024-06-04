@@ -339,6 +339,8 @@ const pauseHandle = () => {
   height: 100vh;
 
   .video-wrap {
+    width: 100%;
+    height: 100%;
     position: relative;
 
     .video-bg {
