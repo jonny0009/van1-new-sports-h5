@@ -189,17 +189,20 @@ const getLastMessage = async () => {
   const extra = res.extra || {}
   const messageList = extra.messageList || []
   if (res.code == 200) {
-    const gidms = []
-    messageList.forEach((message: any) => {
-      if (message.msgType && +message.msgType === 2 && message.content) {
-        const newContent = JSON.parse(message.content || '')
-        const bettingData = newContent.bettingData || []
-        bettingData.forEach((item: any) => {
-          gidms.push(item.gidm)
-        })
-      }
-    })
-    handlerMessage(messageList)
+    // 這段目前看似沒用處先隱藏
+    // const gidms = []
+    // messageList.forEach((message: any) => {
+    //   if (message.msgType && +message.msgType === 2 && message.content) {
+    //     const newContent = JSON.parse(message.content || '')
+    //     const bettingData = newContent.bettingData || []
+    //     bettingData.forEach((item: any) => {
+    //       gidms.push(item.gidm)
+    //     })
+    //   }
+    // })
+    // msgType 1: 聊天消息, 2: 注單分享
+    const messages = messageList.filter((msg: any) => `${msg.msgType}` === '1')
+    handlerMessage(messages)
   }
 }
 
