@@ -335,8 +335,7 @@ const getImg = (val:any) => {
 }
 
 .qizi {
-  width: 20px;
-  height: 20px;
+  height: 40px;
 }
 .img-span {
   display: flex;

@@ -18,13 +18,14 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useMatch } from '@/utils/useMatch'
-const setMatch: any = useMatch()
-import VideoBox from './child/VideoBox.vue'
-import coverFt from './child/assets/ft.jpg'
 import { ref, computed, watch, onBeforeMount, nextTick } from 'vue'
 import { extendInfo } from '@/api/live'
+import { liveVideo } from '@/utils'
+import { useMatch } from '@/utils/useMatch'
+const setMatch: any = useMatch()
 
+import VideoBox from './child/VideoBox.vue'
+import coverFt from './child/assets/ft.jpg'
 const props = defineProps({
   liveInfo: {
     type: Object,
@@ -67,12 +68,14 @@ onBeforeMount(() => {
 const m3u8Str = ref('')
 const getVideoInfo = async () => {
   const gidm = props.liveInfo.gidm
-  const extendInfoRes: any = await extendInfo({ gidm })
-  if (extendInfoRes.code === 200) {
-    const { streamNa }: any = extendInfoRes.data
-    const { live } = streamNa || {}
-    const { m3u8 } = live || {}
-    m3u8Str.value = props.liveInfo.m3u8 || m3u8
+  const res: any = await extendInfo({ gidm })
+  if (res.code === 200) {
+    const { streamNaList }: any = res.data
+
+    console.log(streamNaList)
+    const m3u8 = liveVideo(streamNaList)
+    console.log(m3u8, '====', props.liveInfo.m3u8)
+    m3u8Str.value = m3u8 || props.liveInfo.m3u8
   }
 }
 
