@@ -310,10 +310,10 @@ export const getRatioPlay = (betInfo: any) => {
   }
   // 判断玩法是否有ratioType
   const isRatioType = !(rt * 1)
-  let obj = JSON.parse(JSON.stringify(betInfo))
+  const obj = JSON.parse(JSON.stringify(betInfo))
   const { gameType, gameTypeSon, specifiers } = obj
   // 新增体育项兼容
-  let ratioTypeData = getGamePlayData({ gameType, gameTypeSon, playType, teamSuffix })
+  const ratioTypeData = getGamePlayData({ gameType, gameTypeSon, playType, teamSuffix })
   let regStr = ''
   if (isRatioType) {
     if (ratioTypeData) {
@@ -376,12 +376,14 @@ export const getBetRatioToNumber = (ratio: any) => {
   return retioStr
 }
 // 处理视频
-export const liveVideo = (streamNa: any) => {
-  const { live, stream, videoLive } = streamNa || {}
-  const m3u8 =
-    (live && live.status && live.m3u8) ||
-    (videoLive && videoLive.status && videoLive.m3u8) ||
-    (stream && stream.status && stream.m3u8) ||
-    {}
+export const liveVideo = (streamNaList: any) => {
+  let m3u8 = ''
+  if (streamNaList.length) {
+    streamNaList.forEach((item: any) => {
+      if (JSON.stringify(item) !== '{}' && item.live) {
+        m3u8 = item.live && item.live.m3u8
+      }
+    })
+  }
   return m3u8
 }
