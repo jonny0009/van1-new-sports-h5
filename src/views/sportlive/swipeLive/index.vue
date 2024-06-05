@@ -11,10 +11,10 @@
 </template>
 <script lang="ts" setup>
 import MatchItem from './main/MatchItem.vue'
-import { ref, onBeforeMount, onUnmounted, onActivated, onDeactivated } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import { anchorLiveList, extendInfo } from '@/api/live'
-import store from '@/store'
-import router from '@/router'
+// import store from '@/store'
+// import router from '@/router'
 import { liveVideo } from '@/utils'
 
 const activeIndex = ref(0)
@@ -35,17 +35,17 @@ const init = async () => {
 
     swipeList.value.length = 0
     await dataArray.map(async (e: any) => {
-      const gidm = e.gidm
-      const extendInfoParams = {
-        gidm
-      }
-      const extendInfoRes: any = await extendInfo(extendInfoParams)
-      if (extendInfoRes.code === 200) {
-        const { streamNa }: any = extendInfoRes.data
-        const m3u8 = liveVideo(streamNa)
-        e.m3u8 = e.m3u8 || m3u8
-        e.streamNa = streamNa
-      }
+      // const gidm = e.gidm
+      // const extendInfoParams = {
+      //   gidm
+      // }
+      // const extendInfoRes: any = await extendInfo(extendInfoParams)
+      // if (extendInfoRes.code === 200) {
+      //   const { streamNaList }: any = extendInfoRes.data
+      //   const m3u8 = liveVideo(streamNaList)
+      //   e.m3u8 = e.m3u8 || m3u8
+      //   e.streamNa = streamNaList
+      // }
       swipeList.value.push(e)
     })
   }
