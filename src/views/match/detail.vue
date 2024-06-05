@@ -62,7 +62,7 @@ const navList = reactive([
   { title: t('live.more'), iconName: 'live-grid', path: 'other' }
 ])
 const onNavClick = (path: string) => {
-  router.replace(`/match/${paramsId.value}/${path}`)
+  router.replace({path: `/match/${paramsId.value}/${path}`, query: { ...route.query }})
   getMatchInfo()
   store.commit('match/SET_NEED_TIMER', true)
 }
