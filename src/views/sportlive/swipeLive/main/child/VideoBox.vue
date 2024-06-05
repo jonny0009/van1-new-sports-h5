@@ -94,11 +94,19 @@ const goDetails = () => {
     return
   }
   const { gidm } = props.liveInfo
+  const query: any = {}
+  if (props.liveInfo.anchorId) {
+    query.anchorId = props.liveInfo.anchorId
+  }
+  if (props.liveInfo.m3u8) {
+    query.m3u8 = props.liveInfo.m3u8
+  }
   const params = {
     name: 'MatchDetail',
     params: {
       id: gidm
-    }
+    },
+    query
   }
   router.push(params)
   store.dispatch('app/setMatchLiveIndex', 1)

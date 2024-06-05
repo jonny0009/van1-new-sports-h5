@@ -88,8 +88,8 @@ const getExtendInfo = async () => {
   const res: any = await extendInfo({ gidm })
   if (res.code === 200) {
     const { streamNa } = res.data || {}
-    const { liveali, live } = streamNa || {}
-    videoUrl.value = (liveali || live || {}).m3u8
+    const { live } = streamNa || {}
+    videoUrl.value = (live || {}).m3u8
     if (!videoUrl.value) {
       videoUrl.value = ''
       videoError.value = true
