@@ -2,7 +2,7 @@
   <div ref="newContainer" class="homeTime-page">
     <SportsTabs
       ref="refSportsTabs"
-      class="pb10"
+      class="pb10 mt2"
       :is-custom="true"
       :tabs="sports"
       :if-sport-today="true"

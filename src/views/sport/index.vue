@@ -3,7 +3,7 @@
     <div ref="newContainer">
       <!--公共 体育项-->
 
-      <div class="mt10">
+      <div :class="[homeStyle == 2 ? 'mt5' : 'mt10']">
         <van-tabs
           v-model:active="gameType"
           :duration="0.2"
