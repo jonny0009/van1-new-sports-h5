@@ -256,7 +256,7 @@ export const _formatNumber = (num: any) => {
  * @return: 1
  */
 
-export const debounce = (fn = (...args: any) => {}, ms: number, immediate: boolean = false) => {
+export const debounce = (fn = (...args: any) => { }, ms: number, immediate: boolean = false) => {
   let timeout: any = null
   return function (this: unknown, ...args: any) {
     if (timeout) window.clearTimeout(timeout)
@@ -283,7 +283,7 @@ export const debounce = (fn = (...args: any) => {}, ms: number, immediate: boole
  * @return:
  */
 
-export const throttle = (fn = () => {}, ms: number) => {
+export const throttle = (fn = () => { }, ms: number) => {
   let last = 0
   return function (this: unknown, ...args: any) {
     const nowTime = Date.now()
@@ -377,12 +377,11 @@ export const getBetRatioToNumber = (ratio: any) => {
 }
 // 处理视频
 export const liveVideo = (streamNa: any) => {
-  const { live, stream, videoLive, liveali } = streamNa || {}
+  const { live, stream, videoLive } = streamNa || {}
   const m3u8 =
-    (videoLive && videoLive.status && videoLive.m3u8) ||
-    (liveali && liveali.status && liveali.m3u8) ||
-    (stream && stream.status && stream.m3u8) ||
     (live && live.status && live.m3u8) ||
+    (videoLive && videoLive.status && videoLive.m3u8) ||
+    (stream && stream.status && stream.m3u8) ||
     {}
   return m3u8
 }
