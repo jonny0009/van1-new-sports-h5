@@ -142,7 +142,12 @@ const closeInterval = () => {
 }
 
 onBeforeMount(() => {
+  store.dispatch('app/setKeyValue', {
+    key: 'liveBarHeaderHeight',
+    value: '69vw'
+  })
   getMatchInfo()
+
   if (route.query?.m3u8) {
     videoUrl.value = `${route.query.m3u8}`
   } else {
@@ -168,17 +173,19 @@ watch(
   }
 )
 
-watch(() => route.query.m3u8, (val) => {
-  if (val) {
-    videoUrl.value = `${val}`
+watch(
+  () => route.query.m3u8,
+  (val) => {
+    if (val) {
+      videoUrl.value = `${val}`
+    }
   }
-})
-
+)
 </script>
 
 <style lang="scss" scoped>
 .detail {
-  z-index: 6;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   position: fixed;
