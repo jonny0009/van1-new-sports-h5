@@ -94,9 +94,9 @@
               <van-list
                 v-if="videoLoading || shortVideos.length"
                 v-model:loading="videoLoading"
-                @load="videoLoad"
-                :finished="params1.page * params1.pageSize >= videoTotol && !videoLoading"
-                :finished-text="shortVideos.length == 0 ? '' : $t('live.noMore')"
+                @load="getShortVideos"
+                :finished="noMoreShortVideos"
+                :finished-text="shortVideos.length === 0 ? '' : $t('live.noMore')"
                 class="list-group video-list"
               >
                 <div
@@ -256,7 +256,6 @@ const onRefresh = () => {
   }
 
   if (['RB'].includes(navActive.value)) {
-    params1.value.page = 1
     if (!shortVideos.value.length) {
       getShortVideos()
     }
@@ -316,20 +315,23 @@ const comingSoon = async () => {
 const shortVideos: any = ref([])
 const videoLoading = ref(false)
 const videoTotol = ref(0)
-const params1 = ref({
-  page: 1,
+const shortViedoParams = reactive({
+  page: 0,
   pageSize: 20
 })
+
+const noMoreShortVideos = computed(() => {
+  return videoTotol.value > 0 && shortViedoParams.page * shortViedoParams.pageSize >= videoTotol.value
+})
+
 const getShortVideos = async () => {
-  videoLoading.value = true
-  if (videoTotol.value > 0 && params1.value.page * params1.value.pageSize >= videoTotol.value) {
+  if (noMoreShortVideos.value) {
     return false
   }
-  if (params1.value.page === 1) {
-    shortVideos.value.length = 0
-  }
+  videoLoading.value = true
+  shortViedoParams.page++
   const res: any = await getVideoGreet({
-    ...params1.value
+    ...shortViedoParams
   }).finally(() => {
     videoLoading.value = false
   })
@@ -339,9 +341,7 @@ const getShortVideos = async () => {
     shortVideos.value.push(...vides)
   }
 }
-const videoLoad = () => {
-  videoLoading.value = false
-}
+
 const selectVideo = (video: any) => {
   FullScreenVideosRef.value.fullState = true
   FullScreenVideosRef.value.videoId = video.videoId
