@@ -214,7 +214,7 @@ const getLastMessage = async () => {
     //   }
     // })
     if (isChangeKey.value) {
-      chatMessageList.value = [] 
+      chatMessageList.value = []
       isChangeKey.value = false
     }
     // msgType 1: 聊天消息, 2: 注單分享
@@ -238,9 +238,14 @@ const getSubscribe = async () => {
 const chatMessageList: Ref<any[]> = ref([])
 const handlerMessage = (result: any) => {
   if (result instanceof Array) {
-    chatMessageList.value = result.reverse().concat(chatMessageList.value)
+    const existingMsgIds = new Set(chatMessageList.value.map(item => item.msgId))
+    const newMessages = result.reverse().filter(item => !existingMsgIds.has(item.msgId))
+    chatMessageList.value = newMessages.concat(chatMessageList.value)
   } else {
-    chatMessageList.value.push(result)
+    const existingMsgIds = new Set(chatMessageList.value.map(item => item.msgId))
+    if (!existingMsgIds.has(result.msgId)) {
+      chatMessageList.value.push(result)
+    }
   }
   scorllToBottom()
 }
