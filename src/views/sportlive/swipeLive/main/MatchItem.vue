@@ -70,8 +70,8 @@ const getVideoInfo = async () => {
   const extendInfoRes: any = await extendInfo({ gidm })
   if (extendInfoRes.code === 200) {
     const { streamNa }: any = extendInfoRes.data
-    const { liveali, live } = streamNa || {}
-    const { m3u8 } = liveali || live || {}
+    const { live } = streamNa || {}
+    const { m3u8 } = live || {}
     m3u8Str.value = props.liveInfo.m3u8 || m3u8
   }
 }
