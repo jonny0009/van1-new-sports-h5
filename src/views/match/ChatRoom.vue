@@ -157,16 +157,29 @@ onUnmounted(() => {
   websocket?.disconnect()
 })
 
+const gidm = computed(() => matchInfo.value.gidm)
+const systemId = computed(() => matchInfo.value.systemId)
+const anchorId = computed(() => route?.query?.anchorId)
+const id = computed(() => route?.params?.id)
+const roomKey = computed(() => `${id.value}${anchorId.value}`)
+const isChangeKey = ref(false)
+
+watch(roomKey, (newVal, oldVal) => {
+  if (newVal === oldVal) return
+  websocket?.disconnect()
+  isChangeKey.value = true
+})
+
 const chatRoomInfo: Ref<any> = ref({})
 const getIntoRoom = async () => {
-  if (needTimer.value) {
+  if (needTimer.value && !isChangeKey.value) {
     return
   }
-  const anchorId = route?.query?.anchorId || undefined
+
   const params = {
-    gidm: matchInfo.value.gidm,
-    systemId: matchInfo.value.systemId,
-    anchorId,
+    gidm: gidm.value,
+    systemId: systemId.value,
+    anchorId: anchorId.value,
     version: '3.9.0'
   }
   const res: any = await intoRoom(params)
@@ -200,6 +213,10 @@ const getLastMessage = async () => {
     //     })
     //   }
     // })
+    if (isChangeKey.value) {
+      chatMessageList.value = [] 
+      isChangeKey.value = false
+    }
     // msgType 1: 聊天消息, 2: 注單分享
     const messages = messageList.filter((msg: any) => `${msg.msgType}` === '1')
     handlerMessage(messages)
