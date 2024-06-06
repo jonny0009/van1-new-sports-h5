@@ -117,11 +117,3 @@ export const statistics = (params?: any) => {
     params
   })
 }
-// 时间安排球类数据
-export const recommendEventsCount = (data?: any) => {
-  return request({
-    url: '/ai/mobile/change/recommendEventsCount',
-    method: 'post',
-    data
-  })
-}

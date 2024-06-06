@@ -50,22 +50,6 @@ const props = defineProps({
   matchData: {
     type: Object,
     default: () => {}
-  },
-  firstHomeList: {
-    type: Array,
-    default: () => []
-  },
-  firstAwayList: {
-    type: Array,
-    default: () => []
-  },
-  backupHomeList: {
-    type: Array,
-    default: () => []
-  },
-  backupAwayList: {
-    type: Array,
-    default: () => []
   }
 })
 const matchData = computed(() => props.matchData || {})
@@ -169,13 +153,13 @@ const fetchLineup = async () => {
       line-height: 52px;
     }
     > span.host {
-      background: #0688f9;
-      border-color: #0688f9;
+      background: #48a3ff;
+      border-color: #48a3ff;
       margin-right: 10px;
     }
     > span.away {
-      background: #f80563;
-      border-color: #f80563;
+      background: #db7f91;
+      border-color: #db7f91;
       margin-left: 10px;
     }
   }

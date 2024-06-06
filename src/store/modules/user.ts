@@ -106,6 +106,7 @@ const userModule: Module<User, any> = {
         state.currency = res.data[0].currency || {}
         state.symbol = res.data[0].symbol || ''
         state.currentWallet = res.data[0]
+        localStore.setItem('wid', res.data[0].walletId)
         this.dispatch('user/getBalance', { wid: res.data[0].walletId || '' })
       } else {
         this.dispatch('app/getConfig', { wid: 1 })

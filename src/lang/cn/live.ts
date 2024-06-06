@@ -72,7 +72,4 @@ export default {
   section: '小节',
   videoFailure: '视频加载失败，请刷新重试',
   refreshVideo: '刷新视频',
-  goLive: '前往直播厅',
-  playbackFailed:'播放失败'
-
 }

@@ -18,24 +18,16 @@ const ifBLue = computed(() => {
 })
 
 export default {
-  mounted(el: any, binding: any, { props }: any) {
-    _handleError(el, props)
-    _handleLoad(el, binding, props)
+  mounted(el: any, binding: any) {
+    _handleError(el)
+    _handleLoad(el, binding)
   },
-  updated(el: any, binding: any, { props }: any) {
-    _handleLoad(el, binding, props)
+  updated(el: any, binding: any) {
+    _handleLoad(el, binding)
   }
 }
 
-function _handleError(el: any, props: any) {
-  if (!el.classList.contains('v-img-error')) {
-    el.classList.add('v-img-error')
-  }
-  if (props.errorImg) {
-    el.src = props.errorImg
-    return false
-  }
-
+function _handleError(el: any) {
   // type 1是联赛，2是球队，3是头像，4是主队，5是客队
   const type = el.getAttribute('type') * 1 || ''
   if (type === 1) {
@@ -63,15 +55,14 @@ function _handleError(el: any, props: any) {
     el.src = ''
   }
 }
-function _handleLoad(el: any, { value = '' }: any, props: any) {
+function _handleLoad(el: any, { value = '' }: any) {
   const url = _handleParams(value)
   const img = new Image()
   img.onload = function () {
     el.src = url
-    el.classList.remove('v-img-error')
   }
   img.onerror = function () {
-    _handleError(el, props)
+    _handleError(el)
   }
   img.src = url
 }

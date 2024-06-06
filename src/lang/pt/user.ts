@@ -39,7 +39,7 @@ export default {
   text5: 'caracteres especiais não são permitidos',
   text6: 'sem espaços',
   ExistingAccount: 'Já tem uma conta',
-  personalProfile: 'Perfil',
+  PersonalProfile: 'Perfil',
   RegistrationTime: 'Hora do registro',
   follow: 'focar em',
   fans: 'fã',
@@ -125,7 +125,7 @@ export default {
   affirmPend: 'confirmando',
   noDataRelated: 'Nenhum dado relevante encontrado',
   // 新增6
-  fontNickName: 'O apelido só pode ser editado uma vez em 7 dias e não pode ser repetido com outras pessoas ou conter caracteres ilegais',
+  fontNickName: 'Os apelidos só podem ser editados uma vez e não podem ser duplicados ou conter caracteres ilegais com outros',
   aheadFinal: 'Liquidação antecipada',
   // 新增7
   contactUs: 'entre em contato conosco',
@@ -179,9 +179,6 @@ export default {
     OP_SW: 'nadar',
     OP_BS: 'Futebol de areia',
     OP_WS: 'Esportes de inverno',
-    OP_BD: 'bola arqueada',
-    // 新增
-    XNFT: 'futebol virtual',
-    XNBK: 'basquete virtual'
+    OP_BD: 'bola arqueada'
   }
 }

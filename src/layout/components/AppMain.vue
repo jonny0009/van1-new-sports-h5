@@ -1,59 +1,46 @@
 <template>
-  <div class="app-main" :class="[{ appMainBottom: homeStyle === 1 }]">
+  <div class="app-main">
     <!-- :include="keepAlives" -->
     <router-view v-slot="{ Component, route }">
-      <transition :name="transitionName">
+      <transition :name="transitionName" >
         <keep-alive>
           <component :is="getComponent(Component, route)" v-if="$route.meta.KeepAlive" :key="route.path" />
         </keep-alive>
       </transition>
-      <component
-        :is="getComponent(Component, route)"
-        v-if="!$route.meta.KeepAlive && !$route.meta.key"
-        :key="route.path"
-      />
-      <component
-        :is="getComponent(Component, route)"
-        v-if="!$route.meta.KeepAlive && $route.meta.key"
-        :key="$route.meta.key"
-      />
+      <component :is="getComponent(Component, route)" v-if="!$route.meta.KeepAlive && !$route.meta.key"
+        :key="route.path" />
+      <component :is="getComponent(Component, route)" v-if="!$route.meta.KeepAlive && $route.meta.key"
+        :key="$route.meta.key" />
     </router-view>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onActivated, onMounted } from 'vue'
+import { defineComponent, onActivated } from 'vue'
 export default defineComponent({
   name: 'AppMain'
 })
 </script>
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import store from '@/store'
+import { ref } from 'vue'
 const transitionName: any = ref('fade-right')
 // const keepAlives = computed(() => [])
-const homeStyle = computed(() => store.state.app.homeStyle)
 const getComponent = (Component: any, route: any) => {
   if (!Component.type.name) {
     Component.type.name = route.name
   }
   return Component
 }
-onMounted(() => {
-  transitionName.value = 'fade-right'
-})
 // 缓存触发组件
-onActivated(() => {})
+onActivated(() => { })
 defineExpose({
   transitionName
 })
+
 </script>
 <style scoped>
 .app-main {
   position: relative;
   overflow: hidden;
-}
-.appMainBottom {
-  padding-bottom: 90px;
 }
 /* 向右划 */
 .fade-right-enter-from {

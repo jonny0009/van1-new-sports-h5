@@ -1,7 +1,4 @@
 import { getTheme } from './auth'
-import { ImageSource } from '@/config'
-import { lib } from 'xcsport-lib'
-const { getGamePlayData, isStrong } = lib
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -190,6 +187,7 @@ export const getBrowserLanguage = () => {
     let sysLanguage = ''
     if (searchParams && searchParams.lang) {
       sysLanguage = searchParams.lang
+      localStorage.setItem('locale', obj[sysLanguage])
     } else {
       sysLanguage = window.navigator.language.toLowerCase()
     }
@@ -199,191 +197,14 @@ export const getBrowserLanguage = () => {
   return 'en-us'
 }
 
-export const _checkImgUrl = (url: any) => {
-  // console.log(url)
-  if (!url) return
-  // 本地图片
-  if (
-    url.includes('assets/img') ||
-    url.includes('file://') ||
-    url.includes('data:image') ||
-    url.includes('http') ||
-    url.includes('https')
-  ) {
-    return url
-  }
-  return ImageSource + url
-}
-
-export const _duration = (num: any) => {
-  if (!num) return '00:00'
-  const m: any = Math.floor(num / 60)
-  // let s = num % 60
-  const s = Math.round(num % 60)
-  let str: string = ''
-  if (m === 0) {
-    str = '00'
-  } else if (m > 0 && m < 10) {
-    str = '0' + m
-  } else {
-    str = m
-  }
-  str += ':'
-  if (s === 0) {
-    str += '00'
-  } else if (s > 0 && s < 10) {
-    str += '0' + s
-  } else {
-    str += s
-  }
-  return str
-}
-
-export const _formatNumber = (num: any) => {
-  if (!num) return
-  if (num > 100000000) {
-    return (num / 100000000).toFixed(1) + '亿'
-  } else if (num > 10000) {
-    return (num / 10000).toFixed(1) + '万'
-  } else {
-    return num
-  }
-}
-
-/**
- * @description: 防抖
- * @param {type}
- * @return: 1
- */
-
-export const debounce = (fn = (...args: any) => { }, ms: number, immediate: boolean = false) => {
-  let timeout: any = null
-  return function (this: unknown, ...args: any) {
-    if (timeout) window.clearTimeout(timeout)
-
-    if (immediate) {
-      const callNow = !timeout
-      timeout = setTimeout(() => {
-        timeout = null
-      }, ms)
-      if (callNow) {
-        fn.apply(this, args)
-      }
-    } else {
-      timeout = window.setTimeout(() => {
-        fn.apply(this, args)
-      }, ms)
-    }
-  }
-}
-
-/**
- * @description: 节流函数，单一时间只触发一次
- * @param {type} ms fn
- * @return:
- */
-
-export const throttle = (fn = () => { }, ms: number) => {
-  let last = 0
-  return function (this: unknown, ...args: any) {
-    const nowTime = Date.now()
-    if (nowTime - last > ms) {
-      fn.apply(this, args)
-      last = nowTime
-    }
-  }
-}
-
-const replaceStrFilter = (regStr: string, obj: any, specifiers: any) => {
-  return regStr.replace(/{(.*?)}/g, (match: any, key: any) => {
-    const specialKey = key.trim()
-
-    return obj[specialKey] || specifiers[specialKey] || ''
-  })
-}
-
-export const getRatioPlay = (betInfo: any) => {
-  const { showtype, playType, ratio, ratio1, rt, teamSuffix } = betInfo
-  // 判断是否是冠军杯
-  if (showtype === 'CP' || playType === 'CHAMPION') {
-    return ratio1 || ratio
-  }
-  // 判断玩法是否有ratioType
-  const isRatioType = !(rt * 1)
-  const obj = JSON.parse(JSON.stringify(betInfo))
-  const { gameType, gameTypeSon, specifiers } = obj
-  // 新增体育项兼容
-  const ratioTypeData = getGamePlayData({ gameType, gameTypeSon, playType, teamSuffix })
-  let regStr = ''
-  if (isRatioType) {
-    if (ratioTypeData) {
-      regStr = ratioTypeData.text[obj.ratioType]
-    } else {
-      console.log('不存在玩法', playType)
-    }
-  } else {
-    regStr = ratio1 || ratio
-  }
-
-  const regStrSplit = regStr?.split('{ratio}')
-
-  if (regStrSplit?.length > 1) {
-    const [params1, params2] = regStrSplit
-
-    let retioStr = ratio + ''
-    // 判断球头是否已经有强弱队标识并且有/的未完全转换盘口
-    if (retioStr.includes('+') || retioStr.includes('-')) {
-      retioStr = retioStr.replace(/(\+)|(-)/g, '')
-    }
-    const ratioTag = isStrong({ ...betInfo, ratio: retioStr }, 2)
-    let ratioParams1 = ''
-    let ratioParams2 = ''
-    if (ratioParams2) {
-      ratioParams1 = replaceStrFilter(params1, obj, specifiers)
-      ratioParams2 = replaceStrFilter(params2, obj, specifiers)
-    } else {
-      ratioParams1 = replaceStrFilter(params1, obj, specifiers)
-    }
-
-    return {
-      ratioTag,
-      ratioParams1,
-      ratioParams2
-    }
-  }
-
-  return false
-}
-export const getBetRatioToNumber = (ratio: any) => {
-  if (!ratio) {
-    return ratio
-  }
-  let retioStr = ratio.toString()
-
-  // 判断球头是否已经有强弱队标识并且有/的未完全转换盘口
-  if (retioStr.includes('+') || retioStr.includes('-')) {
-    retioStr = retioStr.replace(/(\+)|(-)/g, '')
-  }
-
-  if (typeof retioStr === 'string') {
-    retioStr = retioStr.replace(/O|U/g, '')
-    // 判断盘口是否有/，有的话拆分相加除以2
-    if (retioStr.indexOf('/') > -1) {
-      const [m, n] = retioStr.split('/')
-      retioStr = (m * 1 + n * 1) / 2
-    }
-  }
-  return retioStr
-}
 // 处理视频
-export const liveVideo = (streamNaList: any) => {
-  let m3u8 = ''
-  if (streamNaList.length) {
-    streamNaList.forEach((item: any) => {
-      if (JSON.stringify(item) !== '{}' && item.live) {
-        m3u8 = item.live && item.live.m3u8
-      }
-    })
-  }
+export const liveVideo = (streamNa: any) => {
+  const { live, stream, videoLive, liveali } = streamNa || {}
+  const m3u8 =
+          (videoLive && videoLive.status && videoLive.m3u8) ||
+          (liveali && liveali.status && liveali.m3u8) ||
+          (stream && stream.status && stream.m3u8) ||
+          (live && live.status && live.m3u8) ||
+          {}
   return m3u8
 }

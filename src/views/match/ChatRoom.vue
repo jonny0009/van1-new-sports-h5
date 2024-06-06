@@ -97,12 +97,8 @@ import { watch, Ref, ref, computed, nextTick, onMounted, onUnmounted } from 'vue
 import { intoRoom, lastMessageByPage } from '@/api/live'
 import { getToken } from '@/utils/auth'
 import { useI18n } from 'vue-i18n'
-import { useRoute } from 'vue-router'
-
-import store from '@/store'
-
 const { t } = useI18n()
-const route = useRoute()
+import store from '@/store'
 
 const props = defineProps({
   show: Boolean
@@ -157,29 +153,16 @@ onUnmounted(() => {
   websocket?.disconnect()
 })
 
-const gidm = computed(() => matchInfo.value.gidm)
-const systemId = computed(() => matchInfo.value.systemId)
-const anchorId = computed(() => route?.query?.anchorId)
-const id = computed(() => route?.params?.id)
-const roomKey = computed(() => `${id.value}${anchorId.value}`)
-const isChangeKey = ref(false)
-
-watch(roomKey, (newVal, oldVal) => {
-  if (newVal === oldVal) return
-  websocket?.disconnect()
-  isChangeKey.value = true
-})
-
 const chatRoomInfo: Ref<any> = ref({})
 const getIntoRoom = async () => {
-  if (needTimer.value && !isChangeKey.value) {
+  if (needTimer.value) {
     return
   }
 
   const params = {
-    gidm: gidm.value,
-    systemId: systemId.value,
-    anchorId: anchorId.value,
+    gidm: matchInfo.value.gidm,
+    systemId: matchInfo.value.systemId,
+    anchorId: undefined,
     version: '3.9.0'
   }
   const res: any = await intoRoom(params)
@@ -202,24 +185,17 @@ const getLastMessage = async () => {
   const extra = res.extra || {}
   const messageList = extra.messageList || []
   if (res.code == 200) {
-    // 這段目前看似沒用處先隱藏
-    // const gidms = []
-    // messageList.forEach((message: any) => {
-    //   if (message.msgType && +message.msgType === 2 && message.content) {
-    //     const newContent = JSON.parse(message.content || '')
-    //     const bettingData = newContent.bettingData || []
-    //     bettingData.forEach((item: any) => {
-    //       gidms.push(item.gidm)
-    //     })
-    //   }
-    // })
-    if (isChangeKey.value) {
-      chatMessageList.value = []
-      isChangeKey.value = false
-    }
-    // msgType 1: 聊天消息, 2: 注單分享
-    const messages = messageList.filter((msg: any) => `${msg.msgType}` === '1')
-    handlerMessage(messages)
+    const gidms = []
+    messageList.forEach((message: any) => {
+      if (message.msgType && +message.msgType === 2 && message.content) {
+        const newContent = JSON.parse(message.content || '')
+        const bettingData = newContent.bettingData || []
+        bettingData.forEach((item: any) => {
+          gidms.push(item.gidm)
+        })
+      }
+    })
+    handlerMessage(messageList)
   }
 }
 
@@ -238,14 +214,9 @@ const getSubscribe = async () => {
 const chatMessageList: Ref<any[]> = ref([])
 const handlerMessage = (result: any) => {
   if (result instanceof Array) {
-    const existingMsgIds = new Set(chatMessageList.value.map(item => item.msgId))
-    const newMessages = result.reverse().filter(item => !existingMsgIds.has(item.msgId))
-    chatMessageList.value = newMessages.concat(chatMessageList.value)
+    chatMessageList.value = result.reverse().concat(chatMessageList.value)
   } else {
-    const existingMsgIds = new Set(chatMessageList.value.map(item => item.msgId))
-    if (!existingMsgIds.has(result.msgId)) {
-      chatMessageList.value.push(result)
-    }
+    chatMessageList.value.push(result)
   }
   scorllToBottom()
 }

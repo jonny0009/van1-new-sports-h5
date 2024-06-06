@@ -35,6 +35,7 @@ const videoFrame = ref()
 watch(
   () => props.url,
   (newUrl) => {
+    console.log(newUrl, ' ---')
     videoWaiting.value = true
     if (!newUrl) {
       emits('on-error', '没有播放链接')
@@ -47,16 +48,12 @@ watch(
 onMounted(() => {
   // message 该事件通过或者从对象(WebSocket, Web Worker, Event Source 或者子 frame 或父窗口)接收到消息时触发
   window.addEventListener('message', payEvent)
-  if (!player && props.url) {
-    getUrl(props.url)
-  }
 })
 const payEvent = (event:any) => {
   console.log(event, '监听frame消息====')
 }
 
 const getUrl = (url: string) => {
-  store.commit('match/SET_LIVE_ROOM_PLAYING_URL', url)
   //  加载视频网页 不全是 m3u8
   urlHtml.value = ''
   if (url.indexOf('.html') > -1) {
@@ -87,7 +84,7 @@ const initVideo = (url: string) => {
     width: '100%',
     height: '100%',
     autoplay: true,
-    muted: true,
+    muted: false,
     controls: true,
     fluid: true,
     bigPlayButton: false,
@@ -121,7 +118,7 @@ const initVideo = (url: string) => {
 
     player.on('waiting', () => {
       console.log('waiting', new Date().getTime())
-      videoWaiting.value = true
+      // videoWaiting.value = true
     })
 
     player.on('volumechange', (event: any) => {

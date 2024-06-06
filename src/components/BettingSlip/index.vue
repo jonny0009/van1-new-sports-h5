@@ -1,7 +1,7 @@
 <template>
   <div class="betting-slip-bg" :class="{ open }" @click="toogle"></div>
   <BallEffect></BallEffect>
-  <div class="betting-slip-popup" :class="{ open, bettingHomeStyle: bettingHomeStyleState && homeStyle === 1 }">
+  <div class="betting-slip-popup" :class="{ open }">
     <div class="betting-slip-header" @click="toogle" :class="{ selected: userConfig.acceptAll === 1 }">
       <div class="bet-header-left">
         <span class="bet-icon"></span>
@@ -105,7 +105,6 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 import store from '@/store'
 const open = ref(false)
-const bettingHomeStyleState = ref(true)
 const type = ref(1)
 const tabs = ref([
   {
@@ -144,15 +143,12 @@ const mode = computed(() => store.state.betting.mode)
 const boardShow = computed(() => store.state.betting.boardShow)
 const markets = computed(() => store.state.betting.markets)
 const parlayMarkets = computed(() => store.state.betting.comboMarkets)
-const combosErrorIds = computed(() => store.state.betting.combosErrorIds)
 const results = computed(() => store.state.betting.results)
 const betsProfit = computed(() => store.getters['betting/betsProfit'])
 const comboMarkets = computed(() => store.getters['betting/comboMarkets'])
 const combosIor = computed(() => store.getters['betting/combosIor'])
 const userConfig = computed(() => store.state.user.userConfig)
 const isAnonymity = computed(() => store.state.user.isAnonymity)
-const homeStyle = computed(() => store.state.app.homeStyle)
-
 store.dispatch('betting/setMode', 1)
 const emit = defineEmits(['close'])
 watch(
@@ -170,18 +166,8 @@ watch(
     if (!isOne.value) {
       hitTimer()
     }
-    store.dispatch('betting/clearCombosErrorIds')
   }
 )
-watch(
-  () => combosErrorIds.value.length,
-  () => {
-    if (combosErrorIds.value.length && mode.value === 2) {
-      hitTimer()
-    }
-  }
-)
-
 watch(
   () => open.value,
   () => {
@@ -217,7 +203,6 @@ const changeType = (mode: any) => {
   store.dispatch('betting/setMode', mode)
   store.dispatch('betting/setHitState', 1)
   store.dispatch('betting/clearResult')
-  store.dispatch('betting/clearCombosErrorIds')
   hitTimer()
 }
 const radioChange = (acceptAll: number) => {
@@ -225,7 +210,6 @@ const radioChange = (acceptAll: number) => {
 }
 const timer = ref()
 const hitTimer = () => {
-  clearInterval(timer.value)
   if (open.value) {
     if (mode.value === 3) {
       store.dispatch('user/pendingOrder')
@@ -237,6 +221,7 @@ const hitTimer = () => {
       store.dispatch('betting/marketHit')
     }
   }
+  clearInterval(timer.value)
   timer.value = setInterval(() => {
     if (open.value && mode.value <= 3) {
       if (mode.value === 1) {
@@ -253,8 +238,7 @@ const hitTimer = () => {
 }
 hitTimer()
 defineExpose({
-  open,
-  bettingHomeStyleState
+  open
 })
 </script>
 <style lang="scss" scoped>
@@ -296,10 +280,6 @@ defineExpose({
   &.open {
     transform: translateY(0px);
   }
-}
-.bettingHomeStyle {
-  // 经典导航
-  margin-bottom: 90px;
 }
 
 .betting-slip-header {
@@ -502,7 +482,6 @@ defineExpose({
     flex: 1;
     padding: 20px 0;
     overflow: auto;
-    -webkit-overflow-scrolling: touch;
     transition: height 0.3s;
     overscroll-behavior: contain;
 

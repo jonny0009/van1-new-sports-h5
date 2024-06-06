@@ -1,0 +1,169 @@
+
+
+@font-face {
+  font-family: 'iconfont';
+  src: url('iconfont.woff2') format('woff2'),
+      url('iconfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-a-americanfootball:before {
+  content: "\e601";
+}
+
+.icon-boxing:before {
+  content: "\e602";
+}
+
+.icon-hockey:before {
+  content: "\e603";
+}
+
+.icon-cricket:before {
+  content: "\e604";
+}
+
+.icon-football:before {
+  content: "\e605";
+}
+
+.icon-baseball:before {
+  content: "\e606";
+}
+
+.icon-handball:before {
+  content: "\e607";
+}
+
+.icon-gaming:before {
+  content: "\e608";
+}
+
+.icon-a-beachvolleyball:before {
+  content: "\e609";
+}
+
+.icon-live-icon-1:before {
+  content: "\e60a";
+}
+
+.icon-pingpong:before {
+  content: "\e60b";
+}
+
+.icon-a-yumaoqiu-icon-1:before {
+  content: "\e60c";
+}
+
+.icon-a-lanqiu-icon-1:before {
+  content: "\e60d";
+}
+
+.icon-a-wangqiu-icon-1:before {
+  content: "\e60e";
+}
+
+.icon-zuqiu-icon-1:before {
+  content: "\e60f";
+}
+
+.icon-a-indoorsoccer:before {
+  content: "\e610";
+}
+
+.icon-snooker:before {
+  content: "\e611";
+}
+
+.icon-volleyball:before {
+  content: "\e612";
+}
+
+.icon-a-waterpolo:before {
+  content: "\e613";
+}
+
+.icon-a-dashibei-icon-22x:before {
+  content: "\e614";
+}
+
+.icon-a-shouyeicon2x:before {
+  content: "\e615";
+}
+
+.icon-a-tiyu-icon-12x:before {
+  content: "\e616";
+}
+
+.icon-guanjunjingcai-2:before {
+  content: "\e617";
+}
+
+.icon-a-shijianpaixu-icon-1:before {
+  content: "\e618";
+}
+
+.icon-a-tuijian-icon-1:before {
+  content: "\e619";
+}
+
+.icon-a-guanjunsai-icon-1:before {
+  content: "\e61a";
+}
+
+.icon-a-rebo-icon-1:before {
+  content: "\e61b";
+}
+
+.icon-a-xuanzeshijian-icon:before {
+  content: "\e61c";
+}
+
+.icon-dianshi:before {
+  content: "\e61d";
+}
+
+.icon-blueGame:before {
+  content: "\e61e";
+}
+
+.icon-group:before {
+  content: "\e61f";
+}
+
+.icon-cup:before {
+  content: "\e620";
+}
+
+.icon-wrestling:before {
+  content: "\e621";
+}
+
+.icon-a-hot-icon2x:before {
+  content: "\e622";
+}
+
+.icon-a-66:before {
+  content: "\e623";
+}
+
+.icon-a-zao-icon2x:before {
+  content: "\e624";
+}
+
+.icon-a-jinriicon2x:before {
+  content: "\e625";
+}
+

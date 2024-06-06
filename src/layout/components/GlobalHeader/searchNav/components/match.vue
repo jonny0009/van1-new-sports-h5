@@ -78,6 +78,9 @@ const toMatch = async (item: any) => {
 // 搜索字体颜色
 const highlightText = (field: any, text: any) => {
   // 使用正则表达式替换文本中的相同字段，并添加样式
+  console.log(field, '1111=====')
+  console.log(text, '1222221=====')
+
   const regex = new RegExp(field, 'gi')
   const highlightedText = text.replace(
     regex,

@@ -2,7 +2,6 @@
   <div ref="container" class="homeMatchHandicap" :data-val="offsetTop">
     <van-sticky v-if="playTitleToggle" :offset-top="offsetTop" :container="container" z-index="5">
       <div class="home-tabs-play">
-        <div class="home-tabs-play-bg"></div>
         <TimeView :time-send-params="sendParams" />
         <div class="play">
           <div class="flex-1"></div>
@@ -68,7 +67,7 @@
             <div class="flex-cross-center">
               <div class="up-match-time">
                 <SportsIcon v-show="showSportsIcon(sendParams)" :icon-src="'sportlive'" class="live-img" />
-                <div class="up-match-time-html" :class="sendParams.gameType" v-html="setMatch.showRBTime(sendParams)"></div>
+                <div class="up-match-time-html" :class="sendParams.gameType" v-html="showRBTime(sendParams)"></div>
               </div>
             </div>
           </div>
@@ -176,7 +175,7 @@
         <div class="match-footer">
           <div class="match-footer__item" @click="betMoreShow">
             <span>{{ $t('home.morePlay') }}</span>
-            <span class="num">{{ sendParams.playNum }}</span>
+            <!-- <span class="num">149</span> -->
             <van-icon class="arrow" name="arrow" />
           </div>
           <!-- <div class="match-footer__item" @click="goClick">
@@ -203,8 +202,6 @@ import TimeView from '@/components/HomeMatch/public/time/index.vue'
 import router from '@/router'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
-import { useMatch } from '@/utils/useMatch'
-const setMatch = useMatch()
 // script
 // import { showDialog } from 'vant'
 import store from '@/store'

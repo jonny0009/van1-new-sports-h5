@@ -118,7 +118,7 @@ export class MarketInfo {
       this.isChampion = false
     }
     try {
-      this.ratioName = createBetItem({ ...this }, 2)
+      this.ratioName = createBetItem({ ...this })
     } catch (error) {
       console.error(error)
     }

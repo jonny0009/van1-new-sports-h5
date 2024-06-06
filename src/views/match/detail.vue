@@ -62,7 +62,7 @@ const navList = reactive([
   { title: t('live.more'), iconName: 'live-grid', path: 'other' }
 ])
 const onNavClick = (path: string) => {
-  router.replace({path: `/match/${paramsId.value}/${path}`, query: { ...route.query }})
+  router.replace(`/match/${paramsId.value}/${path}`)
   getMatchInfo()
   store.commit('match/SET_NEED_TIMER', true)
 }
@@ -88,8 +88,8 @@ const getExtendInfo = async () => {
   const res: any = await extendInfo({ gidm })
   if (res.code === 200) {
     const { streamNa } = res.data || {}
-    const { live } = streamNa || {}
-    videoUrl.value = (live || {}).m3u8
+    const { liveali, live } = streamNa || {}
+    videoUrl.value = (liveali || live || {}).m3u8
     if (!videoUrl.value) {
       videoUrl.value = ''
       videoError.value = true
@@ -131,7 +131,7 @@ const startInterval = () => {
     getMatchInfo()
     // 切换投注不显示问题
     store.commit('match/SET_NEED_TIMER', true)
-  }, 5000)
+  }, 10000)
 }
 const closeInterval = () => {
   if (intervalTimer) {
@@ -142,17 +142,8 @@ const closeInterval = () => {
 }
 
 onBeforeMount(() => {
-  store.dispatch('app/setKeyValue', {
-    key: 'liveBarHeaderHeight',
-    value: '69vw'
-  })
   getMatchInfo()
-
-  if (route.query?.m3u8) {
-    videoUrl.value = `${route.query.m3u8}`
-  } else {
-    getExtendInfo()
-  }
+  getExtendInfo()
   startInterval()
 })
 
@@ -165,27 +156,13 @@ watch(
   () => paramsId.value,
   () => {
     getMatchInfo()
-    if (route.query?.m3u8) {
-      videoUrl.value = `${route.query.m3u8}`
-    } else {
-      getExtendInfo()
-    }
-  }
-)
-
-watch(
-  () => route.query.m3u8,
-  (val) => {
-    if (val) {
-      videoUrl.value = `${val}`
-    }
+    getExtendInfo()
   }
 )
 </script>
 
 <style lang="scss" scoped>
 .detail {
-  z-index: 1;
   display: flex;
   flex-direction: column;
   position: fixed;

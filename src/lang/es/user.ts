@@ -1,3 +1,4 @@
+
 export default {
   lang: 'Language',
   search: 'buscar',
@@ -39,7 +40,7 @@ export default {
   text5: 'No se permiten caracteres especiales',
   text6: 'No hay espacios',
   ExistingAccount: 'Ya tienes una cuenta',
-  personalProfile: 'Perfil',
+  PersonalProfile: 'Perfil',
   RegistrationTime: 'Hora de registro',
   follow: 'concentrarse en',
   fans: 'admirador',
@@ -60,11 +61,9 @@ export default {
   Personal: 'Perfil personal',
   PrivacySettings: 'configuración de privacidad',
   PublicAccount: 'Cuenta pública (recomendado)',
-  font2:
-    'Otros usuarios pueden seguirte directamente y ver tu perfil y tus apuestas. Aún puedes ocultar apuestas específicas. Esta es la configuración predeterminada.',
+  font2: 'Otros usuarios pueden seguirte directamente y ver tu perfil y tus apuestas. Aún puedes ocultar apuestas específicas. Esta es la configuración predeterminada.',
   PrivateAccount: 'cuenta privada',
-  font3:
-    'Otros usuarios sólo podrán ver su perfil y sus boletos de apuestas si acepta su solicitud de seguimiento. Tu experiencia en la plataforma será más privada.',
+  font3: 'Otros usuarios sólo podrán ver su perfil y sus boletos de apuestas si acepta su solicitud de seguimiento. Tu experiencia en la plataforma será más privada.',
   font4: 'El apodo debe contener al menos',
   font5: '4 caracteres (máximo 16)',
   font6: '1 letra y 1 número (no puede contener caracteres especiales)',
@@ -125,14 +124,6 @@ export default {
   officeNumber: 'número de oficina',
   IDOdd: 'Disco indonesio [ID]',
   MYOdd: 'plato malayo [MY]',
-
-  fontNickName: 'El apodo solo se puede editar una vez dentro de 7 días y no se puede repetir con otros ni contener caracteres ilegales',
-  aheadFinal: 'liquidación anticipada',
-  contactUs: 'Contáctenos',
-  type: 'tipo',
-  homeName: 'casa',
-  awayName: 'Invitado',
-
   sports: {
     FT: 'fútbol americano',
     BK: 'baloncesto',
@@ -178,9 +169,7 @@ export default {
     OP_SW: 'nadar',
     OP_BS: 'futbol playa',
     OP_WS: 'Deportes de invierno',
-    OP_BD: 'pelota de hockey',
-    // 新增
-    XNFT: 'Sanal futbol',
-    XNBK: 'Sanal Basketbol'
+    OP_BD: 'pelota de hockey'
   }
+
 }

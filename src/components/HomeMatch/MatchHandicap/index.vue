@@ -2,7 +2,6 @@
   <div ref="container" class="homeMatchHandicap">
     <van-sticky v-if="playTitleToggle" :offset-top="offsetTop" :container="container" z-index="5">
       <div class="home-tabs-play">
-        <div class="home-tabs-play-bg"></div>
         <TimeView :time-send-params="sendParams" />
         <div class="play">
           <div class="flex-1"></div>
@@ -155,7 +154,7 @@
         <div class="match-footer">
           <div class="match-footer__item" @click="betMoreShow">
             <span>{{ $t('home.morePlay') }}</span>
-            <span class="num">{{ sendParams.playNum }}</span>
+            <!-- <span class="num">{{ sendParams.playNum }}</span> -->
             <van-icon class="arrow" name="arrow" />
           </div>
           <!-- <div class="match-footer__item" @click="goClick">

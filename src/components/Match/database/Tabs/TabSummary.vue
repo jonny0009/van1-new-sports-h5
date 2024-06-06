@@ -1,12 +1,7 @@
 <template>
   <div class="panel">
     <van-collapse v-model="activeNames">
-      <van-collapse-item
-        name="1"
-        :title="$t('live.solveAnalyse')"
-        :border="false"
-        v-if="JSON.stringify(anlyzeList) !== '{}'"
-      >
+      <van-collapse-item name="1" :title="$t('live.solveAnalyse')" :border="false">
         <div class="panel-main">
           <div class="panel-main__wrapper">
             <EmptyData v-if="JSON.stringify(anlyzeList) === '{}'" />
@@ -14,7 +9,7 @@
           </div>
         </div>
       </van-collapse-item>
-      <van-collapse-item name="2" :title="$t('live.score')" :border="false" v-if="scoreList.length">
+      <van-collapse-item name="2" :title="$t('live.score')" :border="false">
         <div class="panel-main">
           <div class="panel-main__wrapper">
             <EmptyData v-if="scoreList.length === 0" />
@@ -23,7 +18,7 @@
         </div>
       </van-collapse-item>
 
-      <van-collapse-item name="3" :title="$t('live.summaryInfo')" :border="false" v-if="staticsList.length">
+      <van-collapse-item name="3" :title="$t('live.summaryInfo')" :border="false">
         <div class="panel-main">
           <div class="panel-main__wrapper">
             <EmptyData v-if="staticsList.length === 0" />
@@ -36,31 +31,78 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, ref } from 'vue'
+import { defineAsyncComponent, onMounted, ref, watch, onActivated } from 'vue'
+import { scoresstaticseventsApi, betAnalyzeApi } from '@/api/live'
 const PanelAnalyze = defineAsyncComponent(() => import('../Panel/PanelAnalyze.vue'))
 const PanelScore = defineAsyncComponent(() => import('../Panel/PanelScore.vue'))
 const PanelStatistic = defineAsyncComponent(() => import('../Panel/PanelStatistic.vue'))
 
-defineProps({
+const props = defineProps({
   matchData: {
-    type: Object,
-    default: () => {}
-  },
-  staticsList: {
-    type: Array,
-    default: () => []
-  },
-  scoreList: {
-    type: Array,
-    default: () => []
-  },
-  anlyzeList: {
     type: Object,
     default: () => {}
   }
 })
 
-const activeNames = ref(['1', '2', '3'])
+watch(
+  () => props.matchData,
+  () => {
+    fetchStaticsEvents()
+    fetchBetAnlyze()
+  }
+)
+onMounted(() => {
+  fetchStaticsEvents()
+  fetchBetAnlyze()
+})
+onActivated(() => {
+  fetchStaticsEvents()
+  fetchBetAnlyze()
+})
+
+const anlyzeList = ref({})
+const staticsList = ref([])
+const scoreList = ref([])
+const fetchStaticsEvents = async () => {
+  if (!(props.matchData && props.matchData.icGidm)) {
+    return
+  }
+
+  const { homeTeamId, awayTeamId, icGidm } = props.matchData
+  const params = {
+    gidm: icGidm,
+    homeId: homeTeamId,
+    awayId: awayTeamId
+    // type: ''
+  }
+  const res: any = await scoresstaticseventsApi(params)
+  if (res.code === 200) {
+    const data = res.data || {}
+    staticsList.value = data.statics || []
+    scoreList.value = data.scores || []
+  }
+}
+
+const fetchBetAnlyze = async () => {
+  try {
+    if (!(props.matchData && props.matchData.systemId)) {
+      return
+    }
+    const { systemId } = props.matchData
+
+    const res: any = await betAnalyzeApi({
+      systemId
+    })
+    if (res.code === 200) {
+      const data = res.data || {}
+      anlyzeList.value = data
+    }
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+const activeNames = ref(['1'])
 </script>
 
 <style lang="scss" scoped>

@@ -54,9 +54,6 @@ export default {
     OP_BS: 'Beach Soccer',
     OP_WS: 'Winter Sports',
     OP_BD: 'Bandy',
-    AH: 'Anchor',
-    // 新增
-    XNFT: 'virtual football',
-    XNBK: 'virtual basketball'
+    AH: 'Anchor'
   }
 }

@@ -66,11 +66,9 @@ export default {
   tie: 'bağlamak',
   lose: 'kaybetmek',
   point: 'integral',
-  nextAM: 'Bir sonraki canlı yayın <span class="time-num">{num}</span> tarihinde başlayacak',
+  nextAM: 'Bir sonraki canlı yayın <span class="time-num">{num</span> tarihinde başlayacak',
   halfPlay: 'yarı zamanlı',
   section: 'Bölüm',
   videoFailure: 'Video yüklenemedi, lütfen yenileyip tekrar deneyin',
-  refreshVideo: 'videoyu yenile',
-  goLive: 'Canlı yayın odasına gidin',
-  playbackFailed: 'Oynatma başarısız oldu'
+  refreshVideo: 'videoyu yenile'
 }

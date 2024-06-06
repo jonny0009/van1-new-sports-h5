@@ -54,9 +54,6 @@ export default {
     OP_BS: 'Futebol de areia',
     OP_WS: 'Esportes de inverno',
     OP_BD: 'bola arqueada',
-    AH: 'Âncora',
-    // 新增
-    XNFT: 'futebol virtual',
-    XNBK: 'basquete virtual'
+    AH: 'Âncora'
   }
 }

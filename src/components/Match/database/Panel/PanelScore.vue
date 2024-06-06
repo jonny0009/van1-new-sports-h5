@@ -68,10 +68,10 @@ const props = defineProps({
 })
 
 const home = computed(() => {
-  return props.matchData?.homeTeamShort || props.matchData?.homeTeam
+  return props.matchData.homeTeamShort || props.matchData.homeTeam
 })
 const away = computed(() => {
-  return props.matchData?.awayTeamShort || props.matchData?.awayTeam
+  return props.matchData.awayTeamShort || props.matchData.awayTeam
 })
 const scoreListComputed = computed(() => {
   const exit = ['Current', 'Normaltime']

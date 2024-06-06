@@ -54,9 +54,6 @@ export default {
     OP_BS: '비치 축구',
     OP_WS: '동계 스포츠',
     OP_BD: '밴디볼',
-    AH: '라이브 딜러',
-    // 新增
-    XNFT: '가상 축구',
-    XNBK: '가상 농구'
+    AH: '라이브 딜러'
   }
 }

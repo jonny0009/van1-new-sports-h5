@@ -1,6 +1,6 @@
 <template>
   <div v-if="mode === 2" ref="inputBtn" class="combo-input betting-slip-input" @click="inputTouch">
-    <span class="currency"><CurrencyComp class-name="mr3" /></span>
+    <span class="currency"><van-icon name="balance-o" /></span>
     <div style="flex: 1 1 0%"></div>
     <span class="amount" :class="{ selected: boardShow }">{{ comboAmount }}</span>
     <span v-show="boardShow" class="cursor">|</span>

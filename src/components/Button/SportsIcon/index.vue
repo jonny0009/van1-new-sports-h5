@@ -1,5 +1,6 @@
 <template>
-  <SvgIcon v-if="ifLocalIcon()" :name="`ball-${iconSrc}`" />
+  <SvgIcon v-if="iconSrc === 'OP_DR'" name="ball-OP_DR" />
+  <SvgIcon v-else-if="iconSrc === 'OP_BV'" name="ball-OP_BV" />
   <i v-else class="iconfont" :class="classVal"></i>
 </template>
 <script lang="ts" setup>
@@ -16,17 +17,11 @@ const props = defineProps({
 const theme = computed(() => store.state.app.theme || 'default')
 const classVal = ref('FT')
 classVal.value = `icon-${theme.value}-${props.iconSrc}`
-// 本地图标
-const ifLocalIcon = () => {
-  if (props.iconSrc === 'OP_DR' || props.iconSrc === 'OP_BV' || props.iconSrc === 'XNFT' || props.iconSrc === 'XNBK') {
-    return true
-  }
-  return false
-}
 </script>
 <style lang="scss" scoped>
 .svg-icon {
-  font-size: 50px;
-  margin-top: -2px;
+  font-size: 38px;
+  color: var(--color-global-minButtonicoCl);
+  // margin-right: 3px;
 }
 </style>

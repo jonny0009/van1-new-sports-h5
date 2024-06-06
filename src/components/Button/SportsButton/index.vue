@@ -7,7 +7,8 @@
       }
     ]"
   >
-    <SvgIcon v-if="ifLocalIcon()" :name="`ball-${text}`" />
+    <SvgIcon v-if="text === 'OP_DR'" name="ball-OP_DR" />
+    <SvgIcon v-else-if="text === 'OP_BV'" name="ball-OP_BV" />
     <i v-else class="iconfont" :class="SportsName"></i>
     <span> {{ textVal }} </span>
     <span v-if="showCount && sportCount > 0"> {{ sportCount }}</span>
@@ -57,13 +58,6 @@ const SportsName = ref('icon-FT')
 SportsName.value = `icon-${theme.value}-${props.text}`
 
 const sportCount = computed(() => props.count)
-// 本地图标
-const ifLocalIcon = () => {
-  if (props.text === 'OP_DR' || props.text === 'OP_BV' || props.text === 'XNFT' || props.text === 'XNBK') {
-    return true
-  }
-  return false
-}
 </script>
 <style lang="scss" scoped>
 .SportsButton {

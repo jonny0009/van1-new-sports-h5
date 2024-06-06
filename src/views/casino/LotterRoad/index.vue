@@ -2,8 +2,8 @@
   <section class="good-road-view">
     <div class="title">{{ $t('home.casinoTitleObj.title2') }}</div>
     <Loading v-if="loading" />
-    <div v-else-if="list.length" class="list">
-      <TableInfo v-for="(item, index) in list" :key="index" :table-info="item"></TableInfo>
+    <div class="list" v-else-if="list.length">
+      <TableInfo v-for="(item, index) in list" :key="index" :tableInfo="item"></TableInfo>
     </div>
 
     <EmptyData v-else />
@@ -26,7 +26,7 @@ defineProps({
 </script>
 <style lang="scss" scoped>
 .good-road-view {
-  padding:  35px;
+  padding: 0 36px 36px;
   display: flex;
   flex-direction: column;
   align-items: center;

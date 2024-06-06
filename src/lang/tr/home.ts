@@ -44,7 +44,7 @@ export default {
   numberHour: '{number} Saat',
   numberDay: '{number} Gün',
   hot: 'sıcak',
-  todayUpcoming: 'Bugünün sabah ticareti',
+  TodayUpcoming: 'Bugünün sabah ticareti',
   RBInfo: 'Yuvarlanan Asya Handikapı',
   RBSize: 'Topun yukarı/aşağı yuvarlanması',
   RBRide: 'Yuvarlanan Top 1X2',
@@ -54,35 +54,19 @@ export default {
   comingSoonTitle: 'Oynamaya geliyor',
   shortVideoTitle: 'Kısa video',
   casinoTitleObj: {
-    title1: 'İyi Eğilim',
+    title1: 'İyi yol önerileri',
     title2: 'Canlı Bakara',
-    title3: 'Kumarhane bakımda...',
-    title4: 'Beklenen bakımın sonuna doğru geri sayım',
-    gohome: 'Ana sayfaya dön'
+    title3: 'Kumarhanede bakım yapılıyor...',
+    title4: 'Tahmini bakım geri sayımı',
+    gohome: 'Ana sayfaya git'
   },
-  Community: 'Toplum',
+  Community: 'toplum',
+
   errorTips: {
     tips1: 'Hata! Burada bir şeyler yanlış',
     tips2: 'Üzgünüm, bölgeniz kısıtlı',
     tips3: 'Web sitesi bakımda',
     tips4: 'Yeniden açılmak için geri sayım'
   },
-  miBet: 'Özel Sıkıştırma Masa',
-  mulBet: 'Çoklu Bahis',
-  baccarat: {
-    连庄: 'B Dragon',
-    单跳: 'Ping Pong',
-    '{n1}房{n2}厅': '{n1}P{n2}B',
-    双龙汇: '2Dragon',
-    上坡路: 'Uphill',
-    下坡路: 'Downhill',
-    排排连: 'VRow',
-    逢庄连: 'RowB',
-    逢闲连: 'RowP',
-    逢庄跳: 'BHop',
-    逢闲跳: 'PHop',
-    隔连庄: 'SEP B',
-    隔连闲: 'SEP P',
-    双跳: '2Ping Pong'
-  }
+  mulBet: 'Çoklu Bahis'
 }

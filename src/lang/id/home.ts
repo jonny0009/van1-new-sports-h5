@@ -44,23 +44,23 @@ export default {
   numberHour: '{number} Jam',
   numberDay: '{number} Hari',
 
-  hot: 'Populer',
-  todayUpcoming: 'Yang Akan Datang Hari Ini',
-  RBInfo: 'Handicap Taruhan Langsung Asia',
-  RBSize: 'O/U Taruhan Langsung',
-  RBRide: 'Taruhan Langsung 1X2',
-  PDscore: 'Skor Benar',
+  hot: 'panas',
+  todayUpcoming: 'Perdagangan pagi hari ini',
+  RBInfo: 'Handicap Asia yang Bergulir',
+  RBSize: 'Menggulirkan bola ke atas/bawah',
+  RBRide: 'Bola Bergulir 1X2',
+  PDscore: 'skor benar',
   hotMatchTitle: 'Panas',
   comingSoonTitle: 'Akan dimainkan',
   shortVideoTitle: 'Video pendek',
   casinoTitleObj: {
-    title1: 'Tren Bagus',
-    title2: 'Bakarat Langsung',
+    title1: 'Rekomendasi jalan yang bagus',
+    title2: 'Baccarat Langsung',
     title3: 'Kasino sedang dalam pemeliharaan...',
-    title4: 'Hitung mundur hingga akhir pemeliharaan yang diharapkan',
-    gohome: 'Kembali ke halaman beranda'
+    title4: 'Perkiraan hitungan mundur pemeliharaan',
+    gohome: 'Buka beranda'
   },
-  Community: 'Masyarakat',
+  Community: 'komunitas',
 
   errorTips: {
     tips1: 'Ups! Ada yang tidak beres di sini',
@@ -68,22 +68,6 @@ export default {
     tips3: 'Situs web sedang dalam pemeliharaan',
     tips4: 'Hitung mundur menuju pembukaan kembali'
   },
-  miBet: 'Meja Squeeze Pribadi',
-  mulBet: 'Multi betting',
-  baccarat: {
-    连庄: 'B Dragon',
-    单跳: 'Ping Pong',
-    '{n1}房{n2}厅': '{n1}P{n2}B',
-    双龙汇: '2Dragon',
-    上坡路: 'Uphill',
-    下坡路: 'Downhill',
-    排排连: 'VRow',
-    逢庄连: 'RowB',
-    逢闲连: 'RowP',
-    逢庄跳: 'BHop',
-    逢闲跳: 'PHop',
-    隔连庄: 'SEP B',
-    隔连闲: 'SEP P',
-    双跳: '2Ping Pong'
-  }
+  mulBet: 'Taruhan Berganda'
+
 }

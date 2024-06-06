@@ -34,11 +34,10 @@ export const merchantConfig = () => {
  * 模块开关
  * @returns
  */
-export const moduleConfig = (params:any) => {
+export const moduleConfig = () => {
   return request({
     url: '/ai/merchant/moduleConfig',
-    method: 'get',
-    params
+    method: 'get'
   })
 }
 /**

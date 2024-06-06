@@ -1,7 +1,5 @@
 import { Module } from 'vuex'
 import { Match } from '#/store'
-import localStore from '@/utils/localStore'
-import { statistics } from '@/api/home'
 
 const matchModule: Module<Match, any> = {
   namespaced: true,
@@ -10,9 +8,7 @@ const matchModule: Module<Match, any> = {
     matchInfo: {},
     matchData: {},
     needTimer: false,
-    turnSound: true,
-    sportsListArr: [],
-    liveRoomPlayingUrl: ''
+    turnSound: false
   },
 
   mutations: {
@@ -27,20 +23,10 @@ const matchModule: Module<Match, any> = {
     },
     SET_TURN_SOUND: (state, flag: boolean) => {
       state.turnSound = !flag
-    },
-    SET_LIVE_ROOM_PLAYING_URL: (state, url: string) => {
-      state.liveRoomPlayingUrl = url || ''
     }
   },
-  actions: {
-    async getSportsList({ state }) {
-      const res: any = (await statistics({ showType: 'FAST' })) || {}
-      if (res.code === 200) {
-        localStore.setItem('sportsListArr', res.data?.stResult || [])
-        state.sportsListArr = localStore.getItem('sportsListArr')
-      }
-    }
-  }
+
+  actions: {}
 }
 
 export default matchModule

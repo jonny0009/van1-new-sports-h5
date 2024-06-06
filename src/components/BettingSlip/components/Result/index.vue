@@ -1,12 +1,12 @@
 <template>
-  <SingleResult v-if="mode === 1"></SingleResult>
+  <SingleResult v-if="mode===1"></SingleResult>
   <ComboResult v-else></ComboResult>
 </template>
 <script lang="ts" setup>
 import store from '@/store'
 import { computed } from 'vue'
 import SingleResult from './Single/index.vue'
-import ComboResult from './ComboResult/index.vue'
+import ComboResult from './ComboResult.vue'
 
 const mode = computed(() => store.state.betting.mode)
 </script>
@@ -46,6 +46,7 @@ const mode = computed(() => store.state.betting.mode)
 
         &.error {
           background-image: url('@/assets/images/betting/close-state.png');
+
         }
       }
     }
@@ -55,7 +56,7 @@ const mode = computed(() => store.state.betting.mode)
       align-items: center;
       width: 675px;
       height: 135px;
-      background: #eff0f1;
+      background: #EFF0F1;
       border-radius: 20px;
       overflow: hidden;
 
@@ -118,11 +119,11 @@ const mode = computed(() => store.state.betting.mode)
         height: 100%;
 
         &.check {
-          background: #0bba3e;
+          background: #0BBA3E;
         }
 
         &.error {
-          background: #fb0738;
+          background: #FB0738;
         }
       }
     }

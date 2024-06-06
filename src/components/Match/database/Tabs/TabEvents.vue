@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { Ref, onMounted, ref, computed } from 'vue'
-// import { scoresstaticseventsApi } from '@/api/live'
+import { scoresstaticseventsApi } from '@/api/live'
 import store from '@/store'
 import iconBall from '@/assets/images/live/scene_ball.png'
 import iconTran from '@/assets/images/live/scene_tran.png'
@@ -47,33 +47,29 @@ const props = defineProps({
   matchData: {
     type: Object,
     default: () => {}
-  },
-  eventsList: {
-    type: Array,
-    default: () => []
   }
 })
 
 const activeNames = ref(['1'])
 const matchInfo = computed(() => store.state.match.matchInfo)
 
-// const eventsList: Ref<any[]> = ref([])
-// const fetchStaticsEvents = async () => {
-//   if (!(props.matchData && props.matchData.icGidm)) {
-//     return
-//   }
-//   const { homeTeamId, awayTeamId, icGidm } = props.matchData
-//   const params = {
-//     gidm: icGidm,
-//     homeId: homeTeamId,
-//     awayId: awayTeamId
-//   }
-//   const res: any = await scoresstaticseventsApi(params)
-//   if (res.code === 200) {
-//     const data = res.data || {}
-//     eventsList.value = data.events || []
-//   }
-// }
+const eventsList: Ref<any[]> = ref([])
+const fetchStaticsEvents = async () => {
+  if (!(props.matchData && props.matchData.icGidm)) {
+    return
+  }
+  const { homeTeamId, awayTeamId, icGidm } = props.matchData
+  const params = {
+    gidm: icGidm,
+    homeId: homeTeamId,
+    awayId: awayTeamId
+  }
+  const res: any = await scoresstaticseventsApi(params)
+  if (res.code === 200) {
+    const data = res.data || {}
+    eventsList.value = data.events || []
+  }
+}
 const iconTag = computed(() => {
   const obj: any = {
     9: iconBall,
@@ -87,12 +83,11 @@ const iconTag = computed(() => {
 })
 const showEventFT = computed(() => {
   const { gameType, showtype } = matchInfo.value
-  return  props.eventsList.length > 0 && gameType === 'FT' && showtype == 'RB'
+  return eventsList.value.length > 0 && gameType === 'FT' && showtype == 'RB'
 })
 
 onMounted(() => {
-  // fetchStaticsEvents()
-  
+  fetchStaticsEvents()
 })
 </script>
 

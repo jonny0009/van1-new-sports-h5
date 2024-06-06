@@ -7,25 +7,21 @@
             <!-- start -->
             <div class="panel-recent">
               <div class="recent-header">
-                <div class="header-item home" :class="{ active: teamType === 1 }" @click="fetchRecent(1)">
-                  {{ home }}
-                </div>
-                <div class="header-item away" :class="{ active: teamType === 2 }" @click="fetchRecent(2)">
-                  {{ away }}
-                </div>
+                <div class="header-item" :class="{ active: teamType === 1 }" @click="fetchRecent(1)">{{ home }}</div>
+                <div class="header-item" :class="{ active: teamType === 2 }" @click="fetchRecent(2)">{{ away }}</div>
               </div>
               <div class="panel-recent__item" v-if="recentList.length" v-for="item in recentList" :key="item.matchId">
                 <div :class="['bar', 'host', barScoreColor(item, 'home')]"></div>
                 <section class="team">
                   <div class="team-host">
                     <span>{{ item.homeTeamAlias }}</span>
-                    <img v-img="item.homeIcon" :type="4" alt="" />
+                    <img v-img="item.homeLogo" :type="4" alt="" />
                   </div>
                   <div class="team-score">
                     <span>{{ `${item.homeTeamScore}:${item.awayTeamScore}` }}</span>
                   </div>
                   <div class="team-away">
-                    <img v-img="item.awayIcon" :type="5" alt="" />
+                    <img v-img="item.awayLogo" :type="5" alt="" />
                     <span>{{ item.awayTeamAlias }}</span>
                   </div>
                 </section>
@@ -83,33 +79,29 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { Ref, computed, onMounted, ref } from 'vue'
+import { teamRecentApi, homeAwayIntegralApi } from '@/api/live'
 import { formatToDate } from '@/utils/date'
-const emit = defineEmits(['fetchRecentEmit'])
-
 const props = defineProps({
   matchData: {
     type: Object,
     default: () => {}
-  },
-  recentList: {
-    type: Array as any,
-    default: () => []
-  },
-  integralList: {
-    type: Array as any,
-    default: () => []
   }
 })
 
+onMounted(() => {
+  fetchRecent()
+  fetchIntegral()
+})
 const home = computed(() => {
-  return props.matchData?.homeTeamShort || props.matchData?.homeTeam
+  return props.matchData.homeTeamShort || props.matchData.homeTeam
 })
 const away = computed(() => {
-  return props.matchData?.awayTeamShort || props.matchData?.awayTeam
+  return props.matchData.awayTeamShort || props.matchData.awayTeam
 })
-const activeNames = ref(['1', '2'])
+const activeNames = ref(['1'])
 
+const recentList: Ref<any[]> = ref([])
 const teamType = ref(1)
 const fetchRecent = async (state: number = 1) => {
   teamType.value = state
@@ -118,9 +110,26 @@ const fetchRecent = async (state: number = 1) => {
     teamId: teamType.value === 1 ? homeTeamId : awayTeamId,
     limit: 5
   }
-  emit('fetchRecentEmit', params)
+  const res: any = await teamRecentApi(params)
+  if (res.code === 200) {
+    const data = res.data || {}
+    recentList.value = data.list || []
+  }
 }
 
+const integralList: Ref<any[]> = ref([])
+const fetchIntegral = async () => {
+  const { icGidm, homeTeamId, awayTeamId } = props.matchData || {}
+  const params = {
+    gidm: icGidm,
+    teamId: homeTeamId,
+    awayId: awayTeamId
+  }
+  const res: any = await homeAwayIntegralApi(params)
+  if (res.code === 200) {
+    integralList.value = res.data || []
+  }
+}
 const barScoreColor = (item: any, type: string) => {
   const homeScore = parseFloat(item.homeTeamScore)
   const awayScore = parseFloat(item.awayTeamScore)
@@ -193,15 +202,9 @@ const barScoreColor = (item: any, type: string) => {
       color: #fff;
       font-family: PingFangSC-Medium;
       border-radius: 25px;
-      opacity: 0.5;
-      &.home {
-        background-color: #0688f9;
-      }
-      &.away {
-        background-color: #f80563;
-      }
+      background-color: rgba(72, 163, 255, 0.24);
       &.active {
-        opacity: 1;
+        background-color: rgb(255, 92, 36);
       }
     }
   }

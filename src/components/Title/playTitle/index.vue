@@ -1,8 +1,7 @@
 <template>
   <div class="home-tabs-play">
-    <div class="home-tabs-play-bg"></div>
     <TimeView :time-send-params="sendParams" />
-    <div class="play fff">
+    <div class="play">
       <div class="flex-1"></div>
       <span
         class="btn R"
@@ -101,4 +100,6 @@ const PDclick = () => {
 }
 // defineExpose
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+</style>

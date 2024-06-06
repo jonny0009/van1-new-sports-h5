@@ -45,7 +45,7 @@ export default {
   numberDay: '{number} días',
 
   hot: 'caliente',
-  todayUpcoming: 'Negociación de la mañana de hoy',
+  TodayUpcoming: 'Negociación de la mañana de hoy',
   RBInfo: 'Hándicap asiático rodante',
   RBSize: 'Bola rodante por encima/por debajo',
   RBRide: 'Bola rodante 1X2',
@@ -54,13 +54,13 @@ export default {
   comingSoonTitle: 'Viniendo a jugar',
   shortVideoTitle: 'Video corto',
   casinoTitleObj: {
-    title1: 'Buena pista',
+    title1: 'Buenas recomendaciones de carreteras',
     title2: 'Baccarat en vivo',
     title3: 'El casino está en mantenimiento...',
     title4: 'Cuenta regresiva de mantenimiento estimado',
     gohome: 'Ir a la página de inicio'
   },
-  Community: 'comunidad',
+  Community: 'Comunidad',
 
   errorTips: {
     tips1: '¡Ups! Algo esta mal aqui',
@@ -68,22 +68,6 @@ export default {
     tips3: 'Sitio web en mantenimiento',
     tips4: 'Cuenta atrás para la reapertura'
   },
-  miBet: 'Mesa Squeeze Privada',
-  mulBet: 'Multi betting',
-  baccarat: {
-    连庄: 'B Dragon',
-    单跳: 'Ping Pong',
-    '{n1}房{n2}厅': '{n1}P{n2}B',
-    双龙汇: '2Dragon',
-    上坡路: 'Uphill',
-    下坡路: 'Downhill',
-    排排连: 'VRow',
-    逢庄连: 'RowB',
-    逢闲连: 'RowP',
-    逢庄跳: 'BHop',
-    逢闲跳: 'PHop',
-    隔连庄: 'SEP B',
-    隔连闲: 'SEP P',
-    双跳: '2Ping Pong'
-  }
+  mulBet: 'Apuesta múltiple'
+
 }

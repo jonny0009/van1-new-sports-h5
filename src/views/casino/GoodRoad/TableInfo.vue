@@ -2,17 +2,17 @@
   <div class="table-info-component" @click="goToGame">
     <div class="content">
       <div class="table-cover">
-        <img :src="cover" style="object-fit: contain" @error="errorState = true" />
+        <img :src="cover" @error="errorState = true" style="object-fit: contain" />
       </div>
       <div class="table-road-list">
-        <div v-for="(item, index) in wins" :key="index" class="road-col">
-          <div v-for="(win, index) in item" :key="index" class="road-item">
+        <div class="road-col" v-for="(item, index) in wins" :key="index">
+          <div class="road-item" v-for="(win, index) in item" :key="index">
             <span class="round" :class="win"></span>
           </div>
         </div>
       </div>
       <div class="good-bg">
-        <div class="title-1">{{ getTypeStr }}</div>
+        <div class="title-1">{{ titleX(tableInfo.goodRoadTitle).str1 }}</div>
         <div class="title-2">x{{ titleX(tableInfo.goodRoadTitle).str2 }}</div>
       </div>
     </div>
@@ -40,7 +40,6 @@ import CurrencyComp from '@/components/Currency/index.vue'
 import { computed, ref } from 'vue'
 import { getBrowserLanguage } from '@/utils'
 import { useI18n } from 'vue-i18n'
-import { getGoodRoadStr } from '@/utils/BaccaratUtils'
 const { t } = useI18n()
 
 const props = defineProps({
@@ -147,14 +146,6 @@ const titleX = (titleX: string) => {
   return titleObj
 }
 
-const getTypeStr = computed(() => {
-  return getGoodRoadStr(
-    props.tableInfo.goodRoadType,
-    props.tableInfo.goodRoadTypeParam1,
-    props.tableInfo.goodRoadTypeParam2
-  )
-})
-
 const brandType = 1
 const goToGame = async () => {
   const tableId = props.tableInfo.tableId
@@ -173,18 +164,12 @@ const goToGame = async () => {
   if (gres?.code === 200) {
     closeToast()
     const gameUrl = gres.data['url'].replace('&isAi=1', '')
-    const lang = getLang()
+    const lang = localStorage.getItem('locale') || getBrowserLanguage()
     const herf = `${gameUrl}&source=7lucky&hasLive=1&language=${lang}&brandType=${brandType}&tableId=${tableId}&sourceUrl=${encodeURIComponent(
       window.location.href
     )}`
     window.location.href = herf
   }
-}
-
-const getLang = () => {
-  const lang = localStorage.getItem('locale') || getBrowserLanguage()
-  if (lang === 'zh-sg') return 'zh-tw'
-  return lang
 }
 </script>
 <style lang="scss" scoped>
@@ -209,16 +194,15 @@ const getLang = () => {
       margin: auto;
       z-index: 1;
       right: 16px;
-      width: 112.5px;
-      height: 112.5px;
+      width: 100px;
+      height: 100px;
       background-repeat: no-repeat;
       background-size: contain;
       background-image: url(@/assets/images/casino/road-bg.png);
-      text-align: center;
 
       .title-1 {
-        line-height: 22px;
-        font-size: 22px;
+        line-height: 24px;
+        font-size: 24px;
         font-family: JueJiangHei;
         color: rgb(254, 55, 101);
       }

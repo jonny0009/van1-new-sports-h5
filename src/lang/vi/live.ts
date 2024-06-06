@@ -72,6 +72,6 @@ export default {
   section: 'phần',
   videoFailure: 'Vui lòng refresh thử lại',
   refreshVideo: 'Làm mới video',
-  goLive: 'Phòng phát sóng trực tiếp',
-  playbackFailed: 'Chơi không thành công'
+
 }
+

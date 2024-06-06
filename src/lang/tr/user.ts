@@ -1,3 +1,4 @@
+
 export default {
   lang: 'Language',
   search: 'aramak',
@@ -39,7 +40,7 @@ export default {
   text5: 'Özel karakterlere izin verilmez',
   text6: 'boşluksuz',
   ExistingAccount: 'Zaten hesabınız var mı',
-  personalProfile: 'Profil',
+  PersonalProfile: 'Profil',
   RegistrationTime: 'Kayıt zamanı',
   follow: 'odaklan',
   fans: 'fan',
@@ -60,11 +61,9 @@ export default {
   Personal: 'Kişisel profil',
   PrivacySettings: 'Gizlilik ayarı',
   PublicAccount: 'Herkese açık hesap (önerilir)',
-  font2:
-    'Diğer kullanıcılar sizi doğrudan takip edebilir, profilinizi ve bahislerinizi görüntüleyebilir. Belirli bahisleri hâlâ gizleyebilirsiniz. Bu varsayılan ayardır.',
+  font2: 'Diğer kullanıcılar sizi doğrudan takip edebilir, profilinizi ve bahislerinizi görüntüleyebilir. Belirli bahisleri hâlâ gizleyebilirsiniz. Bu varsayılan ayardır.',
   PrivateAccount: 'özel hesap',
-  font3:
-    'Diğer kullanıcılar profilinizi ve bahis kuponlarınızı ancak takip isteklerini kabul ettiğiniz takdirde görebilirler. Platformdaki deneyiminiz daha özel olacak.',
+  font3: 'Diğer kullanıcılar profilinizi ve bahis kuponlarınızı ancak takip isteklerini kabul ettiğiniz takdirde görebilirler. Platformdaki deneyiminiz daha özel olacak.',
   font4: 'Takma ad en az şunları içermelidir:',
   font5: '4 karakter (maks. 16)',
   font6: '1 harf ve 1 rakam (özel karakter içeremez)',
@@ -122,7 +121,7 @@ export default {
   editPend: 'Kabul ediyorum',
   affirmPend: 'onaylıyor',
   noDataRelated: 'İlgili veri bulunamadı',
-  fontNickName: 'Rumuz 7 gün içinde yalnızca bir kez düzenlenebilir, başkalarıyla tekrarlanamaz veya yasa dışı karakterler içeremez',
+  fontNickName: 'Takma ad yalnızca bir kez düzenlenebilir, başkalarıyla tekrarlanamaz veya yasa dışı karakterler içeremez',
   aheadFinal: 'zamanından önce uzlaşma',
   contactUs: 'Bize ulaşın',
   type: 'tür',
@@ -133,7 +132,8 @@ export default {
   MYOdd: 'Malezya yemeği [MYOdd]',
 
   sports: {
-    officeNumber: 'Büro numarası',
+
+    'officeNumber': 'Büro numarası',
 
     FT: 'Futbol',
     BK: 'Basketbol',
@@ -179,9 +179,6 @@ export default {
     OP_SW: 'yüzmek',
     OP_BS: 'plaj Futbolu',
     OP_WS: 'kış sporları',
-    OP_BD: 'çarpık top',
-    // 新增
-    XNFT: 'Sanal futbol',
-    XNBK: 'Sanal Basketbol'
+    OP_BD: 'çarpık top'
   }
 }

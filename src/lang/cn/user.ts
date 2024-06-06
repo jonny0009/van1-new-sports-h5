@@ -1,3 +1,4 @@
+
 export default {
   lang: '语言',
   search: '搜索',
@@ -39,7 +40,7 @@ export default {
   text5: '不能有特殊字符',
   text6: '不能有空格',
   ExistingAccount: '已有账号',
-  personalProfile: '个人档案',
+  PersonalProfile: '个人档案',
   RegistrationTime: '注册时间',
   follow: '关注',
   fans: '粉丝',
@@ -84,7 +85,7 @@ export default {
   betId: '投注ID',
   bet: '投注ID',
   balance: '余额',
-  currency: '币种',
+  currency: '货币',
   save: '保存',
   nickname: '输入昵称',
   font7: '7天可以修改一次昵称，请认真修改哦!',
@@ -126,7 +127,7 @@ export default {
   editPend: '受理中 ',
   affirmPend: '确认中 ',
   noDataRelated: '未查询到相关数据',
-  fontNickName: '昵称7天内只允许编辑一次，且不可与他人重复或含有非法字元',
+  fontNickName: '昵称只允许编辑一次，且不可与他人重复或含有非法字元',
   aheadFinal: '提前结算',
   contactUs: '联系我们',
   type: '类型',
@@ -135,7 +136,7 @@ export default {
   // IDOdd: '印尼盘 [ID]',
   // MYOdd: '马来盘 [MY]',
   sports: {
-    officeNumber: '局号',
+    'officeNumber': '局号',
     FT: '足球',
     BK: '篮球',
     TN: '网球',
@@ -180,9 +181,7 @@ export default {
     OP_SW: '游泳',
     OP_BS: '沙滩足球',
     OP_WS: '冬季运动',
-    OP_BD: '班迪球',
-    // 新增
-    XNFT: '虚拟足球',
-    XNBK: '虚拟篮球'
+    OP_BD: '班迪球'
   }
+
 }

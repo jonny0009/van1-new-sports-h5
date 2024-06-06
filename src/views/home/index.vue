@@ -6,6 +6,8 @@
       <LatestMatch ref="refLatestMatch" :leagueIdArr="leagueIdArr" />
     </van-pull-refresh>
     <FooterHeight />
+
+
   </div>
 </template>
 <script lang="ts" setup>
@@ -24,8 +26,6 @@ const onRefresh = () => {
 }
 onMounted(() => {
   getFirstLeagues()
-  //获取比赛方式联赛
-  getFirstLeaguesGameType()
 })
 const refreshChangeTime = computed(() => store.state.home.refreshChangeTime)
 const timeout: any = ref('')
@@ -35,38 +35,27 @@ watch(refreshChangeTime, (val) => {
     clearTimeout(timeout.value)
     timeout.value = setTimeout(() => {
       getFirstLeagues()
-      //获取比赛方式联赛
-      getFirstLeaguesGameType()
     }, 100)
   }
 })
 const firstLeaguesList: any = reactive([])
+const leagueIdArr: any = ref([])
 const getFirstLeagues = async () => {
   refHotMatch.value.isLoading = false
-  const res: any = await recommendLeague({ gameType: 'home', showType: 'FAST' })
-  refHotMatch.value.isLoading = true
-  if (res.code === 200) {
-    const list: any = res?.data.list || []
-    firstLeaguesList.length = 0
-    firstLeaguesList.push(...list)
-  }
-}
-
-const leagueIdArr: any = ref([])
-const getFirstLeaguesGameType = async () => {
-  refHotMatch.value.isLoading = false
-  const res: any = await recommendLeague({ gameType: 'FT', showType: 'FAST' })
+  const res: any = await recommendLeague({ gameType: 'home',showType:'FAST' })
   refHotMatch.value.isLoading = true
   if (res.code === 200) {
     leagueIdArr.value = []
     const list: any = res?.data.list || []
-    list.map((n: any) => {
+    firstLeaguesList.length = 0
+    firstLeaguesList.push(...list)
+    firstLeaguesList.map((n: any) => {
       if (n.leagueId) {
         leagueIdArr.value.push(n.leagueId)
       }
     })
-    if (!leagueIdArr.value.length || res?.data.total === 0) {
-      leagueIdArr.value = ['']
+    if (!leagueIdArr.value.length) {
+      leagueIdArr.value = [{}]
     }
   }
 }

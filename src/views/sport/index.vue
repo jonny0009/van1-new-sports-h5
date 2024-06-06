@@ -1,30 +1,21 @@
 <template>
-  <div ref="newContainerRecommend" class="sport-page">
+  <div class="sport-page" ref="newContainerRecommend">
     <div ref="newContainer">
       <!--公共 体育项-->
-
-      <div :class="[homeStyle == 2 ? 'mt5' : 'mt10']">
+      <div class="mt10">
         <van-tabs
-          v-model:active="gameType"
           :duration="0.2"
+          v-model:active="gameType"
           shrink
           line-height="0"
           :animated="ifAnimated"
-          :swipe-threshold="3"
-          :show-header="homeStyle == 2"
           @change="onChangeTabs"
+          :swipe-threshold="3"
           @click-tab="ifAnimated = true"
         >
           <van-tab v-for="(item, index) in sportsList" :key="index" :name="item.text">
             <template #title>
-              <SportsButton
-                class="tabs-cut-7"
-                :text="item.text"
-                :active="gameType === item.text"
-                :class="item.text"
-                :show-count="true"
-                :count="item.gameCount"
-              />
+              <SportsButton class="tabs-cut-7" :text="item.text" :active="gameType === item.text" :class="item.text" />
             </template>
             <!-- 公共联赛 -->
             <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh">
@@ -32,7 +23,6 @@
               <div class="my-scroll__content">
                 <div class="tabs-cut tabs-cut-2">
                   <div class="league-num tabs-cut-1" :class="ifLeagueNum ? 'league-num-1' : ''" @click="clickLeagueNum">
-                    <!-- <span v-if="homeStyle === 1"> {{ $t(`sport.sports.${gameType}`) }}</span> -->
                     <span> {{ $t(`user.whole`) }}</span>
                     <span class="league-match-num">{{ LeaguesInfo.total || 0 }}</span>
                     <SvgIcon name="user-down" class="icon-svg-1" />
@@ -56,13 +46,13 @@
                     :active="leagueId === item.leagueId"
                     type="6"
                     :count="item.gameTypeCount || '0'"
-                    :if-count="Number(item.gameTypeCount) || 0"
+                    :ifCount="Number(item.gameTypeCount) || 0"
                     :if-circle="true"
-                    :if-shadow="false"
                     @click="handleChangeLeagueId(item)"
+                    :if-shadow="false"
                   />
                 </div>
-                <div v-if="firstLeaguesList.length > 1" class="tabs-cut tabs-cut-3">
+                <div class="tabs-cut tabs-cut-3" v-if="firstLeaguesList.length > 1">
                   <ImageButton
                     v-for="(item, index) in firstLeaguesList.slice(Math.floor(firstLeaguesList.length / 2))"
                     :key="index"
@@ -72,10 +62,10 @@
                     :active="leagueId === item.leagueId"
                     type="6"
                     :count="item.gameTypeCount || '0'"
-                    :if-count="Number(item.gameTypeCount) || 0"
+                    :ifCount="Number(item.gameTypeCount) || 0"
                     :if-circle="true"
-                    :if-shadow="false"
                     @click="handleChangeLeagueId(item)"
+                    :if-shadow="false"
                   />
                 </div>
               </div>
@@ -144,7 +134,6 @@
                             </van-sticky>
                             <HomeMatchHandicap
                               v-for="(item1, idx) in item.list"
-                              :key="idx"
                               :play-title-toggle="false"
                               :send-params="item1"
                               :class="{ mt10: idx !== 0 }"
@@ -188,7 +177,6 @@
                             </van-sticky>
                             <HomeMatchHandicap
                               v-for="(item1, idx) in item.list"
-                              :key="idx"
                               :play-title-toggle="false"
                               :send-params="item1"
                               :class="{ mt10: idx !== 0 }"
@@ -226,8 +214,8 @@
                         :src="leagueLogo"
                         type="6"
                         :text="leagueName"
-                        :arrow-show="leagueArrowShow"
-                        :show-other="true"
+                        :arrowShow="leagueArrowShow"
+                        :showOther="true"
                       />
                     </template>
                     <Loading v-if="!getRecommendEventsIsLoading" />
@@ -244,7 +232,6 @@
                           </van-sticky>
                           <HomeMatchHandicap
                             v-for="(item1, idx) in item.list"
-                            :key="idx"
                             :play-title-toggle="false"
                             :send-params="item1"
                             :class="{ mt10: idx !== 0 }"
@@ -275,8 +262,11 @@ import ChampionList from './champion/index.vue'
 import Slideshow from './slideshow/index.vue'
 import TextButton from '@/components/Button/TextButton/index.vue'
 import playTitle from '@/components/Title/playTitle/index.vue'
+// useRouter
 import { useRoute } from 'vue-router'
+// onBeforeMount, watch,
 import { ref, computed, onMounted, onActivated, watch } from 'vue'
+// import router from '@/router'
 import { apiChampionpPlayTypes } from '@/api/champion'
 import {
   recommendLeague,
@@ -288,7 +278,7 @@ import {
 import { MarketInfo } from '@/entitys/MarketInfo'
 import moment from 'moment'
 
-const homeStyle = computed(() => store.state.app.homeStyle)
+// const { currentRoute } = useRouter()
 const route: any = useRoute()
 const scrollNum = computed(() => store.state.user.scrollNumY)
 const gameType1 = computed(() => {
@@ -308,6 +298,7 @@ const onChangeTabs = (item: any) => {
   // end=====
   console.log(item, '==')
 
+  // gameType.value = item
   store.dispatch('user/getLocationHeight', false)
   getRecommendEventsIsLoading.value = false
   initList()
@@ -334,7 +325,6 @@ const recommendLoadAll: any = ref(false)
 const isRefreshLoading = ref(false)
 const newContainer = ref(null)
 const newContainerRecommend = ref(null)
-// const sports = ref([])
 
 import store from '@/store'
 
@@ -350,41 +340,23 @@ const offsetTop = computed(() => {
   }
   return offsetTopval
 })
-
-const sportsListArr = computed(() => store.state.match.sportsListArr)
-
 const sportsList = computed(() => {
-  const newSportsA = sportsListArr.value.filter((e: any) => {
-    return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.num * 1
+  const sports = store.state.app.sports || []
+  const newSportsA = sports.filter((e: any) => {
+    return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType) && e.gameCount
+    // return !['SY', 'RB', 'COMBO', 'JC'].includes(e.gameType)
   })
   let newSportsB: any = []
   if (newSportsA.length) {
     const newSportsC = newSportsA.map((e: any) => {
       return {
-        text: e.gameType,
-        gameCount: e.num * 1
+        text: e.gameType
       }
     })
     newSportsB = [...newSportsC]
   }
-  // const count = newSportsB.reduce((gameCount: number, item: any) => {
-  //   return gameCount + item.gameCount * 1
-  // }, 0)
-  // const allItem = {
-  //   text: 'all',
-  //   gameCount: count
-  // }
-  // return [allItem, ...newSportsB]
-  return [...newSportsB]
+  return newSportsB
 })
-// const getStatistics = async () => {
-//   const res: any = await statistics({ showType: 'FAST' })
-//   if (res?.code === 200 && res?.data) {
-//     const stResult = res.data?.stResult || []
-//     sports.value = stResult
-//   }
-// }
-// getStatistics()
 
 onMounted(() => {
   // 初始化
@@ -434,7 +406,7 @@ const getLeagueByCountryInfo = async (countryId: any, num: any) => {
     countryId,
     groupId: 3,
     showType: 'FAST',
-    gameType: gameType.value === 'all' ? '' : gameType.value
+    gameType: gameType.value
   })
   const res: any = (await searchLeagueByCountryInfo(leagueByCountryParams.value)) || {}
   if (res.code === 200 && res.data) {
@@ -444,7 +416,7 @@ const getLeagueByCountryInfo = async (countryId: any, num: any) => {
         return e.leagueId === leagueId.value
       })
       firstLeaguesList.value = res.data.filter((item: any) => {
-        return item.leagueId !== leagueId.value && item.gameTypeCount > 0
+        return item.leagueId !== leagueId.value
       })
       firstLeaguesList.value.unshift(leagueIdObj)
       initData()
@@ -476,7 +448,7 @@ const LeaguesInfo: any = ref({})
 const getSearchCountryInfo = async () => {
   activeCollapseNames.value = ''
   const CountryInfoParams: any = ref({
-    gameType: gameType.value === 'all' ? '' : gameType.value,
+    gameType: gameType.value,
     showtype: 'FAST',
     page: 1,
     row: 999
@@ -502,7 +474,7 @@ const getCommonMatches = async () => {
     // dateStage: 0,
     // isNovice: 'Y',
     // onlyFavorite: 0,
-    gameType: gameType.value === 'all' ? '' : gameType.value,
+    gameType: gameType.value,
     page: 1,
     pageSize: 5
   })
@@ -531,7 +503,7 @@ const initData = async () => {
       dateStage: 0,
       isNovice: 'Y',
       onlyFavorite: 0,
-      gameType: gameType.value === 'all' ? '' : gameType.value,
+      gameType: gameType.value,
       leagueIds: leagueId.value,
       page: 1,
       pageSize: 20
@@ -543,7 +515,7 @@ const initData = async () => {
     const recommendParames: any = ref({
       gradeType: 1,
       gameTypeSon: '',
-      gameType: gameType.value === 'all' ? '' : gameType.value,
+      gameType: gameType.value,
       showtype: 'FAST',
       timeStage: 0,
       gameSort: 3,
@@ -560,7 +532,7 @@ const initData = async () => {
     const earlyParames: any = ref({
       gradeType: 2,
       gameTypeSon: '',
-      gameType: gameType.value === 'all' ? '' : gameType.value,
+      gameType: gameType.value,
       showtype: 'FAST',
       timeStage: 0,
       gameSort: 3,
@@ -583,11 +555,10 @@ const getFirstLeagues = async (ifSearch?: any) => {
   // firstLeaguesList.value = []
   if (gameType.value) {
     // showType：FT-今日 FU-早盘 RB-滚球
-    const res: any =
-      (await recommendLeague({ gameType: gameType.value === 'all' ? '' : gameType.value, showType: 'FAST' })) || {}
+    const res: any = (await recommendLeague({ gameType: gameType.value, showType: 'FAST' })) || {}
     if (res.code === 200 && res.data) {
-      firstLeaguesList.value = (res.data.list || []).filter((i: any) => i.gameTypeCount > 0)
-      // 搜索目前没有国家ID, 不匹配
+      firstLeaguesList.value = res.data.list || []
+      //搜索目前没有国家ID, 不匹配
       if (!ifSearch) {
         // 联赛ID
         const leagueIdObj = firstLeaguesList.value.find((item: any) => {
@@ -599,7 +570,7 @@ const getFirstLeagues = async (ifSearch?: any) => {
         }
         leagueIdArr.value = []
         firstLeaguesList.value.map((n: any) => {
-          if (n.leagueId && n.gameTypeCount > 0) {
+          if (n.leagueId) {
             leagueIdArr.value.push(n.leagueId)
           }
         })
@@ -628,7 +599,7 @@ const moreEarly = async () => {
     filterLeagueIds: leagueIdArr.value.join(),
     leagueIds: '',
     onlyFavorite: 0,
-    gameType: gameType.value === 'all' ? '' : gameType.value,
+    gameType: gameType.value,
     gradeType: 2,
     page: earlyPage.value,
     pageSize: earlyPageSize.value
@@ -684,7 +655,7 @@ const moreRecommend = async () => {
     leagueIds: leagueIdArr.value.join() || -1,
     // leagueIds: '',
     onlyFavorite: 0,
-    gameType: gameType.value === 'all' ? '' : gameType.value,
+    gameType: gameType.value,
     gradeType: 1,
     page: recommendPage.value,
     pageSize: recommendPageSize.value
@@ -762,11 +733,6 @@ const getRecommendEvents = async (params: any) => {
           listArr.push(JSON.parse(JSON.stringify(listObj[item])))
         })
         recommendList.value = listArr
-        if (recommendListArr.value.length < recommendPage.value * recommendPageSize.value) {
-          recommendLoadAll.value = true
-        } else {
-          recommendLoadAll.value = false
-        }
       } else {
         leagueLogo.value = ''
         leagueName.value = ''
@@ -796,11 +762,6 @@ const getRecommendEvents = async (params: any) => {
           listArr.push(JSON.parse(JSON.stringify(listObj[item])))
         })
         earlyList.value = listArr
-        if (earlyListArr.value.length < earlyPage.value * earlyPageSize.value) {
-          earlyLoadAll.value = true
-        } else {
-          earlyLoadAll.value = false
-        }
       } else {
         earlyList.value = []
       }
@@ -859,7 +820,7 @@ const clickLeague = (item: any) => {
   })
   leagueId.value = item.leagueId
   firstLeaguesList.value = LeagueByCountryInfoArr.value.filter((i: any) => {
-    return i.leagueId !== item.leagueId && i.gameTypeCount > 0
+    return i.leagueId !== item.leagueId
   })
   firstLeaguesList.value.unshift(leagueIdObj)
 
@@ -897,7 +858,6 @@ const handleChangeLeagueId = (item: any) => {
 const ifRouteId = ref('')
 onActivated(async () => {
   if (locationHeight.value) return
-  // gameType.value = route.params?.type || 'all'
   gameType.value = route.params?.type || 'FT'
   groupedArrays.value = []
   firstLeaguesList.value = []
@@ -1015,7 +975,7 @@ onActivated(async () => {
   }
 
   .tabs-cut-2 {
-    // margin-top: 20px;
+    margin-top: 20px;
     display: flex;
     margin-bottom: 2px;
   }

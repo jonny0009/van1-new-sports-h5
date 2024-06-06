@@ -39,7 +39,7 @@ export default {
   text5: 'Không có ký tự đặc biệt',
   text6: 'Không có khoảng trắng',
   ExistingAccount: 'Đã có tài khoản',
-  personalProfile: 'Hồ sơ',
+  PersonalProfile: 'Hồ sơ',
   RegistrationTime: 'Thời gian đăng ký',
   follow: 'Theo dõi',
   fans: 'Pan hâm mộ',
@@ -103,7 +103,9 @@ export default {
   today: 'Hôm nay',
   fortyEight: 'Gần 48 giờ',
   sevenDay: '7 ngày',
-  fontNickName: 'Biệt hiệu chỉ được chỉnh sửa một lần trong vòng 7 ngày, không thể lặp lại với người khác hoặc chứa các ký tự không hợp lệ',
+  // 新增6
+  fontNickName: 'Biệt danh chỉ được phép chỉnh sửa một lần và không được lặp lại với người khác hoặc chứa ký tự bất hợp pháp.',
+
   // 新增3
   compensate: 'Thanh toán',
   winRate: 'Tỷ lệ thắng',
@@ -140,7 +142,7 @@ export default {
   awayName: 'Đội khách',
 
   sports: {
-    officeNumber: 'số trò chơi',
+    'officeNumber': 'số trò chơi',
     FT: 'Bóng đá',
     BK: 'Bóng rổ',
     TN: 'Quần vợt',
@@ -185,9 +187,6 @@ export default {
     OP_SW: 'Bơi lội',
     OP_BS: 'Bóng đá bãi biển',
     OP_WS: 'Thể thao mùa đông',
-    OP_BD: 'Bandy',
-    // 新增
-    XNFT: 'bóng đá ảo',
-    XNBK: 'bóng rổ ảo'
+    OP_BD: 'Bandy'
   }
 }

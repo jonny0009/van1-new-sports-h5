@@ -23,9 +23,10 @@ export default async () => {
     store.commit('app/SET_THEME', '') // 紫色
   }
   if (typeof searchParams.brandType === 'string') {
-    localStore.setItem('visitor', '1')
+    localStorage.setItem('visitor', 'visitor')
   }
   setTheme()
+
   // 商户语言
   // await store.dispatch('app/queryCMerLanguage')
 
@@ -53,10 +54,6 @@ export default async () => {
     await store.dispatch('user/getCurrency')
     // 获取全部体育项
     store.dispatch('app/getAllSports')
-    // 获取首页tab体育项数量
-    store.dispatch('app/getHomeTabsSports')
-    // 获取早盘tab数量
-    store.dispatch('match/getSportsList')
     // 商户语言
     store.dispatch('app/queryCMerLanguage')
     // 获取账号信息

@@ -1,7 +1,7 @@
 <template>
   <!-- 球类型 -->
   <div class="ball-type">
-    <sports-tabs :if-count-num="false" @returnSportsSuccess="setBallSelect" :ifMatchResult="true"></sports-tabs>
+    <sports-tabs @returnSportsSuccess="setBallSelect"></sports-tabs>
   </div>
   <!-- 时间 -->
   <div class="status">
@@ -9,7 +9,7 @@
       <span>{{ $t('user.time') }}</span>
       <div class="round" @click="seStatus()">
         <span>{{ commonKey.name }}</span>
-        <img class="img_1" :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
+        <img class="img_1 " :class="[showBottom ? 'img_3' : '']" src="@/assets/images/user/down.png" alt="" />
       </div>
     </div>
   </div>
@@ -21,18 +21,11 @@
     </p>
   </div>
   <!-- 列表 -->
-  <van-list
-    v-if="list.arr.length || !finished"
-    v-model:loading="loading"
-    :finished="finished"
-    :finished-text="$t('user.noMoreMatch')"
-    :loading-text="$t('user.loadingText')"
-    class="dataList"
-    @load="onLoad"
-  >
+  <van-list v-if="list.arr.length || !finished" v-model:loading="loading" :finished="finished"
+    :finished-text="$t('user.noMoreMatch')" :loading-text="$t('user.loadingText')" class="dataList" @load="onLoad">
     <div v-for="(item, index) in list.arr" :key="index" class="item">
       <div class="title">
-        <div class="left title-left">
+        <div class="left  title-left">
           <SportsIcon :icon-src="item.gameType" class="ball-img" />
           <span class="ball-name">
             {{ item.leagueName }}
@@ -44,10 +37,11 @@
       </div>
       <div class="match-content">
         <div class="left">
+
           <div class="left-1">
             {{ item.homeTeamName }}
           </div>
-          <img v-img="item.homeTeamLogo" class="img_1" alt="" :type="4" style="object-fit: contain" />
+          <img v-img="item.homeTeamLogo" class="img_1" alt="" :type="4" style="object-fit: contain;" />
         </div>
         <div class="center">
           {{ item.result.GM_h || 0 }}
@@ -55,7 +49,8 @@
           {{ item.result.GM_c || 0 }}
         </div>
         <div class="right">
-          <img v-img="item.awayTeamLogo" class="img_2" alt="" :type="5" style="object-fit: contain" />
+
+          <img v-img="item.awayTeamLogo" class="img_2" alt="" :type="5" style="object-fit: contain;" />
           <div class="right-1">
             {{ item.awayTeamName }}
           </div>
@@ -73,19 +68,24 @@ import store from '@/store'
 // import { useI18n } from 'vue-i18n'
 // const { t } = useI18n()
 import { matchResult } from '@/api/user'
+
 const list = reactive<{ arr: any }>({ arr: [] })
 // import { showToast } from 'vant'
 const loading = ref(false)
 const finished = ref(false)
-const commonKey = ref({
-  name: moment().format('YYYY/MM/DD'),
-  value: moment().valueOf(),
-  key: 0
-})
-const ballKey = ref({
-  gameType: 'FT',
-  key: 'FT'
-})
+const commonKey = ref(
+  {
+    name: moment().format('YYYY/MM/DD'),
+    value: moment().valueOf(),
+    key: 0
+  }
+)
+const ballKey = ref(
+  {
+    gameType: 'FT',
+    key: 'FT'
+  }
+)
 const showBottom = ref(false)
 
 const emit = defineEmits(['valueChange', 'timeChange'])
@@ -165,9 +165,9 @@ const setBallSelect = (val: any) => {
   onLoad()
 }
 defineExpose({
-  setDateTime,
-  showBottom
+  setDateTime, showBottom
 })
+
 </script>
 
 <style lang="scss" scoped>
@@ -187,6 +187,7 @@ defineExpose({
   color: var(--color-search-box-text-1);
   letter-spacing: 0;
   font-weight: 600;
+
   .status_1 {
     display: flex;
     align-items: center;
@@ -224,6 +225,7 @@ defineExpose({
   margin-bottom: 18px;
   background: var(--color-search-box-sidebar);
 }
+
 // 列表
 .dataList {
   margin-top: 20px;
@@ -233,20 +235,22 @@ defineExpose({
   .color-1 {
     color: var(--color-bg-1);
   }
+
   .color-2 {
-    color: #1ebb52;
+    color: #1EBB52;
   }
 
   .color-3 {
     color: red;
   }
+
   .item {
     background: var(--color-search-box-frame);
     border-radius: 22px;
     padding: 20px 20px 25px 20px;
     margin-bottom: 20px;
 
-    > .title {
+    >.title {
       font-family: PingFangSC-Medium;
       font-size: 24px;
       color: var(--color-search-box-text-1);
@@ -315,7 +319,7 @@ defineExpose({
           text-overflow: ellipsis;
         }
 
-        > .img_1 {
+        >.img_1 {
           width: 48px;
           height: 48px;
           margin-left: 5px;
@@ -351,6 +355,7 @@ defineExpose({
         }
       }
     }
+
   }
 }
 
@@ -364,11 +369,12 @@ defineExpose({
   font-weight: 500;
   height: 850px;
 
-  > .img_1 {
+  >.img_1 {
     margin-top: 331px;
     width: 102px;
     height: 121px;
     margin-bottom: 57px;
+
   }
 }
 </style>

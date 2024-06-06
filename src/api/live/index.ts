@@ -182,19 +182,3 @@ export const nextAnchorMatchDate = () => {
     method: 'get'
   })
 }
-// 短视频
-export const getVideoGreet = (params: any) => {
-  return request({
-    url: '/ai/mobile/video/getVideoGreet',
-    method: 'get',
-    params
-  })
-}
-// 短视频
-export const mainMatches = (params: any) => {
-  return request({
-    url: '/ai/mobile/detail/mainMatches',
-    method: 'get',
-    params
-  })
-}

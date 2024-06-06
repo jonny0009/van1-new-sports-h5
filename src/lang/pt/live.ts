@@ -73,6 +73,4 @@ export default {
   section: 'seção',
   videoFailure: 'Por favor, atualize e tente novamente',
   refreshVideo: 'Actualizar o Vídeo',
-  goLive: 'Sala de transmissão ao vivo',
-  playbackFailed:'Falha na reprodução'
 }

@@ -70,7 +70,5 @@ export default {
   halfPlay: 'आधा समय',
   section: 'अनुभाग',
   videoFailure: 'वीडियो लोडिंग विफल रही, कृपया ताज़ा करें और पुनः प्रयास करें',
-  refreshVideo: 'वीडियो ताज़ा करें',
-  goLive: 'लाइव प्रसारण कक्ष में जाएँ',
-  playbackFailed: 'खेल विफल रहा'
+  refreshVideo: 'वीडियो ताज़ा करें'
 }

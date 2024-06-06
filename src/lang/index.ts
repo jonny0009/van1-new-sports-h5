@@ -12,8 +12,8 @@ import es from './es/index'
 import id from './id/index'
 import tw from './tw/index'
 import hiInI from './in/index' // 印地
-import sg from './sg/index' //
-import tr from './tr/index' //
+import sg from './sg/index' // 印地
+import tr from './tr/index' // 印地
 
 import { Locale } from 'vant'
 import enUS from 'vant/es/locale/lang/en-US'

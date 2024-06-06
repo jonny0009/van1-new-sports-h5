@@ -6,33 +6,19 @@
           <ArrowTitle class="mt10 goodArrowTitle" :src="titleRecommend" :text="$t('home.goofMatch')" />
         </template>
         <div class="goodMatch">
-          <SportsTabs
-            ref="refSportsTabs"
-            class="pb10 pt10"
-            @returnSportsSuccess="returnSportsSuccess"
-            :ifCapstan="true"
-            :ifGoodMatch="true"
-          >
+          <SportsTabs ref="refSportsTabs" class="pb10 pt10" @returnSportsSuccess="returnSportsSuccess">
             <template #body>
               <div class="mt10">
                 <Loading v-if="!isLoading" />
                 <template v-else>
                   <HomeEmpty v-if="!recommendEventsList.length" />
                   <template v-for="(item, idx) in recommendEventsList" :key="idx">
-                    <van-sticky
-                      :offset-top="offsetTop"
-                      :container="newContainer"
-                      z-index="8"
-                      :class="{ mt10: idx !== 0 }"
-                    >
+                    <van-sticky :offset-top="offsetTop" :container="newContainer" z-index="8"
+                      :class="{ 'mt10': idx !== 0 }">
                       <playTitle :send-params="item" />
                     </van-sticky>
-                    <HomeMatchHandicap
-                      v-for="(item1, idx) in item.list"
-                      :play-title-toggle="false"
-                      :send-params="item1"
-                      :class="{ mt10: idx !== 0 }"
-                    />
+                    <HomeMatchHandicap v-for="(item1, idx) in item.list" :play-title-toggle="false" :send-params="item1"
+                      :class="{ 'mt10': idx !== 0 }" />
                   </template>
                 </template>
                 <div v-if="recommendEventsList.length" class="Button-MatchMore mt10" @click="goToSport">
@@ -57,8 +43,6 @@ import { ref, computed, watch } from 'vue'
 import moment from 'moment'
 import store from '@/store'
 import router from '@/router'
-import { recommendEvents, recommendLeague } from '@/api/home'
-
 const scrollNum = computed(() => store.state.user.scrollNumY)
 const offsetTop = computed(() => {
   const offsetTop = store.state.app.globalBarHeaderHeight || 48
@@ -70,6 +54,7 @@ const offsetTop = computed(() => {
   }
   return offsetTopval
 })
+import { recommendEvents } from '@/api/home'
 const props = defineProps({
   leagueIdArr: {
     type: Array as any,
@@ -82,14 +67,11 @@ const newContainer = ref(null)
 const activeNames = ref('1')
 const refSportsTabs = ref()
 
-watch(
-  () => scrollNum.value,
-  (newValue) => {
-    if (newValue) {
-      refSportsTabs.value.ifAnimated = false
-    }
+watch(() => scrollNum.value, (newValue) => {
+  if (newValue > 88) {
+    refSportsTabs.value.ifAnimated = false
   }
-)
+})
 watch(refreshChangeTime, (val) => {
   if (val) {
     refSportsTabs.value?.resetParams()
@@ -102,28 +84,26 @@ watch(refreshChangeTime, (val) => {
 })
 watch(
   () => props.leagueIdArr,
-  () => {
-    getRecommendEvents()
+  (val, old) => {
+    if (val.join() !== old.join()) {
+      getRecommendEvents()
+    }
   }
 )
 const recommendEventsList: any = ref([])
 const recommendEventsListArr: any = ref([])
 const isLoading = ref(false)
 const getRecommendEvents = async (gameType: any = 'FT') => {
-  isLoading.value = false
-  const params: any = {
+  const params = {
     gradeType: 1,
     gameType: gameType,
-    // leagueId: props.leagueIdArr.join(),
-    leagueId: getLeagueIdArrIds(),
+    leagueId: props.leagueIdArr.join(),
     page: 1,
     pageSize: 10
     // startDate: dateUtil().format('YYYY-MM-DD') + ' 00:00:00',
     // endDate: dateUtil().add(1, 'day').format('YYYY-MM-DD') + ' 23:59:59'
   }
-  if (getLeagueIdArrIds()) {
-    delete params.gradeType
-  }
+  isLoading.value = false
   const res: any = await recommendEvents(params)
   isLoading.value = true
   if (res.code === 200) {
@@ -148,49 +128,19 @@ const getRecommendEvents = async (gameType: any = 'FT') => {
         }
       }
     })
-    Object.keys(listObj).map((item) => {
+    Object.keys(listObj).map(item => {
       listArr.push(JSON.parse(JSON.stringify(listObj[item])))
     })
 
     recommendEventsList.value = listArr
   }
 }
-
-const leagueIdArrType: any = ref([])
-const sportTypeChange: any = ref(false)
-const returnSportsSuccess = async (val: any) => {
-  isLoading.value = false
+const returnSportsSuccess = (val: any) => {
   recommendEventsList.value = []
   gameType.value = val
-  const res: any = await recommendLeague({ gameType: val, showType: 'FAST' })
-  if (res.code === 200) {
-    sportTypeChange.value = true
-    leagueIdArrType.value = []
-    const list: any = res?.data.list || []
-    list.map((n: any) => {
-      if (n.leagueId) {
-        leagueIdArrType.value.push(n.leagueId)
-      }
-    })
-    if (!leagueIdArrType.value.length || res?.data.total === 0) {
-      leagueIdArrType.value = []
-    }
-    getRecommendEvents(val)
-  }
+  getRecommendEvents(val)
 }
-// 联赛id
-const getLeagueIdArrIds = () => {
-  if (sportTypeChange.value) {
-    if (leagueIdArrType.value.length) {
-      return leagueIdArrType.value.join()
-    }
-    return ''
-  }
-  if (props.leagueIdArr) {
-    return props.leagueIdArr.join()
-  }
-  return ''
-}
+
 
 const gameType = ref('FT')
 const goToSport = () => {

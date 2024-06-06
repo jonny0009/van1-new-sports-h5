@@ -10,23 +10,12 @@ export const getAllSports = () => {
     method: 'get'
   })
 }
-/**
- * 获取首页tab体育项数量
- * @returns
- */
-export const getHomeTabsSports = (params: any) => {
-  return request({
-    url: '/ai/mobile/matches/recommendLeagueGameCount',
-    method: 'get',
-    params
-  })
-}
 
 /**
  * 获取游戏
  * @returns
  */
-export const apiGetGameDetail = (params: any) => {
+export const apiGetGameDetail = (params:any) => {
   return request({
     url: '/ai/mobile/game/url/new',
     method: 'get',
@@ -55,7 +44,7 @@ export const anonyToken = () => {
   })
 }
 
-export const getConfig = (params: any) => {
+export const getConfig = (params:any) => {
   return request({
     url: '/ai/mobile/merchant/merchantCustomize',
     method: 'get',

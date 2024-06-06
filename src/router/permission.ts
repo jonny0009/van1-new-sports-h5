@@ -1,7 +1,7 @@
 import router from '@/router'
 import Fingerprint2 from 'fingerprintjs2'
 import localStore from '@/utils/localStore'
-import { setToken, getToken } from '@/utils/auth'
+import { setToken } from '@/utils/auth'
 
 import aesUtil from '@/utils/aesUtil'
 import store from '@/store'
@@ -21,7 +21,7 @@ const createFingerprint = () => {
 }
 
 router.beforeEach(async (_to: any, _from: any, next) => {
-  const hasToken = getToken() || store.state.user.token
+  const hasToken = store.state.user.token
   if (hasToken) {
     next()
   } else {
@@ -49,7 +49,7 @@ router.beforeEach(async (_to: any, _from: any, next) => {
           next()
         }
       } else {
-        // next('/login')
+        next('/login')
       }
     } catch (err) {
       console.log(err)
