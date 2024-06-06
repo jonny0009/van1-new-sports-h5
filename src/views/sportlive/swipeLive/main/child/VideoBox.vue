@@ -54,6 +54,9 @@ import { useRouter } from 'vue-router'
 import { getScore } from '@/utils/home/getScore'
 const router = useRouter()
 const turnSound = computed(() => store.state.match.turnSound)
+Video.options.hls.overrideNative = true
+Video.options.html5.nativeAudioTracks = false
+Video.options.html5.nativeVideoTracks = false
 
 const props: any = defineProps({
   liveInfo: {
