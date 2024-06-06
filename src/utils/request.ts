@@ -119,7 +119,7 @@ service.interceptors.response.use(
       //   router.push(url)
       // })
       removeToken()
-
+      store.commit('user/SET_TOKEN', '')
       // router.push('/login')
     } else if (+response.data.code === 403) {
       router.push('/403')
