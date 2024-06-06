@@ -14,7 +14,7 @@ import { createScript, getBrowserLanguage } from './utils'
 import i18n from './lang'
 
 // 路由守卫
-// import './router/permission'
+import './router/permission'
 
 // 玩法名称，玩法球头表引入
 const lang = localStorage.getItem('locale') || getBrowserLanguage()
