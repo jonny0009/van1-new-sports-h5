@@ -62,7 +62,7 @@ const navList = reactive([
   { title: t('live.more'), iconName: 'live-grid', path: 'other' }
 ])
 const onNavClick = (path: string) => {
-  router.replace(`/match/${paramsId.value}/${path}`)
+  router.replace({path: `/match/${paramsId.value}/${path}`, query: { ...route.query }})
   getMatchInfo()
   store.commit('match/SET_NEED_TIMER', true)
 }
@@ -88,8 +88,8 @@ const getExtendInfo = async () => {
   const res: any = await extendInfo({ gidm })
   if (res.code === 200) {
     const { streamNa } = res.data || {}
-    const { liveali, live } = streamNa || {}
-    videoUrl.value = (liveali || live || {}).m3u8
+    const { live } = streamNa || {}
+    videoUrl.value = (live || {}).m3u8
     if (!videoUrl.value) {
       videoUrl.value = ''
       videoError.value = true

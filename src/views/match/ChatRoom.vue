@@ -157,16 +157,29 @@ onUnmounted(() => {
   websocket?.disconnect()
 })
 
+const gidm = computed(() => matchInfo.value.gidm)
+const systemId = computed(() => matchInfo.value.systemId)
+const anchorId = computed(() => route?.query?.anchorId)
+const id = computed(() => route?.params?.id)
+const roomKey = computed(() => `${id.value}${anchorId.value}`)
+const isChangeKey = ref(false)
+
+watch(roomKey, (newVal, oldVal) => {
+  if (newVal === oldVal) return
+  websocket?.disconnect()
+  isChangeKey.value = true
+})
+
 const chatRoomInfo: Ref<any> = ref({})
 const getIntoRoom = async () => {
-  if (needTimer.value) {
+  if (needTimer.value && !isChangeKey.value) {
     return
   }
-  const anchorId = route?.query?.anchorId || undefined
+
   const params = {
-    gidm: matchInfo.value.gidm,
-    systemId: matchInfo.value.systemId,
-    anchorId,
+    gidm: gidm.value,
+    systemId: systemId.value,
+    anchorId: anchorId.value,
     version: '3.9.0'
   }
   const res: any = await intoRoom(params)
@@ -189,17 +202,24 @@ const getLastMessage = async () => {
   const extra = res.extra || {}
   const messageList = extra.messageList || []
   if (res.code == 200) {
-    const gidms = []
-    messageList.forEach((message: any) => {
-      if (message.msgType && +message.msgType === 2 && message.content) {
-        const newContent = JSON.parse(message.content || '')
-        const bettingData = newContent.bettingData || []
-        bettingData.forEach((item: any) => {
-          gidms.push(item.gidm)
-        })
-      }
-    })
-    handlerMessage(messageList)
+    // 這段目前看似沒用處先隱藏
+    // const gidms = []
+    // messageList.forEach((message: any) => {
+    //   if (message.msgType && +message.msgType === 2 && message.content) {
+    //     const newContent = JSON.parse(message.content || '')
+    //     const bettingData = newContent.bettingData || []
+    //     bettingData.forEach((item: any) => {
+    //       gidms.push(item.gidm)
+    //     })
+    //   }
+    // })
+    if (isChangeKey.value) {
+      chatMessageList.value = []
+      isChangeKey.value = false
+    }
+    // msgType 1: 聊天消息, 2: 注單分享
+    const messages = messageList.filter((msg: any) => `${msg.msgType}` === '1')
+    handlerMessage(messages)
   }
 }
 
@@ -218,9 +238,14 @@ const getSubscribe = async () => {
 const chatMessageList: Ref<any[]> = ref([])
 const handlerMessage = (result: any) => {
   if (result instanceof Array) {
-    chatMessageList.value = result.reverse().concat(chatMessageList.value)
+    const existingMsgIds = new Set(chatMessageList.value.map(item => item.msgId))
+    const newMessages = result.reverse().filter(item => !existingMsgIds.has(item.msgId))
+    chatMessageList.value = newMessages.concat(chatMessageList.value)
   } else {
-    chatMessageList.value.push(result)
+    const existingMsgIds = new Set(chatMessageList.value.map(item => item.msgId))
+    if (!existingMsgIds.has(result.msgId)) {
+      chatMessageList.value.push(result)
+    }
   }
   scorllToBottom()
 }
