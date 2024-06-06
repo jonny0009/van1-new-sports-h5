@@ -2,7 +2,7 @@
   <div class="match-item-wrap" :style="{ backgroundImage: `url(${cover})` }">
     <video-box
       v-if="showVideoBox"
-      :live-url="m3u8Str || liveInfo.url"
+      :live-url="liveInfo.m3u8 || m3u8Str"
       :live-info="liveInfo"
       :controls="false"
       @refresh="refresh"
@@ -71,11 +71,9 @@ const getVideoInfo = async () => {
   const res: any = await extendInfo({ gidm })
   if (res.code === 200) {
     const { streamNaList }: any = res.data
-
-    console.log(streamNaList)
     const m3u8 = liveVideo(streamNaList)
-    console.log(m3u8, '====', props.liveInfo.m3u8)
-    m3u8Str.value = m3u8 || props.liveInfo.m3u8
+    // extend 返回的源加载特别慢 用另一个接口返回的m3u8
+    m3u8Str.value = props.liveInfo.m3u8 || m3u8
   }
 }
 
