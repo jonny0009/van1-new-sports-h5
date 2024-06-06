@@ -43,18 +43,19 @@ export default {
   Saturday: '土曜日',
   numberHour: '{number} 時間',
   numberDay: '{number} 日',
+
   hot: '熱い',
-  todayUpcoming: '今日の午前中の取引',
-  RBInfo: 'ローリング アジアン ハンディキャップ',
-  RBSize: 'ボールを上/下に転がす',
-  RBRide: 'ローリング ボール 1X2',
+  todayUpcoming: '今日の予定',
+  RBInfo: 'ライブベッティング アジア ハンディキャップ',
+  RBSize: 'ライブベッティング O/U',
+  RBRide: 'ライブベッティング 1X2',
   PDscore: '正しいスコア',
 
   hotMatchTitle: 'ホット',
   comingSoonTitle: '遊びに来ます',
   shortVideoTitle: 'ショートビデオ',
   casinoTitleObj: {
-    title1: '良い道路の推奨事項',
+    title1: '良い道推荐',
     title2: 'ライブバカラ',
     title3: 'カジノはメンテナンス中です...',
     title4: '推定メンテナンスカウントダウン',
@@ -68,6 +69,22 @@ export default {
     tips3: 'ウェブサイトはメンテナンス中です',
     tips4: '再開までのカウントダウン'
   },
-  mulBet: '複数ベット'
-
+  miBet: 'プライベート絞り',
+  mulBet: '複数ベット',
+  baccarat: {
+    连庄: 'B Dragon',
+    单跳: 'Ping Pong',
+    '{n1}房{n2}厅': '{n1}P{n2}B',
+    双龙汇: '2Dragon',
+    上坡路: 'Uphill',
+    下坡路: 'Downhill',
+    排排连: 'VRow',
+    逢庄连: 'RowB',
+    逢闲连: 'RowP',
+    逢庄跳: 'BHop',
+    逢闲跳: 'PHop',
+    隔连庄: 'SEP B',
+    隔连闲: 'SEP P',
+    双跳: '2Ping Pong'
+  }
 }

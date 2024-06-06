@@ -2,6 +2,7 @@
   <div ref="container" class="homeMatchHandicap">
     <!-- <van-sticky v-if="playTitleToggle" :offset-top="offsetTop" :container="container" z-index="5"> -->
     <div class="home-tabs-play" v-if="playTitleToggle">
+      <div class="home-tabs-play-bg"></div>
       <TimeView :time-send-params="sendParams" />
       <div class="play">
         <div class="flex-1"></div>

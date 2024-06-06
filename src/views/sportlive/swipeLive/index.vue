@@ -1,9 +1,9 @@
 <template>
   <div v-if="swipeList.length" class="swipeLive">
     <van-swipe class="my-swipe" indicator-color="white" @change="swipeChange">
-      <van-swipe-item v-for="(match, idx) in swipeList" :key="idx" @click="goDetails(match)">
+      <van-swipe-item v-for="(match, idx) in swipeList" :key="idx">
         <div class="wrap">
-          <MatchItem :key="idx" :live-info="match" :match-index="idx" :active-index="activeIndex" />
+          <MatchItem :key="match.gidm" :live-info="match" :match-index="idx" :active-index="activeIndex" />
         </div>
       </van-swipe-item>
     </van-swipe>
@@ -11,10 +11,10 @@
 </template>
 <script lang="ts" setup>
 import MatchItem from './main/MatchItem.vue'
-import { anchorLiveList, extendInfo } from '@/api/live'
 import { ref, onBeforeMount } from 'vue'
-import store from '@/store'
-import router from '@/router'
+import { anchorLiveList, extendInfo } from '@/api/live'
+// import store from '@/store'
+// import router from '@/router'
 import { liveVideo } from '@/utils'
 
 const activeIndex = ref(0)
@@ -24,42 +24,31 @@ const init = async () => {
   const params = {
     page: 1,
     pageSize: 5,
-    rbType: 1
+    rbType: 1,
+    filterFlag: 2
   }
   const res: any = await anchorLiveList(params)
   if (res.code === 200) {
     const dataArray = res?.data?.list || []
+
+    // swipeList.value = dataArray
+
     swipeList.value.length = 0
     await dataArray.map(async (e: any) => {
-      const gidm = e.gidm
-      const extendInfoParams = {
-        gidm
-      }
-      const extendInfoRes: any = await extendInfo(extendInfoParams)
-      if (extendInfoRes.code === 200) {
-        const { streamNa }: any = extendInfoRes.data
-        const m3u8 = liveVideo(streamNa)
-        e.m3u8 = e.m3u8 || m3u8
-        e.streamNa = streamNa
-      }
+      // const gidm = e.gidm
+      // const extendInfoParams = {
+      //   gidm
+      // }
+      // const extendInfoRes: any = await extendInfo(extendInfoParams)
+      // if (extendInfoRes.code === 200) {
+      //   const { streamNaList }: any = extendInfoRes.data
+      //   const m3u8 = liveVideo(streamNaList)
+      //   e.m3u8 = e.m3u8 || m3u8
+      //   e.streamNa = streamNaList
+      // }
       swipeList.value.push(e)
     })
   }
-}
-
-const goDetails = (item: any) => {
-  if (!item) {
-    return
-  }
-  const { gidm } = item
-  const params = {
-    name: 'MatchDetail',
-    params: {
-      id: gidm
-    }
-  }
-  router.push(params)
-  store.dispatch('app/setMatchLiveIndex', 1)
 }
 
 const swipeChange = (index: any) => {

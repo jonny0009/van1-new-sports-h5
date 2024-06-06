@@ -45,8 +45,6 @@ export default {
   numberDay: '{number} days',
   hot: 'Hot',
   todayUpcoming: 'TodayUpComing',
-
-  // new
   RBInfo: 'RB Asian Handicap',
   RBSize: 'RB O/U',
   RBRide: 'RB 1X2',
@@ -55,13 +53,13 @@ export default {
   comingSoonTitle: 'Coming to play',
   shortVideoTitle: 'Short video',
   casinoTitleObj: {
-    title1: 'Good road recommendations',
+    title1: 'Good trend',
     title2: 'Live Baccarat',
     title3: 'The casino is under maintenance...',
     title4: 'Estimated maintenance countdown',
     gohome: 'Go to homepage'
   },
-  Community: 'community',
+  Community: 'Community',
 
   errorTips: {
     tips1: "Oops! Something's wrong here",
@@ -69,6 +67,22 @@ export default {
     tips3: 'Website under maintenance',
     tips4: 'Countdown to reopening'
   },
-  mulBet: 'Multiple betting'
-
+  miBet: 'Private Squeeze',
+  mulBet: 'Multi betting',
+  baccarat: {
+    连庄: 'B Dragon',
+    单跳: 'Ping Pong',
+    '{n1}房{n2}厅': '{n1}P{n2}B',
+    双龙汇: '2Dragon',
+    上坡路: 'Uphill',
+    下坡路: 'Downhill',
+    排排连: 'VRow',
+    逢庄连: 'RowB',
+    逢闲连: 'RowP',
+    逢庄跳: 'BHop',
+    逢闲跳: 'PHop',
+    隔连庄: 'SEP B',
+    隔连闲: 'SEP P',
+    双跳: '2Ping Pong'
+  }
 }

@@ -19,7 +19,6 @@ export default {
         index: 7
       }
     },
-
     // 直播详情
     {
       name: 'MatchDetail',

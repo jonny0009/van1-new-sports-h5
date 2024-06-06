@@ -16,9 +16,10 @@ import {
 import { MarketInfo } from '@/entitys/MarketInfo'
 import { betComboOrder, comboBetting, moreBetting, morePW } from '@/api/betting'
 import lang from '@/lang'
-import { createBetItem, config } from 'xcsport-lib'
+import { createBetItem, lib } from 'xcsport-lib'
 import { accMul, accSubtr, moneyFormat } from '@/utils/math'
-const { letBallMap } = config
+import { getBetRatioToNumber, getRatioPlay } from '@/utils'
+const { isStrong } = lib
 
 // 投注单store
 const MarketListKey = '_MarketList_'
@@ -151,11 +152,15 @@ const bettingModule: Module<Betting, any> = {
     },
     // 有效投注注数
     comboMarkets(state) {
-      return getComboMarkets(state.markets)
+      const comboMakets = getComboMarkets(state.comboMarkets)
+      console.log(comboMakets, 'comboMakets')
+      const noErrorMarkets = comboMakets.filter((i: MarketInfo) => !state.combosErrorIds.includes(i.optionId))
+      return noErrorMarkets
     },
     comboMarketPlayOnlyIds(state) {
       const markets = getComboMarkets(state.markets)
-      const getPlayOnlyIds = markets.map((i: MarketInfo) => i.playOnlyId)
+      const noErrorMarkets = markets.filter((i: MarketInfo) => !state.combosErrorIds.includes(i.optionId))
+      const getPlayOnlyIds = noErrorMarkets.map((i: MarketInfo) => i.playOnlyId)
       return getPlayOnlyIds
     }
   },
@@ -308,7 +313,6 @@ const bettingModule: Module<Betting, any> = {
           const oldShowType = bet.showType || bet.showtype
           // 旧的盘口ratio
           const oldRatio = bet.ratio
-          const ratioTag = bet.ratioTag
           // 旧的强弱队strong
           const oldStrong = bet.strong
           const oldGameDate = bet.gameDate
@@ -319,16 +323,25 @@ const bettingModule: Module<Betting, any> = {
             newBetData.ior = eoIor
           }
           const newIor = newBetData.ior * 1 || ior * 1
-          console.log(autoRatio, userConfig.acceptAll, acceptAll, 'autoRatio')
+
           if (oldIor * 1 !== newIor && !autoRatio) {
-            if (oldIor * 1 > newIor) {
+            console.log('oldIor', oldIor)
+            console.log('newIor', newIor)
+            if (oldIor * 1 < newIor) {
               iorChange = 'up'
             } else {
               iorChange = 'down'
             }
           }
-          if (letBallMap.includes(playType) && Math.abs(ratioTag * 1) !== Math.abs(ratio * 1) && !autoOdd) {
-            if (ratioTag * 1 > ratio) {
+          const newRatioQuite = getBetRatioToNumber(ratio)
+          const oldRatioQuite = getBetRatioToNumber(bet.ratio)
+
+          const isRatioPlay = getRatioPlay(bet)
+          if (isRatioPlay && newRatioQuite * 1 !== oldRatioQuite * 1 && !autoOdd) {
+            console.log('old', oldRatioQuite)
+            console.log('new', newRatioQuite)
+            console.log('cur', ratio)
+            if (bet.ratio * 1 < ratio) {
               ratioChange = 'up'
             } else {
               ratioChange = 'down'
@@ -386,6 +399,16 @@ const bettingModule: Module<Betting, any> = {
            */
           const copyBet = JSON.parse(JSON.stringify(replaceBet))
           replaceBet.betItem = createBetItem(copyBet, 2)
+          replaceBet.ratioName = replaceBet.betItem
+          const getRatioPlayInfo = getRatioPlay(copyBet)
+          if (getRatioPlayInfo) {
+            const { ratioParams1, ratioParams2, ratioTag } = getRatioPlayInfo
+            replaceBet.ratioTagState = !!ratioTag
+            replaceBet.ratioTag = ratioTag
+            replaceBet.ratioParams1 = ratioParams1
+            replaceBet.ratioParams2 = ratioParams2
+          }
+
           return replaceBet
         }
         return bet
@@ -413,7 +436,7 @@ const bettingModule: Module<Betting, any> = {
       }
     },
     // 串关批量点水,更新投注项
-    async comboMarketHit({ state, getters }, betting: boolean = false) {
+    async comboMarketHit({ state, getters, rootState }, betting: boolean = false) {
       if (state.comboMarkets.length === 0) {
         const markets = JSON.parse(JSON.stringify(state.markets))
         state.comboMarkets = markets.map((market: MarketInfo) => {
@@ -427,7 +450,7 @@ const bettingModule: Module<Betting, any> = {
         return false
       }
 
-      const params: any = combosHitParams(state.comboMarkets)
+      const params: any = combosHitParams(getters.comboMarkets)
       const res: any = await betComboOrder(params).catch(() => {})
       if (res?.code === 200 && res?.data && res?.data?.length) {
         const data: any = res?.data[0] || {}
@@ -436,21 +459,16 @@ const bettingModule: Module<Betting, any> = {
         const goldGmin = data.goldGmin
         const goldGmax = data.goldGmax
         const bodyVOS = data.bodyVOS
-        const errorIds = data.errorIds
+        const errorIds = data.errorIds || []
         const s = data.s
         const t = data.t
         state.comboS = s
         state.comboT = t
-        state.combosErrorIds = errorIds || []
+        if (errorIds.length) {
+          state.combosErrorIds.push(...errorIds)
+        }
         // 有异常的情况,全部锁盘
         if (errorCode || (Array.isArray(errorIds) && errorIds.length)) {
-          // if (['1X034'].includes(errorCode)) {
-          //   // 根据返回出异常的errorIds标出有异常的玩法
-          //   if (Array.isArray(errorIds) && errorIds.length) {
-          //     // dispatch('bet/updateComboBets', errorIds, { root: true })
-          //     // dispatch('setCombosStructure', [])
-          //   }
-          // }
         } else {
           const comboCount = state.comboMarkets.length
           const comboList = chaiCombo(comboCount, orderData)
@@ -494,12 +512,43 @@ const bettingModule: Module<Betting, any> = {
             state.comboMarkets = state.comboMarkets.map((marketInfo: MarketInfo) => {
               const playOnlyId = MarketInfo.getPlayOnlyId(marketInfo)
               const { awayTeam, homeTeam } = marketInfo
+              const userConfig = rootState.user.userConfig
+              const { acceptAll } = userConfig || {}
+              const autoRatio = acceptAll === 1
+              const autoOdd = state.oddChangesState || false
               const find = orderData.find((info: MarketInfo) => {
                 return MarketInfo.getPlayOnlyId(info) === playOnlyId
               })
               if (find) {
+                const oldIor = marketInfo.ior * 1
+                const newIor = find.ior * 1
+                let iorChange = ''
+                let ratioChange = ''
+                if (oldIor * 1 !== newIor && !autoRatio) {
+                  console.log('oldIor', oldIor)
+                  console.log('newIor', newIor)
+                  if (oldIor * 1 < newIor) {
+                    iorChange = 'up'
+                  } else {
+                    iorChange = 'down'
+                  }
+                }
+                const newRatioQuite = getBetRatioToNumber(find.ratio)
+                const oldRatioQuite = getBetRatioToNumber(marketInfo.ratio)
+
+                const isRatioPlay = getRatioPlay(marketInfo)
+                if (isRatioPlay && newRatioQuite * 1 !== oldRatioQuite * 1 && !autoOdd) {
+                  console.log('old', oldRatioQuite)
+                  console.log('new', newRatioQuite)
+                  if (marketInfo.ratio * 1 < find.ratio) {
+                    ratioChange = 'up'
+                  } else {
+                    ratioChange = 'down'
+                  }
+                }
+
                 const gameType = find.gameType || marketInfo.gameType
-                return { ...marketInfo, ...find, gameType, awayTeam, homeTeam }
+                return { ...marketInfo, ...find, gameType, awayTeam, homeTeam, iorChange, ratioChange }
               }
               return marketInfo
             })
@@ -547,7 +596,9 @@ const bettingModule: Module<Betting, any> = {
         store.dispatch('user/getCurrency')
       } else {
         let errorStr: string = ''
-        if (errorCodes.netErrorCodes.indexOf(code) > -1) {
+        if (code === 301) {
+          errorStr = lang.global.t('betting.insufficientBalance')
+        } else if (errorCodes.netErrorCodes.indexOf(code) > -1) {
           errorStr = lang.global.t('betting.errors1.error1')
         } else if (errorCodes.betFailCodes.indexOf(code) > -1) {
           errorStr = lang.global.t('betting.errors1.error2')
@@ -584,21 +635,32 @@ const bettingModule: Module<Betting, any> = {
         })
         .catch(() => {})
       if (res?.code === 200 && res?.data) {
-        const { errorCode } = res?.data || {}
+        const { errorCode, comboInfo } = res?.data || {}
+        const betInfo = comboInfo && comboInfo.length && comboInfo[0]
+        const status = betInfo?.status || 1
+        const betNo = betInfo?.betNo
         state.results = [
           {
             errorCode,
             ior: getters.combosIor,
             count: state.comboMarkets.length,
+            status,
+            betNo,
             list: JSON.parse(JSON.stringify(state.comboMarkets))
           }
         ]
         dispatch('clearMarkets')
         store.dispatch('user/pendingOrder')
         store.dispatch('user/getCurrency')
+      } else if (res?.code === 301) {
+        return Promise.reject(lang.global.t('betting.insufficientBalance'))
       } else {
         return Promise.reject(lang.global.t('betting.errorTips'))
       }
+    },
+    // 清空
+    clearCombosErrorIds({ state }) {
+      state.combosErrorIds = []
     },
     // 清空
     clearMarkets({ state }) {

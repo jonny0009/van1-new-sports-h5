@@ -10,9 +10,9 @@
       <van-tabs
         v-model:active="index"
         line-height="3px"
-        :color="ifBLue ? '#0E3D66' : '#1F2630'"
-        :title-inactive-color="ifBLue ? '#88A6BB' : '#96A5AA'"
-        :title-active-color="ifBLue ? '#0E3D66' : '#1F2630'"
+        :color="tabColor(1)"
+        :title-inactive-color="tabColor(2)"
+        :title-active-color="tabColor(1)"
         line-width="40px"
         swipe-threshold="2"
         animated
@@ -98,8 +98,10 @@ import { useRouter } from 'vue-router'
 import RunningHistory from './components/runningHistory.vue'
 import MatchResult from './components/matchResult.vue'
 import store from '@/store'
-const theme = computed(() => store.state.app.theme)
 
+const ifThemeBlue = computed(() => {
+  return store.state.app.theme === 'blue'
+})
 // import { useI18n } from 'vue-i18n'
 // const { t } = useI18n()
 
@@ -130,16 +132,24 @@ const minDateSingle = ref<any>(new Date(currentDate - oneDayDate * 15))
 const defaultDate = ref<any>([new Date(currentDate - oneDayDate * 7), new Date()])
 const defaultDateSingle = ref<any>(new Date())
 
-const ifBLue = computed(() => {
-  if (theme.value === 'blue') {
-    return true
-  }
-  return false
-})
-
 onMounted(() => {})
 const goBack = () => {
   $router.back()
+}
+// 标签颜色
+const tabColor = (num: any) => {
+  if (num === 1) {
+    if (ifThemeBlue) {
+      return '#0E3D66'
+    }
+    return '1F2630'
+  }
+  if (num === 2) {
+    if (ifThemeBlue) {
+      return '#88A6BB'
+    }
+    return '96A5AA'
+  }
 }
 
 const setStatus = (value: any, popupTitleChild: any, popupListChild: any, commonKeyChild: any, wayChild: any) => {

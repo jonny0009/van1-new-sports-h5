@@ -39,7 +39,7 @@ export default {
   text5: '특수 문자는 허용되지 않습니다.',
   text6: '공백 없음',
   ExistingAccount: '이미 계정이 있습니다',
-  PersonalProfile: '프로필',
+  personalProfile: '프로필',
   RegistrationTime: '등록 시간',
   follow: '집중하다',
   fans: '팬',
@@ -125,7 +125,7 @@ export default {
   affirmPend: '확인',
   noDataRelated: '관련 데이터가 없습니다',
   // 新增6
-  fontNickName: '닉네임은 한 번만 편집할 수 있으며 다른 사람과 중복되거나 불법 문자를 포함할 수 없습니다.',
+  fontNickName: '닉네임은 7일 이내에 한 번만 편집할 수 있으며, 다른 사람과 중복되거나 불법 문자를 포함할 수 없습니다.',
   aheadFinal: '조기 결제',
   // 新增7
   contactUs: '연락처',
@@ -179,6 +179,9 @@ export default {
     OP_SW: '수영',
     OP_BS: '해변 축구',
     OP_WS: '동계 스포츠',
-    OP_BD: '밴디 볼'
+    OP_BD: '밴디 볼',
+    // 新增
+    XNFT: '가상 축구',
+    XNBK: '가상 농구'
   }
 }

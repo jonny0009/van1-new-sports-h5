@@ -7,7 +7,16 @@
       <div class="content">
         <div class="title">
           <SportsIcon class="sport-icon" :icon-src="marketInfo.gameType" />
-          <div class="betting-name text-overflow">{{ marketInfo.ratioName }}</div>
+          <div class="betting-name text-overflow">
+            {{ marketInfo.ratioParams1 || marketInfo.betItem }}
+            <template v-if="marketInfo.ratioTagState">
+              <span class="ratio-tag" :class="marketInfo.ratioChange">
+                {{ marketInfo.ratioTag }}
+              </span>
+              <span class="ratio-change" :class="marketInfo.ratioChange"></span>
+            </template>
+            {{ marketInfo.ratioParams2 }}
+          </div>
         </div>
         <div class="details">
           <div v-if="marketInfo.isChampion" class="play-name text-overflow">{{ marketInfo.championType }}</div>
@@ -31,7 +40,7 @@
             {{ $t('betting.acceptOdds') }}
           </div>
           <div v-else ref="inputBtn" class="betting-slip-input" :class="{ error: goldRule }" @click="inputTouch">
-            <span class="currency"><van-icon name="balance-o" /></span>
+            <span class="currency"> <CurrencyComp class-name="mr3" /></span>
             <div style="flex: 1 1 0%"></div>
             <span class="amount" :class="{ selected: marketInfo.playOnlyId === editId }">{{ marketInfo.gold }}</span>
             <span v-show="marketInfo.playOnlyId === editId" class="cursor">|</span>
@@ -49,6 +58,7 @@
 <script lang="ts" setup>
 import store from '@/store'
 import { computed, ref, watch } from 'vue'
+import CurrencyComp from '@/components/Currency/index.vue'
 const inputBtn = ref()
 const props = defineProps({
   marketInfo: {
@@ -226,12 +236,41 @@ defineExpose({
       }
 
       .betting-name {
+        display: flex;
+        align-items: center;
         margin-left: 8px;
         font-family: PingFangSC-Medium;
         font-size: 28px;
         color: rgb(14, 61, 102);
         letter-spacing: 0;
         font-weight: 500;
+        .ratio-tag {
+          margin: 0 8px;
+          &.up {
+            color: #0bba3e;
+          }
+
+          &.down {
+            color: #fb0738;
+          }
+        }
+        .ratio-change {
+          width: 22px;
+          height: 11px;
+          margin-left: 5px;
+          display: inline-block;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+
+          &.up {
+            background-image: url('@/assets/images/betting/up.png');
+          }
+
+          &.down {
+            background-image: url('@/assets/images/betting/down.png');
+          }
+        }
       }
     }
 
@@ -265,11 +304,11 @@ defineExpose({
       font-weight: 600;
 
       &.up {
-        color: #fb0738;
+        color: #0bba3e;
       }
 
       &.down {
-        color: #0bba3e;
+        color: #fb0738;
       }
 
       .ior-change {
@@ -280,7 +319,6 @@ defineExpose({
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
-        transform: rotate(180deg);
 
         &.up {
           background-image: url('@/assets/images/betting/up.png');
@@ -349,6 +387,7 @@ defineExpose({
         letter-spacing: 0.8px;
         text-align: justify;
         font-weight: 600;
+        overflow: hidden;
 
         &.error {
           border: 2px solid rgba(251, 7, 56, 1);

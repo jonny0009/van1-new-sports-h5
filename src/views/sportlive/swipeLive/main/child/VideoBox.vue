@@ -1,5 +1,5 @@
 <template>
-  <div class="video-box-wrap">
+  <div class="video-box-wrap" @click="touch">
     <div v-if="liveUrl?.endsWith('html')" class="video-iframe">
       <iframe :src="liveUrl" width="100%" height="100%" frameborder="0"></iframe>
     </div>
@@ -16,24 +16,33 @@
     <div v-if="videoErrorState" class="video-error">
       <span class="video-icon"></span>
       <div class="error-tips">{{ $t('live.videoFailure') }}</div>
-      <div class="error-btn" @click="refresh"> {{ $t('live.refreshVideo') }}</div>
+      <div class="error-btn" @click="refresh">{{ $t('live.refreshVideo') }}</div>
     </div>
 
     <div
       class="pop"
       :class="{
-        'popBg':popBgToggle
+        popBg: popBgToggle
       }"
     >
       <van-loading class="popBg-loading" />
     </div>
+    <div v-if="touchState" class="touch-pop">
+      <div class="team-info">
+        <div class="team-item">
+          <img v-img="liveInfo.homeLogo" :type="4" style="object-fit: contain" alt="" />
+          <span class="team-name text-overflow">{{ liveInfo.homeTeamAbbr || liveInfo.homeTeam }}</span>
+        </div>
+        <div class="team-item">
+          <span class="team-name text-overflow">{{ liveInfo.awayTeamAbbr || liveInfo.awayTeam }}</span>
+          <img v-img="liveInfo.awayLogo" :type="5" style="object-fit: contain" alt="" />
+        </div>
+      </div>
+      <div class="team-score">{{ getScore(liveInfo, 'H') }} : {{ getScore(liveInfo, 'C') }}</div>
+      <div class="match-btn" @click.stop="goDetails">{{ $t('live.goLive') }}</div>
+    </div>
 
-    <div
-      class="sound-icon"
-      :class="{ muted: muted }"
-      @click.stop="soundHandle"
-    ></div>
-
+    <div class="sound-icon" :class="{ muted: muted }" @click.stop="soundHandle"></div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -41,9 +50,19 @@ import Video from 'video.js'
 import 'video.js/dist/video-js.css'
 import { ref, watch, onBeforeMount, onBeforeUnmount, nextTick, computed } from 'vue'
 import store from '@/store'
+import { useRouter } from 'vue-router'
+import { getScore } from '@/utils/home/getScore'
+const router = useRouter()
 const turnSound = computed(() => store.state.match.turnSound)
+Video.options.hls.overrideNative = true
+Video.options.html5.nativeAudioTracks = false
+Video.options.html5.nativeVideoTracks = false
 
-const props:any = defineProps({
+const props: any = defineProps({
+  liveInfo: {
+    type: Object,
+    default: () => {}
+  },
   liveUrl: {
     type: String,
     default: ''
@@ -54,9 +73,10 @@ const props:any = defineProps({
   }
 })
 
-const videoExample:any = ref(null)
-const videoErrorState:any = ref(false)
-const muted = ref(true)
+const videoExample: any = ref(null)
+const videoErrorState: any = ref(false)
+const muted = ref(false)
+const touchState = ref(false)
 
 watch(turnSound, (newValue, oldValue) => {
   console.log(`turnSound发生变化，新值为：${newValue}，旧值为：${oldValue}`)
@@ -69,6 +89,31 @@ watch(turnSound, (newValue, oldValue) => {
   }
 })
 
+const touch = () => {
+  touchState.value = !touchState.value
+}
+const goDetails = () => {
+  if (!props.liveInfo) {
+    return
+  }
+  const { gidm } = props.liveInfo
+  const query: any = {}
+  if (props.liveInfo.anchorId) {
+    query.anchorId = props.liveInfo.anchorId
+  }
+  if (props.liveInfo.m3u8) {
+    query.m3u8 = props.liveInfo.m3u8
+  }
+  const params = {
+    name: 'MatchDetail',
+    params: {
+      id: gidm
+    },
+    query
+  }
+  router.push(params)
+  store.dispatch('app/setMatchLiveIndex', 1)
+}
 const playVideo = () => {
   if (turnSound.value) {
     muted.value = false
@@ -83,7 +128,7 @@ const initVideo = () => {
   clearTimeout(setTimeoutTime.value)
   setTimeoutTime.value = setTimeout(() => {
     videoErrorState.value = false
-    const videoRef:any = document.querySelector('#VideoRef')
+    const videoRef: any = document.querySelector('#VideoRef')
     if (!(videoRef && props.liveUrl)) {
       return
     }
@@ -94,7 +139,7 @@ const initVideo = () => {
       videoExample.value = Video(
         'VideoRef',
         {
-          muted: true,
+          muted: false,
           controls: props.controls,
           width: '100%',
           height: '100%',
@@ -109,7 +154,7 @@ const initVideo = () => {
         },
         () => {
           try {
-            videoRef.muted = true
+            videoRef.muted = false
             videoRef.play()
             videoExample.value.on('error', () => {
               videoErrorState.value = true
@@ -241,13 +286,13 @@ onBeforeUnmount(() => {
 }
 
 .video-icon {
-    display: block;
-    width: 120px;
-    height: 40px;
-    margin: 100px auto 20px;
-    background: url('@/assets/images/sportlive/video.svg') no-repeat center;
-    background-size: contain;
-  }
+  display: block;
+  width: 120px;
+  height: 40px;
+  margin: 100px auto 20px;
+  background: url('@/assets/images/sportlive/video.svg') no-repeat center;
+  background-size: contain;
+}
 .error-tips {
   font-size: 24px;
   color: #ffffff;
@@ -275,19 +320,78 @@ onBeforeUnmount(() => {
   width: 100%;
   height: 100%;
   z-index: 10;
-  .popBg-loading{
+  .popBg-loading {
     display: none;
   }
 }
-.popBg{
+.touch-pop {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 11;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  .team-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 8px;
+    overflow: hidden;
+
+    .team-item {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      img {
+        width: 44px;
+        height: 44px;
+        + .team-name {
+          margin-left: 15px;
+        }
+      }
+      .team-name {
+        max-width: 240px;
+        font-size: 24px;
+        color: #fff;
+        font-weight: 600;
+        + img {
+          margin-left: 15px;
+        }
+      }
+    }
+  }
+
+  .team-score {
+    text-align: center;
+    margin-top: 42px;
+    font-size: 32px;
+    color: #fff;
+  }
+
+  .match-btn {
+    display: inline-block;
+    margin: 42px auto 0;
+    padding: 0 8px;
+    min-width: 250px;
+    line-height: 52px;
+    border-radius: 40px;
+    background-image: linear-gradient(270deg, rgb(44, 136, 229) 0%, rgb(72, 163, 255) 100%);
+    text-align: center;
+    font-size: 24px;
+    color: #fff;
+  }
+}
+.popBg {
   background: url('@/assets/images/sportlive/ft.jpg') no-repeat;
   background-size: cover;
-  .popBg-loading{
+  .popBg-loading {
     display: block;
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate3d(-50%,-50%,0);
+    transform: translate3d(-50%, -50%, 0);
   }
 }
 </style>

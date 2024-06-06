@@ -49,6 +49,7 @@ export default {
   RBSize: '滾球 大小盤',
   RBRide: '滾球 1X2',
   PDscore: '正確比分',
+
   hotMatchTitle: '熱播中',
   comingSoonTitle: '即將播放',
   shortVideoTitle: '短影片',
@@ -66,5 +67,22 @@ export default {
     tips3: '網站維護',
     tips4: '重新開放倒數'
   },
-  mulBet: '多台下注'
+  miBet: '私人咪牌桌',
+  mulBet: '多台下注',
+  baccarat: {
+    连庄: 'B Dragon',
+    单跳: 'Ping Pong',
+    '{n1}房{n2}厅': '{n1}P{n2}B',
+    双龙汇: '2Dragon',
+    上坡路: 'Uphill',
+    下坡路: 'Downhill',
+    排排连: 'VRow',
+    逢庄连: 'RowB',
+    逢闲连: 'RowP',
+    逢庄跳: 'BHop',
+    逢闲跳: 'PHop',
+    隔连庄: 'SEP B',
+    隔连闲: 'SEP P',
+    双跳: '2Ping Pong'
+  }
 }

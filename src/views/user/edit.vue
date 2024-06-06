@@ -8,7 +8,7 @@
     </van-nav-bar>
     <div class="content">
       <div class="top1">
-        <span>{{ $t('user.userName') }}</span>
+        <span>{{ $t('user.account') }}</span>
         <span class="font2">{{ userInfo.nickName }}</span>
       </div>
       <div class="top1">
@@ -17,8 +17,11 @@
       </div>
       <div class="top1" @click="showPk(1)">
         <span>{{ $t('user.lang') }}</span>
-        <div class="font3">
-          <span class="font2">{{ lang?.value }}</span>
+        <div class="font3 cursor">
+          <div class="font2 img-span">
+            <img :src="getImg(lang.key)" alt="" class="qizi">
+            <span> {{ lang?.value }} </span>
+          </div>
           <img class="arrow" src="@/assets/images/login/go@2x.png" />
         </div>
       </div>
@@ -41,13 +44,14 @@
           @click="setPk(item)"
         >
           <p>
+            <img class="qizi" :src="getImg(item.key)" alt="">
             <span>
               {{ item.value }}
             </span>
-            <span v-if="commonKey.key === item.key">
-              <van-icon name="success" />
-            </span>
           </p>
+          <span v-if="commonKey.key === item.key">
+            <van-icon name="success" />
+          </span>
         </div>
       </div>
     </van-popup>
@@ -61,6 +65,8 @@ import { useRouter } from 'vue-router'
 import localStore from '@/utils/localStore'
 import store from '@/store'
 import { useI18n } from 'vue-i18n'
+import { ImageSource } from '@/config'
+
 const language: any = localStore.getItem('language')
 const lang = ref<any>(language || {})
 
@@ -85,7 +91,7 @@ const popupIndex = ref(0)
 const popupList = reactive<{ arr: any[] }>({ arr: [] })
 
 const { t } = useI18n()
-const title = ref(t('user.account'))
+const title = ref(t('user.edit'))
 const $router = useRouter()
 
 const plateMaskKey: any = localStore.getItem('plateMaskKey') || ''
@@ -172,6 +178,27 @@ function getLangs() {
     lang.value = obj
   }
 }
+
+const getImg = (val:any) => {
+  const obj = {
+    'zh-cn': 'cn',
+    'en-us': 'en',
+    'vi-vn': 'vn',
+    'ko-kr': 'kr',
+    'pt-pt': 'pt',
+    'th-th': 'th',
+    'ja-jp': 'jp',
+    'es-es': 'es',
+    'id-id': 'id',
+    'zh-tw': 'hk',
+    'zh-sg': 'sg',
+    'hi-in': 'in',
+    'tr-tr': 'tr'
+  }
+  const name = obj[val]
+  const imgUrl = `/FE/common/langIcon/${name}.png`
+  return `${ImageSource}${imgUrl}`
+}
 </script>
 
 <style lang="scss" scoped>
@@ -245,18 +272,24 @@ function getLangs() {
 
   .pk-list {
     padding-top: 30px;
-
+    max-height: 600px;
+    overflow: auto;
     .item {
       font-size: 26px;
       color: var(--color-user-pop-up-text-color);
       letter-spacing: 1px;
       padding: 40px;
       border-bottom: 2px solid #eaeaea;
-
+      display: flex;
+      justify-content: space-between;
       p {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-start;
+        img {
+          display: inline-block;
+          margin-right: 10px;
+        }
       }
     }
 
@@ -299,5 +332,19 @@ function getLangs() {
 
 :deep(.van-icon) {
   font-size: 48px;
+}
+
+.qizi {
+  height: 40px;
+}
+.img-span {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  justify-content: flex-end;
+}
+.img-span > img {
+  display: inline-block;
+  margin-right: 5px;
 }
 </style>

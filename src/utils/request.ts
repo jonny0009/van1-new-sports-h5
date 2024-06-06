@@ -1,6 +1,6 @@
 import axios from 'axios'
 import router from '@/router'
-import { showDialog } from 'vant'
+// import { showDialog } from 'vant'
 import { getToken, removeToken } from './auth'
 import { getBrowserLanguage } from './index'
 import store from '@/store'
@@ -30,10 +30,11 @@ service.interceptors.request.use(
     config.headers['Content-Type'] = 'application/json'
     config.headers.token = token
     config.headers.terType = '16'
-    config.headers.wid = localStorage.getItem('wid') || store.state.user.currentWallet?.walletId || 1
+    config.headers.wid = store.state.user.currentWallet?.walletId || 1
     config.headers.lang = localStorage.getItem('locale') || getBrowserLanguage()
-    config.headers.apiVer = '4.06'
+    config.headers.apiVer = '4.11'
     config.headers.groupId = groupId
+
     if (config.method === 'post') {
       if (noGroupId.indexOf(config.url) < 0) {
         config.data = config.data || {}
@@ -45,7 +46,6 @@ service.interceptors.request.use(
         config.params = Object.assign({}, { groupId }, config.params)
       }
     }
-
     return config
   },
   (error: any) => Promise.reject(error)
@@ -59,6 +59,7 @@ service.interceptors.response.use(
       // removeToken()
       const locale: any = (localStorage.getItem('locale') || getBrowserLanguage()).toLocaleLowerCase()
       const visitor = localStorage.getItem('visitor')
+
       const inform: any = {
         'zh-cn': '登录信息已失效,请重新登录',
         'vi-vn': 'Thông tin đăng nhập đã hết hạn, vui lòng đăng nhập lại',
@@ -104,22 +105,21 @@ service.interceptors.response.use(
         'th': 'เวลาทดลองใช้หมดลงแล้ว โปรดลองอีกครั้ง'
       }
       let message = inform[locale]
-      const url = '/login'
-      if (visitor === 'visitor') {
+      let url = '/login'
+      if (visitor === '1') {
         message = informVisitor[locale]
+        url = '/sign_in'
       }
 
-      showDialog({
-        message,
-        theme: 'round-button'
-      }).then(() => {
-        removeToken()
-        if (visitor === 'visitor') {
-          window.location.reload()
-        } else {
-          router.push(url)
-        }
-      })
+      // showDialog({
+      //   message,
+      //   theme: 'round-button'
+      // }).then(() => {
+      //   removeToken()
+      //   router.push(url)
+      // })
+      removeToken()
+      store.commit('user/SET_TOKEN', '')
       // router.push('/login')
     } else if (+response.data.code === 403) {
       router.push('/403')

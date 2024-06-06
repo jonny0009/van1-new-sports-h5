@@ -70,11 +70,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
   src: url('@/assets/icon/iconfont.ttf?t=1702953359576') format('truetype');
-  src: url('@/assets/icon/iconfont.woff2') format('woff2'),
-  url('@/assets/icon/iconfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
 }
 .iconfont{
   font-family:iconfont!important;
@@ -586,10 +581,25 @@
   }
 }
 .home-tabs-play{
+  position: relative;
   height: 68px;
   display: flex;
   align-items: center;
+
+  .home-tabs-play-bg{
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, .7);
+    backdrop-filter: blur(11px);
+  }
+
   .time{
+    position: relative;
+    z-index: 1;
     font-size: 24px;
     color: var(--color-text-5);
     font-weight: 500;
@@ -598,6 +608,8 @@
     font-weight: 600;
   }
   .play{
+    position: relative;
+    z-index: 2;
     flex:1;
     display: flex;
     align-items: center;
@@ -737,8 +749,7 @@
 }
 .van-sticky--fixed{
   .home-tabs-play{
-    background: rgba(255, 255, 255, .5);
-    backdrop-filter: blur(6px);
+   
   }
 }
 .GlobalCollapse{

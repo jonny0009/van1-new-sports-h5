@@ -43,11 +43,8 @@ const setMatch = useMatch()
 const matchInfo = computed(() => store.state.match.matchInfo)
 const matchCover = computed(() => {
   const item = matchInfo.value
-  if (item.gameType == 'BK') {
-    return ImageSource + 'FE/common/live/img_video_bg_BK.jpg'
-  } else {
-    return ImageSource + 'FE/common/live/img_video_bg_FT.jpg'
-  }
+  const gameType = item.gameType || 'FT'
+  return ImageSource + `FE/common/live/VIDEO_BG_${gameType}_mask.jpg`
 })
 </script>
 

@@ -129,7 +129,7 @@ const tryPlay = async () => {
     const res: any = await tryLogin(params)
     if (res.code === 200) {
       const { token } = res.data || {}
-      localStorage.setItem('visitor', 'visitor')
+      localStore.setItem('visitor', '1')
       setToken(token)
       // setUserInfo()
       window.location.href = '/'

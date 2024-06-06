@@ -2,13 +2,28 @@
   <div ref="newContainer">
     <swipeLive class="mt10" />
     <div class="tabs-cut">
-      <van-tabs :duration="0.2" v-model:active="active" shrink line-height="0" :animated="ifAnimated"
-        @change="onChangeTabs" :swipe-threshold="3" @click-tab="ifAnimated = true">
+      <van-tabs
+        v-model:active="active"
+        :duration="0.2"
+        shrink
+        line-height="0"
+        :animated="ifAnimated"
+        :swipe-threshold="3"
+        @change="onChangeTabs"
+        @click-tab="ifAnimated = true"
+      >
         <van-tab v-for="(item, index) in gameTypeList" :key="index" :name="item.gameType">
           <template #title>
             <TextButton v-if="index === 0" :text="$t('sport.all')" :active="!gameType" class="tabs-cut-1" />
-            <SportsButton v-else class="tabs-cut-1" :text="item.gameType" :active="active === item.gameType"
-              :class="item.gameType" :count="item.count" show-count />
+            <SportsButton
+              v-else
+              class="tabs-cut-1"
+              :text="item.gameType"
+              :active="active === item.gameType"
+              :class="item.gameType"
+              :count="item.count"
+              show-count
+            />
           </template>
           <div class="sportlive">
             <Loading v-if="!isLoading" />
@@ -17,8 +32,12 @@
                 <van-sticky v-if="idx === 0" :offset-top="offsetTop" :container="newContainer" z-index="5">
                   <playTitle :class="{ 'mt20': idx !== 0 }" :send-params="item" />
                 </van-sticky>
-                <MatchLive :play-title-toggle="false" :send-params="item" :tabType="'RB'"
-                  :class="{ 'mt10': idx !== 0 }" />
+                <MatchLive
+                  :play-title-toggle="false"
+                  :send-params="item"
+                  :tab-type="'RB'"
+                  :class="{ 'mt10': idx !== 0 }"
+                />
               </template>
               <HomeEmpty v-if="!commonMatchesList.length"></HomeEmpty>
             </template>
@@ -32,7 +51,7 @@
         </van-tab>
       </van-tabs>
     </div>
-   
+
   </div>
 </template>
 <script lang="ts" setup>
@@ -143,7 +162,7 @@ watch(pushSwitch, () => {
 })
 const scrollNum = computed(() => store.state.user.scrollNumY)
 watch(() => scrollNum.value, (newValue) => {
-  if (newValue > 88) {
+  if (newValue) {
     ifAnimated.value = false
   }
 })

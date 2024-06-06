@@ -310,8 +310,8 @@ onUnmounted(() => {
     justify-content: center;
     .icon {
       width: 300px;
-      height: 165px;
-      background: url('@/assets/images/live/v_loading.gif') no-repeat;
+      height: 100px;
+      background: url('@/assets/images/live/v_loading.png') no-repeat;
       background-size: 100% auto;
     }
     .text {

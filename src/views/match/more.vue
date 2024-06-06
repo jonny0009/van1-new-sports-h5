@@ -61,7 +61,7 @@
         :loading="bettingInfo.apiLoading"
         @tab-change="bettingInfo.findGroupById"
       />
-      <MatchDatabase v-show="menuType === 1" />
+      <MatchDatabase v-show="menuType === 1" :sticky="true" />
     </div>
   </div>
 </template>
