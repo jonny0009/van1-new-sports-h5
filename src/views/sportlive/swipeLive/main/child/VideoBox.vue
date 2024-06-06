@@ -54,9 +54,6 @@ import { useRouter } from 'vue-router'
 import { getScore } from '@/utils/home/getScore'
 const router = useRouter()
 const turnSound = computed(() => store.state.match.turnSound)
-Video.options.hls.overrideNative = true
-Video.options.html5.nativeAudioTracks = false
-Video.options.html5.nativeVideoTracks = false
 
 const props: any = defineProps({
   liveInfo: {
@@ -97,19 +94,11 @@ const goDetails = () => {
     return
   }
   const { gidm } = props.liveInfo
-  const query: any = {}
-  if (props.liveInfo.anchorId) {
-    query.anchorId = props.liveInfo.anchorId
-  }
-  if (props.liveInfo.m3u8) {
-    query.m3u8 = props.liveInfo.m3u8
-  }
   const params = {
     name: 'MatchDetail',
     params: {
       id: gidm
-    },
-    query
+    }
   }
   router.push(params)
   store.dispatch('app/setMatchLiveIndex', 1)
