@@ -87,7 +87,11 @@ const gameTypeList: any = ref([])
 const getApiRBCondition = async () => {
   const res: any = (await apiRBCondition({})) || {}
   if (res.code === 200 && res.data) {
-    const dataList = res.data || []
+    const dataList = res.data.filter((item: { gameType: string }) => {
+      if (!['OP_DJ', 'XNFT', 'XNBK'].includes(item.gameType)) {
+        return item
+      }
+    })
     gameTypeList.value = dataList.filter((t: any) => !showGameTypeList.value.includes(t.gameType))
     gameTypeList.value = [{ gameType: '' }, ...gameTypeList.value]
   }
