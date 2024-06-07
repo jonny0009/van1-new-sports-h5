@@ -100,7 +100,12 @@ const getStatistics = async () => {
   const res: any = await statistics({ showType: 'FT' })
   if (res?.code === 200 && res?.data) {
     const stResult = res.data?.stResult || []
-    sports.value = stResult.map((item: any) => {
+    const dataList = stResult.filter((item: { gameType: string }) => {
+      if (!['OP_DJ', 'XNFT', 'XNBK'].includes(item.gameType)) {
+        return item
+      }
+    })
+    sports.value = dataList.map((item: any) => {
       return {
         gameType: item.gameType,
         gameCount: item.num * 1
