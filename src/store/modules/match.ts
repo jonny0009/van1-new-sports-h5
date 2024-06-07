@@ -36,8 +36,20 @@ const matchModule: Module<Match, any> = {
     async getSportsList({ state }) {
       const res: any = (await statistics({ showType: 'FAST' })) || {}
       if (res.code === 200) {
-        localStore.setItem('sportsListArr', res.data?.stResult || [])
-        state.sportsListArr = localStore.getItem('sportsListArr')
+        if (res.data && res.data.stResult && res.data.stResult.length) {
+          const arr = ['OP_DJ', 'XNFT', 'XNBK']
+          const data :any = []
+          res.data.stResult.forEach((ele: { gameType: string }) => {
+            if (!arr.includes(ele.gameType)) {
+              data.push(ele)
+            }
+          })
+          localStore.setItem('sportsListArr', data || [])
+          state.sportsListArr = localStore.getItem('sportsListArr')
+        } else {
+          localStore.setItem('sportsListArr', [])
+          state.sportsListArr = localStore.getItem('sportsListArr')
+        }
       }
     }
   }

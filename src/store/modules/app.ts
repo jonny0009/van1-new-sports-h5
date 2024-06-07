@@ -86,7 +86,14 @@ const appModule: Module<App, any> = {
     async getAllSports({ state }) {
       const res: any = (await getAllSports()) || {}
       if (res.code === 200) {
-        localStore.setItem('sports', res.data)
+        const arr = ['OP_DJ', 'XNFT', 'XNBK']
+        const data :any = []
+        res.data.forEach((ele: { gameType: string }) => {
+          if (!arr.includes(ele.gameType)) {
+            data.push(ele)
+          }
+        })
+        localStore.setItem('sports', data)
         state.sports = localStore.getItem('sports')
       }
     },
