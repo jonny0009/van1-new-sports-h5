@@ -483,12 +483,15 @@ const getSearchCountryInfo = async () => {
   })
   const res: any = (await searchCountryInfo(CountryInfoParams.value)) || {}
   if (res.code === 200 && res.data) {
-    if (!res.data?.countryData || !res.data.countryData.length) {
-      groupedArrays.value = []
+    if (res.data?.countryData && res.data.countryData.length) {
+      groupedArrays.value = res.data.countryData
+        .filter((country: any) => country.leagueCount && country.leagueCount > 0)
+      leaguesTotal.value = groupedArrays.value.length
     }
-    groupedArrays.value = res.data.countryData
-      .filter((country: any) => country.leagueCount && country.leagueCount > 0)
-    leaguesTotal.value = groupedArrays.value.length
+    else {
+      groupedArrays.value = []
+      leaguesTotal.value = 0
+    }
 
   } else {
     groupedArrays.value = []
