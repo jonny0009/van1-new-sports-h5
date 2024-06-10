@@ -34,7 +34,7 @@
                   <div class="league-num tabs-cut-1" :class="ifLeagueNum ? 'league-num-1' : ''" @click="clickLeagueNum">
                     <!-- <span v-if="homeStyle === 1"> {{ $t(`sport.sports.${gameType}`) }}</span> -->
                     <span> {{ $t(`user.whole`) }}</span>
-                    <span class="league-match-num">{{ LeaguesInfo.total || 0 }}</span>
+                    <span class="league-match-num">{{ leaguesTotal || 0 }}</span>
                     <SvgIcon name="user-down" class="icon-svg-1" />
                   </div>
                   <TextButton
@@ -472,7 +472,7 @@ const initList = () => {
 }
 // 获取国家信息
 const groupedArrays: any = ref([])
-const LeaguesInfo: any = ref({})
+const leaguesTotal: any = ref(0)
 const getSearchCountryInfo = async () => {
   activeCollapseNames.value = ''
   const CountryInfoParams: any = ref({
@@ -483,8 +483,13 @@ const getSearchCountryInfo = async () => {
   })
   const res: any = (await searchCountryInfo(CountryInfoParams.value)) || {}
   if (res.code === 200 && res.data) {
-    LeaguesInfo.value = res.data
-    groupedArrays.value = res.data?.countryData || []
+    if (!res.data?.countryData || !res.data.countryData.length) {
+      groupedArrays.value = []
+    }
+    groupedArrays.value = res.data.countryData
+      .filter((country: any) => country.leagueCount && country.leagueCount > 0)
+    leaguesTotal.value = groupedArrays.value.length
+
   } else {
     groupedArrays.value = []
   }
