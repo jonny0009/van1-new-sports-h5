@@ -1,4 +1,4 @@
-import { ref, reactive, queuePostFlushCb } from 'vue'
+import { reactive, queuePostFlushCb } from 'vue'
 import i18n from '@/lang/index'
 import { dateFormat } from '@/utils/date'
 import { getScore } from '@/utils/home/getScore'
@@ -254,7 +254,14 @@ export function useMatch() {
       timeData[gameType].currTime = +gameInfo.t_count
       stopTimer(gameType)
       timeData[gameType].timer = setInterval(() => {
-        timeData[gameType].currTime = timeData[gameType].currTime - 1
+        if (gameType === 'FT') {
+          // 正計時
+          timeData[gameType].currTime++
+        }
+        else {
+          // 倒計時
+          timeData[gameType].currTime--
+        }
         if (timeData[gameType].currTime <= 0) {
           timeData[gameType].currTime = 0
           stopTimer(gameType)
