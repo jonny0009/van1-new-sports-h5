@@ -176,7 +176,7 @@ export function useMatch() {
 
   function showSportTime(raceinfo: RaceInfo = {}) {
     const { gameType, gameInfo } = raceinfo
-    const validGameTypes = ['BK', 'FT']
+    const validGameTypes = ['BK', 'FT', 'XNFT', 'XNBK']
     if (!gameInfo || !gameType || !validGameTypes.includes(gameType)) {
       stopTimer()
       return
@@ -191,7 +191,7 @@ export function useMatch() {
       timeData[gameType].currTime = +gameInfo.t_count
     }
     // 正計時
-    if(gameType === 'FT') {
+    if(['FT', 'XNFT'].includes(gameType)) {
       if (timeData[gameType].currTime <= +gameInfo.t_count) {
         timeData[gameType].currTime = +gameInfo.t_count
         stopTimer(gameType)
