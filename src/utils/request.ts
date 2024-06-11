@@ -1,6 +1,6 @@
 import axios from 'axios'
 import router from '@/router'
-import { showDialog } from 'vant'
+// import { showDialog } from 'vant'
 import { getToken, removeToken } from './auth'
 import { getBrowserLanguage } from './index'
 import store from '@/store'
@@ -111,13 +111,15 @@ service.interceptors.response.use(
         url = '/sign_in'
       }
 
-      showDialog({
-        message,
-        theme: 'round-button'
-      }).then(() => {
-        removeToken()
-        router.push(url)
-      })
+      // showDialog({
+      //   message,
+      //   theme: 'round-button'
+      // }).then(() => {
+      //   removeToken()
+      //   router.push(url)
+      // })
+      removeToken()
+      store.commit('user/SET_TOKEN', '')
       // router.push('/login')
     } else if (+response.data.code === 403) {
       router.push('/403')

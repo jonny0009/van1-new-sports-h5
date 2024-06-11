@@ -122,7 +122,10 @@
             <ShortVideo
               v-if="['SORTVIDEO'].includes(navActive) && nav.type === 'SORTVIDEO' && !refreshing"
               :short-videos="shortVideos"
-              @selectVideo="selectVideo"
+              :video-loading="videoLoading"
+              :no-more="noMoreShortVideos"
+              @select-video="selectVideo"
+              @on-scroll-bottom="getShortVideos"
             ></ShortVideo>
           </van-collapse>
         </van-tab>
@@ -134,7 +137,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, Ref, onBeforeMount, computed, queuePostFlushCb, nextTick } from 'vue'
+import { reactive, ref, Ref, onBeforeMount, computed, queuePostFlushCb } from 'vue'
 import ListItem from './ListItem.vue'
 import ShortVideo from './short-video/index.vue'
 import { anchorLiveList, getVideoGreet, nextAnchorMatchDate } from '@/api/live'

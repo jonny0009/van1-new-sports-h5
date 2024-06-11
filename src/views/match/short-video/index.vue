@@ -1,6 +1,12 @@
 <template>
   <div class="short-video-container">
-    <div class="list">
+    <van-list
+      class="list"
+      v-model:loading="videoLoading"
+      :finished="noMore"
+      :finished-text="shortVideos.length === 0 ? '' : $t('live.noMore')"
+      @load="getShortVideos"
+    >
       <VideoItem
         ref="videoRefs"
         v-for="(videoInfo, index) in shortVideos"
@@ -8,18 +14,26 @@
         :videoInfo="videoInfo"
         @selectVideo="selectVideo"
       ></VideoItem>
-    </div>
+    </van-list>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { nextTick, onMounted, ref } from 'vue'
 import VideoItem from './VideoItem.vue'
-const emit = defineEmits(['selectVideo'])
+const emit = defineEmits(['selectVideo', 'on-scroll-bottom'])
 defineProps({
   shortVideos: {
     type: Array as any,
     default: () => []
+  },
+  videoLoading: {
+    type: Boolean,
+    default: true
+  },
+  noMore: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -49,6 +63,11 @@ const videosPlay = () => {
 const selectVideo = (videoInfo: any) => {
   emit('selectVideo', videoInfo)
 }
+
+const getShortVideos = () => {
+  emit('on-scroll-bottom')
+}
+
 </script>
 
 <style scoped lang="scss">

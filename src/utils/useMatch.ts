@@ -1,4 +1,4 @@
-import { ref, reactive, queuePostFlushCb } from 'vue'
+import { reactive, queuePostFlushCb } from 'vue'
 import i18n from '@/lang/index'
 import { dateFormat } from '@/utils/date'
 import { getScore } from '@/utils/home/getScore'
@@ -64,61 +64,10 @@ export function useMatch() {
       switch (gameType) {
         // 足球
         case 'FT':
-          if (!gameInfo) {
-            // 原本data显示空
-            return t('live.inprogress')
-          }
-          if (homeTeamSuffix?.includes('点球') || homeTeamSuffix?.includes('點球')) {
-            gameInfo.raceType = 'dianqiu'
-            gameInfo.teamSuffix = '点球大战'
-          }
-          if (homeTeamSuffix?.includes('加时赛') || homeTeamSuffix?.includes('加時賽')) {
-            gameInfo.raceType = 'jiashi'
-            gameInfo.teamSuffix = '加时'
-          }
-          if (gameInfo.raceType) {
-            //  加时赛
-            if (gameInfo?.raceType === 'jiashi' && (gameInfo?.re_time === 'HT^^' || gameInfo?.re_time === 'HT')) {
-              // 中场休息
-              return t('live.HT')
-            }
-            if (gameInfo?.raceType === 'jiashi' && gameInfo?.re_time && new RegExp('LIVE').test(gameInfo?.re_time)) {
-              // 暂停
-              return t('live.pause')
-            }
-            if (gameInfo?.raceType === 'jiashi' && gameInfo?.re_time.indexOf('^') > -1) {
-              const [secssion, raceTime] = gameInfo.re_time.split('^')
-              // 上and下
-              const overTiming = secssion === '1H' ? `上${raceTime}` : `下${raceTime}`
-              return `${gameInfo.teamSuffix}<span class='time-h-number'>${overTiming}</span>`
-            }
-          }
-          // 非加时赛
-          if (gameInfo?.re_time === 'HT^^' || gameInfo?.re_time === 'HT') {
-            // 中场休息
-            return t('live.HT')
-          } else if (gameInfo?.re_time && new RegExp('LIVE').test(gameInfo?.re_time)) {
-            // 暂停
-            return t('live.pause')
-          } else if (gameInfo?.re_time && gameInfo?.re_time.indexOf('^') > -1) {
-            // 比赛进行中
-            const [secssion, raceTime] = gameInfo.re_time.split('^')
-            let newRaceTimeVal = ''
-            if (raceTime.indexOf("'") > -1) {
-              newRaceTimeVal = `${convertToMinAndSec(timeData.FT.currTime)}<span class="time-h-dot">'</span>`
-            } else {
-              newRaceTimeVal = `${convertToMinAndSec(timeData.FT.currTime)}`
-            }
-            // 上半场and下半场
-            return secssion === '1H'
-              ? `${t('live.H1')}&nbsp;<span class='time-h-Up'>${newRaceTimeVal}</span>`
-              : `${t('live.H2')}&nbsp;<span class='time-h-d'>${newRaceTimeVal}</span>`
-          } else if (gameInfo?.re_time) {
-            // 比赛时间容错
-            return gameInfo.re_time
-          }
-          // 比赛时间容错
-          return '-' + ':' + '-'
+          return handleFtTime(gameInfo, homeTeamSuffix)
+        // 虛擬足球
+        case 'XNFT':
+          return handleFtTime(gameInfo, homeTeamSuffix)
         // 网球
         //
         case 'TN':
@@ -155,19 +104,10 @@ export function useMatch() {
         //
         // 篮球
         case 'BK':
-          if (gameInfo?.se_now === 'HT' || gameInfo?.se_now === 'ht') {
-            // 中场休息
-            return t('live.HT')
-          }
-          if (gameInfo?.se_now.indexOf('OT') > -1 || gameInfo?.se_now.indexOf('ot') > -1) {
-            // 加时
-            return `加时<span>${dateFormat(timeData.BK.currTime * 1000, 'mm:ss')}</span>`
-          }
-          return seNow && timeData.BK.currTime
-            ? `${BKSection(gameInfo?.se_now)}&nbsp;<span>${dateFormat(timeData.BK.currTime * 1000, 'mm:ss')}</span>`
-            : !timeData.BK.currTime && seNow
-            ? `${BKSection(gameInfo.se_now)}&nbsp;<span>00:00</span>`
-            : ''
+          return handelBkTime(gameInfo, seNow)
+        // 虛擬籃球
+        case 'XNBK':
+          return handelBkTime(gameInfo, seNow)
         //
         // 美式足球
         case 'BK_AFT':
@@ -236,7 +176,7 @@ export function useMatch() {
 
   function showSportTime(raceinfo: RaceInfo = {}) {
     const { gameType, gameInfo } = raceinfo
-    const validGameTypes = ['BK', 'FT']
+    const validGameTypes = ['BK', 'FT', 'XNFT', 'XNBK']
     if (!gameInfo || !gameType || !validGameTypes.includes(gameType)) {
       stopTimer()
       return
@@ -250,16 +190,29 @@ export function useMatch() {
       timeData[gameType].seNow = gameInfo.se_now
       timeData[gameType].currTime = +gameInfo.t_count
     }
-    if (timeData[gameType].currTime >= +gameInfo.t_count && timeData[gameType].currTime > 0) {
-      timeData[gameType].currTime = +gameInfo.t_count
-      stopTimer(gameType)
-      timeData[gameType].timer = setInterval(() => {
-        timeData[gameType].currTime = timeData[gameType].currTime - 1
-        if (timeData[gameType].currTime <= 0) {
-          timeData[gameType].currTime = 0
-          stopTimer(gameType)
-        }
-      }, 1000)
+    // 正計時
+    if(['FT', 'XNFT'].includes(gameType)) {
+      if (timeData[gameType].currTime <= +gameInfo.t_count) {
+        timeData[gameType].currTime = +gameInfo.t_count
+        stopTimer(gameType)
+        timeData[gameType].timer = setInterval(() => {
+          timeData[gameType].currTime++
+        }, 1000)
+      }
+    }
+    // 倒計時
+    else {
+      if (timeData[gameType].currTime >= +gameInfo.t_count && timeData[gameType].currTime > 0) {
+        timeData[gameType].currTime = +gameInfo.t_count
+        stopTimer(gameType)
+        timeData[gameType].timer = setInterval(() => {
+          timeData[gameType].currTime--
+          if (timeData[gameType].currTime <= 0) {
+            timeData[gameType].currTime = 0
+            stopTimer(gameType)
+          }
+        }, 1000)
+      }
     }
   }
 
@@ -278,6 +231,80 @@ export function useMatch() {
         }
       }
     }
+  }
+
+  function handleFtTime(gameInfo: any, homeTeamSuffix: any) {
+    if (!gameInfo) {
+      // 原本data显示空
+      return t('live.inprogress')
+    }
+    if (homeTeamSuffix?.includes('点球') || homeTeamSuffix?.includes('點球')) {
+      gameInfo.raceType = 'dianqiu'
+      gameInfo.teamSuffix = '点球大战'
+    }
+    if (homeTeamSuffix?.includes('加时赛') || homeTeamSuffix?.includes('加時賽')) {
+      gameInfo.raceType = 'jiashi'
+      gameInfo.teamSuffix = '加时'
+    }
+    if (gameInfo.raceType) {
+      //  加时赛
+      if (gameInfo?.raceType === 'jiashi' && (gameInfo?.re_time === 'HT^^' || gameInfo?.re_time === 'HT')) {
+        // 中场休息
+        return t('live.HT')
+      }
+      if (gameInfo?.raceType === 'jiashi' && gameInfo?.re_time && new RegExp('LIVE').test(gameInfo?.re_time)) {
+        // 暂停
+        return t('live.pause')
+      }
+      if (gameInfo?.raceType === 'jiashi' && gameInfo?.re_time.indexOf('^') > -1) {
+        const [secssion, raceTime] = gameInfo.re_time.split('^')
+        // 上and下
+        const overTiming = secssion === '1H' ? `上${raceTime}` : `下${raceTime}`
+        return `${gameInfo.teamSuffix}<span class='time-h-number'>${overTiming}</span>`
+      }
+    }
+    // 非加时赛
+    if (gameInfo?.re_time === 'HT^^' || gameInfo?.re_time === 'HT') {
+      // 中场休息
+      return t('live.HT')
+    } else if (gameInfo?.re_time && new RegExp('LIVE').test(gameInfo?.re_time)) {
+      // 暂停
+      return t('live.pause')
+    } else if (gameInfo?.re_time && gameInfo?.re_time.indexOf('^') > -1) {
+      // 比赛进行中
+      const [secssion, raceTime] = gameInfo.re_time.split('^')
+      let newRaceTimeVal = ''
+      if (raceTime.indexOf("'") > -1) {
+        newRaceTimeVal = `${convertToMinAndSec(timeData.FT.currTime)}<span class="time-h-dot">'</span>`
+      } else {
+        newRaceTimeVal = `${convertToMinAndSec(timeData.FT.currTime)}`
+      }
+      // 上半场and下半场
+      return secssion === '1H'
+        ? `${t('live.H1')}&nbsp;<span class='time-h-Up'>${newRaceTimeVal}</span>`
+        : `${t('live.H2')}&nbsp;<span class='time-h-d'>${newRaceTimeVal}</span>`
+    } else if (gameInfo?.re_time) {
+      // 比赛时间容错
+      return gameInfo.re_time
+    }
+    // 比赛时间容错
+    return '-' + ':' + '-'
+  }
+
+  function handelBkTime(gameInfo: any, seNow: any) {
+    if (gameInfo?.se_now === 'HT' || gameInfo?.se_now === 'ht') {
+      // 中场休息
+      return t('live.HT')
+    }
+    if (gameInfo?.se_now.indexOf('OT') > -1 || gameInfo?.se_now.indexOf('ot') > -1) {
+      // 加时
+      return `加时<span>${dateFormat(timeData.BK.currTime * 1000, 'mm:ss')}</span>`
+    }
+    return seNow && timeData.BK.currTime
+      ? `${BKSection(gameInfo?.se_now)}&nbsp;<span>${dateFormat(timeData.BK.currTime * 1000, 'mm:ss')}</span>`
+      : !timeData.BK.currTime && seNow
+      ? `${BKSection(gameInfo.se_now)}&nbsp;<span>00:00</span>`
+      : ''
   }
 
   return { BKSection, showRBTime, getScore }

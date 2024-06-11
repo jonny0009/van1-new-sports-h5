@@ -19,7 +19,7 @@
         <span>{{ $t('user.lang') }}</span>
         <div class="font3 cursor">
           <div class="font2 img-span">
-            <img :src="getImg(lang.key)" alt="" class="qizi">
+            <img :src="getImg(lang?.key)" alt="" class="qizi">
             <span> {{ lang?.value }} </span>
           </div>
           <img class="arrow" src="@/assets/images/login/go@2x.png" />
@@ -143,7 +143,7 @@ function showPk(val?: any) {
   popupList.arr = []
   if (val === 1) {
     popupList.arr = languageList.value || []
-    commonKey.key = lang.value.key || getBrowserLanguage()
+    commonKey.key = lang.value?.key || getBrowserLanguage()
     popupTitle.value = 'lang'
   }
   if (val === 3) {
@@ -180,7 +180,7 @@ function getLangs() {
 }
 
 const getImg = (val:any) => {
-  const obj = {
+  const obj: any = {
     'zh-cn': 'cn',
     'en-us': 'en',
     'vi-vn': 'vn',
